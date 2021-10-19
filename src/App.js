@@ -1,6 +1,6 @@
-import './App.css';
+import './App.scss';
 
-function App() {
+const App = () => {
   return (
     <div>
     </div>
