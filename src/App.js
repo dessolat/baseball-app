@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import NavBar from './components/NavBar/NavBar';
 import Game from './pages/Game';
@@ -9,8 +9,11 @@ const App = () => {
       <Router>
         <NavBar />
         <Switch>
-          <Route path='/game'>
+          <Route path='/game/:tab'>
             <Game />
+          </Route>
+          <Route path='/game'>
+            <Redirect to='/game/videos' />
           </Route>
         </Switch>
       </Router>

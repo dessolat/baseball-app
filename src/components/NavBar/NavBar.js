@@ -5,7 +5,7 @@ import cl from './NavBar.module.scss'
 const NavBar = () => {
 	return (
 		<nav className={cl.navbar}>
-			<Link to='/game'>Game</Link>
+			<Link to='/game/videos'>Game</Link>
 		</nav>
 	)
 }
