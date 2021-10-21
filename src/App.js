@@ -5,19 +5,17 @@ import Game from './pages/Game';
 
 const App = () => {
   return (
-    <div className='container'>
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route path='/game/:tab'>
-            <Game />
-          </Route>
-          <Route path='/game'>
-            <Redirect to='/game/videos' />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path='/game/:tab'>
+          <Game />
+        </Route>
+        <Route path='/game'>
+          <Redirect to='/game/videos' />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
