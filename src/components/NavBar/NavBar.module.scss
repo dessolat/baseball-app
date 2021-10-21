@@ -1,7 +1,10 @@
 .navbar {
-	height: 35px;
+	height: 2.1875rem;
+	font: bold 1.125rem 'Comfortaa', cursive;
 	border-bottom: .5px solid #CDCCCC;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: linear-gradient(
+		90deg, #f4f5f7 12.5%, #eeeeef 100%);
 }
