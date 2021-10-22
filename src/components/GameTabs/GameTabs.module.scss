@@ -1,0 +1,22 @@
+.gameTabs {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  margin-top: 1rem;
+
+  > li + li {
+    margin-left: 1.875rem;
+  }
+
+  a {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: border-bottom var(--transition-speed);
+
+    &:hover,
+    &.active {
+      border-bottom: 2px solid #1a4c96;
+    }
+  }
+}

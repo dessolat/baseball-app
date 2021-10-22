@@ -10,9 +10,8 @@
 	// justify-content: flex-start;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 1.125rem;
+	// padding: 0 1.125rem;
 	font: bold 1.125rem 'Comfortaa', cursive;
-
 }
 
 .date {
@@ -21,29 +20,6 @@
 
 .location {
   margin-top: 0.75rem;
-}
-
-.gameTabs {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  margin-top: 1rem;
-
-  > li + li {
-    margin-left: 1.875rem;
-  }
-
-  a {
-    border-bottom: 2px solid transparent;
-    padding-bottom: 4px;
-    transition: border-bottom var(--transition-speed);
-
-    &:hover,
-    &.active {
-      border-bottom: 2px solid #1a4c96;
-    }
-  }
 }
 
 .leftLogo {
@@ -68,73 +44,6 @@
   display: flex;
   align-items: flex-end;
   // margin-left: 5px;
-}
-
-.teamNames {
-  padding-bottom: 0.875rem;
-}
-
-.teamAttack {
-  border-bottom: 2px solid #1a4c96;
-  padding-bottom: 4px;
-}
-
-.teamDefence {
-  padding-top: 5px;
-}
-
-.scoresTable {
-  height: 103px;
-  width: 16.875rem;
-  margin-left: 4px;
-  display: flex;
-  text-align: center;
-  overflow-x: scroll;
-  font-weight: normal;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex: 0 0 1.875rem;
-    transition: all var(--transition-speed);
-    border-bottom: 2px solid transparent;
-
-    > span:first-child {
-      font-weight: bold;
-    }
-
-    &:hover {
-      background-color: white;
-      cursor: pointer;
-      border-bottom: 2px solid #1a4c96;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      font-weight: bold;
-    }
-  }
-}
-
-.gameInfo {
-  height: 103px;
-  width: 5.625rem;
-  margin-left: 4px;
-  display: flex;
-  text-align: center;
-  overflow-x: scroll;
-  font-weight: normal;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex: 0 0 1.875rem;
-    transition: all var(--transition-speed);
-    border-bottom: 2px solid transparent;
-
-    > span:first-child {
-      font-weight: bold;
-    }
-  }
 }
 
 ::-webkit-scrollbar {

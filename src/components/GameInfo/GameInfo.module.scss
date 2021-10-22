@@ -1,0 +1,22 @@
+.gameInfo {
+  height: 103px;
+  width: 5.625rem;
+  margin-left: 4px;
+  display: flex;
+  text-align: center;
+  overflow-x: scroll;
+  font-weight: normal;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 0 0 1.875rem;
+    transition: all var(--transition-speed);
+    border-bottom: 2px solid transparent;
+
+    > span:first-child {
+      font-weight: bold;
+    }
+  }
+}
