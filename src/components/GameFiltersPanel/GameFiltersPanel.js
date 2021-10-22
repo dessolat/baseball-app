@@ -17,13 +17,13 @@ const GameFiltersPanel = ({ situationFilter, setSituationFilter, situationsList 
       e.preventDefault();
     }
 
-		const scroll = scrollRef.current
+    const scroll = scrollRef.current;
 
-    if (scrollRef.current.addEventListener) {
-      scrollRef.current.addEventListener('mousewheel', scrollHorizontally, false);
-      scrollRef.current.addEventListener('DOMMouseScroll', scrollHorizontally, false);
+    if (scroll.addEventListener) {
+      scroll.addEventListener('mousewheel', scrollHorizontally, false);
+      scroll.addEventListener('DOMMouseScroll', scrollHorizontally, false);
     } else {
-      scrollRef.current.attachEvent('onmousewheel', scrollHorizontally);
+      scroll.attachEvent('onmousewheel', scrollHorizontally);
     }
 
     return () => {
@@ -48,11 +48,30 @@ const GameFiltersPanel = ({ situationFilter, setSituationFilter, situationsList 
     setSituationFilter(e.currentTarget.name);
   };
 
-  function scrollHorizontally(e) {
-    e.currentTarget.name === 'scroll-left'
-      ? (scrollRef.current.scrollLeft -= 32)
-      : (scrollRef.current.scrollLeft += 32);
-  }
+  const scrollHorizontally = e => {
+    const start = scrollRef.current.scrollLeft,
+      change = 120,
+      increment = 10;
+    let currentTime = 0;
+
+    Math.easeInOutQuad = function (t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return (c / 2) * t * t + b;
+      t--;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
+    };
+
+    const animateScroll = function (name) {
+      currentTime += increment;
+      const val = Math.easeInOutQuad(currentTime, start, name === 'scroll-left' ? -change : change, 300);
+      scrollRef.current.scrollLeft = val;
+      if (currentTime < 300) {
+        setTimeout(() => animateScroll(name), increment);
+      }
+    };
+
+    animateScroll(e.currentTarget.name);
+  };
 
   return (
     <section>
