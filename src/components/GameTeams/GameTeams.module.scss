@@ -1,9 +1,11 @@
+@import '../../scss/vars.scss';
+
 .teamNames {
   padding-bottom: 0.875rem;
 }
 
 .teamAttack {
-  border-bottom: 2px solid #1a4c96;
+  border-bottom: 2px solid var(--side-color);
   padding-bottom: 4px;
 }
 

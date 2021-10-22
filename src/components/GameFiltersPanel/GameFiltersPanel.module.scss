@@ -1,0 +1,24 @@
+@import '../../scss/vars.scss';
+
+.filtersPanel {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px;
+  // background-color: bisque;
+}
+
+.situationsWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.arrowBtn {
+  width: 11px;
+  height: 19px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.arrowImg {
+  width: 100%;
+}

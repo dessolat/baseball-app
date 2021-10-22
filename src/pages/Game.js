@@ -1,11 +1,19 @@
-import React from 'react';
-import { inningsData, gameInfoData, teamNames } from '../data';
+import React, { useState } from 'react';
+import { inningsData, gameInfoData, teamNames, situationsList } from '../data';
 import GameHeader from '../components/GameHeader/GameHeader';
+import GameFiltersPanel from '../components/GameFiltersPanel/GameFiltersPanel';
 
 const Game = () => {
+  const [situationFilter, setSituationFilter] = useState('All');
+
   return (
     <div>
       <GameHeader inningsData={inningsData} gameInfoData={gameInfoData} teamNames={teamNames} />
+      <GameFiltersPanel
+        situationFilter={situationFilter}
+        setSituationFilter={setSituationFilter}
+        situationsList={situationsList}
+      />
     </div>
   );
 };

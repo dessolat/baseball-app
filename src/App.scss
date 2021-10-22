@@ -21,6 +21,13 @@ ul {
 	list-style: none;
 }
 
+button {
+	background-color: transparent;
+	cursor: pointer;
+	outline: none;
+	border: none;
+}
+
 .container {
 	max-width: 1280px;
 	padding: 0 17px;
