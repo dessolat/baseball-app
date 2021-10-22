@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/baseball-app/static/css/main.f2a0f321.chunk.css",
-    "main.js": "/baseball-app/static/js/main.f9276c83.chunk.js",
-    "main.js.map": "/baseball-app/static/js/main.f9276c83.chunk.js.map",
+    "main.css": "/baseball-app/static/css/main.712d7bec.chunk.css",
+    "main.js": "/baseball-app/static/js/main.b6f92464.chunk.js",
+    "main.js.map": "/baseball-app/static/js/main.b6f92464.chunk.js.map",
     "runtime-main.js": "/baseball-app/static/js/runtime-main.f07ee06d.js",
     "runtime-main.js.map": "/baseball-app/static/js/runtime-main.f07ee06d.js.map",
-    "static/js/2.dd2ff36c.chunk.js": "/baseball-app/static/js/2.dd2ff36c.chunk.js",
-    "static/js/2.dd2ff36c.chunk.js.map": "/baseball-app/static/js/2.dd2ff36c.chunk.js.map",
+    "static/js/2.dbe60439.chunk.js": "/baseball-app/static/js/2.dbe60439.chunk.js",
+    "static/js/2.dbe60439.chunk.js.map": "/baseball-app/static/js/2.dbe60439.chunk.js.map",
     "index.html": "/baseball-app/index.html",
-    "static/css/main.f2a0f321.chunk.css.map": "/baseball-app/static/css/main.f2a0f321.chunk.css.map",
-    "static/js/2.dd2ff36c.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.dd2ff36c.chunk.js.LICENSE.txt",
+    "static/css/main.712d7bec.chunk.css.map": "/baseball-app/static/css/main.712d7bec.chunk.css.map",
+    "static/js/2.dbe60439.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.dbe60439.chunk.js.LICENSE.txt",
     "static/media/left-logo.f3645bbc.png": "/baseball-app/static/media/left-logo.f3645bbc.png",
     "static/media/right-logo.e28481c9.png": "/baseball-app/static/media/right-logo.e28481c9.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f07ee06d.js",
-    "static/js/2.dd2ff36c.chunk.js",
-    "static/css/main.f2a0f321.chunk.css",
-    "static/js/main.f9276c83.chunk.js"
+    "static/js/2.dbe60439.chunk.js",
+    "static/css/main.712d7bec.chunk.css",
+    "static/js/main.b6f92464.chunk.js"
   ]
 }
