@@ -5,6 +5,7 @@ import GameFiltersPanel from '../components/GameFiltersPanel/GameFiltersPanel';
 
 const Game = () => {
   const [situationFilter, setSituationFilter] = useState('All');
+	const [viewMode, setViewMode] = useState('mode-1')
 
   return (
     <div>
@@ -12,6 +13,8 @@ const Game = () => {
       <GameFiltersPanel
         situationFilter={situationFilter}
         setSituationFilter={setSituationFilter}
+				viewMode={viewMode}
+				setViewMode={setViewMode}
         situationsList={situationsList}
       />
     </div>
