@@ -1,9 +1,9 @@
 import React from 'react';
-import cl from './GameInfo.module.scss';
+import cl from './HeaderInfo.module.scss';
 
-const GameInfo = ({data}) => {
+const HeaderInfo = ({data}) => {
   return (
-    <div className={cl.gameInfo}>
+    <div className={cl.info}>
       <div>
         <span>R</span>
         <span>{data.attack.r}</span>
@@ -23,4 +23,4 @@ const GameInfo = ({data}) => {
   );
 };
 
-export default GameInfo;
+export default HeaderInfo;

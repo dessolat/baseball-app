@@ -1,7 +1,7 @@
 import React from 'react';
-import cl from './GameViewModes.module.scss';
+import cl from './FiltersViewModes.module.scss';
 
-const GameViewModes = ({handleModeClick, viewMode}) => {
+const FiltersViewModes = ({handleModeClick, viewMode}) => {
   return (
     <div className={cl.viewModes}>
       <button className={viewMode === 'mode-1' ? cl.active : ''} name='mode-1' onClick={handleModeClick}>
@@ -27,4 +27,4 @@ const GameViewModes = ({handleModeClick, viewMode}) => {
   );
 };
 
-export default GameViewModes;
+export default FiltersViewModes;

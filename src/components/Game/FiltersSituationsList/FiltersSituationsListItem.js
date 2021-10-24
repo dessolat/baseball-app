@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameSituationsListItem = ({ situationFilter, situation, handleClick, cl }) => {
+const FiltersSituationsListItem = ({ situationFilter, situation, handleClick, cl }) => {
   const classes = situationFilter === situation ? cl.active : ''
 	
 	return (
@@ -12,4 +12,4 @@ const GameSituationsListItem = ({ situationFilter, situation, handleClick, cl })
   );
 };
 
-export default GameSituationsListItem;
+export default FiltersSituationsListItem;

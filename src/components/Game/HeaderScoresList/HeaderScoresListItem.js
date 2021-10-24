@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameScoresListItem = ({inning}) => {
+const HeaderScoresListItem = ({inning}) => {
   return (
     <div>
       <span>{inning.inning_number}</span>
@@ -10,4 +10,4 @@ const GameScoresListItem = ({inning}) => {
   );
 };
 
-export default GameScoresListItem;
+export default HeaderScoresListItem;

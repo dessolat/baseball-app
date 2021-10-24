@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import cl from './GameScoresList.module.scss';
-import GameScoresListItem from '../GameScoresListItem';
+import cl from './HeaderScoresList.module.scss';
+import HeaderScoresListItem from './HeaderScoresListItem';
 
-const GameScoresList = ({ data }) => {
+const HeaderScoresList = ({ data }) => {
   useEffect(() => {
     function scrollHorizontally(e) {
       e = window.event || e;
@@ -38,10 +38,10 @@ const GameScoresList = ({ data }) => {
   return (
     <div className={cl.scoresTable} id='scores-table-scroll'>
       {data.map(inning => (
-        <GameScoresListItem key={inning.inning_number} inning={inning} />
+        <HeaderScoresListItem key={inning.inning_number} inning={inning} />
       ))}
     </div>
   );
 };
 
-export default GameScoresList;
+export default HeaderScoresList;

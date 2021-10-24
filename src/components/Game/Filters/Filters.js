@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import GameSituationsList from '../GameSituationsList/GameSituationsList';
-import GameViewModes from '../GameViewModes/GameViewModes';
-import LeftArrow from '../UI/buttons/LeftArrow';
-import RightArrow from '../UI/buttons/RightArrow';
-import cl from './GameFiltersPanel.module.scss';
+import FiltersSituationsList from '../FiltersSituationsList/FiltersSituationsList';
+import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
+import LeftArrow from 'components/UI/buttons/LeftArrow';
+import RightArrow from 'components/UI/buttons/RightArrow';
+import cl from './Filters.module.scss';
 
-const GameFiltersPanel = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situationsList }) => {
-  const [situations, setSituations] = useState(situationsList);
+const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
   const [remWidth, setRemWidth] = useState(null);
   const scrollRef = useRef();
 
@@ -79,24 +78,20 @@ const GameFiltersPanel = ({ situationFilter, setSituationFilter, viewMode, setVi
   };
 
   return (
-    <section>
-      <div className='container'>
-        <div className={cl.filtersPanel}>
-          <div className={cl.situationsWrapper}>
-            {remWidth >= 63.5 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
-            <GameSituationsList
-              ref={scrollRef}
-              situationFilter={situationFilter}
-              situations={situations}
-              handleClick={handleSituationClick}
-            />
-            {remWidth >= 63.5 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
-          </div>
-          <GameViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
-        </div>
+    <div className={cl.filters}>
+      <div className={cl.situationsWrapper}>
+        {remWidth >= 63.5 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
+        <FiltersSituationsList
+          ref={scrollRef}
+          situationFilter={situationFilter}
+          situations={situations}
+          handleClick={handleSituationClick}
+        />
+        {remWidth >= 63.5 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
       </div>
-    </section>
+      <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
+    </div>
   );
 };
 
-export default GameFiltersPanel;
+export default Filters;

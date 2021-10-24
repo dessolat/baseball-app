@@ -1,7 +1,7 @@
 import React from 'react';
-import cl from './GameTeams.module.scss';
+import cl from './HeaderTeams.module.scss';
 
-const GameTeams = ({ names }) => {
+const HeaderTeams = ({ names }) => {
   return (
     <div className={cl.teamNames}>
       <p className={cl.teamAttack}>{names.attack_team}</p>
@@ -10,4 +10,4 @@ const GameTeams = ({ names }) => {
   );
 };
 
-export default GameTeams;
+export default HeaderTeams;

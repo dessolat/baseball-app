@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
-import GameSituationsListItem from '../GameSituationsListItem';
-import cl from './GameSituationsList.module.scss';
+import FiltersSituationsListItem from './FiltersSituationsListItem';
+import cl from './FiltersSituationsList.module.scss';
 
-const GameSituationsList = forwardRef((props, ref) => {
+const FiltersSituationsList = forwardRef((props, ref) => {
 	const {situationFilter, situations, handleClick} = props
 
   return (
     <ul ref={ref} className={cl.situationsList}>
       {situations.map((situation, i) => (
-        <GameSituationsListItem
+        <FiltersSituationsListItem
           key={i}
           situationFilter={situationFilter}
           situation={situation}
@@ -20,4 +20,4 @@ const GameSituationsList = forwardRef((props, ref) => {
   );
 });
 
-export default GameSituationsList;
+export default FiltersSituationsList;

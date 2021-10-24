@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import cl from './GameTabs.module.scss'
+import cl from './HeaderTabs.module.scss'
 
-const GameTabs = () => {
+const HeaderTabs = () => {
   return (
-    <ul className={cl.gameTabs}>
+    <ul className={cl.headerTabs}>
       <li>
         <NavLink to={`/game/lineup`} activeClassName={cl.active}>
           Lineup
@@ -29,4 +29,4 @@ const GameTabs = () => {
   );
 };
 
-export default GameTabs;
+export default HeaderTabs;

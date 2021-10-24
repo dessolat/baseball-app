@@ -1,13 +1,13 @@
 import React from 'react';
-import cl from './GameHeader.module.scss';
-import LeftLogo from '../../images/left-logo.png';
-import RightLogo from '../../images/right-logo.png';
-import GameTabs from '../GameTabs/GameTabs';
-import GameScoresList from '../GameScoresList/GameScoresList';
-import GameInfo from '../GameInfo/GameInfo';
-import GameTeams from '../GameTeams/GameTeams';
+import cl from './Header.module.scss';
+import LeftLogo from 'images/left-logo.png';
+import RightLogo from 'images/right-logo.png';
+import HeaderTabs from '../HeaderTabs/HeaderTabs';
+import HeaderScoresList from '../HeaderScoresList/HeaderScoresList';
+import HeaderInfo from '../HeaderInfo/HeaderInfo';
+import HeaderTeams from '../HeaderTeams/HeaderTeams';
 
-const GameHeader = ({inningsData, gameInfoData, teamNames}) => {
+const Header = ({inningsData, gameInfoData, teamNames}) => {
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -15,14 +15,14 @@ const GameHeader = ({inningsData, gameInfoData, teamNames}) => {
           <div>
             <p className={cl.date}>Aug 23, 2021</p>
             <p className={cl.location}>at Moscow (Russtar Arena)</p>
-            <GameTabs />
+            <HeaderTabs />
           </div>
           <img src={LeftLogo} className={cl.leftLogo} alt='attack-team' />
           <h2 className={cl.teamScore}>4</h2>
           <div className={cl.scoresWrapper}>
-            <GameTeams names={teamNames}/>
-            <GameScoresList data={inningsData} />
-            <GameInfo data={gameInfoData} />
+            <HeaderTeams names={teamNames}/>
+            <HeaderScoresList data={inningsData} />
+            <HeaderInfo data={gameInfoData} />
           </div>
           <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>6</h2>
           <img src={RightLogo} className={cl.rightLogo} alt='defence-team' />
@@ -32,4 +32,4 @@ const GameHeader = ({inningsData, gameInfoData, teamNames}) => {
   );
 };
 
-export default GameHeader;
+export default Header;
