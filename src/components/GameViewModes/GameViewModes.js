@@ -13,11 +13,9 @@ const GameViewModes = ({handleModeClick, viewMode}) => {
       </button>
       <button className={viewMode === 'mode-3' ? cl.active : ''} name='mode-3' onClick={handleModeClick}>
         <div></div>
-        <div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        <div></div>
+        <div></div>
+        <div></div>
       </button>
       <button className={viewMode === 'mode-4' ? cl.active : ''} name='mode-4' onClick={handleModeClick}>
         <div></div>
