@@ -1,0 +1,18 @@
+.content {
+  display: grid;
+  grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 58.6875rem);
+  grid-template-areas:
+    'list graphics'
+    'controls graphics';
+}
+
+.situationsControls {
+  // background-color: gray;
+  grid-area: controls;
+  padding-top: 2px;
+}
+
+.graphics {
+  grid-area: graphics;
+  // background-color: blue;
+}

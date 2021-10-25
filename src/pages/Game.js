@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { inningsData, gameInfoData, teamNames, situationsList } from '../data';
+import React, { useState, useEffect } from 'react';
+import { inningsData, gameInfoData, teamNames, filterSituationsList, contentSituationsList } from '../data';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
@@ -7,6 +7,21 @@ import Content from 'components/Game/Content/Content';
 const Game = () => {
   const [situationFilter, setSituationFilter] = useState('All');
   const [viewMode, setViewMode] = useState('mode-1');
+  // const [activeSituation, setActiveSituation] = useState(null)
+
+  // useEffect(() => {
+  //   const handleKeyDown = e => {
+  //     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+
+  //     console.log(e.key);
+  //   };
+
+  //   document.addEventListener('keydown', handleKeyDown);
+
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, []);
 
   return (
     <div>
@@ -17,9 +32,9 @@ const Game = () => {
           setSituationFilter={setSituationFilter}
           viewMode={viewMode}
           setViewMode={setViewMode}
-          situations={situationsList}
+          situations={filterSituationsList}
         />
-        <Content viewMode={viewMode} />
+        <Content viewMode={viewMode} contentSituationsList={contentSituationsList} />
       </div>
     </div>
   );

@@ -1,0 +1,95 @@
+@import 'scss/vars.scss';
+
+.listItem {
+  background-color: white;
+
+  & + & {
+    margin-top: 2px;
+  }
+
+  > button {
+    padding: 3px 5px 9px 8px;
+    display: flex;
+		align-items: stretch;
+		column-gap: 5px;
+  }
+}
+
+.portraitRectanglesWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+	align-items: center;
+}
+
+.portrait {
+	margin-top: 6px;
+}
+
+.rectangles {
+  position: relative;
+  margin-top: 20px;
+  height: 38px;
+  width: 36px;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.topRectangle {
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.leftRectangle, .rightRectangle {
+	top: 45%;
+	transform: translateY(-50%);
+}
+
+.leftRectangle {
+	left: 0;
+}
+
+.rightRectangle {
+	right: 0;
+}
+
+.leftEllipse,
+.rightEllipse {
+  bottom: 0;
+}
+
+.leftEllipse {
+  right: 53%;
+}
+
+.rightEllipse {
+	left: 53%;
+}
+
+.textEllipsesWrapper {
+	display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text {
+	font: 400 .875rem var(--font-athiti);
+	line-height: 1.36rem;
+	text-align: justify;
+}
+
+.ellipsesWrapper {
+	width: 100%;
+}
+
+.ellipses {
+	width: 34px;
+	height: 22;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	margin-left: auto;
+}
