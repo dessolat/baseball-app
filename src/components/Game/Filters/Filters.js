@@ -38,7 +38,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
 
   useEffect(() => {
     if (scrollRef.current) {
-			setScrollDelta(scrollRef.current.scrollWidth - scrollRef.current.clientWidth)
+      setScrollDelta(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
     }
   }, [situations]);
 
@@ -76,19 +76,21 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
   };
 
   return (
-    <div className={cl.filters}>
-      <div className={cl.situationsWrapper}>
-        {scrollDelta > 0 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
-        <FiltersSituationsList
-          ref={scrollRef}
-          situationFilter={situationFilter}
-          situations={situations}
-          handleClick={handleSituationClick}
-        />
-        {scrollDelta > 0 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
+    <section className='container'>
+      <div className={cl.filters}>
+        <div className={cl.situationsWrapper}>
+          {scrollDelta > 0 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
+          <FiltersSituationsList
+            ref={scrollRef}
+            situationFilter={situationFilter}
+            situations={situations}
+            handleClick={handleSituationClick}
+          />
+          {scrollDelta > 0 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
+        </div>
+        <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
       </div>
-      <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
-    </div>
+    </section>
   );
 };
 

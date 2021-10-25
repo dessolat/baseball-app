@@ -24,19 +24,17 @@ const Game = () => {
   // }, []);
 
   return (
-    <div>
+    <>
       <Header inningsData={inningsData} gameInfoData={gameInfoData} teamNames={teamNames} />
-      <div className='container'>
-        <Filters
-          situationFilter={situationFilter}
-          setSituationFilter={setSituationFilter}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          situations={filterSituationsList}
-        />
-        <Content viewMode={viewMode} contentSituationsList={contentSituationsList} />
-      </div>
-    </div>
+      <Filters
+        situationFilter={situationFilter}
+        setSituationFilter={setSituationFilter}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        situations={filterSituationsList}
+      />
+      <Content viewMode={viewMode} contentSituationsList={contentSituationsList} />
+    </>
   );
 };
 

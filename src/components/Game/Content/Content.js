@@ -3,7 +3,7 @@ import cl from './Content.module.scss';
 import $ from 'jquery';
 import { useParams } from 'react-router';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
-import PlaysImg from 'images/plays.jpg'
+import PlaysImg from 'images/plays.jpg';
 
 const Content = ({ viewMode, contentSituationsList }) => {
   const { tab } = useParams();
@@ -21,21 +21,21 @@ const Content = ({ viewMode, contentSituationsList }) => {
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen></iframe>
         );
-				case 'plays':
-					return <img src={PlaysImg} alt="plays" width='100%'/>
+      case 'plays':
+        return <img src={PlaysImg} alt='plays' width='100%' />;
       default:
         break;
     }
   };
 
   return (
-    <div className={cl.content}>
-      <ContentSituationsList situations={contentSituationsList} />
-      <div className={cl.situationsControls}></div>
-      <div className={cl.graphics}>
-        {renderTab(tab)}
+    <section className='container'>
+      <div className={cl.content}>
+        <ContentSituationsList situations={contentSituationsList} />
+        <div className={cl.situationsControls}></div>
+        <div className={cl.graphics}>{renderTab(tab)}</div>
       </div>
-    </div>
+    </section>
   );
 };
 
