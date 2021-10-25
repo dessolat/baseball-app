@@ -6,7 +6,7 @@ import RightArrow from 'components/UI/buttons/RightArrow';
 import cl from './Filters.module.scss';
 
 const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-  const [remWidth, setRemWidth] = useState(null);
+  const [scrollDelta, setScrollDelta] = useState(0);
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -38,9 +38,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
 
   useEffect(() => {
     if (scrollRef.current) {
-      const fontSize = window.getComputedStyle(document.documentElement).fontSize;
-      const remWidth = scrollRef.current.clientWidth / parseInt(fontSize);
-      setRemWidth(remWidth);
+			setScrollDelta(scrollRef.current.scrollWidth - scrollRef.current.clientWidth)
     }
   }, [situations]);
 
@@ -80,14 +78,14 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
   return (
     <div className={cl.filters}>
       <div className={cl.situationsWrapper}>
-        {remWidth >= 63.5 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
+        {scrollDelta > 0 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
         <FiltersSituationsList
           ref={scrollRef}
           situationFilter={situationFilter}
           situations={situations}
           handleClick={handleSituationClick}
         />
-        {remWidth >= 63.5 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
+        {scrollDelta > 0 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
       </div>
       <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
     </div>
