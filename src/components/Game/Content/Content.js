@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cl from './Content.module.scss';
 import $ from 'jquery';
 import { useParams } from 'react-router';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import PlaysImg from 'images/plays.jpg';
+import Pause from 'components/UI/buttons/Pause/Pause';
+import Play from 'components/UI/buttons/Play';
+import Repeat from 'components/UI/buttons/Repeat/Repeat';
 
 const Content = ({ viewMode, contentSituationsList }) => {
+  const [playbackMode, setPlaybackMode] = useState('play');
   const { tab } = useParams();
 
   const renderTab = tab => {
@@ -28,11 +32,36 @@ const Content = ({ viewMode, contentSituationsList }) => {
     }
   };
 
+  const playbackModeClick = e => {
+    setPlaybackMode(e.currentTarget.name);
+  };
+
   return (
     <section className='container'>
       <div className={cl.content}>
         <ContentSituationsList situations={contentSituationsList} />
-        <div className={cl.situationsControls}></div>
+        <div className={cl.controlsWrapper}>
+          <p className={cl.playerName}>
+            Pitcher: <span>LEONOV</span>
+          </p>
+          <div className={cl.controls}>
+            <Play
+              name='play'
+              onClick={playbackModeClick}
+              className={playbackMode === 'play' ? cl.active : ''}
+            />
+            <Pause
+              name='pause'
+              onClick={playbackModeClick}
+              className={playbackMode === 'pause' ? cl.active : ''}
+            />
+            <Repeat
+              name='repeat'
+              onClick={playbackModeClick}
+              className={playbackMode === 'repeat' ? cl.active : ''}
+            />
+          </div>
+        </div>
         <div className={cl.graphics}>{renderTab(tab)}</div>
       </div>
     </section>

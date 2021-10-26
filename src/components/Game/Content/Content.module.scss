@@ -1,3 +1,5 @@
+@import 'scss/vars.scss';
+
 .content {
   display: grid;
   grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 58.6875rem);
@@ -6,13 +8,47 @@
     'controls graphics';
 }
 
-.situationsControls {
-  // background-color: gray;
+.controlsWrapper {
   grid-area: controls;
   padding-top: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+	padding: 0 6px;
+}
+
+.playerName {
+  font: 700 0.875rem var(--font-athiti);
+
+  > span {
+		font-weight: 400;
+  }
+}
+
+.controls {
+  display: flex;
+
+  > button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-speed);
+
+		&:first-child > * {
+			margin-left: 3px;
+		}
+
+    &.active {
+      background-color: white;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
 }
 
 .graphics {
   grid-area: graphics;
-  // background-color: blue;
+	position: relative;
 }

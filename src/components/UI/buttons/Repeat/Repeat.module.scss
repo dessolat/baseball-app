@@ -1,0 +1,15 @@
+.btn {
+  position: relative;
+
+  > * {
+    position: absolute;
+  }
+
+  > *:first-child {
+    top: 35%;
+  }
+
+  > *:last-child {
+    bottom: 35%;
+  }
+}
