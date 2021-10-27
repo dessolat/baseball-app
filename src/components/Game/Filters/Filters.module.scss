@@ -1,7 +1,11 @@
 .filters {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 1.25rem 0;
+
+  @media screen and (max-height: 725px) {
+    padding: .43rem 0;
+  }
 }
 
 .situationsWrapper {

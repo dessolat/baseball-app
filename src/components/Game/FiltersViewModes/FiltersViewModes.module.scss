@@ -13,10 +13,15 @@
     align-items: stretch;
     transition: all var(--transition-speed);
 
-		@media screen and (max-width: 1102px) {
-			width: 2.4rem;
-    height: 2.4rem;
-		}
+    @media screen and (max-width: 1102px) {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    @media screen and (max-height: 725px) {
+      width: 2.3rem;
+      height: 2.3rem;
+    }
 
     > div {
       background: var(--side-color);
@@ -25,17 +30,17 @@
 
     &:first-child > div {
       width: 1.6875rem;
-      height: .9375rem;
+      height: 0.9375rem;
     }
 
     &:nth-child(2) {
-      grid-template: .5rem / .75rem .75rem;
+      grid-template: 0.5rem / 0.75rem 0.75rem;
       column-gap: 1px;
     }
 
     &:nth-child(3) {
-      grid-template-columns: 1.1875rem .5rem;
-      grid-auto-rows: minmax(.3125rem, auto);
+      grid-template-columns: 1.1875rem 0.5rem;
+      grid-auto-rows: minmax(0.3125rem, auto);
       gap: 1px;
       grid-template-areas: 'md sm2' 'md sm3' 'md sm4';
 
@@ -54,7 +59,7 @@
     }
 
     &:last-child {
-      grid-template: .5rem .5rem / .8125rem .8125rem;
+      grid-template: 0.5rem 0.5rem / 0.8125rem 0.8125rem;
       gap: 1px;
     }
 
