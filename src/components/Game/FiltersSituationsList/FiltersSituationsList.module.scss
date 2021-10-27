@@ -1,14 +1,14 @@
 @import 'scss/vars.scss';
 
 .situationsList {
-  margin: 0 10px;
+  margin: 0 0.625rem;
   max-width: 63.5rem;
   overflow-x: scroll;
   padding: 0px 2px 6px;
   display: flex;
   align-items: center;
   font: bold 0.875rem 'Comfortaa', cursive;
-	transition: all 1s;
+  transition: all 1s;
 
   > li {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -18,23 +18,31 @@
   }
 
   > li + li {
-    margin-left: 8px;
+    margin-left: 0.5rem;
   }
 
   > li > button {
-    padding: 12.5px 30px 7.5px;
+    padding: 0.78125rem 1.875rem 0.46875rem;
     font: inherit;
+
+    @media screen and (max-width: 1102px) {
+			padding: 0.75rem 1.25rem 0.39rem;
+    }
   }
 
   > li > button > span {
     display: inline-block;
-    padding-bottom: 3px;
+    padding-bottom: 0.1875rem;
     border-bottom: 2px solid transparent;
-		transition: border-bottom var(--transition-speed);
+    transition: border-bottom var(--transition-speed);
 
-		&.active {
-			border-bottom: 2px solid var(--side-color);
-		}
+		@media screen and (max-width: 1102px) {
+			padding-bottom: 0.12rem;
+    }
+
+    &.active {
+      border-bottom: 2px solid var(--side-color);
+    }
   }
 }
 

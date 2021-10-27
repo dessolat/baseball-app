@@ -8,6 +8,17 @@
   box-sizing: border-box;
 }
 
+html {
+	font-size: 16px;
+
+	@media screen and (max-width: 1230px){
+		font-size: 15px;
+	}
+	@media screen and (max-width: 1151px){
+		font-size: 14px;
+	}
+}
+
 body {
   background-color: #e5e5e5;
 	-webkit-tap-highlight-color: transparent;
