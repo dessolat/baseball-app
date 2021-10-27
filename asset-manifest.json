@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/baseball-app/static/css/main.068a7cd5.chunk.css",
+    "main.css": "/baseball-app/static/css/main.bff44a51.chunk.css",
     "main.js": "/baseball-app/static/js/main.6ced3271.chunk.js",
     "main.js.map": "/baseball-app/static/js/main.6ced3271.chunk.js.map",
     "runtime-main.js": "/baseball-app/static/js/runtime-main.f07ee06d.js",
@@ -8,7 +8,7 @@
     "static/js/2.a5190fc3.chunk.js": "/baseball-app/static/js/2.a5190fc3.chunk.js",
     "static/js/2.a5190fc3.chunk.js.map": "/baseball-app/static/js/2.a5190fc3.chunk.js.map",
     "index.html": "/baseball-app/index.html",
-    "static/css/main.068a7cd5.chunk.css.map": "/baseball-app/static/css/main.068a7cd5.chunk.css.map",
+    "static/css/main.bff44a51.chunk.css.map": "/baseball-app/static/css/main.bff44a51.chunk.css.map",
     "static/js/2.a5190fc3.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.a5190fc3.chunk.js.LICENSE.txt",
     "static/media/left-logo.f3645bbc.png": "/baseball-app/static/media/left-logo.f3645bbc.png",
     "static/media/plays.24360431.jpg": "/baseball-app/static/media/plays.24360431.jpg",
@@ -17,7 +17,7 @@
   "entrypoints": [
     "static/js/runtime-main.f07ee06d.js",
     "static/js/2.a5190fc3.chunk.js",
-    "static/css/main.068a7cd5.chunk.css",
+    "static/css/main.bff44a51.chunk.css",
     "static/js/main.6ced3271.chunk.js"
   ]
 }
