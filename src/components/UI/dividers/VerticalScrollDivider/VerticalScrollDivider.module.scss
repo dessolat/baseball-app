@@ -1,0 +1,12 @@
+.divider {
+  width: 0.5px;
+  background: rgba(#dfdfdf, 0.6);
+  align-self: stretch;
+
+  &.left {
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+  &.right {
+    box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+}
