@@ -4,9 +4,11 @@ import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
+import useQuery from 'hooks/useQuery';
 
 const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-  const [
+  const query = useQuery()
+	const [
     scrollRef,
     leftScrollDelta,
     setLeftScrollDelta,
@@ -22,12 +24,14 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
     return () => {
 			removeListeners(scroll)
     };
+		// eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollFixation()
     }
+		// eslint-disable-next-line
   }, [situations]);
 
   const handleSituationClick = e => {
@@ -86,7 +90,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
             <Arrow style={{ visibility: 'hidden' }} />
           )}
         </div>
-        <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
+        {query.get('tab') === 'videos' && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
       </div>
     </section>
   );

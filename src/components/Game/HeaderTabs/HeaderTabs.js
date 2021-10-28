@@ -1,29 +1,35 @@
+import useQuery from 'hooks/useQuery';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import cl from './HeaderTabs.module.scss'
 
 const HeaderTabs = () => {
+	const tab = useQuery().get('tab')
+	// const loc = useLocation()
+	const {url} = useRouteMatch()
+	// console.log(loc)
+	// console.log(mat)
   return (
     <ul className={cl.headerTabs}>
       <li>
-        <NavLink to={`/game/lineup`} activeClassName={cl.active}>
+        <Link to={`${url}?tab=lineup`} className={tab === 'lineup' ? cl.active : ''}>
           Lineup
-        </NavLink>
+        </Link>
       </li>
       <li>
-        <NavLink to={`/game/box`} activeClassName={cl.active}>
+        <Link to={`${url}?tab=box`} className={tab === 'box' ? cl.active : ''}>
           Box
-        </NavLink>
+        </Link>
       </li>
       <li>
-        <NavLink to={`/game/plays`} activeClassName={cl.active}>
+        <Link to={`${url}?tab=plays`} className={tab === 'plays' ? cl.active : ''}>
           Plays
-        </NavLink>
+        </Link>
       </li>
       <li>
-        <NavLink to={`/game/videos`} activeClassName={cl.active}>
+        <Link to={`${url}?tab=videos`} className={tab === 'videos' ? cl.active : ''}>
           Videos
-        </NavLink>
+        </Link>
       </li>
     </ul>
   );

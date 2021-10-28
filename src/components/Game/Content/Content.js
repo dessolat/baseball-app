@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import cl from './Content.module.scss';
-import $ from 'jquery';
-import { useParams } from 'react-router';
+// import $ from 'jquery';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import PlaysImg from 'images/plays.jpg';
 import Pause from 'components/UI/buttons/Pause/Pause';
 import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
+import useQuery from 'hooks/useQuery';
 
 const Content = ({ viewMode, contentSituationsList }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
-  const { tab } = useParams();
+	const query = useQuery()
 
   const renderTab = tab => {
     switch (tab) {
@@ -62,7 +62,7 @@ const Content = ({ viewMode, contentSituationsList }) => {
             />
           </div>
         </div>
-        <div className={cl.graphics}>{renderTab(tab)}</div>
+        <div className={cl.graphics}>{renderTab(query.get('tab'))}</div>
       </div>
     </section>
   );

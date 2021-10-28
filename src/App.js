@@ -8,11 +8,14 @@ const App = () => {
     <Router>
       <NavBar />
       <Switch>
-        <Route path='/game/:tab'>
+				{/* <Route exact path='/'>
+
+				</Route> */}
+        <Route path='/game'>
           <Game />
         </Route>
-        <Route path='/game'>
-          <Redirect to='/game/videos' />
+        <Route path='*'>
+          <Redirect to='/game?tab=videos' />
         </Route>
       </Switch>
     </Router>

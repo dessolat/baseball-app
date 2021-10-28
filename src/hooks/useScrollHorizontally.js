@@ -21,7 +21,6 @@ const useScrollHorizontally = () => {
 
   const addListeners = scroll => {
     if (scroll.addEventListener) {
-      console.log(scroll);
       scroll.addEventListener('mousewheel', scrollHorizontally, false);
       scroll.addEventListener('scroll', scrollFixation, false);
       scroll.addEventListener('DOMMouseScroll', scrollHorizontally, false);
