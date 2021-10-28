@@ -11,15 +11,9 @@
 .situationsWrapper {
   display: flex;
   align-items: center;
+
+	> button {
+		margin-bottom: 6px;
+	}
 }
 
-.arrowBtn {
-  width: 11px;
-  height: 19px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-
-.arrowImg {
-  width: 100%;
-}

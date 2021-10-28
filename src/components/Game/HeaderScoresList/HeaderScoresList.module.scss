@@ -1,7 +1,7 @@
 .scoresTable {
   height: 6.4375rem;
   width: 16.875rem;
-  margin-left: .25rem;
+  margin: 0 .25rem;
   display: flex;
   text-align: center;
   overflow-x: scroll;
@@ -19,7 +19,8 @@
       font-weight: bold;
     }
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
       background-color: white;
       cursor: pointer;
       border-bottom: 2px solid #1a4c96;

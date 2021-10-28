@@ -16,10 +16,18 @@
 
 .date {
   margin-top: 0.4375rem;
+	
+	@media screen and (max-width: 1070px) {
+		margin-top: 0.3rem;
+	}
 }
 
 .location {
   margin-top: 0.75rem;
+	
+	@media screen and (max-width: 1070px) {
+		margin-top: 0.55rem;
+	}
 }
 
 .leftLogo, .rightLogo {
@@ -44,7 +52,7 @@
   text-align: center;
 
 	@media screen and (max-width: 1070px) {
-		font-size: 4.2rem;
+		font-size: 3.4rem;
 	}
 }
 
@@ -58,17 +66,40 @@
   // margin-left: 5px;
 }
 
+.scoresListWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 3px;
+
+	> div:first-of-type {
+		margin-left: 2px;
+	}
+
+	> div:last-of-type {
+		margin-right: 2px;
+	}
+
+	> button {
+		margin-bottom: 3px;
+	}
+
+	// > button:first-of-type {
+	// 	margin-right: 2px;
+	// }
+}
+
 ::-webkit-scrollbar {
-  height: 3px;
+  height: 0;
 }
 
-::-webkit-scrollbar-track {
-  background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
-}
+// ::-webkit-scrollbar-track {
+//   background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
+// }
 
-::-webkit-scrollbar-thumb {
-  background: #d5d5d5;
-}
+// ::-webkit-scrollbar-thumb {
+//   background: #d5d5d5;
+// }
 
 @supports (scrollbar-width: thin) {
   * {

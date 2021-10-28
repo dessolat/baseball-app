@@ -1,44 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import FiltersSituationsList from '../FiltersSituationsList/FiltersSituationsList';
 import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
-import LeftArrow from 'components/UI/buttons/LeftArrow';
-import RightArrow from 'components/UI/buttons/RightArrow';
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import cl from './Filters.module.scss';
+import useScrollHorizontally from 'hooks/useScrollHorizontally';
 
 const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-  const [scrollDelta, setScrollDelta] = useState(0);
-  const scrollRef = useRef();
+  const [
+    scrollRef,
+    leftScrollDelta,
+    setLeftScrollDelta,
+    fullScrollWidth,
+    addListeners,
+    removeListeners,
+    scrollFixation
+  ] = useScrollHorizontally();
 
   useEffect(() => {
-    function scrollHorizontally(e) {
-      e = window.event || e;
-      var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
-      scrollRef.current.scrollLeft += delta * 32;
-      e.preventDefault();
-    }
-
     const scroll = scrollRef.current;
-
-    if (scroll.addEventListener) {
-      scroll.addEventListener('mousewheel', scrollHorizontally, false);
-      scroll.addEventListener('DOMMouseScroll', scrollHorizontally, false);
-    } else {
-      scroll.attachEvent('onmousewheel', scrollHorizontally);
-    }
-
+		addListeners(scroll);
     return () => {
-      if (scroll.removeEventListener) {
-        scroll.removeEventListener('mousewheel', scrollHorizontally, false);
-        scroll.removeEventListener('DOMMouseScroll', scrollHorizontally, false);
-      } else {
-        scroll.detachEvent('onmousewheel', scrollHorizontally);
-      }
+			removeListeners(scroll)
     };
   }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
-      setScrollDelta(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
+      scrollFixation()
     }
   }, [situations]);
 
@@ -69,6 +57,8 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
       scrollRef.current.scrollLeft = val;
       if (currentTime < 300) {
         setTimeout(() => animateScroll(name), increment);
+      } else {
+        setLeftScrollDelta(scrollRef.current.scrollLeft);
       }
     };
 
@@ -79,14 +69,22 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
     <section className='container'>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {scrollDelta > 0 && <LeftArrow cl={cl} scroll={scrollHorizontally} />}
+          {leftScrollDelta > 0 ? (
+            <Arrow onClick={scrollHorizontally} />
+          ) : (
+            <Arrow style={{ visibility: 'hidden' }} />
+          )}
           <FiltersSituationsList
             ref={scrollRef}
             situationFilter={situationFilter}
             situations={situations}
             handleClick={handleSituationClick}
           />
-          {scrollDelta > 0 && <RightArrow cl={cl} scroll={scrollHorizontally} />}
+          {leftScrollDelta + scrollRef.current?.clientWidth < fullScrollWidth ? (
+            <Arrow direction='right' onClick={scrollHorizontally} />
+          ) : (
+            <Arrow style={{ visibility: 'hidden' }} />
+          )}
         </div>
         <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />
       </div>
