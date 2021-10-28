@@ -6,6 +6,7 @@ import Content from 'components/Game/Content/Content';
 
 const Game = () => {
   const [situationFilter, setSituationFilter] = useState('All');
+  const [inningNumber, setInningNumber] = useState(null);
   const [viewMode, setViewMode] = useState('mode-1');
   // const [activeSituation, setActiveSituation] = useState(null)
 
@@ -25,7 +26,13 @@ const Game = () => {
 
   return (
     <>
-      <Header inningsData={inningsData} gameInfoData={gameInfoData} teamNames={teamNames} />
+      <Header
+        inningsData={inningsData}
+        gameInfoData={gameInfoData}
+        teamNames={teamNames}
+        inningNumber={inningNumber}
+				setInningNumber={setInningNumber}
+      />
       <Filters
         situationFilter={situationFilter}
         setSituationFilter={setSituationFilter}

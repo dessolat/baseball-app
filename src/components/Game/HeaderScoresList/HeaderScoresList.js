@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
 
-const HeaderScoresList = ({ data }) => {
+const HeaderScoresList = ({ data, inningNumber, setInningNumber }) => {
   useEffect(() => {
     function scrollHorizontally(e) {
       e = window.event || e;
@@ -35,10 +35,20 @@ const HeaderScoresList = ({ data }) => {
     };
   }, []);
 
+  const handleScoresItemClick = inningNumber => {
+    setInningNumber(inningNumber);
+  };
+
   return (
     <div className={cl.scoresTable} id='scores-table-scroll'>
       {data.map(inning => (
-        <HeaderScoresListItem key={inning.inning_number} inning={inning} />
+        <HeaderScoresListItem
+          key={inning.inning_number}
+          inning={inning}
+          inningNumber={inningNumber}
+          cl={cl}
+          handleClick={handleScoresItemClick}
+        />
       ))}
     </div>
   );

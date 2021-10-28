@@ -7,7 +7,7 @@ import HeaderScoresList from '../HeaderScoresList/HeaderScoresList';
 import HeaderInfo from '../HeaderInfo/HeaderInfo';
 import HeaderTeams from '../HeaderTeams/HeaderTeams';
 
-const Header = ({inningsData, gameInfoData, teamNames}) => {
+const Header = ({inningsData, gameInfoData, teamNames, inningNumber, setInningNumber}) => {
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -21,7 +21,7 @@ const Header = ({inningsData, gameInfoData, teamNames}) => {
           <h2 className={cl.teamScore}>4</h2>
           <div className={cl.scoresWrapper}>
             <HeaderTeams names={teamNames}/>
-            <HeaderScoresList data={inningsData} />
+            <HeaderScoresList data={inningsData} inningNumber={inningNumber} setInningNumber={setInningNumber}/>
             <HeaderInfo data={gameInfoData} />
           </div>
           <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>6</h2>
