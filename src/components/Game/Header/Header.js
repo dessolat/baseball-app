@@ -13,19 +13,18 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningNumber }) => {
   const [
     scrollRef,
-    leftScrollDelta,
-    setLeftScrollDelta,
-    fullScrollWidth,
+    isLeftScroll,
+    isRightScroll,
     addListeners,
     removeListeners,
     scrollFixation
   ] = useScrollHorizontally();
 
   useEffect(() => {
-    const scroll = scrollRef.current;
-    addListeners(scroll);
+		scrollFixation()
+    addListeners();
     return () => {
-      removeListeners(scroll);
+      removeListeners();
     };
   }, []);
 
@@ -58,8 +57,6 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
       scrollRef.current.scrollLeft = val;
       if (currentTime < 300) {
         setTimeout(() => animateScroll(name), increment);
-      } else {
-        setLeftScrollDelta(scrollRef.current.scrollLeft);
       }
     };
 
@@ -80,7 +77,7 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
           <div className={cl.scoresWrapper}>
             <HeaderTeams names={teamNames} />
             <div className={cl.scoresListWrapper}>
-              {leftScrollDelta > 0 ? (
+              {isLeftScroll ? (
                 <>
                   <Arrow onClick={scrollHorizontally} />
                   <VerticalScrollDivider />
@@ -97,7 +94,7 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
                 inningNumber={inningNumber}
                 handleClick={handleScoresItemClick}
               />
-              {leftScrollDelta + scrollRef.current?.clientWidth < fullScrollWidth ? (
+              {isRightScroll ? (
                 <>
                   <VerticalScrollDivider direction='right' />
                   <Arrow direction='right' onClick={scrollHorizontally} />

@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import FiltersSituationsListItem from './FiltersSituationsListItem';
 import cl from './FiltersSituationsList.module.scss';
 
-const FiltersSituationsList = forwardRef((props, ref) => {
+const FiltersSituationsList = (props, ref) => {
 	const {situationFilter, situations, handleClick} = props
 
   return (
@@ -18,6 +18,6 @@ const FiltersSituationsList = forwardRef((props, ref) => {
       ))}
     </ul>
   );
-});
+};
 
-export default FiltersSituationsList;
+export default forwardRef(FiltersSituationsList);

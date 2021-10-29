@@ -1,45 +1,49 @@
 import { useState, useRef } from 'react';
 
 const useScrollHorizontally = () => {
-  const scrollRef = useRef();
-  const [leftScrollDelta, setLeftScrollDelta] = useState(0);
-  const [fullScrollWidth, setFullScrollWidth] = useState(0);
+  const scrollRef = useRef(0);
+  const [isLeftScroll, setIsLeftScroll] = useState(false);
+  const [isRightScroll, setIsRightScroll] = useState(false);
 
   const scrollHorizontally = e => {
     e = window.event || e;
     var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
     scrollRef.current.scrollLeft += delta * 32;
-    setLeftScrollDelta(scrollRef.current.scrollLeft);
-    setFullScrollWidth(scrollRef.current.scrollWidth);
+    setIsLeftScroll(scrollRef.current.scrollLeft !== 0);
+    setIsRightScroll(
+      scrollRef.current.scrollLeft + scrollRef.current.clientWidth < scrollRef.current.scrollWidth
+    );
     e.preventDefault();
   };
 
   const scrollFixation = () => {
-    setLeftScrollDelta(scrollRef.current.scrollLeft);
-    setFullScrollWidth(scrollRef.current.scrollWidth);
+    setIsLeftScroll(scrollRef.current.scrollLeft !== 0);
+    setIsRightScroll(
+      scrollRef.current.scrollLeft + scrollRef.current.clientWidth < scrollRef.current.scrollWidth
+    );
   };
 
-  const addListeners = scroll => {
-    if (scroll.addEventListener) {
-      scroll.addEventListener('mousewheel', scrollHorizontally, false);
-      scroll.addEventListener('scroll', scrollFixation, false);
-      scroll.addEventListener('DOMMouseScroll', scrollHorizontally, false);
+  const addListeners = () => {
+    if (scrollRef.current.addEventListener) {
+      scrollRef.current.addEventListener('mousewheel', scrollHorizontally, false);
+      scrollRef.current.addEventListener('scroll', scrollFixation, false);
+      scrollRef.current.addEventListener('DOMMouseScroll', scrollHorizontally, false);
     } else {
-      scroll.attachEvent('onmousewheel', scrollHorizontally);
+      scrollRef.current.attachEvent('onmousewheel', scrollHorizontally);
     }
   };
 
-  const removeListeners = scroll => {
-    if (scroll.removeEventListener) {
-      scroll.removeEventListener('mousewheel', scrollHorizontally, false);
-      scroll.removeEventListener('scroll', scrollFixation, false);
-      scroll.removeEventListener('DOMMouseScroll', scrollHorizontally, false);
+  const removeListeners = () => {
+    if (scrollRef.current.removeEventListener) {
+      scrollRef.current.removeEventListener('mousewheel', scrollHorizontally, false);
+      scrollRef.current.removeEventListener('scroll', scrollFixation, false);
+      scrollRef.current.removeEventListener('DOMMouseScroll', scrollHorizontally, false);
     } else {
-      scroll.detachEvent('onmousewheel', scrollHorizontally);
+      scrollRef.current.detachEvent('onmousewheel', scrollHorizontally);
     }
   };
 
-  return [scrollRef, leftScrollDelta, setLeftScrollDelta,fullScrollWidth, addListeners, removeListeners, scrollFixation];
+  return [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation];
 };
 
 export default useScrollHorizontally;

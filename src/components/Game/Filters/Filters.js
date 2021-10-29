@@ -10,19 +10,18 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
   const query = useQuery()
 	const [
     scrollRef,
-    leftScrollDelta,
-    setLeftScrollDelta,
-    fullScrollWidth,
+    isLeftScroll,
+    isRightScroll,
     addListeners,
     removeListeners,
     scrollFixation
   ] = useScrollHorizontally();
 
   useEffect(() => {
-    const scroll = scrollRef.current;
-		addListeners(scroll);
+		setTimeout(scrollFixation, 100)
+		addListeners();
     return () => {
-			removeListeners(scroll)
+			removeListeners()
     };
 		// eslint-disable-next-line
   }, []);
@@ -61,8 +60,6 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
       scrollRef.current.scrollLeft = val;
       if (currentTime < 300) {
         setTimeout(() => animateScroll(name), increment);
-      } else {
-        setLeftScrollDelta(scrollRef.current.scrollLeft);
       }
     };
 
@@ -73,7 +70,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
     <section className='container'>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {leftScrollDelta > 0 ? (
+          {isLeftScroll ? (
             <Arrow onClick={scrollHorizontally} />
           ) : (
             <Arrow style={{ visibility: 'hidden' }} />
@@ -84,7 +81,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
             situations={situations}
             handleClick={handleSituationClick}
           />
-          {leftScrollDelta + scrollRef.current?.clientWidth < fullScrollWidth ? (
+          {isRightScroll ? (
             <Arrow direction='right' onClick={scrollHorizontally} />
           ) : (
             <Arrow style={{ visibility: 'hidden' }} />
