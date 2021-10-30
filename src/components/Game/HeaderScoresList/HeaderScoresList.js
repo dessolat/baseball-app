@@ -3,14 +3,24 @@ import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
 
 const HeaderScoresList = forwardRef((props, ref) => {
-	const { data, inningNumber, handleClick } = props
+  const { innings, inningNumber, handleClick } = props;
+  const maxInnings = innings.length;
+	const newInnings = innings.slice()
+
+  if (maxInnings < 9) {
+    for (let i = maxInnings + 1; i <= 9; i++) {
+			newInnings.push({number: i });
+    }
+  }
+
   return (
     <ul ref={ref} className={cl.scoresTable}>
-      {data.map(inning => (
+      {newInnings.map(inning => (
         <HeaderScoresListItem
           key={inning.inning_number}
           inning={inning}
           inningNumber={inningNumber}
+          maxInnings={maxInnings}
           cl={cl}
           handleClick={handleClick}
         />

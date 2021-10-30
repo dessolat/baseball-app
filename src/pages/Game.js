@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { inningsData, gameInfoData, teamNames, filterSituationsList, contentSituationsList } from '../data';
+import fullData from 'baseball.json'
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
@@ -23,15 +24,16 @@ const Game = () => {
   //     document.removeEventListener('keydown', handleKeyDown);
   //   };
   // }, []);
-
+	
   return (
     <>
       <Header
-        inningsData={inningsData}
-        gameInfoData={gameInfoData}
-        teamNames={teamNames}
+				{...fullData}
+        // inningsData={inningsData}
+        // gameInfoData={gameInfoData}
+        // teamNames={teamNames}
         inningNumber={inningNumber}
-				setInningNumber={setInningNumber}
+        setInningNumber={setInningNumber}
       />
       <Filters
         situationFilter={situationFilter}

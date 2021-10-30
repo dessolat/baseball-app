@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import cl from './Header.module.scss';
 import LeftLogo from 'images/left-logo.png';
 import RightLogo from 'images/right-logo.png';
@@ -9,33 +9,28 @@ import HeaderTeams from '../HeaderTeams/HeaderTeams';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import VerticalScrollDivider from 'components/UI/dividers/VerticalScrollDivider/VerticalScrollDivider';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
+import useFullDate from 'hooks/useFullDate';
 
-const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningNumber }) => {
-  const [
-    scrollRef,
-    isLeftScroll,
-    isRightScroll,
-    addListeners,
-    removeListeners,
-    scrollFixation
-  ] = useScrollHorizontally();
+const Header = ({ preview, innings, inningNumber, setInningNumber }) => {
+  const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
+    useScrollHorizontally();
 
-  useEffect(() => {
-		scrollFixation()
-    addListeners();
-    return () => {
-      removeListeners();
-    };
-  }, []);
+  // useEffect(() => {
+  // 	scrollFixation()
+  //   addListeners();
+  //   return () => {
+  //     removeListeners();
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollFixation();
     }
-  }, [inningsData]);
+  }, [preview.innings]);
 
   const handleScoresItemClick = inningNumber => {
-    setInningNumber(inningNumber);
+    setInningNumber(prev => prev === inningNumber ? null : inningNumber);
   };
 
   const scrollHorizontally = e => {
@@ -63,19 +58,20 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
     animateScroll(e.currentTarget.name);
   };
 
+
   return (
     <header className={cl.header}>
       <div className='container'>
         <div className={cl.headerContent}>
           <div>
-            <p className={cl.date}>Aug 23, 2021</p>
-            <p className={cl.location}>at Moscow (Russtar Arena)</p>
+            <p className={cl.date}>{useFullDate(preview.game_date)}</p>
+            <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
             <HeaderTabs />
           </div>
           <img src={LeftLogo} className={cl.leftLogo} alt='attack-team' />
-          <h2 className={cl.teamScore}>44</h2>
+          <h2 className={cl.teamScore}>{preview.guests_score}</h2>
           <div className={cl.scoresWrapper}>
-            <HeaderTeams names={teamNames} />
+            <HeaderTeams names={[preview.guests, preview.owners]} />
             <div className={cl.scoresListWrapper}>
               {isLeftScroll ? (
                 <>
@@ -90,7 +86,7 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
               )}
               <HeaderScoresList
                 ref={scrollRef}
-                data={inningsData}
+                innings={innings}
                 inningNumber={inningNumber}
                 handleClick={handleScoresItemClick}
               />
@@ -106,9 +102,9 @@ const Header = ({ inningsData, gameInfoData, teamNames, inningNumber, setInningN
                 </>
               )}
             </div>
-            <HeaderInfo data={gameInfoData} />
+            <HeaderInfo innings={innings} inningNumber={inningNumber}/>
           </div>
-          <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>44</h2>
+          <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners_score}</h2>
           <img src={RightLogo} className={cl.rightLogo} alt='defence-team' />
         </div>
       </div>

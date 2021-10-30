@@ -2,8 +2,8 @@ import React from 'react';
 import cl from './HeaderInfo.module.scss';
 import useSummaryRHE from 'hooks/useSummaryRHE';
 
-const HeaderInfo = ({ innings }) => {
-	const summaryRHE = useSummaryRHE(innings)
+const HeaderInfo = ({ innings, inningNumber }) => {
+  const summaryRHE = useSummaryRHE(innings, inningNumber);
 
   return (
     <div className={cl.info}>
