@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { inningsData, gameInfoData, teamNames, filterSituationsList, contentSituationsList } from '../data';
+import { filterSituationsList } from '../data';
 import fullData from 'baseball.json'
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
@@ -24,14 +24,11 @@ const Game = () => {
   //     document.removeEventListener('keydown', handleKeyDown);
   //   };
   // }, []);
-	
+
   return (
     <>
       <Header
 				{...fullData}
-        // inningsData={inningsData}
-        // gameInfoData={gameInfoData}
-        // teamNames={teamNames}
         inningNumber={inningNumber}
         setInningNumber={setInningNumber}
       />
@@ -42,7 +39,7 @@ const Game = () => {
         setViewMode={setViewMode}
         situations={filterSituationsList}
       />
-      <Content viewMode={viewMode} contentSituationsList={contentSituationsList} />
+      <Content viewMode={viewMode} innings={fullData.innings} inningNumber={inningNumber} />
     </>
   );
 };

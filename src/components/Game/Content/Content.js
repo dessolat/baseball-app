@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import cl from './Content.module.scss';
-// import $ from 'jquery';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import PlaysImg from 'images/plays.jpg';
 import Pause from 'components/UI/buttons/Pause/Pause';
@@ -8,7 +7,7 @@ import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import useQuery from 'hooks/useQuery';
 
-const Content = ({ viewMode, contentSituationsList }) => {
+const Content = ({ viewMode, innings, inningNumber }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
 	const query = useQuery()
 
@@ -39,7 +38,7 @@ const Content = ({ viewMode, contentSituationsList }) => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList situations={contentSituationsList} />
+        <ContentSituationsList innings={innings} inningNumber={inningNumber}/>
         <div className={cl.controlsWrapper}>
           <p className={cl.playerName}>
             Pitcher: <span>LEONOV</span>
