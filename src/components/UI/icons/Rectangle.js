@@ -9,7 +9,7 @@ const Rectangle = ({ fill, ...props }) => {
         width='10.5'
         height='10.5'
         transform='rotate(-45 0.646447 8.07104)'
-        fill={fill}
+        fill={fill === false ? 'none' : fill}
         stroke='black'
         strokeWidth='0.5'
       />
