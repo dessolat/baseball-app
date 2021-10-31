@@ -17,7 +17,7 @@ const HeaderScoresList = forwardRef((props, ref) => {
     <ul ref={ref} className={cl.scoresTable}>
       {newInnings.map(inning => (
         <HeaderScoresListItem
-          key={inning.inning_number}
+          key={inning.number}
           inning={inning}
           inningNumber={inningNumber}
           maxInnings={maxInnings}
