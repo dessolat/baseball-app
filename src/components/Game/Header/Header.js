@@ -58,9 +58,11 @@ const Header = ({ preview, innings, inningNumber, setInningNumber }) => {
     animateScroll(e.currentTarget.name);
   };
 
+	
 
   return (
     <header className={cl.header}>
+			
       <div className='container'>
         <div className={cl.headerContent}>
           <div>
