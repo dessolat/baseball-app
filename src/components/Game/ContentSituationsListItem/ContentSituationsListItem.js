@@ -16,9 +16,9 @@ const ContentSituationsListItem = ({ player }) => {
         <div className={cl.portraitRectanglesWrapper}>
           <img className={cl.portrait} src={PortraitImg} alt='Portrait' />
           <div className={cl.rectangles}>
-            <Rectangle className={cl.topRectangle + ' ' + cl.absolute} fill={r1 && '#FFAB00'} />
-            <Rectangle className={cl.leftRectangle + ' ' + cl.absolute} fill={r2 && '#FFAB00'} />
-            <Rectangle className={cl.rightRectangle + ' ' + cl.absolute} fill={r3 && '#FFAB00'} />
+            <Rectangle className={cl.topRectangle + ' ' + cl.absolute} fill={r2 && '#FFAB00'} />
+            <Rectangle className={cl.leftRectangle + ' ' + cl.absolute} fill={r3 && '#FFAB00'} />
+            <Rectangle className={cl.rightRectangle + ' ' + cl.absolute} fill={r1 && '#FFAB00'} />
             <Ellipse className={cl.leftEllipse + ' ' + cl.absolute} fill={outs > 0 && '#1A4C96'} />
             <Ellipse className={cl.rightEllipse + ' ' + cl.absolute} fill={outs > 1 && '#1A4C96'} />
           </div>
