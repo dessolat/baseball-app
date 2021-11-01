@@ -15,19 +15,19 @@ const Header = ({ preview, innings, inningNumber, setInningNumber }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
 
-  // useEffect(() => {
-  // 	scrollFixation()
-  //   addListeners();
-  //   return () => {
-  //     removeListeners();
-  //   };
-  // }, []);
+  useEffect(() => {
+  	scrollFixation()
+    addListeners();
+    return () => {
+      removeListeners();
+    };
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollFixation();
     }
-  }, [preview.innings]);
+  }, [innings]);
 
   const handleScoresItemClick = inningNumber => {
     setInningNumber(prev => prev === inningNumber ? null : inningNumber);
