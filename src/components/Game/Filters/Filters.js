@@ -18,10 +18,11 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
   ] = useScrollHorizontally();
 
   useEffect(() => {
+		const ref = scrollRef.current
 		setTimeout(scrollFixation, 100)
 		addListeners();
     return () => {
-			removeListeners()
+			removeListeners(ref)
     };
 		// eslint-disable-next-line
   }, []);

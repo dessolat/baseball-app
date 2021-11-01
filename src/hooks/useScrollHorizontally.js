@@ -33,13 +33,13 @@ const useScrollHorizontally = () => {
     }
   };
 
-  const removeListeners = () => {
-    if (scrollRef.current.removeEventListener) {
-      scrollRef.current.removeEventListener('mousewheel', scrollHorizontally, false);
-      scrollRef.current.removeEventListener('scroll', scrollFixation, false);
-      scrollRef.current.removeEventListener('DOMMouseScroll', scrollHorizontally, false);
+  const removeListeners = ref => {
+    if (ref.removeEventListener) {
+      ref.removeEventListener('mousewheel', scrollHorizontally, false);
+      ref.removeEventListener('scroll', scrollFixation, false);
+      ref.removeEventListener('DOMMouseScroll', scrollHorizontally, false);
     } else {
-      scrollRef.current.detachEvent('onmousewheel', scrollHorizontally);
+      ref.detachEvent('onmousewheel', scrollHorizontally);
     }
   };
 

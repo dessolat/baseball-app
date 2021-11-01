@@ -16,10 +16,11 @@ const Header = ({ preview, innings, inningNumber, setInningNumber }) => {
     useScrollHorizontally();
 
   useEffect(() => {
+		const ref = scrollRef.current
   	scrollFixation()
     addListeners();
     return () => {
-      removeListeners();
+      removeListeners(ref);
     };
   }, []);
 
