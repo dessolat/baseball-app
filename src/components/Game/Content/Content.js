@@ -6,24 +6,16 @@ import Pause from 'components/UI/buttons/Pause/Pause';
 import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import useQuery from 'hooks/useQuery';
+import ContentVideos from '../ContentVideos/ContentVideos';
 
 const Content = ({ viewMode, innings, inningNumber }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
-	const query = useQuery()
+  const query = useQuery();
 
   const renderTab = tab => {
     switch (tab) {
       case 'videos':
-        return (
-          <iframe
-            width='100%'
-            height='100%'
-            src='https://www.youtube.com/embed/gN7RdRGmBF4?autoplay=1'
-            title='YouTube video player'
-            frameBorder='0'
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-            allowFullScreen></iframe>
-        );
+        return <ContentVideos viewMode={viewMode} />;
       case 'plays':
         return <img src={PlaysImg} alt='plays' width='100%' />;
       default:
@@ -38,7 +30,7 @@ const Content = ({ viewMode, innings, inningNumber }) => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList innings={innings} inningNumber={inningNumber}/>
+        <ContentSituationsList innings={innings} inningNumber={inningNumber} />
         <div className={cl.controlsWrapper}>
           <p className={cl.playerName}>
             Pitcher: <span>LEONOV</span>
