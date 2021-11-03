@@ -10,12 +10,14 @@ import ContentVideos from '../ContentVideos/ContentVideos';
 
 const Content = ({ viewMode, innings, inningNumber }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
+  const [events, setEvents] = useState([]);
+  const [currentCard, setCurrentCard] = useState({});
   const query = useQuery();
 
   const renderTab = tab => {
     switch (tab) {
       case 'videos':
-        return <ContentVideos viewMode={viewMode} />;
+        return <ContentVideos viewMode={viewMode} events={events} />;
       case 'plays':
         return <img src={PlaysImg} alt='plays' width='100%' />;
       default:
@@ -30,7 +32,13 @@ const Content = ({ viewMode, innings, inningNumber }) => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList innings={innings} inningNumber={inningNumber} />
+        <ContentSituationsList
+          innings={innings}
+          inningNumber={inningNumber}
+          setEvents={setEvents}
+          currentCard={currentCard}
+          setCurrentCard={setCurrentCard}
+        />
         <div className={cl.controlsWrapper}>
           <p className={cl.playerName}>
             Pitcher: <span>LEONOV</span>
