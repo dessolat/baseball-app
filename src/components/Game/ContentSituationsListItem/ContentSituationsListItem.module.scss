@@ -2,17 +2,20 @@
 
 .listItem {
   background-color: white;
+  cursor: pointer;
 
   & + & {
     margin-top: 2px;
   }
 
-  > button {
-    padding: 3px 5px 9px 8px;
-    display: flex;
-		align-items: stretch;
-		column-gap: 5px;
-		width: 100%;
+  padding: 3px 5px 9px 8px;
+  display: flex;
+  align-items: stretch;
+  column-gap: 5px;
+  width: 100%;
+	
+  &.active {
+    background: linear-gradient(90deg, #d1d1d1 4.46%, rgba(255, 255, 255, 0) 93.05%);
   }
 }
 
@@ -20,11 +23,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-	align-items: center;
+  align-items: center;
 }
 
 .portrait {
-	margin-top: 6px;
+  margin-top: 6px;
 }
 
 .rectangles {
@@ -39,22 +42,23 @@
 }
 
 .topRectangle {
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.leftRectangle, .rightRectangle {
-	top: 45%;
-	transform: translateY(-50%);
+.leftRectangle,
+.rightRectangle {
+  top: 45%;
+  transform: translateY(-50%);
 }
 
 .leftRectangle {
-	left: 0;
+  left: 0;
 }
 
 .rightRectangle {
-	right: 0;
+  right: 0;
 }
 
 .leftEllipse,
@@ -67,31 +71,31 @@
 }
 
 .rightEllipse {
-	left: 53%;
+  left: 53%;
 }
 
 .textEllipsesWrapper {
-	display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-	flex: 1 1 100%;
+  flex: 1 1 100%;
 }
 
 .text {
-	font: 400 .875rem var(--font-athiti);
-	line-height: 1.36rem;
-	text-align: justify;
+  font: 400 0.875rem var(--font-athiti);
+  line-height: 1.36rem;
+  text-align: justify;
 }
 
 .ellipsesWrapper {
-	width: 100%;
+  width: 100%;
 }
 
 .ellipses {
-	width: 34px;
-	height: 22;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 2px;
-	margin-left: auto;
+  width: 34px;
+  height: 22;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-left: auto;
 }
