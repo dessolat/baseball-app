@@ -1,6 +1,8 @@
+@import 'scss/vars.scss';
+
 .navbar {
 	height: 2.1875rem;
-	font: bold 1.125rem 'Comfortaa', cursive;
+	font: bold 1.125rem var(--font-comfortaa);
 	border-bottom: .5px solid #CDCCCC;
 	display: flex;
 	justify-content: center;

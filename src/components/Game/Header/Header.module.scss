@@ -7,11 +7,9 @@
 
 .headerContent {
 	display: flex;
-	// justify-content: flex-start;
 	justify-content: space-between;
 	align-items: center;
-	// padding: 0 1.125rem;
-	font: bold 1.125rem 'Comfortaa', cursive;
+	font: bold 1.125rem var(--font-comfortaa);
 }
 
 .date {
@@ -83,10 +81,6 @@
 	> button {
 		margin-bottom: 3px;
 	}
-
-	// > button:first-of-type {
-	// 	margin-right: 2px;
-	// }
 }
 
 ::-webkit-scrollbar {
