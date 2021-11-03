@@ -1,0 +1,25 @@
+@import 'scss/vars.scss';
+
+.events {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 8px;
+  background: linear-gradient(180deg, #c4c4c4 10.33%, rgba(196, 196, 196, 0.05) 100%);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  > * {
+    width: 30px;
+    height: 30px;
+    background: #e2001c;
+    border: 0.5px solid #000000;
+    border-radius: 15px;
+    font: bold 1.125rem var(--font-comfortaa);
+    color: #ffffff;
+		line-height: 30px;
+		text-align: center;
+  }
+}
