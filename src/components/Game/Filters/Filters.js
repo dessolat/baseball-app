@@ -19,7 +19,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
 
   useEffect(() => {
 		const ref = scrollRef.current
-		setTimeout(scrollFixation, 100)
+		setTimeout(scrollFixation, 300)
 		addListeners();
     return () => {
 			removeListeners(ref)
