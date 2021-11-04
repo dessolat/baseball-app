@@ -2,32 +2,26 @@ import React from 'react';
 import cl from './ContentSituationsList.module.scss';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 
-const ContentSituationsList = ({ innings, inningNumber, setEvents, currentCard, setCurrentCard }) => {
-  const cards = [];
-  const newInnings =
-    inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
-  newInnings.forEach(inning => {
-    inning['top/guests'].forEach(guest => cards.push({ inning_number: inning.number, ...guest }));
-    inning['bottom/owners']?.forEach(owner => cards.push({ inning_number: inning.number, ...owner }));
-  });
+const ContentSituationsList = ({ innings, inningNumber, cards, currentCard, setCurrentCard }) => {
+  
 
-  const situationClick = player => {
-		setCurrentCard({who_id: player['who id'], inning_number: player.inning_number})
-    const events = [];
-    player.moments.forEach(moment => {
-      if (moment.events) moment.events.forEach(event => events.push(event.description));
-    });
-    setEvents(events);
+  const situationClick = (player, number) => {
+    if (currentCard.row_number !== number) {
+      setCurrentCard({ ...player, row_number: number });
+      return;
+    }
+    setCurrentCard({});
   };
 
   return (
     <ul className={cl.list}>
-      {cards.map(card => (
+      {cards.map((card, i) => (
         <ContentSituationsListItem
           key={card.inning_number + ' ' + card.who}
           player={card}
+          number={i}
           situationClick={situationClick}
-					currentCard={currentCard}
+          currentCard={currentCard}
         />
       ))}
     </ul>

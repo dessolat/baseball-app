@@ -22,7 +22,6 @@ const ContentVideoEventsListItem = ({ event }) => {
 		: event.includes('swing') ? 'SW'
 		: event.includes('flied') ? 'FL'
     : 'w';
-  console.log(event);
   return <li>{eventValue}</li>;
 };
 
