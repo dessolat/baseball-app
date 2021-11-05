@@ -1,11 +1,13 @@
-const defaultState = [];
+import fullData from 'baseball.json';
+
+const defaultState = { innings: fullData.innings, preview: fullData.preview };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
 
 export const gameReducer = (state = defaultState, action) => {
-  switch (action) {
+  switch (action.type) {
     case SET_FULL_DATA:
-      return action.payload;
+      return { ...state, innings: action.payload.innings, preview: action.payload.preview };
     default:
       return state;
   }
