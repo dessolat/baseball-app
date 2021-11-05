@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { filterSituationsList } from '../data';
 import fullData from 'baseball.json';
 import Header from 'components/Game/Header/Header';
@@ -10,21 +10,7 @@ const Game = () => {
   const [inningNumber, setInningNumber] = useState(null);
   const [viewMode, setViewMode] = useState('mode-1');
   const [jsonData, setJsonData] = useState(fullData);
-  // const [activeSituation, setActiveSituation] = useState(null)
 
-  // useEffect(() => {
-  //   const handleKeyDown = e => {
-  //     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-
-  //     console.log(e.key);
-  //   };
-
-  //   document.addEventListener('keydown', handleKeyDown);
-
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, []);
   const selectJSON = e => {
     const files = e.target.files;
 

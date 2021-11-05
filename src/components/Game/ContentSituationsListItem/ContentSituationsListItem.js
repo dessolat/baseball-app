@@ -4,18 +4,18 @@ import PortraitImg from 'images/portrait.png';
 import Ellipse from 'components/UI/icons/Ellipse';
 import Rectangle from 'components/UI/icons/Rectangle';
 
-const ContentSituationsListItem = ({ player, situationClick, currentCard }) => {
+const ContentSituationsListItem = ({ player, number, situationClick, currentCard }) => {
   const eventsSummary = [];
   const lastMoment = player.moments.slice(-1)[0];
   lastMoment.events?.forEach(event => eventsSummary.push(event.description));
   const { r1, r2, r3, outs, balls, strikes } = lastMoment.table;
   const classNames = [cl.listItem];
-  player['who id'] === currentCard.who_id &&
+  player['who id'] === currentCard['who id'] &&
     player.inning_number === currentCard.inning_number &&
     classNames.push(cl.active);
 
   return (
-    <li className={classNames.join(' ')} onClick={() => situationClick(player)}>
+    <li className={classNames.join(' ')} onClick={() => situationClick(player, number)}>
       <div className={cl.portraitRectanglesWrapper}>
         <img className={cl.portrait} src={PortraitImg} alt='Portrait' />
         <div className={cl.rectangles}>

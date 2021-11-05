@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import PlaysImg from 'images/plays.jpg';
@@ -10,14 +10,28 @@ import ContentVideos from '../ContentVideos/ContentVideos';
 
 const Content = ({ viewMode, innings, inningNumber }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
-  const [events, setEvents] = useState([]);
+  const [cards, setCards] = useState([]);
   const [currentCard, setCurrentCard] = useState({});
   const query = useQuery();
+
+  // **** Handle inning change ****
+  useEffect(() => {
+    setCurrentCard({});
+
+    const newCards = [];
+    const newInnings =
+      inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
+    newInnings.forEach(inning => {
+      inning['top/guests'].forEach(guest => newCards.push({ inning_number: inning.number, ...guest }));
+      inning['bottom/owners']?.forEach(owner => newCards.push({ inning_number: inning.number, ...owner }));
+    });
+    setCards(newCards);
+  }, [inningNumber, innings]);
 
   const renderTab = tab => {
     switch (tab) {
       case 'videos':
-        return <ContentVideos viewMode={viewMode} events={events} />;
+        return <ContentVideos viewMode={viewMode} currentCard={currentCard} />;
       case 'plays':
         return <img src={PlaysImg} alt='plays' width='100%' />;
       default:
@@ -35,7 +49,7 @@ const Content = ({ viewMode, innings, inningNumber }) => {
         <ContentSituationsList
           innings={innings}
           inningNumber={inningNumber}
-          setEvents={setEvents}
+          cards={cards}
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}
         />
