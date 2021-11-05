@@ -7,11 +7,13 @@ import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import useQuery from 'hooks/useQuery';
 import ContentVideos from '../ContentVideos/ContentVideos';
+import { useSelector } from 'react-redux';
 
-const Content = ({ viewMode, innings, inningNumber }) => {
+const Content = ({ viewMode, inningNumber }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
   const [cards, setCards] = useState([]);
   const [currentCard, setCurrentCard] = useState({});
+  const innings = useSelector(state => state.game.innings);
   const query = useQuery();
 
   // **** Handle inning change ****
@@ -47,8 +49,6 @@ const Content = ({ viewMode, innings, inningNumber }) => {
     <section className='container'>
       <div className={cl.content}>
         <ContentSituationsList
-          innings={innings}
-          inningNumber={inningNumber}
           cards={cards}
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}

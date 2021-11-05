@@ -2,9 +2,7 @@ import React from 'react';
 import cl from './ContentSituationsList.module.scss';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 
-const ContentSituationsList = ({ innings, inningNumber, cards, currentCard, setCurrentCard }) => {
-  
-
+const ContentSituationsList = ({ cards, currentCard, setCurrentCard }) => {
   const situationClick = (player, number) => {
     if (currentCard.row_number !== number) {
       setCurrentCard({ ...player, row_number: number });
