@@ -12,7 +12,7 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import useFullDate from 'hooks/useFullDate';
 import { useSelector } from 'react-redux';
 
-const Header = ({ inningNumber, setInningNumber }) => {
+const Header = () => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
   const innings = useSelector(state => state.game.innings);
@@ -32,10 +32,6 @@ const Header = ({ inningNumber, setInningNumber }) => {
       scrollFixation();
     }
   }, [innings]);
-
-  const handleScoresItemClick = inningNumber => {
-    setInningNumber(prev => (prev === inningNumber ? null : inningNumber));
-  };
 
   const scrollHorizontally = e => {
     const start = scrollRef.current.scrollLeft,
@@ -87,12 +83,7 @@ const Header = ({ inningNumber, setInningNumber }) => {
                   <VerticalScrollDivider style={{ visibility: 'hidden' }} />
                 </>
               )}
-              <HeaderScoresList
-                ref={scrollRef}
-                innings={innings}
-                inningNumber={inningNumber}
-                handleClick={handleScoresItemClick}
-              />
+              <HeaderScoresList ref={scrollRef} innings={innings} />
               {isRightScroll ? (
                 <>
                   <VerticalScrollDivider direction='right' />
@@ -105,7 +96,7 @@ const Header = ({ inningNumber, setInningNumber }) => {
                 </>
               )}
             </div>
-            <HeaderInfo innings={innings} inningNumber={inningNumber} />
+            <HeaderInfo innings={innings} />
           </div>
           <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners_score}</h2>
           <img src={RightLogo} className={cl.rightLogo} alt='defence-team' />

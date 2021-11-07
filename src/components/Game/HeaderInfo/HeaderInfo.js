@@ -1,8 +1,10 @@
 import React from 'react';
 import cl from './HeaderInfo.module.scss';
 import useSummaryRHE from 'hooks/useSummaryRHE';
+import { useSelector } from 'react-redux';
 
-const HeaderInfo = ({ innings, inningNumber }) => {
+const HeaderInfo = ({ innings }) => {
+	const inningNumber = useSelector(state => state.game.inningNumber)
   const summaryRHE = useSummaryRHE(innings, inningNumber);
 
   return (
