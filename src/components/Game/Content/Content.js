@@ -9,11 +9,12 @@ import useQuery from 'hooks/useQuery';
 import ContentVideos from '../ContentVideos/ContentVideos';
 import { useSelector } from 'react-redux';
 
-const Content = ({ viewMode, inningNumber }) => {
-  const [playbackMode, setPlaybackMode] = useState('play');
+const Content = ({ viewMode }) => {
+	const [playbackMode, setPlaybackMode] = useState('play');
   const [cards, setCards] = useState([]);
   const [currentCard, setCurrentCard] = useState({});
   const innings = useSelector(state => state.game.innings);
+	const inningNumber = useSelector(state => state.game.inningNumber);
   const query = useQuery();
 
   // **** Handle inning change ****
