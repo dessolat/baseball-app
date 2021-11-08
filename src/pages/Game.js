@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { filterSituationsList } from '../data';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
@@ -8,6 +7,7 @@ import { setFullData } from 'redux/gameReducer';
 
 const Game = () => {
   const [situationFilter, setSituationFilter] = useState('All');
+  const [situations, setSituations] = useState(['All']);
   const [viewMode, setViewMode] = useState('mode-1');
   const dispatch = useDispatch();
 
@@ -45,9 +45,9 @@ const Game = () => {
         setSituationFilter={setSituationFilter}
         viewMode={viewMode}
         setViewMode={setViewMode}
-        situations={filterSituationsList}
+        situations={situations}
       />
-      <Content viewMode={viewMode} />
+      <Content viewMode={viewMode} setSituations={setSituations} situationFilter={situationFilter} setSituationFilter={setSituationFilter} />
     </>
   );
 };
