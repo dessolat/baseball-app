@@ -1,0 +1,2826 @@
+{
+    "innings": [
+        {
+            "number": 1,
+            "bot_err": 0,
+            "top_err": 0,
+            "bot_hits": 0,
+            "bot_runs": 1,
+            "top_hits": 8,
+            "top_runs": 6,
+            "top/guests": [
+                {
+                    "who": "David Castillo Velazquez",
+                    "type": "at bat",
+                    "who_id": 162,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11111,
+                                "final": 22243,
+                                "number": 0,
+                                "original": 22242
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Castillo Velazquez D. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 1,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 1,
+                                "strikes_count": 0
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11118,
+                                "final": 22257,
+                                "number": 1,
+                                "original": 22256
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Castillo Velazquez D. strike looking (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 1,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 2,
+                                "strikes_count": 1
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11119,
+                                "final": 22259,
+                                "number": 2,
+                                "original": 22258
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Castillo Velazquez D. doubled to center fielder"
+                                }
+                            ],
+                            "filter": [
+                                "Double"
+                            ],
+                            "pitcher": {
+                                "balls_count": 1,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 3,
+                                "strikes_count": 2
+                            }
+                        }
+                    ],
+                    "hit_order": 1
+                },
+                {
+                    "who": "Maxim Monakhov",
+                    "type": "at bat",
+                    "who_id": 139,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11120,
+                                "final": 22261,
+                                "number": 3,
+                                "original": 22260
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 1,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 4,
+                                "strikes_count": 3
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11121,
+                                "final": 22263,
+                                "number": 4,
+                                "original": 22262
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 2,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 5,
+                                "strikes_count": 3
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11122,
+                                "final": 22265,
+                                "number": 5,
+                                "original": 22264
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (2-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 6,
+                                "strikes_count": 3
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11123,
+                                "final": 22267,
+                                "number": 6,
+                                "original": 22266
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 2,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (3-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 4,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 7,
+                                "strikes_count": 3
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11124,
+                                "final": 22269,
+                                "number": 7,
+                                "original": 22268
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 3,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Monakhov M. walked"
+                                }
+                            ],
+                            "filter": [
+                                "Walk"
+                            ],
+                            "pitcher": {
+                                "balls_count": 5,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 8,
+                                "strikes_count": 3
+                            }
+                        }
+                    ],
+                    "hit_order": 2
+                },
+                {
+                    "who": "Geidys Soler Hinojosa",
+                    "type": "at bat",
+                    "who_id": 170,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11125,
+                                "final": 22271,
+                                "number": 8,
+                                "original": 22270
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Soler Hinojosa G. foul (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 5,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 9,
+                                "strikes_count": 4
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11126,
+                                "final": 22273,
+                                "number": 9,
+                                "original": 22272
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Soler Hinojosa G. doubled to center fielder, RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Monakhov M. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Castillo Velazquez D. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Double",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 5,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 10,
+                                "strikes_count": 5
+                            }
+                        }
+                    ],
+                    "hit_order": 3
+                },
+                {
+                    "who": "Luis Yunior Valiente",
+                    "type": "at bat",
+                    "who_id": 159,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11127,
+                                "final": 22275,
+                                "number": 10,
+                                "original": 22274
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 1,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Valiente L. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 6,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 11,
+                                "strikes_count": 5
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11128,
+                                "final": 22277,
+                                "number": 11,
+                                "original": 22276
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 1,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Valiente L. grounded out to short stop, RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Soler Hinojosa G. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Monakhov M. scored"
+                                }
+                            ],
+                            "filter": [
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 6,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 12,
+                                "strikes_count": 6
+                            }
+                        }
+                    ],
+                    "hit_order": 4
+                },
+                {
+                    "who": "Yan Alekhandro Perez Nunez",
+                    "type": "at bat",
+                    "who_id": 167,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11129,
+                                "final": 22279,
+                                "number": 12,
+                                "original": 22278
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Perez Nunez Y. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 6,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 13,
+                                "strikes_count": 7
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11130,
+                                "final": 22281,
+                                "number": 13,
+                                "original": 22280
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Perez Nunez Y. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 7,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 14,
+                                "strikes_count": 7
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11131,
+                                "final": 22283,
+                                "number": 14,
+                                "original": 22282
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Perez Nunez Y. singled to center fielder, RBI"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Soler Hinojosa G. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Single",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 7,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 15,
+                                "strikes_count": 8
+                            }
+                        }
+                    ],
+                    "hit_order": 5
+                },
+                {
+                    "who": "Vyacheslav Vasilev",
+                    "type": "at bat",
+                    "who_id": 126,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11132,
+                                "final": 22285,
+                                "number": 15,
+                                "original": 22284
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 8,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 16,
+                                "strikes_count": 8
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11133,
+                                "final": 22287,
+                                "number": 16,
+                                "original": 22286
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. strike swing (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 8,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 17,
+                                "strikes_count": 9
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11134,
+                                "final": 22289,
+                                "number": 17,
+                                "original": 22288
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. strike swing (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 8,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 18,
+                                "strikes_count": 10
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11135,
+                                "final": 22291,
+                                "number": 18,
+                                "original": 22290
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Vasilev V. struck out looking"
+                                }
+                            ],
+                            "filter": [
+                                "StrikeOut"
+                            ],
+                            "pitcher": {
+                                "balls_count": 8,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 19,
+                                "strikes_count": 11
+                            }
+                        }
+                    ],
+                    "hit_order": 6
+                },
+                {
+                    "who": "Kirill Chermoshentsev",
+                    "type": "at bat",
+                    "who_id": 153,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11136,
+                                "final": 22293,
+                                "number": 19,
+                                "original": 22292
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 8,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 20,
+                                "strikes_count": 12
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11137,
+                                "final": 22295,
+                                "number": 20,
+                                "original": 22294
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 9,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 21,
+                                "strikes_count": 12
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11138,
+                                "final": 22297,
+                                "number": 21,
+                                "original": 22296
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. strike looking (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 9,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 22,
+                                "strikes_count": 13
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11139,
+                                "final": 22299,
+                                "number": 22,
+                                "original": 22298
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Chermoshentsev K. singled to left fielder"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Perez Nunez Y. advanced to second"
+                                }
+                            ],
+                            "filter": [
+                                "Single"
+                            ],
+                            "pitcher": {
+                                "balls_count": 9,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 23,
+                                "strikes_count": 14
+                            }
+                        }
+                    ],
+                    "hit_order": 7
+                },
+                {
+                    "who": "Frank Antonio  Bulte Pinya",
+                    "type": "at bat",
+                    "who_id": 102,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11140,
+                                "final": 22301,
+                                "number": 23,
+                                "original": 22300
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 9,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 24,
+                                "strikes_count": 15
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11141,
+                                "final": 22303,
+                                "number": 24,
+                                "original": 22302
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 10,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 25,
+                                "strikes_count": 15
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11142,
+                                "final": 22305,
+                                "number": 25,
+                                "original": 22304
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. strike looking (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 10,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 26,
+                                "strikes_count": 16
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11143,
+                                "final": 22307,
+                                "number": 26,
+                                "original": 22306
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (2-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 11,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 27,
+                                "strikes_count": 16
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11144,
+                                "final": 22309,
+                                "number": 27,
+                                "original": 22308
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 2,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. foul (2-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 11,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 28,
+                                "strikes_count": 17
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11145,
+                                "final": 22311,
+                                "number": 28,
+                                "original": 22310
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 2,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (3-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 12,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 29,
+                                "strikes_count": 17
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11146,
+                                "final": 22313,
+                                "number": 29,
+                                "original": 22312
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 3,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. foul (3-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 12,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 30,
+                                "strikes_count": 18
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11147,
+                                "final": 22315,
+                                "number": 30,
+                                "original": 22314
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 3,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Bulte Pinya F. singled to rigth fielder, singled to rigth fielder, singled to rigth fielder, 3 RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Chermoshentsev K. advanced to second, advanced to third"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Perez Nunez Y. advanced to third"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Chermoshentsev K. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Perez Nunez Y. scored, scored"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Bulte Pinya F. singled to rigth fielder, 3 RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Chermoshentsev K. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Perez Nunez Y. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Single",
+                                "score",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 12,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 31,
+                                "strikes_count": 19
+                            }
+                        }
+                    ],
+                    "hit_order": 8
+                },
+                {
+                    "who": "Nikita Monakhov",
+                    "type": "at bat",
+                    "who_id": 140,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11149,
+                                "final": 22319,
+                                "number": 31,
+                                "original": 22318
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 13,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 32,
+                                "strikes_count": 19
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11150,
+                                "final": 22321,
+                                "number": 32,
+                                "original": 22320
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. strike looking (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 13,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 33,
+                                "strikes_count": 20
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11151,
+                                "final": 22323,
+                                "number": 33,
+                                "original": 22322
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. strike swing (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 13,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 34,
+                                "strikes_count": 21
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11152,
+                                "final": 22325,
+                                "number": 34,
+                                "original": 22324
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Monakhov N. grounded out to third base"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 13,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 35,
+                                "strikes_count": 22
+                            }
+                        }
+                    ],
+                    "hit_order": 9
+                }
+            ],
+            "bottom/owners": [
+                {
+                    "who": "GENNER ARIEL CERVANTES",
+                    "type": "at bat",
+                    "who_id": 524,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11153,
+                                "final": 22327,
+                                "number": 0,
+                                "original": 22326
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "CERVANTES G. hit by pitch, hit by pitch"
+                                }
+                            ],
+                            "filter": [
+                                "HitByPitch"
+                            ],
+                            "pitcher": {
+                                "balls_count": 1,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 1,
+                                "strikes_count": 0
+                            }
+                        }
+                    ],
+                    "hit_order": 1
+                },
+                {
+                    "who": "CARPENTER ANDREW SCOTT",
+                    "type": "at bat",
+                    "who_id": 511,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11156,
+                                "final": 22333,
+                                "number": 1,
+                                "original": 22332
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "SCOTT C. hit by pitch"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " CERVANTES G. advanced to second"
+                                }
+                            ],
+                            "filter": [
+                                "HitByPitch"
+                            ],
+                            "pitcher": {
+                                "balls_count": 2,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 2,
+                                "strikes_count": 0
+                            }
+                        }
+                    ],
+                    "hit_order": 2
+                },
+                {
+                    "who": "TOMMY GABRIEL CRUZ ",
+                    "type": "at bat",
+                    "who_id": 512,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11157,
+                                "final": 22335,
+                                "number": 2,
+                                "original": 22334
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "CRUZ  T. hit by pitch"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " SCOTT C. advanced to second"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " CERVANTES G. advanced to third"
+                                }
+                            ],
+                            "filter": [
+                                "HitByPitch"
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 3,
+                                "strikes_count": 0
+                            }
+                        }
+                    ],
+                    "hit_order": 3
+                },
+                {
+                    "who": "ROMAN ALEXANDER DOROSH",
+                    "type": "at bat",
+                    "who_id": 513,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11158,
+                                "final": 22337,
+                                "number": 3,
+                                "original": 22336
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 1,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "DOROSH R. grounded into double play and reached on a fielder's choice"
+                                },
+                                {
+                                    "type": "out",
+                                    "description": " CRUZ  T. out at second, 3b to 2b"
+                                },
+                                {
+                                    "type": "out",
+                                    "description": " SCOTT C. out at third, 3b"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " CERVANTES G. scored"
+                                }
+                            ],
+                            "filter": [
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 4,
+                                "strikes_count": 1
+                            }
+                        }
+                    ],
+                    "hit_order": 4
+                },
+                {
+                    "who": "BRANTLEY TATE DURHAM",
+                    "type": "at bat",
+                    "who_id": 514,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11159,
+                                "final": 22339,
+                                "number": 4,
+                                "original": 22338
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "DURHAM B. flied out to catcher"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 5,
+                                "strikes_count": 2
+                            }
+                        }
+                    ],
+                    "hit_order": 5
+                }
+            ]
+        },
+        {
+            "number": 2,
+            "bot_err": 0,
+            "top_err": 0,
+            "bot_hits": 0,
+            "bot_runs": 0,
+            "top_hits": 5,
+            "top_runs": 4,
+            "top/guests": [
+                {
+                    "who": "David Castillo Velazquez",
+                    "type": "at bat",
+                    "who_id": 162,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11410,
+                                "final": 22841,
+                                "number": 0,
+                                "original": 22840
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Castillo Velazquez D. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 14,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 36,
+                                "strikes_count": 22
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11411,
+                                "final": 22843,
+                                "number": 1,
+                                "original": 22842
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Castillo Velazquez D. strike looking (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 14,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 37,
+                                "strikes_count": 23
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11412,
+                                "final": 22845,
+                                "number": 2,
+                                "original": 22844
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Castillo Velazquez D. doubled to left fielder"
+                                }
+                            ],
+                            "filter": [
+                                "Double"
+                            ],
+                            "pitcher": {
+                                "balls_count": 14,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 38,
+                                "strikes_count": 24
+                            }
+                        }
+                    ],
+                    "hit_order": 1
+                },
+                {
+                    "who": "Maxim Monakhov",
+                    "type": "at bat",
+                    "who_id": 139,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11413,
+                                "final": 22847,
+                                "number": 3,
+                                "original": 22846
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 14,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 39,
+                                "strikes_count": 25
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11414,
+                                "final": 22849,
+                                "number": 4,
+                                "original": 22848
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 15,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 40,
+                                "strikes_count": 25
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11415,
+                                "final": 22851,
+                                "number": 5,
+                                "original": 22850
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (2-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 16,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 41,
+                                "strikes_count": 25
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11416,
+                                "final": 22853,
+                                "number": 6,
+                                "original": 22852
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 2,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov M. ball (3-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 17,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 42,
+                                "strikes_count": 25
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11417,
+                                "final": 22855,
+                                "number": 7,
+                                "original": 22854
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 3,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Monakhov M. walked"
+                                }
+                            ],
+                            "filter": [
+                                "Walk"
+                            ],
+                            "pitcher": {
+                                "balls_count": 18,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 43,
+                                "strikes_count": 25
+                            }
+                        }
+                    ],
+                    "hit_order": 2
+                },
+                {
+                    "who": "Geidys Soler Hinojosa",
+                    "type": "at bat",
+                    "who_id": 170,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11418,
+                                "final": 22857,
+                                "number": 8,
+                                "original": 22856
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Soler Hinojosa G. foul (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 18,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 44,
+                                "strikes_count": 26
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11419,
+                                "final": 22859,
+                                "number": 9,
+                                "original": 22858
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Soler Hinojosa G. doubled to center fielder, RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Monakhov M. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Castillo Velazquez D. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Double",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 18,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 45,
+                                "strikes_count": 27
+                            }
+                        }
+                    ],
+                    "hit_order": 3
+                },
+                {
+                    "who": "Luis Yunior Valiente",
+                    "type": "at bat",
+                    "who_id": 159,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11420,
+                                "final": 22861,
+                                "number": 10,
+                                "original": 22860
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 1,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Valiente L. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 18,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 46,
+                                "strikes_count": 28
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11421,
+                                "final": 22863,
+                                "number": 11,
+                                "original": 22862
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 1,
+                                "r3": 1,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Valiente L. grounded out to short stop, RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Soler Hinojosa G. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Monakhov M. scored"
+                                }
+                            ],
+                            "filter": [
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 18,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 47,
+                                "strikes_count": 29
+                            }
+                        }
+                    ],
+                    "hit_order": 4
+                },
+                {
+                    "who": "Yan Alekhandro Perez Nunez",
+                    "type": "at bat",
+                    "who_id": 167,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11422,
+                                "final": 22865,
+                                "number": 12,
+                                "original": 22864
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Perez Nunez Y. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 19,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 48,
+                                "strikes_count": 29
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11423,
+                                "final": 22867,
+                                "number": 13,
+                                "original": 22866
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Perez Nunez Y. ball (2-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 20,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 49,
+                                "strikes_count": 29
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11424,
+                                "final": 22869,
+                                "number": 14,
+                                "original": 22868
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 1,
+                                "balls": 2,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Perez Nunez Y. singled to center fielder, RBI"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Soler Hinojosa G. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Single",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 20,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 50,
+                                "strikes_count": 30
+                            }
+                        }
+                    ],
+                    "hit_order": 5
+                },
+                {
+                    "who": "Vyacheslav Vasilev",
+                    "type": "at bat",
+                    "who_id": 126,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11425,
+                                "final": 22871,
+                                "number": 15,
+                                "original": 22870
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 21,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 51,
+                                "strikes_count": 30
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11426,
+                                "final": 22873,
+                                "number": 16,
+                                "original": 22872
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. strike looking (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 21,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 52,
+                                "strikes_count": 31
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11427,
+                                "final": 22875,
+                                "number": 17,
+                                "original": 22874
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Vasilev V. strike looking (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 21,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 53,
+                                "strikes_count": 32
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11428,
+                                "final": 22877,
+                                "number": 18,
+                                "original": 22876
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Vasilev V. struck out swinging"
+                                }
+                            ],
+                            "filter": [
+                                "StrikeOut"
+                            ],
+                            "pitcher": {
+                                "balls_count": 21,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 54,
+                                "strikes_count": 33
+                            }
+                        }
+                    ],
+                    "hit_order": 6
+                },
+                {
+                    "who": "Kirill Chermoshentsev",
+                    "type": "at bat",
+                    "who_id": 153,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11429,
+                                "final": 22879,
+                                "number": 19,
+                                "original": 22878
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 21,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 55,
+                                "strikes_count": 34
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11430,
+                                "final": 22881,
+                                "number": 20,
+                                "original": 22880
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 22,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 56,
+                                "strikes_count": 34
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11431,
+                                "final": 22883,
+                                "number": 21,
+                                "original": 22882
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. strike looking (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 22,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 57,
+                                "strikes_count": 35
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11432,
+                                "final": 22885,
+                                "number": 22,
+                                "original": 22884
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Chermoshentsev K. ball (2-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 23,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 58,
+                                "strikes_count": 35
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11433,
+                                "final": 22887,
+                                "number": 23,
+                                "original": 22886
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 2,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Chermoshentsev K. singled to second base"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Perez Nunez Y. advanced to second"
+                                }
+                            ],
+                            "filter": [
+                                "Single"
+                            ],
+                            "pitcher": {
+                                "balls_count": 23,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 59,
+                                "strikes_count": 36
+                            }
+                        }
+                    ],
+                    "hit_order": 7
+                },
+                {
+                    "who": "Frank Antonio  Bulte Pinya",
+                    "type": "at bat",
+                    "who_id": 102,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11434,
+                                "final": 22889,
+                                "number": 24,
+                                "original": 22888
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. strike looking (0-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 23,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 60,
+                                "strikes_count": 37
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11435,
+                                "final": 22891,
+                                "number": 25,
+                                "original": 22890
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 24,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 61,
+                                "strikes_count": 37
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11436,
+                                "final": 22893,
+                                "number": 26,
+                                "original": 22892
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. strike looking (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 24,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 62,
+                                "strikes_count": 38
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11437,
+                                "final": 22895,
+                                "number": 27,
+                                "original": 22894
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (2-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 25,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 63,
+                                "strikes_count": 38
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11438,
+                                "final": 22897,
+                                "number": 28,
+                                "original": 22896
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 2,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. foul (2-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 25,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 64,
+                                "strikes_count": 39
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11439,
+                                "final": 22899,
+                                "number": 29,
+                                "original": 22898
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 2,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. ball (3-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 26,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 65,
+                                "strikes_count": 39
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11440,
+                                "final": 22901,
+                                "number": 30,
+                                "original": 22900
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 3,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Bulte Pinya F. foul (3-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 26,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 66,
+                                "strikes_count": 40
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11441,
+                                "final": 22903,
+                                "number": 31,
+                                "original": 22902
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 1,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 3,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "advance",
+                                    "description": "Bulte Pinya F. singled to rigth fielder, RBI"
+                                },
+                                {
+                                    "type": "advance",
+                                    "description": " Chermoshentsev K. advanced to third"
+                                },
+                                {
+                                    "type": "score",
+                                    "description": " Perez Nunez Y. scored"
+                                }
+                            ],
+                            "filter": [
+                                "Single",
+                                "score"
+                            ],
+                            "pitcher": {
+                                "balls_count": 26,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 67,
+                                "strikes_count": 41
+                            }
+                        }
+                    ],
+                    "hit_order": 8
+                },
+                {
+                    "who": "Nikita Monakhov",
+                    "type": "at bat",
+                    "who_id": 140,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11442,
+                                "final": 22905,
+                                "number": 32,
+                                "original": 22904
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 27,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 68,
+                                "strikes_count": 41
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11443,
+                                "final": 22907,
+                                "number": 33,
+                                "original": 22906
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. strike swing (1-1)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 27,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 69,
+                                "strikes_count": 42
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11444,
+                                "final": 22909,
+                                "number": 34,
+                                "original": 22908
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 1
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Monakhov N. strike swing (1-2)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 27,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 70,
+                                "strikes_count": 43
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11445,
+                                "final": 22911,
+                                "number": 35,
+                                "original": 22910
+                            },
+                            "table": {
+                                "r1": 1,
+                                "r2": 0,
+                                "r3": 1,
+                                "outs": 2,
+                                "balls": 1,
+                                "strikes": 2
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "Monakhov N. grounded out to short stop"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 27,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 71,
+                                "strikes_count": 44
+                            }
+                        }
+                    ],
+                    "hit_order": 9
+                }
+            ],
+            "bottom/owners": [
+                {
+                    "who": "ANTHONY CARMINE JARVIS",
+                    "type": "at bat",
+                    "who_id": 515,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11446,
+                                "final": 22913,
+                                "number": 0,
+                                "original": 22912
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "JARVIS A. flied out to first base"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 6,
+                                "strikes_count": 3
+                            }
+                        }
+                    ],
+                    "hit_order": 6
+                },
+                {
+                    "who": "ENGERS VLADIMIR MARTE PAEZ",
+                    "type": "at bat",
+                    "who_id": 516,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11447,
+                                "final": 22915,
+                                "number": 1,
+                                "original": 22914
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 1,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "MARTE PAEZ E. flied out to short stop"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 7,
+                                "strikes_count": 4
+                            }
+                        }
+                    ],
+                    "hit_order": 7
+                },
+                {
+                    "who": "ALLEN PAZ WALKER",
+                    "type": "at bat",
+                    "who_id": 517,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11448,
+                                "final": 22917,
+                                "number": 2,
+                                "original": 22916
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 2,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "out",
+                                    "description": "PAZ WALKER A. grounded out to catcher"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 3,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "Petr Balan",
+                                "pitches_count": 8,
+                                "strikes_count": 5
+                            }
+                        }
+                    ],
+                    "hit_order": 8
+                }
+            ]
+        },
+        {
+            "number": 3,
+            "top/guests": [
+                {
+                    "who": "David Castillo Velazquez",
+                    "type": "at bat",
+                    "who_id": 162,
+                    "moments": [
+                        {
+                            "inner": {
+                                "id": 11449,
+                                "final": 22919,
+                                "number": 0,
+                                "original": 22918
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 0,
+                                "strikes": 0
+                            },
+                            "events": [
+                                {
+                                    "type": "pitch",
+                                    "description": "Castillo Velazquez D. ball (1-0)"
+                                }
+                            ],
+                            "pitcher": {
+                                "balls_count": 28,
+                                "moment_type": "pitch to batter",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 72,
+                                "strikes_count": 44
+                            }
+                        },
+                        {
+                            "inner": {
+                                "id": 11450,
+                                "final": 22921,
+                                "number": 1,
+                                "original": 22920
+                            },
+                            "table": {
+                                "r1": 0,
+                                "r2": 0,
+                                "r3": 0,
+                                "outs": 0,
+                                "balls": 1,
+                                "strikes": 0
+                            },
+                            "pitcher": {
+                                "balls_count": 28,
+                                "moment_type": "no pitch",
+                                "pitches_name": "GENNER ARIEL CERVANTES",
+                                "pitches_count": 72,
+                                "strikes_count": 44
+                            }
+                        }
+                    ],
+                    "hit_order": 1
+                }
+            ]
+        }
+    ],
+    "preview": {
+        "score": "8 1",
+        "guests": "RUS RUSSIA",
+        "owners": "CVS Catawba Valley Stars",
+        "game_date": "2021-08-28",
+        "league_name": "Test Goodwills Game",
+        "league_year": "2021",
+        "guests_score": 8,
+        "owners_score": 1,
+        "stadium_name": "Russtar",
+        "guests_lineup_pos": [
+            "P",
+            "C",
+            "1B",
+            "2B",
+            "3B",
+            "SS",
+            "LF",
+            "CF",
+            "RF"
+        ],
+        "owners_lineup_pos": [
+            "SS",
+            "RF",
+            "CF",
+            "3B",
+            "DH",
+            "LF",
+            "1B",
+            "2B",
+            "C",
+            "P"
+        ],
+        "guests_lineup_name": [
+            "GENNER ARIEL CERVANTES",
+            "CARPENTER ANDREW SCOTT",
+            "TOMMY GABRIEL CRUZ ",
+            "ROMAN ALEXANDER DOROSH",
+            "BRANTLEY TATE DURHAM",
+            "ANTHONY CARMINE JARVIS",
+            "ENGERS VLADIMIR MARTE PAEZ",
+            "ALLEN PAZ WALKER",
+            "CHARLES PATRICK ROBERTS"
+        ],
+        "owners_lineup_name": [
+            "David Castillo Velazquez",
+            "Maxim Monakhov",
+            "Geidys Soler Hinojosa",
+            "Luis Yunior Valiente",
+            "Yan Alekhandro Perez Nunez",
+            "Vyacheslav Vasilev",
+            "Kirill Chermoshentsev",
+            "Frank Antonio  Bulte Pinya",
+            "Nikita Monakhov",
+            "Petr Balan"
+        ]
+    }
+}
