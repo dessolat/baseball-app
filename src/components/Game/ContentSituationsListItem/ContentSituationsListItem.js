@@ -10,7 +10,7 @@ const ContentSituationsListItem = ({ player, number, situationClick, currentCard
   lastMoment.events?.forEach(event => eventsSummary.push(event.description));
   const { r1, r2, r3, outs, balls, strikes } = lastMoment.table;
   const classNames = [cl.listItem];
-  player['who id'] === currentCard['who id'] &&
+  player.who_id === currentCard.who_id &&
     player.inning_number === currentCard.inning_number &&
     classNames.push(cl.active);
 
