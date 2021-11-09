@@ -1,15 +1,19 @@
 @import 'scss/vars.scss';
 
 .events {
+	--w: 46;
   position: absolute;
   left: 0;
   top: 0;
+	width: calc(var(--w) * 1px);
   padding: 8px;
   background: linear-gradient(180deg, #c4c4c4 10.33%, rgba(196, 196, 196, 0.05) 100%);
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  max-height: 250px;
+  flex-wrap: wrap;
+  gap: 8px;
 
   > * {
     width: 30px;
@@ -19,7 +23,7 @@
     border-radius: 15px;
     font: bold 1.125rem var(--font-comfortaa);
     color: #ffffff;
-		line-height: 30px;
-		text-align: center;
+    line-height: 30px;
+    text-align: center;
   }
 }

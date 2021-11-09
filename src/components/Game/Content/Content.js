@@ -8,28 +8,52 @@ import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import useQuery from 'hooks/useQuery';
 import ContentVideos from '../ContentVideos/ContentVideos';
 import { useSelector } from 'react-redux';
+import ContentPitcher from '../ContentPitcher/ContentPitcher';
 
-const Content = ({ viewMode }) => {
-	const [playbackMode, setPlaybackMode] = useState('play');
+const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter }) => {
+  const [playbackMode, setPlaybackMode] = useState('play');
   const [cards, setCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
   const [currentCard, setCurrentCard] = useState({});
   const innings = useSelector(state => state.game.innings);
-	const inningNumber = useSelector(state => state.game.inningNumber);
+  const inningNumber = useSelector(state => state.game.inningNumber);
   const query = useQuery();
 
   // **** Handle inning change ****
   useEffect(() => {
     setCurrentCard({});
 
+    const newSituations = ['All'];
     const newCards = [];
     const newInnings =
       inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
     newInnings.forEach(inning => {
-      inning['top/guests'].forEach(guest => newCards.push({ inning_number: inning.number, ...guest }));
-      inning['bottom/owners']?.forEach(owner => newCards.push({ inning_number: inning.number, ...owner }));
+      inning['top/guests'].forEach(guest => {
+        newCards.push({ inning_number: inning.number, ...guest });
+        guest.moments.slice(-1)[0].filter && newSituations.push(...guest.moments.slice(-1)[0].filter);
+      });
+      inning['bottom/owners']?.forEach(owner => {
+        newCards.push({ inning_number: inning.number, ...owner });
+        owner.moments?.slice(-1)[0].filter && newSituations.push(...owner.moments.slice(-1)[0].filter);
+      });
     });
     setCards(newCards);
+    setSituations([...new Set(newSituations)]);
   }, [inningNumber, innings]);
+
+  useEffect(() => {
+    setSituationFilter('All');
+  }, [inningNumber]);
+
+  useEffect(() => {
+		setCurrentCard({});
+    const filteredCards =
+      situationFilter !== 'All'
+        ? cards.filter(card => card.moments.slice(-1)[0].filter?.includes(situationFilter))
+        : cards;
+
+    setFilteredCards(filteredCards);
+  }, [situationFilter, cards]);
 
   const renderTab = tab => {
     switch (tab) {
@@ -49,15 +73,9 @@ const Content = ({ viewMode }) => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList
-          cards={cards}
-          currentCard={currentCard}
-          setCurrentCard={setCurrentCard}
-        />
+        <ContentSituationsList cards={filteredCards} currentCard={currentCard} setCurrentCard={setCurrentCard} />
         <div className={cl.controlsWrapper}>
-          <p className={cl.playerName}>
-            Pitcher: <span>LEONOV</span>
-          </p>
+          <ContentPitcher currentCard={currentCard} />
           <div className={cl.controls}>
             <Play
               name='play'
