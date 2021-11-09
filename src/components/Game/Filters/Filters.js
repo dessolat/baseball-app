@@ -4,10 +4,10 @@ import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
-import useQuery from 'hooks/useQuery';
+import { useSearchParams } from 'react-router-dom';
 
 const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-  const query = useQuery()
+	const [searchParams, setSearchParams] = useSearchParams()
 	const [
     scrollRef,
     isLeftScroll,
@@ -88,7 +88,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
             <Arrow style={{ visibility: 'hidden' }} />
           )}
         </div>
-        {query.get('tab') === 'videos' && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
+        {searchParams.get('tab') === 'videos' && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
       </div>
     </section>
   );

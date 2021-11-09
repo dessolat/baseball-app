@@ -5,9 +5,9 @@ import PlaysImg from 'images/plays.jpg';
 import Pause from 'components/UI/buttons/Pause/Pause';
 import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
-import useQuery from 'hooks/useQuery';
 import ContentVideos from '../ContentVideos/ContentVideos';
 import { useSelector } from 'react-redux';
+import {useSearchParams} from 'react-router-dom'
 import ContentPitcher from '../ContentPitcher/ContentPitcher';
 
 const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter }) => {
@@ -17,7 +17,7 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
   const [currentCard, setCurrentCard] = useState({});
   const innings = useSelector(state => state.game.innings);
   const inningNumber = useSelector(state => state.game.inningNumber);
-  const query = useQuery();
+	const [searchParams, setSearchParams] = useSearchParams()
 
   // **** Handle inning change ****
   useEffect(() => {
@@ -94,7 +94,7 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
             />
           </div>
         </div>
-        <div className={cl.graphics}>{renderTab(query.get('tab'))}</div>
+        <div className={cl.graphics}>{renderTab(searchParams.get('tab'))}</div>
       </div>
     </section>
   );
