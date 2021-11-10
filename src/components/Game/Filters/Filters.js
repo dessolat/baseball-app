@@ -5,33 +5,29 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
+import useTabs from 'hooks/useTabs';
 
 const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-	const [searchParams, setSearchParams] = useSearchParams()
-	const [
-    scrollRef,
-    isLeftScroll,
-    isRightScroll,
-    addListeners,
-    removeListeners,
-    scrollFixation
-  ] = useScrollHorizontally();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
+  const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
+    useScrollHorizontally();
 
   useEffect(() => {
-		const ref = scrollRef.current
-		setTimeout(scrollFixation, 300)
-		addListeners();
+    const ref = scrollRef.current;
+    setTimeout(scrollFixation, 300);
+    addListeners();
     return () => {
-			removeListeners(ref)
+      removeListeners(ref);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollFixation()
+      scrollFixation();
     }
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [situations]);
 
   const handleSituationClick = e => {
@@ -71,11 +67,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
     <section className='container'>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {isLeftScroll ? (
-            <Arrow onClick={scrollHorizontally} />
-          ) : (
-            <Arrow style={{ visibility: 'hidden' }} />
-          )}
+          {isLeftScroll ? <Arrow onClick={scrollHorizontally} /> : <Arrow style={{ visibility: 'hidden' }} />}
           <FiltersSituationsList
             ref={scrollRef}
             situationFilter={situationFilter}
@@ -88,7 +80,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
             <Arrow style={{ visibility: 'hidden' }} />
           )}
         </div>
-        {searchParams.get('tab') === 'videos' && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
+        {useTabs(tab) && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
       </div>
     </section>
   );
