@@ -7,7 +7,6 @@ import { setFullData } from 'redux/gameReducer';
 
 const Game = () => {
   const [situations, setSituations] = useState(['All']);
-  const [viewMode, setViewMode] = useState('mode-1');
   const dispatch = useDispatch();
 
   const selectJSON = e => {
@@ -39,8 +38,8 @@ const Game = () => {
         accept='application/json'
       />
       <Header />
-      <Filters viewMode={viewMode} setViewMode={setViewMode} situations={situations} />
-      <Content viewMode={viewMode} setSituations={setSituations} />
+      <Filters situations={situations} />
+      <Content setSituations={setSituations} />
     </>
   );
 };
