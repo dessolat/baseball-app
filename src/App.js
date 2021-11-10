@@ -9,7 +9,7 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path='/game' element={<Game />} />
-        <Route path='*' element={<Navigate to='/game?tab=videos' replace={true} />} />
+        <Route path='*' element={<Navigate to='/game' replace={true} />} />
       </Routes>
     </Router>
   );
