@@ -7,7 +7,7 @@ import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import ContentVideos from '../ContentVideos/ContentVideos';
 import { useSelector } from 'react-redux';
-import {useSearchParams} from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
 import ContentPitcher from '../ContentPitcher/ContentPitcher';
 
 const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter }) => {
@@ -17,7 +17,7 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
   const [currentCard, setCurrentCard] = useState({});
   const innings = useSelector(state => state.game.innings);
   const inningNumber = useSelector(state => state.game.inningNumber);
-	const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // **** Handle inning change ****
   useEffect(() => {
@@ -46,7 +46,7 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
   }, [inningNumber]);
 
   useEffect(() => {
-		setCurrentCard({});
+    setCurrentCard({});
     const filteredCards =
       situationFilter !== 'All'
         ? cards.filter(card => card.moments.slice(-1)[0].filter?.includes(situationFilter))
@@ -57,12 +57,13 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
 
   const renderTab = tab => {
     switch (tab) {
-      case 'videos':
-        return <ContentVideos viewMode={viewMode} currentCard={currentCard} />;
+      case 'lineup':
+      case 'box':
+        return <></>;
       case 'plays':
         return <img src={PlaysImg} alt='plays' width='100%' />;
       default:
-        break;
+        return <ContentVideos viewMode={viewMode} currentCard={currentCard} />;
     }
   };
 
@@ -73,7 +74,11 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList cards={filteredCards} currentCard={currentCard} setCurrentCard={setCurrentCard} />
+        <ContentSituationsList
+          cards={filteredCards}
+          currentCard={currentCard}
+          setCurrentCard={setCurrentCard}
+        />
         <div className={cl.controlsWrapper}>
           <ContentPitcher currentCard={currentCard} />
           <div className={cl.controls}>
