@@ -1,31 +1,37 @@
-import useQuery from 'hooks/useQuery';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import useTabs from 'hooks/useTabs'
 import cl from './HeaderTabs.module.scss';
 
 const HeaderTabs = () => {
-  const tab = useQuery().get('tab');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
+
+  const handleTabClick = e => setSearchParams({ tab: e.target.name });
   return (
     <ul className={cl.headerTabs}>
       <li>
-        <Link to='?tab=lineup' className={tab === 'lineup' ? cl.active : ''}>
+        <button name='lineup' onClick={handleTabClick} className={tab === 'lineup' ? cl.active : ''}>
           Lineup
-        </Link>
+        </button>
       </li>
       <li>
-        <Link to='?tab=box' className={tab === 'box' ? cl.active : ''}>
+        <button name='box' onClick={handleTabClick} className={tab === 'box' ? cl.active : ''}>
           Box
-        </Link>
+        </button>
       </li>
       <li>
-        <Link to='?tab=plays' className={tab === 'plays' ? cl.active : ''}>
+        <button name='plays' onClick={handleTabClick} className={tab === 'plays' ? cl.active : ''}>
           Plays
-        </Link>
+        </button>
       </li>
       <li>
-        <Link to='?tab=videos' className={tab === 'videos' ? cl.active : ''}>
+        <button
+          name='videos'
+          onClick={handleTabClick}
+          className={useTabs(tab) ? cl.active : ''}>
           Videos
-        </Link>
+        </button>
       </li>
     </ul>
   );
