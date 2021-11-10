@@ -6,18 +6,21 @@ import Pause from 'components/UI/buttons/Pause/Pause';
 import Play from 'components/UI/buttons/Play';
 import Repeat from 'components/UI/buttons/Repeat/Repeat';
 import ContentVideos from '../ContentVideos/ContentVideos';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import ContentPitcher from '../ContentPitcher/ContentPitcher';
+import { setSituationFilter } from 'redux/gameReducer';
 
-const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter }) => {
+const Content = ({ viewMode, setSituations }) => {
   const [playbackMode, setPlaybackMode] = useState('play');
   const [cards, setCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
   const [currentCard, setCurrentCard] = useState({});
   const innings = useSelector(state => state.game.innings);
   const inningNumber = useSelector(state => state.game.inningNumber);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const situationFilter = useSelector(state => state.game.situationFilter);
+  const dispatch = useDispatch();
+  const searchParams = useSearchParams()[0];
 
   // **** Handle inning change ****
   useEffect(() => {
@@ -42,7 +45,7 @@ const Content = ({ viewMode, setSituations, situationFilter, setSituationFilter 
   }, [inningNumber, innings]);
 
   useEffect(() => {
-    setSituationFilter('All');
+		dispatch(setSituationFilter('All'))
   }, [inningNumber]);
 
   useEffect(() => {

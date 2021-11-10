@@ -7,8 +7,8 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
 import useTabs from 'hooks/useTabs';
 
-const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, situations }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+const Filters = ({ viewMode, setViewMode, situations }) => {
+  const searchParams = useSearchParams()[0];
   const tab = searchParams.get('tab');
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
@@ -29,10 +29,6 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
     }
     // eslint-disable-next-line
   }, [situations]);
-
-  const handleSituationClick = e => {
-    setSituationFilter(e.currentTarget.name);
-  };
 
   const handleModeClick = e => {
     setViewMode(e.currentTarget.name);
@@ -68,12 +64,7 @@ const Filters = ({ situationFilter, setSituationFilter, viewMode, setViewMode, s
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
           {isLeftScroll ? <Arrow onClick={scrollHorizontally} /> : <Arrow style={{ visibility: 'hidden' }} />}
-          <FiltersSituationsList
-            ref={scrollRef}
-            situationFilter={situationFilter}
-            situations={situations}
-            handleClick={handleSituationClick}
-          />
+          <FiltersSituationsList ref={scrollRef} situations={situations} />
           {isRightScroll ? (
             <Arrow direction='right' onClick={scrollHorizontally} />
           ) : (
