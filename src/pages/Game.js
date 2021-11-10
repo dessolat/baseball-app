@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { setFullData } from 'redux/gameReducer';
 
 const Game = () => {
-  const [situationFilter, setSituationFilter] = useState('All');
   const [situations, setSituations] = useState(['All']);
   const [viewMode, setViewMode] = useState('mode-1');
   const dispatch = useDispatch();
@@ -40,14 +39,8 @@ const Game = () => {
         accept='application/json'
       />
       <Header />
-      <Filters
-        situationFilter={situationFilter}
-        setSituationFilter={setSituationFilter}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        situations={situations}
-      />
-      <Content viewMode={viewMode} setSituations={setSituations} situationFilter={situationFilter} setSituationFilter={setSituationFilter} />
+      <Filters viewMode={viewMode} setViewMode={setViewMode} situations={situations} />
+      <Content viewMode={viewMode} setSituations={setSituations} />
     </>
   );
 };
