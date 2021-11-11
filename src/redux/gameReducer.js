@@ -1,8 +1,6 @@
-import fullData from 'baseball.json';
-
 const defaultState = {
-  innings: fullData.innings,
-  preview: fullData.preview,
+  innings: [],
+  preview: {},
   inningNumber: null,
   situationFilter: 'All',
   viewMode: 'mode-1'
