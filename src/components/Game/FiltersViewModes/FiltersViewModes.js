@@ -1,7 +1,15 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setViewMode } from 'redux/gameReducer';
 import cl from './FiltersViewModes.module.scss';
 
-const FiltersViewModes = ({handleModeClick, viewMode}) => {
+const FiltersViewModes = () => {
+	const viewMode = useSelector(state => state.game.viewMode)
+	const dispatch = useDispatch()
+
+	const handleModeClick = e => {
+		dispatch(setViewMode(e.currentTarget.name))
+  };
   return (
     <div className={cl.viewModes}>
       <button className={viewMode === 'mode-1' ? cl.active : ''} name='mode-1' onClick={handleModeClick}>

@@ -7,7 +7,7 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
 import useTabs from 'hooks/useTabs';
 
-const Filters = ({ viewMode, setViewMode, situations }) => {
+const Filters = ({ situations }) => {
   const searchParams = useSearchParams()[0];
   const tab = searchParams.get('tab');
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -29,10 +29,6 @@ const Filters = ({ viewMode, setViewMode, situations }) => {
     }
     // eslint-disable-next-line
   }, [situations]);
-
-  const handleModeClick = e => {
-    setViewMode(e.currentTarget.name);
-  };
 
   const scrollHorizontally = e => {
     const start = scrollRef.current.scrollLeft,
@@ -71,7 +67,7 @@ const Filters = ({ viewMode, setViewMode, situations }) => {
             <Arrow style={{ visibility: 'hidden' }} />
           )}
         </div>
-        {useTabs(tab) && <FiltersViewModes handleModeClick={handleModeClick} viewMode={viewMode} />}
+        {useTabs(tab) && <FiltersViewModes />}
       </div>
     </section>
   );
