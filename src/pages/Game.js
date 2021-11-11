@@ -1,45 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setFullData } from 'redux/gameReducer';
+import Loader from 'components/UI/loaders/Loader/Loader';
+import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const Game = () => {
   const [situations, setSituations] = useState(['All']);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const innings = useSelector(state => state.game.innings);
+  const preview = useSelector(state => state.game.preview);
   const dispatch = useDispatch();
+  const ref = useRef();
 
-  const selectJSON = e => {
-    const files = e.target.files;
+  useEffect(() => {
+    const getFullData = async () => {
+      try {
+        const resp = await axios.get('http://84.201.172.216:3030/game_280');
+        dispatch(setFullData(resp.data));
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-    for (let i = 0, f; (f = files[i]); i++) {
-      const reader = new FileReader();
+    setIsLoading(true);
 
-      reader.onload = (function (theFile) {
-        return e => {
-          try {
-            const json = JSON.parse(e.target.result);
-            dispatch(setFullData(json));
-          } catch (ex) {
-            alert('ex when trying to parse json = ' + ex);
-          }
-        };
-      })(f);
-      reader.readAsText(f);
-    }
-  };
+    axios
+      .get('http://84.201.172.216:3030/game_280')
+      .then(resp => {
+        dispatch(setFullData(resp.data));
+      })
+      .catch(err => setError(err.message))
+      .finally(() => {
+        setIsLoading(false);
+        ref.current = setInterval(getFullData, 4000);
+      });
+
+    return () => {
+      clearInterval(ref.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    error && setError(null);
+  }, [innings, preview]);
 
   return (
     <>
-      <input
-        type='file'
-        onChange={selectJSON}
-        style={{ position: 'fixed', left: 0, top: 0 }}
-        accept='application/json'
-      />
-      <Header />
-      <Filters situations={situations} />
-      <Content setSituations={setSituations} />
+      {error ? (
+        <ErrorLoader error={error} />
+      ) : isLoading ? (
+        <Loader />
+      ) : innings.length > 0 ? (
+        <>
+          <Header />
+          <Filters situations={situations} />
+          <Content setSituations={setSituations} />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
