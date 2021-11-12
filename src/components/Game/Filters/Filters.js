@@ -9,7 +9,7 @@ import useTabs from 'hooks/useTabs';
 import { useSelector } from 'react-redux';
 
 const Filters = () => {
-  const searchParams = useSearchParams()[0];
+  const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab');
   const situations = useSelector(state => state.game.situations);
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
