@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
@@ -8,7 +8,6 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 
 const Game = () => {
-  const [situations, setSituations] = useState(['All']);
   const innings = useSelector(state => state.game.innings);
   const dispatch = useDispatch();
   const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://84.201.172.216:3030/game_280');
@@ -32,8 +31,8 @@ const Game = () => {
       ) : innings.length > 0 ? (
         <>
           <Header />
-          <Filters situations={situations} />
-          <Content setSituations={setSituations} />
+          <Filters />
+          <Content />
         </>
       ) : (
         <></>

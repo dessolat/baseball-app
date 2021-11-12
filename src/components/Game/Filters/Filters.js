@@ -6,10 +6,12 @@ import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
 import useTabs from 'hooks/useTabs';
+import { useSelector } from 'react-redux';
 
-const Filters = ({ situations }) => {
+const Filters = () => {
   const searchParams = useSearchParams()[0];
   const tab = searchParams.get('tab');
+  const situations = useSelector(state => state.game.situations);
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
 
