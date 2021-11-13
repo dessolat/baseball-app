@@ -4,7 +4,7 @@ const defaultState = {
   inningNumber: null,
 	situations: ['All'],
   situationFilter: 'All',
-	playbackMode: 'play',
+	playbackMode: 'pause',
   viewMode: 'mode-1'
 };
 
