@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import cl from './ContentSituationsListItem.module.scss';
 import PortraitImg from 'images/portrait.png';
 import Ellipse from 'components/UI/icons/Ellipse';
 import Rectangle from 'components/UI/icons/Rectangle';
 
-const ContentSituationsListItem = ({ player, number, situationClick, currentCard }) => {
+const ContentSituationsListItem = ({ player, number, situationClick, currentCard }, ref) => {
   const eventsSummary = [];
   const lastMoment = player.moments.slice(-1)[0];
   lastMoment.events?.forEach(event => eventsSummary.push(event.description));
@@ -15,7 +15,12 @@ const ContentSituationsListItem = ({ player, number, situationClick, currentCard
     classNames.push(cl.active);
 
   return (
-    <li className={classNames.join(' ')} onClick={() => situationClick(player, number)}>
+    <li
+      ref={
+        player.who_id === currentCard.who_id && player.inning_number === currentCard.inning_number ? ref : null
+      }
+      className={classNames.join(' ')}
+      onClick={() => situationClick(player, number)}>
       <div className={cl.portraitRectanglesWrapper}>
         <img className={cl.portrait} src={PortraitImg} alt='Portrait' />
         <div className={cl.rectangles}>
@@ -42,4 +47,4 @@ const ContentSituationsListItem = ({ player, number, situationClick, currentCard
   );
 };
 
-export default ContentSituationsListItem;
+export default forwardRef(ContentSituationsListItem);

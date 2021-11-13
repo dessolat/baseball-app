@@ -2,6 +2,7 @@
   position: relative;
   grid-area: list;
   overflow-y: scroll;
+	scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     width: 7px;
