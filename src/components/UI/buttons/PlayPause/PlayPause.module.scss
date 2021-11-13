@@ -1,0 +1,28 @@
+.play {
+  > * {
+    margin-left: 3px;
+		
+		> * {
+			animation: animate 1s;
+		}
+  }
+}
+
+.pause {
+  > * {
+    animation: animate 1s;
+  }
+
+  > * + * {
+    margin-left: 3px;
+  }
+}
+
+@keyframes animate {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
