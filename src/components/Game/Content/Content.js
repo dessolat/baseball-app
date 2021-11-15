@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import PlaysImg from 'images/plays.jpg';
@@ -20,7 +20,8 @@ const Content = ({ viewMode, setSituations }) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const dispatch = useDispatch();
-  const searchParams = useSearchParams()[0];
+  const [searchParams] = useSearchParams();
+  const situationsChildRef = useRef();
 
   // **** Handle inning change ****
   useEffect(() => {
@@ -78,6 +79,7 @@ const Content = ({ viewMode, setSituations }) => {
     <section className='container'>
       <div className={cl.content}>
         <ContentSituationsList
+          ref={situationsChildRef}
           cards={filteredCards}
           currentCard={currentCard}
           setCurrentCard={setCurrentCard}
