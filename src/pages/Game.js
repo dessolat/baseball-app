@@ -11,8 +11,9 @@ const Game = () => {
   const innings = useSelector(state => state.game.innings);
   const dispatch = useDispatch();
   // const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://84.201.172.216:3030/game_280');
-  const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://192.168.1.4:3001/');
-  // const [error, isLoading, intervalRef, getFullData] = useGameFetch('https://fierce-harbor-71147.herokuapp.com/');
+  // const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://192.168.1.5:3001/');
+  // const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://localhost:3001/');
+  const [error, isLoading, intervalRef, getFullData] = useGameFetch('https://fierce-harbor-71147.herokuapp.com/');
 
   useEffect(() => {
     const interval = intervalRef.current;
