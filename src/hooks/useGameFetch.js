@@ -20,7 +20,7 @@ const useGameFetch = url => {
     async dispatch => {
       try {
         firstTime && setIsLoading(true);
-        const resp = await axios.get(url);
+        const resp = await axios.get(firstTime ? url + '0' : url);
         if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
         dataRef.current = resp.data;
         dispatch(setFullData(resp.data));
@@ -29,7 +29,7 @@ const useGameFetch = url => {
       } finally {
         if (firstTime) {
           setIsLoading(false);
-          intervalRef.current = setInterval(() => {dispatch(getFullData())}, 4000);
+          intervalRef.current = setInterval(() => {dispatch(getFullData())}, 3000);
         }
       }
     };
