@@ -7,18 +7,9 @@ const ContentVideoEventsList = ({ currentCard }) => {
 
   useEffect(() => {
     const newEvents = [];
-    currentCard.moments?.forEach(moment => {
-      if (moment.events) moment.events.forEach(event => newEvents.push(event.description));
-    });
+    currentCard.moments?.forEach(moment => moment.icons && newEvents.push(moment.icons));
     setEvents(newEvents);
   }, [currentCard]);
-
-  // useEffect(() => {
-  //   if (events.length > 0) {
-  //     const count = Math.ceil(events.length / 6);
-  //     ref.current.style.setProperty('--w', 30 * count + 16 + 8 * (count - 1));
-  //   }
-  // }, [events]);
 
   return (
     <>
