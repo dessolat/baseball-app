@@ -17,6 +17,8 @@ const Header = () => {
     useScrollHorizontally();
   const innings = useSelector(state => state.game.innings);
   const preview = useSelector(state => state.game.preview);
+  const inningNumber = useSelector(state => state.game.inningNumber);
+  const playbackMode = useSelector(state => state.game.playbackMode);
 
   useEffect(() => {
     const ref = scrollRef.current;
@@ -32,6 +34,11 @@ const Header = () => {
       scrollFixation();
     }
   }, [innings]);
+
+  useEffect(() => {
+    if (playbackMode !== 'play' || inningNumber < 10) return;
+    scrollRef.current.scrollLeft = (inningNumber - 9) * 30;
+  }, [playbackMode, inningNumber, scrollRef]);
 
   const scrollHorizontally = e => {
     const start = scrollRef.current.scrollLeft,
