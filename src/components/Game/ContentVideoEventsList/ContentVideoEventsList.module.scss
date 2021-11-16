@@ -22,7 +22,6 @@
   > * {
     width: 30px;
     height: 30px;
-    background: #e2001c;
     border: 0.5px solid #000000;
     border-radius: 15px;
     font: bold 1.125rem var(--font-comfortaa);
@@ -30,4 +29,16 @@
     line-height: 30px;
     text-align: center;
   }
+}
+
+.red {
+	background: #e2001c;
+}
+
+.green {
+	background: #2B9D6A;
+}
+
+.blue {
+	background: #3f5cfd;
 }
