@@ -27,13 +27,14 @@ const Header = () => {
     return () => {
       removeListeners(ref);
     };
-  }, []);
+  }, [scrollFixation, addListeners, removeListeners, scrollRef]);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollFixation();
     }
-  }, [innings]);
+
+  }, [innings, scrollRef, scrollFixation]);
 
   useEffect(() => {
     if (playbackMode !== 'play' || inningNumber < 10) return;
