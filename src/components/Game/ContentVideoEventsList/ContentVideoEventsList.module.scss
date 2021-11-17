@@ -28,6 +28,15 @@
     color: #ffffff;
     line-height: 30px;
     text-align: center;
+		position: relative;
+
+		&::before {
+			content: attr(data-before);
+			position: absolute;
+			left: 0;
+			top: -1rem;
+			font-size: .5rem;
+		}
   }
 }
 
@@ -41,4 +50,8 @@
 
 .blue {
 	background: #3f5cfd;
+}
+
+.yellow {
+	background: yellow;
 }
