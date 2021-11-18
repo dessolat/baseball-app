@@ -5,7 +5,13 @@ const ContentVideoEventsListItem = ({ event }) => {
   return (
     <>
       {event.circ_color_play && (
-        <li className={cl[event.circ_color_play]} data-before={event.batter_moment}>
+        <li
+          className={cl[event.circ_color_play]}
+          data-before={
+            (event.circ_text_pitch && event.circ_text_play === 'CS') || event.circ_text_play === 'R'
+              ? ''
+              : event.batter_moment
+          }>
           {event.circ_text_play}
         </li>
       )}
