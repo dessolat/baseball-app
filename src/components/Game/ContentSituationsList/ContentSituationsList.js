@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import cl from './ContentSituationsList.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode } from 'redux/gameReducer';
@@ -21,7 +22,8 @@ const ContentSituationsList = ({ cards, currentCard, setCurrentCard }, ref) => {
     <ul className={cl.list}>
       {cards.map((card, i) => (
         <ContentSituationsListItem
-          key={card.inning_number + ' ' + card.who}
+          // key={card.inning_number + ' ' + card.who}
+          key={uuidv4()}
 					ref={ref}
           player={card}
           number={i}
