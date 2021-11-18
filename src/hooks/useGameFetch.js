@@ -20,7 +20,8 @@ const useGameFetch = url => {
     async dispatch => {
       try {
         firstTime && setIsLoading(true);
-        const resp = await axios.get(firstTime ? url + '0' : url);
+        // const resp = await axios.get(firstTime ? url + '0' : url);
+        const resp = await axios.get(url);
         if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
         dataRef.current = resp.data;
         dispatch(setFullData(resp.data));
