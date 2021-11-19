@@ -1,12 +1,13 @@
 import React from 'react';
+import cl from './FiltersSituationsList.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaybackMode, setSituationFilter } from 'redux/gameReducer';
 
-const FiltersSituationsListItem = ({ situation, cl }) => {
+const FiltersSituationsListItem = ({ situation }) => {
 	const situationFilter = useSelector(state => state.game.situationFilter)
 	const playbackMode = useSelector(state => state.game.playbackMode)
 	const dispatch = useDispatch();
-  const classes = situationFilter === situation ? cl.active : '';
+  const classes = situationFilter === situation.name ? cl.active : '';
 
   const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
 	const handleClick = e => {
@@ -15,8 +16,8 @@ const FiltersSituationsListItem = ({ situation, cl }) => {
 	}
   return (
     <li>
-      <button name={situation} onClick={handleClick}>
-        <span className={classes}>{capitalizeFirstLetter(situation)}</span>
+      <button name={situation.name} onClick={handleClick} data-count={situation.count} className={situation.count <= 1 ? cl.hidden : ''}>
+        <span className={classes}>{capitalizeFirstLetter(situation.name)}</span>
       </button>
     </li>
   );
