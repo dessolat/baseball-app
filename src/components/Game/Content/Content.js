@@ -59,7 +59,7 @@ const Content = () => {
       
       gameIdRef.current = gameId; //Delete later
       dispatch(setInningNumber(null)); //Delete later
-    } 
+    } //Delete later
     setCards(newCards);
     setFilteredCards(filteredCards);
     playbackMode === 'play' &&
@@ -67,7 +67,7 @@ const Content = () => {
         ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
         : setCurrentCard({}));
 
-    dispatch(setSituations([...new Set(newSituations)]));
+    dispatch(setSituations(newSituations));
     // eslint-disable-next-line
   }, [innings]);
 
@@ -104,7 +104,7 @@ const Content = () => {
       (filteredCards.length !== 0
         ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
         : setCurrentCard({}));
-    dispatch(setSituations([...new Set(newSituations)]));
+    dispatch(setSituations(newSituations));
     // eslint-disable-next-line
   }, [inningNumber]);
 
@@ -149,29 +149,6 @@ const Content = () => {
 
     // eslint-disable-next-line
   }, [playbackMode]);
-
-  /*********** TO-DO **************
-	1. In playbackMode === "play", when clicking the ContentSituationsListItem change the playbackMode to "pause"		(DONE)
-	2. When paused - don't switch the current card  																																(DONE)
-	3. Change default state of playbackMode to "pause"																															(DONE)
-	4. Change play/pause buttons appearance																																					(DONE)
-	5. Make scrolling to latest filterCard when playbackMode changed to "play"																			(DONE)
-	6. Add row_number key to current_card																																						(DONE)
-	7. Make fetch more often																																												(DONE)
-	8. Update json files in the server, make them 4-5 more count																										(DONE)
-	9. Make switching current inning in playback mode "play"																												(DONE)
-	10. Add colors and labels for circles in video																																	(DONE)
-	11. Добавить ĸ VideoEventsListItem ĸружĸам - цифру moment_id (вроде)																						(DONE)
-	12. Сделать отображение второго ĸружĸа ĸ VideoEventsListItem																										(DONE)
-	13. Сделать чтобы нельзя было отжать аĸтивную ĸарточĸу																													(DONE)
-	14. Сделать поле с ĸнопĸой и добавлением id игры для теста
-	15. Добавить ĸ фильтрам цифру с ĸоличеством ĸарточеĸ данного типа
-	16. При создании массива cards - парсить игроĸа на наличие замены в первом моменте и если она есть, то
-	17. Добавить этот момент (замену) ĸаĸ отдельную ĸарточĸу (объеĸт).
-	18. Промежуточные данные в прямоугольниĸах сделать через map массива прямоугольниĸов (сделать
-			 массив предварительно)
-	19. Ask to add field "game_over" to not fetch many times
-	********************************/
 
   const renderTab = tab => {
     switch (tab) {
