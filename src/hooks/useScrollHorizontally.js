@@ -17,7 +17,8 @@ const useScrollHorizontally = () => {
   };
 
   const scrollFixation = () => {
-    setIsLeftScroll(scrollRef.current.scrollLeft !== 0);
+    if (scrollRef.current === null) return 
+		setIsLeftScroll(scrollRef.current.scrollLeft !== 0);
     setIsRightScroll(
       scrollRef.current.scrollLeft + scrollRef.current.clientWidth < scrollRef.current.scrollWidth
     );
