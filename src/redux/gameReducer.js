@@ -5,7 +5,8 @@ const defaultState = {
 	situations: ['All'],
   situationFilter: 'All',
 	playbackMode: 'play',
-  viewMode: 'mode-1'
+  viewMode: 'mode-1',
+	gameId: 0
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -14,6 +15,7 @@ const SET_SITUATIONS = 'SET_SITUATIONS';
 const SET_SITUATION_FILTER = 'SET_SITUATION_FILTER';
 const SET_PLAYBACK_MODE = 'SET_PLAYBACK_MODE'
 const SET_VIEW_MODE = 'SET_VIEW_MODE'
+const SET_GAME_ID = 'SET_GAME_ID'
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -29,6 +31,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, playbackMode: action.payload };
     case SET_VIEW_MODE:
       return { ...state, viewMode: action.payload };
+    case SET_GAME_ID:
+      return { ...state, gameId: action.payload };
     default:
       return state;
   }
@@ -40,3 +44,4 @@ export const setSituations = payload => ({ type: SET_SITUATIONS, payload });
 export const setSituationFilter = payload => ({ type: SET_SITUATION_FILTER, payload });
 export const setPlaybackMode = payload => ({ type: SET_PLAYBACK_MODE, payload });
 export const setViewMode = payload => ({ type: SET_VIEW_MODE, payload });
+export const setGameId = payload => ({ type: SET_GAME_ID, payload });
