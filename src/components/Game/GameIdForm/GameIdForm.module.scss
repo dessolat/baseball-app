@@ -1,0 +1,17 @@
+.form {
+  position: absolute;
+  left: 7.5px;
+  top: 7.5px;
+
+  > input {
+    width: 40px;
+    text-align: right;
+  }
+
+  > button {
+    margin-left: 8px;
+    background-color: white;
+    padding: 1px;
+    border: 1px solid black;
+  }
+}
