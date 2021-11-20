@@ -36,7 +36,7 @@ const Content = () => {
       inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
     newInnings.forEach(inning => {
       inning['top/guests'].forEach(guest => {
-        newCards.push({ inning_number: inning.number, ...guest });
+        newCards.push({ inning_number: inning.number, ...guest});
         guest.moments.slice(-1)[0].filter &&
           (typeof guest.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...guest.moments.slice(-1)[0].filter)
@@ -64,7 +64,8 @@ const Content = () => {
     setFilteredCards(filteredCards);
     playbackMode === 'play' &&
       (filteredCards.length !== 0
-        ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+        // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+        ? setCurrentCard({ ...filteredCards.slice(-1)[0]})
         : setCurrentCard({}));
 
     dispatch(setSituations(newSituations));
@@ -99,10 +100,12 @@ const Content = () => {
 
     setCards(newCards);
     setFilteredCards(filteredCards);
-    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
+    // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
+    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0]});
     playbackMode === 'play' &&
       (filteredCards.length !== 0
-        ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+        // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+        ? setCurrentCard({ ...filteredCards.slice(-1)[0]})
         : setCurrentCard({}));
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
@@ -118,9 +121,11 @@ const Content = () => {
         : cards;
 
     setFilteredCards(filteredCards);
-    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
+    // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
+    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0]});
     playbackMode === 'play' &&
-      setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      setCurrentCard({ ...filteredCards.slice(-1)[0]});
     // eslint-disable-next-line
   }, [situationFilter]);
 
@@ -130,7 +135,8 @@ const Content = () => {
       return;
     }
     playbackMode === 'play' &&
-      setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      setCurrentCard({ ...filteredCards.slice(-1)[0]});
     // eslint-disable-next-line
   }, [filteredCards]);
 
@@ -145,7 +151,8 @@ const Content = () => {
     if (playbackMode !== 'play') return;
     inningNumber !== innings.length
       ? dispatch(setInningNumber(innings.length))
-      : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+      : setCurrentCard({ ...filteredCards.slice(-1)[0]});
 
     // eslint-disable-next-line
   }, [playbackMode]);

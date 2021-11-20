@@ -9,10 +9,11 @@ const ContentSituationsList = ({ cards, currentCard, setCurrentCard }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
-  const situationClick = (player, number) => {
+  const situationClick = player => {
     playbackMode === 'play' && dispatch(setPlaybackMode('pause'));
-    if (currentCard.row_number === number) return;
-    setCurrentCard({ ...player, row_number: number });
+    // if (currentCard.row_number === number) return;
+    // setCurrentCard({ ...player, row_number: number });
+    setCurrentCard({ ...player});
   };
 
   return (

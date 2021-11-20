@@ -19,8 +19,6 @@ const useGameFetch = url => {
   const getFullData =
     (firstTime = false, innerUrl = url) =>
     async dispatch => {
-      
-
       cancelTokenRef.current = axios.CancelToken.source();
 
       try {
