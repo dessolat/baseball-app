@@ -9,7 +9,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font: bold 1.125rem var(--font-comfortaa);
+	font-size: 1.125rem;
 }
 
 .date {
@@ -44,7 +44,7 @@
 }
 
 .teamScore {
-  font-size: 4.75rem;
+	font: 700 4.75rem var(--font-comfortaa);
   line-height: 1.118;
   width: 7rem;
   text-align: center;
