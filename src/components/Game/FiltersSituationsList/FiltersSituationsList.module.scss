@@ -26,7 +26,7 @@
   }
 
   > li > button {
-    padding: 0.78125rem 1.875rem 0.46875rem;
+    padding: 0.7rem 1.875rem 0.46875rem;
     font: inherit;
 		position: relative;
 
@@ -60,7 +60,7 @@
 
   > li > button > span {
     display: inline-block;
-    padding-bottom: 0.1875rem;
+    // padding-bottom: 0.1875rem;
     border-bottom: 2px solid transparent;
     transition: border-bottom var(--transition-speed);
 
