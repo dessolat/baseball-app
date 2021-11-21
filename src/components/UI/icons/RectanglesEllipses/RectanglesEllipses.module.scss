@@ -1,0 +1,43 @@
+.rectangles {
+  position: relative;
+  margin-top: 5px;
+  height: 38px;
+  width: 36px;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.topRectangle {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.leftRectangle,
+.rightRectangle {
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.leftRectangle {
+  left: 0;
+}
+
+.rightRectangle {
+  right: 0;
+}
+
+.leftEllipse,
+.rightEllipse {
+  bottom: 0;
+}
+
+.leftEllipse {
+  right: 52%;
+}
+
+.rightEllipse {
+  left: 53.5%;
+}
