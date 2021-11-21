@@ -1,0 +1,35 @@
+.classic {
+	display: flex;
+  align-items: stretch;
+  column-gap: 10px;
+}
+
+.textRectanglesWrapper {
+	display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+	flex: 1 1 100%;
+}
+
+.portrait {
+  margin-top: 4px;
+}
+
+.portraitEllipsesWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.playerName {
+  font: 700 .875rem var(--font-nunito);
+  line-height: 1.36rem;
+  text-align: justify;
+}
+
+.text {
+  font: 400 .875rem var(--font-nunito);
+  line-height: 1.36rem;
+  text-align: justify;
+}
