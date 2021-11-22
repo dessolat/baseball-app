@@ -7,7 +7,9 @@ const ContentVideoEventsList = ({ currentCard }) => {
 
   useEffect(() => {
     const newEvents = [];
-    currentCard.moments?.forEach(moment => moment.icons && newEvents.push(moment.icons));
+    currentCard.type !== 'Replacement'
+      ? currentCard.moments?.forEach(moment => moment.icons && newEvents.push(moment.icons))
+      : newEvents.push(currentCard.moments[0].icons);
     setEvents(newEvents);
   }, [currentCard]);
 

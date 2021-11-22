@@ -31,6 +31,26 @@
     text-align: center;
 		position: relative;
 
+		> div {
+			width: 100%;
+			height: 100%;
+
+			> svg {
+				position: absolute;
+
+				&:first-child {
+					left: 52%;
+					top: 22%;
+					transform: translate(-50%);
+				}
+				&:last-child {
+					left: 48%;
+					bottom: 18%;
+					transform: translate(-50%);
+				}
+			}
+		}
+
 		&::before {
 			content: attr(data-before);
 			position: absolute;
