@@ -1,3 +1,4 @@
+import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 import React from 'react';
 import cl from './ContentVideoEventsList.module.scss';
 
@@ -6,13 +7,13 @@ const ContentVideoEventsListItem = ({ event }) => {
     <>
       {event.circ_color_play && (
         <li
-          className={cl[event.circ_color_play]}
+          className={event.circ_text_play !== 'R' ? cl[event.circ_color_play] : ''}
           data-before={
             (event.circ_text_pitch && event.circ_text_play === 'CS') || event.circ_text_play === 'R'
               ? ''
               : event.batter_moment
           }>
-          {event.circ_text_play}
+          {event.circ_text_play !== 'R' ? event.circ_text_play : <ReplaceEvent />}
         </li>
       )}
       {event.circ_color_pitch && (
