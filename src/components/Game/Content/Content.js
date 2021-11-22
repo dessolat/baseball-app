@@ -36,14 +36,26 @@ const Content = () => {
       inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
     newInnings.forEach(inning => {
       inning['top/guests'].forEach(guest => {
-        newCards.push({ inning_number: inning.number, ...guest});
+        guest.moments[0].icons?.rect_text !== 'Replacement'
+          ? newCards.push({ inning_number: inning.number, ...guest })
+          : newCards.push(
+              { inning_number: inning.number, ...guest, type: 'Replacement' },
+              { inning_number: inning.number, ...guest }
+            );
+
         guest.moments.slice(-1)[0].filter &&
           (typeof guest.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...guest.moments.slice(-1)[0].filter)
             : newSituations.push(guest.moments.slice(-1)[0].filter));
       });
       inning['bottom/owners']?.forEach(owner => {
-        newCards.push({ inning_number: inning.number, ...owner });
+        owner.moments[0].icons?.rect_text !== 'Replacement'
+          ? newCards.push({ inning_number: inning.number, ...owner })
+          : newCards.push(
+              { inning_number: inning.number, ...owner, type: 'Replacement' },
+              { inning_number: inning.number, ...owner }
+            );
+
         owner.moments?.slice(-1)[0].filter &&
           (typeof owner.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...owner.moments.slice(-1)[0].filter)
@@ -55,8 +67,9 @@ const Content = () => {
         ? newCards.filter(card => card.moments.slice(-1)[0].filter?.includes(situationFilter))
         : newCards;
 
-    if (gameIdRef.current !== gameId && playbackMode !== 'play') {//Delete later
-      
+    if (gameIdRef.current !== gameId && playbackMode !== 'play') {
+      //Delete later
+
       gameIdRef.current = gameId; //Delete later
       dispatch(setInningNumber(null)); //Delete later
     } //Delete later
@@ -64,8 +77,8 @@ const Content = () => {
     setFilteredCards(filteredCards);
     playbackMode === 'play' &&
       (filteredCards.length !== 0
-        // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
-        ? setCurrentCard({ ...filteredCards.slice(-1)[0]})
+        ? // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+          setCurrentCard({ ...filteredCards.slice(-1)[0] })
         : setCurrentCard({}));
 
     dispatch(setSituations(newSituations));
@@ -79,14 +92,26 @@ const Content = () => {
       inningNumber !== null ? innings.filter(inning => inning.number === inningNumber) : innings;
     newInnings.forEach(inning => {
       inning['top/guests'].forEach(guest => {
-        newCards.push({ inning_number: inning.number, ...guest });
+        guest.moments[0].icons?.rect_text !== 'Replacement'
+          ? newCards.push({ inning_number: inning.number, ...guest })
+          : newCards.push(
+              { inning_number: inning.number, ...guest, type: 'Replacement' },
+              { inning_number: inning.number, ...guest }
+            );
+
         guest.moments?.slice(-1)[0]?.filter &&
           (typeof guest.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...guest.moments.slice(-1)[0].filter)
             : newSituations.push(guest.moments.slice(-1)[0].filter));
       });
       inning['bottom/owners']?.forEach(owner => {
-        newCards.push({ inning_number: inning.number, ...owner });
+        owner.moments[0].icons?.rect_text !== 'Replacement'
+          ? newCards.push({ inning_number: inning.number, ...owner })
+          : newCards.push(
+              { inning_number: inning.number, ...owner, type: 'Replacement' },
+              { inning_number: inning.number, ...owner }
+            );
+
         owner.moments?.slice(-1)[0].filter &&
           (typeof owner.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...owner.moments.slice(-1)[0].filter)
@@ -101,11 +126,11 @@ const Content = () => {
     setCards(newCards);
     setFilteredCards(filteredCards);
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
-    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0]});
+    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0] });
     playbackMode === 'play' &&
       (filteredCards.length !== 0
-        // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
-        ? setCurrentCard({ ...filteredCards.slice(-1)[0]})
+        ? // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
+          setCurrentCard({ ...filteredCards.slice(-1)[0] })
         : setCurrentCard({}));
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
@@ -122,10 +147,10 @@ const Content = () => {
 
     setFilteredCards(filteredCards);
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
-    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0]});
+    playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0] });
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-      setCurrentCard({ ...filteredCards.slice(-1)[0]});
+      setCurrentCard({ ...filteredCards.slice(-1)[0] });
     // eslint-disable-next-line
   }, [situationFilter]);
 
@@ -136,7 +161,7 @@ const Content = () => {
     }
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-      setCurrentCard({ ...filteredCards.slice(-1)[0]});
+      setCurrentCard({ ...filteredCards.slice(-1)[0] });
     // eslint-disable-next-line
   }, [filteredCards]);
 
@@ -151,8 +176,8 @@ const Content = () => {
     if (playbackMode !== 'play') return;
     inningNumber !== innings.length
       ? dispatch(setInningNumber(innings.length))
-      // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-      : setCurrentCard({ ...filteredCards.slice(-1)[0]});
+      : // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+        setCurrentCard({ ...filteredCards.slice(-1)[0] });
 
     // eslint-disable-next-line
   }, [playbackMode]);
