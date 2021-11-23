@@ -8,6 +8,7 @@
 
 # production
 /build
+templates.md
 
 # misc
 .DS_Store
