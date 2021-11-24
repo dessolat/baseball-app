@@ -3,17 +3,16 @@ import cl from './ContentSituationsList.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPlaybackMode } from 'redux/gameReducer';
+import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
 
-const ContentSituationsList = ({ cards, currentCard, setCurrentCard }, ref) => {
+const ContentSituationsList = ({ cards, currentCard }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
   const situationClick = player => {
     playbackMode === 'play' && dispatch(setPlaybackMode('pause'));
-    // if (currentCard.row_number === number) return;
     // setCurrentCard({ ...player, row_number: number });
-    setCurrentCard({ ...player});
+    dispatch(setCurrentCard({ ...player, manualClick: true}));
   };
 
   return (
