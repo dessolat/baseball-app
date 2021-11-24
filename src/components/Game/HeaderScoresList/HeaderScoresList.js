@@ -1,13 +1,12 @@
 import React, { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setInningNumber, setPlaybackMode, setSituationFilter } from 'redux/gameReducer';
+import { setCurrentCard, setPlaybackMode } from 'redux/gameReducer';
 import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
 
 const HeaderScoresList = forwardRef(({ innings }, ref) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const situationFilter = useSelector(state => state.game.situationFilter);
+  const filteredCards = useSelector(state => state.game.filteredCards);
   const dispatch = useDispatch();
   const maxInnings = innings.length;
   const newInnings = innings.slice();
@@ -18,10 +17,10 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
     }
   }
 
-  const handleClick = number => {
-    playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
-		situationFilter !== 'All' && dispatch(setSituationFilter('All'))
-    dispatch(setInningNumber(inningNumber === number ? null : number));
+  const handleClick = (number, side) => {
+    dispatch(setPlaybackMode('pause'));
+		const newCurrentCard = filteredCards.find(card => card.inning_number === number && card.side === side)
+		newCurrentCard && dispatch(setCurrentCard({...newCurrentCard, manualClick: false}))
   };
 
   return (
