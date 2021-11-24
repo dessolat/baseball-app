@@ -7,6 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
+import { setCurrentCard, setSituationFilter } from 'redux/gameReducer';
 
 const Game = () => {
   const innings = useSelector(state => state.game.innings);
@@ -31,6 +32,8 @@ const Game = () => {
   useEffect(() => {
     if (gameId === 0) return;
     typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+    dispatch(setCurrentCard({}));
+    dispatch(setSituationFilter('All'));
     clearInterval(intervalRef.current);
     dispatch(getFullData(true, 'http://84.201.172.216:3030/game_' + gameId));
     // eslint-disable-next-line
