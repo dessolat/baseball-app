@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './ContentControls.module.scss';
 import PlayPause from 'components/UI/buttons/PlayPause/PlayPause';
-import Repeat from 'components/UI/buttons/Repeat/Repeat';
+import PlayOnline from 'components/UI/buttons/PlayOnline/PlayOnline';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode } from 'redux/gameReducer';
 
@@ -11,7 +11,7 @@ const ContentControls = () => {
 
 	const playbackModeClick = e => {
     const newMode =
-      e.currentTarget.name === 'play-pause' ? (playbackMode === 'play' ? 'pause' : 'play') : 'repeat';
+      e.currentTarget.name === 'play-pause' ? (playbackMode === 'play' ? 'pause' : 'play') : 'play-online';
     dispatch(setPlaybackMode(newMode));
   };
 
@@ -20,13 +20,13 @@ const ContentControls = () => {
       <PlayPause
         name='play-pause'
         onClick={playbackModeClick}
-        className={playbackMode !== 'repeat' ? cl.active : ''}
+        className={playbackMode !== 'play-online' ? cl.active : ''}
         playbackMode={playbackMode}
       />
-      <Repeat
-        name='repeat'
+      <PlayOnline
+        name='play-online'
         onClick={playbackModeClick}
-        className={playbackMode === 'repeat' ? cl.active : ''}
+        className={playbackMode === 'play-online' ? cl.active : ''}
       />
     </div>
   );
