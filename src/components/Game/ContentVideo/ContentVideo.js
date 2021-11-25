@@ -1,8 +1,8 @@
 import React from 'react';
-import ContentVideoEventsList from '../ContentVideoEventsList/ContentVideoEventsList';
 import cl from './ContentVideo.module.scss';
+import ContentVideoEventsList from '../ContentVideoEventsList/ContentVideoEventsList';
 
-const ContentVideo = ({currentCard}) => {
+const ContentVideo = () => {
   return (
     <div className={cl.videoWrapper + ' ' + cl.videoOne}>
       <iframe
@@ -13,7 +13,7 @@ const ContentVideo = ({currentCard}) => {
         frameBorder='0'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen></iframe>
-      <ContentVideoEventsList currentCard={currentCard}/>
+      <ContentVideoEventsList />
     </div>
   );
 };

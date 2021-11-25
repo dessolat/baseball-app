@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import cl from './ContentVideoEventsList.module.scss';
 import ContentVideoEventsListItem from './ContentVideoEventsListItem';
+import { useSelector } from 'react-redux';
 
-const ContentVideoEventsList = ({ currentCard }) => {
+const ContentVideoEventsList = () => {
   const [events, setEvents] = useState([]);
+  const currentCard = useSelector(state => state.game.currentCard);
 
   useEffect(() => {
     const newEvents = [];
