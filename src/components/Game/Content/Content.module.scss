@@ -1,22 +1,7 @@
-@import 'scss/vars.scss';
-
 .content {
   display: grid;
   grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 58.6875rem);
   grid-template-areas:
     'list graphics'
     'controls graphics';
-}
-
-.controlsWrapper {
-  grid-area: controls;
-  padding-top: 2px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-	padding: 0 6px;
-}
-
-.graphics {
-  grid-area: graphics;
 }
