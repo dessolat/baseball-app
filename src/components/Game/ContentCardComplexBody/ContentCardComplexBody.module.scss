@@ -7,28 +7,9 @@
 
 .bottom {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-}
 
-.rectText {
-	padding: .25rem .9375rem;
-	border: .8px solid transparent;
-	border-radius: 8px;
-	font-size: .875rem;
-}
-
-.red {
-  color: #e2001c;
-	border-color: #e2001c;
-}
-
-.blue {
-	color: #1a4c96;
-	border-color: #1a4c96;
-}
-
-.green {
-	color: #2b9d6a;
-	border-color: #2b9d6a;
+  > *:last-child {
+    margin-left: auto;
+  }
 }

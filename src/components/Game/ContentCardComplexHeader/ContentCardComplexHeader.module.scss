@@ -1,50 +1,31 @@
 .top {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	column-gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  column-gap: 10px;
 }
 
 .portrait {
-	margin-top: 4px;
+  margin-top: 4px;
 }
 
 .playerName {
-  font: 700 .875rem var(--font-nunito);
+  font: 700 0.875rem var(--font-nunito);
   line-height: 1.36rem;
   text-align: justify;
 }
 
 .text {
-  font: 400 .875rem var(--font-nunito);
+  font: 400 0.875rem var(--font-nunito);
   line-height: 1.36rem;
   text-align: justify;
 }
 
 .bottom {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-}
 
-.rectText {
-	padding: .25rem .9375rem;
-	border: .8px solid transparent;
-	border-radius: 8px;
-	font-size: .875rem;
-}
-
-.red {
-  color: #e2001c;
-	border-color: #e2001c;
-}
-
-.blue {
-	color: #1a4c96;
-	border-color: #1a4c96;
-}
-
-.green {
-	color: #2b9d6a;
-	border-color: #2b9d6a;
+  > *:last-child {
+    margin-left: auto;
+  }
 }
