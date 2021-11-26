@@ -1,10 +1,15 @@
 import React from 'react'
 import cl from './Plays.module.scss'
-import PlaysImg from 'images/plays.jpg';
 
 const Plays = () => {
 	return (
-		<img src={PlaysImg} alt='plays' width='100%' />
+		<div className={cl.plays}>
+			<div className={cl.events}></div>
+			<div className={cl.speed}></div>
+			<div className={cl.spin}></div>
+			<div className={cl.field}></div>
+			<div className={cl.footer}></div>
+		</div>
 	)
 }
 

@@ -1,0 +1,35 @@
+.plays {
+	height: 100%;
+  display: grid;
+  grid-template: minmax(116px, 146px) minmax(300px, 330px) 36px / minmax(192px, 262px) minmax(336px, 406px) minmax(189px, 259px);
+  grid-template-areas:
+    'events spd spin'
+    'events field field'
+		'footer footer footer';
+	gap: 6px;
+}
+
+.events {
+	grid-area: events;
+	background: lightgray;
+}
+
+.speed {
+	grid-area: spd;
+	background: lightgray;
+}
+
+.spin {
+	grid-area: spin;
+	background: lightgray;
+}
+
+.field {
+	grid-area: field;
+	background: lightgray;
+}
+
+.footer {
+	grid-area: footer;
+	background: lightgray;
+}
