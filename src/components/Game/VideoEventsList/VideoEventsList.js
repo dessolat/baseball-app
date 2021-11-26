@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import cl from './ContentVideoEventsList.module.scss';
-import ContentVideoEventsListItem from './ContentVideoEventsListItem';
+import cl from './VideoEventsList.module.scss';
+import VideoEventsListItem from './VideoEventsListItem';
 import { useSelector } from 'react-redux';
 
-const ContentVideoEventsList = () => {
+const VideoEventsList = () => {
   const [events, setEvents] = useState([]);
   const currentCard = useSelector(state => state.game.currentCard);
 
@@ -20,7 +20,7 @@ const ContentVideoEventsList = () => {
       {events.length !== 0 && (
         <ul className={cl.events}>
           {events.map((event, i) => (
-            <ContentVideoEventsListItem key={i} event={event} />
+            <VideoEventsListItem key={i} event={event} />
           ))}
         </ul>
       )}
@@ -28,4 +28,4 @@ const ContentVideoEventsList = () => {
   );
 };
 
-export default ContentVideoEventsList;
+export default VideoEventsList;

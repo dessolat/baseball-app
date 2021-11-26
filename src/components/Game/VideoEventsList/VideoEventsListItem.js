@@ -1,8 +1,8 @@
-import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 import React from 'react';
-import cl from './ContentVideoEventsList.module.scss';
+import cl from './VideoEventsList.module.scss';
+import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 
-const ContentVideoEventsListItem = ({ event }) => {
+const VideoEventsListItem = ({ event }) => {
   return (
     <>
       {event.circ_color_pitch && (
@@ -21,4 +21,4 @@ const ContentVideoEventsListItem = ({ event }) => {
   );
 };
 
-export default ContentVideoEventsListItem;
+export default VideoEventsListItem;

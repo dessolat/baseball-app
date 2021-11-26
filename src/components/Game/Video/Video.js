@@ -1,8 +1,8 @@
 import React from 'react';
-import cl from './ContentVideo.module.scss';
-import ContentVideoEventsList from '../ContentVideoEventsList/ContentVideoEventsList';
+import cl from './Video.module.scss';
+import VideoEventsList from '../VideoEventsList/VideoEventsList';
 
-const ContentVideo = () => {
+const Video = () => {
   return (
     <div className={cl.videoWrapper + ' ' + cl.videoOne}>
       <iframe
@@ -13,9 +13,9 @@ const ContentVideo = () => {
         frameBorder='0'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen></iframe>
-      <ContentVideoEventsList />
+      <VideoEventsList />
     </div>
   );
 };
 
-export default ContentVideo;
+export default Video;
