@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './ContentGraphics.module.scss';
-import PlaysImg from 'images/plays.jpg';
 import Videos from '../Videos/Videos';
+import Plays from '../Plays/Plays';
 import { useSearchParams } from 'react-router-dom';
 
 const ContentGraphics = () => {
@@ -15,7 +15,7 @@ const ContentGraphics = () => {
       case 'videos':
         return <Videos />;
       default:
-        return <img src={PlaysImg} alt='plays' width='100%' />;
+        return <Plays />;
     }
   };
 
