@@ -1,0 +1,16 @@
+@import 'scss/vars.scss';
+
+.speed {
+	grid-area: spd;
+	background: white;
+	padding: 1.05rem 1.375rem;
+}
+
+.subHeader {
+  font: 400 0.875rem var(--font-nunito);
+  color: var(--side-color);
+}
+
+.chart {
+	
+}
