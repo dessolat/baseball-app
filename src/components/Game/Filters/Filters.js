@@ -69,7 +69,7 @@ const Filters = () => {
             <Arrow style={{ visibility: 'hidden' }} />
           )}
         </div>
-        {useTabs(tab) && <FiltersViewModes />}
+        {tab === 'videos' && <FiltersViewModes />}
       </div>
     </section>
   );
