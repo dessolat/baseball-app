@@ -1,0 +1,34 @@
+.spin {
+	grid-area: spin;
+	display: flex;
+	align-items: center;
+	column-gap: 5px;
+	background-color: white;
+	padding: 5px 0;
+
+	> div {
+		flex: 1 1 50%;
+
+		&:last-child {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			height: 100%;
+		}
+	}
+
+}
+
+.subHeader {
+  font: 400 0.875rem var(--font-nunito);
+  color: var(--side-color);
+}
+
+.regularValue {
+	font: 700 .875rem var(--font-athiti);
+}
+
+.breakValue {
+	color: var(--red-color);
+	font: 700 .875rem var(--font-athiti);
+}
