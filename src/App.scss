@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&display=swap&family=Nunito:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@700&family=Comfortaa:wght@300;700&family=Nunito:wght@300;400;700&family=Roboto:wght@700&display=swap');
 @import 'scss/vars.scss';
 
 *,
@@ -10,41 +10,41 @@
 }
 
 html {
-	font-size: 16px;
+  font-size: 16px;
 
-	@media screen and (max-width: 1230px){
-		font-size: 15px;
-	}
-	@media screen and (max-width: 1151px){
-		font-size: 14px;
-	}
+  @media screen and (max-width: 1230px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 1151px) {
+    font-size: 14px;
+  }
 }
 
 body {
-	font-family: var(--font-nunito);
-	font-weight: 400;
+  font-family: var(--font-nunito);
+  font-weight: 400;
   background-color: #e5e5e5;
-	-webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
-	text-decoration: none;
-	color: black;
+  text-decoration: none;
+  color: black;
 }
 
 ul {
-	list-style: none;
+  list-style: none;
 }
 
 button {
-	background-color: transparent;
-	cursor: pointer;
-	outline: none;
-	border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
 }
 
 .container {
-	max-width: 1280px;
-	padding: 0 1rem;
-	margin: 0 auto;
+  max-width: 1280px;
+  padding: 0 1rem;
+  margin: 0 auto;
 }
