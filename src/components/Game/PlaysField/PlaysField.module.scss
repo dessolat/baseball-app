@@ -1,0 +1,52 @@
+@import 'scss/vars.scss';
+
+.field {
+  grid-area: field;
+  background: no-repeat url('../../../images/plays_bg.jpg') center / cover;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.grid {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
+.ball {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  background-color: gray;
+  border: 0.5px solid black;
+  box-shadow: 1px 1px 1px 1px gray;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.875rem 1.375rem;
+}
+
+.subHeader {
+  font: 400 0.875rem var(--font-nunito);
+  color: var(--side-color);
+}
+
+.releaseSpeed,
+.releaseValue {
+  width: 5.9rem;
+	display: inline-block;
+}
+
+.releaseValue {
+  font: 700 1.375rem var(--font-roboto);
+  color: var(--red-color);
+}
+
+.regularValue {
+	font: 700 .875rem var(--font-athiti);
+}
