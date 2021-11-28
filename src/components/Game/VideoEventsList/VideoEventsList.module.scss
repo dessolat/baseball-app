@@ -63,17 +63,17 @@
 }
 
 .red {
-	background: #e2001c;
+	background: var(--red-color);
 }
 
 .green {
-	background: #2B9D6A;
+	background: var(--green-color);
 }
 
 .blue {
-	background: #4AA0F0;
+	background: var(--light-blue-color);
 }
 
 .yellow {
-	background: #F3D11A;
+	background: var(--yellow-color);
 }
