@@ -1,0 +1,85 @@
+@import 'scss/vars.scss';
+
+.events {
+  grid-area: events;
+  background: white;
+  border-top: 2px solid var(--side-color);
+  padding: 8px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+	> * {
+		display: flex;
+		align-items: center;
+		column-gap: 8px;
+	}
+
+	> * + * {
+		margin-top: 8px;
+	}
+
+  > * > *:first-child {
+		flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid #000000;
+    border-radius: 15px;
+    font: 400 1.125rem var(--font-comfortaa);
+    color: #ffffff;
+    line-height: 30px;
+    text-align: center;
+    position: relative;
+
+    > div {
+      width: 100%;
+      height: 100%;
+
+      > svg {
+        position: absolute;
+
+        &:first-child {
+          left: 52%;
+          top: 22%;
+          transform: translate(-50%);
+        }
+        &:last-child {
+          left: 48%;
+          bottom: 18%;
+          transform: translate(-50%);
+        }
+      }
+    }
+
+    &::before {
+      content: attr(data-before);
+      position: absolute;
+      left: -4px;
+      top: -11.9px;
+      font-size: 8px;
+      color: black;
+    }
+  }
+}
+
+.text {
+	font: 400 .875rem var(--font-nunito);
+}
+
+.red {
+	background: var(--red-color);
+}
+
+.green {
+	background: var(--green-color);
+}
+
+.blue {
+	background: var(--light-blue-color);
+}
+
+.yellow {
+	background: var(--yellow-color);
+}
