@@ -5,7 +5,6 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
-import useTabs from 'hooks/useTabs';
 import { useSelector } from 'react-redux';
 
 const Filters = () => {
