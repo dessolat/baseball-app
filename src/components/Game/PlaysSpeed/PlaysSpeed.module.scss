@@ -3,14 +3,11 @@
 .speed {
 	grid-area: spd;
 	background: white;
-	padding: 1.05rem 1.375rem;
+	padding: 1.05rem .2rem 5px;
 }
 
 .subHeader {
   font: 400 0.875rem var(--font-nunito);
   color: var(--side-color);
-}
-
-.chart {
-	
+	margin-left: .8rem;
 }
