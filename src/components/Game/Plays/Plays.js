@@ -4,6 +4,7 @@ import PlaysField from '../PlaysField/PlaysField';
 import PlaysSpin from '../PlaysSpin/PlaysSpin';
 import PlaysSpeed from '../PlaysSpeed/PlaysSpeed';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
+import PlaysFooter from '../PlaysFooter/PlaysFooter';
 
 const Plays = () => {
   return (
@@ -12,7 +13,7 @@ const Plays = () => {
       <PlaysSpeed />
       <PlaysSpin />
       <PlaysField />
-      <div className={cl.footer}></div>
+      <PlaysFooter />
     </div>
   );
 };
