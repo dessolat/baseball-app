@@ -2,7 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSituations, setInningNumber, setCurrentCard, setFilteredCards, setPlaybackMode } from 'redux/gameReducer';
+import {
+  setSituations,
+  setInningNumber,
+  setCurrentCard,
+  setFilteredCards,
+  setPlaybackMode
+} from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
 
@@ -61,7 +67,9 @@ const Content = () => {
     /*************************************************/
     setCards(newCards);
     dispatch(setFilteredCards(filteredCards));
-		playbackMode === 'pause' && Object.keys(currentCard).length === 0 && dispatch(setCurrentCard(filteredCards[0]))
+    playbackMode === 'pause' &&
+      Object.keys(currentCard).length === 0 &&
+      dispatch(setCurrentCard(filteredCards[0]));
     playbackMode === 'play' &&
       (filteredCards.length !== 0
         ? // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
@@ -71,7 +79,6 @@ const Content = () => {
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
   }, [innings]);
-
 
   useEffect(() => {
     if (cards.length === 0) return;
@@ -84,7 +91,10 @@ const Content = () => {
 
     dispatch(setFilteredCards(filteredCards));
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
-    playbackMode === 'pause' && dispatch(setCurrentCard({ ...filteredCards[0] }));
+    playbackMode === 'pause' &&
+      situationFilter !== 'All' &&
+      dispatch(setCurrentCard({ ...filteredCards[0] }));
+    
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
@@ -96,6 +106,11 @@ const Content = () => {
       // setCurrentCard({});    //Delete later
       return;
     }
+		if (playbackMode === 'pause' && situationFilter === 'All') {
+			console.log(123)
+      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+      // situationsChildRef.current.parentNode.scrollTop = 50;
+    }
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
@@ -104,8 +119,8 @@ const Content = () => {
 
   useEffect(() => {
     // if (Object.keys(currentCard).length === 0 || playbackMode !== 'play' || !situationsChildRef.current)
-		dispatch(setInningNumber(currentCard.inning_number || 1))
-		currentCard.manualClick && dispatch(setPlaybackMode('pause'))
+    dispatch(setInningNumber(currentCard.inning_number || 1));
+    currentCard.manualClick && dispatch(setPlaybackMode('pause'));
     if (Object.keys(currentCard).length === 0 || currentCard.manualClick || !situationsChildRef.current)
       return;
     situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
@@ -116,8 +131,8 @@ const Content = () => {
     if (playbackMode !== 'play') return;
     // inningNumber !== innings.length
     //   ? dispatch(setInningNumber(innings.length))
-      // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-			dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
+    // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
+    dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
 
     // eslint-disable-next-line
   }, [playbackMode]);
@@ -125,11 +140,7 @@ const Content = () => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList
-          ref={situationsChildRef}
-          cards={filteredCards}
-          currentCard={currentCard}
-        />
+        <ContentSituationsList ref={situationsChildRef} cards={filteredCards} currentCard={currentCard} />
         <ContentFooter />
         <ContentGraphics />
       </div>
