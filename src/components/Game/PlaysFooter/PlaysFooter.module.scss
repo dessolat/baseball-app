@@ -1,0 +1,28 @@
+@import 'scss/vars.scss';
+
+.footer {
+	grid-area: footer;
+	padding-left: 10px;
+  display: flex;
+	align-items: center;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  margin-top: .5rem;
+  margin-bottom: 5px;
+
+  > li + li {
+    margin-left: 1.875rem;
+  }
+
+  button {
+		font: inherit;
+    border-bottom: 2px solid transparent;
+    padding-bottom: .25rem;
+    transition: border-bottom var(--transition-speed);
+
+    &:hover,
+    &.active {
+      border-bottom: 2px solid var(--side-color);
+    }
+  }
+}
