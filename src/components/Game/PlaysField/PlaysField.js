@@ -3,11 +3,11 @@ import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 
 const coords = [
-  { x: 75, y: 170 },
-  { x: 85, y: 155 },
-  { x: 97, y: 140 },
-  { x: 115, y: 131 },
-  { x: 135, y: 118 }
+  { x: 280, y: 170 },
+  { x: 300, y: 155 },
+  { x: 312, y: 140 },
+  { x: 330, y: 131 },
+  { x: 350, y: 118 }
 ];
 
 const PlaysField = () => {
@@ -33,9 +33,16 @@ const PlaysField = () => {
         src={gridImg}
         alt='grid'
       />
-      {coords.slice(0, count).map((coord, i) => (
-        <div key={i} className={cl.ball} style={{ left: coord.x * coeff.x, top: coord.y * coeff.y }}></div>
-      ))}
+      {coords.slice(0, count).map((coord, i) => {
+        const classes = [cl.ball];
+        i === 0 && classes.push(cl.onTop);
+        return (
+          <div
+            key={i}
+            className={classes.join(' ')}
+            style={{ left: coord.x * coeff.x, top: coord.y * coeff.y }}></div>
+        );
+      })}
 
       <div className={cl.top}>
         <div className={cl.speedData}>
