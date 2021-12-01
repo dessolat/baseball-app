@@ -1,15 +1,29 @@
 @import 'scss/vars.scss';
 
 .teamNames {
-  padding-bottom: 0.875rem;
 	width: 6.1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-bottom: 0.5rem;
 }
 
 .guests {
-  border-bottom: 2px solid var(--side-color);
-  padding-bottom: 4px;
+	border-bottom: 2px solid transparent;
+  padding-bottom: .125rem;
 }
 
 .owners {
-  padding-top: 5px;
+	border-bottom: 2px solid transparent;
+	padding-top: .25rem;
+	padding-bottom: .125rem;
+
+	@media screen and (max-width: 1030px) {
+		padding-top: .1rem;
+	}
+}
+
+.active {
+	border-bottom: 2px solid var(--side-color);
+	transition: border-bottom var(--transition-speed);
 }
