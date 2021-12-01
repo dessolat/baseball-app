@@ -3,36 +3,36 @@ import cl from './PlaysSpin.module.scss';
 // import Chart from 'react-google-charts';
 
 const PlaysSpin = () => {
-  const options = {
-    height: 100,
-    width: 100,
-    chartArea: { left: 10, top: 10, width: '100%', height: '80%' },
-    lineWidth: 1,
-    explorer: { keepInBounds: true, zoomDelta: 1.1 },
-    hAxis: {
-      baseline: {
-        lineWidth: 1
-      },
-      gridlines: {
-        multiple: 1,
-        count: 1,
-        interval: 1
-      }
-      // viewWindowMode: 'maximized'
-    },
-    vAxis: {
-      gridlines: {
-        multiple: 1,
-        count: 1,
-        interval: 1
-      },
-      viewWindow: {
-        // min: 20
-      }
-    },
-    colors: ['#1A4C96'],
-    legend: { position: 'none' }
-  };
+  // const options = {
+  //   height: 100,
+  //   width: 100,
+  //   chartArea: { left: 10, top: 10, width: '100%', height: '80%' },
+  //   lineWidth: 1,
+  //   explorer: { keepInBounds: true, zoomDelta: 1.1 },
+  //   hAxis: {
+  //     baseline: {
+  //       lineWidth: 1
+  //     },
+  //     gridlines: {
+  //       multiple: 1,
+  //       count: 1,
+  //       interval: 1
+  //     }
+  //     // viewWindowMode: 'maximized'
+  //   },
+  //   vAxis: {
+  //     gridlines: {
+  //       multiple: 1,
+  //       count: 1,
+  //       interval: 1
+  //     },
+  //     viewWindow: {
+  //       // min: 20
+  //     }
+  //   },
+  //   colors: ['#1A4C96'],
+  //   legend: { position: 'none' }
+  // };
 
   return (
     <div className={cl.spin}>
