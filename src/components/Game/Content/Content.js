@@ -106,11 +106,14 @@ const Content = () => {
       // setCurrentCard({});    //Delete later
       return;
     }
-		if (playbackMode === 'pause' && situationFilter === 'All') {
-			console.log(123)
-      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
-      // situationsChildRef.current.parentNode.scrollTop = 50;
-    }
+
+		//Add parent node checking on null or undefined
+		//Add field 'scroll' (bool) to setFilteredCards to know when scroll 
+		// if (playbackMode === 'pause' && situationFilter === 'All') {
+		// 	console.log(123)
+    //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+    //   // situationsChildRef.current.parentNode.scrollTop = 50;
+    // }
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
