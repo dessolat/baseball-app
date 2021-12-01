@@ -10,9 +10,9 @@ const PlaysEventsItem = ({ moment }) => {
           <div className={cl[moment.icons.circ_color_pitch]} data-before={moment.icons.batter_moment}>
             {moment.icons.circ_text_pitch}
           </div>
-          <p className={cl.text}>
+          <div className={cl.text}>
             <p>slider</p>({moment.pitcher.strikes_count} strike, {moment.pitcher.balls_count} ball)
-          </p>
+          </div>
         </li>
       )}
       {moment.icons.circ_color_play && (
@@ -26,9 +26,9 @@ const PlaysEventsItem = ({ moment }) => {
             }>
             {moment.icons.circ_text_play !== 'R' ? moment.icons.circ_text_play : <ReplaceEvent />}
           </div>
-          <p className={cl.text}>
+          <div className={cl.text}>
             <p>slider</p>({moment.pitcher.strikes_count} strike, {moment.pitcher.balls_count} ball)
-          </p>
+          </div>
         </li>
       )}
     </>
