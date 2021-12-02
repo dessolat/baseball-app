@@ -5,7 +5,7 @@ const RectText = ({ icons }) => {
   const classes = [cl.filter, cl.rectText, cl[icons.rect_color]];
   const text = icons.rect_text.toLowerCase();
 
-  text === 'filders choice out' && classes.push(cl.f10_5);
+  text === 'fielders choice out' && classes.push(cl.f10);
   text === 'grounded into dp' && classes.push(cl.f11);
   text === 'caught stealing' && classes.push(cl.f11_5);
   (text === 'fielders choice' || text === 'pickoff attempt') && classes.push(cl.f12);
