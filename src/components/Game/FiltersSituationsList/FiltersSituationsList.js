@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import FiltersSituationsListItem from './FiltersSituationsListItem';
 import cl from './FiltersSituationsList.module.scss';
-import useFilterSituations from 'hooks/useFilterSituations';
+import { useSortFilteredSituations } from 'hooks/useFilterSituations';
 
 const FiltersSituationsList = ({ situations }, ref) => {
-  const filteredSituations = useFilterSituations(situations);
+  const filteredSituations = useSortFilteredSituations(situations);
 
   return (
     <ul ref={ref} className={cl.situationsList}>
