@@ -20,9 +20,7 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: #2B9D6A;
-  // border: 0.5px solid black;
-  box-shadow: 1px 1px 1px 1px gray;
+	background: no-repeat url('../../../images/ball.png') center / cover;
 
 	&.onTop {
 		z-index: 11;
