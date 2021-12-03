@@ -36,10 +36,12 @@ const Content = () => {
               { inning_number: inning.number, ...guest, side: 'top' }
             );
 
-        guest.moments.slice(-1)[0].filter &&
-          (typeof guest.moments.slice(-1)[0].filter === 'object'
-            ? newSituations.push(...guest.moments.slice(-1)[0].filter)
-            : newSituations.push(guest.moments.slice(-1)[0].filter));
+        guest.moments?.forEach(moment => {
+          moment.filter &&
+            (typeof moment.filter === 'object'
+              ? newSituations.push(...moment.filter)
+              : newSituations.push(moment.filter));
+        });
       });
       inning['bottom/owners']?.forEach(owner => {
         owner.moments[0].icons?.rect_text !== 'Replacement'
@@ -49,10 +51,12 @@ const Content = () => {
               { inning_number: inning.number, ...owner, side: 'bottom' }
             );
 
-        owner.moments?.slice(-1)[0].filter &&
-          (typeof owner.moments.slice(-1)[0].filter === 'object'
-            ? newSituations.push(...owner.moments.slice(-1)[0].filter)
-            : newSituations.push(owner.moments.slice(-1)[0].filter));
+        owner.moments?.forEach(moment => {
+          moment.filter &&
+            (typeof moment.filter === 'object'
+              ? newSituations.push(...moment.filter)
+              : newSituations.push(moment.filter));
+        });
       });
     });
     const filteredCards =
@@ -85,7 +89,7 @@ const Content = () => {
     const filteredCards =
       situationFilter !== 'All'
         ? cards.filter(card =>
-            card.moments.length > 0 ? card.moments.slice(-1)[0].filter?.includes(situationFilter) : false
+            card.moments.length > 0 ? card.moments.some(moment => moment.filter?.includes(situationFilter)) : false
           )
         : cards;
 
@@ -94,7 +98,7 @@ const Content = () => {
     playbackMode === 'pause' &&
       situationFilter !== 'All' &&
       dispatch(setCurrentCard({ ...filteredCards[0] }));
-    
+
     playbackMode === 'play' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
@@ -107,10 +111,10 @@ const Content = () => {
       return;
     }
 
-		//Add parent node checking on null or undefined
-		//Add field 'scroll' (bool) to setFilteredCards to know when scroll 
-		// if (playbackMode === 'pause' && situationFilter === 'All') {
-		// 	console.log(123)
+    //Add parent node checking on null or undefined
+    //Add field 'scroll' (bool) to setFilteredCards to know when scroll
+    // if (playbackMode === 'pause' && situationFilter === 'All') {
+    // 	console.log(123)
     //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
