@@ -11,7 +11,7 @@ const ContentCardComplex = ({ player, situationsArr }) => {
       {situationsArr.slice(1).map((sit, i) => (
         <ContentCardComplexBody key={i} sit={sit} />
       ))}
-      {(!lastMoment.icons.rect_text || lastMoment.icons.rect_text === 'Replacement') && (
+      {(!lastMoment.icons?.rect_text || lastMoment.icons?.rect_text === 'Replacement') && (
         <ContentCardComplexFooter lastMoment={lastMoment} />
       )}
     </div>
