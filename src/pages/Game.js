@@ -14,7 +14,7 @@ const Game = () => {
   const gameId = useSelector(state => state.game.gameId);
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
-    'http://84.201.172.216:3030/game_279'
+    'http://84.201.172.216:3030/game_359'
   );
   // const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://192.168.1.3:3001/');
   // const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch('http://localhost:3001/');
