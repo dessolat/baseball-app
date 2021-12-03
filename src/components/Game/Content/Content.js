@@ -25,6 +25,15 @@ const Content = () => {
   const gameIdRef = useRef(0); //Delete later
 
   useEffect(() => {
+    function situationsConcat(member) {
+      member.moments?.forEach(moment => {
+        moment.filter &&
+          (typeof moment.filter === 'object'
+            ? newSituations.push(...moment.filter)
+            : newSituations.push(moment.filter));
+      });
+    }
+
     const newSituations = ['All'];
     const newCards = [];
     innings.forEach(inning => {
@@ -35,13 +44,8 @@ const Content = () => {
               { inning_number: inning.number, ...guest, type: 'Replacement', side: 'top' },
               { inning_number: inning.number, ...guest, side: 'top' }
             );
-
-        guest.moments?.forEach(moment => {
-          moment.filter &&
-            (typeof moment.filter === 'object'
-              ? newSituations.push(...moment.filter)
-              : newSituations.push(moment.filter));
-        });
+						
+        situationsConcat(guest);
       });
       inning['bottom/owners']?.forEach(owner => {
         owner.moments[0].icons?.rect_text !== 'Replacement'
@@ -51,12 +55,7 @@ const Content = () => {
               { inning_number: inning.number, ...owner, side: 'bottom' }
             );
 
-        owner.moments?.forEach(moment => {
-          moment.filter &&
-            (typeof moment.filter === 'object'
-              ? newSituations.push(...moment.filter)
-              : newSituations.push(moment.filter));
-        });
+        situationsConcat(owner);
       });
     });
     const filteredCards =
@@ -89,7 +88,9 @@ const Content = () => {
     const filteredCards =
       situationFilter !== 'All'
         ? cards.filter(card =>
-            card.moments.length > 0 ? card.moments.some(moment => moment.filter?.includes(situationFilter)) : false
+            card.moments.length > 0
+              ? card.moments.some(moment => moment.filter?.includes(situationFilter))
+              : false
           )
         : cards;
 
