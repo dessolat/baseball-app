@@ -9,14 +9,14 @@
 }
 
 .guests {
-	border-bottom: 2px solid transparent;
-  padding-bottom: .125rem;
+	border-bottom: 3px solid transparent;
+  padding-bottom: calc(.125rem - 1px);
 }
 
 .owners {
-	border-bottom: 2px solid transparent;
+	border-bottom: 3px solid transparent;
 	padding-top: .25rem;
-	padding-bottom: .125rem;
+	padding-bottom: calc(.125rem - 1px);
 
 	@media screen and (max-width: 1030px) {
 		padding-top: .1rem;
@@ -24,6 +24,6 @@
 }
 
 .active {
-	border-bottom: 2px solid var(--side-color);
-	transition: border-bottom var(--transition-speed);
+	border-bottom: 3px solid var(--side-color);
+	// transition: border-bottom var(--transition-speed);
 }
