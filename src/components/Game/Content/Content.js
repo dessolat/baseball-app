@@ -145,6 +145,15 @@ const Content = () => {
     // eslint-disable-next-line
   }, [playbackMode]);
 
+  const getFilteredCards = cards =>
+    situationFilter !== 'All'
+      ? cards.filter(card =>
+          card.moments.length > 0
+            ? card.moments.some(moment => moment.filter?.includes(situationFilter))
+            : false
+        )
+      : cards;
+
   return (
     <section className='container'>
       <div className={cl.content}>
