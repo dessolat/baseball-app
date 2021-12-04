@@ -14,13 +14,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
 
   //Filling situationsArr with moments where icons.rect_text exists
   const situationsArr = [];
-  player.moments.forEach(
-    (moment, i) =>
-      moment.icons?.rect_text &&
-      (moment.icons.rect_text !== 'Replacement'
-        ? situationsArr.push(moment)
-        : i !== 0 && situationsArr.push(moment))
-  );
+  player.moments.forEach(moment => moment.icons?.rect_text && situationsArr.push(moment));
 
   return (
     <li
