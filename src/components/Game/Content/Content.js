@@ -34,34 +34,36 @@ const Content = () => {
       });
     }
 
-    const newSituations = ['All'];
-    const newCards = [];
-    innings.forEach(inning => {
-      inning['top/guests'].forEach(guest => {
-        guest.moments[0].icons?.rect_text !== 'Replacement'
-          ? newCards.push({ inning_number: inning.number, ...guest, side: 'top' })
+    function newCardsConcat(team, inning, side) {
+      team.forEach(member => {
+        member.moments[0].icons?.rect_text !== 'Replacement'
+          ? newCards.push({ inning_number: inning.number, ...member, side })
+          : member.moments.length === 1
+          ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side })
           : newCards.push(
-              { inning_number: inning.number, ...guest, type: 'Replacement', side: 'top' },
-              { inning_number: inning.number, ...guest, side: 'top' }
-            );
-						
-        situationsConcat(guest);
-      });
-      inning['bottom/owners']?.forEach(owner => {
-        owner.moments[0].icons?.rect_text !== 'Replacement'
-          ? newCards.push({ inning_number: inning.number, ...owner, side: 'bottom' })
-          : newCards.push(
-              { inning_number: inning.number, ...owner, type: 'Replacement', side: 'bottom' },
-              { inning_number: inning.number, ...owner, side: 'bottom' }
+              {
+                inning_number: inning.number,
+                ...member,
+                moments: [member.moments[0]],
+                type: 'Replacement',
+                side
+              },
+              { inning_number: inning.number, ...member, moments: member.moments.slice(1), side }
             );
 
-        situationsConcat(owner);
+        situationsConcat(member);
       });
+    }
+
+    const newSituations = ['All'];
+    const newCards = [];
+
+    innings.forEach(inning => {
+      newCardsConcat(inning['top/guests'], inning, 'top');
+      inning['bottom/owners'] && newCardsConcat(inning['bottom/owners'], inning, 'bottom');
     });
-    const filteredCards =
-      situationFilter !== 'All'
-        ? newCards.filter(card => card.moments.slice(-1)[0].filter?.includes(situationFilter))
-        : newCards;
+
+    const filteredCards = getFilteredCards(newCards);
     /*******************Delete later******************/
     if (gameIdRef.current !== gameId && playbackMode !== 'play') {
       gameIdRef.current = gameId;
@@ -85,14 +87,8 @@ const Content = () => {
 
   useEffect(() => {
     if (cards.length === 0) return;
-    const filteredCards =
-      situationFilter !== 'All'
-        ? cards.filter(card =>
-            card.moments.length > 0
-              ? card.moments.some(moment => moment.filter?.includes(situationFilter))
-              : false
-          )
-        : cards;
+
+    const filteredCards = getFilteredCards(cards);
 
     dispatch(setFilteredCards(filteredCards));
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
