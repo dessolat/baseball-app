@@ -12,6 +12,7 @@ const Video = () => {
   const momentRef = useRef(0);
   const currentCard = useSelector(state => state.game.currentCard);
   const filteredCards = useSelector(state => state.game.filteredCards);
+  const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,17 +23,17 @@ const Video = () => {
 
   useEffect(() => {
     if (videoRef.current === null) return;
-		videoHandling()
+    videoHandling();
     // eslint-disable-next-line
   }, [currentCard]);
 
   const onReady = e => {
     videoRef.current = e.target;
-    videoHandling()
+    videoHandling();
   };
 
-	const videoHandling = () => {
-		clearInterval(intervalRef.current);
+  const videoHandling = () => {
+    clearInterval(intervalRef.current);
     momentRef.current = 0;
 
     videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
@@ -49,17 +50,21 @@ const Video = () => {
           videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
           endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
         } else {
-          let index = filteredCards.findIndex(
-            card => card.inning_number === currentCard.inning_number && card.who_id === currentCard.who_id
-          );
-          index++;
-          index < filteredCards.length
-            ? dispatch(setCurrentCard(filteredCards[index]))
-            : clearInterval(intervalRef.current);
+          if (playbackMode === 'pause') {
+            videoHandling();
+          } else {
+            let index = filteredCards.findIndex(
+              card => card.inning_number === currentCard.inning_number && card.who_id === currentCard.who_id
+            );
+            index++;
+            index < filteredCards.length
+              ? dispatch(setCurrentCard(filteredCards[index]))
+              : clearInterval(intervalRef.current);
+          }
         }
       }
     }, 500);
-	}
+  };
 
   return (
     <div className={cl.videoWrapper + ' ' + cl.videoOne}>
