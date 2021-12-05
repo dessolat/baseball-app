@@ -6,7 +6,7 @@ const defaultState = {
   situationFilter: 'All',
   currentCard: {},
 	filteredCards: [],
-  playbackMode: 'play',
+  playbackMode: 'playOnline',
   viewMode: 'mode-1',
   gameId: 0
 };
