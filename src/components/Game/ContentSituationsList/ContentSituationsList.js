@@ -10,7 +10,7 @@ const ContentSituationsList = ({ cards, currentCard }, ref) => {
   const dispatch = useDispatch();
 
   const situationClick = player => {
-    playbackMode === 'play' && dispatch(setPlaybackMode('pause'));
+    playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
     // setCurrentCard({ ...player, row_number: number });
     dispatch(setCurrentCard({ ...player, manualClick: true}));
   };
