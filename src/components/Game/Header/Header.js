@@ -37,7 +37,7 @@ const Header = () => {
   }, [innings, scrollRef, scrollFixation]);
 
   useEffect(() => {
-    if (playbackMode !== 'play' || inningNumber < 10) return;
+    if (playbackMode !== 'playOnline' || inningNumber < 10) return;
     scrollRef.current.scrollLeft = (inningNumber - 9) * 30;
   }, [playbackMode, inningNumber, scrollRef]);
 

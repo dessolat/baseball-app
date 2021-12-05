@@ -65,7 +65,7 @@ const Content = () => {
 
     const filteredCards = getFilteredCards(newCards);
     /*******************Delete later******************/
-    if (gameIdRef.current !== gameId && playbackMode !== 'play') {
+    if (gameIdRef.current !== gameId && playbackMode !== 'playOnline') {
       gameIdRef.current = gameId;
       dispatch(setInningNumber(1));
     }
@@ -75,7 +75,7 @@ const Content = () => {
     playbackMode === 'pause' &&
       Object.keys(currentCard).length === 0 &&
       dispatch(setCurrentCard(filteredCards[0]));
-    playbackMode === 'play' &&
+    playbackMode === 'playOnline' &&
       (filteredCards.length !== 0
         ? // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
           dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }))
@@ -96,7 +96,7 @@ const Content = () => {
       situationFilter !== 'All' &&
       dispatch(setCurrentCard({ ...filteredCards[0] }));
 
-    playbackMode === 'play' &&
+    playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
     // eslint-disable-next-line
@@ -115,14 +115,14 @@ const Content = () => {
     //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
-    playbackMode === 'play' &&
+    playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
     // eslint-disable-next-line
   }, [filteredCards]);
 
   useEffect(() => {
-    // if (Object.keys(currentCard).length === 0 || playbackMode !== 'play' || !situationsChildRef.current)
+    // if (Object.keys(currentCard).length === 0 || playbackMode !== 'playOnline' || !situationsChildRef.current)
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
     if (Object.keys(currentCard).length === 0 || currentCard.manualClick || !situationsChildRef.current)
@@ -132,7 +132,7 @@ const Content = () => {
   }, [currentCard]);
 
   useEffect(() => {
-    if (playbackMode !== 'play') return;
+    if (playbackMode !== 'playOnline') return;
     // inningNumber !== innings.length
     //   ? dispatch(setInningNumber(innings.length))
     // : setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
