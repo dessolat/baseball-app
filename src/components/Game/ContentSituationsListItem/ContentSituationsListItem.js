@@ -19,7 +19,9 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
   return (
     <li
       ref={
-        player.who_id === currentCard.who_id && player.inning_number === currentCard.inning_number
+        player.who_id === currentCard.who_id &&
+        player.inning_number === currentCard.inning_number &&
+        player.type === currentCard.type
           ? ref
           : null
       }
