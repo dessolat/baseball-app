@@ -11,7 +11,7 @@ const ContentCardComplexFooter = ({ lastMoment }) => {
 
   return (
     <div className={cl.footer}>
-      <p className={cl.text}>{eventsSummary.join('.')}</p>
+      <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
       <div className={cl.rectanglesEllipsesWrapper}>
         <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
         <Ellipses balls={balls} strikes={strikes} />

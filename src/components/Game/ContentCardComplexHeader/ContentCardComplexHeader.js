@@ -17,7 +17,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       <div className={cl.top}>
         <div className={cl.textWrapper}>
           <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
-          <p className={cl.text}>{sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') : ''}</p>
+          <p className={cl.text}>{sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') + '.' : ''}</p>
         </div>
         <img className={cl.portrait} src={PortraitImg} alt='Portrait' />
       </div>
@@ -28,7 +28,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         <Ellipses balls={balls} strikes={strikes} />
       </div>
 
-      {sit.icons.rect_text === 'Replacement' && <ContentCardReplacement text={eventsSummary.join('.')} />}
+      {sit.icons.rect_text === 'Replacement' && <ContentCardReplacement text={eventsSummary.join('.') + '.'} />}
     </div>
   );
 };

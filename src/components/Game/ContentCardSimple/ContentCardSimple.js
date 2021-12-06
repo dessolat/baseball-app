@@ -16,7 +16,7 @@ const ContentCardSimple = ({player}) => {
     <div className={cl.classic}>
       <div className={cl.textRectanglesWrapper}>
         <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
-        <p className={cl.text}>{eventsSummary.join('.')}</p>
+        <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
         <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
 				
       </div>

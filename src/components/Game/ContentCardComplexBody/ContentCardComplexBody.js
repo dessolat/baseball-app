@@ -15,7 +15,7 @@ const ContentCardComplexBody = ({ sit }) => {
     <>
       {sit.icons.rect_text !== 'Replacement' ? (
         <div>
-          <p className={cl.text}>{eventsSummary.join('.')}</p>
+          <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
           <div className={cl.bottom}>
             <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
             <RectText icons={sit.icons} />
@@ -24,7 +24,7 @@ const ContentCardComplexBody = ({ sit }) => {
           </div>
         </div>
       ) : (
-        <ContentCardReplacement text={eventsSummary.join('.')} />
+        <ContentCardReplacement text={eventsSummary.join('.') + '.'} />
       )}
     </>
   );
