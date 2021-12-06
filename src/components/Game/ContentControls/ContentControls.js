@@ -11,7 +11,7 @@ const ContentControls = () => {
 
 	const playbackModeClick = e => {
     const newMode =
-      e.currentTarget.name === 'play-pause' ? (playbackMode === 'play' ? 'pause' : 'play') : 'play-online';
+      e.currentTarget.name === 'play-pause' ? (playbackMode === 'play' ? 'pause' : 'play') : 'playOnline';
     dispatch(setPlaybackMode(newMode));
   };
 
@@ -20,13 +20,13 @@ const ContentControls = () => {
       <PlayPause
         name='play-pause'
         onClick={playbackModeClick}
-        className={playbackMode !== 'play-online' ? cl.active : ''}
+        className={playbackMode !== 'playOnline' ? cl.active : ''}
         playbackMode={playbackMode}
       />
       <PlayOnline
         name='play-online'
         onClick={playbackModeClick}
-        className={playbackMode === 'play-online' ? cl.active : ''}
+        className={playbackMode === 'playOnline' ? cl.active : ''}
       />
     </div>
   );
