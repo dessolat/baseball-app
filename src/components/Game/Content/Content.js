@@ -29,27 +29,27 @@ const Content = () => {
     const newCards = [];
     innings.forEach(inning => {
       inning['top/guests'].forEach(guest => {
-        guest.moments[0].icons?.rect_text !== 'Replacement'
+        guest.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...guest, side: 'top' })
           : newCards.push(
               { inning_number: inning.number, ...guest, type: 'Replacement', side: 'top' },
               { inning_number: inning.number, ...guest, side: 'top' }
             );
 
-        guest.moments.slice(-1)[0].filter &&
+        guest.moments.slice(-1)[0]?.filter &&
           (typeof guest.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...guest.moments.slice(-1)[0].filter)
             : newSituations.push(guest.moments.slice(-1)[0].filter));
       });
       inning['bottom/owners']?.forEach(owner => {
-        owner.moments[0].icons?.rect_text !== 'Replacement'
+        owner.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...owner, side: 'bottom' })
           : newCards.push(
               { inning_number: inning.number, ...owner, type: 'Replacement', side: 'bottom' },
               { inning_number: inning.number, ...owner, side: 'bottom' }
             );
 
-        owner.moments?.slice(-1)[0].filter &&
+        owner.moments?.slice(-1)[0]?.filter &&
           (typeof owner.moments.slice(-1)[0].filter === 'object'
             ? newSituations.push(...owner.moments.slice(-1)[0].filter)
             : newSituations.push(owner.moments.slice(-1)[0].filter));
