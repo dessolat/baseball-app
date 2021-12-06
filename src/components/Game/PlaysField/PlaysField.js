@@ -16,8 +16,8 @@ const PlaysField = () => {
   const parent = useRef(null);
 
   useEffect(() => {
-    setTimeout(() => setCount(prev => prev + 1), 80);
-    setCoeff({ x: parent.current.clientWidth / 671, y: parent.current.clientHeight / 330 });
+    setTimeout(() => setCount(prev => prev + 1), 150);
+    setCoeff({ x: parent.current.clientWidth / 746, y: parent.current.clientHeight / 330 });
   }, []);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const PlaysField = () => {
     <div className={cl.field} ref={parent}>
       <img
         className={cl.grid}
-        style={{ top: 21 * coeff.y, width: 109 * coeff.x, height: 158 * coeff.y }}
+        style={{ top: 43 * coeff.y, width: 102 * coeff.x, height: 148 * coeff.y }}
         src={gridImg}
         alt='grid'
       />
