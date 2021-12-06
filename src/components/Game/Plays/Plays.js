@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cl from './Plays.module.scss';
-import PlaysField from '../PlaysField/PlaysField';
-import PlaysSpin from '../PlaysSpin/PlaysSpin';
-import PlaysSpeed from '../PlaysSpeed/PlaysSpeed';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import PlaysFooter from '../PlaysFooter/PlaysFooter';
+import PlaysContent from '../PlaysContent/PlaysContent';
 
 const Plays = () => {
+  const [footerTab, setFooterTab] = useState('pitch');
+	const classes = [cl.plays]
+	// footerTab === 'pitch' && classes.push(cl.pitch)
+	classes.push(cl.pitch)
+
   return (
-    <div className={cl.plays}>
+    <div className={classes.join(' ')}>
       <PlaysEvents />
-      <PlaysSpeed />
-      <PlaysSpin />
-      <PlaysField />
-      <PlaysFooter />
+      <PlaysContent footerTab={footerTab} />
+      <PlaysFooter footerTab={footerTab} setFooterTab={setFooterTab} />
     </div>
   );
 };
