@@ -37,7 +37,7 @@ const Content = () => {
 
     function newCardsConcat(team, inning, side) {
       team.forEach(member => {
-        member.moments[0].icons?.rect_text !== 'Replacement'
+        member.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...member, side })
           : member.moments.length === 1
           ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side })
