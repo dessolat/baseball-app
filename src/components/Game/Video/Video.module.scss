@@ -1,5 +1,9 @@
 .videoWrapper {
   position: relative;
+
+	> div {
+		height: 100%;
+	}
 }
 
 .videoOne {
