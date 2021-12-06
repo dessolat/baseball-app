@@ -23,6 +23,7 @@ const Content = () => {
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
+	const scrollToRef = useRef(false);
 
   useEffect(() => {
     function situationsConcat(member) {
@@ -96,6 +97,8 @@ const Content = () => {
       situationFilter !== 'All' &&
       dispatch(setCurrentCard({ ...filteredCards[0] }));
 
+    if (playbackMode === 'pause' && situationFilter === 'All') scrollToRef.current = true;
+
     playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
@@ -115,6 +118,11 @@ const Content = () => {
     //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
+		if (scrollToRef.current) {
+			situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+			scrollToRef.current = false
+		}
+
     playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
