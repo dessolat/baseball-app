@@ -139,7 +139,7 @@ const Video = () => {
               autoplay: 1,
               controls: 0,
               modestbranding: 1,
-              disablekb: 1
+              // disablekb: 1
               // loop: 1,
               // playlist: '-GR52czEd-0'
             }
