@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { setFullData } from 'redux/gameReducer';
+import { setFullData, setPlayersInfo } from 'redux/gameReducer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const useGameFetch = url => {
   const innings = useSelector(state => state.game.innings);
   const intervalRef = useRef();
   const dataRef = useRef({});
-	const cancelTokenRef = useRef()
+  const cancelTokenRef = useRef();
 
   useEffect(() => {
     error && setError(null);
@@ -23,10 +23,21 @@ const useGameFetch = url => {
 
       try {
         firstTime && setIsLoading(true);
-        // const resp = await axios.get(firstTime ? url + '0' : url);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
         if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
         dataRef.current = resp.data;
+        if (firstTime) {
+          let newPlayersInfo = resp.data.preview.guests.players.reduce(
+            (sum, player) => ({ ...sum, [player.name + ' ' + player.surname]: player.photo }),
+            {}
+          );
+          newPlayersInfo = resp.data.preview.owners.players.reduce(
+            (sum, player) => ({ ...sum, [player.name + ' ' + player.surname]: player.photo }),
+            newPlayersInfo
+          );
+          dispatch(setPlayersInfo(newPlayersInfo));
+        }
+
         dispatch(setFullData(resp.data));
       } catch (err) {
         setError(err.message);
