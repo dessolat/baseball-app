@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/baseball-app/static/css/main.2788bd05.chunk.css",
-    "main.js": "/baseball-app/static/js/main.daceb268.chunk.js",
-    "main.js.map": "/baseball-app/static/js/main.daceb268.chunk.js.map",
+    "main.js": "/baseball-app/static/js/main.8c69f5b6.chunk.js",
+    "main.js.map": "/baseball-app/static/js/main.8c69f5b6.chunk.js.map",
     "runtime-main.js": "/baseball-app/static/js/runtime-main.f07ee06d.js",
     "runtime-main.js.map": "/baseball-app/static/js/runtime-main.f07ee06d.js.map",
     "static/js/2.154e1caa.chunk.js": "/baseball-app/static/js/2.154e1caa.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.f07ee06d.js",
     "static/js/2.154e1caa.chunk.js",
     "static/css/main.2788bd05.chunk.css",
-    "static/js/main.daceb268.chunk.js"
+    "static/js/main.8c69f5b6.chunk.js"
   ]
 }
