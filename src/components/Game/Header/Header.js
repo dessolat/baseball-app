@@ -76,9 +76,9 @@ const Header = () => {
             <HeaderTabs />
           </div>
           <img src={LeftLogo} className={cl.leftLogo} alt='attack-team' />
-          <h2 className={cl.teamScore}>{preview.guests_score}</h2>
+          <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <div className={cl.scoresWrapper}>
-            <HeaderTeams names={[preview.guests, preview.owners]} />
+            <HeaderTeams names={[preview.guests.name, preview.owners.name]} />
             <div className={cl.scoresListWrapper}>
               {isLeftScroll ? (
                 <>
@@ -106,7 +106,7 @@ const Header = () => {
             </div>
             <HeaderInfo innings={innings} />
           </div>
-          <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners_score}</h2>
+          <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners.score}</h2>
           <img src={RightLogo} className={cl.rightLogo} alt='defence-team' />
         </div>
       </div>
