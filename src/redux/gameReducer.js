@@ -5,6 +5,7 @@ const defaultState = {
   situations: ['All'],
   situationFilter: 'All',
   currentCard: {},
+	playersInfo: {},
 	filteredCards: [],
   playbackMode: 'playOnline',
   viewMode: 'mode-1',
@@ -16,6 +17,7 @@ const SET_INNING_NUMBER = 'SET_INNING_NUMBER';
 const SET_SITUATIONS = 'SET_SITUATIONS';
 const SET_SITUATION_FILTER = 'SET_SITUATION_FILTER';
 const SET_CURRENT_CARD = 'SET_CURRENT_CARD';
+const SET_PLAYERS_INFO = 'SET_PLAYERS_INFO';
 const SET_FILTERED_CARDS = 'SET_FILTERED_CARDS';
 const SET_PLAYBACK_MODE = 'SET_PLAYBACK_MODE';
 const SET_VIEW_MODE = 'SET_VIEW_MODE';
@@ -33,6 +35,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, situationFilter: action.payload };
     case SET_CURRENT_CARD:
       return { ...state, currentCard: action.payload };
+    case SET_PLAYERS_INFO:
+      return { ...state, playersInfo: action.payload };
     case SET_FILTERED_CARDS:
       return { ...state, filteredCards: action.payload };
     case SET_PLAYBACK_MODE:
@@ -51,6 +55,7 @@ export const setInningNumber = payload => ({ type: SET_INNING_NUMBER, payload })
 export const setSituations = payload => ({ type: SET_SITUATIONS, payload });
 export const setSituationFilter = payload => ({ type: SET_SITUATION_FILTER, payload });
 export const setCurrentCard = payload => ({ type: SET_CURRENT_CARD, payload });
+export const setPlayersInfo = payload => ({ type: SET_PLAYERS_INFO, payload });
 export const setFilteredCards = payload => ({ type: SET_FILTERED_CARDS, payload });
 export const setPlaybackMode = payload => ({ type: SET_PLAYBACK_MODE, payload });
 export const setViewMode = payload => ({ type: SET_VIEW_MODE, payload });
