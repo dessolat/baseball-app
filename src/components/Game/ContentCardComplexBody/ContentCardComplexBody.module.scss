@@ -1,8 +1,26 @@
+@import 'scss/vars.scss';
+
 .text {
   padding-right: 49px;
 	font: 400 .875rem var(--font-nunito);
   line-height: 1.36rem;
   text-align: justify;
+
+	&.red > span {
+		color: var(--red-color);
+	}
+	
+	&.green > span {
+		color: var(--green-color);
+	}
+	
+	&.blue > span {
+		color: var(--side-color);
+	}
+	
+	&.yellow > span {
+		color: var(--yellow-color);
+	}
 }
 
 .bottom {
