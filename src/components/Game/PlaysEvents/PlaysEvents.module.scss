@@ -4,7 +4,6 @@
   grid-area: events;
   background: white;
   border-top: 2px solid var(--side-color);
-  padding: 8px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -15,10 +14,12 @@
 		display: flex;
 		align-items: center;
 		column-gap: 8px;
-	}
-
-	> * + * {
-		margin-top: 8px;
+		cursor: pointer;
+		padding: 4px 8px;
+		
+		&.active {
+			background: #E0F0FF;
+		}
 	}
 
   > * > *:first-child {
