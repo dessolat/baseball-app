@@ -63,7 +63,7 @@ const Filters = () => {
           {isLeftScroll ? <Arrow onClick={scrollHorizontally} /> : <Arrow style={{ visibility: 'hidden' }} />}
           <FiltersSituationsList ref={scrollRef} situations={situations} />
           {isRightScroll ? (
-            <Arrow direction='right' onClick={scrollHorizontally} />
+            <Arrow direction='right' onClick={scrollHorizontally} style={{marginLeft: '.3125rem'}}/>
           ) : (
             <Arrow style={{ visibility: 'hidden' }} />
           )}

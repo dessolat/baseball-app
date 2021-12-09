@@ -1,20 +1,24 @@
 .filters {
   display: flex;
   justify-content: space-between;
-	align-items: center;
+  align-items: center;
   padding: calc(1.25rem - 7px) 0 1.25rem;
 
   @media screen and (max-height: 725px) {
-    padding: calc(.43rem - 7px) 0 .43rem;
+    padding: calc(0.43rem - 7px) 0 0.43rem;
   }
 }
 
 .situationsWrapper {
   display: flex;
   align-items: center;
+  overflow: hidden;
+	
+	> button {
+		margin-top: 2px;
 
-	// > button {
-		// margin-bottom: 6px;
-	// }
+		@media screen and (max-width: 1100px) {
+			margin-top: 3px;
+		}
+	}
 }
-
