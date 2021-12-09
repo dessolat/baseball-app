@@ -1,14 +1,15 @@
 import React from 'react';
 import cl from './PlaysEvents.module.scss';
-import useCurrentEvents from 'hooks/useCurrentEvents';
+
 import PlaysEventsItem from './PlaysEventsItem';
 
-const PlaysEvents = () => {
-  const moments = useCurrentEvents();
-
+const PlaysEvents = ({ moments, currentMoment, handleClick }) => {
   return (
     <ul className={cl.events}>
-      {moments.length !== 0 && moments.map((moment, i) => <PlaysEventsItem key={i} moment={moment} />)}
+      {moments.length !== 0 &&
+        moments.map((moment, i) => (
+          <PlaysEventsItem key={i} moment={moment} currentMoment={currentMoment} handleClick={handleClick} />
+        ))}
     </ul>
   );
 };
