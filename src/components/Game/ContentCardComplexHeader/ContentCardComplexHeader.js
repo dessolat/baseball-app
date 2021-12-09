@@ -8,6 +8,7 @@ import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
+  const playersInfo = useSelector(state => state.game.playersInfo);
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
   const eventsSummary = [];
   sit.events.forEach(event => eventsSummary.push(event.description));
@@ -19,7 +20,16 @@ const ContentCardComplexHeader = ({ player, sit }) => {
           <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
           <p className={cl.text}>{sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') + '.' : ''}</p>
         </div>
-        <img className={cl.portrait} src={PortraitImg} alt='Portrait' />
+        <div className={cl.portrait}>
+          <img
+            src={
+              playersInfo[player.who] && playersInfo[player.who] !== ''
+                ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
+                : PortraitImg
+            }
+            alt='Portrait'
+          />
+        </div>
       </div>
       <div className={cl.bottom}>
         <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />

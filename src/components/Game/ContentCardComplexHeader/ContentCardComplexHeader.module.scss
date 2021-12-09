@@ -3,6 +3,10 @@
   justify-content: space-between;
   align-items: flex-start;
   column-gap: 10px;
+
+	> *:first-child {
+		flex: 1 0;
+	}
 }
 
 .portrait {
