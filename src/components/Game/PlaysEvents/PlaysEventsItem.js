@@ -5,6 +5,10 @@ import cl from './PlaysEvents.module.scss';
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   const classes = moment.inner.id === currentMoment.inner?.id ? cl.active : '';
 
+  const playClasses = [];
+  moment.icons.circ_text_play !== 'R' && playClasses.push(cl[moment.icons.circ_color_play]);
+  moment.icons.circ_text_play === 'OBR' && playClasses.push(cl.obr);
+
   return (
     <>
       {moment.icons.circ_color_pitch && (
@@ -20,7 +24,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
       {moment.icons.circ_color_play && (
         <li className={classes} onClick={() => handleClick(moment)}>
           <div
-            className={moment.icons.circ_text_play !== 'R' ? cl[moment.icons.circ_color_play] : ''}
+            className={playClasses.join(' ')}
             data-before={
               moment.icons.circ_text_pitch || moment.icons.circ_text_play === 'R'
                 ? ''
