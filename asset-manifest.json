@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/baseball-app/static/css/main.2788bd05.chunk.css",
-    "main.js": "/baseball-app/static/js/main.8c69f5b6.chunk.js",
-    "main.js.map": "/baseball-app/static/js/main.8c69f5b6.chunk.js.map",
+    "main.css": "/baseball-app/static/css/main.0a587690.chunk.css",
+    "main.js": "/baseball-app/static/js/main.45ffe2fd.chunk.js",
+    "main.js.map": "/baseball-app/static/js/main.45ffe2fd.chunk.js.map",
     "runtime-main.js": "/baseball-app/static/js/runtime-main.f07ee06d.js",
     "runtime-main.js.map": "/baseball-app/static/js/runtime-main.f07ee06d.js.map",
-    "static/js/2.154e1caa.chunk.js": "/baseball-app/static/js/2.154e1caa.chunk.js",
-    "static/js/2.154e1caa.chunk.js.map": "/baseball-app/static/js/2.154e1caa.chunk.js.map",
+    "static/js/2.3707994f.chunk.js": "/baseball-app/static/js/2.3707994f.chunk.js",
+    "static/js/2.3707994f.chunk.js.map": "/baseball-app/static/js/2.3707994f.chunk.js.map",
     "index.html": "/baseball-app/index.html",
-    "static/css/main.2788bd05.chunk.css.map": "/baseball-app/static/css/main.2788bd05.chunk.css.map",
-    "static/js/2.154e1caa.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.154e1caa.chunk.js.LICENSE.txt",
+    "static/css/main.0a587690.chunk.css.map": "/baseball-app/static/css/main.0a587690.chunk.css.map",
+    "static/js/2.3707994f.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.3707994f.chunk.js.LICENSE.txt",
     "static/media/PlaysField.module.scss": "/baseball-app/static/media/plays_bg.47a36066.jpg",
     "static/media/left-logo.f3645bbc.png": "/baseball-app/static/media/left-logo.f3645bbc.png",
     "static/media/right-logo.e28481c9.png": "/baseball-app/static/media/right-logo.e28481c9.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f07ee06d.js",
-    "static/js/2.154e1caa.chunk.js",
-    "static/css/main.2788bd05.chunk.css",
-    "static/js/main.8c69f5b6.chunk.js"
+    "static/js/2.3707994f.chunk.js",
+    "static/css/main.0a587690.chunk.css",
+    "static/js/main.45ffe2fd.chunk.js"
   ]
 }
