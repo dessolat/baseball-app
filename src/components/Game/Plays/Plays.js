@@ -28,7 +28,7 @@ const Plays = () => {
   return (
     <div className={classes.join(' ')}>
       <PlaysEvents moments={moments} currentMoment={currentMoment} handleClick={handleMomentClick} />
-      <PlaysContent footerTab={footerTab} />
+      <PlaysContent footerTab={footerTab} currentMoment={currentMoment}/>
       <PlaysFooter footerTab={footerTab} setFooterTab={setFooterTab} />
     </div>
   );

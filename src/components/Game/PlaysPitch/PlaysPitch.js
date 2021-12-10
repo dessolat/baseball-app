@@ -3,12 +3,12 @@ import PlaysField from '../PlaysField/PlaysField';
 import PlaysSpin from '../PlaysSpin/PlaysSpin';
 import PlaysSpeed from '../PlaysSpeed/PlaysSpeed';
 
-const PlaysPitch = () => {
+const PlaysPitch = ({currentMoment}) => {
 	return (
 		<>
 			<PlaysSpeed />
       <PlaysSpin />
-      <PlaysField />
+      <PlaysField currentMoment={currentMoment}/>
 		</>
 	)
 }
