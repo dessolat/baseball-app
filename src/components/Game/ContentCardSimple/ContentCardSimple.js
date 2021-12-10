@@ -1,17 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import cl from './ContentCardSimple.module.scss';
 import Ellipses from 'components/UI/icons/Ellipses/Ellipses';
 import RectanglesEllipses from 'components/UI/icons/RectanglesEllipses/RectanglesEllipses';
 import PortraitImg from 'images/portrait.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { setImagesData } from 'redux/gameReducer';
 
 const ContentCardSimple = ({ player }) => {
   const playersInfo = useSelector(state => state.game.playersInfo);
+	const imagesData = useSelector(state => state.game.imagesData);
+	const dispatch = useDispatch()
+
   const eventsSummary = [];
   const lastMoment = player.moments.slice(-1)[0];
   const { r1, r2, r3, outs, balls, strikes } = lastMoment?.table || 0;
 
   lastMoment?.events?.forEach(event => eventsSummary.push(event.description));
+
+	useEffect(() => {
+    const fetchImage = async () => {
+			try {
+				const response = await axios.get(`http://84.201.172.216:3030/logo/${playersInfo[player.who]}`, {
+					responseType: 'arraybuffer'
+				});
+				
+				dispatch(setImagesData({[player.who]: "data:image/jpg;base64, " + Buffer.from(response.data, 'binary').toString('base64')}))
+			} catch (err) {
+				console.log(err.message)
+			}
+    };
+
+    playersInfo[player.who] && playersInfo[player.who] !== '' && !imagesData[player.who] && fetchImage();
+  }, []);
 
   return (
     <div className={cl.classic}>
@@ -23,11 +44,13 @@ const ContentCardSimple = ({ player }) => {
       <div className={cl.portraitEllipsesWrapper}>
         <div className={cl.portrait}>
           <img
-            src={
-              playersInfo[player.who] && playersInfo[player.who] !== ''
-                ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
-                : PortraitImg
-            }
+            // src={
+            //   playersInfo[player.who] && playersInfo[player.who] !== ''
+            //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
+            //     : PortraitImg
+            // }
+						className={!imagesData[player.who] ? cl.default : ''}
+            src={imagesData[player.who] || PortraitImg}
             alt='Portrait'
           />
         </div>

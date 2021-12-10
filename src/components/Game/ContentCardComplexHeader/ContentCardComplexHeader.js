@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexHeader.module.scss';
 import PortraitImg from 'images/portrait.png';
 import Ellipses from 'components/UI/icons/Ellipses/Ellipses';
@@ -7,10 +7,16 @@ import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplace
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { setImagesData } from 'redux/gameReducer';
+import { useDispatch } from 'react-redux';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
   const playersInfo = useSelector(state => state.game.playersInfo);
+  const imagesData = useSelector(state => state.game.imagesData);
+	const dispatch = useDispatch()
+
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
   const textClasses = [cl.text, cl[sit.icons.rect_color]];
@@ -18,6 +24,22 @@ const ContentCardComplexHeader = ({ player, sit }) => {
     () => sit.events.reduce((sum, event) => [...sum, event.description], []),
     [sit.events]
   );
+
+  useEffect(() => {
+    const fetchImage = async () => {
+			try {
+				const response = await axios.get(`http://84.201.172.216:3030/logo/${playersInfo[player.who]}`, {
+					responseType: 'arraybuffer'
+				});
+				
+				dispatch(setImagesData({[player.who]: "data:image/jpg;base64, " + Buffer.from(response.data, 'binary').toString('base64')}))
+			} catch (err) {
+				console.log(err.message)
+			}
+    };
+
+    playersInfo[player.who] && playersInfo[player.who] !== '' && !imagesData[player.who] && fetchImage();
+  }, []);
 
   useLayoutEffect(() => {
     ref.current.innerHTML = sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') + '.' : '';
@@ -34,11 +56,13 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         </div>
         <div className={cl.portrait}>
           <img
-            src={
-              playersInfo[player.who] && playersInfo[player.who] !== ''
-                ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
-                : PortraitImg
-            }
+            // src={
+            //   playersInfo[player.who] && playersInfo[player.who] !== ''
+            //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
+            //     : PortraitImg
+            // }
+						className={!imagesData[player.who] ? cl.default : ''}
+            src={imagesData[player.who] || PortraitImg}
             alt='Portrait'
           />
         </div>
