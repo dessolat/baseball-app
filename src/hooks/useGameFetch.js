@@ -8,7 +8,7 @@ const useGameFetch = url => {
   const [error, setError] = useState(null);
   const innings = useSelector(state => state.game.innings);
   const intervalRef = useRef();
-  const dataRef = useRef({});
+  const dataRef = useRef(0);
   const cancelTokenRef = useRef();
 
   useEffect(() => {
@@ -24,8 +24,11 @@ const useGameFetch = url => {
       try {
         firstTime && setIsLoading(true);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
-        if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
-        dataRef.current = resp.data;
+        // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
+				const dataLength = JSON.stringify(resp.data).length
+        if (dataRef.current === dataLength) return;
+        // dataRef.current = resp.data;
+        dataRef.current = dataLength;
         if (firstTime) {
           let newPlayersInfo = resp.data.preview.guests.players.reduce(
             (sum, player) => ({ ...sum, [player.name + ' ' + player.surname]: player.photo }),
