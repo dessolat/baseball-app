@@ -12,12 +12,13 @@ const ContentCardSimple = ({ player }) => {
 	const imagesData = useSelector(state => state.game.imagesData);
 	const dispatch = useDispatch()
 
-  const eventsSummary = [];
   const lastMoment = player.moments.slice(-1)[0];
   const { r1, r2, r3, outs, balls, strikes } = lastMoment?.table || 0;
-
-  lastMoment?.events?.forEach(event => eventsSummary.push(event.description));
-
+	
+  const eventsSummary = lastMoment?.events?.reduce((sum, event) => [...sum, event.description], []) || [];
+	const cardText = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : ''
+	const imgClassName = !imagesData[player.who] ? cl.default : ''
+	
 	useEffect(() => {
     const fetchImage = async () => {
 			try {
@@ -38,7 +39,7 @@ const ContentCardSimple = ({ player }) => {
     <div className={cl.classic}>
       <div className={cl.textRectanglesWrapper}>
         <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
-        <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
+        <p className={cl.text}>{cardText}</p>
         <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
       </div>
       <div className={cl.portraitEllipsesWrapper}>
@@ -49,7 +50,7 @@ const ContentCardSimple = ({ player }) => {
             //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
             //     : PortraitImg
             // }
-						className={!imagesData[player.who] ? cl.default : ''}
+						className={imgClassName}
             src={imagesData[player.who] || PortraitImg}
             alt='Portrait'
           />
