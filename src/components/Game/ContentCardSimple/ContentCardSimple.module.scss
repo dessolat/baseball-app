@@ -29,6 +29,13 @@
 		transform: translateX(40%);
 		width: 65px;
 	}
+
+	> img.default {
+		top: 0;
+		left: 0;
+		width: 100%;
+		transform: none;
+	}
 }
 
 .portraitEllipsesWrapper {
@@ -47,5 +54,5 @@
 .text {
   font: 400 .875rem var(--font-nunito);
   line-height: 1.36rem;
-  text-align: justify;
+  // text-align: justify;
 }
