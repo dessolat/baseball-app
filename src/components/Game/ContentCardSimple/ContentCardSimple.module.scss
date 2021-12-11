@@ -1,19 +1,15 @@
-.classic {
-	display: flex;
-  align-items: stretch;
-  column-gap: 10px;
+.playerName {
+	font: 400 .9375rem var(--font-nunito);
+	line-height: .9375rem;
+	margin-left: 4px;
 }
 
-.textRectanglesWrapper {
+.portraitTextWrapper {
 	display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-	flex: 1 1 100%;
+	column-gap: .4375rem;
 }
 
 .portrait {
-  margin-top: 4px;
 	width: 39px;
 	height: 42px;
 	overflow: hidden;
@@ -38,21 +34,22 @@
 	}
 }
 
-.portraitEllipsesWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-	align-items: flex-end;
-}
-
-.playerName {
-  font: 700 .875rem var(--font-nunito);
-  line-height: 1.36rem;
-  text-align: justify;
-}
-
 .text {
-  font: 400 .875rem var(--font-nunito);
-  line-height: 1.36rem;
-  // text-align: justify;
+	font: 300 .875rem var(--font-nunito);
+	line-height: .9375rem;
+	flex: 1 1;
+}
+
+.rectanglesEllipsesWrapper {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	column-gap: 6px;
+	line-height: 0;
+}
+
+.ellipses {
+	display: flex;
+	align-items: flex-start;
+	column-gap: 6px;
 }
