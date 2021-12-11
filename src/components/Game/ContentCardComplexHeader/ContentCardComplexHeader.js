@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexHeader.module.scss';
 import PortraitImg from 'images/portrait.png';
 import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
-import RectanglesEllipses from 'components/UI/icons/RectanglesEllipses/RectanglesEllipses';
+import Bases from 'components/UI/icons/Bases/Bases';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { setImagesData } from 'redux/gameReducer';
 import { useDispatch } from 'react-redux';
+import Outs from 'components/UI/icons/Outs/Outs';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
@@ -68,7 +69,8 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         </div>
       </div>
       <div className={cl.bottom}>
-        <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
+        <Bases r1={r1} r2={r2} r3={r3} />
+				<Outs outs={outs} />
         {sit.icons.rect_text !== 'Replacement' && <RectText icons={sit.icons} />}
         {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
         <BallsStrikes balls={balls} strikes={strikes} />

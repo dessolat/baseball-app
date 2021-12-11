@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexBody.module.scss';
 import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
-import RectanglesEllipses from 'components/UI/icons/RectanglesEllipses/RectanglesEllipses';
+import Bases from 'components/UI/icons/Bases/Bases';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
+import Outs from 'components/UI/icons/Outs/Outs';
 
 const ContentCardComplexBody = ({ sit }) => {
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
@@ -27,7 +28,8 @@ const ContentCardComplexBody = ({ sit }) => {
         <div>
           <p className={textClasses.join(' ')} ref={ref}>{eventsSummary.join('.') + '.'}</p>
           <div className={cl.bottom}>
-            <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
+            <Bases r1={r1} r2={r2} r3={r3} />
+						<Outs outs={outs} />
             <RectText icons={sit.icons} />
             {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
             <BallsStrikes balls={balls} strikes={strikes} />
