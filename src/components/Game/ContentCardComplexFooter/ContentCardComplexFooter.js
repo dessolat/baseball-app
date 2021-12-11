@@ -1,6 +1,6 @@
 import React from 'react';
 import cl from './ContentCardComplexFooter.module.scss';
-import Ellipses from 'components/UI/icons/Ellipses/Ellipses';
+import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
 import RectanglesEllipses from 'components/UI/icons/RectanglesEllipses/RectanglesEllipses';
 
 const ContentCardComplexFooter = ({ lastMoment }) => {
@@ -14,7 +14,7 @@ const ContentCardComplexFooter = ({ lastMoment }) => {
       <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
       <div className={cl.rectanglesEllipsesWrapper}>
         <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
-        <Ellipses balls={balls} strikes={strikes} />
+        <BallsStrikes balls={balls} strikes={strikes} />
       </div>
     </div>
   );

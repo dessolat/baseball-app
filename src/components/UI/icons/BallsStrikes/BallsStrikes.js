@@ -1,8 +1,8 @@
 import React from 'react';
 import Ellipse from '../Ellipse';
-import cl from './Ellipses.module.scss';
+import cl from './BallsStrikes.module.scss';
 
-const Ellipses = ({balls, strikes}) => {
+const BallsStrikes = ({balls, strikes}) => {
   return (
     <div className={cl.ellipses}>
       <Ellipse fill={balls > 0 && '#2B9D6A'} />
@@ -16,4 +16,4 @@ const Ellipses = ({balls, strikes}) => {
   );
 };
 
-export default Ellipses;
+export default BallsStrikes;

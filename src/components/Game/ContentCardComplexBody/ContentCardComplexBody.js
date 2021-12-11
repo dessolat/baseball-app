@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexBody.module.scss';
-import Ellipses from 'components/UI/icons/Ellipses/Ellipses';
+import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
 import RectanglesEllipses from 'components/UI/icons/RectanglesEllipses/RectanglesEllipses';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import RectText from 'components/UI/icons/Rects/RectText';
@@ -30,7 +30,7 @@ const ContentCardComplexBody = ({ sit }) => {
             <RectanglesEllipses r1={r1} r2={r2} r3={r3} outs={outs} />
             <RectText icons={sit.icons} />
             {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
-            <Ellipses balls={balls} strikes={strikes} />
+            <BallsStrikes balls={balls} strikes={strikes} />
           </div>
         </div>
       ) : (
