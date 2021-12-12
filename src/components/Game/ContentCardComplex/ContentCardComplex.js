@@ -6,7 +6,7 @@ import ContentCardComplexHeader from '../ContentCardComplexHeader/ContentCardCom
 const ContentCardComplex = ({ player, situationsArr }) => {
   const lastMoment = player.moments.slice(-1)[0];
   return (
-    <div>
+    <>
       <ContentCardComplexHeader player={player} sit={situationsArr[0]} />
       {situationsArr.slice(1).map((sit, i) => (
         <ContentCardComplexBody key={i} sit={sit} />
@@ -14,7 +14,7 @@ const ContentCardComplex = ({ player, situationsArr }) => {
       {(!lastMoment.icons?.rect_text || lastMoment.icons?.rect_text === 'Replacement') && (
         <ContentCardComplexFooter lastMoment={lastMoment} />
       )}
-    </div>
+    </>
   );
 };
 

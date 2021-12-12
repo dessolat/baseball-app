@@ -38,6 +38,7 @@ const ContentCardSimple = ({ player }) => {
     };
 
     playersInfo[player.who] && playersInfo[player.who] !== '' && !imagesData[player.who] && fetchImage();
+		// eslint-disable-next-line
   }, []);
 
   return (
@@ -56,7 +57,7 @@ const ContentCardSimple = ({ player }) => {
             alt='Portrait'
           />
         </div>
-        <p className={cl.text}>
+        <div className={cl.text}>
           {cardText}
           <div className={cl.rectanglesEllipsesWrapper}>
             <div className={cl.ellipses}>
@@ -65,7 +66,7 @@ const ContentCardSimple = ({ player }) => {
             </div>
             <Bases r1={r1} r2={r2} r3={r3} />
           </div>
-        </p>
+        </div>
       </div>
     </div>
   );
