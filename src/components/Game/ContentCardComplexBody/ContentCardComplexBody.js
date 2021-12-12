@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexBody.module.scss';
+import 'scss/colorWords.scss';
 import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
 import Bases from 'components/UI/icons/Bases/Bases';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';

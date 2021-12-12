@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexHeader.module.scss';
+import 'scss/colorWords.scss';
 import PortraitImg from 'images/portrait.png';
 import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
 import Bases from 'components/UI/icons/Bases/Bases';

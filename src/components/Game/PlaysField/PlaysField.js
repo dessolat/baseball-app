@@ -17,7 +17,6 @@ const PlaysField = ({ currentMoment }) => {
 				setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
 				timeoutRef.current = null
       }, 100);
-      // console.log(Math.random())
     };
 
     setTimeout(() => setCount(prev => prev + 1), 150);
