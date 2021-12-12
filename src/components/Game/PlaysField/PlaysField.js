@@ -31,7 +31,8 @@ const PlaysField = ({ currentMoment }) => {
 
   useEffect(() => {
     if (count === 1) return;
-    count < coords.length && setTimeout(() => setCount(prev => prev + 1), 80);
+    count < coords.length && setTimeout(() => setCount(prev => prev + 1), 40);
+		// eslint-disable-next-line
   }, [count]);
 
   useEffect(() => {
