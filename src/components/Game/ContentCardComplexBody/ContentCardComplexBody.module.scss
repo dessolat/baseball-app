@@ -1,33 +1,21 @@
 @import 'scss/vars.scss';
 
 .text {
-  padding-right: 49px;
-	font: 400 .875rem var(--font-nunito);
-  line-height: 1.36rem;
-  // text-align: justify;
-
-	&.red > span {
-		color: var(--red-color);
-	}
-	
-	&.green > span {
-		color: var(--green-color);
-	}
-	
-	&.blue > span {
-		color: var(--side-color);
-	}
-	
-	&.yellow > span {
-		color: var(--yellow-color);
-	}
+	font: 300 .875rem var(--font-nunito);
+	line-height: .9375rem;
 }
 
 .bottom {
-  display: flex;
-  align-items: flex-end;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	column-gap: 6px;
+	line-height: 0;
+}
 
-  > *:last-child {
-    margin-left: auto;
-  }
+.ellipses {
+	display: flex;
+	align-items: flex-start;
+	column-gap: 6px;
+	margin-left: auto;
 }
