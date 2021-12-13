@@ -1,23 +1,21 @@
 {
   "files": {
-    "main.css": "/baseball-app/static/css/main.0a587690.chunk.css",
-    "main.js": "/baseball-app/static/js/main.d8d6fbcb.chunk.js",
-    "main.js.map": "/baseball-app/static/js/main.d8d6fbcb.chunk.js.map",
+    "main.css": "/baseball-app/static/css/main.f0901a4d.chunk.css",
+    "main.js": "/baseball-app/static/js/main.b5963b99.chunk.js",
+    "main.js.map": "/baseball-app/static/js/main.b5963b99.chunk.js.map",
     "runtime-main.js": "/baseball-app/static/js/runtime-main.f07ee06d.js",
     "runtime-main.js.map": "/baseball-app/static/js/runtime-main.f07ee06d.js.map",
-    "static/js/2.3707994f.chunk.js": "/baseball-app/static/js/2.3707994f.chunk.js",
-    "static/js/2.3707994f.chunk.js.map": "/baseball-app/static/js/2.3707994f.chunk.js.map",
+    "static/js/2.d42af6d2.chunk.js": "/baseball-app/static/js/2.d42af6d2.chunk.js",
+    "static/js/2.d42af6d2.chunk.js.map": "/baseball-app/static/js/2.d42af6d2.chunk.js.map",
     "index.html": "/baseball-app/index.html",
-    "static/css/main.0a587690.chunk.css.map": "/baseball-app/static/css/main.0a587690.chunk.css.map",
-    "static/js/2.3707994f.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.3707994f.chunk.js.LICENSE.txt",
-    "static/media/PlaysField.module.scss": "/baseball-app/static/media/plays_bg.47a36066.jpg",
-    "static/media/left-logo.f3645bbc.png": "/baseball-app/static/media/left-logo.f3645bbc.png",
-    "static/media/right-logo.e28481c9.png": "/baseball-app/static/media/right-logo.e28481c9.png"
+    "static/css/main.f0901a4d.chunk.css.map": "/baseball-app/static/css/main.f0901a4d.chunk.css.map",
+    "static/js/2.d42af6d2.chunk.js.LICENSE.txt": "/baseball-app/static/js/2.d42af6d2.chunk.js.LICENSE.txt",
+    "static/media/PlaysField.module.scss": "/baseball-app/static/media/plays_bg.47a36066.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.f07ee06d.js",
-    "static/js/2.3707994f.chunk.js",
-    "static/css/main.0a587690.chunk.css",
-    "static/js/main.d8d6fbcb.chunk.js"
+    "static/js/2.d42af6d2.chunk.js",
+    "static/css/main.f0901a4d.chunk.css",
+    "static/js/main.b5963b99.chunk.js"
   ]
 }
