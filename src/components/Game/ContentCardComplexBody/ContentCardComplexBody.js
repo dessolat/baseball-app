@@ -12,28 +12,31 @@ const ContentCardComplexBody = ({ sit }) => {
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
   const ref = useRef(null);
 
-	const textClasses = [cl.text, cl[sit.icons.rect_color]];
   const eventsSummary = useMemo(
     () => sit.events.reduce((sum, event) => [...sum, event.description], []),
     [sit.events]
   );
 
-	useLayoutEffect(() => {
-		if (sit.icons.rect_text === 'Replacement') return
+  useLayoutEffect(() => {
+    if (sit.icons.rect_text === 'Replacement') return;
     ref.current.innerHTML = eventsSummary.join('.') + '.';
   }, [eventsSummary, sit.icons.rect_text]);
 
   return (
     <>
       {sit.icons.rect_text !== 'Replacement' ? (
-        <div>
-          <p className={textClasses.join(' ')} ref={ref}>{eventsSummary.join('.') + '.'}</p>
+        <div className={cl.body}>
+          <p className={cl.text} ref={ref}>
+            {eventsSummary.join('.') + '.'}
+          </p>
           <div className={cl.bottom}>
-            <Bases r1={r1} r2={r2} r3={r3} />
-						<Outs outs={outs} />
             <RectText icons={sit.icons} />
             {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
-            <BallsStrikes balls={balls} strikes={strikes} />
+            <div className={cl.ellipses}>
+              <Outs outs={outs} />
+              <BallsStrikes balls={balls} strikes={strikes} />
+            </div>
+            <Bases r1={r1} r2={r2} r3={r3} />
           </div>
         </div>
       ) : (
