@@ -23,7 +23,7 @@ const Content = () => {
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
-	const scrollToRef = useRef(false);
+  const scrollToRef = useRef(false);
 
   useEffect(() => {
     function situationsConcat(member) {
@@ -35,23 +35,28 @@ const Content = () => {
       });
     }
 
+    function momentsDecompose(member, moments, inning, side) {
+      newCards.push({
+        inning_number: inning.number,
+        ...member,
+        moments: [moments[0]],
+        type: 'Replacement',
+        side
+      });
+      if (moments.length <= 1) return;
+
+      moments[1].icons?.rect_text !== 'Replacement'
+        ? newCards.push({ inning_number: inning.number, ...member, moments: moments.slice(1), side })
+        : momentsDecompose(member, moments.slice(1), inning, side);
+    }
+
     function newCardsConcat(team, inning, side) {
       team.forEach(member => {
         member.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...member, side })
           : member.moments.length === 1
           ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side })
-          : newCards.push(
-              {
-                inning_number: inning.number,
-                ...member,
-                moments: [member.moments[0]],
-                type: 'Replacement',
-                side
-              },
-              { inning_number: inning.number, ...member, moments: member.moments.slice(1), side }
-            );
-
+          : momentsDecompose(member, member.moments, inning, side);
         situationsConcat(member);
       });
     }
@@ -114,14 +119,13 @@ const Content = () => {
     //Add parent node checking on null or undefined
     //Add field 'scroll' (bool) to setFilteredCards to know when scroll
     // if (playbackMode === 'pause' && situationFilter === 'All') {
-    // 	console.log(123)
     //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
-		if (scrollToRef.current) {
-			situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
-			scrollToRef.current = false
-		}
+    if (scrollToRef.current) {
+      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+      scrollToRef.current = false;
+    }
 
     playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
