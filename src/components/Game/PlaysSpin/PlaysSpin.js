@@ -1,55 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cl from './PlaysSpin.module.scss';
-// import Chart from 'react-google-charts';
 
-const PlaysSpin = () => {
-  // const options = {
-  //   height: 100,
-  //   width: 100,
-  //   chartArea: { left: 10, top: 10, width: '100%', height: '80%' },
-  //   lineWidth: 1,
-  //   explorer: { keepInBounds: true, zoomDelta: 1.1 },
-  //   hAxis: {
-  //     baseline: {
-  //       lineWidth: 1
-  //     },
-  //     gridlines: {
-  //       multiple: 1,
-  //       count: 1,
-  //       interval: 1
-  //     }
-  //     // viewWindowMode: 'maximized'
-  //   },
-  //   vAxis: {
-  //     gridlines: {
-  //       multiple: 1,
-  //       count: 1,
-  //       interval: 1
-  //     },
-  //     viewWindow: {
-  //       // min: 20
-  //     }
-  //   },
-  //   colors: ['#1A4C96'],
-  //   legend: { position: 'none' }
-  // };
+const PlaysSpin = ({ currentMoment }) => {
+  const [ballCoords, setBallCoords] = useState({ coordX: 50, coordY: 50 });
+
+  useEffect(() => {
+    if (Object.keys(currentMoment).length === 0 || !currentMoment.metering?.is_strike) return;
+
+    const coordX = 50 + 50 * currentMoment.metering.strike_zone_x;
+    const coordY = 50 - 50 * currentMoment.metering.strike_zone_y;
+
+    setBallCoords({ coordX, coordY });
+  }, [currentMoment]);
+
+  const isDrawBall = currentMoment.metering?.is_strike;
 
   return (
     <div className={cl.spin}>
       <svg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'>
         <line x1='49.5' y1='100' x2='49.5' stroke='#ACACAC' />
         <line y1='49.5' x2='100' y2='49.5' stroke='#ACACAC' />
-        <circle cx='68.5' cy='22.5' r='7.5' fill='#2B9D6A' />
+        {isDrawBall && <circle cx={ballCoords.coordX} cy={ballCoords.coordY} r='7.5' fill='#2B9D6A' />}
       </svg>
-
-      {/* <Chart
-        chartType='ScatterChart'
-        data={[
-          ['', 'speed'],
-          [40, 45]
-        ]}
-        options={options}
-      /> */}
       <div>
         <p className={cl.subHeader}>True spin</p>
         <p className={cl.regularValue}>1952.1 rpm</p>
