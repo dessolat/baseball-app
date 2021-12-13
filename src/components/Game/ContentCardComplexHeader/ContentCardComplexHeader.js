@@ -17,11 +17,10 @@ const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
   const playersInfo = useSelector(state => state.game.playersInfo);
   const imagesData = useSelector(state => state.game.imagesData);
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
-  const textClasses = [cl.text, cl[sit.icons.rect_color]];
   const eventsSummary = useMemo(
     () => sit.events.reduce((sum, event) => [...sum, event.description], []),
     [sit.events]
@@ -29,52 +28,60 @@ const ContentCardComplexHeader = ({ player, sit }) => {
 
   useEffect(() => {
     const fetchImage = async () => {
-			try {
-				const response = await axios.get(`http://84.201.172.216:3030/logo/${playersInfo[player.who]}`, {
-					responseType: 'arraybuffer'
-				});
-				
-				dispatch(setImagesData({[player.who]: "data:image/jpg;base64, " + Buffer.from(response.data, 'binary').toString('base64')}))
-			} catch (err) {
-				console.log(err.message)
-			}
+      try {
+        const response = await axios.get(`http://84.201.172.216:3030/logo/${playersInfo[player.who]}`, {
+          responseType: 'arraybuffer'
+        });
+
+        dispatch(
+          setImagesData({
+            [player.who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+          })
+        );
+      } catch (err) {
+        console.log(err.message);
+      }
     };
 
     playersInfo[player.who] && playersInfo[player.who] !== '' && !imagesData[player.who] && fetchImage();
+		// eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
-    ref.current.innerHTML = sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') + '.' : '';
+    ref.current.innerHTML = eventsSummary.join('.') + '.';
   }, [eventsSummary, sit.icons.rect_text]);
 
   return (
     <div>
       <div className={cl.top}>
-        <div className={cl.textWrapper}>
-          <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
-          <p className={textClasses.join(' ')} ref={ref}>
-            {sit.icons.rect_text !== 'Replacement' ? eventsSummary.join('.') + '.' : ''}
+        <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
+        <div className={cl.portraitTextWrapper}>
+          <div className={cl.portrait}>
+            <img
+              // src={
+              //   playersInfo[player.who] && playersInfo[player.who] !== ''
+              //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
+              //     : PortraitImg
+              // }
+              className={!imagesData[player.who] ? cl.default : ''}
+              src={imagesData[player.who] || PortraitImg}
+              alt='Portrait'
+            />
+          </div>
+          <p className={cl.text} ref={ref}>
+            {eventsSummary.join('.') + '.'}
           </p>
         </div>
-        <div className={cl.portrait}>
-          <img
-            // src={
-            //   playersInfo[player.who] && playersInfo[player.who] !== ''
-            //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
-            //     : PortraitImg
-            // }
-						className={!imagesData[player.who] ? cl.default : ''}
-            src={imagesData[player.who] || PortraitImg}
-            alt='Portrait'
-          />
-        </div>
       </div>
+
       <div className={cl.bottom}>
-        <Bases r1={r1} r2={r2} r3={r3} />
-				<Outs outs={outs} />
         {sit.icons.rect_text !== 'Replacement' && <RectText icons={sit.icons} />}
         {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
-        <BallsStrikes balls={balls} strikes={strikes} />
+        <div className={cl.ellipses}>
+          <Outs outs={outs} />
+          <BallsStrikes balls={balls} strikes={strikes} />
+        </div>
+        <Bases r1={r1} r2={r2} r3={r3} />
       </div>
 
       {sit.icons.rect_text === 'Replacement' && (
