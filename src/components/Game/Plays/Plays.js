@@ -20,15 +20,15 @@ const Plays = () => {
     setCurrentMoment(newMoments[0] || {});
   }, [currentCard]);
 
-  const classes = [cl.plays, cl.pitch];
-  // footerTab === 'pitch' && classes.push(cl.pitch)
+  const classes = [cl.plays];
+  classes.push(footerTab === 'pitch' ? cl.pitch : cl.hitting);
 
   const handleMomentClick = moment => setCurrentMoment(moment);
 
   return (
     <div className={classes.join(' ')}>
       <PlaysEvents moments={moments} currentMoment={currentMoment} handleClick={handleMomentClick} />
-      <PlaysContent footerTab={footerTab} currentMoment={currentMoment}/>
+      <PlaysContent footerTab={footerTab} currentMoment={currentMoment} />
       <PlaysFooter footerTab={footerTab} setFooterTab={setFooterTab} />
     </div>
   );
