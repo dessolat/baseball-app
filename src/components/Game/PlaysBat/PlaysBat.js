@@ -3,7 +3,7 @@ import cl from './PlaysBat.module.scss'
 
 const PlaysBat = () => {
 	return (
-		<div>
+		<div className={cl.bat}>
 			
 		</div>
 	)
