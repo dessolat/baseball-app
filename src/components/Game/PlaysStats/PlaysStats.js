@@ -3,7 +3,7 @@ import cl from './PlaysStats.module.scss'
 
 const PlaysStats = () => {
 	return (
-		<div>
+		<div className={cl.stats}>
 			
 		</div>
 	)
