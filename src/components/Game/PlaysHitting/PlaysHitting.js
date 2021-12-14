@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import PlaysBat from '../PlaysBat/PlaysBat';
+import PlaysStats from '../PlaysStats/PlaysStats';
 
-const PlaysHitting = () => {
-	return (
-		<>
-			
-		</>
-	)
-}
+const PlaysHitting = () => (
+  <>
+    <PlaysBat />
+		<PlaysStats />
+  </>
+);
 
-export default PlaysHitting
+export default PlaysHitting;
