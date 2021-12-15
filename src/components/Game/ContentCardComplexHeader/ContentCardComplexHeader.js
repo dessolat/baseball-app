@@ -58,11 +58,6 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         <div className={cl.portraitTextWrapper}>
           <div className={cl.portrait}>
             <img
-              // src={
-              //   playersInfo[player.who] && playersInfo[player.who] !== ''
-              //     ? `http://84.201.172.216:3030/logo/${playersInfo[player.who]}`
-              //     : PortraitImg
-              // }
               className={!imagesData[player.who] ? cl.default : ''}
               src={imagesData[player.who] || PortraitImg}
               alt='Portrait'
