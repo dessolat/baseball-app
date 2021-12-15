@@ -11,6 +11,7 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import useFullDate from 'hooks/useFullDate';
 import { useDispatch, useSelector } from 'react-redux';
 import { setImagesData } from 'redux/gameReducer';
+import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
 const Header = () => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -124,7 +125,7 @@ const Header = () => {
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
             <HeaderTabs />
           </div>
-          <img src={imagesData[preview.guests.name]} className={cl.leftLogo} alt='attack-team' />
+          <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <div className={cl.scoresWrapper}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} />
@@ -136,7 +137,7 @@ const Header = () => {
             <HeaderInfo innings={innings} />
           </div>
           <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners.score}</h2>
-          <img src={imagesData[preview.owners.name]} className={cl.rightLogo} alt='defence-team' />
+          <HeaderLogo teamName={preview.owners.name} side='right' images={imagesData} />
         </div>
       </div>
     </header>
