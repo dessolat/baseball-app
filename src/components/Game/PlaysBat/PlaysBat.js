@@ -27,7 +27,7 @@ const PlaysBat = ({ currentDot, handleDotClick }) => {
       </div>
       <div className={cl.footer}>
         <svg width='100%' height='40' viewBox='0 0 334 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
-          <text x='0' y='15' className={cl.subHeader}>
+          <text x='0' y='12' className={cl.subHeader}>
             Bat speed (mph)
           </text>
           <path d='M1 25L330 25' stroke='#1A4C96' />
