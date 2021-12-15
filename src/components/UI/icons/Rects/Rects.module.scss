@@ -1,14 +1,8 @@
-// .filter {
-//   margin-left: 0.875rem;
-// 	width: 7rem;
-// }
-
-
 .rectText {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  border: 0.8px solid transparent;
+  border: 0.8px solid black;
   border-radius: 4px;
   font-size: 0.65rem;
 	padding: 1px 2.5px 0;
@@ -31,6 +25,21 @@
 	padding: 1px 8px 0;
 }
 
+.red {
+	color: #e2001c;
+  border-color: #e2001c;
+}
+
+.blue {
+	color: #1a4c96;
+  border-color: #1a4c96;
+}
+
+.green {
+	color: #2b9d6a;
+  border-color: #2b9d6a;
+}
+
 // .f10 {
 // 	font-size: .625rem;
 // }
@@ -46,18 +55,3 @@
 // .f12 {
 // 	font-size: .75rem;
 // }
-
-.red {
-  color: #e2001c;
-  border-color: #e2001c;
-}
-
-.blue {
-  color: #1a4c96;
-  border-color: #1a4c96;
-}
-
-.green {
-  color: #2b9d6a;
-  border-color: #2b9d6a;
-}
