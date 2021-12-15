@@ -1,17 +1,24 @@
 @import './vars.scss';
 
+.red,
+.green,
+.blue,
+.yellow {
+  font-weight: 600;
+}
+
 .red {
-	color: var(--red-color);
+  color: var(--red-color);
 }
 
 .green {
-	color: var(--green-color);
+  color: var(--green-color);
 }
 
 .blue {
-	color: var(--side-color);
+  color: var(--side-color);
 }
 
 .yellow {
-	color: var(--yellow-color);
+  color: var(--yellow-color);
 }
