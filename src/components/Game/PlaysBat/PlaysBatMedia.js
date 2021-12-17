@@ -22,7 +22,21 @@ const oldCoords = [
   [0, 200]
 ];
 
-const PlaysBatMedia = () => {
+let coords = [];
+for (let i = 0; i < oldCoords.length; i++) {
+  if (i === 0) {
+    coords.push(oldCoords[i]);
+    continue;
+  }
+
+  let xDiff = oldCoords[i][0] - oldCoords[i - 1][0];
+  let yDiff = oldCoords[i][1] - oldCoords[i - 1][1];
+
+  for (let j = 1; j <= 10; j++) {
+    coords.push([oldCoords[i-1][0] + (xDiff / 10) * j, oldCoords[i-1][1] + (yDiff / 10) * j]);
+  }
+}
+const PlaysBatMedia = ({ currentMoment }) => {
   return (
     <div className={cl.batter}>
       <img src={BatterImg} alt='batter' />
