@@ -28,6 +28,9 @@
 }
 
 .batter {
+background: no-repeat url('../../../images/batter_bg.png') center / contain;
+height: 68%;
+
   > img {
     width: 100%;
   }
