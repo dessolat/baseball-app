@@ -57,25 +57,26 @@ const PlaysField = ({ currentMoment }) => {
       {coords.slice(0, count).map((coord, i) => {
         const ballClasses = [cl.ball];
         i === coords.length - 1 && ballClasses.push(cl.onTop);
+
+				const ballStyles = {
+					left: coord[0] * coeff.x - (12.5 * coord[4]) / 2,
+					top: coord[1] * coeff.y - (12.5 * coord[4]) / 2 - 90 * coeff.y,
+					width: 12.5 * coord[4] + 'px',
+					height: 12.5 * coord[4] + 'px'
+				};
+			
+				const shadowStyles = {
+					left: coord[2] * coeff.x - (12.5 * coord[4]) / 2,
+					top: coord[3] * coeff.y - (7.5 * coord[4]) / 2 - 90 * coeff.y,
+					width: 12.5 * coord[4] + 'px',
+					height: 7.5 * coord[4] + 'px'
+				};
+
         return (
-          <React.Fragment key={i}>
-            <div
-              className={ballClasses.join(' ')}
-              style={{
-                left: coord[0] * coeff.x - (12.5 * coord[4]) / 2,
-                top: coord[1] * coeff.y - (12.5 * coord[4]) / 2,
-                width: 12.5 * coord[4] + 'px',
-                height: 12.5 * coord[4] + 'px'
-              }}></div>
-            <div
-              className={cl.shadow}
-              style={{
-                left: coord[2] * coeff.x - (12.5 * coord[4]) / 2,
-                top: coord[3] * coeff.y - (7.5 * coord[4]) / 2,
-                width: 12.5 * coord[4] + 'px',
-                height: 7.5 * coord[4] + 'px'
-              }}></div>
-          </React.Fragment>
+          <Fragment key={i}>
+            <div className={ballClasses.join(' ')} style={ballStyles}></div>
+            <div className={cl.shadow} style={shadowStyles}></div>
+          </Fragment>
         );
       })}
 
