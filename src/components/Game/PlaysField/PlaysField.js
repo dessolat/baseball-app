@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 
@@ -12,10 +12,10 @@ const PlaysField = ({ currentMoment }) => {
 
   useEffect(() => {
     const resizeHandler = () => {
-			timeoutRef.current !== null && clearTimeout(timeoutRef.current)
+      timeoutRef.current !== null && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-				setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
-				timeoutRef.current = null
+        setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
+        timeoutRef.current = null;
       }, 100);
     };
 
@@ -31,7 +31,7 @@ const PlaysField = ({ currentMoment }) => {
   useEffect(() => {
     if (count === 1) return;
     count < coords.length && setTimeout(() => setCount(prev => prev + 1), 40);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [count]);
 
   useEffect(() => {
