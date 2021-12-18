@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
+import PlaysFieldBalls from './PlaysFieldBalls';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
   const [initSpeed, setInitSpeed] = useState('');
   const [count, setCount] = useState(1);
-  const [coeff, setCoeff] = useState({ x: 1, y: 1 });
+  const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
   const parent = useRef(null);
   const timeoutRef = useRef(null);
 
@@ -14,13 +15,25 @@ const PlaysField = ({ currentMoment }) => {
     const resizeHandler = () => {
       timeoutRef.current !== null && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
+        // setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
+        const yScale = parent.current.clientHeight / 330;
+        setCoeff({
+          x: parent.current.clientWidth / 1920,
+          y: (parent.current.clientHeight + 90 * yScale) / 1080,
+          yScale
+        });
         timeoutRef.current = null;
       }, 100);
     };
 
     setTimeout(() => setCount(prev => prev + 1), 150);
-    setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
+    // setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
+    const yScale = parent.current.clientHeight / 330;
+    setCoeff({
+      x: parent.current.clientWidth / 1920,
+      y: (parent.current.clientHeight + 90 * yScale) / 1080,
+      yScale
+    });
     window.addEventListener('resize', resizeHandler);
 
     return () => {
@@ -46,46 +59,24 @@ const PlaysField = ({ currentMoment }) => {
     };
   }, [currentMoment]);
 
+  const imgStyles = {
+    top: parent.current ? (43 * parent.current.clientHeight) / 330 : 43,
+    width: parent.current ? (102 * parent.current.clientWidth) / 746 : 102,
+    height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
+  };
+
+  const releaseValue = initSpeed !== '' ? initSpeed.toFixed(1) : '';
+
   return (
     <div className={cl.field} ref={parent}>
-      <img
-        className={cl.grid}
-        style={{ top: 43 * coeff.y * 3.273, width: 102 * coeff.x * 2.574, height: 148 * coeff.y * 3.273 }}
-        src={gridImg}
-        alt='grid'
-      />
-      {coords.slice(0, count).map((coord, i) => {
-        const ballClasses = [cl.ball];
-        i === coords.length - 1 && ballClasses.push(cl.onTop);
-
-				const ballStyles = {
-					left: coord[0] * coeff.x - (12.5 * coord[4]) / 2,
-					top: coord[1] * coeff.y - (12.5 * coord[4]) / 2 - 90 * coeff.y,
-					width: 12.5 * coord[4] + 'px',
-					height: 12.5 * coord[4] + 'px'
-				};
-			
-				const shadowStyles = {
-					left: coord[2] * coeff.x - (12.5 * coord[4]) / 2,
-					top: coord[3] * coeff.y - (7.5 * coord[4]) / 2 - 90 * coeff.y,
-					width: 12.5 * coord[4] + 'px',
-					height: 7.5 * coord[4] + 'px'
-				};
-
-        return (
-          <Fragment key={i}>
-            <div className={ballClasses.join(' ')} style={ballStyles}></div>
-            <div className={cl.shadow} style={shadowStyles}></div>
-          </Fragment>
-        );
-      })}
-
+      <img className={cl.grid} style={imgStyles} src={gridImg} alt='grid' />
+      <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
       <div className={cl.top}>
         <div className={cl.speedData}>
           <p className={cl.subHeader}>
             <span className={cl.releaseSpeed}>Release speed</span>/ Plate point speed
           </p>
-          <span className={cl.releaseValue}>{initSpeed !== '' ? initSpeed.toFixed(1) : ''} mph</span>
+          <span className={cl.releaseValue}>{releaseValue} mph</span>
           <span className={cl.regularValue}>/ 73.7 mph</span>
         </div>
         <div className={cl.releaseData}>
