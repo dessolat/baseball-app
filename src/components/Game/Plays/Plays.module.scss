@@ -18,3 +18,10 @@
 	'events bat stats'
 	'footer footer footer';
 }
+
+.running {
+	grid-template: minmax(422px, 482px) 36px / minmax(160px, 187px) minmax(363.5px, 491px) minmax(121.5px, 249px);
+	grid-template-areas:
+	'events field info'
+	'footer footer footer';
+}
