@@ -22,6 +22,7 @@
     flex-shrink: 0;
 
     &:hover {
+			transition: border var(--transition-speed);
       border: 2px solid #18a0fb;
     }
   }
