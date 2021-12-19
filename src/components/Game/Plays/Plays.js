@@ -21,7 +21,7 @@ const Plays = () => {
   }, [currentCard]);
 
   const classes = [cl.plays];
-  classes.push(footerTab === 'pitch' ? cl.pitch : cl.hitting);
+  classes.push(footerTab === 'pitch' ? cl.pitch : footerTab === 'hitting' ? cl.hitting : cl.running);
 
   const handleMomentClick = moment => setCurrentMoment(moment);
 
