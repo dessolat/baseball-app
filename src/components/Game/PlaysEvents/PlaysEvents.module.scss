@@ -1,4 +1,5 @@
 @import 'scss/vars.scss';
+@import 'scss/animations.scss';
 
 .events {
   grid-area: events;
@@ -18,7 +19,7 @@
 		padding: 4px 8px;
 		
 		&.active {
-			background: #E0F0FF;
+			animation: backgroundChange var(--transition-speed) forwards;
 		}
 	}
 
