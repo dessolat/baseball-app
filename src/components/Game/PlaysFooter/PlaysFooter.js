@@ -22,7 +22,7 @@ const PlaysFooter = ({footerTab, setFooterTab}) => {
       </li>
       <li>
         <button
-          name='running_fielding'
+          name='running'
           onClick={handleTabClick}
           className={footerTab === 'running' ? cl.active : ''}>
           Running/Fielding
