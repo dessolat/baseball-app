@@ -15,7 +15,6 @@ const PlaysField = ({ currentMoment }) => {
     const resizeHandler = () => {
       timeoutRef.current !== null && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        // setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
         const yScale = parent.current.clientHeight / 330;
         setCoeff({
           x: parent.current.clientWidth / 1920,
@@ -27,7 +26,6 @@ const PlaysField = ({ currentMoment }) => {
     };
 
     setTimeout(() => setCount(prev => prev + 1), 150);
-    // setCoeff({ x: parent.current.clientWidth / 1920, y: parent.current.clientHeight / 1080 });
     const yScale = parent.current.clientHeight / 330;
     setCoeff({
       x: parent.current.clientWidth / 1920,
