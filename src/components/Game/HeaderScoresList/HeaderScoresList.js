@@ -17,24 +17,26 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
     }
   }
 
-  const handleClick = (number, side) => {
-    dispatch(setPlaybackMode('pause'));
+	const handleClick = (number, side) => {
+		dispatch(setPlaybackMode('pause'));
 		const newCurrentCard = filteredCards.find(card => card.inning_number === number && card.side === side)
 		newCurrentCard && dispatch(setCurrentCard({...newCurrentCard, manualClick: false}))
-  };
+	};
+
+	const renderedInnings = newInnings.map(inning => (
+		<HeaderScoresListItem
+			key={inning.number}
+			inning={inning}
+			inningNumber={inningNumber}
+			maxInnings={maxInnings}
+			cl={cl}
+			handleClick={handleClick}
+		/>
+	))
 
   return (
     <ul ref={ref} className={cl.scoresTable}>
-      {newInnings.map(inning => (
-        <HeaderScoresListItem
-          key={inning.number}
-          inning={inning}
-          inningNumber={inningNumber}
-          maxInnings={maxInnings}
-          cl={cl}
-          handleClick={handleClick}
-        />
-      ))}
+      {renderedInnings}
     </ul>
   );
 });
