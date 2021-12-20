@@ -5,3 +5,27 @@
   overflow: hidden;
   background: no-repeat url('../../../images/running_bg.jpg') center / 100% 100%;
 }
+
+.infoItem {
+	padding: .875rem 0 .625rem;
+	position: relative;
+
+	& + &:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 75%;
+		height: 1px;
+		background-color: black;
+	}
+}
+
+.infoTitle {
+  font: 400 0.875rem/1.07 var(--font-nunito);
+}
+
+.infoValue {
+	font: 700 0.875rem/1.2 var(--font-athiti);
+}
