@@ -6,6 +6,17 @@
   background: no-repeat url('../../../images/running_bg.jpg') center / 100% 100%;
 }
 
+.info {
+  grid-area: info;
+  background: white;
+  padding: 0.6875rem;
+}
+
+.subHeader {
+  font: 400 0.875rem/1.36 var(--font-nunito);
+  color: var(--side-color);
+}
+
 .infoItem {
 	padding: .875rem 0 .625rem;
 	position: relative;
