@@ -28,8 +28,8 @@
 }
 
 .batter {
-background: no-repeat url('../../../images/batter_bg.png') center / contain;
-height: 68%;
+  background: no-repeat url('../../../images/batter_bg.png') center / contain;
+  height: 68%;
 
   > img {
     width: 100%;
@@ -52,7 +52,7 @@ height: 68%;
 
     > .value {
       font: 400 0.875rem var(--font-athiti);
-			fill: black;
+      fill: black;
     }
 
     > circle {
@@ -70,9 +70,9 @@ height: 68%;
         cursor: pointer;
       }
 
-			&.slider {
-				pointer-events: none;
-			}
+      &.slider {
+        pointer-events: none;
+      }
     }
   }
 }
