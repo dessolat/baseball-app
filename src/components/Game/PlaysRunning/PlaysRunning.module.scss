@@ -1,0 +1,7 @@
+@import 'scss/vars.scss';
+
+.field {
+  grid-area: field;
+  overflow: hidden;
+  background: no-repeat url('../../../images/running_bg.jpg') center / 100% 100%;
+}

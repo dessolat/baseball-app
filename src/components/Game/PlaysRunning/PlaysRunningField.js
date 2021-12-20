@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './PlaysRunning.module.scss';
 
 const PlaysRunningField = () => {
-  return <div></div>;
+  return <div className={cl.field}></div>;
 };
 
 export default PlaysRunningField;
