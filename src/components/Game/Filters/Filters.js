@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
+import cl from './Filters.module.scss';
 import FiltersSituationsList from '../FiltersSituationsList/FiltersSituationsList';
 import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import cl from './Filters.module.scss';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -56,17 +56,24 @@ const Filters = () => {
     animateScroll(e.currentTarget.name);
   };
 
+  const leftScrollArrow = isLeftScroll ? (
+    <Arrow onClick={scrollHorizontally} />
+  ) : (
+    <Arrow style={{ visibility: 'hidden' }} />
+  );
+  const rightScrollArrow = isRightScroll ? (
+    <Arrow direction='right' onClick={scrollHorizontally} style={{ marginLeft: '.3125rem' }} />
+  ) : (
+    <Arrow style={{ visibility: 'hidden' }} />
+  );
+
   return (
     <section className='container'>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {isLeftScroll ? <Arrow onClick={scrollHorizontally} /> : <Arrow style={{ visibility: 'hidden' }} />}
+          {leftScrollArrow}
           <FiltersSituationsList ref={scrollRef} situations={situations} />
-          {isRightScroll ? (
-            <Arrow direction='right' onClick={scrollHorizontally} style={{marginLeft: '.3125rem'}}/>
-          ) : (
-            <Arrow style={{ visibility: 'hidden' }} />
-          )}
+          {rightScrollArrow}
         </div>
         {tab === 'videos' && <FiltersViewModes />}
       </div>
