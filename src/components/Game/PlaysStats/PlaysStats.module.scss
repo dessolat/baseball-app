@@ -9,30 +9,36 @@
 	overflow: hidden;
 	padding: 0.2rem 0.3rem 1.125rem 0.9rem;
 
+	// > svg {
+	// 	@media screen and (max-width: 1232px) {
+	// 		margin-top: -.5rem;
+	// 	}
+
+	// 	@media screen and (max-width: 1155px) {
+	// 		margin-top: -1.2rem;
+	// 	}
+
+	// 	@media screen and (max-width: 1100px) {
+	// 		margin-top: -1.5rem;
+	// 	}
+
+	// 	@media screen and (max-width: 1035px) {
+	// 		margin-top: -1.8rem;
+	// 	}
+	// }
+}
+
+.field {
+	height: 55%;
+	background: no-repeat url('../../../images/field_right.png') center / 100% 100%;
+
 	> svg {
-		@media screen and (max-width: 1232px) {
-			margin-top: -.5rem;
-		}
 
-		@media screen and (max-width: 1155px) {
-			margin-top: -1.2rem;
-		}
-
-		@media screen and (max-width: 1100px) {
-			margin-top: -1.5rem;
-		}
-
-		@media screen and (max-width: 1035px) {
-			margin-top: -1.8rem;
-		}
 	}
 }
 
 .info {
 	padding-left: 7.5rem;
-	// display: flex;
-	// flex-direction: column;
-	// justify-content: space-between;
 	@media screen and (max-width: 1155px) {
 		padding-left: 5rem;
 	}
@@ -56,11 +62,6 @@
 .title {
   font: 400 0.875rem var(--font-nunito);
   color: var(--side-color);
-
-	@media screen and (max-width: 1155px) {
-		// font-size: .8rem;
-		// line-height: 1.9;
-	}
 }
 
 .value {
