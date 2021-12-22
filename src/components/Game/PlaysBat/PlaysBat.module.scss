@@ -72,7 +72,18 @@
 
       &.slider {
         pointer-events: none;
+				animation: sliderAnimation .9s linear forwards;
       }
     }
   }
+}
+
+@keyframes sliderAnimation {
+	from {
+		cx: 1;
+	}
+
+	to {
+		cx: 326.5;
+	}
 }
