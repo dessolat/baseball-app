@@ -9,7 +9,7 @@ const PlaysBat = ({ currentDot, handleDotClick, currentMoment }) => {
     <div className={cl.bat}>
       <PlaysBatHeader />
       <PlaysBatMedia currentMoment={currentMoment}/>
-      <PlaysBatFooter currentDot={currentDot} handleDotClick={handleDotClick} />
+      <PlaysBatFooter currentDot={currentDot} currentMoment={currentMoment} handleDotClick={handleDotClick} />
     </div>
   );
 };
