@@ -45,7 +45,7 @@ const PlaysBatMedia = ({ currentMoment }) => {
 
   useEffect(() => {
 		clearTimeout(timeoutRef.current)
-    if (Object.keys(currentMoment).length === 0 || currentMoment.events[0].type === 'replace') {
+    if (Object.keys(currentMoment).length === 0 || (currentMoment.events && currentMoment.events[0].type === 'replace')) {
 			setCurvePath('')
 			return}
     maxFrameRef.current = coords.length / 2;

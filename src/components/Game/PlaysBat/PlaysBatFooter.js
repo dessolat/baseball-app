@@ -14,7 +14,7 @@ const PlaysBatFooter = ({ currentDot, currentMoment, handleDotClick }) => {
 
   const getDotColor = order => (currentDot === order ? '#1A4C96' : '#E8E6E6');
 
-  const isDots = !(Object.keys(currentMoment).length === 0) && currentMoment.events[0].type !== 'replace';
+  const isDots = Object.keys(currentMoment).length !== 0 && (!currentMoment.events || currentMoment.events[0].type !== 'replace');
 
   return (
     <div className={cl.footer}>
