@@ -2,12 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import {
   setSituations,
   setInningNumber,
   setCurrentCard,
   setFilteredCards,
-  setPlaybackMode
+  setPlaybackMode,
+  setImagesData
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
@@ -19,11 +21,14 @@ const Content = () => {
   const currentCard = useSelector(state => state.game.currentCard);
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
+  const playersInfo = useSelector(state => state.game.playersInfo);
+  const imagesData = useSelector(state => state.game.imagesData);
   const gameId = useSelector(state => state.game.gameId);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
   const scrollToRef = useRef(false);
+  const queriesRef = useRef([]);
 
   useEffect(() => {
     function situationsConcat(member) {
@@ -61,6 +66,21 @@ const Content = () => {
       });
     }
 
+    const fetchImage = async who => {
+      try {
+        const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[who]}`, {
+          responseType: 'arraybuffer'
+        });
+        dispatch(
+          setImagesData({
+            [who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+          })
+        );
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
     const newSituations = ['All'];
     const newCards = [];
 
@@ -68,6 +88,18 @@ const Content = () => {
       newCardsConcat(inning['top/guests'], inning, 'top');
       inning['bottom/owners'] && newCardsConcat(inning['bottom/owners'], inning, 'bottom');
     });
+
+    /****************Images fetching*****************/
+
+    newCards
+      .filter(card => playersInfo[card.who])
+      .forEach(card => {
+        if (queriesRef.current.includes(card.who)) return;
+        queriesRef.current.push(card.who);
+        fetchImage(card.who);
+      });
+
+    /************************************************/
 
     const filteredCards = getFilteredCards(newCards);
     /*******************Delete later******************/
