@@ -16,6 +16,15 @@ const useGameFetch = url => {
     // eslint-disable-next-line
   }, [innings]);
 
+	const concatPlayersInfo = (players, summary) => {
+		return players
+		.filter(player => player.photo !== '')
+		.reduce((sum, player) => {
+			sum[player.name + ' ' + player.surname] = player.photo;
+			return sum;
+		}, summary);
+	}
+
   const getFullData =
     (firstTime = false, innerUrl = url) =>
     async dispatch => {
@@ -25,19 +34,17 @@ const useGameFetch = url => {
         firstTime && setIsLoading(true);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
-				const dataLength = JSON.stringify(resp.data).length
+        const dataLength = JSON.stringify(resp.data).length;
         if (dataRef.current === dataLength) return;
         // dataRef.current = resp.data;
         dataRef.current = dataLength;
+
         if (firstTime) {
-          let newPlayersInfo = resp.data.preview.guests.players.reduce(
-            (sum, player) => ({ ...sum, [player.name + ' ' + player.surname]: player.photo }),
-            {}
-          );
-          newPlayersInfo = resp.data.preview.owners.players.reduce(
-            (sum, player) => ({ ...sum, [player.name + ' ' + player.surname]: player.photo }),
-            newPlayersInfo
-          );
+					//Concat players info from fetched data
+					let newPlayersInfo = {}
+          newPlayersInfo = concatPlayersInfo(resp.data.preview.guests.players, newPlayersInfo);
+          newPlayersInfo = concatPlayersInfo(resp.data.preview.owners.players, newPlayersInfo);
+					
           dispatch(setPlayersInfo(newPlayersInfo));
         }
 
