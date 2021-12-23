@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
+import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexHeader.module.scss';
 import 'scss/colorWords.scss';
 import PortraitImg from 'images/portrait.png';
@@ -8,16 +8,11 @@ import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplace
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { setImagesData } from 'redux/gameReducer';
-import { useDispatch } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
-  const playersInfo = useSelector(state => state.game.playersInfo);
   const imagesData = useSelector(state => state.game.imagesData);
-  const dispatch = useDispatch();
 
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
@@ -25,27 +20,6 @@ const ContentCardComplexHeader = ({ player, sit }) => {
     () => sit.events.reduce((sum, event) => [...sum, event.description], []),
     [sit.events]
   );
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await axios.get(`http://84.201.172.216:3030/logo/${playersInfo[player.who]}`, {
-          responseType: 'arraybuffer'
-        });
-
-        dispatch(
-          setImagesData({
-            [player.who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-          })
-        );
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-
-    playersInfo[player.who] && playersInfo[player.who] !== '' && !imagesData[player.who] && fetchImage();
-		// eslint-disable-next-line
-  }, []);
 
   useLayoutEffect(() => {
     ref.current.innerHTML = eventsSummary.join('.') + '.';
