@@ -17,7 +17,7 @@ const Game = () => {
   const gameId = useSelector(state => state.game.gameId);
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
-    'http://84.201.172.216:3030/game_359'
+    'http://51.250.11.151:3030/game_359'
   );
   // const [error, isLoading, intervalRef, getFullData] = useGameFetch('http://192.168.1.3:3001/');
   // const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch('http://localhost:3001/');
@@ -38,7 +38,7 @@ const Game = () => {
     dispatch(setCurrentCard({}));
     dispatch(setSituationFilter('All'));
     clearInterval(intervalRef.current);
-    dispatch(getFullData(true, 'http://84.201.172.216:3030/game_' + gameId));
+    dispatch(getFullData(true, 'http://51.250.11.151:3030/game_' + gameId));
     // eslint-disable-next-line
   }, [gameId]);
 
