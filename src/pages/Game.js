@@ -8,8 +8,11 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { setCurrentCard, setSituationFilter } from 'redux/gameReducer';
+import { useSearchParams } from 'react-router-dom';
 
 const Game = () => {
+	const [searchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
   const innings = useSelector(state => state.game.innings);
   const gameId = useSelector(state => state.game.gameId);
   const dispatch = useDispatch();
@@ -49,7 +52,7 @@ const Game = () => {
       ) : innings.length > 0 ? (
         <>
           <Header />
-          <Filters />
+          {tab !== 'lineup' && <Filters />}
           <Content />
         </>
       ) : (
