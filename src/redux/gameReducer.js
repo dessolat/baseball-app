@@ -8,7 +8,7 @@ const defaultState = {
 	playersInfo: {},
 	imagesData: {},
 	filteredCards: [],
-  playbackMode: 'playOnline',
+  playbackMode: 'pause',
   viewMode: 'mode-1',
   gameId: 0
 };
