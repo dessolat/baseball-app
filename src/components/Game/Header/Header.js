@@ -26,7 +26,7 @@ const Header = () => {
   useEffect(() => {
     const fetchImage = async (teamName, url) => {
       try {
-        const response = await axios.get(`http://84.201.172.216:3030/logo/${url}`, {
+        const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
           responseType: 'arraybuffer'
         });
 
