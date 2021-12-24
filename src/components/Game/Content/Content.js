@@ -22,7 +22,6 @@ const Content = () => {
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const playersInfo = useSelector(state => state.game.playersInfo);
-  const imagesData = useSelector(state => state.game.imagesData);
   const gameId = useSelector(state => state.game.gameId);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
@@ -77,6 +76,7 @@ const Content = () => {
           })
         );
       } catch (err) {
+        setTimeout(() => fetchImage(who), 2000);
         console.log(err.message);
       }
     };
