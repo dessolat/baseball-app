@@ -110,7 +110,7 @@ const Content = () => {
     /*************************************************/
     setCards(newCards);
     dispatch(setFilteredCards(filteredCards));
-    playbackMode === 'pause' &&
+    (playbackMode === 'play' || playbackMode === 'pause') &&
       Object.keys(currentCard).length === 0 &&
       dispatch(setCurrentCard(filteredCards[0]));
     playbackMode === 'playOnline' &&
