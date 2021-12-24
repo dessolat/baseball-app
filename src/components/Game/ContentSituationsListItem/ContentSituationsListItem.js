@@ -1,10 +1,27 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './ContentSituationsListItem.module.scss';
 import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 
 const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref) => {
+  const itemRef = useRef('itemRef');
+
+  // useEffect(() => {
+  //   let observer = new IntersectionObserver(entries => {
+  //     entries.forEach(entry => {
+  //       const { isIntersecting } = entry;
+
+  //       if (isIntersecting) {
+  //         console.log('Intersecting', player.who);
+  //       } else {
+  //         console.log('Not intersecting', player.who);
+  //       }
+  //     });
+  //   });
+  //   observer.observe(activeRef.current);
+  // }, []);
+
   const classNames = [cl.listItem];
 
   currentCard.moments &&
@@ -15,12 +32,12 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
   const situationsArr = [];
   player.moments.forEach(moment => moment.icons?.rect_text && situationsArr.push(moment));
 
-	const itemRef = currentCard.moments && player.moments[0].inner.id === currentCard.moments[0].inner.id ? ref : null || null
+  const activeRef =
+    currentCard.moments && player.moments[0].inner.id === currentCard.moments[0].inner.id
+      ? ref
+      : itemRef || itemRef;
   return (
-    <li
-      ref={itemRef}
-      className={classNames.join(' ')}
-      onClick={() => situationClick(player)}>
+    <li ref={activeRef} className={classNames.join(' ')} onClick={() => situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
       ) : situationsArr.length > 0 ? (
