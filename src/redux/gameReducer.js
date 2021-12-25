@@ -10,7 +10,7 @@ const defaultState = {
 	filteredCards: [],
   playbackMode: 'pause',
   viewMode: 'mode-1',
-  gameId: 0
+  currentGameId: null
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -23,7 +23,7 @@ const SET_IMAGES_DATA = 'SET_IMAGES_DATA';
 const SET_FILTERED_CARDS = 'SET_FILTERED_CARDS';
 const SET_PLAYBACK_MODE = 'SET_PLAYBACK_MODE';
 const SET_VIEW_MODE = 'SET_VIEW_MODE';
-const SET_GAME_ID = 'SET_GAME_ID';
+const SET_CURRENT_GAME_ID = 'SET_CURRENT_GAME_ID';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -47,8 +47,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, playbackMode: action.payload };
     case SET_VIEW_MODE:
       return { ...state, viewMode: action.payload };
-    case SET_GAME_ID:
-      return { ...state, gameId: action.payload };
+    case SET_CURRENT_GAME_ID:
+      return { ...state, currentGameId: action.payload };
     default:
       return state;
   }
@@ -64,4 +64,4 @@ export const setImagesData = payload => ({ type: SET_IMAGES_DATA, payload });
 export const setFilteredCards = payload => ({ type: SET_FILTERED_CARDS, payload });
 export const setPlaybackMode = payload => ({ type: SET_PLAYBACK_MODE, payload });
 export const setViewMode = payload => ({ type: SET_VIEW_MODE, payload });
-export const setGameId = payload => ({ type: SET_GAME_ID, payload });
+export const setCurrentGameId = payload => ({ type: SET_CURRENT_GAME_ID, payload });
