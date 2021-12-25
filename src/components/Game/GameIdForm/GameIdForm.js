@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setGameId } from 'redux/gameReducer';
+import { useNavigate } from 'react-router-dom';
 import cl from './GameIdForm.module.scss';
 
 const GameIdForm = ({isLoading}) => {
   const [input, setInput] = useState('');
-  const dispatch = useDispatch();
+	const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
-    input !== '' && dispatch(setGameId(input));
+		if (input === '') return
+		navigate(`/game/${input}`)
   };
 
   return (
