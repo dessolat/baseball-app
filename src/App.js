@@ -8,7 +8,9 @@ const App = () => {
     <Router>
       <NavBar />
       <Routes>
-        <Route path='/game' element={<Game />} />
+        <Route path='/game' element={<Game />}>
+          <Route path=':gameId' element={<Game />} />
+        </Route>
         <Route path='*' element={<Navigate to='/game' replace={true} />} />
       </Routes>
     </Router>
