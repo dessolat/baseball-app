@@ -8,10 +8,11 @@ const App = () => {
     <Router>
       <NavBar />
       <Routes>
-        <Route path='/game' element={<Game />}>
+        {/* <Route path='/game' element={<Game />}>
           <Route path=':gameId' element={<Game />} />
-        </Route>
-        <Route path='*' element={<Navigate to='/game' replace={true} />} />
+        </Route> */}
+        <Route path='/game/:gameId' element={<Game />} />
+        <Route path='*' element={<Navigate to='/game/359' replace={true} />} />
       </Routes>
     </Router>
   );
