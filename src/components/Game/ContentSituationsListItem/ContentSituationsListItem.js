@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import cl from './ContentSituationsListItem.module.scss';
 import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
@@ -37,7 +37,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ? ref
       : itemRef || itemRef;
   return (
-    <li ref={activeRef} className={classNames.join(' ')} onClick={() => situationClick(player)}>
+    <li ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
       ) : situationsArr.length > 0 ? (
