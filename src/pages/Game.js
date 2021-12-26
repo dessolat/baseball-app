@@ -45,6 +45,9 @@ const Game = () => {
   return (
     <>
       <GameIdForm isLoading={isLoading} />
+      {/* <Link to='/game/350'>to game number 350</Link>
+      <Link to='/game/351'>to game number 351</Link>
+      <Link to='/game/359'>to game number 359</Link> */}
       {error ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
