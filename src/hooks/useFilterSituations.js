@@ -22,7 +22,8 @@ const SORT_PRIORITY = {
   Flyout: 19,
   Pickoff: 20,
   Sacrifice: 21,
-  Replace: 22
+  Bunt: 22,
+  Replace: 23
 };
 
 export const useFilterSituations = newSituations =>
