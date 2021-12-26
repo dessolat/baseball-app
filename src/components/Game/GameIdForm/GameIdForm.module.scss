@@ -2,16 +2,19 @@
   position: absolute;
   left: 7.5px;
   top: 7.5px;
+	display: flex;
+	align-items: center;
+	column-gap: 8px;
 
   > input {
     width: 40px;
     text-align: right;
+		padding: .5px;
   }
 
   > button {
-    margin-left: 8px;
     background-color: white;
-    padding: 1px;
+    padding: 1.5px;
     border: 1px solid black;
   }
 }
