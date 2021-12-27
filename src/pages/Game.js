@@ -10,6 +10,7 @@ import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { setCurrentCard, setSituationFilter, setCurrentGameId } from 'redux/gameReducer';
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
   const [searchParams] = useSearchParams();
@@ -69,6 +70,7 @@ const Game = () => {
         <ErrorLoader error={error} />
       ) : isLoading ? (
         <Loader />
+				// <Skeleton />
       ) : innings.length > 0 ? (
         <>
           <Header />
