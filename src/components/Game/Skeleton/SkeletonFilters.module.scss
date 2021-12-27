@@ -1,0 +1,38 @@
+.list {
+  padding: 1.25rem 1.375rem calc(1.25rem + 6px);
+	display: flex;
+
+  > * {
+    height: 2.85rem;
+    background-color: rgb(243, 242, 242);
+    border-radius: 2.5rem;
+
+    + * {
+      margin-left: 0.5rem;
+    }
+  }
+
+  > *:first-child {
+    width: 4.9rem;
+  }
+
+  > *:nth-child(2) {
+    width: 5.94rem;
+  }
+
+  > *:nth-child(3) {
+    width: 6.22rem;
+  }
+
+  > *:nth-child(4) {
+    width: 6.61rem;
+  }
+
+  > *:nth-child(5) {
+    width: 7.29rem;
+  }
+
+  > *:last-child {
+    width: 8.56rem;
+  }
+}
