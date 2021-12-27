@@ -68,7 +68,8 @@ const Content = () => {
     const fetchImage = async who => {
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[who]}`, {
-          responseType: 'arraybuffer'
+          responseType: 'arraybuffer',
+					timeout: 2500
         });
         dispatch(
           setImagesData({
