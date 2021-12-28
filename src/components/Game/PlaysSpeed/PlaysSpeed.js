@@ -35,12 +35,12 @@ const PlaysSpeed = () => {
   }, []);
 
 	useEffect(() => {
-		if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.init_speed_x) {
+		if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
 			setChartData([])
 			return
 		}
 
-		const newChartData = currentCard.moments.reduce((sum, moment, i) => [...sum, [i, moment.metering.init_speed_x]], [['', 'speed']])
+		const newChartData = currentCard.moments.reduce((sum, moment, i) => [...sum, [i, moment.metering.pitch.init_speed_x]], [['', 'speed']])
 		setChartData(newChartData)
 	}, [currentCard])
 
