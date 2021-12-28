@@ -5,7 +5,6 @@ import PlaysFieldBalls from './PlaysFieldBalls';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
-  const [initSpeed, setInitSpeed] = useState('');
   const [count, setCount] = useState(1);
   const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
   const parent = useRef(null);
@@ -49,8 +48,7 @@ const PlaysField = ({ currentMoment }) => {
     setCount(1);
     setTimeout(() => setCount(prev => prev + 1), 150);
     // timeoutRef.current = setTimeout(() => setCount(prev => prev + 1), 150);
-    setCoords(currentMoment.metering?.data_2d || []);
-    setInitSpeed(currentMoment.metering?.init_speed_x || '');
+    setCoords(currentMoment.metering?.pitch?.data_2d || []);
 
     return () => {
       // clearTimeout(timeoutRef.current);
@@ -63,7 +61,8 @@ const PlaysField = ({ currentMoment }) => {
     height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
   };
 
-  const releaseValue = initSpeed !== '' ? initSpeed.toFixed(1) : '';
+	const initSpeed = currentMoment.metering?.pitch?.init_speed_x
+  const releaseValue = initSpeed ? initSpeed.toFixed(1) : '';
 
   return (
     <div className={cl.field} ref={parent}>
