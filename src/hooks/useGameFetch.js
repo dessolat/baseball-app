@@ -34,6 +34,7 @@ const useGameFetch = url => {
         firstTime && setIsLoading(true);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
+				error && setError(null);
         const dataLength = JSON.stringify(resp.data).length;
         if (dataRef.current === dataLength) return;
         // dataRef.current = resp.data;
@@ -59,6 +60,8 @@ const useGameFetch = url => {
           }, 3000);
         }
       }
+
+			
     };
 
   return [error, isLoading, cancelTokenRef, intervalRef, getFullData];
