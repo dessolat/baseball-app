@@ -8,7 +8,7 @@ const PlaysSpeed = () => {
   const [chartHeight, setChartHeight] = useState(0);
   const [chartData, setChartData] = useState([]);
   const ref = useRef(null);
-	const currentCard = useSelector(state => state.game.currentCard)
+  const currentCard = useSelector(state => state.game.currentCard);
 
   useEffect(() => {
     let clientWidth = ref.current.clientWidth;
@@ -34,15 +34,21 @@ const PlaysSpeed = () => {
     };
   }, []);
 
-	useEffect(() => {
-		if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
-			setChartData([])
-			return
-		}
+  useEffect(() => {
+    if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
+      setChartData([]);
+      return;
+    }
 
-		const newChartData = currentCard.moments.reduce((sum, moment, i) => [...sum, [i, moment.metering.pitch.init_speed_x]], [['', 'speed']])
-		setChartData(newChartData)
-	}, [currentCard])
+    const newChartData = currentCard.moments.reduce(
+      (sum, moment, i) => {
+        sum.push([i, moment.metering.pitch.init_speed_x]);
+        return sum;
+      },
+      [['', 'speed']]
+    );
+    setChartData(newChartData);
+  }, [currentCard]);
 
   const options = {
     height: chartHeight,
