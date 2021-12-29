@@ -7,24 +7,25 @@ const PlaysFooter = ({footerTab, setFooterTab}) => {
   // const tab = searchParams.get('ptab');
 
   // const handleTabClick = e => setSearchParams({ ptab: e.target.name });
-  const handleTabClick = e => setFooterTab(e.target.name);
+  const getClass = name => {
+    if (tab === name || (name === 'pitch' && !tab)) return cl.active;
+    return '';
+  };
+
   return (
     <ul className={cl.footer}>
       <li>
-        <button name='pitch' onClick={handleTabClick} className={footerTab === 'pitch' ? cl.active : ''}>
+        <button name='pitch' onClick={handleClick} className={getClass('pitch')}>
           Pitch
         </button>
       </li>
       <li>
-        <button name='hitting' onClick={handleTabClick} className={footerTab === 'hitting' ? cl.active : ''}>
+        <button name='hitting' onClick={handleClick} className={getClass('hitting')}>
           Hitting
         </button>
       </li>
       <li>
-        <button
-          name='running'
-          onClick={handleTabClick}
-          className={footerTab === 'running' ? cl.active : ''}>
+        <button name='running' onClick={handleClick} className={getClass('running')}>
           Running/Fielding
         </button>
       </li>
