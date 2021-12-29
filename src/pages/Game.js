@@ -8,15 +8,15 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { setCurrentCard, setSituationFilter, setCurrentGameId } from 'redux/gameReducer';
-import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { StringParam, useQueryParam } from 'use-query-params';
 import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
-  const [searchParams] = useSearchParams();
+  const [tab] = useQueryParam('tab', StringParam)
   const { gameId } = useParams();
   const navigate = useNavigate();
-  const tab = searchParams.get('tab');
   const innings = useSelector(state => state.game.innings);
   const currentGameId = useSelector(state => state.game.currentGameId);
   const dispatch = useDispatch();
