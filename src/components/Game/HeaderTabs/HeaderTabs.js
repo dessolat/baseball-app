@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-import useTabs from 'hooks/useTabs';
+import { useQueryParam, StringParam } from 'use-query-params';
 import cl from './HeaderTabs.module.scss';
 
 const HeaderTabs = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const tab = searchParams.get('tab');
+  const [tab, setTab] = useQueryParam('tab', StringParam);
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const tab = searchParams.get('tab');
 
-  const handleTabClick = e => setSearchParams({ tab: e.target.name });
+  const handleTabClick = e => setTab(e.target.name);
 
   const getClass = name => {
     if (tab === name || (name === 'plays' && !tab)) return cl.active;
