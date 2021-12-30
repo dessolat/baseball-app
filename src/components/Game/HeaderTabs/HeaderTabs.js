@@ -10,7 +10,9 @@ const HeaderTabs = () => {
   const handleTabClick = e => setTab(e.target.name);
 
   const getClass = name => {
-    if (tab === name || (name === 'plays' && !tab)) return cl.active;
+		const values = ['lineup', 'box', 'videos']
+
+    if (tab === name || (name === 'plays' && (!tab || !values.includes(tab)))) return cl.active;
     return '';
   };
 
