@@ -14,7 +14,7 @@ const PlaysStats = ({ hit }) => {
   const intermediatePoints = data_2d
     ? data_2d
         .filter(coords => coords[3] === 1)
-        .map(coords => <circle cx={coords[0]} cy={coords[1]} r={18} fill='red'></circle>)
+        .map((coords, i) => <circle key={i} cx={coords[0]} cy={coords[1]} r={18} fill='red'></circle>)
     : '';
 
   return (
