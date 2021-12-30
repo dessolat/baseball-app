@@ -1,14 +1,19 @@
 import React from 'react';
+import { StringParam, useQueryParam } from 'use-query-params';
 import cl from './PlaysFooter.module.scss';
-// import { useSearchParams } from 'react-router-dom';
 
-const PlaysFooter = ({footerTab, setFooterTab}) => {
+const PlaysFooter = () => {
+  const [tab, setTab] = useQueryParam('ptab', StringParam);
   // const [searchParams, setSearchParams] = useSearchParams();
   // const tab = searchParams.get('ptab');
 
   // const handleTabClick = e => setSearchParams({ ptab: e.target.name });
+  const handleClick = e => setTab(e.target.name);
+
   const getClass = name => {
-    if (tab === name || (name === 'pitch' && !tab)) return cl.active;
+    const values = ['pitch', 'hitting', 'running'];
+
+    if (tab === name || (name === 'pitch' && (!tab || !values.includes(tab)))) return cl.active;
     return '';
   };
 
