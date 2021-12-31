@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setPlaybackMode } from 'redux/gameReducer';
+import { NumberParam, useQueryParam } from 'use-query-params';
 import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
 
 const HeaderScoresList = forwardRef(({ innings }, ref) => {
+  const setCard = useQueryParam('card', NumberParam)[1];
   const inningNumber = useSelector(state => state.game.inningNumber);
   const filteredCards = useSelector(state => state.game.filteredCards);
   const dispatch = useDispatch();
@@ -26,16 +28,16 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
     }
   };
 
-	const renderedInnings = newInnings.map(inning => (
-		<HeaderScoresListItem
-			key={inning.number}
-			inning={inning}
-			inningNumber={inningNumber}
-			maxInnings={maxInnings}
-			cl={cl}
-			handleClick={handleClick}
-		/>
-	))
+  const renderedInnings = newInnings.map(inning => (
+    <HeaderScoresListItem
+      key={inning.number}
+      inning={inning}
+      inningNumber={inningNumber}
+      maxInnings={maxInnings}
+      cl={cl}
+      handleClick={handleClick}
+    />
+  ));
 
   return (
     <ul ref={ref} className={cl.scoresTable}>
