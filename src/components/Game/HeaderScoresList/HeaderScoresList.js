@@ -17,11 +17,14 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
     }
   }
 
-	const handleClick = (number, side) => {
-		dispatch(setPlaybackMode('pause'));
-		const newCurrentCard = filteredCards.find(card => card.inning_number === number && card.side === side)
-		newCurrentCard && dispatch(setCurrentCard({...newCurrentCard, manualClick: false}))
-	};
+  const handleClick = (number, side) => {
+    dispatch(setPlaybackMode('pause'));
+    const newCurrentCard = filteredCards.find(card => card.inning_number === number && card.side === side);
+    if (newCurrentCard) {
+      dispatch(setCurrentCard({ ...newCurrentCard, manualClick: false }));
+      setCard(newCurrentCard.moments[0].inner.id);
+    }
+  };
 
 	const renderedInnings = newInnings.map(inning => (
 		<HeaderScoresListItem
