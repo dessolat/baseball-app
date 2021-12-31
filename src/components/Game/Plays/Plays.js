@@ -4,9 +4,10 @@ import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useSelector } from 'react-redux';
+import { StringParam, useQueryParam } from 'use-query-params';
 
 const Plays = () => {
-  const [footerTab, setFooterTab] = useState('pitch');
+  const [tab] = useQueryParam('ptab', StringParam);
   const [moments, setMoments] = useState([]);
   const [currentMoment, setCurrentMoment] = useState({});
   const currentCard = useSelector(state => state.game.currentCard);
@@ -21,15 +22,15 @@ const Plays = () => {
   }, [currentCard]);
 
   const classes = [cl.plays];
-  classes.push(footerTab === 'pitch' ? cl.pitch : footerTab === 'hitting' ? cl.hitting : cl.running);
+  classes.push(tab === 'hitting' ? cl.hitting : tab === 'running' ? cl.running : cl.pitch);
 
   const handleMomentClick = moment => setCurrentMoment(moment);
 
   return (
     <div className={classes.join(' ')}>
       <PlaysEvents moments={moments} currentMoment={currentMoment} handleClick={handleMomentClick} />
-      <PlaysContent footerTab={footerTab} currentMoment={currentMoment} moments={moments} />
-      <PlaysFooter footerTab={footerTab} setFooterTab={setFooterTab} />
+      <PlaysContent currentMoment={currentMoment} moments={moments} />
+      <PlaysFooter />
     </div>
   );
 };
