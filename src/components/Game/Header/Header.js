@@ -27,7 +27,7 @@ const Header = () => {
     const fetchImage = async (teamName, url) => {
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
-          responseType: 'arraybuffer'
+          responseType: 'arraybuffer', timeout: 2500
         });
 
         dispatch(
@@ -36,8 +36,8 @@ const Header = () => {
           })
         );
       } catch (err) {
-        err.message === 'Request failed with status code 523' &&
-          setTimeout(() => fetchImage(teamName, url), 10000);
+        // err.message === 'Request failed with status code 523' &&
+          setTimeout(() => fetchImage(teamName, url), 2500);
         console.log(err.message);
       }
     };
