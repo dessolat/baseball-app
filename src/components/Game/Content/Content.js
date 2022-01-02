@@ -13,9 +13,13 @@ import {
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
+// import { useSearchParams } from 'react-router-dom';
+import { NumberParam, useQueryParam } from 'use-query-params';
 
 const Content = () => {
   const [cards, setCards] = useState([]);
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [card, setCard] = useQueryParam('card', NumberParam);
   const innings = useSelector(state => state.game.innings);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const currentCard = useSelector(state => state.game.currentCard);
@@ -69,7 +73,7 @@ const Content = () => {
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[who]}`, {
           responseType: 'arraybuffer',
-					timeout: 2500
+          timeout: 2500
         });
         dispatch(
           setImagesData({
@@ -102,7 +106,7 @@ const Content = () => {
 
     /************************************************/
 
-    const filteredCards = getFilteredCards(newCards);
+    const newFilteredCards = getFilteredCards(newCards);
     /*******************Delete later******************/
     if (gameIdRef.current !== gameId && playbackMode !== 'playOnline') {
       gameIdRef.current = gameId;
@@ -110,14 +114,20 @@ const Content = () => {
     }
     /*************************************************/
     setCards(newCards);
-    dispatch(setFilteredCards(filteredCards));
-    (playbackMode === 'play' || playbackMode === 'pause') &&
-      Object.keys(currentCard).length === 0 &&
-      dispatch(setCurrentCard(filteredCards[0]));
+    dispatch(setFilteredCards(newFilteredCards));
+
+    if ((playbackMode === 'play' || playbackMode === 'pause') && Object.keys(currentCard).length === 0) {
+      let cardIndex =
+        card !== undefined ? newFilteredCards.findIndex(player => player.moments[0].inner.id === card) : 0;
+
+      if (cardIndex === -1) cardIndex = 0;
+
+      dispatch(setCurrentCard(newFilteredCards[cardIndex]));
+    }
+
     playbackMode === 'playOnline' &&
-      (filteredCards.length !== 0
-        ? // ? setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 })
-          dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }))
+      (newFilteredCards.length !== 0
+        ? dispatch(setCurrentCard({ ...newFilteredCards.slice(-1)[0] }))
         : dispatch(setCurrentCard({})));
 
     dispatch(setSituations(newSituations));
@@ -131,15 +141,20 @@ const Content = () => {
 
     dispatch(setFilteredCards(filteredCards));
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
-    playbackMode === 'pause' &&
-      situationFilter !== 'All' &&
-      dispatch(setCurrentCard({ ...filteredCards[0] }));
+    if (playbackMode === 'pause' && situationFilter !== 'All') {
+      dispatch(setCurrentCard(filteredCards[0]));
+      setCard(filteredCards[0].moments[0].inner.id);
+      scrollToRef.current = true;
+    }
 
     if (playbackMode === 'pause' && situationFilter === 'All') scrollToRef.current = true;
 
-    playbackMode === 'playOnline' &&
+    if (playbackMode === 'playOnline') {
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-      dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
+      const lastCard = filteredCards.slice(-1)[0];
+      dispatch(setCurrentCard(lastCard));
+      setCard(lastCard.moments[0].inner.id);
+    }
     // eslint-disable-next-line
   }, [situationFilter]);
 
@@ -168,11 +183,33 @@ const Content = () => {
 
   useEffect(() => {
     // if (Object.keys(currentCard).length === 0 || playbackMode !== 'playOnline' || !situationsChildRef.current)
+
+    // const sumUrl = { tab: e.target.name };
+    // for (let item of searchParams.entries()) {
+    // 	if (item[0] !== 'tab') {
+    // 		sumUrl[item[0]] = item[1];
+    // 	}
+    // }
+
+    // setSearchParams(sumUrl);
+    // const cardId = filteredCards.find(
+    //   card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+    // );
+
+    const cardId = currentCard.moments && currentCard.moments[0].inner.id;
+    if (cardId !== undefined) {
+      // const sumUrl = Object.fromEntries(searchParams.entries());
+      // sumUrl.card = cardId;
+      // setSearchParams(sumUrl);
+      // setCard(cardId, 'replaceIn');
+    }
+
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
     if (Object.keys(currentCard).length === 0 || currentCard.manualClick || !situationsChildRef.current)
       return;
     situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+
     // eslint-disable-next-line
   }, [currentCard]);
 
