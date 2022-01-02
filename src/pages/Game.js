@@ -11,7 +11,7 @@ import { setCurrentCard, setSituationFilter, setCurrentGameId } from 'redux/game
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { StringParam, useQueryParam } from 'use-query-params';
-import Skeleton from 'components/Game/Skeleton/Skeleton';
+// import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
   const [tab] = useQueryParam('tab', StringParam)
