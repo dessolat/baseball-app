@@ -6,13 +6,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode } from 'redux/gameReducer';
 
 const ContentControls = () => {
-	const playbackMode = useSelector(state => state.game.playbackMode)
-	const dispatch = useDispatch()
+  const playbackMode = useSelector(state => state.game.playbackMode);
+  const dispatch = useDispatch();
 
-	const playbackModeClick = e => {
+  const playbackModeClick = e => {
     const newMode =
       e.currentTarget.name === 'play-pause' ? (playbackMode === 'play' ? 'pause' : 'play') : 'playOnline';
     dispatch(setPlaybackMode(newMode));
+  };
+
+  const getClassName = name => {
+    if (
+      (playbackMode !== 'playOnline' && name === 'play-pause') ||
+      (playbackMode === 'playOnline' && name === 'play-online')
+    )
+      return cl.active;
+    return '';
   };
 
   return (
@@ -20,14 +29,10 @@ const ContentControls = () => {
       <PlayPause
         name='play-pause'
         onClick={playbackModeClick}
-        className={playbackMode !== 'playOnline' ? cl.active : ''}
+        className={getClassName('play-pause')}
         playbackMode={playbackMode}
       />
-      <PlayOnline
-        name='play-online'
-        onClick={playbackModeClick}
-        className={playbackMode === 'playOnline' ? cl.active : ''}
-      />
+      <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />
     </div>
   );
 };
