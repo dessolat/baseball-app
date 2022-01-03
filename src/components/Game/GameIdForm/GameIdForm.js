@@ -15,7 +15,7 @@ const GameIdForm = ({ isLoading }) => {
     try {
       setIsURLChecking(true);
       await axios.get(`http://51.250.11.151:3030/game_${id}`, {
-        timeout: 2500
+        timeout: 5000
       });
       return true;
     } catch ({ message }) {
