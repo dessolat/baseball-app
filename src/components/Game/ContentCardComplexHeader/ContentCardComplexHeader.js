@@ -25,10 +25,15 @@ const ContentCardComplexHeader = ({ player, sit }) => {
     ref.current.innerHTML = eventsSummary.join('.') + '.';
   }, [eventsSummary, sit.icons.rect_text]);
 
+  const titleText = `${player.hit_order}. ${player.who}`;
+  const cardText = eventsSummary.join('.') + '.';
+
+	const isRectText = sit.icons.rect_text !== 'Replacement'
+	const isRectScore = sit.icons.score_own !== undefined
   return (
     <div>
       <div className={cl.top}>
-        <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
+        <p className={cl.playerName}>{titleText}</p>
         <div className={cl.portraitTextWrapper}>
           <div className={cl.portrait}>
             <img
@@ -38,14 +43,14 @@ const ContentCardComplexHeader = ({ player, sit }) => {
             />
           </div>
           <p className={cl.text} ref={ref}>
-            {eventsSummary.join('.') + '.'}
+            {cardText}
           </p>
         </div>
       </div>
 
       <div className={cl.bottom}>
-        {sit.icons.rect_text !== 'Replacement' && <RectText icons={sit.icons} />}
-        {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
+        {isRectText && <RectText icons={sit.icons} />}
+        {isRectScore && <RectScore icons={sit.icons} />}
         <div className={cl.ellipses}>
           <Outs outs={outs} />
           <BallsStrikes balls={balls} strikes={strikes} />
@@ -53,8 +58,8 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         <Bases r1={r1} r2={r2} r3={r3} />
       </div>
 
-      {sit.icons.rect_text === 'Replacement' && (
-        <ContentCardReplacement text={eventsSummary.join('.') + '.'} />
+      {!isRectText && (
+        <ContentCardReplacement text={cardText} />
       )}
     </div>
   );
