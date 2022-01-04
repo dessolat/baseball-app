@@ -116,6 +116,8 @@ const Header = () => {
     </>
   );
 
+	const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore]
+
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -136,7 +138,7 @@ const Header = () => {
             </div>
             <HeaderInfo innings={innings} />
           </div>
-          <h2 className={cl.teamScore + ' ' + cl.defenceTeamScore}>{preview.owners.score}</h2>
+          <h2 className={defenceScoreClasses.join(' ')}>{preview.owners.score}</h2>
           <HeaderLogo teamName={preview.owners.name} side='right' images={imagesData} />
         </div>
       </div>
