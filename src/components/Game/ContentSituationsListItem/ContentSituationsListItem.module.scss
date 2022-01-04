@@ -6,7 +6,6 @@
   cursor: pointer;
   padding: 0.5rem 0.3125rem 0;
   border-left: 2px solid transparent;
-	// margin-top: 3px;
 
   > * {
     padding-bottom: 0.4375rem;
@@ -24,18 +23,11 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      // background-color: black;
     }
   }
 
   > *:last-child {
     padding-bottom: 0.5625rem;
-  }
-
-  & + & {
-    // margin-top: 2px;
-		// border-top: 1px solid transparent;
-		// border-bottom: 1px solid transparent;
   }
 
   &.active {
