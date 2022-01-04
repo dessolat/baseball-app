@@ -37,7 +37,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ? ref
       : itemRef || itemRef;
   return (
-    <li ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
+    <div ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
       ) : situationsArr.length > 0 ? (
@@ -45,7 +45,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ) : (
         <ContentCardSimple player={player} />
       )}
-    </li>
+    </div>
   );
 };
 
