@@ -22,16 +22,18 @@ const ContentCardComplexBody = ({ sit }) => {
     ref.current.innerHTML = eventsSummary.join('.') + '.';
   }, [eventsSummary, sit.icons.rect_text]);
 
+  const isRectScore = sit.icons.score_own !== undefined;
+  const cardText = eventsSummary.join('.') + '.';
   return (
     <>
       {sit.icons.rect_text !== 'Replacement' ? (
         <div className={cl.body}>
           <p className={cl.text} ref={ref}>
-            {eventsSummary.join('.') + '.'}
+            {cardText}
           </p>
           <div className={cl.bottom}>
             <RectText icons={sit.icons} />
-            {sit.icons.score_own !== undefined && <RectScore icons={sit.icons} />}
+            {isRectScore && <RectScore icons={sit.icons} />}
             <div className={cl.ellipses}>
               <Outs outs={outs} />
               <BallsStrikes balls={balls} strikes={strikes} />
@@ -40,7 +42,7 @@ const ContentCardComplexBody = ({ sit }) => {
           </div>
         </div>
       ) : (
-        <ContentCardReplacement text={eventsSummary.join('.') + '.'} />
+        <ContentCardReplacement text={cardText} />
       )}
     </>
   );
