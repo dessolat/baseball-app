@@ -10,9 +10,10 @@ const ContentCardComplexFooter = ({ lastMoment }) => {
 
   lastMoment?.events?.forEach(event => eventsSummary.push(event.description));
 
+	const cardText = eventsSummary.join('.') + '.'
   return (
     <div className={cl.footer}>
-      <p className={cl.text}>{eventsSummary.join('.') + '.'}</p>
+      <p className={cl.text}>{cardText}</p>
       <div className={cl.rectanglesEllipsesWrapper}>
         <Bases r1={r1} r2={r2} r3={r3} />
 				<Outs outs={outs} />
