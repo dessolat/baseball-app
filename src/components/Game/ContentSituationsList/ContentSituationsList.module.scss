@@ -4,6 +4,10 @@
   overflow-y: scroll;
 	scroll-behavior: smooth;
 
+	> * + * {
+		margin-top: 2px;
+	}
+
   &::-webkit-scrollbar {
     width: 7px;
   }
