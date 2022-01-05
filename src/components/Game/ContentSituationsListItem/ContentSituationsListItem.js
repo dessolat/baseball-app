@@ -1,12 +1,10 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import cl from './ContentSituationsListItem.module.scss';
 import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 
 const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref) => {
-  const itemRef = useRef('itemRef');
-
   // useEffect(() => {
   //   let observer = new IntersectionObserver(entries => {
   //     entries.forEach(entry => {
@@ -35,7 +33,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
   const activeRef =
     currentCard.moments && player.moments[0].inner.id === currentCard.moments[0].inner.id
       ? ref
-      : itemRef || itemRef;
+      : null || null;
   return (
     <div ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
