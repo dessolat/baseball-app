@@ -2,11 +2,9 @@ import React from 'react';
 import cl from './ContentGraphics.module.scss';
 import Videos from '../Videos/Videos';
 import Plays from '../Plays/Plays';
-// import { useSearchParams } from 'react-router-dom';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 const ContentGraphics = () => {
-  // const [searchParams] = useSearchParams();
 	const [tab] = useQueryParam('tab', StringParam)
 
   const renderTab = tab => {
@@ -21,7 +19,6 @@ const ContentGraphics = () => {
     }
   };
 
-  // return <div className={cl.graphics}>{renderTab(searchParams.get('tab'))}</div>;
   return <div className={cl.graphics}>{renderTab(tab)}</div>;
 };
 
