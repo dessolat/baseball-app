@@ -9,8 +9,8 @@ const HeaderScoresListItem = ({ inning, inningNumber, maxInnings, cl, handleClic
       {inning.number <= maxInnings ? (
         <div className={outerClass}>
           <span>{inning.number}</span>
-          <span onClick={handleClick(inning.number, 'top')}>{inning.top_runs !== undefined ? inning.top_runs : 0}</span>
-          <span onClick={handleClick(inning.number, 'bottom')} className={innerClass}>{inning.bot_runs !== undefined ? inning.bot_runs : 0}</span>
+          <span onClick={handleClick(inning.number, 'top')}>{inning.top_runs ?? 0}</span>
+          <span onClick={handleClick(inning.number, 'bottom')} className={innerClass}>{inning.bot_runs ?? 0}</span>
         </div>
       ) : (
         <div>
