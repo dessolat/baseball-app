@@ -2,10 +2,10 @@ import React from 'react';
 import { useQueryParam, StringParam } from 'use-query-params';
 import cl from './HeaderTabs.module.scss';
 
+const tabsArr = ['lineup', 'box', 'plays', 'videos']
+
 const HeaderTabs = () => {
   const [tab, setTab] = useQueryParam('tab', StringParam);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const tab = searchParams.get('tab');
 
   const handleTabClick = e => setTab(e.target.name);
 
@@ -18,26 +18,11 @@ const HeaderTabs = () => {
 
   return (
     <ul className={cl.headerTabs}>
-      <li>
-        <button name='lineup' onClick={handleTabClick} className={getClass('lineup')}>
-          Lineup
+			{tabsArr.map(item => <li>
+        <button name={item} onClick={handleTabClick} className={getClass(item)}>
+          {item[0].toUpperCase()}{item.slice(1)}
         </button>
-      </li>
-      <li>
-        <button name='box' onClick={handleTabClick} className={getClass('box')}>
-          Box
-        </button>
-      </li>
-      <li>
-        <button name='plays' onClick={handleTabClick} className={getClass('plays')}>
-          Plays
-        </button>
-      </li>
-      <li>
-        <button name='videos' onClick={handleTabClick} className={getClass('videos')}>
-          Videos
-        </button>
-      </li>
+      </li>)}
     </ul>
   );
 };
