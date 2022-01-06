@@ -19,7 +19,7 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
     }
   }
 
-  const handleClick = (number, side) => {
+  const handleClick = (number, side) => () => {
     dispatch(setPlaybackMode('pause'));
     const newCurrentCard = filteredCards.find(card => card.inning_number === number && card.side === side);
     if (newCurrentCard) {
