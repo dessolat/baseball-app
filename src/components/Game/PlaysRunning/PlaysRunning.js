@@ -2,10 +2,10 @@ import React from 'react';
 import PlaysRunningField from './PlaysRunningField';
 import PlaysRunningInfo from './PlaysRunningInfo';
 
-const PlaysRunning = ({ currentMoment, moments }) => {
+const PlaysRunning = ({ currentMoment }) => {
   return (
     <>
-      <PlaysRunningField field={currentMoment.metering?.field} moments={moments}/>
+      <PlaysRunningField field={currentMoment.metering?.field} />
       <PlaysRunningInfo />
     </>
   );

@@ -1,9 +1,7 @@
 import React from 'react';
 import cl from './PlaysRunning.module.scss';
 
-const PlaysRunningField = ({ field, moments }) => {
-  // const { data_2d } = field || 0;
-
+const PlaysRunningField = ({ field }) => {
   let ballPath = '';
 
   moments
