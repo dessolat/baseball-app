@@ -4,17 +4,12 @@ import cl from './PlaysRunning.module.scss';
 const PlaysRunningField = ({ field }) => {
   let ballPath = '';
 
-  moments
-    .filter(moment => moment.metering?.field?.data_2d)
-    .forEach(moment => {
-      const { data_2d } = moment.metering.field;
-
-      ballPath += `M${data_2d[0][0]} ${data_2d[0][1]}`;
-      data_2d.slice(1).forEach(coords => (ballPath += `L${coords[0]} ${coords[1]}`));
+  field
+    ?.filter(coords => coords.length > 0)
+    .forEach(coords => {
+      ballPath += `M${coords[0][0]} ${coords[0][1]}`;
+      coords.slice(1).forEach(coord => (ballPath += `L${coord[0]} ${coord[1]}`));
     });
-
-  // let ballPath = data_2d ? `M${data_2d[0][0]} ${data_2d[0][1]}` : '';
-  // data_2d && data_2d.slice(1).forEach(coords => (ballPath += `L${coords[0]} ${coords[1]}`));
 
   return (
     <svg
