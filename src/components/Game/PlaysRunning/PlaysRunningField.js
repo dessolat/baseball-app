@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './PlaysRunning.module.scss';
 
 const PlaysRunningField = ({ field }) => {
@@ -30,4 +30,4 @@ const PlaysRunningField = ({ field }) => {
   );
 };
 
-export default PlaysRunningField;
+export default memo(PlaysRunningField);
