@@ -33,7 +33,7 @@ for (let i = 0; i < oldCoords.length; i++) {
   let yDiff = oldCoords[i][1] - oldCoords[i - 1][1];
 
   for (let j = 1; j <= 10; j++) {
-    coords.push([oldCoords[i-1][0] + (xDiff / 10) * j, oldCoords[i-1][1] + (yDiff / 10) * j]);
+    coords.push([oldCoords[i - 1][0] + (xDiff / 10) * j, oldCoords[i - 1][1] + (yDiff / 10) * j]);
   }
 }
 
@@ -41,19 +41,23 @@ const PlaysBatMedia = ({ currentMoment }) => {
   const [curvePath, setCurvePath] = useState('');
   const [frame, setFrame] = useState(0);
   const maxFrameRef = useRef(null);
-	const timeoutRef = useRef(null)
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
-		clearTimeout(timeoutRef.current)
-    if (Object.keys(currentMoment).length === 0 || (currentMoment.events && currentMoment.events[0].type === 'replace')) {
-			setCurvePath('')
-			return}
+    clearTimeout(timeoutRef.current);
+    if (
+      Object.keys(currentMoment).length === 0 ||
+      (currentMoment.events && currentMoment.events[0].type === 'replace')
+    ) {
+      setCurvePath('');
+      return;
+    }
     maxFrameRef.current = coords.length / 2;
     setFrame(1);
   }, [currentMoment]);
 
   useEffect(() => {
-		if (frame === 0) return
+    if (frame === 0) return;
     if (frame > maxFrameRef.current) {
       maxFrameRef.current = null;
       return;
@@ -76,6 +80,10 @@ const PlaysBatMedia = ({ currentMoment }) => {
     setCurvePath(newCurve);
 
     timeoutRef.current = setTimeout(() => setFrame(prev => prev + 1), 10);
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
   }, [frame]);
 
   return (
