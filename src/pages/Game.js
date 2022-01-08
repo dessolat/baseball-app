@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
@@ -14,7 +14,7 @@ import { StringParam, useQueryParam } from 'use-query-params';
 // import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
-  const [tab] = useQueryParam('tab', StringParam)
+  const [currentTab, setCurrentTab] = useState(getSearchParam('tab') || 'plays');
   const { gameId } = useParams();
   const navigate = useNavigate();
   const innings = useSelector(state => state.game.innings);
