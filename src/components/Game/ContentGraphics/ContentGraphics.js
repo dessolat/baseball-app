@@ -2,13 +2,10 @@ import React from 'react';
 import cl from './ContentGraphics.module.scss';
 import Videos from '../Videos/Videos';
 import Plays from '../Plays/Plays';
-import { StringParam, useQueryParam } from 'use-query-params';
 
-const ContentGraphics = () => {
-	const [tab] = useQueryParam('tab', StringParam)
-
-  const renderTab = tab => {
-    switch (tab) {
+const ContentGraphics = ({ currentTab }) => {
+  const renderTab = () => {
+    switch (currentTab) {
       case 'lineup':
       case 'box':
         return <></>;
@@ -19,7 +16,7 @@ const ContentGraphics = () => {
     }
   };
 
-  return <div className={cl.graphics}>{renderTab(tab)}</div>;
+  return <div className={cl.graphics}>{renderTab()}</div>;
 };
 
 export default ContentGraphics;
