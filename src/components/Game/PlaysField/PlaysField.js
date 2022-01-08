@@ -24,7 +24,7 @@ const PlaysField = ({ currentMoment }) => {
       }, 100);
     };
 
-    setTimeout(() => setCount(prev => prev + 1), 150);
+    const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
     const yScale = parent.current.clientHeight / 330;
     setCoeff({
       x: parent.current.clientWidth / 1920,
@@ -35,23 +35,31 @@ const PlaysField = ({ currentMoment }) => {
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
+      clearTimeout(timeout);
     };
   }, []);
 
   useEffect(() => {
     if (count === 1) return;
-    count < coords.length && setTimeout(() => setCount(prev => prev + 1), 40);
+
+    let timeout;
+    if (count < coords.length) {
+      timeout = setTimeout(() => setCount(prev => prev + 1), 40);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
     // eslint-disable-next-line
   }, [count]);
 
   useEffect(() => {
     setCount(1);
-    setTimeout(() => setCount(prev => prev + 1), 150);
-    // timeoutRef.current = setTimeout(() => setCount(prev => prev + 1), 150);
+    const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
     setCoords(currentMoment.metering?.pitch?.data_2d || []);
 
     return () => {
-      // clearTimeout(timeoutRef.current);
+      clearTimeout(timeout);
     };
   }, [currentMoment]);
 
@@ -61,7 +69,7 @@ const PlaysField = ({ currentMoment }) => {
     height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
   };
 
-	const initSpeed = currentMoment.metering?.pitch?.init_speed_x
+  const initSpeed = currentMoment.metering?.pitch?.init_speed_x;
   const releaseValue = initSpeed ? initSpeed.toFixed(1) : '';
 
   return (
