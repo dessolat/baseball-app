@@ -51,10 +51,7 @@ const Video = () => {
             videoHandling();
           } else {
             let index = filteredCards.findIndex(
-              card => card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-              // card.inning_number === currentCard.inning_number &&
-              // card.who_id === currentCard.who_id &&
-              // card.type === currentCard.type
+              card => card.moments[0].inner.id === currentCard.moments[0].inner.id
             );
 
             index++;
@@ -65,7 +62,6 @@ const Video = () => {
             }
 
             dispatch(setPlaybackMode('pause'));
-            // clearInterval(intervalRef.current);
           }
         }
       }
@@ -106,9 +102,6 @@ const Video = () => {
           } else {
             let index = filteredCards.findIndex(
               card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-              // card.inning_number === currentCard.inning_number &&
-              // card.who_id === currentCard.who_id &&
-              // card.type === currentCard.type
             );
 
             index++;
@@ -119,7 +112,6 @@ const Video = () => {
             }
 
             dispatch(setPlaybackMode('pause'));
-            // clearInterval(intervalRef.current);
           }
         }
       }
