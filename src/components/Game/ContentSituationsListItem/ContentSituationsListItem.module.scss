@@ -32,8 +32,7 @@
   }
 
   &.active {
-		// animation: backgroundChange var(--transition-speed) forwards;
-		background: #e0f0ff;
+		animation: backgroundChange var(--transition-speed) forwards;
     border-left: 2px solid var(--side-color);
   }
 }
