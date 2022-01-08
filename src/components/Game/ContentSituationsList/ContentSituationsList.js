@@ -4,18 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
-import { NumberParam, useQueryParam } from 'use-query-params';
 
 const ContentSituationsList = ({ cards, currentCard }, ref) => {
-	const setCard = useQueryParam('card', NumberParam)[1]
   const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
   const situationClick = player => () => {
     playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
-    // setCurrentCard({ ...player, row_number: number });
     dispatch(setCurrentCard({ ...player, manualClick: true }));
-		setCard(player.moments[0].inner.id);
+    // setCurrentCard({ ...player, row_number: number });
   };
 
   return (
