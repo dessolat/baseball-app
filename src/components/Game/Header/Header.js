@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setImagesData } from 'redux/gameReducer';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
-const Header = () => {
+const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
   const innings = useSelector(state => state.game.innings);
@@ -27,7 +27,8 @@ const Header = () => {
     const fetchImage = async (teamName, url) => {
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
-          responseType: 'arraybuffer', timeout: 2500
+          responseType: 'arraybuffer',
+          timeout: 2500
         });
 
         dispatch(
@@ -37,7 +38,7 @@ const Header = () => {
         );
       } catch (err) {
         // err.message === 'Request failed with status code 523' &&
-          setTimeout(() => fetchImage(teamName, url), 2500);
+        setTimeout(() => fetchImage(teamName, url), 2500);
         console.log(err.message);
       }
     };
@@ -116,7 +117,7 @@ const Header = () => {
     </>
   );
 
-	const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore]
+  const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
 
   return (
     <header className={cl.header}>
@@ -125,7 +126,7 @@ const Header = () => {
           <div>
             <p className={cl.date}>{useFullDate(preview.game_date)}</p>
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
-            <HeaderTabs />
+            <HeaderTabs currentTab={currentTab} handleClick={handleTabClick}/>
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
