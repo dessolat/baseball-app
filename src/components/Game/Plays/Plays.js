@@ -4,10 +4,12 @@ import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useSelector } from 'react-redux';
-import { StringParam, useQueryParam } from 'use-query-params';
+import { getSearchParam, setSearchParam } from 'utils';
 
 const Plays = () => {
-  const [tab] = useQueryParam('ptab', StringParam);
+	const ptab = getSearchParam('ptab')
+	const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch'
+  const [currentTab, setCurrentTab] = useState(defaultPtab);
   const [moments, setMoments] = useState([]);
   const [currentMoment, setCurrentMoment] = useState({});
   const currentCard = useSelector(state => state.game.currentCard);
@@ -22,15 +24,19 @@ const Plays = () => {
   }, [currentCard]);
 
   const classes = [cl.plays];
-  classes.push(tab === 'hitting' ? cl.hitting : tab === 'running' ? cl.running : cl.pitch);
+  classes.push(currentTab === 'hitting' ? cl.hitting : currentTab === 'running' ? cl.running : cl.pitch);
 
   const handleMomentClick = moment => setCurrentMoment(moment);
+  const handleTabClick = e => {
+    setSearchParam('ptab', e.target.name);
+    setCurrentTab(e.target.name);
+  };
 
   return (
     <div className={classes.join(' ')}>
       <PlaysEvents moments={moments} currentMoment={currentMoment} handleClick={handleMomentClick} />
-      <PlaysContent currentMoment={currentMoment} moments={moments} />
-      <PlaysFooter />
+      <PlaysContent currentMoment={currentMoment} moments={moments} currentTab={currentTab}/>
+      <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
     </div>
   );
 };
