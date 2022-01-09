@@ -13,13 +13,10 @@ import {
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
-// import { useSearchParams } from 'react-router-dom';
-import { NumberParam, useQueryParam } from 'use-query-params';
+import { getSearchParam, setSearchParam } from 'utils';
 
-const Content = () => {
+const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  const [card, setCard] = useQueryParam('card', NumberParam);
   const innings = useSelector(state => state.game.innings);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const currentCard = useSelector(state => state.game.currentCard);
@@ -117,6 +114,7 @@ const Content = () => {
     dispatch(setFilteredCards(newFilteredCards));
 
     if ((playbackMode === 'play' || playbackMode === 'pause') && Object.keys(currentCard).length === 0) {
+      const card = +getSearchParam('card');
       let cardIndex =
         card !== undefined ? newFilteredCards.findIndex(player => player.moments[0].inner.id === card) : 0;
 
@@ -143,7 +141,6 @@ const Content = () => {
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
     if (playbackMode === 'pause' && situationFilter !== 'All') {
       dispatch(setCurrentCard(filteredCards[0]));
-      setCard(filteredCards[0].moments[0].inner.id);
       scrollToRef.current = true;
     }
 
@@ -153,7 +150,6 @@ const Content = () => {
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       const lastCard = filteredCards.slice(-1)[0];
       dispatch(setCurrentCard(lastCard));
-      setCard(lastCard.moments[0].inner.id);
     }
     // eslint-disable-next-line
   }, [situationFilter]);
@@ -182,31 +178,14 @@ const Content = () => {
   }, [filteredCards]);
 
   useEffect(() => {
-    // if (Object.keys(currentCard).length === 0 || playbackMode !== 'playOnline' || !situationsChildRef.current)
-
-    // const sumUrl = { tab: e.target.name };
-    // for (let item of searchParams.entries()) {
-    // 	if (item[0] !== 'tab') {
-    // 		sumUrl[item[0]] = item[1];
-    // 	}
-    // }
-
-    // setSearchParams(sumUrl);
-    // const cardId = filteredCards.find(
-    //   card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-    // );
+		if (Object.keys(currentCard).length === 0) return
 
     const cardId = currentCard.moments && currentCard.moments[0].inner.id;
-    if (cardId !== undefined) {
-      // const sumUrl = Object.fromEntries(searchParams.entries());
-      // sumUrl.card = cardId;
-      // setSearchParams(sumUrl);
-      // setCard(cardId, 'replaceIn');
-    }
+    setSearchParam('card', cardId);
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
-    if (Object.keys(currentCard).length === 0 || currentCard.manualClick || !situationsChildRef.current)
+    if (currentCard.manualClick || !situationsChildRef.current)
       return;
     situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
 
@@ -237,7 +216,7 @@ const Content = () => {
       <div className={cl.content}>
         <ContentSituationsList ref={situationsChildRef} cards={filteredCards} currentCard={currentCard} />
         <ContentFooter />
-        <ContentGraphics />
+        <ContentGraphics currentTab={currentTab} />
       </div>
     </section>
   );
