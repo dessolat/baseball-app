@@ -10,11 +10,13 @@ import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { setCurrentCard, setSituationFilter, setCurrentGameId } from 'redux/gameReducer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { StringParam, useQueryParam } from 'use-query-params';
+import { getSearchParam, setSearchParam } from 'utils';
 // import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
-  const [currentTab, setCurrentTab] = useState(getSearchParam('tab') || 'plays');
+	const tab = getSearchParam('tab')
+	const defaultTab = ['lineup', 'box', 'plays', 'videos'].includes(tab) ? tab : 'plays'
+  const [currentTab, setCurrentTab] = useState(defaultTab);
   const { gameId } = useParams();
   const navigate = useNavigate();
   const innings = useSelector(state => state.game.innings);
@@ -57,22 +59,24 @@ const Game = () => {
     // eslint-disable-next-line
   }, [gameId]);
 
+  const handleTabClick = e => {
+		setSearchParam('tab', e.target.name)
+		setCurrentTab(e.target.name)
+	};
+
   return (
     <>
       <GameIdForm isLoading={isLoading} />
-      {/* <Link to='/game/350'>to game number 350</Link>
-      <Link to='/game/351'>to game number 351</Link>
-      <Link to='/game/359'>to game number 359</Link> */}
       {error ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
         <Loader />
-				// <Skeleton />
-      ) : innings.length > 0 ? (
+      ) : // <Skeleton />
+      innings.length > 0 ? (
         <>
-          <Header />
-          {tab !== 'lineup' && <Filters />}
-          <Content />
+          <Header currentTab={currentTab} handleTabClick={handleTabClick}/>
+          {currentTab !== 'lineup' && <Filters />}
+          <Content currentTab={currentTab}/>
         </>
       ) : (
         <></>
