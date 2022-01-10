@@ -6,18 +6,19 @@ import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplace
 
 const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref) => {
   // useEffect(() => {
-  //   let observer = new IntersectionObserver(entries => {
-  //     entries.forEach(entry => {
-  //       const { isIntersecting } = entry;
+    // let observer = new IntersectionObserver(entries => {
+    //   entries.forEach(entry => {
+    //     const { isIntersecting } = entry;
 
-  //       if (isIntersecting) {
-  //         console.log('Intersecting', player.who);
-  //       } else {
-  //         console.log('Not intersecting', player.who);
-  //       }
-  //     });
-  //   });
-  //   observer.observe(activeRef.current);
+    //     if (isIntersecting) {
+    //       console.log('Intersecting', player.who);
+    //     } else {
+    //       console.log('Not intersecting', player.who);
+    //     }
+    //   });
+    // });
+    // observer.observe(activeRef.current);
+
   // }, []);
 
   const classNames = [cl.listItem];
@@ -35,7 +36,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ? ref
       : null || null;
   return (
-    <div ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
+    <li ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
       ) : situationsArr.length > 0 ? (
@@ -43,7 +44,7 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ) : (
         <ContentCardSimple player={player} />
       )}
-    </div>
+    </li>
   );
 };
 
