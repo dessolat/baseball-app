@@ -3,7 +3,8 @@ import React from 'react';
 import cl from './PlaysEvents.module.scss';
 
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
-  const classes = moment.inner.id === currentMoment.inner?.id ? cl.active : '';
+  const { icons, pitcher, inner } = moment;
+  const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 
   const playClasses = [];
   moment.icons.circ_text_play !== 'R' && playClasses.push(cl[moment.icons.circ_color_play]);
