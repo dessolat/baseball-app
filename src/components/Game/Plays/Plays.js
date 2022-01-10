@@ -26,7 +26,7 @@ const Plays = () => {
   const classes = [cl.plays];
   classes.push(currentTab === 'hitting' ? cl.hitting : currentTab === 'running' ? cl.running : cl.pitch);
 
-  const handleMomentClick = moment => setCurrentMoment(moment);
+  const handleMomentClick = moment => () => setCurrentMoment(moment);
   const handleTabClick = e => {
     setSearchParam('ptab', e.target.name);
     setCurrentTab(e.target.name);
