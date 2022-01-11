@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './HeaderTabs.module.scss';
 
-const tabsArr = ['lineup', 'box', 'plays', 'videos'];
+const tabsArr = ['box', 'plays', 'videos'];
 
 const HeaderTabs = ({ currentTab, handleClick }) => {
   const getClass = name => (currentTab === name ? cl.active : '');
