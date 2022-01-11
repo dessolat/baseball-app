@@ -14,8 +14,8 @@ import { getSearchParam, setSearchParam } from 'utils';
 // import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
-	const tab = getSearchParam('tab')
-	const defaultTab = ['lineup', 'box', 'plays', 'videos'].includes(tab) ? tab : 'plays'
+  const tab = getSearchParam('tab');
+  const defaultTab = ['box', 'plays', 'videos'].includes(tab) ? tab : 'plays';
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const { gameId } = useParams();
   const navigate = useNavigate();
@@ -60,9 +60,9 @@ const Game = () => {
   }, [gameId]);
 
   const handleTabClick = e => {
-		setSearchParam('tab', e.target.name)
-		setCurrentTab(e.target.name)
-	};
+    setSearchParam('tab', e.target.name);
+    setCurrentTab(e.target.name);
+  };
 
   return (
     <>
@@ -74,9 +74,9 @@ const Game = () => {
       ) : // <Skeleton />
       innings.length > 0 ? (
         <>
-          <Header currentTab={currentTab} handleTabClick={handleTabClick}/>
-          {currentTab !== 'lineup' && <Filters />}
-          <Content currentTab={currentTab}/>
+          <Header currentTab={currentTab} handleTabClick={handleTabClick} />
+          <Filters />
+          <Content currentTab={currentTab} />
         </>
       ) : (
         <></>
