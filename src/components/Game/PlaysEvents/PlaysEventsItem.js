@@ -19,7 +19,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({pitcher.strikes_count} strike, {pitcher.balls_count} ball)
+            <p>slider</p>({pitcher.balls_count} - {pitcher.strikes_count})
           </div>
         </li>
       )}
@@ -29,7 +29,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({pitcher.strikes_count} strike, {pitcher.balls_count} ball)
+            <p>slider</p>({pitcher.balls_count} - {pitcher.strikes_count})
           </div>
         </li>
       )}
