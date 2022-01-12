@@ -167,7 +167,7 @@ const Content = ({ currentTab }) => {
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
     if (scrollToRef.current) {
-      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
       scrollToRef.current = false;
     }
 
@@ -178,16 +178,15 @@ const Content = ({ currentTab }) => {
   }, [filteredCards]);
 
   useEffect(() => {
-		if (Object.keys(currentCard).length === 0) return
+    if (Object.keys(currentCard).length === 0) return;
 
     const cardId = currentCard.moments && currentCard.moments[0].inner.id;
     setSearchParam('card', cardId);
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
-    if (currentCard.manualClick || !situationsChildRef.current)
-      return;
-    situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
+    if (currentCard.manualClick || !situationsChildRef.current) return;
+    situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
 
     // eslint-disable-next-line
   }, [currentCard]);
