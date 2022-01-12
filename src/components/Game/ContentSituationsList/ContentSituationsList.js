@@ -25,9 +25,11 @@ const ContentSituationsList = ({ cards, currentCard }, ref) => {
 
   return (
     <ul className={cl.list}>
-      {cards.map((card,i) => (
+      {cards.map((card, i) => (
         <ContentSituationsListItem
           key={i}
+					cardIndex={i}
+					cardsCount={cards.length}
           ref={ref}
           player={card}
           situationClick={situationClick}
