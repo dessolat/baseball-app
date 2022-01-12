@@ -4,20 +4,20 @@ import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 
-const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref) => {
+const ContentSituationsListItem = ({ player, situationClick, currentCard, cardIndex, cardsCount }, ref) => {
   // useEffect(() => {
-    // let observer = new IntersectionObserver(entries => {
-    //   entries.forEach(entry => {
-    //     const { isIntersecting } = entry;
+  // let observer = new IntersectionObserver(entries => {
+  //   entries.forEach(entry => {
+  //     const { isIntersecting } = entry;
 
-    //     if (isIntersecting) {
-    //       console.log('Intersecting', player.who);
-    //     } else {
-    //       console.log('Not intersecting', player.who);
-    //     }
-    //   });
-    // });
-    // observer.observe(activeRef.current);
+  //     if (isIntersecting) {
+  //       console.log('Intersecting', player.who);
+  //     } else {
+  //       console.log('Not intersecting', player.who);
+  //     }
+  //   });
+  // });
+  // observer.observe(activeRef.current);
 
   // }, []);
 
@@ -36,7 +36,12 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard }, ref)
       ? ref
       : null || null;
   return (
-    <li ref={activeRef} className={classNames.join(' ')} onClick={situationClick(player)}>
+    <li
+      ref={activeRef}
+			// data-after={cardIndex === cardsCount - 1 ? }
+      className={classNames.join(' ')}
+      // style={cardIndex === 0 ? { marginTop: 50 } : cardIndex === cardsCount - 1 ? { marginBottom: 50 } : {}}
+      onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
       ) : situationsArr.length > 0 ? (
