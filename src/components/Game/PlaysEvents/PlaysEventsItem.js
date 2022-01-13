@@ -2,8 +2,8 @@ import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 import React from 'react';
 import cl from './PlaysEvents.module.scss';
 
-const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
-  const { icons, pitcher, inner } = moment;
+const PlaysEventsItem = ({ moment, prevTable, currentMoment, handleClick }) => {
+  const { icons, table, inner } = moment;
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 
   const playClasses = [];
@@ -11,6 +11,8 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   icons.circ_text_play === 'OBR' && playClasses.push(cl.obr);
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
+	const ballsCount = table.balls - prevTable.balls
+	const strikesCount = table.strikes - prevTable.strikes
   return (
     <>
       {icons.circ_color_pitch && (
@@ -19,7 +21,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({pitcher.balls_count} - {pitcher.strikes_count})
+            <p>slider</p>({ballsCount} - {strikesCount})
           </div>
         </li>
       )}
@@ -29,7 +31,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({pitcher.balls_count} - {pitcher.strikes_count})
+            <p>slider</p>({ballsCount} - {strikesCount})
           </div>
         </li>
       )}
