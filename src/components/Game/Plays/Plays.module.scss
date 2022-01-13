@@ -1,11 +1,12 @@
 .plays {
 	height: 100%;
   display: grid;
-	gap: 6px;
+	// gap: 6px;
 }
 
 .pitch {
-	grid-template: minmax(116px, 146px) minmax(300px, 330px) 36px / minmax(157.53px, 187px) minmax(345px, 500px) minmax(210.87px, 280px);
+	// grid-template: minmax(116px, 146px) minmax(300px, 330px) 36px / minmax(157.53px, 187px) minmax(345px, 500px) minmax(210.87px, 280px);
+	grid-template: 9.5rem 20.625rem 2.875rem / minmax(157.53px, 187px) minmax(345px, 500px) minmax(210.87px, 280px);
 	grid-template-areas:
 	'events spd spin'
 	'events field field'
@@ -13,14 +14,16 @@
 }
 
 .hitting {
-	grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
+	// grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
+	grid-template: 30.125rem 2.875rem / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
 	grid-template-areas:
 	'events bat stats'
 	'footer footer footer';
 }
 
 .running {
-	grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
+	// grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
+	grid-template: 30.125rem 2.875rem / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
 	grid-template-areas:
 	'events field info'
 	'footer footer footer';
