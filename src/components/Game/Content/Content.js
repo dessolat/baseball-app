@@ -13,7 +13,7 @@ import {
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
-import { getSearchParam, setSearchParam } from 'utils';
+import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -29,6 +29,7 @@ const Content = ({ currentTab }) => {
   const gameIdRef = useRef(0); //Delete later
   const scrollToRef = useRef(false);
   const queriesRef = useRef([]);
+  const beforeAfterRef = useRef({});
 
   useEffect(() => {
     function situationsConcat(member) {
@@ -104,6 +105,8 @@ const Content = ({ currentTab }) => {
     /************************************************/
 
     const newFilteredCards = getFilteredCards(newCards);
+    beforeAfterRef.current = getBeforeAfterFlags(newFilteredCards, innings);
+
     /*******************Delete later******************/
     if (gameIdRef.current !== gameId && playbackMode !== 'playOnline') {
       gameIdRef.current = gameId;
@@ -136,6 +139,7 @@ const Content = ({ currentTab }) => {
     if (cards.length === 0) return;
 
     const filteredCards = getFilteredCards(cards);
+    beforeAfterRef.current = getBeforeAfterFlags(filteredCards, innings);
 
     dispatch(setFilteredCards(filteredCards));
     // playbackMode === 'pause' && setCurrentCard({ ...filteredCards[0], row_number: 0 });
@@ -167,7 +171,8 @@ const Content = ({ currentTab }) => {
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
     if (scrollToRef.current) {
-      situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
+      situationsChildRef.current.parentNode.scrollTop =
+        situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
       scrollToRef.current = false;
     }
 
@@ -186,7 +191,8 @@ const Content = ({ currentTab }) => {
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
     if (currentCard.manualClick || !situationsChildRef.current) return;
-    situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
+    situationsChildRef.current.parentNode.scrollTop =
+      situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
 
     // eslint-disable-next-line
   }, [currentCard]);
@@ -213,7 +219,12 @@ const Content = ({ currentTab }) => {
   return (
     <section className='container'>
       <div className={cl.content}>
-        <ContentSituationsList ref={situationsChildRef} cards={filteredCards} currentCard={currentCard} />
+        <ContentSituationsList
+          ref={situationsChildRef}
+          filteredCards={filteredCards}
+          currentCard={currentCard}
+          beforeAfterData={beforeAfterRef.current}
+        />
         <ContentFooter />
         <ContentGraphics currentTab={currentTab} />
       </div>
