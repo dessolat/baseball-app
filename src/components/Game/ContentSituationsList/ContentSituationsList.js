@@ -5,17 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 
-const ContentSituationsList = ({ cards, currentCard }, ref) => {
+const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
-  const handleKeyDown = useArrowNavigate(cards, currentCard);
+  const handleKeyDown = useArrowNavigate(filteredCards, currentCard);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentCard, cards, handleKeyDown]);
+  }, [currentCard, filteredCards, handleKeyDown]);
 
   const situationClick = player => () => {
     playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
@@ -24,15 +24,15 @@ const ContentSituationsList = ({ cards, currentCard }, ref) => {
 
   return (
     <ul className={cl.list}>
-      {cards.map((card, i) => (
+      {filteredCards.map((card, i) => (
         <ContentSituationsListItem
           key={i}
 					cardIndex={i}
-					cardsCount={cards.length}
           ref={ref}
           player={card}
           situationClick={situationClick}
           currentCard={currentCard}
+					beforeAfterData={beforeAfterData}
         />
       ))}
     </ul>
