@@ -4,7 +4,12 @@ import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 
-const ContentSituationsListItem = ({ player, situationClick, currentCard, cardIndex, cardsCount }, ref) => {
+const ENDINGS = ['ST', 'ND', 'RD', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH'];
+
+const ContentSituationsListItem = (
+  { player, situationClick, currentCard, cardIndex, beforeAfterData },
+  ref
+) => {
   // useEffect(() => {
   // let observer = new IntersectionObserver(entries => {
   //   entries.forEach(entry => {
@@ -35,10 +40,16 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard, cardIn
     currentCard.moments && player.moments[0].inner.id === currentCard.moments[0].inner.id
       ? ref
       : null || null;
+
+  const dataBefore = beforeAfterData[cardIndex]?.before
+    ? `${player.side.toUpperCase()} ${player.inning_number}${ENDINGS[player.inning_number - 1]}`
+    : null;
+  const isDataAfter = beforeAfterData[cardIndex]?.after;
   return (
     <li
       ref={activeRef}
-			// data-after={cardIndex === cardsCount - 1 ? }
+      data-before={dataBefore}
+      data-after={isDataAfter}
       className={classNames.join(' ')}
       // style={cardIndex === 0 ? { marginTop: 50 } : cardIndex === cardsCount - 1 ? { marginBottom: 50 } : {}}
       onClick={situationClick(player)}>
@@ -48,6 +59,14 @@ const ContentSituationsListItem = ({ player, situationClick, currentCard, cardIn
         <ContentCardComplex player={player} situationsArr={situationsArr} />
       ) : (
         <ContentCardSimple player={player} />
+      )}
+      {isDataAfter && (
+        <div className={cl.dataAfter}>
+          <span>RUNS: {beforeAfterData[cardIndex].after.runs}</span>
+          <span>HITS: {beforeAfterData[cardIndex].after.hits}</span>
+          <span>ERRORS: {beforeAfterData[cardIndex].after.err}</span>
+          <span>LOB: {beforeAfterData[cardIndex].after.lob}</span>
+        </div>
       )}
     </li>
   );
