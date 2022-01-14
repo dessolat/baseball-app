@@ -6,12 +6,60 @@
   cursor: pointer;
   padding: 0.5rem 0.3125rem 0;
   border-left: 2px solid transparent;
+  position: relative;
 
-  > * {
+  &[data-before] {
+    margin-top: 50px;
+
+    &:first-child {
+      margin-top: 24px;
+    }
+
+    &::before {
+      content: attr(data-before);
+      position: absolute;
+      left: -2px;
+      top: -24px;
+      height: 22px;
+      width: calc(100% + 2px);
+      background-color: var(--side-color);
+      padding: 2px 6px;
+      font: 700 0.875rem / 1.36 var(--font-nunito);
+      color: white;
+      pointer-events: none;
+    }
+  }
+
+  &[data-after]:last-child {
+    margin-bottom: 24px;
+  }
+
+  .dataAfter {
+    position: absolute;
+    bottom: -24px;
+    left: -2px;
+    height: 22px;
+    width: calc(100% + 2px);
+    font: 700 0.875rem / 1.36 var(--font-nunito);
+    color: black;
+    pointer-events: none;
+		display: flex;
+		justify-content: space-between;
+
+		> * {
+			width: calc((100% - 6px) / 4);
+			background-color: white;
+			text-align: center;
+			font: 300 .75rem / 1.9 var(--font-nunito);
+			
+		}
+  }
+
+  > *:not(.dataAfter) {
     padding-bottom: 0.4375rem;
   }
 
-  > * + * {
+  > * + *:not(.dataAfter) {
     padding-top: 0.4375rem;
     position: relative;
 
@@ -23,16 +71,12 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-			background-color: #000;
+      background-color: #000;
     }
   }
 
-  > *:last-child {
-    padding-bottom: 0.5625rem;
-  }
-
   &.active {
-		animation: backgroundChange var(--transition-speed) forwards;
+    animation: backgroundChange var(--transition-speed) forwards;
     border-left: 2px solid var(--side-color);
   }
 }
