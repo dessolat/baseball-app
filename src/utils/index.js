@@ -5,3 +5,50 @@ export const setSearchParam = (param, value) => {
   url.searchParams.set(param, value);
   window.history.pushState({}, '', url);
 };
+
+export const getBeforeAfterFlags = (cards, innings) => {
+  const result = { 0: { before: true } };
+  for (let i = 0; i < cards.length; i++) {
+    const { inning_number } = cards[i];
+    const inning = innings[inning_number - 1];
+    const { side } = cards[i];
+    const { top_runs = 0, bot_runs = 0, top_hits = 0, bot_hits = 0, top_err = 0, bot_err = 0 } = inning;
+
+    if (i === 0 && i === cards.length) {
+      result[i] = {
+        ...result[i],
+        after: {
+          runs: side === 'top' ? top_runs : bot_runs,
+          hits: side === 'top' ? top_hits : bot_hits,
+          err: side === 'top' ? top_err : bot_err,
+          lob: 0
+        }
+      };
+      continue;
+    }
+
+    if (
+      i !== 0 &&
+      (cards[i].inning_number !== cards[i - 1].inning_number || cards[i].side !== cards[i - 1].side)
+    )
+      result[i] = { before: true };
+
+    if (
+      i === cards.length - 1 ||
+      cards[i].inning_number !== cards[i + 1].inning_number ||
+      cards[i].side !== cards[i + 1].side
+    ) {
+      result[i] = {
+        ...result[i],
+        after: {
+          runs: side === 'top' ? top_runs : bot_runs,
+          hits: side === 'top' ? top_hits : bot_hits,
+          err: side === 'top' ? top_err : bot_err,
+          lob: 0
+        }
+      };
+    }
+  }
+
+	return result
+};
