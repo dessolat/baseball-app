@@ -170,7 +170,7 @@ const Content = ({ currentTab }) => {
     //   situationsChildRef.current.parentNode.scrollTop = situationsChildRef.current.offsetTop;
     //   // situationsChildRef.current.parentNode.scrollTop = 50;
     // }
-    if (scrollToRef.current) {
+    if (scrollToRef.current && situationsChildRef.current) {
       situationsChildRef.current.parentNode.scrollTop =
         situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
       scrollToRef.current = false;
