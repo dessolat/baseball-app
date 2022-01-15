@@ -218,16 +218,20 @@ const Content = ({ currentTab }) => {
 
   return (
     <section className='container'>
-      <div className={cl.content}>
-        <ContentSituationsList
-          ref={situationsChildRef}
-          filteredCards={filteredCards}
-          currentCard={currentCard}
-          beforeAfterData={beforeAfterRef.current}
-        />
-        <ContentFooter />
-        <ContentGraphics currentTab={currentTab} />
-      </div>
+      {currentTab !== 'box' ? (
+        <div className={cl.content}>
+          <ContentSituationsList
+            ref={situationsChildRef}
+            filteredCards={filteredCards}
+            currentCard={currentCard}
+            beforeAfterData={beforeAfterRef.current}
+          />
+          <ContentFooter />
+          <ContentGraphics currentTab={currentTab} />
+        </div>
+      ) : (
+        <div className={cl.box}></div>
+      )}
     </section>
   );
 };
