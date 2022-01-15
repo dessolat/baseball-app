@@ -64,6 +64,7 @@ const Game = () => {
     setCurrentTab(e.target.name);
   };
 
+  const isFilters = currentTab !== 'box';
   return (
     <>
       <GameIdForm isLoading={isLoading} />
@@ -75,7 +76,7 @@ const Game = () => {
       innings.length > 0 ? (
         <>
           <Header currentTab={currentTab} handleTabClick={handleTabClick} />
-          <Filters />
+          {isFilters && <Filters />}
           <Content currentTab={currentTab} />
         </>
       ) : (
