@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import cl from './PlaysBat.module.scss';
 
 // const oldCoords = [
@@ -37,65 +37,30 @@ import cl from './PlaysBat.module.scss';
 //   }
 // }
 
-const PlaysBatMedia = ({ currentMoment }) => {
-  const [curvePath, setCurvePath] = useState('');
-  const [frame, setFrame] = useState(0);
-  const maxFrameRef = useRef(null);
-  const timeoutRef = useRef(null);
-
-  useEffect(() => {
-    clearTimeout(timeoutRef.current);
-    if (
-      Object.keys(currentMoment).length === 0 ||
-      (currentMoment.events && currentMoment.events[0].type === 'replace')
-    ) {
-      setCurvePath('');
-      return;
-    }
-    maxFrameRef.current = coords.length / 2;
-    setFrame(1);
-  }, [currentMoment]);
-
-  useEffect(() => {
-    if (frame === 0) return;
-    if (frame > maxFrameRef.current) {
-      maxFrameRef.current = null;
-      return;
-    }
-
-    let newCurve = '';
-    coords
-      .slice(0, frame)
-      .forEach(
-        (coord, i) => (newCurve += i === 0 ? `M${coords[0][0]} ${coords[0][1]}` : `L${coord[0]} ${coord[1]}`)
-      );
-
-    let backPath = '';
-    coords
-      .slice()
-      .reverse()
-      .slice(0, frame)
-      .forEach(coord => (backPath = `L${coord[0]} ${coord[1]}` + backPath));
-    newCurve += backPath;
-    setCurvePath(newCurve);
-
-    timeoutRef.current = setTimeout(() => setFrame(prev => prev + 1), 10);
-
-    return () => {
-      clearTimeout(timeoutRef.current);
-    };
-  }, [frame]);
+const PlaysBatMedia = ({ metering, curvePath, linesPaths }) => {
+  const batterClasses = [cl.batter];
+  metering?.bat?.batter_position && batterClasses.push(cl.leftHanded);
 
   return (
-    <div className={cl.batter}>
-      <svg width='100%' height='235' viewBox='0 0 355 235' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <div className={batterClasses.join(' ')}>
+      {/* <svg width='100%' height='235px' viewBox='0 0 355 235' fill='none' xmlns='http://www.w3.org/2000/svg'> */}
+      <svg
+        width='100%'
+        height='100%'
+        viewBox='0 0 830 550'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+        preserveAspectRatio='none'>
         <path
           opacity='0.45'
-          fillRule='evenodd'
-          clipRule='evenodd'
+          // fillRule='evenodd'
+          // clipRule='evenodd'
           d={curvePath}
           fill='url(#paint0_linear_486_642)'
         />
+        <path d={linesPaths[0]} name='line0' stroke='#1A4C96' strokeWidth='0.5' />
+        <path d={linesPaths[1]} name='line1' stroke='#9E9E9E' strokeWidth='0.5' />
+        <path d={linesPaths[2]} name='line2' stroke='#9E9E9E' strokeWidth='0.5' />
         <defs>
           <linearGradient
             id='paint0_linear_486_642'
