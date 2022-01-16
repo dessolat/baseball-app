@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './PlaysBat.module.scss';
 
 const PlaysBatHeader = ({ bat }) => {
@@ -18,4 +18,4 @@ const PlaysBatHeader = ({ bat }) => {
   );
 };
 
-export default PlaysBatHeader;
+export default memo(PlaysBatHeader);
