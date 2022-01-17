@@ -5,13 +5,13 @@ import PlaysBatHeader from './PlaysBatHeader';
 import PlaysBatMedia from './PlaysBatMedia';
 
 const PlaysBat = ({ currentMoment }) => {
-	const { metering, events } = currentMoment;
-	const { data_2d, swing_index, plane_index, impact_index } = metering?.bat || {};
+  const { metering, events } = currentMoment;
+  const { data_2d, swing_index, plane_index, impact_index } = metering?.bat || {};
 
   const [currentLine, setCurrentLine] = useState('');
-	const [curvePath, setCurvePath] = useState('');
-	const [linesPaths, setLinesPaths] = useState(['', '', '']);
-	const [frame, setFrame] = useState(0);
+  const [curvePath, setCurvePath] = useState('');
+  const [linesPaths, setLinesPaths] = useState(['', '', '']);
+  const [frame, setFrame] = useState(0);
 
   const maxFrameRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -20,15 +20,16 @@ const PlaysBat = ({ currentMoment }) => {
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
-    if (Object.keys(currentMoment).length === 0 || (events && events[0].type === 'replace') || !data_2d) {
+    // if (Object.keys(currentMoment).length === 0 || (events && events[0].type === 'replace') || !data_2d) {
+    if (Object.keys(currentMoment).length === 0 || !data_2d) {
       setCurvePath('');
-			setLinesPaths(['', '', '']);
+      setLinesPaths(['', '', '']);
       return;
     }
     maxFrameRef.current = data_2d.length;
     setFrame(1);
-		setLinesPaths(['', '', ''])
-  }, [currentMoment]);
+    setLinesPaths(['', '', '']);
+  }, [currentMoment, data_2d, events]);
 
   useEffect(() => {
     if (frame === 0 || !data_2d) return;
@@ -87,16 +88,26 @@ const PlaysBat = ({ currentMoment }) => {
     // setCurvePath(newCurve);
 
     timeoutRef.current = setTimeout(() => setFrame(prev => prev + 1), 10);
+		// eslint-disable-next-line
   }, [frame]);
-
 
   const handleDotClick = str => () => setCurrentLine(str);
 
   return (
     <div className={cl.bat}>
       <PlaysBatHeader bat={currentMoment.metering?.bat} />
-      <PlaysBatMedia metering={metering} curvePath={curvePath} linesPaths={linesPaths}/>
-      <PlaysBatFooter currentLine={currentLine} currentMoment={currentMoment} handleDotClick={handleDotClick} />
+      <PlaysBatMedia
+        metering={metering}
+        curvePath={curvePath}
+        linesPaths={linesPaths}
+        currentLine={currentLine}
+      />
+      <PlaysBatFooter
+        currentLine={currentLine}
+        currentMoment={currentMoment}
+        handleDotClick={handleDotClick}
+				frame={frame}
+      />
     </div>
   );
 };
