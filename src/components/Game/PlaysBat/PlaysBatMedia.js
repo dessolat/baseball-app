@@ -37,13 +37,13 @@ import cl from './PlaysBat.module.scss';
 //   }
 // }
 
-const PlaysBatMedia = ({ metering, curvePath, linesPaths }) => {
+const PlaysBatMedia = ({ metering, curvePath, linesPaths, currentLine }) => {
   const batterClasses = [cl.batter];
   metering?.bat?.batter_position && batterClasses.push(cl.leftHanded);
 
+  const getLineColor = name => (currentLine === name ? '#1A4C96' : '#9E9E9E');
   return (
     <div className={batterClasses.join(' ')}>
-      {/* <svg width='100%' height='235px' viewBox='0 0 355 235' fill='none' xmlns='http://www.w3.org/2000/svg'> */}
       <svg
         width='100%'
         height='100%'
@@ -53,14 +53,14 @@ const PlaysBatMedia = ({ metering, curvePath, linesPaths }) => {
         preserveAspectRatio='none'>
         <path
           opacity='0.45'
-          // fillRule='evenodd'
+					// fillRule='evenodd'
           // clipRule='evenodd'
           d={curvePath}
           fill='url(#paint0_linear_486_642)'
         />
-        <path d={linesPaths[0]} name='line0' stroke='#1A4C96' strokeWidth='0.5' />
-        <path d={linesPaths[1]} name='line1' stroke='#9E9E9E' strokeWidth='0.5' />
-        <path d={linesPaths[2]} name='line2' stroke='#9E9E9E' strokeWidth='0.5' />
+        <path d={linesPaths[0]} stroke={getLineColor('line0')} strokeWidth='1.5' />
+        <path d={linesPaths[1]} stroke={getLineColor('line1')} strokeWidth='1.5' />
+        <path d={linesPaths[2]} stroke={getLineColor('line2')} strokeWidth='1.5' />
         <defs>
           <linearGradient
             id='paint0_linear_486_642'
