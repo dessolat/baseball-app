@@ -1,75 +1,80 @@
 import React, { useEffect, useRef } from 'react';
 import cl from './PlaysBat.module.scss';
 
-const PlaysBatFooter = ({ currentDot, currentMoment, handleDotClick }) => {
+const PlaysBatFooter = ({ currentLine, currentMoment, handleDotClick, frame }) => {
+  const { swing_index, plane_index, impact_index, data_2d } = currentMoment.metering?.bat || {};
+
   const dotRef = useRef(null);
 
   useEffect(() => {
     if (Object.keys(currentMoment).length === 0 || dotRef.current === null) return;
     dotRef.current.classList.remove(cl.slider);
     setTimeout(() => {
-      dotRef.current.classList.add(cl.slider);
+      dotRef.current?.classList.add(cl.slider);
     }, 0);
   }, [currentMoment]);
 
-  const getDotColor = order => (currentDot === order ? '#1A4C96' : '#E8E6E6');
+  const getDotColor = order => (currentLine === order ? '#1A4C96' : '#E8E6E6');
+  const getXCoord = index => (330 / data_2d.length) * index;
 
-  const isDots = Object.keys(currentMoment).length !== 0 && (!currentMoment.events || currentMoment.events[0].type !== 'replace');
-
+  const isDots = Object.keys(currentMoment).length !== 0 && data_2d !== undefined;
+  // (!currentMoment.events || currentMoment.events[0].type !== 'replace');
   return (
     <div className={cl.footer}>
-      <svg width='100%' height='40' viewBox='0 0 334 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
+      <svg
+        width='100%'
+        height='40'
+        viewBox='0 0 338 40'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+        preserveAspectRatio='none'>
         <text x='0' y='12' className={cl.subHeader}>
           Bat speed (mph)
         </text>
         <path d='M1 25L330 25' stroke='#1A4C96' />
         {isDots && (
           <>
-            <text x='182.5' y='12' className={cl.value}>
+            {/* <text x='182.5' y='12' className={cl.value}>
               90
-            </text>
+            </text> */}
             <circle
-              cx='190.5'
+              cx={getXCoord(swing_index)}
               cy='25.38184'
               r='5'
               className={cl.dot}
-              onClick={handleDotClick('first')}
-              fill={getDotColor('first')}
+              onClick={handleDotClick('line0')}
+              fill={getDotColor('line0')}
             />
-            <text x='228.5' y='12' className={cl.value}>
+            {/* <text x='228.5' y='12' className={cl.value}>
               90
-            </text>
+            </text> */}
             <circle
-              cx='236.5'
+              cx={getXCoord(plane_index)}
               cy='25.38184'
               r='5'
               className={cl.dot}
-              onClick={handleDotClick('second')}
-              fill={getDotColor('second')}
+              onClick={handleDotClick('line1')}
+              fill={getDotColor('line1')}
             />
-            <text x='268.5' y='12' className={cl.value}>
+            {/* <text x='268.5' y='12' className={cl.value}>
               90
-            </text>
+            </text> */}
             <circle
-              cx='277.5'
+              cx={getXCoord(impact_index)}
               cy='25.38184'
               r='5'
               className={cl.dot}
-              onClick={handleDotClick('third')}
-              fill={getDotColor('third')}
+              onClick={handleDotClick('line2')}
+              fill={getDotColor('line2')}
             />
-            <text x='318.7' y='12' className={cl.value}>
-              90
-            </text>
             <circle
-              cx='326.5'
+              cx={getXCoord(frame - 1)}
               cy='25.5'
-              r='5'
-              className={cl.dot}
-              onClick={handleDotClick('fourth')}
-              fill={getDotColor('fourth')}
+              r='7.5'
+              className={cl.slider}
+              ref={dotRef}
+              fill='#4AA0F0'
             />
-            <circle cx='1' cy='25.5' r='7.5' className={cl.slider} ref={dotRef} fill='#4AA0F0' />
           </>
         )}
       </svg>
