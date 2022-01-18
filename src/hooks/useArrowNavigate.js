@@ -1,12 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { setCurrentCard } from 'redux/gameReducer';
 
+const KEYS = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
+
 const useArrowNavigate = (cards, currentCard) => {
   const dispatch = useDispatch();
 
   const handleKeyDown = e => {
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
-      return;
+    if (!KEYS.includes(e.key)) return;
     e.preventDefault();
 
     const cardIndex = cards.findIndex(card => card.moments[0].inner.id === currentCard.moments[0].inner.id);
