@@ -9,7 +9,6 @@ const PlaysEventsList = ({ moments, currentMoment, handleClick }) => (
         <PlaysEventsItem
           key={i}
           moment={moment}
-          prevTable={i !== 0 ? moments[i - 1].table : { balls: 0, strikes: 0 }}
           currentMoment={currentMoment}
           handleClick={handleClick}
         />

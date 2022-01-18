@@ -2,7 +2,7 @@ import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 import React from 'react';
 import cl from './PlaysEvents.module.scss';
 
-const PlaysEventsItem = ({ moment, prevTable, currentMoment, handleClick }) => {
+const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   const { icons, table, inner } = moment;
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 
