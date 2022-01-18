@@ -20,7 +20,7 @@ const PlaysBat = ({ currentMoment }) => {
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
-    // if (Object.keys(currentMoment).length === 0 || (events && events[0].type === 'replace') || !data_2d) {
+		
     if (Object.keys(currentMoment).length === 0 || !data_2d) {
       setCurvePath('');
       setLinesPaths(['', '', '']);
@@ -72,20 +72,6 @@ const PlaysBat = ({ currentMoment }) => {
       .forEach(coord => (backPath += `L${coord.bottom[0] + xShift} ${coord.bottom[1] + yShift}`));
     newCurve += backPath + 'Z';
     setCurvePath(newCurve);
-    // coords
-    //   .slice(0, frame)
-    //   .forEach(
-    //     (coord, i) => (newCurve += i === 0 ? `M${coords[0][0]} ${coords[0][1]}` : `L${coord[0]} ${coord[1]}`)
-    //   );
-
-    // let backPath = '';
-    // coords
-    //   .slice()
-    //   .reverse()
-    //   .slice(0, frame)
-    //   .forEach(coord => (backPath = `L${coord[0]} ${coord[1]}` + backPath));
-    // newCurve += backPath;
-    // setCurvePath(newCurve);
 
     timeoutRef.current = setTimeout(() => setFrame(prev => prev + 1), 10);
 		// eslint-disable-next-line
