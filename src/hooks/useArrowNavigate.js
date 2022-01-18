@@ -22,18 +22,24 @@ const useArrowNavigate = (cards, currentCard) => {
         dispatch(setCurrentCard(cards[cardIndex + 1]));
         break;
       case 'ArrowLeft':
-        const prevCard = cards
-          .slice(0, cardIndex)
-          .reverse()
-          .find(card => card.who_id === currentCard.who_id);
-        if (prevCard === undefined) break;
-        dispatch(setCurrentCard(prevCard));
-        break;
+        if (e.shiftKey) {
+          const prevCard = cards
+            .slice(0, cardIndex)
+            .reverse()
+            .find(card => card.who_id === currentCard.who_id);
+          if (prevCard === undefined) break;
+          dispatch(setCurrentCard(prevCard));
+          break;
+        }
+				break;
       case 'ArrowRight':
-        const nextCard = cards.slice(cardIndex + 1).find(card => card.who_id === currentCard.who_id);
-        if (nextCard === undefined) break;
-        dispatch(setCurrentCard(nextCard));
-        break;
+        if (e.shiftKey) {
+          const nextCard = cards.slice(cardIndex + 1).find(card => card.who_id === currentCard.who_id);
+          if (nextCard === undefined) break;
+          dispatch(setCurrentCard(nextCard));
+          break;
+        }
+				break;
       default:
         break;
     }
