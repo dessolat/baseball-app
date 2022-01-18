@@ -11,8 +11,6 @@ const PlaysEventsItem = ({ moment, prevTable, currentMoment, handleClick }) => {
   icons.circ_text_play === 'OBR' && playClasses.push(cl.obr);
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
-	const ballsCount = table.balls - prevTable.balls
-	const strikesCount = table.strikes - prevTable.strikes
   return (
     <>
       {icons.circ_color_pitch && (
@@ -21,7 +19,7 @@ const PlaysEventsItem = ({ moment, prevTable, currentMoment, handleClick }) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({ballsCount} - {strikesCount})
+            <p>slider</p>({table.balls} - {table.strikes})
           </div>
         </li>
       )}
@@ -31,7 +29,7 @@ const PlaysEventsItem = ({ moment, prevTable, currentMoment, handleClick }) => {
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({ballsCount} - {strikesCount})
+            <p>slider</p>({table.balls} - {table.strikes})
           </div>
         </li>
       )}
