@@ -18,7 +18,6 @@ const PlaysBatFooter = ({ currentLine, currentMoment, handleDotClick, frame }) =
   const getXCoord = index => (330 / data_2d.length) * index;
 
   const isDots = Object.keys(currentMoment).length !== 0 && data_2d !== undefined;
-  // (!currentMoment.events || currentMoment.events[0].type !== 'replace');
   return (
     <div className={cl.footer}>
       <svg
