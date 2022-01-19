@@ -3,6 +3,7 @@ import cl from './ContentSituationsListItem.module.scss';
 import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
+import { useSelector } from 'react-redux';
 
 const ENDINGS = ['ST', 'ND', 'RD', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH'];
 
@@ -10,6 +11,7 @@ const ContentSituationsListItem = (
   { player, situationClick, currentCard, cardIndex, beforeAfterData },
   ref
 ) => {
+  const situationFilter = useSelector(state => state.game.situationFilter);
   // useEffect(() => {
   // let observer = new IntersectionObserver(entries => {
   //   entries.forEach(entry => {
@@ -44,13 +46,19 @@ const ContentSituationsListItem = (
   const dataBefore = beforeAfterData[cardIndex]?.before
     ? `${player.side.toUpperCase()} ${player.inning_number}${ENDINGS[player.inning_number - 1]}`
     : null;
-  const isDataAfter = beforeAfterData[cardIndex]?.after;
+  const isDataAfter = beforeAfterData[cardIndex]?.after && situationFilter === 'All';
+
+	const styles = {}
+	if (dataBefore && situationFilter !== 'All') styles.marginTop = cardIndex === 0 ? 24 : 26
+	if (!isDataAfter && situationFilter !== 'All') styles.marginBottom = 0
+
   return (
     <li
       ref={activeRef}
       data-before={dataBefore}
       data-after={isDataAfter}
       className={classNames.join(' ')}
+      style={styles}
       // style={cardIndex === 0 ? { marginTop: 50 } : cardIndex === cardsCount - 1 ? { marginBottom: 50 } : {}}
       onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
