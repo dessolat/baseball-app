@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import { useSelector, useDispatch } from 'react-redux';
@@ -135,7 +135,7 @@ const Content = ({ currentTab }) => {
     // eslint-disable-next-line
   }, [innings]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (cards.length === 0) return;
 
     const filteredCards = getFilteredCards(cards);
