@@ -59,7 +59,6 @@ const ContentSituationsListItem = (
       data-after={isDataAfter}
       className={classNames.join(' ')}
       style={styles}
-      // style={cardIndex === 0 ? { marginTop: 50 } : cardIndex === cardsCount - 1 ? { marginBottom: 50 } : {}}
       onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
         <ContentCardReplacement text={player.moments[0].events[0].description} />
