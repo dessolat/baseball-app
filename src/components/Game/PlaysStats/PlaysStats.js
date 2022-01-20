@@ -1,12 +1,9 @@
 import React from 'react';
 import cl from './PlaysStats.module.scss';
+import PlaysStatsInfo from './PlaysStatsInfo';
 
 const PlaysStats = ({ hit }) => {
-  const { init_speed_x, distance, angle, data_2d } = hit || 0;
-
-  const exitVelocityValue = init_speed_x ? init_speed_x.toFixed(1) + ' mph' : ' ';
-  const distanceValue = distance ? distance.toFixed(1) + ' m' : ' ';
-  const angleValue = angle ? angle.toFixed(0) + '°' : ' ';
+  const { data_2d } = hit || 0;
 
   let ballPath = data_2d ? `M${data_2d[0][0]} ${data_2d[0][1]}` : '';
   data_2d && data_2d.slice(1).forEach(coords => (ballPath += `L${coords[0]} ${coords[1]}`));
@@ -30,36 +27,7 @@ const PlaysStats = ({ hit }) => {
           {intermediatePoints}
         </svg>
       </div>
-      <div className={cl.info}>
-        <p className={cl.row}>
-          <span className={cl.title}>At Bats</span>
-          <span className={cl.value}>2</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Hits</span>
-          <span className={cl.value}>0</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Runs</span>
-          <span className={cl.value}>0</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Exit Velocity</span>
-          <span className={cl.value}>{exitVelocityValue}</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Launch Angle</span>
-          <span className={cl.value}>{angleValue}</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Height</span>
-          <span className={cl.value}>37.2 m</span>
-        </p>
-        <p className={cl.row}>
-          <span className={cl.title}>Distance</span>
-          <span className={cl.value}>{distanceValue}</span>
-        </p>
-      </div>
+      <PlaysStatsInfo hit={hit} />
     </div>
   );
 };
