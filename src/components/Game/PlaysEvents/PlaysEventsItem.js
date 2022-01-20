@@ -29,7 +29,15 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
           <div className={cl.text}>
-            <p> </p> 
+            {icons.circ_color_pitch && icons.circ_color_play ? (
+              <>
+                <p> </p> 
+              </>
+            ) : (
+              <>
+                <p>slider</p>({table.balls} - {table.strikes})
+              </>
+            )}
           </div>
         </li>
       )}
