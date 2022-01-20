@@ -18,7 +18,8 @@ const ContentCardComplexBody = ({ sit }) => {
   );
 
   useLayoutEffect(() => {
-    if (sit.icons.rect_text === 'Replacement') return;
+    if (ref.current === null) return;
+    // if (sit.icons.rect_text === 'Replacement') return;
     ref.current.innerHTML = eventsSummary.join('.') + '.';
   }, [eventsSummary, sit.icons.rect_text]);
 
