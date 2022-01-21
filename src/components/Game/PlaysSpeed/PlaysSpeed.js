@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 // import Chart from 'react-google-charts';
 import { useSelector } from 'react-redux';
 import cl from './PlaysSpeed.module.scss';
@@ -36,7 +36,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   //   };
   // }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
       setChartData([]);
       return;
