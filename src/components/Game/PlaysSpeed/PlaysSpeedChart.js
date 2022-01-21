@@ -82,7 +82,7 @@ const PlaysSpeedChart = ({ dataArr, currentDot = 0 }) => {
 
   const isDots = dataArr.length > 1;
   const dots = isDots
-    ? dotsCoords.map(dot => <circle cx={dot[0]} cy={dot[1]} r={DOT_RADIUS} fill={DOT_COLOR} />)
+    ? dotsCoords.map((dot, i) => <circle key={i} cx={dot[0]} cy={dot[1]} r={DOT_RADIUS} fill={DOT_COLOR} />)
     : null;
 
   return (
