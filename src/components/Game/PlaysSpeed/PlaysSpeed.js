@@ -65,7 +65,7 @@ const PlaysSpeed = ({ currentMoment }) => {
       // [['', 'speed']]
     );
     setChartData(newChartData);
-  }, [currentCard]);
+  }, [currentCard, innings]);
 
   // const options = {
   //   height: chartHeight,
