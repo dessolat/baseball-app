@@ -8,6 +8,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   // const [chartWidth, setChartWidth] = useState(0);
   // const [chartHeight, setChartHeight] = useState(0);
   const [chartData, setChartData] = useState([]);
+  const [currentDotIndex, setCurrentDotIndex] = useState(0);
   const ref = useRef(null);
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
@@ -43,29 +44,49 @@ const PlaysSpeed = ({ currentMoment }) => {
     }
 
     const testData = [];
+    let dotIndex = 0;
 
     innings.forEach(inning => {
       inning['top/guests']
-        .filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
-        .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
+        // .filter(card =>   card.moments.some(moment => moment.pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)  )
+        // card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
+        .forEach(card =>
+          card.moments.forEach(moment => {
+            if (moment.inner.id === currentMoment.inner?.id) dotIndex = testData.length;
+            moment.pitcher?.pitches_name === currentMoment.pitcher?.pitches_name &&
+              testData.push(moment.metering.pitch.init_speed_x);
+          })
+        );
       inning['bottom/owners']
-        ?.filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
-        .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
+        // ?.filter(card =>
+        //   card.moments.some(
+        //     moment => moment.pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name
+        //   )
+        // )
+        // card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
+        ?.forEach(card =>
+          card.moments.forEach(moment => {
+            if (moment.inner.id === currentMoment.inner?.id) dotIndex = testData.length;
+            moment.pitcher?.pitches_name === currentMoment.pitcher?.pitches_name &&
+              testData.push(moment.metering.pitch.init_speed_x);
+          })
+        );
     });
-
-    console.log(testData);
-    const newChartData = currentCard.moments.reduce(
-      (sum, moment) => {
-        // (sum, moment, i) => {
-        sum.push(moment.metering.pitch.init_speed_x);
-        // sum.push([i, moment.metering.pitch.init_speed_x]);
-        return sum;
-      },
-      []
-      // [['', 'speed']]
-    );
-    setChartData(newChartData);
-  }, [currentCard, innings]);
+    setChartData(testData);
+    setCurrentDotIndex(dotIndex);
+    // console.log(testData);
+    // const newChartData = currentCard.moments.reduce(
+    //   (sum, moment) => {
+    //     // (sum, moment, i) => {
+    //     sum.push(moment.metering.pitch.init_speed_x);
+    //     // sum.push([i, moment.metering.pitch.init_speed_x]);
+    //     return sum;
+    //   },
+    //   []
+    //   // [['', 'speed']]
+    // );
+    // setChartData(newChartData);
+  }, [currentCard, innings, currentMoment]);
 
   // const options = {
   //   height: chartHeight,
@@ -116,7 +137,7 @@ const PlaysSpeed = ({ currentMoment }) => {
       {chartData.length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
-          <PlaysSpeedChart dataArr={chartData} currentDot={0} />
+          <PlaysSpeedChart dataArr={chartData} currentDot={currentDotIndex} />
         </>
 
         // <div ref={ref} className={cl.speed}>
