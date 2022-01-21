@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import cl from './PlaysSpeed.module.scss';
 import PlaysSpeedChart from './PlaysSpeedChart';
 
-const PlaysSpeed = () => {
+const PlaysSpeed = ({ currentMoment }) => {
   // const [chartWidth, setChartWidth] = useState(0);
   // const [chartHeight, setChartHeight] = useState(0);
   const [chartData, setChartData] = useState([]);
@@ -42,18 +42,18 @@ const PlaysSpeed = () => {
       return;
     }
 
-    // const testData = [];
+    const testData = [];
 
-    // innings.forEach(inning => {
-    //   inning['top/guests']
-    //     .filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
-    //     .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
-    //   inning['bottom/owners']
-    //     ?.filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
-    //     .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
-    // });
+    innings.forEach(inning => {
+      inning['top/guests']
+        .filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
+        .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
+      inning['bottom/owners']
+        ?.filter(card => card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
+        .forEach(card => card.moments.forEach(moment => testData.push(moment.metering.pitch.init_speed_x)));
+    });
 
-		// console.log(testData);
+    console.log(testData);
     const newChartData = currentCard.moments.reduce(
       (sum, moment) => {
         // (sum, moment, i) => {
@@ -65,7 +65,6 @@ const PlaysSpeed = () => {
       // [['', 'speed']]
     );
     setChartData(newChartData);
-
   }, [currentCard]);
 
   // const options = {

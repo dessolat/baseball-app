@@ -6,7 +6,7 @@ import PlaysSpeed from '../PlaysSpeed/PlaysSpeed';
 const PlaysPitch = ({ currentMoment }) => {
   return (
     <>
-      <PlaysSpeed />
+      <PlaysSpeed currentMoment={currentMoment} />
       <PlaysSpin pitch={currentMoment.metering?.pitch} />
       <PlaysField currentMoment={currentMoment} />
     </>
