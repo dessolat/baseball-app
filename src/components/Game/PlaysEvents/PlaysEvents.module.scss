@@ -4,17 +4,48 @@
 .events {
   grid-area: events;
   position: relative;
-  padding-top: 2px;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: calc(100% - 6px);
-    height: 2px;
-    background-color: var(--side-color);
-  }
+.beforeBlue::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--side-color);
+}
+
+.blueTopLoad::before {
+	width: calc(100% - 6px);
+}
+
+.wider::before {
+	animation: slideToRight .2s linear forwards;
+}
+
+.taller::before {
+	animation: slideToLeft .2s linear forwards;
+}
+
+@keyframes slideToLeft {
+	from {
+		width: calc(100% - 6px);
+	}
+
+	to {
+		width: 0;
+	}
+}
+
+@keyframes slideToRight {
+	from {
+		width: 0;
+	}
+
+	to {
+		width: calc(100% - 6px);
+	}
 }
 
 .list {
