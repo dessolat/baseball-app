@@ -3,8 +3,9 @@ import cl from './PlaysEvents.module.scss';
 import PlaysEventsItem from './PlaysEventsItem';
 import { useSelector } from 'react-redux';
 
-const PlaysEventsList = ({ moments, currentMoment, handleClick }) => {
+const PlaysEventsList = ({ moments, handleClick }) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
+  const currentMoment = useSelector(state => state.game.currentMoment);
   const [classes, setClasses] = useState([cl.list]);
   const [animationClass, setAnimationClass] = useState('');
   const ref = useRef();

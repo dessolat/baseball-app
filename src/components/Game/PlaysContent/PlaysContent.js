@@ -3,14 +3,14 @@ import PlaysHitting from '../PlaysHitting/PlaysHitting';
 import PlaysPitch from '../PlaysPitch/PlaysPitch';
 import PlaysRunning from '../PlaysRunning/PlaysRunning';
 
-const PlaysContent = ({ currentMoment, currentTab }) => {
+const PlaysContent = ({ currentTab }) => {
   const renderComponent =
 	currentTab === 'hitting' ? (
-      <PlaysHitting currentMoment={currentMoment} />
+      <PlaysHitting />
     ) : currentTab === 'running' ? (
-      <PlaysRunning currentMoment={currentMoment} />
+      <PlaysRunning />
     ) : (
-      <PlaysPitch currentMoment={currentMoment} />
+      <PlaysPitch />
     );
 
   return <>{renderComponent}</>;
