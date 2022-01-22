@@ -14,13 +14,17 @@ const VideoEventsListItem = ({ moment }) => {
   return (
     <>
       {moment.icons.circ_color_pitch && (
-        <li className={cl[moment.icons.circ_color_pitch]} data-before={moment.icons.batter_moment}>
-          {moment.icons.circ_text_pitch}
+        <li>
+          <div className={cl[moment.icons.circ_color_pitch]} data-before={moment.icons.batter_moment}>
+            {moment.icons.circ_text_pitch}
+          </div>
         </li>
       )}
       {moment.icons.circ_color_play && (
-        <li className={playClasses.join(' ')} data-before={playDataBefore}>
-          {playContent}
+        <li>
+          <div className={playClasses.join(' ')} data-before={playDataBefore}>
+            {playContent}
+          </div>
         </li>
       )}
     </>
