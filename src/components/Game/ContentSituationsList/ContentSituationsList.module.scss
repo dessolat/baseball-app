@@ -1,29 +1,73 @@
-.list {
+@import 'scss/vars.scss';
+
+.wrapper {
   position: relative;
   grid-area: list;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
+}
+
+.list {
+	height: 100%;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
 
   > * + * {
     margin-top: 2px;
   }
 
-  &::-webkit-scrollbar {
-    width: 7px;
+	&::-webkit-scrollbar {
+		width: 7px;
   }
-
+	
   &::-webkit-scrollbar-track {
-    background: transparent;
+		background: transparent;
   }
-
+	
   &::-webkit-scrollbar-thumb {
-    width: 7px;
-    background: #ACACAC;
+		width: 7px;
+    background: #acacac;
     border: 2px solid #e5e5e5;
     border-radius: 5px;
   }
 
-	@media only screen and (min-device-width: 481px) and (max-device-width: 1366px) and (max-device-height: 1024px) and (orientation:landscape) {
+  @media only screen and (min-device-width: 481px) and (max-device-width: 1366px) and (max-device-height: 1024px) and (orientation: landscape) {
 		border-right: 6px solid #e5e5e5;
+  }
+}
+
+.blueDiv {
+  position: absolute;
+  right: 7px;
+  top: 0;
+  height: 2px;
+	width: calc(100% - 7px);
+  background-color: var(--side-color);
+}
+
+.wider {
+	animation: slideToLeft .2s linear forwards;
+}
+
+.taller {
+	animation: slideToRight .2s linear forwards;
+}
+
+@keyframes slideToLeft {
+	from {
+		width: 0;
+	}
+
+	to {
+		width: calc(100% - 7px);
 	}
 }
+
+@keyframes slideToRight {
+	from {
+		width: calc(100% - 7px);
+	}
+
+	to {
+		width: 0;
+	}
+}
+
