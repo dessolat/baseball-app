@@ -5,6 +5,7 @@ const defaultState = {
   situations: ['All'],
   situationFilter: 'All',
   currentCard: {},
+	currentMoment: {},
 	playersInfo: {},
 	imagesData: {},
 	filteredCards: [],
@@ -19,6 +20,7 @@ const SET_INNING_NUMBER = 'SET_INNING_NUMBER';
 const SET_SITUATIONS = 'SET_SITUATIONS';
 const SET_SITUATION_FILTER = 'SET_SITUATION_FILTER';
 const SET_CURRENT_CARD = 'SET_CURRENT_CARD';
+const SET_CURRENT_MOMENT = 'SET_CURRENT_MOMENT';
 const SET_PLAYERS_INFO = 'SET_PLAYERS_INFO';
 const SET_IMAGES_DATA = 'SET_IMAGES_DATA';
 const SET_FILTERED_CARDS = 'SET_FILTERED_CARDS';
@@ -39,6 +41,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, situationFilter: action.payload };
     case SET_CURRENT_CARD:
       return { ...state, currentCard: action.payload };
+    case SET_CURRENT_MOMENT:
+      return { ...state, currentMoment: action.payload };
     case SET_PLAYERS_INFO:
       return { ...state, playersInfo: action.payload };
     case SET_IMAGES_DATA:
@@ -63,6 +67,7 @@ export const setInningNumber = payload => ({ type: SET_INNING_NUMBER, payload })
 export const setSituations = payload => ({ type: SET_SITUATIONS, payload });
 export const setSituationFilter = payload => ({ type: SET_SITUATION_FILTER, payload });
 export const setCurrentCard = payload => ({ type: SET_CURRENT_CARD, payload });
+export const setCurrentMoment = payload => ({ type: SET_CURRENT_MOMENT, payload });
 export const setPlayersInfo = payload => ({ type: SET_PLAYERS_INFO, payload });
 export const setImagesData = payload => ({ type: SET_IMAGES_DATA, payload });
 export const setFilteredCards = payload => ({ type: SET_FILTERED_CARDS, payload });
