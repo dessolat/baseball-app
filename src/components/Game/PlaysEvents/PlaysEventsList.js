@@ -19,6 +19,7 @@ const PlaysEventsList = ({ moments, currentMoment, handleClick }) => {
 		: classes.push([cl.beforeBlue]);
 		activeCardList === 'events' && classes.push(cl.blueTopLoad)
 		setClasses(classes)
+		// eslint-disable-next-line
   }, [moments]);
 
   useEffect(() => {
