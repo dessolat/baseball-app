@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setCurrentCard } from 'redux/gameReducer';
+import { setActiveCardList, setCurrentCard } from 'redux/gameReducer';
 
 const KEYS = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
 
@@ -15,13 +15,6 @@ const useArrowNavigate = (cards, currentCard) => {
     switch (e.key) {
       case 'ArrowUp':
         if (cardIndex === 0) break;
-        dispatch(setCurrentCard(cards[cardIndex - 1]));
-        break;
-      case 'ArrowDown':
-        if (cardIndex >= cards.length - 1) break;
-        dispatch(setCurrentCard(cards[cardIndex + 1]));
-        break;
-      case 'ArrowLeft':
         if (e.shiftKey) {
           const prevCard = cards
             .slice(0, cardIndex)
@@ -31,15 +24,24 @@ const useArrowNavigate = (cards, currentCard) => {
           dispatch(setCurrentCard(prevCard));
           break;
         }
-				break;
-      case 'ArrowRight':
+        dispatch(setCurrentCard(cards[cardIndex - 1]));
+        break;
+      case 'ArrowDown':
+        if (cardIndex >= cards.length - 1) break;
         if (e.shiftKey) {
           const nextCard = cards.slice(cardIndex + 1).find(card => card.who_id === currentCard.who_id);
           if (nextCard === undefined) break;
           dispatch(setCurrentCard(nextCard));
           break;
         }
-				break;
+        dispatch(setCurrentCard(cards[cardIndex + 1]));
+        break;
+      case 'ArrowLeft':
+				dispatch(setActiveCardList('cards'))
+        break;
+				case 'ArrowRight':
+				dispatch(setActiveCardList('events'))
+        break;
       default:
         break;
     }
