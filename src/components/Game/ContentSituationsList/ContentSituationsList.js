@@ -7,6 +7,7 @@ import useArrowNavigate from 'hooks/useArrowNavigate';
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
+  const activeCardList = useSelector(state => state.game.activeCardList);
   const dispatch = useDispatch();
   const handleKeyDown = useArrowNavigate(filteredCards, currentCard);
 
@@ -22,20 +23,26 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, 
     dispatch(setCurrentCard({ ...player, manualClick: true }));
   };
 
+  const classes = [cl.blueDiv];
+  classes.push(activeCardList === 'cards' ? cl.wider : cl.taller);
+
   return (
-    <ul className={cl.list}>
-      {filteredCards.map((card, i) => (
-        <ContentSituationsListItem
-          key={i}
-					cardIndex={i}
-          ref={ref}
-          player={card}
-          situationClick={situationClick}
-          currentCard={currentCard}
-					beforeAfterData={beforeAfterData}
-        />
-      ))}
-    </ul>
+    <div className={cl.wrapper}>
+      <ul className={cl.list}>
+        {filteredCards.map((card, i) => (
+          <ContentSituationsListItem
+            key={i}
+            cardIndex={i}
+            ref={ref}
+            player={card}
+            situationClick={situationClick}
+            currentCard={currentCard}
+            beforeAfterData={beforeAfterData}
+          />
+        ))}
+      </ul>
+      <div className={classes.join(' ')}></div>
+    </div>
   );
 };
 
