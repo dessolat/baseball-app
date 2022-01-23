@@ -11,6 +11,10 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   icons.circ_text_play === 'OBR' && playClasses.push(cl.obr);
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
+
+  const topEventText = moment.metering?.pitch?.init_speed_x
+    ? `${moment.metering?.pitch?.init_speed_x.toFixed(1)} mph`
+    : '';
   return (
     <>
       {icons.circ_color_pitch && (
@@ -19,7 +23,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>slider</p>({table.balls} - {table.strikes})
+            <p>slider {topEventText}</p>({table.balls} - {table.strikes})
           </div>
         </li>
       )}
@@ -35,7 +39,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
               </>
             ) : (
               <>
-                <p>slider</p>({table.balls} - {table.strikes})
+                <p>slider {topEventText}</p>({table.balls} - {table.strikes})
               </>
             )}
           </div>
