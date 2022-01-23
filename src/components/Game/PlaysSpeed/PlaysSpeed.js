@@ -52,8 +52,8 @@ const PlaysSpeed = ({ currentMoment }) => {
         // card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
         .forEach(card =>
           card.moments.forEach(moment => {
-            if (moment.inner.id === currentMoment.inner?.id) dotIndex = testData.length;
-            moment.pitcher?.pitches_name === currentMoment.pitcher?.pitches_name &&
+            if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
               testData.push(moment.metering.pitch.init_speed_x);
           })
         );
@@ -66,8 +66,8 @@ const PlaysSpeed = ({ currentMoment }) => {
         // card.moments[0].pitcher.pitches_name === currentCard.moments[0].pitcher.pitches_name)
         ?.forEach(card =>
           card.moments.forEach(moment => {
-            if (moment.inner.id === currentMoment.inner?.id) dotIndex = testData.length;
-            moment.pitcher?.pitches_name === currentMoment.pitcher?.pitches_name &&
+            if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
               testData.push(moment.metering.pitch.init_speed_x);
           })
         );

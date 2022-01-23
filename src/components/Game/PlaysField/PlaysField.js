@@ -56,7 +56,7 @@ const PlaysField = ({ currentMoment }) => {
   useEffect(() => {
     setCount(1);
     const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
-    setCoords(currentMoment.metering?.pitch?.data_2d || []);
+    setCoords(currentMoment?.metering?.pitch?.data_2d || []);
 
     return () => {
       clearTimeout(timeout);
@@ -69,7 +69,7 @@ const PlaysField = ({ currentMoment }) => {
     height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
   };
 
-  const initSpeed = currentMoment.metering?.pitch?.init_speed_x;
+  const initSpeed = currentMoment?.metering?.pitch?.init_speed_x;
   const releaseValue = initSpeed ? initSpeed.toFixed(1) : '';
 
   return (

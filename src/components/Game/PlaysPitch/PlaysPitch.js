@@ -9,7 +9,7 @@ const PlaysPitch = () => {
   return (
     <>
       <PlaysSpeed currentMoment={currentMoment} />
-      <PlaysSpin pitch={currentMoment.metering?.pitch} />
+      <PlaysSpin pitch={currentMoment?.metering?.pitch} />
       <PlaysField currentMoment={currentMoment} />
     </>
   );
