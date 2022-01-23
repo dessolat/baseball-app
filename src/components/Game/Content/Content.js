@@ -15,6 +15,7 @@ import {
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
 import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
+import ContentBox from '../ContentBox/ContentBox';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -240,7 +241,7 @@ const Content = ({ currentTab }) => {
           <ContentGraphics currentTab={currentTab} />
         </div>
       ) : (
-        <div className={cl.box}></div>
+        <ContentBox />
       )}
     </section>
   );
