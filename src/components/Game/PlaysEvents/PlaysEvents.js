@@ -3,9 +3,9 @@ import cl from './PlaysEvents.module.scss';
 import PlaysEventsList from './PlaysEventsList';
 import PlaysEventsTotal from './PlaysEventsTotal';
 
-const PlaysEvents = ({ moments, handleClick }) => (
+const PlaysEvents = ({ moments }) => (
   <div className={cl.events}>
-    <PlaysEventsList moments={moments} handleClick={handleClick} />
+    <PlaysEventsList moments={moments} />
     <PlaysEventsTotal moments={moments} />
   </div>
 );
