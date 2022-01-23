@@ -9,7 +9,8 @@ import {
   setCurrentCard,
   setFilteredCards,
   setPlaybackMode,
-  setImagesData
+  setImagesData,
+  setCurrentMoment
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
@@ -190,6 +191,15 @@ const Content = ({ currentTab }) => {
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
+
+    const newMoments = [];
+    currentCard.type !== 'Replacement'
+      ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+      : newMoments.push(currentCard.moments[0]);
+    currentCard.manualMoment
+      ? dispatch(setCurrentMoment(newMoments[0] || {}))
+      : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
+
     if (currentCard.manualClick || !situationsChildRef.current) return;
     situationsChildRef.current.parentNode.scrollTop =
       situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
