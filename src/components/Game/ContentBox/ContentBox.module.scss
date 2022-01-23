@@ -1,4 +1,53 @@
+@import 'scss/vars.scss';
+
 .box {
-	background-color: white;
-	padding: 2.25rem 3rem;
+  background-color: white;
+  padding: 4.3rem 3rem;
+}
+
+.table {
+  border-collapse: collapse;
+
+  thead {
+    border-bottom: 0.5px solid #cdcccc;
+  }
+
+  th {
+    font: 700 0.75rem / 2rem var(--font-nunito);
+    color: #838383;
+  }
+
+  tr {
+    font: 400 0.875rem / 2.5rem var(--font-athiti);
+
+    > td {
+      width: 2.35rem;
+      text-align: center;
+
+      &:nth-child(1) {
+        width: 2rem;
+      }
+
+      &:nth-child(2) {
+        width: 13.5rem;
+        text-align: left;
+        font: 300 0.875rem var(--font-nunito);
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  tr:nth-child(2n) {
+    background-color: #eaeaea;
+    line-height: 1.5rem;
+  }
+
+  tfoot > tr {
+    font-weight: 700;
+
+    > td:nth-child(2) {
+      font-weight: 700;
+    }
+  }
+}
 }
