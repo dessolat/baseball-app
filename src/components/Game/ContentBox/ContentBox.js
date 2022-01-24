@@ -34,8 +34,26 @@ const TABLE_DATA = {
   }
 };
 
+const FOOTER_DATA = {
+	leftData: {
+		location: 'Moscow',
+		stadium: 'RusStar Arena Ballpark',
+		weather: 'Cloudy, +19',
+		att: 300,
+		t: '2:08',
+		hpUmpire: 'Dzianis PRYPUTNEVICH'
+		},
+	rightData: {
+		bUmpire: 'Milan Preradović',
+		scorers: ['Nadezhda PASHKOVA', 'Petr ROTMISTROV', 'ALEXANDER KAVERIN'],
+		tcs: ['Jürgen Elsishans', 'Alessandra Soprani']
+	}
+}
+
 const ContentBox = () => {
 	const {batting, pitching, fielding, catching} = TABLE_DATA.guests
+	const {location, stadium, weather, att, t, hpUmpire} = FOOTER_DATA.leftData
+	const {bUmpire, scorers, tcs} = FOOTER_DATA.rightData
 
   return (
 	<div className={cl.box}>
