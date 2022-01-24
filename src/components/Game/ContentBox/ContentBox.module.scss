@@ -59,7 +59,7 @@
       &::before {
         content: 'Batting';
         position: absolute;
-        left: 0.4rem;
+        left: 0.39rem;
         top: -1rem;
         font: 400 0.875rem var(--font-nunito);
         color: black;
@@ -110,4 +110,23 @@
       width: 4.35rem;
     }
   }
+}
+
+.footerContainer {
+	max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer {
+	padding: 1.07rem 6rem;
+	background: linear-gradient(90deg, #F4F5F7 12.5%, #EEEEEF 100%);
+}
+
+.text {
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+
+	&:hover {
+		cursor: grab;
+	}
 }
