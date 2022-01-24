@@ -12,7 +12,7 @@ const VideoEventsListItem = ({ moment, handleClick }) => {
   moment.icons.circ_text_play === 'OBR' && playClasses.push(cl.obr);
 
 	const wrapperClasses = []
-	moment.inner?.id === currentMoment.inner?.id && wrapperClasses.push(cl.active)
+	moment.inner?.id === currentMoment?.inner?.id && wrapperClasses.push(cl.active)
 	
 
   const playDataBefore =
