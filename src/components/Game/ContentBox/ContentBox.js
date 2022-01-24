@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './ContentBox.module.scss';
+import ContentBoxTable from './ContentBoxTable';
 
 const TABLE_DATA = {
   guests: {
@@ -40,32 +41,12 @@ const ContentBox = () => {
 	<div className={cl.box}>
 		<div className="container">
 			<div className={cl.tables}>
-				<table className={cl.table + ' ' + cl.battingTable}>
-					<thead>
-						<tr>
-							<th></th>
-							<th></th>
-							{Object.keys(batting[0]).slice(1).map((title, i) => <th key={i}>{title.toUpperCase()}</th>)}
-							{/* {Object.keys(running[0]).slice(1).map((title, i) => <th key={i}>{title.toUpperCase()}</th>)} */}
-						</tr>
-					</thead>
-					<tbody>
-						{batting.map((player, i) => <tr key={i}>
-							<td>{i+1}</td>
-							{Object.values(player).map((value,j) => <td key={j}>{j >= 15 && j <= 18 ? value.toFixed(3) : value}</td>)}
-							{/* {Object.values(running[i]).slice(1).map((value,j) => <td key={j}>{value}</td>)} */}
-						</tr>)}
-					</tbody>
-					<tfoot>
-						<tr>
-							<td></td>
-							<td>TOTALS</td>
-							<td></td>
-							{Object.values(TABLE_DATA.guests.batting[0]).slice(2).map((value,j) => <td key={j}>{j >= 13 && j <= 16 ? value.toFixed(3) : value}</td>)}
-							{/* {Object.values(TABLE_DATA.guests.running[0]).slice(1).map((value,j) => <td key={j}>{value}</td>)} */}
-						</tr>
-					</tfoot>
-				</table>
+				<ContentBoxTable tableData={batting} tableClass={cl.battingTable} footerOffset={2} />
+				<ContentBoxTable tableData={pitching} tableClass={cl.pitchingTable} footerOffset={1} />
+				<div className={cl.wrapper}>
+					<ContentBoxTable tableData={fielding} tableClass={cl.fieldingTable} footerOffset={1} />
+					<ContentBoxTable tableData={catching} tableClass={cl.catchingTable} footerOffset={1} />
+				</div>
 			</div>
 			<div className={cl.footerContainer}>
 				<div className={cl.footer}>
