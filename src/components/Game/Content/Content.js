@@ -228,22 +228,24 @@ const Content = ({ currentTab }) => {
       : cards;
 
   return (
-    <section className='container'>
+    <>
       {currentTab !== 'box' ? (
-        <div className={cl.content}>
-          <ContentSituationsList
-            ref={situationsChildRef}
-            filteredCards={filteredCards}
-            currentCard={currentCard}
-            beforeAfterData={beforeAfterRef.current}
-          />
-          <ContentFooter />
-          <ContentGraphics currentTab={currentTab} />
-        </div>
+        <section className='container'>
+          <div className={cl.content}>
+            <ContentSituationsList
+              ref={situationsChildRef}
+              filteredCards={filteredCards}
+              currentCard={currentCard}
+              beforeAfterData={beforeAfterRef.current}
+            />
+            <ContentFooter />
+            <ContentGraphics currentTab={currentTab} />
+          </div>
+        </section>
       ) : (
         <ContentBox />
       )}
-    </section>
+    </>
   );
 };
 
