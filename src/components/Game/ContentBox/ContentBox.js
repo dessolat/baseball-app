@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cl from './ContentBox.module.scss';
 import ContentBoxTable from './ContentBoxTable';
+import { setSearchParam } from 'utils';
 
 const TABLE_DATA = {
   guests: {
@@ -56,13 +57,21 @@ const ContentBox = () => {
 	const {bUmpire, scorers, tcs} = FOOTER_DATA.rightData
 
 	const [activeButton, setActiveButton] = useState('guests')
+
+	useEffect(() => {
+		setSearchParam('tab', 'box');
+	}, []);
+	
+
+	const getClassName = name => name === activeButton ? cl.active : null
+
 	const handleButtonClick = name => () => setActiveButton(name)
   return (
 	<div className={cl.box}>
 		<div className="container">
 			<div className={cl.tables}>
-				<ContentBoxTable tableData={batting} tableClass={cl.battingTable} footerOffset={2} />
-				<ContentBoxTable tableData={pitching} tableClass={cl.pitchingTable} footerOffset={1} />
+				<ContentBoxTable tableData={batting} tableClass={cl.battingTable} footerOffset={2} toFixList={['avg','slg','obp','ops']} />
+				<ContentBoxTable tableData={pitching} tableClass={cl.pitchingTable} footerOffset={1} toFixList={['ERA']} />
 				<div className={cl.wrapper}>
 					<ContentBoxTable tableData={fielding} tableClass={cl.fieldingTable} footerOffset={1} />
 					<ContentBoxTable tableData={catching} tableClass={cl.catchingTable} footerOffset={1} />
@@ -73,10 +82,26 @@ const ContentBox = () => {
 				</div>
 			</div>
 		</div>
+
+		<div className={cl.footer}>
 			<div className={cl.footerContainer}>
-				<div className={cl.footer}>
+					<div>
+						<p>Location: {location}</p>
+						<p>Stadium: {stadium}</p>
+						<p>Weather: {weather}</p>
+						<p>Att: {att}</p>
+						<p>T: {t}</p>
+						<p>HP Umpire: {hpUmpire}</p>
+					</div>
+					<div>
+						<p>1B Umpire: {bUmpire}</p>
+						<p>Scorer: {scorers[0]}</p>
+						<p>Scorer: {scorers[1]}</p>
+						<p>Scorer: {scorers[2]}</p>
+						<p>TC: {tcs[0]}</p>
+						<p>TC: {tcs[1]}</p>
+					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 )
