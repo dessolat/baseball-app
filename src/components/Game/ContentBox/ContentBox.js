@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cl from './ContentBox.module.scss';
 import ContentBoxTable from './ContentBoxTable';
 
@@ -55,6 +55,8 @@ const ContentBox = () => {
 	const {location, stadium, weather, att, t, hpUmpire} = FOOTER_DATA.leftData
 	const {bUmpire, scorers, tcs} = FOOTER_DATA.rightData
 
+	const [activeButton, setActiveButton] = useState('guests')
+	const handleButtonClick = name => () => setActiveButton(name)
   return (
 	<div className={cl.box}>
 		<div className="container">
@@ -65,7 +67,12 @@ const ContentBox = () => {
 					<ContentBoxTable tableData={fielding} tableClass={cl.fieldingTable} footerOffset={1} />
 					<ContentBoxTable tableData={catching} tableClass={cl.catchingTable} footerOffset={1} />
 				</div>
+				<div className={cl.buttons}>
+					<span className={getClassName('guests')} onClick={handleButtonClick('guests')}>Guests</span>
+					<span className={getClassName('owners')} onClick={handleButtonClick('owners')}>Owners</span>
+				</div>
 			</div>
+		</div>
 			<div className={cl.footerContainer}>
 				<div className={cl.footer}>
 				</div>
