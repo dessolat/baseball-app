@@ -22,7 +22,12 @@ const useArrowNavigate = (cards, currentCard) => {
     switch (e.key) {
       case 'ArrowUp':
         if (activeCardList === 'events') {
-          if (momentIndex === 0 || momentIndex === -1) break;
+					if (momentIndex === 0 && cardIndex === 0) break
+					// if ((momentIndex === 0 && cardIndex === 0) || momentIndex === -1) break
+          if (momentIndex === 0 || (momentIndex === -1 && cardIndex !== 0)) {
+						dispatch(setCurrentCard(cards[cardIndex - 1]));
+						break;
+					};
           dispatch(setCurrentMoment(currentCard.moments[momentIndex - 1]));
           break;
         }
@@ -40,7 +45,12 @@ const useArrowNavigate = (cards, currentCard) => {
         break;
       case 'ArrowDown':
         if (activeCardList === 'events') {
-          if (momentIndex >= currentCard.moments.length - 1 || momentIndex === -1) break;
+					if ((momentIndex >= currentCard.moments.length - 1 && cardIndex >= cards.length - 1) || momentIndex === -1) break;
+          if (momentIndex >= currentCard.moments.length - 1) {
+						dispatch(setCurrentCard({...cards[cardIndex + 1], manualMoment: true}));
+						break
+					};
+
           dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]));
           break;
         }
