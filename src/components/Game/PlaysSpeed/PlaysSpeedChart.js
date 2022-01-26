@@ -6,7 +6,6 @@ const PlaysSpeedChart = ({ dataArr, currentDot = 0 }) => {
   const GRAPH_COLOR = '#1A4C96';
   const DOT_RADIUS = 1;
   const DOT_COLOR = '#1A4C96';
-  // const CURRENT_DOT = 2;
   const CURRENT_DOT_RADIUS = 6;
   const CURRENT_DOT_COLOR = '#2B9D6A';
   const LINE_DOWN_WIDTH = 1;
@@ -23,10 +22,6 @@ const PlaysSpeedChart = ({ dataArr, currentDot = 0 }) => {
     }
     return [max, min];
   }
-
-  // const dataArr = [65];
-  // const dataArr = [74, 65, 80, 85];
-  // const dataArr = [74, 65, 80, 94, 71, 58, 53, 42, 70, 66, 41, 85];
 
   let maxYValue = Math.max(...dataArr) + 2;
   let minYValue = Math.min(...dataArr) - 2;
