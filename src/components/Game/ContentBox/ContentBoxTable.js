@@ -26,7 +26,7 @@ const ContentBoxTable = ({ tableData, tableClass, footerOffset, toFixList = [] }
         ))}
       </tbody>
       <tfoot>
-        <tr style={tableData.length % 2 ? { lineHeight: '1.5rem', backgroundColor: '#eaeaea' } : {}}>
+        <tr style={tableData.length % 2 ? { backgroundColor: '#eaeaea' } : {}}>
           <td></td>
           <td>TOTALS</td>
           {footerOffset > 1 && <td></td>}
