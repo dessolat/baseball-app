@@ -52,6 +52,7 @@
   overflow-y: scroll;
   height: 92%;
   background: white;
+	scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     width: 6px;
