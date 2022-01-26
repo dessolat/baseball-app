@@ -2,8 +2,8 @@ import React from 'react';
 import cl from './PlaysSpin.module.scss';
 
 const PlaysSpinInfo = ({ pitch }) => {
-  const { offset_x, offset_y, rotation } = pitch || 0;
-
+  const { offset_x, offset_y, rotation } = pitch || {};
+	
   const trueSpinValue = rotation ? rotation.toFixed(2) + ' rpm' : ' ';
   const verticalBreakValue = offset_y ? (offset_y * 100).toFixed(2) + ' cm' : ' ';
   const horizontalBreakValue = offset_x ? (offset_x * 100).toFixed(2) + ' cm' : ' ';
