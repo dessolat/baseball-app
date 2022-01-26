@@ -3,11 +3,11 @@ import cl from './PlaysSpin.module.scss';
 import PlaysSpinInfo from './PlaysSpinInfo';
 
 const PlaysSpin = ({ pitch }) => {
-  const { strike_zone_x, strike_zone_y } = pitch || 0;
+  const { offset_x, offset_y } = pitch || 0;
 
   const isDrawBall = pitch;
-  const coordX = 50 + 50 * strike_zone_x;
-  const coordY = 50 - 50 * strike_zone_y;
+  const coordX = 50 + 50 * offset_x;
+  const coordY = 50 - 50 * offset_y;
 
   return (
     <div className={cl.spin}>
