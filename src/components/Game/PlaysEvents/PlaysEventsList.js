@@ -7,10 +7,11 @@ import { setCurrentMoment } from 'redux/gameReducer';
 const PlaysEventsList = ({ moments }) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
   const currentMoment = useSelector(state => state.game.currentMoment);
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [classes, setClasses] = useState([cl.list]);
   const [animationClass, setAnimationClass] = useState('');
   const ref = useRef();
+  const eventsChildRef = useRef(null);
   const animationRef = useRef(false);
 
   useEffect(() => {
@@ -35,6 +36,14 @@ const PlaysEventsList = ({ moments }) => {
     setAnimationClass(animation);
   }, [activeCardList]);
 
+  useEffect(() => {
+    // if (currentCard.manualClick || !situationsChildRef.current) return;
+    if (!eventsChildRef.current) return;
+
+    eventsChildRef.current.parentNode.scrollTop =
+      eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
+  }, [currentMoment]);
+
   const handleMomentClick = moment => () => dispatch(setCurrentMoment(moment));
   return (
     <ul className={classes.join(' ') + ' ' + animationClass} ref={ref}>
@@ -45,6 +54,7 @@ const PlaysEventsList = ({ moments }) => {
             moment={moment}
             currentMoment={currentMoment}
             handleClick={handleMomentClick}
+						ref={eventsChildRef}
           />
         ))}
     </ul>
