@@ -1,5 +1,4 @@
 @import 'scss/vars.scss';
-@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@400;700&display=swap');
 
 .speed {
 	grid-area: spd;
@@ -13,19 +12,15 @@
 	margin-left: .8rem;
 }
 
-circle:hover {
-	cursor: pointer;
-}
-
 .chart {
 	background-color: white;
 	margin-left: .2rem;
 }
 
 .plainText {
-	font: 400 .875rem 'Athiti', sans-serif;
+	font: 400 .875rem var(--font-athiti);
 }
 
 .boldText {
-	font: 700 .875rem 'Athiti', sans-serif;
+	font: 700 .875rem var(--font-athiti);
 }
