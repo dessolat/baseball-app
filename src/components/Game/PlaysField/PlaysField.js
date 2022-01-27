@@ -2,11 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 import PlaysFieldBalls from './PlaysFieldBalls';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
   const [count, setCount] = useState(1);
   const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
+  const currentCard = useSelector(state => state.game.currentCard);
+  const playbackMode = useSelector(state => state.game.playbackMode);
+	const filteredCards = useSelector(state => state.game.filteredCards)
+  const dispatch = useDispatch();
   const parent = useRef(null);
   const timeoutRef = useRef(null);
 
@@ -42,16 +48,38 @@ const PlaysField = ({ currentMoment }) => {
   useEffect(() => {
     if (count === 1) return;
 
-    let timeout;
+    let graphTimeout;
     if (count < coords.length) {
-      timeout = setTimeout(() => setCount(prev => prev + 1), 40);
+      graphTimeout = setTimeout(() => setCount(prev => prev + 1), 40);
+      return;
+    }
+
+    const newMoments = [];
+    currentCard.type !== 'Replacement'
+      ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+      : newMoments.push(currentCard.moments[0]);
+
+    const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+    const cardIndex = filteredCards.findIndex(card => card.moments[0].inner.id === currentCard.moments[0].inner.id);
+
+    let playTimeout;
+    if (playbackMode !== 'pause') {
+      playTimeout = setTimeout(() => {
+				if ((momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) || momentIndex === -1) return;
+				if (momentIndex >= currentCard.moments.length - 1) {
+			dispatch(setCurrentCard({...filteredCards[cardIndex + 1], manualMoment: true}));
+			return
+		};
+        dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
+      }, 2000);
     }
 
     return () => {
-      clearTimeout(timeout);
+      clearTimeout(graphTimeout);
+      clearTimeout(playTimeout);
     };
     // eslint-disable-next-line
-  }, [count]);
+  }, [count, playbackMode]);
 
   useEffect(() => {
     setCount(1);
