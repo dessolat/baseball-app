@@ -3,7 +3,7 @@ import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
+import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -65,7 +65,10 @@ const PlaysField = ({ currentMoment }) => {
     let playTimeout;
     if (playbackMode !== 'pause') {
       playTimeout = setTimeout(() => {
-				if ((momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) || momentIndex === -1) return;
+				if ((momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) || momentIndex === -1) {
+					dispatch(setPlaybackMode('pause'))
+					return
+				};
 				if (momentIndex >= currentCard.moments.length - 1) {
 			dispatch(setCurrentCard({...filteredCards[cardIndex + 1], manualMoment: true}));
 			return

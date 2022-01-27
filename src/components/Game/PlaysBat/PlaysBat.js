@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import cl from './PlaysBat.module.scss';
 import PlaysBatFooter from './PlaysBatFooter';
 import PlaysBatHeader from './PlaysBatHeader';
@@ -13,45 +15,119 @@ const PlaysBat = ({ currentMoment }) => {
   const [linesPaths, setLinesPaths] = useState(['', '', '']);
   const [frame, setFrame] = useState(0);
 
+  const playbackMode = useSelector(state => state.game.playbackMode);
+  const currentCard = useSelector(state => state.game.currentCard);
+  const filteredCards = useSelector(state => state.game.filteredCards);
+  const dispatch = useDispatch();
+
   const maxFrameRef = useRef(null);
   const timeoutRef = useRef(null);
+  const playRef = useRef(null);
 
-  useEffect(() => () => clearTimeout(timeoutRef.current), []);
+  useEffect(() => () => {
+		clearTimeout(timeoutRef.current)
+		clearTimeout(playRef.current)
+	}, []);
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
-		
+    clearTimeout(playRef.current);
+
     if (Object.keys(currentMoment).length === 0 || !data_2d) {
       setCurvePath('');
       setLinesPaths(['', '', '']);
+
+      if (playbackMode !== 'pause') {
+        const newMoments = [];
+        currentCard.type !== 'Replacement'
+          ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+          : newMoments.push(currentCard.moments[0]);
+
+        const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+        const cardIndex = filteredCards.findIndex(
+          card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+        );
+
+        playRef.current = setTimeout(() => {
+          // setFrame(0)
+          if (
+            (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
+            momentIndex === -1
+          ) {
+            dispatch(setPlaybackMode('pause'));
+            return;
+          }
+          if (momentIndex >= currentCard.moments.length - 1) {
+            dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], manualMoment: true }));
+            return;
+          }
+          dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
+        }, 2000);
+      }
+
       return;
     }
-    maxFrameRef.current = data_2d.length;
+    maxFrameRef.current = data_2d?.length || 0;
     setFrame(1);
     setLinesPaths(['', '', '']);
   }, [currentMoment, data_2d, events]);
 
   useEffect(() => {
-    if (frame === 0 || !data_2d) return;
+    if (playbackMode === 'pause') clearTimeout(playRef.current);
+    console.log(frame);
+    if (frame === 0 || (!data_2d && playbackMode === 'pause')) return;
 
+    console.log(playbackMode);
     const xShift = -450;
     const yShift = -200;
 
     if (frame > maxFrameRef.current) {
       maxFrameRef.current = null;
-      const coord0 = data_2d[swing_index];
-      const coord1 = data_2d[plane_index];
-      const coord2 = data_2d[impact_index];
-      const line0 = `M${coord0.up[0] + xShift} ${coord0.up[1] + yShift}L${coord0.bottom[0] + xShift} ${
-        coord0.bottom[1] + yShift
-      }`;
-      const line1 = `M${coord1.up[0] + xShift} ${coord1.up[1] + yShift}L${coord1.bottom[0] + xShift} ${
-        coord1.bottom[1] + yShift
-      }`;
-      const line2 = `M${coord2.up[0] + xShift} ${coord2.up[1] + yShift}L${coord2.bottom[0] + xShift} ${
-        coord2.bottom[1] + yShift
-      }`;
-      setLinesPaths([line0, line1, line2]);
+
+      if (data_2d) {
+        const coord0 = data_2d[swing_index];
+        const coord1 = data_2d[plane_index];
+        const coord2 = data_2d[impact_index];
+        const line0 = `M${coord0.up[0] + xShift} ${coord0.up[1] + yShift}L${coord0.bottom[0] + xShift} ${
+          coord0.bottom[1] + yShift
+        }`;
+        const line1 = `M${coord1.up[0] + xShift} ${coord1.up[1] + yShift}L${coord1.bottom[0] + xShift} ${
+          coord1.bottom[1] + yShift
+        }`;
+        const line2 = `M${coord2.up[0] + xShift} ${coord2.up[1] + yShift}L${coord2.bottom[0] + xShift} ${
+          coord2.bottom[1] + yShift
+        }`;
+        setLinesPaths([line0, line1, line2]);
+      }
+
+      const newMoments = [];
+      currentCard.type !== 'Replacement'
+        ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+        : newMoments.push(currentCard.moments[0]);
+
+      const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+      const cardIndex = filteredCards.findIndex(
+        card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+      );
+
+      if (playbackMode !== 'pause') {
+        playRef.current = setTimeout(() => {
+          // setFrame(0)
+          if (
+            (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
+            momentIndex === -1
+          ) {
+            dispatch(setPlaybackMode('pause'));
+            return;
+          }
+          if (momentIndex >= currentCard.moments.length - 1) {
+            dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], manualMoment: true }));
+            return;
+          }
+          dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
+        }, 2000);
+      }
+
       return;
     }
 
@@ -74,8 +150,46 @@ const PlaysBat = ({ currentMoment }) => {
     setCurvePath(newCurve);
 
     timeoutRef.current = setTimeout(() => setFrame(prev => prev + 1), 10);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
+
+    return () => {
+      clearTimeout(playRef.current);
+    };
   }, [frame]);
+
+  useEffect(() => {
+    if (playbackMode === 'pause') {
+      clearTimeout(playRef.current);
+      return;
+    }
+
+    const newMoments = [];
+    currentCard.type !== 'Replacement'
+      ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+      : newMoments.push(currentCard.moments[0]);
+
+    const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+    const cardIndex = filteredCards.findIndex(
+      card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+    );
+
+    playRef.current = setTimeout(() => {
+      // setFrame(0)
+      if (
+        (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
+        momentIndex === -1
+      ) {
+        console.log('here');
+        dispatch(setPlaybackMode('pause'));
+        return;
+      }
+      if (momentIndex >= currentCard.moments.length - 1) {
+        dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], manualMoment: true }));
+        return;
+      }
+      dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
+    }, 2000);
+  }, [playbackMode]);
 
   const handleDotClick = str => () => setCurrentLine(str);
 
@@ -92,7 +206,7 @@ const PlaysBat = ({ currentMoment }) => {
         currentLine={currentLine}
         currentMoment={currentMoment}
         handleDotClick={handleDotClick}
-				frame={frame}
+        frame={frame}
       />
     </div>
   );
