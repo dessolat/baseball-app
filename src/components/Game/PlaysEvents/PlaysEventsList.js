@@ -16,8 +16,10 @@ const PlaysEventsList = ({ moments }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      eventsChildRef.current.parentNode.scrollTop =
-        eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
+      if (eventsChildRef.current) {
+        eventsChildRef.current.parentNode.scrollTop =
+          eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
+      }
     }, 0);
   }, []);
 
