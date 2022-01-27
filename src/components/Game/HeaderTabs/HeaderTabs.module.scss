@@ -2,14 +2,13 @@
 
 .headerTabs {
   display: flex;
-  justify-content: space-between;
   font-size: 0.875rem;
   line-height: 1rem;
   margin-top: 1rem;
   margin-bottom: 5px;
 
   > li + li {
-    margin-left: 1.875rem;
+    margin-left: 2rem;
   }
 
   button {
