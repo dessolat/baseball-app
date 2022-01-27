@@ -15,6 +15,13 @@ const PlaysEventsList = ({ moments }) => {
   const animationRef = useRef(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      eventsChildRef.current.parentNode.scrollTop =
+        eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
+    }, 0);
+  }, []);
+
+  useEffect(() => {
     if (ref.current === null) return;
 
     const classes = [cl.list];
@@ -54,7 +61,7 @@ const PlaysEventsList = ({ moments }) => {
             moment={moment}
             currentMoment={currentMoment}
             handleClick={handleMomentClick}
-						ref={eventsChildRef}
+            ref={eventsChildRef}
           />
         ))}
     </ul>
