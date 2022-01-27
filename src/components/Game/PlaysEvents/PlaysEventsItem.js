@@ -1,10 +1,11 @@
 import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import cl from './PlaysEvents.module.scss';
 
-const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
+const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
   const { icons, table, inner } = moment;
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
+	const refValue = inner.id === currentMoment.inner?.id ? ref : null
 
   const playClasses = [];
   icons.circ_text_play !== 'R' && playClasses.push(cl[icons.circ_color_play]);
@@ -18,7 +19,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   return (
     <>
       {icons.circ_color_pitch && (
-        <li className={classes} onClick={handleClick(moment)}>
+        <li ref={refValue} className={classes} onClick={handleClick(moment)}>
           <div className={cl[icons.circ_color_pitch]} data-before={icons.batter_moment}>
             {icons.circ_text_pitch}
           </div>
@@ -49,4 +50,4 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }) => {
   );
 };
 
-export default PlaysEventsItem;
+export default forwardRef(PlaysEventsItem);
