@@ -5,6 +5,7 @@ import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
 
 const TABLE_DATA = {
@@ -346,6 +347,8 @@ const ContentBox = () => {
 
   const { gameId } = useParams();
 
+  const preview = useSelector(state => state.game.preview);
+
   const cancelTokenRef = useRef();
 
   const { batting, pitching, fielding, catching } = TABLE_DATA.guests;
@@ -381,7 +384,9 @@ const ContentBox = () => {
 
   const handleButtonClick = name => () => setActiveButton(name);
 
-	const tableData = boxData[activeButton]
+	const getShortName = name => (name.length > 8 ? name.slice(0, 7) + '…' : name);
+  
+	const tableData = boxData[activeButton];
   return (
     <>
       {isLoading ? (
@@ -395,27 +400,38 @@ const ContentBox = () => {
               <ContentBoxTable
                 tableData={tableData}
                 tableClass={cl.battingTable}
-								tableName='batting'
+                tableName='batting'
                 footerOffset={2}
-                toFixList={['AVG', 'SLG', 'OBP', 'OPS']}
-								/>
+                toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr']}
+              />
               <ContentBoxTable
                 tableData={tableData}
                 tableClass={cl.pitchingTable}
-								tableName='pitching'
+                tableName='pitching'
                 footerOffset={1}
                 toFixList={['ERA']}
               />
               <div className={cl.wrapper}>
-                <ContentBoxTable tableData={tableData} tableClass={cl.fieldingTable} tableName='fielding' footerOffset={1} />
-                <ContentBoxTable tableData={tableData} tableClass={cl.catchingTable} tableName='catching' footerOffset={1} />
+                <ContentBoxTable
+                  tableData={tableData}
+                  tableClass={cl.fieldingTable}
+                  tableName='fielding'
+                  toFixList={['FLD']}
+                  footerOffset={1}
+                />
+                <ContentBoxTable
+                  tableData={tableData}
+                  tableClass={cl.catchingTable}
+                  tableName='catching'
+                  footerOffset={1}
+                />
               </div>
               <div className={cl.buttons}>
                 <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
-                  Guests
+                  {preview && getShortName(preview.guests.name)}
                 </span>
                 <span className={getClassName('owners')} onClick={handleButtonClick('owners')}>
-                  Owners
+                  {preview && getShortName(preview.owners.name)}
                 </span>
               </div>
             </div>
