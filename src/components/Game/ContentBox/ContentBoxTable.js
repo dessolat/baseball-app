@@ -57,31 +57,65 @@ const TABLES_INFO = {
     headers: ['SB', 'CS', 'PB']
   }
 };
+
+const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFixList = [] }) => {
   return (
     <table className={cl.table + ' ' + tableClass}>
       <thead>
         <tr>
           <th></th>
           <th></th>
-          {Object.keys(tableData[0])
+          {TABLES_INFO[tableName].headers.map((title, i) => (
+            <th key={i}>{title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title}</th>
+          ))}
+          {/* {Object.keys(tableData[0])
             .slice(1)
             .map((title, i) => (
               <th key={i}>{title.toUpperCase()}</th>
-            ))}
+            ))} */}
         </tr>
       </thead>
       <tbody>
-        {tableData.map((player, i) => (
+        {tableData
+          .filter(player =>
+            tableName === 'pitching'
+              ? player.is_pitcher
+              : tableName === 'catching' || tableName === 'fielding'
+              ? player.is_catcher
+              : true
+          )
+          .map((player, i) => (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{player.content.player_name}</td>
+              {TABLES_INFO[tableName].headers.map((title, i) => (
+                <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
+                  {title === 'POS'
+                    ? player.content.position[0]
+                    : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title)
+                    ? player.content.running[title]
+                    : title === 'PB'
+                    ? '--' :
+										toFixList.includes(title) ? Number(player.content[tableName][title]).toFixed(3)
+                    : player.content[tableName][title]}
+                </td>
+              ))}
+              {/* {Object.entries(player).map((entry, j) => (
+              <td key={j}>{toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}</td>
+            ))} */}
+            </tr>
+          ))}
+        {/* {tableData.map((player, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
             {Object.entries(player).map((entry, j) => (
               <td key={j}>{toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}</td>
             ))}
           </tr>
-        ))}
+        ))} */}
       </tbody>
       <tfoot>
-        <tr style={tableData.length % 2 ? { backgroundColor: '#eaeaea' } : {}}>
+        {/* <tr style={tableData.length % 2 ? { backgroundColor: '#eaeaea' } : {}}>
           <td></td>
           <td>TOTALS</td>
           {footerOffset > 1 && <td></td>}
@@ -92,7 +126,7 @@ const TABLES_INFO = {
                 {toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}
               </td>
             ))}
-        </tr>
+        </tr> */}
       </tfoot>
     </table>
   );
