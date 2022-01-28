@@ -380,6 +380,8 @@ const ContentBox = () => {
   const getClassName = name => (name === activeButton ? cl.active : null);
 
   const handleButtonClick = name => () => setActiveButton(name);
+
+	const tableData = boxData[activeButton]
   return (
     <>
       {isLoading ? (
@@ -391,20 +393,22 @@ const ContentBox = () => {
           <div className='container'>
             <div className={cl.tables}>
               <ContentBoxTable
-                tableData={batting}
+                tableData={tableData}
                 tableClass={cl.battingTable}
+								tableName='batting'
                 footerOffset={2}
-                toFixList={['avg', 'slg', 'obp', 'ops']}
-              />
+                toFixList={['AVG', 'SLG', 'OBP', 'OPS']}
+								/>
               <ContentBoxTable
-                tableData={pitching}
+                tableData={tableData}
                 tableClass={cl.pitchingTable}
+								tableName='pitching'
                 footerOffset={1}
                 toFixList={['ERA']}
               />
               <div className={cl.wrapper}>
-                <ContentBoxTable tableData={fielding} tableClass={cl.fieldingTable} footerOffset={1} />
-                <ContentBoxTable tableData={catching} tableClass={cl.catchingTable} footerOffset={1} />
+                <ContentBoxTable tableData={tableData} tableClass={cl.fieldingTable} tableName='fielding' footerOffset={1} />
+                <ContentBoxTable tableData={tableData} tableClass={cl.catchingTable} tableName='catching' footerOffset={1} />
               </div>
               <div className={cl.buttons}>
                 <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
