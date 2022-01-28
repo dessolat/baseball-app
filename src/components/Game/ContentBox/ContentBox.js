@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentBox.module.scss';
 import ContentBoxTable from './ContentBoxTable';
 import { setSearchParam } from 'utils';
@@ -359,29 +359,39 @@ const ContentBox = () => {
   const [boxData, setBoxData] = useState({});
   const [activeButton, setActiveButton] = useState('guests');
 
-	const { gameId } = useParams();
+  const { gameId } = useParams();
+
+  const cancelTokenRef = useRef();
 
   const { batting, pitching, fielding, catching } = TABLE_DATA.guests;
   const { location, stadium, weather, att, t, hpUmpire } = FOOTER_DATA.leftData;
   const { bUmpire, scorers, tcs } = FOOTER_DATA.rightData;
-	const { footer, guests, owners } = boxData || {}
+  const { footer, guests, owners } = boxData || {};
 
   useEffect(() => {
     setSearchParam('tab', 'box');
 
-		const fetchBoxData = async () => {
-			try {
-				setIsLoading(true)
-				const response = await axios.get(`http://51.250.11.151:3030/game_${gameId}/box`)
-				setBoxData(response.data)
-			} catch (err) {
-				console.log(err.message);
-			} finally {
-				setIsLoading(false)
-			}
-		}
+    const fetchBoxData = async () => {
+      cancelTokenRef.current = axios.CancelToken.source();
 
-		fetchBoxData()
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`http://51.250.11.151:3030/game_${gameId}/box`, {
+          cancelToken: cancelTokenRef.current.token
+        });
+        setBoxData(response.data);
+      } catch (err) {
+        err.message !== null && console.log(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBoxData();
+
+    return () => {
+      cancelTokenRef.current.cancel(null);
+    };
   }, []);
 
   const getClassName = name => (name === activeButton ? cl.active : null);
