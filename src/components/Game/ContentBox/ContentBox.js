@@ -5,6 +5,7 @@ import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
 
 const TABLE_DATA = {
   guests: {
@@ -415,27 +416,7 @@ const ContentBox = () => {
               </div>
             </div>
           </div>
-
-          <div className={cl.footer}>
-            <div className={cl.footerContainer}>
-              <div>
-                <p>Location: {footer.location}</p>
-                <p>Stadium: {footer.stadium}</p>
-                <p>Weather: {footer.weather}</p>
-                <p>Att: {footer.att}</p>
-                <p>T: {footer.t}</p>
-                <p>HP Umpire: {footer.umpires ? footer.umpires[0] : ' '}</p>
-              </div>
-              <div>
-                <p>1B Umpire: {footer.umpires ? footer.umpires[1] : ' '}</p>
-                <p>Scorer: {footer.scorers ? footer.scorers[0] : ' '}</p>
-                <p>Scorer: {footer.scorers ? footer.scorers[1] : ' '}</p>
-                <p>Scorer: {footer.scorers ? footer.scorers[2] : ' '}</p>
-                <p>TC: {footer.tc ? footer.tc[0] : ' '}</p>
-                <p>TC: {footer.tc ? footer.tc[1] : ' '}</p>
-              </div>
-            </div>
-          </div>
+          <ContentBoxFooter footer={footer} />
         </div>
       )}
     </>
