@@ -1,7 +1,62 @@
 import React from 'react';
 import cl from './ContentBoxTable.module.scss';
 
-const ContentBoxTable = ({ tableData, tableClass, footerOffset, toFixList = [] }) => {
+const TABLES_INFO = {
+  batting: {
+    headers: [
+      'POS',
+      'AB',
+      'H',
+      '2B',
+      '3B',
+      'HR',
+      'RBI',
+      'GDP',
+      'BB',
+      'HP',
+      'SH',
+      'SF',
+      'SO',
+      'TB',
+      'AVG',
+      'SLG',
+      'OBP',
+      'OPS',
+      'SB',
+      'CS',
+      'SB_pr',
+      'LOB'
+    ]
+  },
+  pitching: {
+    headers: [
+      'PA',
+      'R',
+      'ER',
+      'H',
+      '2B',
+      '3B',
+      'HR',
+      'BB',
+      'IBB',
+      'HP',
+      'SH',
+      'SF',
+      'SO',
+      'WP',
+      'ERA',
+      'NP',
+      'NS',
+      'NB'
+    ]
+  },
+  fielding: {
+    headers: ['CH', 'PO', 'A', 'E', 'DP', 'FLD']
+  },
+  catching: {
+    headers: ['SB', 'CS', 'PB']
+  }
+};
   return (
     <table className={cl.table + ' ' + tableClass}>
       <thead>
