@@ -59,6 +59,16 @@ const TABLES_INFO = {
 };
 
 const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFixList = [] }) => {
+  const getFieldSum = (table, field) =>
+    table === 'fielding'
+      ? tableData
+          .filter(player => player.is_catcher)
+          .reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
+      : table === 'catching'
+      ? tableData
+          .filter(player => player.is_catcher)
+          .reduce((sum, cur) => sum + Number(cur.content['running'][field]), 0)
+      : tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0);
   return (
     <table className={cl.table + ' ' + tableClass}>
       <thead>
