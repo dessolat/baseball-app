@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useCurrentEvents from 'hooks/useCurrentEvents';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCurrentMoment } from 'redux/gameReducer';
+import { setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import cl from './VideoEventsList.module.scss';
 import VideoEventsListItem from './VideoEventsListItem';
 
@@ -24,13 +24,16 @@ const VideoEventsList = () => {
     const newClasses = [cl.events, cl.beforeBlue];
     newClasses.push(activeCardList === 'events' ? cl.wider : cl.taller);
     setClasses(newClasses);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [activeCardList]);
 
   // const classes = [cl.events];
   // classes.push(activeCardList === 'events' ? cl.wider : cl.taller);
 
-  const handleMomentClick = moment => () => dispatch(setCurrentMoment(moment));
+  const handleMomentClick = moment => () => {
+    dispatch(setPlaybackMode('pause'));
+    dispatch(setCurrentMoment(moment));
+  };
   return (
     <>
       {moments.length !== 0 && (

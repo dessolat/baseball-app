@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import cl from './PlaysEvents.module.scss';
 import PlaysEventsItem from './PlaysEventsItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentMoment } from 'redux/gameReducer';
+import { setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 
 const PlaysEventsList = ({ moments }) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
@@ -53,7 +53,11 @@ const PlaysEventsList = ({ moments }) => {
       eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
   }, [currentMoment]);
 
-  const handleMomentClick = moment => () => dispatch(setCurrentMoment(moment));
+  const handleMomentClick = moment => () => {
+		
+		dispatch(setPlaybackMode('pause'))
+    dispatch(setCurrentMoment(moment));
+  };
   return (
     <ul className={classes.join(' ') + ' ' + animationClass} ref={ref}>
       {moments.length !== 0 &&
