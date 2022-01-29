@@ -45,6 +45,7 @@ const ContentBox = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
+		// eslint-disable-next-line
   }, []);
 
   const getClassName = name => (name === activeButton ? cl.active : null);

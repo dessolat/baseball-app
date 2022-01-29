@@ -70,6 +70,7 @@ const PlaysBat = ({ currentMoment }) => {
     maxFrameRef.current = data_2d?.length || 0;
     setFrame(1);
     setLinesPaths(['', '', '']);
+		// eslint-disable-next-line
   }, [currentMoment, data_2d, events]);
 
   useEffect(() => {
@@ -155,6 +156,7 @@ const PlaysBat = ({ currentMoment }) => {
     return () => {
       clearTimeout(playRef.current);
     };
+		// eslint-disable-next-line
   }, [frame]);
 
   useEffect(() => {
@@ -189,6 +191,7 @@ const PlaysBat = ({ currentMoment }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
+		// eslint-disable-next-line
   }, [playbackMode]);
 
   const handleDotClick = str => () => setCurrentLine(str);

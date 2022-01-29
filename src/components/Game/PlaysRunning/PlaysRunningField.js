@@ -41,6 +41,7 @@ const PlaysRunningField = ({ field }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
+		// eslint-disable-next-line
   }, [currentMoment]);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const PlaysRunningField = ({ field }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
+		// eslint-disable-next-line
   }, [playbackMode]);
 
   let ballPath = '';
