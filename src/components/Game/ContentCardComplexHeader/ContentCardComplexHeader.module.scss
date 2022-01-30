@@ -1,59 +1,77 @@
 @import 'scss/vars.scss';
 
+.header {
+  position: relative;
+
+  > *:nth-child(3) {
+    margin-top: 1rem;
+		position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 12.8125rem;
+      top: -.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #000;
+    }
+  }
+}
+
 .playerName {
-	font: 400 .9375rem var(--font-nunito);
-	line-height: .9375rem;
-	margin-left: 4px;
+  font: 400 0.9375rem var(--font-nunito);
+  line-height: 0.9375rem;
+  margin-left: 4px;
 }
 
 .portraitTextWrapper {
-	margin-top: 2px;
-	display: flex;
-	column-gap: .4375rem;
+  margin-top: 2px;
+  display: flex;
+  column-gap: 0.4375rem;
 }
 
 .portrait {
-	width: 39px;
-	height: 42px;
-	overflow: hidden;
-	position: relative;
-	border-radius: 5px;
-	
-	> img {
-		position: absolute;
-		top: -2px;
-		left: -100%;
-		transform: translateX(40%);
-		width: 65px;
-	}
+  width: 39px;
+  height: 42px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
 
-	> img.default {
-		top: 0;
-		left: 0;
-		width: 100%;
-		transform: none;
-	}
+  > img {
+    position: absolute;
+    top: -2px;
+    left: -100%;
+    transform: translateX(40%);
+    width: 65px;
+  }
+
+  > img.default {
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
 }
 
-
 .text {
-  font: 300 .875rem var(--font-nunito);
-	line-height: .9375rem;
-	flex: 1 1;
+  font: 300 0.875rem var(--font-nunito);
+  line-height: 0.9375rem;
+  flex: 1 1;
 }
 
 .bottom {
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-end;
-	column-gap: 6px;
-	line-height: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  column-gap: 6px;
+  line-height: 0;
 }
 
 .ellipses {
-	display: flex;
-	align-items: flex-start;
-	column-gap: 6px;
-	margin-left: auto;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 6px;
+  margin-left: auto;
 }
-
