@@ -5,6 +5,17 @@
 	column-gap: 10px;
 }
 
+.title {
+	text-align: center;
+	font-size: .875rem;
+	font-weight: 700;
+
+	&:nth-of-type(2) {
+		margin-top: .5rem;
+		line-height: 1.2;
+	}
+}
+
 .text {
 	font: 400 .875rem var(--font-nunito);
   line-height: 1.36rem;
