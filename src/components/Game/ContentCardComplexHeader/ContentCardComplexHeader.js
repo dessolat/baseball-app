@@ -17,21 +17,24 @@ const ContentCardComplexHeader = ({ player, sit }) => {
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
   const eventsSummary = useMemo(
-    () => sit.events.reduce((sum, event) => [...sum, event.description], []),
+    () =>
+      sit.icons.rect_text !== 'Replacement'
+        ? sit.events.reduce((sum, event) => [...sum, event.description], [])
+        : [],
     [sit.events]
   );
 
   useLayoutEffect(() => {
-    ref.current.innerHTML = eventsSummary.join('.') + '.';
+    ref.current.innerHTML = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
   }, [eventsSummary, sit.icons.rect_text]);
 
   const titleText = `${player.hit_order}. ${player.who}`;
-  const cardText = eventsSummary.join('.') + '.';
+  const cardText = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
 
-	const isRectText = sit.icons.rect_text !== 'Replacement'
-	const isRectScore = sit.icons.score_own !== undefined
+  const isRectText = sit.icons.rect_text !== 'Replacement';
+  const isRectScore = sit.icons.score_own !== undefined;
   return (
-    <div>
+    <div className={cl.header}>
       <div className={cl.top}>
         <p className={cl.playerName}>{titleText}</p>
         <div className={cl.portraitTextWrapper}>
@@ -48,7 +51,9 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         </div>
       </div>
 
-      <div className={cl.bottom}>
+      <div
+        className={cl.bottom}
+        style={eventsSummary.length === 0 ? { position: 'absolute', top: '1.6rem', right: 0 } : null}>
         {isRectText && <RectText icons={sit.icons} />}
         {isRectScore && <RectScore icons={sit.icons} />}
         <div className={cl.ellipses}>
