@@ -5,19 +5,21 @@ import Bases from 'components/UI/icons/Bases/Bases';
 import Outs from 'components/UI/icons/Outs/Outs';
 
 const ContentCardComplexFooter = ({ lastMoment }) => {
-	const eventsSummary = [];
+  const eventsSummary = [];
   const { r1, r2, r3, outs, balls, strikes } = lastMoment?.table || 0;
 
   lastMoment?.events?.forEach(event => eventsSummary.push(event.description));
 
-	const cardText = eventsSummary.join('.') + '.'
+  const cardText = eventsSummary.join('.') + '.';
   return (
     <div className={cl.footer}>
       <p className={cl.text}>{cardText}</p>
       <div className={cl.rectanglesEllipsesWrapper}>
+        <div className={cl.ellipses}>
+          <Outs outs={outs} />
+          <BallsStrikes balls={balls} strikes={strikes} />
+        </div>
         <Bases r1={r1} r2={r2} r3={r3} />
-				<Outs outs={outs} />
-        <BallsStrikes balls={balls} strikes={strikes} />
       </div>
     </div>
   );
