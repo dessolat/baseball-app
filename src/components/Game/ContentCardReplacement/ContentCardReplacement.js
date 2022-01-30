@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import cl from './ContentCardReplacement.module.scss';
 import PortraitImg from 'images/portrait.png';
 
-const ContentCardReplacement = ({ text = '' }) => {
+const ContentCardReplacement = ({ events }) => {
   const ref = useRef(null);
 
   useLayoutEffect(() => {

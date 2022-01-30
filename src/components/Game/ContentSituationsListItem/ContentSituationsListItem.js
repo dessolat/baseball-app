@@ -61,7 +61,7 @@ const ContentSituationsListItem = (
       style={styles}
       onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
-        <ContentCardReplacement text={player.moments[0].events[0].description} />
+        <ContentCardReplacement events={player.moments[0].events} />
       ) : situationsArr.length > 0 ? (
         <ContentCardComplex player={player} situationsArr={situationsArr} />
       ) : (

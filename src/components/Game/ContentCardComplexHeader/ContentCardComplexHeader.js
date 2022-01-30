@@ -58,9 +58,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         <Bases r1={r1} r2={r2} r3={r3} />
       </div>
 
-      {!isRectText && (
-        <ContentCardReplacement text={cardText} />
-      )}
+      {!isRectText && <ContentCardReplacement events={sit.events} />}
     </div>
   );
 };

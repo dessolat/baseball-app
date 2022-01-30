@@ -43,7 +43,7 @@ const ContentCardComplexBody = ({ sit }) => {
           </div>
         </div>
       ) : (
-        <ContentCardReplacement text={cardText} />
+        <ContentCardReplacement events={sit.events} />
       )}
     </>
   );
