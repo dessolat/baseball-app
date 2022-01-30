@@ -1,7 +1,15 @@
 .rectanglesEllipsesWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-end;
+	column-gap: 6px;
+}
+
+.ellipses {
+	display: flex;
+	align-items: flex-start;
+	line-height: 0;
+	column-gap: 6px;
 }
 
 .text {
