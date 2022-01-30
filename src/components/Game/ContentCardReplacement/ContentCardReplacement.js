@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import cl from './ContentCardReplacement.module.scss';
-import PortraitImg from 'images/portrait.png';
+import ContentCardReplacementItem from './ContentCardReplacementItem';
 
 const ContentCardReplacement = ({ events }) => {
   const ref = useRef(null);
@@ -20,30 +20,18 @@ const ContentCardReplacement = ({ events }) => {
           teamName = event.team;
 
           return (
-            <>
+            <React.Fragment key={i}>
               <p className={cl.title}>{getShortName(event.team)} replacements:</p>
-              <div className={cl.replace} key={i}>
-                <div className={cl.portrait}>
-                  <img className={cl.default} src={PortraitImg} alt='Portrait' />
-                </div>
-                <p className={cl.text}>{event.description}</p>
-                <div className={cl.portrait}>
-                  <img className={cl.default} src={PortraitImg} alt='Portrait' />
-                </div>
-              </div>
-            </>
+              <ContentCardReplacementItem event={event} />
+            </React.Fragment>
           );
         }
 
-				return <div className={cl.replace} key={i}>
-				<div className={cl.portrait}>
-					<img className={cl.default} src={PortraitImg} alt='Portrait' />
-				</div>
-				<p className={cl.text}>{event.description}</p>
-				<div className={cl.portrait}>
-					<img className={cl.default} src={PortraitImg} alt='Portrait' />
-				</div>
-			</div>
+        return (
+          <React.Fragment key={i}>
+            <ContentCardReplacementItem event={event} />
+          </React.Fragment>
+        );
 
         // return i === 0 || event.team !== teamName ? (
         //   <>
