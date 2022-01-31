@@ -20,7 +20,7 @@ const useGameFetch = url => {
 		return players
 		.filter(player => player.photo !== '')
 		.reduce((sum, player) => {
-			sum[player.name + ' ' + player.surname] = player.photo;
+			// sum[player.name + ' ' + player.surname] = player.photo;
 			sum[player.id] = player.photo;
 			return sum;
 		}, summary);
