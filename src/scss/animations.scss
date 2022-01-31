@@ -6,3 +6,13 @@
     background: #e0f0ff;
   }
 }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+  }
+
+  to {
+		opacity: 1;
+  }
+}
