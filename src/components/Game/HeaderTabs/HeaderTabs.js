@@ -10,7 +10,7 @@ const HeaderTabs = ({ currentTab, handleClick }) => {
 
 	const tabsArr = isVideo ? ['box', 'plays', 'videos'] : ['box', 'plays'];
 
-	const getClass = name => (currentTab === name ? cl.active : '');
+	const getClass = name => (currentTab === name || (currentTab === 'videos' && name === 'plays' && !isVideo) ? cl.active : '');
   return (
     <ul className={cl.headerTabs}>
       {tabsArr.map((item, i) => (
