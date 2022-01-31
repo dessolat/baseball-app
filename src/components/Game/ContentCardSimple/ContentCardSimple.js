@@ -14,7 +14,7 @@ const ContentCardSimple = ({ player }) => {
 
   const eventsSummary = lastMoment?.events?.reduce((sum, event) => [...sum, event.description], []) || [];
   const cardText = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
-  const imgClassName = !imagesData[player.who] ? cl.default : '';
+  const imgClassName = !imagesData[player.who_id] ? cl.default : '';
 
   return (
     <div className={cl.classic}>
@@ -23,7 +23,7 @@ const ContentCardSimple = ({ player }) => {
         <div className={cl.portrait}>
           <img
             className={imgClassName}
-            src={imagesData[player.who] || PortraitImg}
+            src={imagesData[player.who_id] || PortraitImg}
             alt='Portrait'
           />
         </div>

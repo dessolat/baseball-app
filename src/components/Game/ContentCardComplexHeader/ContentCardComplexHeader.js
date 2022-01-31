@@ -40,8 +40,8 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         <div className={cl.portraitTextWrapper}>
           <div className={cl.portrait}>
             <img
-              className={!imagesData[player.who] ? cl.default : ''}
-              src={imagesData[player.who] || PortraitImg}
+              className={!imagesData[player.who_id] ? cl.default : ''}
+              src={imagesData[player.who_id] || PortraitImg}
               alt='Portrait'
             />
           </div>
