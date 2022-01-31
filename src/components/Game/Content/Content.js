@@ -69,19 +69,20 @@ const Content = ({ currentTab }) => {
       });
     }
 
-    const fetchImage = async who => {
+    const fetchImage = async id => {
       try {
-        const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[who]}`, {
+        const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[id]}`, {
           responseType: 'arraybuffer',
           timeout: 2500
         });
         dispatch(
           setImagesData({
-            [who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+            // [who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
           })
         );
       } catch (err) {
-        setTimeout(() => fetchImage(who), 2000);
+        setTimeout(() => fetchImage(id), 2000);
         console.log(err.message);
       }
     };
@@ -95,13 +96,22 @@ const Content = ({ currentTab }) => {
     });
 
     /****************Images fetching*****************/
+		// const testArr = []
+		// console.log(playersInfo);
+		// console.log(playersInfo[166]);
+		// newCards.filter(card => playersInfo[card.who_id]).forEach(card => testArr.push(card.who_id))
+		// console.log(testArr.includes(166));
 
-    newCards
-      .filter(card => playersInfo[card.who])
-      .forEach(card => {
-        if (queriesRef.current.includes(card.who)) return;
-        queriesRef.current.push(card.who);
-        fetchImage(card.who);
+Object.entries(playersInfo)
+    
+      // .filter(card => playersInfo[card.who_id])
+      .forEach(entry => {
+        if (queriesRef.current.includes(entry[0])) return;
+        // if (queriesRef.current.includes(card.who_id)) return;
+        queriesRef.current.push(entry[0]);
+        // queriesRef.current.push(card.who_id);
+        fetchImage(entry[0]);
+        // fetchImage(card.who_id);
       });
 
     /************************************************/
