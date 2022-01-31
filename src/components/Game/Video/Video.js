@@ -3,7 +3,7 @@ import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentCard, setPlaybackMode } from 'redux/gameReducer';
+import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 
 const Video = () => {
   const videoRef = useRef(null);
@@ -12,6 +12,7 @@ const Video = () => {
   const momentRef = useRef(0);
   const modeRef = useRef('play');
   const currentCard = useSelector(state => state.game.currentCard);
+  const currentMoment = useSelector(state => state.game.currentMoment);
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
@@ -27,7 +28,7 @@ const Video = () => {
     if (videoRef.current === null) return;
     videoHandling();
     // eslint-disable-next-line
-  }, [currentCard]);
+  }, [currentMoment]);
 
   useEffect(() => {
     modeRef.current = playbackMode;
@@ -76,43 +77,51 @@ const Video = () => {
 
   const videoHandling = () => {
     clearInterval(intervalRef.current);
-    momentRef.current = 0;
+    // momentRef.current = 0;
 
-    if (currentCard.moments.length === 0 || !currentCard.moments[0].video) {
+    if (currentCard.moments.length === 0 || !currentCard.moments[0].video || !currentMoment.video) {
       videoRef.current.pauseVideo();
       return;
     }
 
     videoRef.current.getPlayerState() !== 1 && videoRef.current.playVideo();
-    videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
-    endRef.current = currentCard.moments[0].video.seconds_to;
+    videoRef.current.seekTo(currentMoment.video.seconds_from);
+    // videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
+    endRef.current = currentMoment.video.seconds_to;
+    // endRef.current = currentCard.moments[0].video.seconds_to;
 
     intervalRef.current = setInterval(() => {
       const currentTime = videoRef.current.getCurrentTime();
 
       if (currentTime >= endRef.current) {
-        momentRef.current += 1;
-
-        if (momentRef.current < currentCard.moments.length) {
-          videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
-          endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
+        // momentRef.current += 1;
+        if (modeRef.current === 'pause') {
+          videoHandling();
+					return
+        }
+        const momentIndex = currentCard.moments.findIndex(
+          moment => moment.inner.id === currentMoment.inner.id
+        );
+        if (momentIndex < currentCard.moments.length - 1) {
+          // if (momentRef.current < currentCard.moments.length) {
+          videoRef.current.seekTo(currentCard.moments[momentIndex + 1].video.seconds_from);
+					dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]))
+          // videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
+          endRef.current = currentCard.moments[momentIndex + 1].video.seconds_to;
+          // endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
         } else {
-          if (modeRef.current === 'pause') {
-            videoHandling();
-          } else {
-            let index = filteredCards.findIndex(
-              card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-            );
+          let cardIndex = filteredCards.findIndex(
+            card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+          );
 
-            index++;
+          cardIndex++;
 
-            if (index < filteredCards.length) {
-              dispatch(setCurrentCard(filteredCards[index]));
-              return;
-            }
-
-            dispatch(setPlaybackMode('pause'));
+          if (cardIndex < filteredCards.length) {
+            dispatch(setCurrentCard({...filteredCards[cardIndex], manualMoment: true}));
+            return;
           }
+
+          dispatch(setPlaybackMode('pause'));
         }
       }
     }, 500);
