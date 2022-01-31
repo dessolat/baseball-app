@@ -1,7 +1,11 @@
+@import 'scss/vars.scss';
+@import 'scss/animations.scss';
+
 .content {
   display: grid;
   grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 64rem);
   grid-template-areas:
     'list graphics'
     'controls graphics';
+  // animation: rise var(--transition-speed) linear forwards;
 }
