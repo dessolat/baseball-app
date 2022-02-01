@@ -33,7 +33,6 @@ const useArrowNavigate = (cards, currentCard) => {
 				}
         if (activeCardList === 'events') {
 					if (momentIndex === 0 && cardIndex === 0) break
-					// if ((momentIndex === 0 && cardIndex === 0) || momentIndex === -1) break
           if (momentIndex === 0 || (momentIndex === -1 && cardIndex !== 0)) {
 						dispatch(setCurrentCard(cards[cardIndex - 1]));
 						break;
