@@ -20,7 +20,17 @@ const useArrowNavigate = (cards, currentCard) => {
     const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
 
     switch (e.key) {
-      case 'ArrowUp':
+			case 'ArrowUp':
+				if (cardIndex === 0 && activeCardList !== 'events') break;
+				if (e.shiftKey) {
+					const prevCard = cards
+						.slice(0, cardIndex)
+						.reverse()
+						.find(card => card.who_id === currentCard.who_id);
+					if (prevCard === undefined) break;
+					dispatch(setCurrentCard(prevCard));
+					break;
+				}
         if (activeCardList === 'events') {
 					if (momentIndex === 0 && cardIndex === 0) break
 					// if ((momentIndex === 0 && cardIndex === 0) || momentIndex === -1) break
@@ -31,19 +41,16 @@ const useArrowNavigate = (cards, currentCard) => {
           dispatch(setCurrentMoment(currentCard.moments[momentIndex - 1]));
           break;
         }
-        if (cardIndex === 0) break;
-        if (e.shiftKey) {
-          const prevCard = cards
-            .slice(0, cardIndex)
-            .reverse()
-            .find(card => card.who_id === currentCard.who_id);
-          if (prevCard === undefined) break;
-          dispatch(setCurrentCard(prevCard));
-          break;
-        }
         dispatch(setCurrentCard(cards[cardIndex - 1]));
         break;
       case 'ArrowDown':
+				if (cardIndex >= cards.length - 1 && activeCardList !== 'events') break;
+				if (e.shiftKey) {
+					const nextCard = cards.slice(cardIndex + 1).find(card => card.who_id === currentCard.who_id);
+					if (nextCard === undefined) break;
+					dispatch(setCurrentCard(nextCard));
+					break;
+				}
         if (activeCardList === 'events') {
 					if ((momentIndex >= currentCard.moments.length - 1 && cardIndex >= cards.length - 1) || momentIndex === -1) break;
           if (momentIndex >= currentCard.moments.length - 1) {
@@ -52,13 +59,6 @@ const useArrowNavigate = (cards, currentCard) => {
 					};
 
           dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]));
-          break;
-        }
-        if (cardIndex >= cards.length - 1) break;
-        if (e.shiftKey) {
-          const nextCard = cards.slice(cardIndex + 1).find(card => card.who_id === currentCard.who_id);
-          if (nextCard === undefined) break;
-          dispatch(setCurrentCard(nextCard));
           break;
         }
         dispatch(setCurrentCard(cards[cardIndex + 1]));
