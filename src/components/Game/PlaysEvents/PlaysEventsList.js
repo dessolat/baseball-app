@@ -46,7 +46,6 @@ const PlaysEventsList = ({ moments }) => {
   }, [activeCardList]);
 
   useEffect(() => {
-    // if (currentCard.manualClick || !situationsChildRef.current) return;
     if (!eventsChildRef.current) return;
 
     eventsChildRef.current.parentNode.scrollTop =
