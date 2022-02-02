@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import cl from './ContentCardReplacement.module.scss';
 import ContentCardReplacementItem from './ContentCardReplacementItem';
 
