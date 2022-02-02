@@ -5,37 +5,11 @@ import cl from './PlaysSpeed.module.scss';
 import PlaysSpeedChart from './PlaysSpeedChart';
 
 const PlaysSpeed = ({ currentMoment }) => {
-  // const [chartWidth, setChartWidth] = useState(0);
-  // const [chartHeight, setChartHeight] = useState(0);
   const [chartData, setChartData] = useState([]);
   const [currentDotIndex, setCurrentDotIndex] = useState(0);
   const ref = useRef(null);
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
-
-  // useEffect(() => {
-  //   let clientWidth = ref.current.clientWidth;
-  //   let clientHeight = ref.current.clientHeight;
-
-  //   setChartWidth(clientWidth - 5);
-  //   setChartHeight(clientHeight - 40);
-
-  //   const resizeHandler = () => {
-  //     clientWidth = ref.current.clientWidth;
-  //     clientHeight = ref.current.clientHeight;
-
-  //     if (clientWidth < 1277) {
-  //       setChartWidth(clientWidth - 5);
-  //       setChartHeight(clientHeight - 40);
-  //     }
-  //   };
-
-  //   window.addEventListener('resize', resizeHandler);
-
-  //   return () => {
-  //     window.removeEventListener('resize', resizeHandler);
-  //   };
-  // }, []);
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
