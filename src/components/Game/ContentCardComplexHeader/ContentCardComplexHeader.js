@@ -9,6 +9,7 @@ import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
+import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
@@ -33,18 +34,15 @@ const ContentCardComplexHeader = ({ player, sit }) => {
 
   const isRectText = sit.icons.rect_text !== 'Replacement';
   const isRectScore = sit.icons.score_own !== undefined;
+
+  const imgClassName = !imagesData[player.who_id] ? cl.default : '';
+  const imgSrc = imagesData[player.who_id] || PortraitImg;
   return (
     <div className={cl.header}>
       <div className={cl.top}>
         <p className={cl.playerName}>{titleText}</p>
         <div className={cl.portraitTextWrapper}>
-          <div className={cl.portrait}>
-            <img
-              className={!imagesData[player.who_id] ? cl.default : ''}
-              src={imagesData[player.who_id] || PortraitImg}
-              alt='Portrait'
-            />
-          </div>
+          <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
           <p className={cl.text} ref={ref}>
             {cardText}
           </p>

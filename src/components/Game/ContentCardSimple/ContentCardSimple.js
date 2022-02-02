@@ -5,6 +5,7 @@ import Bases from 'components/UI/icons/Bases/Bases';
 import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
+import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 
 const ContentCardSimple = ({ player }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -15,18 +16,13 @@ const ContentCardSimple = ({ player }) => {
   const eventsSummary = lastMoment?.events?.reduce((sum, event) => [...sum, event.description], []) || [];
   const cardText = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
   const imgClassName = !imagesData[player.who_id] ? cl.default : '';
+  const imgSrc = imagesData[player.who_id] || PortraitImg;
 
   return (
     <div className={cl.classic}>
       <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
       <div className={cl.portraitTextWrapper}>
-        <div className={cl.portrait}>
-          <img
-            className={imgClassName}
-            src={imagesData[player.who_id] || PortraitImg}
-            alt='Portrait'
-          />
-        </div>
+        <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
         <div className={cl.text}>
           {cardText}
           <div className={cl.rectanglesEllipsesWrapper}>
