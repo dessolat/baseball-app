@@ -22,6 +22,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       sit.icons.rect_text !== 'Replacement'
         ? sit.events.reduce((sum, event) => [...sum, event.description], [])
         : [],
+    // eslint-disable-next-line
     [sit.events]
   );
 
