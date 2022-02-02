@@ -1,21 +1,6 @@
 import React from 'react';
 import cl from './PlaysBat.module.scss';
 
-// let coords = [];
-// for (let i = 0; i < oldCoords.length; i++) {
-//   if (i === 0) {
-//     coords.push(oldCoords[i]);
-//     continue;
-//   }
-
-//   let xDiff = oldCoords[i][0] - oldCoords[i - 1][0];
-//   let yDiff = oldCoords[i][1] - oldCoords[i - 1][1];
-
-//   for (let j = 1; j <= 10; j++) {
-//     coords.push([oldCoords[i - 1][0] + (xDiff / 10) * j, oldCoords[i - 1][1] + (yDiff / 10) * j]);
-//   }
-// }
-
 const PlaysBatMedia = ({ metering, curvePath, linesPaths, currentLine }) => {
   const batterClasses = [cl.batter];
   metering?.bat?.batter_position && batterClasses.push(cl.leftHanded);
@@ -32,8 +17,6 @@ const PlaysBatMedia = ({ metering, curvePath, linesPaths, currentLine }) => {
         preserveAspectRatio='none'>
         <path
           opacity='0.45'
-					// fillRule='evenodd'
-          // clipRule='evenodd'
           d={curvePath}
           fill='url(#paint0_linear_486_642)'
         />
