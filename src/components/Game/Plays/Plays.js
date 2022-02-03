@@ -6,9 +6,7 @@ import PlaysContent from '../PlaysContent/PlaysContent';
 import { useSelector } from 'react-redux';
 import { getSearchParam, setSearchParam } from 'utils';
 
-const Plays = () => {
-	const ptab = getSearchParam('ptab')
-	const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch'
+const Plays = ({ isVideo }) => {
   const [currentTab, setCurrentTab] = useState(defaultPtab);
   const [moments, setMoments] = useState([]);
   const currentCard = useSelector(state => state.game.currentCard);
