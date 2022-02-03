@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import cl from './ContentCardReplacement.module.scss';
 import ContentCardReplacementItem from './ContentCardReplacementItem';
 
 const ContentCardReplacement = ({ events }) => {
-  const ref = useRef(null);
+  // const ref = useRef(null);
 
   // useLayoutEffect(() => {
   // 	if (ref.current === null) return
