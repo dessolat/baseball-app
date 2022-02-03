@@ -28,3 +28,9 @@
 	'events field info'
 	'footer footer footer';
 }
+
+.playsNoVideo {
+	grid-template: 33rem / minmax(9.735rem, 19.94rem);
+	grid-template-areas:
+	'events';
+}
