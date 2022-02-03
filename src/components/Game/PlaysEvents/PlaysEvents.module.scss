@@ -14,6 +14,7 @@
   width: 0;
   height: 2px;
   background-color: var(--side-color);
+	z-index: 5;
 }
 
 .blueTopLoad::before {
