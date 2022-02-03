@@ -96,14 +96,14 @@ const Content = ({ currentTab }) => {
     });
 
     /****************Images fetching*****************/
-		// const testArr = []
-		// console.log(playersInfo);
-		// console.log(playersInfo[166]);
-		// newCards.filter(card => playersInfo[card.who_id]).forEach(card => testArr.push(card.who_id))
-		// console.log(testArr.includes(166));
+    // const testArr = []
+    // console.log(playersInfo);
+    // console.log(playersInfo[166]);
+    // newCards.filter(card => playersInfo[card.who_id]).forEach(card => testArr.push(card.who_id))
+    // console.log(testArr.includes(166));
 
-Object.entries(playersInfo)
-    
+    Object.entries(playersInfo)
+
       // .filter(card => playersInfo[card.who_id])
       .forEach(entry => {
         if (queriesRef.current.includes(entry[0])) return;
@@ -237,19 +237,21 @@ Object.entries(playersInfo)
         )
       : cards;
 
+  const isVideo = innings[0]['top/guests'][0].moments[0].video !== null;
+	const contentClass = isVideo ? cl.content : cl.contentNoVideo
   return (
     <>
       {currentTab !== 'box' ? (
         <section className='container'>
-          <div className={cl.content}>
+          <div className={contentClass}>
             <ContentSituationsList
               ref={situationsChildRef}
               filteredCards={filteredCards}
               currentCard={currentCard}
               beforeAfterData={beforeAfterRef.current}
             />
-            <ContentFooter />
-            <ContentGraphics currentTab={currentTab} />
+            {isVideo && <ContentFooter />}
+            <ContentGraphics currentTab={currentTab} isVideo={isVideo}/>
           </div>
         </section>
       ) : (
