@@ -70,10 +70,13 @@ const Content = ({ currentTab }) => {
     }
 
     const fetchImage = async id => {
+			const token = axios.CancelToken.source();
+			tokens[id] = token
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[id]}`, {
           responseType: 'arraybuffer',
-          timeout: 2500
+          timeout: 2500,
+					cancelToken: token.token
         });
         dispatch(
           setImagesData({
@@ -102,6 +105,7 @@ const Content = ({ currentTab }) => {
     // newCards.filter(card => playersInfo[card.who_id]).forEach(card => testArr.push(card.who_id))
     // console.log(testArr.includes(166));
 
+		const tokens = {}
     Object.entries(playersInfo)
 
       // .filter(card => playersInfo[card.who_id])
@@ -145,6 +149,13 @@ const Content = ({ currentTab }) => {
 
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
+
+		return () => {
+			console.log('fetch return');
+			console.log(tokens);
+			Object.values(tokens).forEach(token => token.cancel(null))
+			console.log('tokens canceled');
+		}
   }, [innings]);
 
   useLayoutEffect(() => {
