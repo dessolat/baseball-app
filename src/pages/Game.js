@@ -7,7 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
-import { setCurrentCard, setSituationFilter, setCurrentGameId } from 'redux/gameReducer';
+import { setCurrentCard, setSituationFilter, setCurrentGameId, resetData } from 'redux/gameReducer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
@@ -40,10 +40,16 @@ const Game = () => {
         navigate('/game/359');
       });
 
-    return () => {
-      // eslint-disable-next-line
-      clearInterval(intervalRef.current);
-    };
+			return () => {
+				// eslint-disable-next-line
+				console.log(cancelTokenRef.current, intervalRef.current);
+				typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+				clearInterval(intervalRef.current);
+				dispatch(resetData())
+				// dispatch(setCurrentCard({}));
+				// dispatch(setCurrentGameId(null));
+				// dispatch(setSituationFilter('All'));
+			};
     // eslint-disable-next-line
   }, []);
 
