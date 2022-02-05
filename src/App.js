@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocat
 import { QueryParamProvider } from 'use-query-params';
 import NavBar from './components/NavBar/NavBar';
 import Game from './pages/Game';
+import Games from 'pages/Games/Games';
 const App = () => {
   const RouteAdapter = ({ children }) => {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ const App = () => {
           {/* <Route path='/game' element={<Game />}>
           <Route path=':gameId' element={<Game />} />
         </Route> */}
+          <Route path='/games' element={<Games />} />
           <Route path='/game/:gameId' element={<Game />} />
           <Route path='*' element={<Navigate to='/game/359' replace={true} />} />
         </Routes>
