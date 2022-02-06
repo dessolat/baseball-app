@@ -30,9 +30,11 @@ const VideoEventsList = () => {
     dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentMoment(moment));
   };
+
+	const isList = moments.length !== 0
   return (
     <>
-      {moments.length !== 0 && (
+      {isList && (
         <ul className={classes.join(' ')}>
           {moments.map((moment, i) => (
             <VideoEventsListItem key={i} moment={moment} handleClick={handleMomentClick} />
