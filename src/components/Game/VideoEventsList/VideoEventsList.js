@@ -17,7 +17,6 @@ const VideoEventsList = () => {
       const newClasses =
         activeCardList === 'events' ? [cl.events, cl.blueTopLoad, cl.beforeBlue] : [cl.events, cl.beforeBlue];
       setClasses(newClasses);
-
       return;
     }
 
@@ -26,9 +25,6 @@ const VideoEventsList = () => {
     setClasses(newClasses);
     // eslint-disable-next-line
   }, [activeCardList]);
-
-  // const classes = [cl.events];
-  // classes.push(activeCardList === 'events' ? cl.wider : cl.taller);
 
   const handleMomentClick = moment => () => {
     dispatch(setPlaybackMode('pause'));
