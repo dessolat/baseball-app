@@ -34,7 +34,7 @@ const App = () => {
         </Route> */}
           <Route path='/games' element={<Games />} />
           <Route path='/game/:gameId' element={<Game />} />
-          <Route path='*' element={<Navigate to='/game/359' replace={true} />} />
+          <Route path='*' element={<Navigate to='/games' replace={true} />} />
         </Routes>
       </QueryParamProvider>
     </Router>
