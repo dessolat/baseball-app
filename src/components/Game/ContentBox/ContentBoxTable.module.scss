@@ -1,5 +1,6 @@
 .table {
   border-collapse: collapse;
+  user-select: none;
 
   thead {
     border-bottom: 0.5px solid #cdcccc;
