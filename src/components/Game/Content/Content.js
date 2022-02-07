@@ -156,6 +156,7 @@ const Content = ({ currentTab }) => {
 			Object.values(tokens).forEach(token => token.cancel(null))
 			console.log('tokens canceled');
 		}
+		// eslint-disable-next-line
   }, [innings]);
 
   useLayoutEffect(() => {
@@ -260,6 +261,7 @@ const Content = ({ currentTab }) => {
               filteredCards={filteredCards}
               currentCard={currentCard}
               beforeAfterData={beforeAfterRef.current}
+							isVideo={isVideo}
             />
             {isVideo && <ContentFooter />}
             <ContentGraphics currentTab={currentTab} isVideo={isVideo}/>
