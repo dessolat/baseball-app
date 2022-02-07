@@ -41,9 +41,10 @@ const Game = () => {
       });
 
 			return () => {
-				// eslint-disable-next-line
 				console.log(cancelTokenRef.current, intervalRef.current);
+				// eslint-disable-next-line
 				typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+				// eslint-disable-next-line
 				clearInterval(intervalRef.current);
 				dispatch(resetData())
 				// dispatch(setCurrentCard({}));
