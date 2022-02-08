@@ -126,7 +126,7 @@ const Header = ({ currentTab, handleTabClick }) => {
           <div>
             <p className={cl.date}>{useFullDate(preview.game_date)}</p>
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
-            <HeaderTabs currentTab={currentTab} handleClick={handleTabClick}/>
+            <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
@@ -134,7 +134,7 @@ const Header = ({ currentTab, handleTabClick }) => {
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} />
             <div className={cl.scoresListWrapper}>
               {leftArrowGroup}
-              <HeaderScoresList ref={scrollRef} innings={innings} />
+              <HeaderScoresList ref={scrollRef} innings={innings} currentTab={currentTab} />
               {rightArrowGroup}
             </div>
             <HeaderInfo innings={innings} />

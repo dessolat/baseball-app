@@ -4,7 +4,7 @@ import { setCurrentCard, setPlaybackMode } from 'redux/gameReducer';
 import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
 
-const HeaderScoresList = forwardRef(({ innings }, ref) => {
+const HeaderScoresList = forwardRef(({ innings, currentTab }, ref) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
   const filteredCards = useSelector(state => state.game.filteredCards);
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const HeaderScoresList = forwardRef(({ innings }, ref) => {
       maxInnings={maxInnings}
       cl={cl}
       handleClick={handleClick}
+			currentTab={currentTab}
     />
   ));
 
