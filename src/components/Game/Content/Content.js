@@ -70,13 +70,13 @@ const Content = ({ currentTab }) => {
     }
 
     const fetchImage = async id => {
-			const token = axios.CancelToken.source();
-			tokens[id] = token
+      const token = axios.CancelToken.source();
+      tokens[id] = token;
       try {
         const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[id]}`, {
           responseType: 'arraybuffer',
           timeout: 2500,
-					cancelToken: token.token
+          cancelToken: token.token
         });
         dispatch(
           setImagesData({
@@ -105,7 +105,7 @@ const Content = ({ currentTab }) => {
     // newCards.filter(card => playersInfo[card.who_id]).forEach(card => testArr.push(card.who_id))
     // console.log(testArr.includes(166));
 
-		const tokens = {}
+    const tokens = {};
     Object.entries(playersInfo)
 
       // .filter(card => playersInfo[card.who_id])
@@ -150,13 +150,13 @@ const Content = ({ currentTab }) => {
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
 
-		return () => {
-			console.log('fetch return');
-			console.log(tokens);
-			Object.values(tokens).forEach(token => token.cancel(null))
-			console.log('tokens canceled');
-		}
-		// eslint-disable-next-line
+    return () => {
+      console.log('fetch return');
+      console.log(tokens);
+      Object.values(tokens).forEach(token => token.cancel(null));
+      console.log('tokens canceled');
+    };
+    // eslint-disable-next-line
   }, [innings]);
 
   useLayoutEffect(() => {
@@ -207,6 +207,20 @@ const Content = ({ currentTab }) => {
   }, [filteredCards]);
 
   useEffect(() => {
+		if (currentTab === 'box') {
+			scrollToRef.current = true;
+			return;
+		}
+		if (filteredCards.length === 0) return;
+
+		if (scrollToRef.current && situationsChildRef.current) {
+      situationsChildRef.current.parentNode.scrollTop =
+        situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
+      scrollToRef.current = false;
+    }
+  }, [currentTab]);
+
+  useEffect(() => {
     if (Object.keys(currentCard).length === 0) return;
 
     const cardId = currentCard.moments && currentCard.moments[0].inner.id;
@@ -250,7 +264,7 @@ const Content = ({ currentTab }) => {
       : cards;
 
   const isVideo = innings[0]['top/guests'][0].moments[0].video !== null;
-	const contentClass = isVideo ? cl.content : cl.contentNoVideo
+  const contentClass = isVideo ? cl.content : cl.contentNoVideo;
   return (
     <>
       {currentTab !== 'box' ? (
@@ -261,10 +275,10 @@ const Content = ({ currentTab }) => {
               filteredCards={filteredCards}
               currentCard={currentCard}
               beforeAfterData={beforeAfterRef.current}
-							isVideo={isVideo}
+              isVideo={isVideo}
             />
             {isVideo && <ContentFooter />}
-            <ContentGraphics currentTab={currentTab} isVideo={isVideo}/>
+            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
           </div>
         </section>
       ) : (
