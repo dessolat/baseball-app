@@ -35,8 +35,11 @@ const HeaderScoresList = forwardRef(({ innings, currentTab }, ref) => {
     />
   ));
 
+	const classes = [cl.scoresTable]
+	currentTab === 'box' && classes.push(cl.inActiveList)
+
   return (
-    <ul ref={ref} className={cl.scoresTable}>
+    <ul ref={ref} className={classes.join(' ')}>
       {renderedInnings}
     </ul>
   );
