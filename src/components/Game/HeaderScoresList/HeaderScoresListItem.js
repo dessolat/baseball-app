@@ -1,7 +1,7 @@
 import React from 'react';
 
-const HeaderScoresListItem = ({ inning, inningNumber, maxInnings, cl, handleClick }) => {
-  const outerClass = inning.number === inningNumber ? cl.active : '';
+const HeaderScoresListItem = ({ inning, inningNumber, maxInnings, cl, handleClick, currentTab }) => {
+  const outerClass = inning.number === inningNumber && currentTab !== 'box' ? cl.active : '';
   const innerClass = inning['bottom/owners'] === undefined ? cl.hidden : '';
 
   const topScore = inning['top/guests'] ? inning.top_runs || 0 : 0;
