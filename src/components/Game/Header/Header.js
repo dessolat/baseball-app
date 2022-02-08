@@ -131,7 +131,7 @@ const Header = ({ currentTab, handleTabClick }) => {
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <div className={cl.scoresWrapper}>
-            <HeaderTeams names={[preview.guests.name, preview.owners.name]} />
+            <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab}/>
             <div className={cl.scoresListWrapper}>
               {leftArrowGroup}
               <HeaderScoresList ref={scrollRef} innings={innings} currentTab={currentTab} />

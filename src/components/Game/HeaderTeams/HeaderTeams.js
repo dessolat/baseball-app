@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cl from './HeaderTeams.module.scss';
 
-const HeaderTeams = ({ names }) => {
+const HeaderTeams = ({ names, currentTab }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const getShortName = name => (name.length > 8 ? name.slice(0, 7) + '…' : name);
   const guestsClasses = [cl.guests];
