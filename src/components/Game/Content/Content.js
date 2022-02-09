@@ -26,6 +26,7 @@ const Content = ({ currentTab }) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const playersInfo = useSelector(state => state.game.playersInfo);
   const gameId = useSelector(state => state.game.gameId);
+  const isVideo = useSelector(state => state.game.isVideo);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
@@ -263,7 +264,6 @@ const Content = ({ currentTab }) => {
         )
       : cards;
 
-  const isVideo = innings[0]['top/guests'][0].moments[0].video !== null;
   const contentClass = isVideo ? cl.content : cl.contentNoVideo;
   return (
     <>

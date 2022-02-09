@@ -4,9 +4,10 @@ import cl from './HeaderTabs.module.scss';
 
 
 const HeaderTabs = ({ currentTab, handleClick }) => {
-	const innings = useSelector(state => state.game.innings)
+	// const innings = useSelector(state => state.game.innings)
+	const isVideo = useSelector(state => state.game.isVideo)
 
-	const isVideo = innings[0]['top/guests'][0].moments[0].video !== null
+	// const isVideo = innings[0]['top/guests'][0].moments[0].video !== null
 
 	const tabsArr = isVideo ? ['box', 'plays', 'videos'] : ['box', 'plays'];
 
