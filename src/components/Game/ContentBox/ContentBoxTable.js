@@ -106,7 +106,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFix
                 {TABLES_INFO[tableName].headers.map((title, i) => (
                   <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
                     {title === 'POS'
-                      ? player.content.position[0]
+                      ? player.content.position.join('/')
                       : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title)
                       ? player.content.running[title]
                       : title === 'PB'
