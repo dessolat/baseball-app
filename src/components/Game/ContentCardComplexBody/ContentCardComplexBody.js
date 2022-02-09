@@ -7,10 +7,13 @@ import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplace
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 import Outs from 'components/UI/icons/Outs/Outs';
+import { useSelector } from 'react-redux';
 
 const ContentCardComplexBody = ({ sit }) => {
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
   const ref = useRef(null);
+
+	const isVideo = useSelector(state => state.game.isVideo)
 
   const eventsSummary = useMemo(
     () => sit.events.reduce((sum, event) => [...sum, event.description], []),
@@ -24,14 +27,17 @@ const ContentCardComplexBody = ({ sit }) => {
 
   const isRectScore = sit.icons.score_own !== undefined;
   const cardText = eventsSummary.join('.') + '.';
-  return (
+
+	const bottomClasses = [cl.bottom]
+	!isVideo && bottomClasses.push(cl.noVideo)
+	return (
     <>
       {sit.icons.rect_text !== 'Replacement' ? (
         <div className={cl.body}>
           <p className={cl.text} ref={ref}>
             {cardText}
           </p>
-          <div className={cl.bottom}>
+          <div className={bottomClasses.join(' ')}>
             <RectText icons={sit.icons} />
             {isRectScore && <RectScore icons={sit.icons} />}
             <div className={cl.ellipses}>

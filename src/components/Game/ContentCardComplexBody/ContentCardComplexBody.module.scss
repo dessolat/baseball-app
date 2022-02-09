@@ -1,25 +1,41 @@
 @import 'scss/vars.scss';
 
 .body {
-	position: relative;
+  position: relative;
 }
 
 .text {
-	font: 300 .875rem var(--font-nunito);
-	line-height: .9375rem;
+  font: 300 0.875rem var(--font-nunito);
+  line-height: 0.9375rem;
 }
 
 .bottom {
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-end;
-	column-gap: 6px;
-	line-height: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  column-gap: 6px;
+  line-height: 0;
+
+  &.noVideo {
+    justify-content: flex-start;
+
+    > .ellipses {
+      margin-left: 2rem;
+
+      > * + * {
+        margin-left: 2rem;
+      }
+    }
+
+    > *:last-child {
+      margin-left: 2rem;
+    }
+  }
 }
 
 .ellipses {
-	display: flex;
-	align-items: flex-start;
-	column-gap: 6px;
-	margin-left: auto;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 6px;
+  margin-left: auto;
 }
