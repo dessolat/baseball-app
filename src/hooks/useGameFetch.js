@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { setFullData, setPlayersInfo } from 'redux/gameReducer';
+import { setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -48,6 +48,7 @@ const useGameFetch = url => {
           newPlayersInfo = concatPlayersInfo(resp.data.preview.owners.players, newPlayersInfo);
 					
           dispatch(setPlayersInfo(newPlayersInfo));
+					resp.data.innings[0]['top/guests'][0].moments[0].video !== null && dispatch(setIsVideo(true))
         }
 
         dispatch(setFullData(resp.data));
