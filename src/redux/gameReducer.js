@@ -13,7 +13,8 @@ const defaultState = {
   viewMode: 'mode-1',
   currentGameId: null,
 	activeCardList: 'cards',
-	boxActiveButton: 'guests'
+	boxActiveButton: 'guests',
+	isVideo: false
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -30,6 +31,7 @@ const SET_VIEW_MODE = 'SET_VIEW_MODE';
 const SET_CURRENT_GAME_ID = 'SET_CURRENT_GAME_ID';
 const SET_ACTIVE_CARD_LIST = 'SET_ACTIVE_CARD_LIST';
 const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
+const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const RESET_DATA = 'RESET_DATA';
 
 export const gameReducer = (state = defaultState, action) => {
@@ -62,6 +64,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, activeCardList: action.payload };
     case SET_BOX_ACTIVE_BUTTON:
       return { ...state, boxActiveButton: action.payload };
+    case SET_IS_VIDEO:
+      return { ...state, isVideo: action.payload };
     case RESET_DATA:
       return defaultState;
     default:
@@ -83,4 +87,5 @@ export const setViewMode = payload => ({ type: SET_VIEW_MODE, payload });
 export const setCurrentGameId = payload => ({ type: SET_CURRENT_GAME_ID, payload });
 export const setActiveCardList = payload => ({ type: SET_ACTIVE_CARD_LIST, payload });
 export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, payload });
+export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const resetData = () => ({ type: RESET_DATA });
