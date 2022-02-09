@@ -5,17 +5,19 @@ import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
+import { setBoxActiveButton } from 'redux/gameReducer';
 
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [boxData, setBoxData] = useState({});
-  const [activeButton, setActiveButton] = useState('guests');
 
   const { gameId } = useParams();
 
   const preview = useSelector(state => state.game.preview);
+	const activeButton = useSelector(state => state.game.boxActiveButton)
+	const dispatch = useDispatch()
 
   const cancelTokenRef = useRef();
 
@@ -41,20 +43,19 @@ const ContentBox = () => {
     };
 
     fetchBoxData();
-
     return () => {
       cancelTokenRef.current.cancel(null);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const getClassName = name => (name === activeButton ? cl.active : null);
 
-  const handleButtonClick = name => () => setActiveButton(name);
+  const handleButtonClick = name => () => dispatch(setBoxActiveButton(name));
 
-	const getShortName = name => (name.length > 8 ? name.slice(0, 7) + '…' : name);
-  
-	const tableData = boxData[activeButton];
+  const getShortName = name => (name.length > 8 ? name.slice(0, 7) + '…' : name);
+
+  const tableData = boxData[activeButton];
   return (
     <>
       {isLoading ? (
