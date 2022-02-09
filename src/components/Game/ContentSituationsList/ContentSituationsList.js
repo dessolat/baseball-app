@@ -4,8 +4,9 @@ import ContentSituationsListItem from '../ContentSituationsListItem/ContentSitua
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
+import ContentControls from '../ContentControls/ContentControls';
 
-const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, ref) => {
+const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const activeCardList = useSelector(state => state.game.activeCardList);
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, 
   const classes = [cl.blueDiv];
   classes.push(activeCardList === 'cards' ? cl.wider : cl.taller);
 
+	const controlsStyles = {position: 'absolute', right: 10, bottom: 10}
   return (
     <div className={cl.wrapper}>
       <ul className={cl.list}>
@@ -42,6 +44,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData }, 
         ))}
       </ul>
       <div className={classes.join(' ')}></div>
+			{!isVideo && <ContentControls style={controlsStyles} noPlayPause/>}
     </div>
   );
 };
