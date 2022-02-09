@@ -9,6 +9,7 @@ import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 
 const ContentCardSimple = ({ player }) => {
   const imagesData = useSelector(state => state.game.imagesData);
+  const isVideo = useSelector(state => state.game.isVideo);
 
   const lastMoment = player.moments.slice(-1)[0];
   const { r1, r2, r3, outs, balls, strikes } = lastMoment?.table || 0;
@@ -18,6 +19,8 @@ const ContentCardSimple = ({ player }) => {
   const imgClassName = !imagesData[player.who_id] ? cl.default : '';
   const imgSrc = imagesData[player.who_id] || PortraitImg;
 
+	const wrapperClasses = [cl.rectanglesEllipsesWrapper]
+	!isVideo && wrapperClasses.push(cl.noVideo)
   return (
     <div className={cl.classic}>
       <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
@@ -25,7 +28,7 @@ const ContentCardSimple = ({ player }) => {
         <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
         <div className={cl.text}>
           {cardText}
-          <div className={cl.rectanglesEllipsesWrapper}>
+          <div className={wrapperClasses.join(' ')}>
             <div className={cl.ellipses}>
               <Outs outs={outs} />
               <BallsStrikes balls={balls} strikes={strikes} />
