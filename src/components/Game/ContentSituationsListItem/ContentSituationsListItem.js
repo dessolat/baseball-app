@@ -12,6 +12,7 @@ const ContentSituationsListItem = (
   ref
 ) => {
   const situationFilter = useSelector(state => state.game.situationFilter);
+  const isVideo = useSelector(state => state.game.isVideo);
   // useEffect(() => {
   // let observer = new IntersectionObserver(entries => {
   //   entries.forEach(entry => {
@@ -33,6 +34,7 @@ const ContentSituationsListItem = (
   currentCard.moments &&
     player.moments[0].inner.id === currentCard.moments[0].inner.id &&
     classNames.push(cl.active);
+	!isVideo && classNames.push(cl.dataBeforeNoVideo)
 
   //Filling situationsArr with moments where icons.rect_text exists
   const situationsArr = [];
@@ -52,6 +54,9 @@ const ContentSituationsListItem = (
 	if (dataBefore && situationFilter !== 'All') styles.marginTop = cardIndex === 0 ? 24 : 26
 	if (!isDataAfter && situationFilter !== 'All') styles.marginBottom = 0
 
+
+	const dataAfterClasses = [cl.dataAfter]
+	!isVideo && dataAfterClasses.push(cl.dataAfterNoVideo)
   return (
     <li
       ref={activeRef}
@@ -68,7 +73,7 @@ const ContentSituationsListItem = (
         <ContentCardSimple player={player} />
       )}
       {isDataAfter && (
-        <div className={cl.dataAfter}>
+        <div className={dataAfterClasses.join(' ')}>
           <span>RUNS: {beforeAfterData[cardIndex].after.runs}</span>
           <span>HITS: {beforeAfterData[cardIndex].after.hits}</span>
           <span>ERRORS: {beforeAfterData[cardIndex].after.err}</span>
