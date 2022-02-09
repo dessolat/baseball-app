@@ -14,6 +14,7 @@ import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
   const imagesData = useSelector(state => state.game.imagesData);
+  const isVideo = useSelector(state => state.game.isVideo);
 
   const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
@@ -38,6 +39,9 @@ const ContentCardComplexHeader = ({ player, sit }) => {
 
   const imgClassName = !imagesData[player.who_id] ? cl.default : '';
   const imgSrc = imagesData[player.who_id] || PortraitImg;
+
+  const bottomClasses = [cl.bottom];
+  !isVideo && bottomClasses.push(cl.noVideo);
   return (
     <div className={cl.header}>
       <div className={cl.top}>
@@ -51,8 +55,14 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       </div>
 
       <div
-        className={cl.bottom}
-        style={eventsSummary.length === 0 ? { position: 'absolute', top: '1.6rem', right: 0 } : null}>
+        className={bottomClasses.join(' ')}
+        style={
+          eventsSummary.length === 0
+            ? isVideo
+              ? { position: 'absolute', top: '1.6rem', right: 0 }
+              : { position: 'absolute', top: '1.6rem', left: '3rem' }
+            : null
+        }>
         {isRectText && <RectText icons={sit.icons} />}
         {isRectScore && <RectScore icons={sit.icons} />}
         <div className={cl.ellipses}>
