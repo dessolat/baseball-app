@@ -71,7 +71,7 @@ const ContentBox = () => {
                 tableClass={cl.battingTable}
                 tableName='batting'
                 footerOffset={2}
-                toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr']}
+                toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr', 'FLD']}
               />
               <ContentBoxTable
                 tableData={tableData}
@@ -80,21 +80,21 @@ const ContentBox = () => {
                 footerOffset={1}
                 toFixList={['ERA']}
               />
-              <div className={cl.wrapper}>
-                <ContentBoxTable
+              {/* <div className={cl.wrapper}> */}
+                {/* <ContentBoxTable
                   tableData={tableData}
                   tableClass={cl.fieldingTable}
                   tableName='fielding'
                   toFixList={['FLD']}
                   footerOffset={1}
-                />
+                /> */}
                 <ContentBoxTable
                   tableData={tableData}
                   tableClass={cl.catchingTable}
                   tableName='catching'
                   footerOffset={1}
                 />
-              </div>
+              {/* </div> */}
               <div className={cl.buttons}>
                 <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
                   {preview && getShortName(preview.guests.name)}
