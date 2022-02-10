@@ -27,7 +27,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   const classes = [cl.blueDiv];
   classes.push(activeCardList === 'cards' ? cl.wider : cl.taller);
 
-	const controlsStyles = {position: 'absolute', right: 10, bottom: 10}
+	const controlsStyles = {position: 'absolute', right: 15, bottom: 10}
   return (
     <div className={cl.wrapper}>
       <ul className={cl.list}>
