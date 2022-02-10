@@ -219,6 +219,7 @@ const Content = ({ currentTab }) => {
         situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
       scrollToRef.current = false;
     }
+		// eslint-disable-next-line
   }, [currentTab]);
 
   useEffect(() => {
