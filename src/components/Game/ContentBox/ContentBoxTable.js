@@ -25,7 +25,13 @@ const TABLES_INFO = {
       'SB',
       'CS',
       'SB_pr',
-      'LOB'
+      'LOB',
+      'CH',
+      'PO',
+      'A',
+      'E',
+      'DP',
+      'FLD'
     ]
   },
   pitching: {
@@ -58,11 +64,11 @@ const TABLES_INFO = {
   }
 };
 
-const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFixList = [] }) => {
+const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
   const getFieldSum = (table, field) =>
     table === 'fielding'
       ? tableData
-          .filter(player => player.is_catcher)
+          // .filter(player => player.is_catcher)
           .reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
       : table === 'catching'
       ? tableData
@@ -70,7 +76,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFix
           .reduce((sum, cur) => sum + Number(cur.content['running'][field]), 0)
       : tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0);
 
-	let rowDelta = 0
+  let rowDelta = 0;
   return (
     <table className={cl.table + ' ' + tableClass}>
       <thead>
@@ -92,23 +98,29 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFix
           .filter(player =>
             tableName === 'pitching'
               ? player.is_pitcher
-              : tableName === 'catching' || tableName === 'fielding'
-              ? player.is_catcher
+              : tableName === 'catching'
+              ? // : tableName === 'catching' || tableName === 'fielding'
+                player.is_catcher
               : true
           )
           .map((player, i) => {
-						if (player.is_substituted) rowDelta++
-						
+            if (player.is_substituted && tableName === 'batting') rowDelta++;
+
             return (
               <tr key={i}>
-                <td>{player.is_substituted ? ' ' : i + 1 - rowDelta}</td>
-                <td style={player.is_substituted ? {paddingLeft: '2.5rem'} : null}>{player.content.player_name}</td>
+                <td>{player.is_substituted && tableName === 'batting' ? ' ' : i + 1 - rowDelta}</td>
+                <td
+                  style={player.is_substituted && tableName === 'batting' ? { paddingLeft: '2.5rem' } : null}>
+                  {player.content.player_name}
+                </td>
                 {TABLES_INFO[tableName].headers.map((title, i) => (
                   <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
                     {title === 'POS'
                       ? player.content.position.join('/')
                       : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title)
                       ? player.content.running[title]
+                      : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
+                      ? player.content.fielding[title]
                       : title === 'PB'
                       ? '--'
                       : toFixList.includes(title)
@@ -137,7 +149,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFix
             tableData.filter(player =>
               tableName === 'pitching'
                 ? player.is_pitcher
-                : tableName === 'catching' || tableName === 'fielding'
+                : tableName === 'catching'
                 ? player.is_catcher
                 : true
             ).length % 2
@@ -155,6 +167,10 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, footerOffset, toFix
                 ? ' '
                 : title === 'SB_pr'
                 ? getFieldSum('running', title).toFixed(3)
+                : title === 'FLD'
+                ? getFieldSum('fielding', title).toFixed(3)
+                : ['CH', 'PO', 'A', 'E', 'DP'].includes(title)
+                ? getFieldSum('fielding', title)
                 : toFixList.includes(title)
                 ? getFieldSum(tableName, title).toFixed(3)
                 : getFieldSum(
