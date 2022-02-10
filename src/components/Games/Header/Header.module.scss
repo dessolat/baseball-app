@@ -1,6 +1,87 @@
+@import 'scss/vars.scss';
+
 .headerContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.125rem;
+}
+
+.selections {
+  padding-top: 1.2rem;
+  > * + * {
+    margin-top: 1rem;
+  }
+}
+
+.years,
+.types {
+  display: flex;
+
+  > * {
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      border-bottom: 2.15px solid var(--side-color);
+    }
+  }
+
+  > * + * {
+    margin-left: 1.2rem;
+  }
+}
+
+.types {
+  font-size: 0.875rem;
+}
+
+.leaguesWrapper {
+  display: flex;
+  align-items: center;
+
+	> *:first-child {
+		margin-right: .2rem;
+	}
+
+	> *:last-child {
+		margin-left: .5rem;
+	}
+}
+
+.leagues {
+  overflow-x: scroll;
+  width: 54rem;
+  border-left: 0.5px solid #dfdfdf;
+  border-right: 0.5px solid #dfdfdf;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+	display: flex;
+	background-color: #fff;
+
+	> * + * {
+		margin-left: 2rem;
+	}
+}
+
+.league {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  width: 14.375rem;
+  border-bottom: 2px solid transparent;
+	font: 400 1.125rem var(--font-comfortaa);
+	
+	&:hover {
+		cursor: pointer;
+	}
+	
+  &.active {
+		border-bottom: 2px solid var(--side-color);
+		font: 700 1.125rem var(--font-comfortaa);
+  }
+
+  > * + * {
+    margin-left: 0.575rem;
+  }
 }
