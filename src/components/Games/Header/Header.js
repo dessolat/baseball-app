@@ -3,6 +3,7 @@ import cl from './Header.module.scss';
 import HeaderWrapper from 'components/HeaderWrapper/HeaderWrapper';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import LeagueImage from 'images/league_image.png';
+import HeaderSelections from '../HeaderSelections/HeaderSelections';
 
 const Header = () => {
   const [currentScroll, setCurrentScroll] = useState(0);
@@ -30,17 +31,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <div className={cl.headerContent}>
-        <div className={cl.selections}>
-          <ul className={cl.years}>
-            <li className={cl.active}>2021</li>
-            <li>2022</li>
-          </ul>
-          <ul className={cl.types}>
-            <li>All</li>
-            <li className={cl.active}>Baseball</li>
-            <li>Softball</li>
-          </ul>
-        </div>
+        <HeaderSelections />
         <div className={cl.leaguesWrapper}>
           <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
           <ul className={cl.leagues} ref={leaguesRef}>
