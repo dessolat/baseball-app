@@ -35,8 +35,8 @@ const Header = () => {
         <div className={cl.leaguesWrapper}>
           <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
           <ul className={cl.leagues} ref={leaguesRef}>
-            <li className={cl.league + ' ' + cl.active}>All</li>
-            <li className={cl.league}>Russian championship</li>
+            <li className={cl.league}>All</li>
+            <li className={cl.league + ' ' + cl.active}>Pervenstvo Russian Unior (19 years)</li>
             <li className={cl.league}>Russian championship</li>
             <li className={cl.league}>Russian championship</li>
             <li className={cl.league}>Russian championship</li>
