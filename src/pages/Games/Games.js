@@ -16,9 +16,20 @@ const TABLES_DATA = {
     rows: []
   }
 };
+
 const Games = () => {
   return (
-    <Header />
+    <>
+      <Header />
+      <section>
+        <div className='container'>
+          <div className={cl.content}>
+            <div className={cl.table}>table</div>
+            <div className={cl.tops}>tops</div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
