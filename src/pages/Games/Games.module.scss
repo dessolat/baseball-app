@@ -1,0 +1,23 @@
+.content {
+	position: relative;
+	display: flex;
+	
+	> * {
+		padding: 3.125rem 1rem;
+		position: relative;
+		background-color: #fff;
+	}
+	
+	> * + * {
+		margin-left: 6px;
+	}
+}
+
+.table {
+	flex: 0 1 929.05px;
+}
+
+.tops {
+	flex: 0 1 315px;
+}
+
