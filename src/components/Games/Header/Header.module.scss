@@ -34,17 +34,19 @@
   overflow-x: hidden;
   scroll-behavior: smooth;
 
-	@media screen and (max-width: 1100px) {
-		width: 55.125rem;
+	@media screen and (max-width: 1080px) {
+		width: 59rem;
 	}
 }
 
 .league {
-
-	text-align: center;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   border-bottom: 2px solid transparent;
-  font: 400 .875rem / 3.2rem var(--font-comfortaa);
+  font: 400 .875rem var(--font-comfortaa);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 
 	&:first-child {
 		font-size: 1.125rem !important;
@@ -86,7 +88,7 @@
 
   &.active {
     border-bottom: 2px solid var(--side-color);
-    font: 700 .875rem / 3.2rem var(--font-comfortaa);
+    font: 700 .875rem var(--font-comfortaa);
 		z-index: 1;
   }
 

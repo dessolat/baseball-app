@@ -13,10 +13,6 @@
     &:hover {
       cursor: pointer;
     }
-
-    &.active {
-      border-bottom: 2.15px solid var(--side-color);
-    }
   }
 
   > * + * {
@@ -26,4 +22,8 @@
 
 .types {
   font-size: 0.875rem;
+}
+
+.active {
+	border-bottom: 2.15px solid var(--side-color);
 }
