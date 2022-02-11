@@ -51,6 +51,8 @@ const Header = () => {
             <li className={cl.league}>Russian championship</li>
             <li className={cl.league}>Russian championship</li>
             <li className={cl.league}>Russian championship</li>
+            <li className={cl.league}>Russian championship</li>
+            <li className={cl.league}>Russian championship</li>
           </ul>
           <Arrow
             direction='right'
