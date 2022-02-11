@@ -7,36 +7,6 @@
   font-size: 1.125rem;
 }
 
-.selections {
-  padding-top: 1.2rem;
-  > * + * {
-    margin-top: 1rem;
-  }
-}
-
-.years,
-.types {
-  display: flex;
-
-  > * {
-    &:hover {
-      cursor: pointer;
-    }
-
-    &.active {
-      border-bottom: 2.15px solid var(--side-color);
-    }
-  }
-
-  > * + * {
-    margin-left: 1.2rem;
-  }
-}
-
-.types {
-  font-size: 0.875rem;
-}
-
 .leaguesWrapper {
   display: flex;
   align-items: center;
