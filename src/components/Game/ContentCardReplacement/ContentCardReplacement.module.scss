@@ -3,6 +3,14 @@
 	justify-content: space-between;
 	align-items: center;
 	column-gap: 10px;
+
+	&.noVideo {
+		justify-content: flex-start;
+
+		> p {
+			flex: unset;
+		}
+	}
 }
 
 .title {
@@ -20,6 +28,10 @@
 	font: 400 .875rem var(--font-nunito);
   line-height: 1.36rem;
 	flex: 1 0;
+}
+
+.textBold {
+	font: 700 .875rem var(--font-nunito);
 }
 
 .portrait {
