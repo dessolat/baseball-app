@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import cl from './ContentCardReplacement.module.scss';
 import ContentCardReplacementItem from './ContentCardReplacementItem';
 
 const ContentCardReplacement = ({ events }) => {
+	const isVideo = useSelector(state => state.game.isVideo);
   // const ref = useRef(null);
 
   // useLayoutEffect(() => {
@@ -21,8 +23,8 @@ const ContentCardReplacement = ({ events }) => {
 
           return (
             <React.Fragment key={i}>
-              <p className={cl.title}>{getShortName(event.team)} replacements:</p>
-              <ContentCardReplacementItem event={event} />
+              {isVideo && <p className={cl.title}>{getShortName(event.team)} replacements:</p>}
+              <ContentCardReplacementItem event={event} header={`${getShortName(event.team)} replacements:`}/>
             </React.Fragment>
           );
         }
