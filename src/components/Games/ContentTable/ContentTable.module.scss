@@ -5,14 +5,27 @@
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	height: 2.9925rem;
-	padding: 0 2.6rem 0 5.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.9925rem;
+  padding: 0 1.5rem 0 1.106rem;
+
+  img {
+    width: 3.34rem;
+  }
+}
+
+.teamWrapper {
+  display: flex;
+  align-items: center;
+
+  > * + * {
+    margin-left: 1.106rem;
+  }
 }
 
 .teamName {
-	font: 700 1.125rem var(--font-comfortaa);
-	max-width: 15.67rem;
+  font: 700 1.125rem var(--font-comfortaa);
+  max-width: 15.67rem;
 }
