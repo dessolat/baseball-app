@@ -1,0 +1,18 @@
+.content {
+  position: relative;
+  display: flex;
+
+  > * {
+    padding: 4.375rem 1rem;
+    position: relative;
+    background-color: #fff;
+  }
+
+	> *:first-child {
+		padding-top: 1.3825rem;
+	}
+
+  > * + * {
+    margin-left: 6px;
+  }
+}
