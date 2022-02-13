@@ -1,12 +1,14 @@
 const defaultState = {
   currentLeague: { id: 1, name: 'All' },
 	currentYear: new Date().getFullYear(),
-	currentHome: 'All'
+	currentHome: 'All',
+	currentGuests: 'All'
 };
 
 const SET_CURRENT_LEAGUE = 'SET_CURRENT_LEAGUE';
 const SET_CURRENT_YEAR = 'SET_CURRENT_YEAR';
 const SET_CURRENT_HOME = 'SET_CURRENT_HOME';
+const SET_CURRENT_GUESTS = 'SET_CURRENT_GUESTS';
 
 export const gamesReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -16,6 +18,8 @@ export const gamesReducer = (state = defaultState, action) => {
       return { ...state, currentYear: action.payload };
     case SET_CURRENT_HOME:
       return { ...state, currentHome: action.payload };
+    case SET_CURRENT_GUESTS:
+      return { ...state, currentGuests: action.payload };
     default:
       return state;
   }
@@ -24,3 +28,4 @@ export const gamesReducer = (state = defaultState, action) => {
 export const setCurrentLeague = payload => ({ type: SET_CURRENT_LEAGUE, payload });
 export const setCurrentYear = payload => ({ type: SET_CURRENT_YEAR, payload });
 export const setCurrentHome = payload => ({ type: SET_CURRENT_HOME, payload });
+export const setCurrentGuests = payload => ({ type: SET_CURRENT_GUESTS, payload });
