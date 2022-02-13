@@ -1,4 +1,6 @@
+import ArrowDown from 'components/UI/icons/ArrowDown';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -86,15 +88,56 @@ const ROWS_DATA = [
 ];
 
 const ContentTable = () => {
-  
-
   return (
     <div className={cl.wrapper}>
-			<ContentTableHeader />
-			
-			<div className={cl.table}>
+      <ContentTableHeader />
 
-			</div>
+      <table className={cl.table}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Time</th>
+            <th>
+              <div>
+                Stadium <ArrowDown />
+              </div>
+            </th>
+            <th>
+              <div>
+                Home <ArrowDown />
+              </div>
+            </th>
+            <th> </th>
+            <th>
+              <div>
+                Guests <ArrowDown />
+              </div>
+            </th>
+            <th> </th>
+            <th>Inn</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ROWS_DATA.map(row => (
+            <tr key={row.id}>
+              <td>{row.id}</td>
+              <td>{row.time}</td>
+              <td>{row.stadium}</td>
+              <td>{row.home}</td>
+              <td>{row.score}</td>
+              <td>{row.guests}</td>
+              <td className={cl.links}>
+                <div>
+                  <Link to={`/game/${row.id}?tab=box`}>Box</Link>
+                  <Link to={`/game/${row.id}?tab=plays`}>Plays</Link>
+                  {row.isVideo && <Link to={`/game/${row.id}?tab=videos`}>Videos</Link>}
+                </div>
+              </td>
+              <td>{row.inn} inn</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
