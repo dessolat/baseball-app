@@ -29,3 +29,94 @@
   font: 700 1.125rem var(--font-comfortaa);
   max-width: 15.67rem;
 }
+
+.table {
+  border-collapse: collapse;
+  margin: 1rem 1.5rem 0 1.5rem;
+
+  > thead {
+    font: 700 0.75rem var(--font-nunito);
+    color: #838383;
+    border-bottom: 0.5px solid rgb(16, 16, 16, .01);
+    box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, .07);
+
+    th {
+      text-align: left;
+
+      &:first-child {
+        width: 3.6rem;
+        text-align: center;
+      }
+
+      &:nth-child(2) {
+        width: 3.5rem;
+      }
+
+      &:nth-child(3) {
+        width: 6.7rem;
+        padding-right: 1rem;
+      }
+
+      &:nth-child(4) {
+        width: 15.5rem;
+      }
+      &:nth-child(5) {
+        width: 5rem;
+      }
+      &:nth-child(6) {
+        width: 15.69rem;
+        padding-right: 1rem;
+      }
+      &:nth-child(7) {
+        width: 9.9rem;
+      }
+      &:nth-child(8) {
+        width: 3rem;
+      }
+
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(6) {
+        > * {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+  }
+  > tbody {
+    > tr {
+			&:nth-child(2n) {
+				background-color: #eaeaea;
+      }
+			
+      > td {
+        font: 300 0.875rem var(--font-nunito);
+
+        &:first-child {
+          text-align: center;
+        }
+        &:nth-child(5) {
+          text-align: center;
+          font: 700 0.875rem var(--font-athiti);
+        }
+
+        &:nth-child(7) {
+          a {
+            color: var(--side-color);
+            text-decoration: underline;
+          }
+
+          a + a {
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+	tr {
+		height: 2rem;
+	}
+}
