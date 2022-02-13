@@ -11,7 +11,7 @@ const ContentTableHeader = () => {
 	return (
     <div className={cl.header}>
       <div className={cl.teamWrapper}>
-        <img src={LeagueImage} />
+        <img src={LeagueImage} alt='league-img'/>
         <h2 className={cl.teamName}>{currentLeague.name}</h2>
       </div>
       <ContentCalendar />
