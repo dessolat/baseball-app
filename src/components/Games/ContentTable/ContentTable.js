@@ -1,6 +1,9 @@
+import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import ArrowDown from 'components/UI/icons/ArrowDown';
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setCurrentGuests, setCurrentHome } from 'redux/gamesReducer';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -88,6 +91,43 @@ const ROWS_DATA = [
 ];
 
 const ContentTable = () => {
+  const currentHome = useSelector(state => state.games.currentHome);
+  const currentGuests = useSelector(state => state.games.currentGuests);
+  const dispatch = useDispatch();
+
+  const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
+  const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
+
+  const homeOptions = Array.from(
+    new Set(
+      ROWS_DATA.reduce(
+        (sum, cur) => {
+          sum.push(cur.home);
+          return sum;
+        },
+        ['All']
+      )
+    )
+  );
+  const guestsOptions = Array.from(
+    new Set(
+      ROWS_DATA.reduce(
+        (sum, cur) => {
+          sum.push(cur.guests);
+          return sum;
+        },
+        ['All']
+      )
+    )
+  );
+
+  const filteredData = ROWS_DATA.filter(row => {
+    return (
+      (currentHome !== 'All' ? row.home === currentHome : true) &&
+      (currentGuests !== 'All' ? row.guests === currentGuests : true)
+    );
+  });
+
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader />
@@ -103,22 +143,24 @@ const ContentTable = () => {
               </div>
             </th>
             <th>
-              <div>
+              <Dropdown title={'Home'} options={homeOptions} currentOption={currentHome} handleClick={handleHomeDropdownClick} listStyles={{left: '-1rem', width: 'calc(100% + 1rem)'}} />
+              {/* <div>
                 Home <ArrowDown />
-              </div>
+              </div> */}
             </th>
             <th> </th>
             <th>
-              <div>
+              <Dropdown title={'Guests'} options={guestsOptions} currentOption={currentGuests} handleClick={handleGuestsDropdownClick} listStyles={{left: '-1rem', width: 'calc(100% + 1rem)'}}/>
+              {/* <div>
                 Guests <ArrowDown />
-              </div>
+              </div> */}
             </th>
             <th> </th>
             <th>Inn</th>
           </tr>
         </thead>
         <tbody>
-          {ROWS_DATA.map(row => (
+          {filteredData.map(row => (
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>{row.time}</td>
