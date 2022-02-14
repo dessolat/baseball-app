@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import LeagueImage from 'images/league_image.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 
@@ -22,16 +21,16 @@ const HeaderLeagues = ({ leagues }) => {
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
-      const scrollValue = leaguesRef.current.scrollLeft - 248;
-      leaguesRef.current.scrollLeft -= 248;
+      const scrollValue = leaguesRef.current.scrollLeft - 249;
+      leaguesRef.current.scrollLeft -= 249;
       setCurrentScroll(scrollValue);
       return;
     }
-    const scrollValue = leaguesRef.current.scrollLeft + 248;
-    leaguesRef.current.scrollLeft += 248;
+    const scrollValue = leaguesRef.current.scrollLeft + 249;
+    leaguesRef.current.scrollLeft += 249;
     setCurrentScroll(scrollValue);
   };
-  console.log(leagues);
+
   return (
     <div className={cl.leaguesWrapper}>
       <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
