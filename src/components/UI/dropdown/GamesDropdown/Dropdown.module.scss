@@ -3,7 +3,7 @@
 .dropdownWrapper {
   width: 100%;
   position: relative;
-  text-align: center;
+  text-align: inherit;
   user-select: none;
 
   &:hover {
@@ -28,6 +28,7 @@
 
   > * {
 		border-bottom: 2px solid transparent;
+		padding: 0 1rem;
 		
     &:hover {
 			border-bottom: 2px solid var(--side-color);
