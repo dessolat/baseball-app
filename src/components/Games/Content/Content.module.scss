@@ -1,15 +1,19 @@
 .content {
   position: relative;
   display: flex;
+	align-items: flex-start;
 
   > * {
-    padding: 4.375rem 1rem;
-    position: relative;
+		position: relative;
     background-color: #fff;
   }
-
+	
 	> *:first-child {
-		padding-top: 1.3825rem;
+		padding: 1.3825rem 0 1rem;
+	}
+	
+	> *:last-child {
+		padding: 4.375rem 1.35rem 1rem;
 	}
 
   > * + * {
