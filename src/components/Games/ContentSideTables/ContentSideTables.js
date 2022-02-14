@@ -12,6 +12,14 @@ const FIRST_TABLE_DATA = [
   { id: 8, name: 'RusStar Unost Moscow', w: '00', l: '00', pct: '0000' }
 ];
 
+const SECOND_TABLE_DATA = [
+  { id: 1, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
+  { id: 2, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
+  { id: 3, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
+  { id: 4, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
+  { id: 5, name: 'SURNAME Name', team: 'RusStar', avr: '0000'}
+];
+
 const ContentSideTables = () => {
   return (
     <div className={cl.side}>
