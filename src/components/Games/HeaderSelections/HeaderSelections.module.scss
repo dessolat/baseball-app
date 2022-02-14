@@ -5,7 +5,16 @@
   }
 }
 
-.years,
+.years {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	width: 5rem;
+	margin-left: -1.22rem;
+	text-align: center;
+}
+
 .types {
   display: flex;
 
@@ -16,7 +25,7 @@
   }
 
   > * + * {
-    margin-left: 1.2rem;
+    margin-left: 1.95rem;
   }
 }
 
