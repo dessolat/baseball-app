@@ -3,7 +3,7 @@ import ArrowDown from 'components/UI/icons/ArrowDown';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setCurrentGuests, setCurrentHome } from 'redux/gamesReducer';
+import { setCurrentGuests, setCurrentHome, setCurrentStadium } from 'redux/gamesReducer';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -91,13 +91,26 @@ const ROWS_DATA = [
 ];
 
 const ContentTable = () => {
+  const currentStadium = useSelector(state => state.games.currentStadium);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
   const dispatch = useDispatch();
 
+  const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
   const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
   const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
+  const stadiumOptions = Array.from(
+    new Set(
+      ROWS_DATA.reduce(
+        (sum, cur) => {
+          sum.push(cur.stadium);
+          return sum;
+        },
+        ['All']
+      )
+    )
+  );
   const homeOptions = Array.from(
     new Set(
       ROWS_DATA.reduce(
@@ -123,6 +136,7 @@ const ContentTable = () => {
 
   const filteredData = ROWS_DATA.filter(row => {
     return (
+      (currentStadium !== 'All' ? row.stadium === currentStadium : true) &&
       (currentHome !== 'All' ? row.home === currentHome : true) &&
       (currentGuests !== 'All' ? row.guests === currentGuests : true)
     );
@@ -138,19 +152,38 @@ const ContentTable = () => {
             <th>ID</th>
             <th>Time</th>
             <th>
-              <div>
+              <Dropdown
+                title={'Stadium'}
+                options={stadiumOptions}
+                currentOption={currentStadium}
+                handleClick={handleStadiumDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
+              {/* <div>
                 Stadium <ArrowDown />
-              </div>
+              </div> */}
             </th>
             <th>
-              <Dropdown title={'Home'} options={homeOptions} currentOption={currentHome} handleClick={handleHomeDropdownClick} listStyles={{left: '-1rem', width: 'calc(100% + 1rem)'}} />
+              <Dropdown
+                title={'Home'}
+                options={homeOptions}
+                currentOption={currentHome}
+                handleClick={handleHomeDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
               {/* <div>
                 Home <ArrowDown />
               </div> */}
             </th>
             <th> </th>
             <th>
-              <Dropdown title={'Guests'} options={guestsOptions} currentOption={currentGuests} handleClick={handleGuestsDropdownClick} listStyles={{left: '-1rem', width: 'calc(100% + 1rem)'}}/>
+              <Dropdown
+                title={'Guests'}
+                options={guestsOptions}
+                currentOption={currentGuests}
+                handleClick={handleGuestsDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
               {/* <div>
                 Guests <ArrowDown />
               </div> */}
