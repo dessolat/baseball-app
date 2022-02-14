@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './ContentSideTables.module.scss';
+import ArrowDown from 'components/UI/icons/ArrowDown';
 
 const FIRST_TABLE_DATA = [
   { id: 1, name: 'RusStar Unost Moscow', w: '00', l: '00', pct: '0000' },
@@ -39,6 +40,25 @@ const ContentSideTables = () => {
               <td>{row.w}</td>
               <td>{row.l}</td>
               <td>{row.pct}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+			<p className={cl.drop}>Batting <ArrowDown /></p>
+      <table className={cl.switchTable}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Team</th>
+            <th>AVR</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SECOND_TABLE_DATA.map(row => (
+            <tr key={row.id}>
+              <td>{row.name}</td>
+              <td>{row.team}</td>
+              <td>{row.avr}</td>
             </tr>
           ))}
         </tbody>
