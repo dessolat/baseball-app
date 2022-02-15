@@ -17,8 +17,11 @@
 
 .types {
   display: flex;
+	font-size: 0.875rem;
 
   > * {
+		border-bottom: 2.15px solid transparent;
+
     &:hover {
       cursor: pointer;
     }
@@ -27,10 +30,6 @@
   > * + * {
     margin-left: 1.95rem;
   }
-}
-
-.types {
-  font-size: 0.875rem;
 }
 
 .active {
