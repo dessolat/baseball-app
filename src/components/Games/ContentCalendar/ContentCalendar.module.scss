@@ -1,0 +1,29 @@
+.calendar {
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.wrapper {
+	width: 423.5px;
+	overflow-x: hidden;
+}
+
+.list {
+	display: flex;
+	justify-content: space-evenly;
+	transform: translateX(60.5px);
+	transition: all .4s;
+	list-style: none;
+}
+
+.item {
+	flex: 0 0 60.5px;
+	user-select: none;
+	font: 700 12px 'Nunito', sans-serif;
+	color: #838383;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
