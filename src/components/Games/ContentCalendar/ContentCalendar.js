@@ -1,12 +1,14 @@
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import cl from './ContentCalendar.module.scss';
-import ContentCalendarList from './ContentCalendarList'
+import ContentCalendarList from './ContentCalendarList';
 
-const ContentCalendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+const ContentCalendar = ({ onChange }) => {
   const ref = useRef();
   const timeoutRef = useRef(null);
+
+  const currentDate = useSelector(state => state.games.currentDate);
 
   useEffect(() => {
     ref.current.style.transition = 'none';
@@ -22,7 +24,7 @@ const ContentCalendar = () => {
     const daysDelta = (date - currentDate) / 1000 / 60 / 60 / 24;
     ref.current.style.transform = `translate(${60.5 - 60.5 * daysDelta}px)`;
     timeoutRef.current = setTimeout(() => {
-      setCurrentDate(date);
+      onChange(date);
     }, 400);
   };
 
@@ -34,9 +36,9 @@ const ContentCalendar = () => {
   return (
     <div className={cl.calendar}>
       {/* <button onClick={handleArrowClick('left')}>Left</button> */}
-			<Arrow onClick={handleArrowClick('left')} style={{marginRight: '.3rem'}}/>
+      <Arrow onClick={handleArrowClick('left')} style={{ marginRight: '.3rem' }} />
       <ContentCalendarList currentDate={currentDate} handleClick={handleDateClick} ref={ref} />
-			<Arrow direction='right' onClick={handleArrowClick('right')} style={{marginLeft: '.5rem'}}/>
+      <Arrow direction='right' onClick={handleArrowClick('right')} style={{ marginLeft: '.5rem' }} />
       {/* <button onClick={handleArrowClick('right')}>Right</button> */}
     </div>
   );
