@@ -14,11 +14,11 @@ const FIRST_TABLE_DATA = [
 ];
 
 const SECOND_TABLE_DATA = [
-  { id: 1, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
-  { id: 2, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
-  { id: 3, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
-  { id: 4, name: 'SURNAME Name', team: 'RusStar', avr: '0000'},
-  { id: 5, name: 'SURNAME Name', team: 'RusStar', avr: '0000'}
+  { id: 1, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
+  { id: 2, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
+  { id: 3, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
+  { id: 4, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
+  { id: 5, name: 'SURNAME Name', team: 'RusStar', avr: '0000' }
 ];
 
 const ContentSideTables = () => {
@@ -44,13 +44,19 @@ const ContentSideTables = () => {
           ))}
         </tbody>
       </table>
-			<p className={cl.drop}>Batting <ArrowDown /></p>
+      <p className={cl.drop}>
+        Batting <ArrowDown />
+      </p>
       <table className={cl.switchTable}>
         <thead>
           <tr>
             <th>Name</th>
             <th>Team</th>
-            <th>AVR</th>
+            <th>
+              <div className={cl.avr}>
+                AVR <ArrowDown />
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
