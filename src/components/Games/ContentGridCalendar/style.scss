@@ -1,0 +1,93 @@
+@import 'scss/vars.scss';
+
+.content-grid-calendar-wrapper {
+	position: relative;
+	display: flex;
+
+	> img {
+		width: 2rem;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.react-calendar {
+	border-radius: 4px;
+	width: 350px;
+	background: white;
+	font: inherit;
+	line-height: 1.125em;
+	border: 0;
+	overflow: hidden;
+	box-shadow: 0 30px 40px 0 rgb(16 36 94 / 20%);
+	z-index: 10;
+}
+
+.gamesCalendar {
+	position: absolute;
+	left: 0;
+	top: 105%;
+  font: 400 1rem var(--font-athiti);
+  // font: 400 1rem 'Montserrat', sans-serif;
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .react-calendar button {
+    margin: 0;
+    border: 0;
+    outline: none;
+    font: inherit;
+    font-size: 0.8em;
+  }
+
+	.react-calendar__tile {
+    max-width: 100%;
+    text-align: center;
+    padding: 0.75em 0.5em;
+    background: none;
+}
+
+
+  .react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 10px;
+  }
+
+  .react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+  }
+
+  .react-calendar__month-view__weekdays__weekday {
+    text-align: center;
+    text-transform: uppercase;
+		font-weight: 600;
+		
+		> abbr {
+			text-decoration: none;
+		}
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: red;
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: rgb(117, 117, 117);
+  }
+
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus,
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #e6e6e6;
+  }
+}
