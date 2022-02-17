@@ -1,35 +1,35 @@
 @import 'scss/vars.scss';
 
 .content-grid-calendar-wrapper {
-	position: relative;
-	display: flex;
+  position: relative;
+  display: flex;
 
-	> img {
-		width: 2rem;
+  > img {
+    width: 2rem;
 
-		&:hover {
-			cursor: pointer;
-		}
-	}
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .react-calendar {
-	border-radius: 4px;
-	width: 350px;
-	background: white;
-	font: inherit;
-	line-height: 1.125em;
-	border: 0;
-	overflow: hidden;
-	box-shadow: 0 30px 40px 0 rgb(16 36 94 / 20%);
-	z-index: 10;
-	animation: popUp var(--transition-speed) forwards;
+  border-radius: 4px;
+  width: 350px;
+  background: white;
+  font: inherit;
+  line-height: 1.125em;
+  border: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 40px 0 rgb(16 36 94 / 20%);
+  z-index: 10;
+  animation: popUp var(--transition-speed) forwards;
 }
 
 .gamesCalendar {
-	position: absolute;
-	left: 0;
-	top: 105%;
+  position: absolute;
+  left: 0;
+  top: 105%;
   font: 400 1rem var(--font-athiti);
   // font: 400 1rem 'Montserrat', sans-serif;
 
@@ -48,13 +48,12 @@
     font-size: 0.8em;
   }
 
-	.react-calendar__tile {
+  .react-calendar__tile {
     max-width: 100%;
     text-align: center;
     padding: 0.75em 0.5em;
     background: none;
-}
-
+  }
 
   .react-calendar__navigation {
     display: flex;
@@ -67,14 +66,18 @@
     background: none;
   }
 
+  .react-calendar__navigation__label:disabled {
+    color: black;
+  }
+
   .react-calendar__month-view__weekdays__weekday {
     text-align: center;
     text-transform: uppercase;
-		font-weight: 600;
-		
-		> abbr {
-			text-decoration: none;
-		}
+    font-weight: 600;
+
+    > abbr {
+      text-decoration: none;
+    }
   }
 
   .react-calendar__month-view__days__day--weekend {
