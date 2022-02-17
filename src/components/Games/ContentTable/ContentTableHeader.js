@@ -8,6 +8,7 @@ import { setCurrentDate } from 'redux/gamesReducer';
 
 const ContentTableHeader = () => {
   const currentLeague = useSelector(state => state.games.currentLeague);
+	const currentDate = useSelector(state => state.games.currentDate);
 	const dispatch = useDispatch()
 
 	const calendarChangeHandler = value => dispatch(setCurrentDate(value))
@@ -18,7 +19,7 @@ const ContentTableHeader = () => {
         <h2 className={cl.teamName}>{currentLeague.name}</h2>
       </div>
       <div className={cl.calendarsWrapper}>
-				<ContentGridCalendar onChange={calendarChangeHandler} />
+				<ContentGridCalendar value={currentDate} onChange={calendarChangeHandler} />
         <ContentCalendar onChange={calendarChangeHandler}/>
       </div>
     </div>
