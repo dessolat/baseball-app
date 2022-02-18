@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/gamesReducer';
+import HeaderLeaguesList from './HeaderLeaguesList';
 
 const HeaderLeagues = ({ leagues }) => {
   const [currentScroll, setCurrentScroll] = useState(0);
@@ -10,9 +9,6 @@ const HeaderLeagues = ({ leagues }) => {
   const [isRightScroll, setIsRightScroll] = useState(true);
 
   const leaguesRef = useRef();
-
-  const currentLeague = useSelector(state => state.games.currentLeague);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLeftScroll(currentScroll <= 0 ? false : true);
@@ -34,19 +30,7 @@ const HeaderLeagues = ({ leagues }) => {
   return (
     <div className={cl.leaguesWrapper}>
       <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
-      <ul className={cl.leagues} ref={leaguesRef}>
-        {leagues.map(league => {
-					console.log(league);
-          return (
-            <li
-              key={league.id}
-              className={league.id === currentLeague.id ? cl.league + ' ' + cl.active : cl.league}
-              onClick={() => dispatch(setCurrentLeague({ id: league.id, name: league.name }))}>
-              {league.name}
-            </li>
-          );
-        })}
-      </ul>
+      <HeaderLeaguesList leagues={leagues} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
