@@ -57,11 +57,12 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       <div
         className={bottomClasses.join(' ')}
         style={
-          eventsSummary.length === 0
-            ? isVideo
-              ? { position: 'absolute', top: '1.6rem', right: 0 }
-              : { position: 'absolute', top: '1.6rem', left: '3rem' }
-            : null
+          eventsSummary.length === 0 && !isVideo ? { position: 'absolute', top: '1.6rem', right: 0 } : null
+          // eventsSummary.length === 0
+          //   ? isVideo
+          //     ? { position: 'absolute', top: '1.6rem', right: 0 }
+          //     : { position: 'absolute', top: '1.6rem', left: '3rem' }
+          //   : null
         }>
         {isRectText && <RectText icons={sit.icons} />}
         {isRectScore && <RectScore icons={sit.icons} />}

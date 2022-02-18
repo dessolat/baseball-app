@@ -55,9 +55,34 @@
   }
 
   .dataAfterNoVideo {
-    left: unset;
-    right: 0;
-    width: 32%;
+    // left: unset;
+    left: calc(50% - 1px);
+		transform: translateX(-50%);
+    // right: 0;
+    width: calc(100% + 2px);
+		background-color: white;
+		border-left: 2px solid white;
+    // width: 32%;
+		display: flex;
+		justify-content: center;
+		> span {
+			border-left: 2px solid lightgray;
+			// width: 6.2rem;
+			width: calc((100% - 33rem) / 4 + 2px);
+			@media screen and (max-width: 1275px) {
+				width: calc((100% - 31rem) / 4 + 2px);
+			}
+			@media screen and (max-width: 1170px) {
+				width: calc((100% - 30rem) / 4 + 2px);
+			}
+			@media screen and (max-width: 1086px) {
+				width: calc((100% - 26rem) / 4 + 2px);
+			}
+
+			&:last-child {
+				border-right: 2px solid lightgray;
+			}
+		}
   }
 
   > *:not(.dataAfter) {
@@ -86,11 +111,28 @@
   }
 
   &.dataBeforeNoVideo {
-		padding-left: 5.89rem;
-		padding-right: 5.89rem;
+		// padding-left: 5.89rem;
+		// padding-right: 5.89rem;
+		padding-left: 16.5rem;
+		padding-right: 16.5rem;
+		
+		@media screen and (max-width: 1275px) {
+			padding-left: 15.5rem;
+			padding-right: 15.5rem;
+		}
+		@media screen and (max-width: 1170px) {
+			padding-left: 15rem;
+			padding-right: 15rem;
+		}
+		@media screen and (max-width: 1086px) {
+			padding-left: 13rem;
+			padding-right: 13rem;
+		}
 
     &::before {
-      width: 32%;
+      // width: 32%;
+      width: calc(100% + 2px);
+			text-align: center;
     }
   }
 }
