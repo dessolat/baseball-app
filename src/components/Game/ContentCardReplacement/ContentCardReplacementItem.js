@@ -16,10 +16,10 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
   const replaceClasses = [cl.replace];
   !isVideo && replaceClasses.push(cl.noVideo);
   return (
-    <div className={replaceClasses.join(' ')}>
+    <div className={replaceClasses.join(' ')} style={(event.old_player === null && !isVideo) ? { justifyContent: 'flex-start' } : null}>
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
       <div className={cl.textBlock}>
-				{header !== null && <p className={cl.textBold}>{header}</p>}
+				{header !== null && !isVideo && <p className={cl.textBold}>{header}</p>}
         <p className={cl.text}>{event.description}</p>
       </div>
       <ContentCardPortrait

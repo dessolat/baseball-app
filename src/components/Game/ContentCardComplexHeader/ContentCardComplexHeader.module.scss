@@ -68,21 +68,21 @@
   column-gap: 6px;
   line-height: 0;
 
-	&.noVideo {
-		justify-content: flex-start;
+	// &.noVideo {
+	// 	justify-content: flex-start;
 		
-		> .ellipses {
-			margin-left: 2rem;
+	// 	> .ellipses {
+	// 		margin-left: 2rem;
 
-			> * + * {
-				margin-left: 2rem;
-			}
-		}
+	// 		> * + * {
+	// 			margin-left: 2rem;
+	// 		}
+	// 	}
 
-		> *:last-child {
-			margin-left: 2rem;
-		}
-	}
+	// 	> *:last-child {
+	// 		margin-left: 2rem;
+	// 	}
+	// }
 }
 
 .ellipses {
