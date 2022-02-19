@@ -1,5 +1,4 @@
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import ArrowDown from 'components/UI/icons/ArrowDown';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -159,9 +158,6 @@ const ContentTable = () => {
                 handleClick={handleStadiumDropdownClick}
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
               />
-              {/* <div>
-                Stadium <ArrowDown />
-              </div> */}
             </th>
             <th>
               <Dropdown
@@ -171,9 +167,6 @@ const ContentTable = () => {
                 handleClick={handleHomeDropdownClick}
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
               />
-              {/* <div>
-                Home <ArrowDown />
-              </div> */}
             </th>
             <th> </th>
             <th>
@@ -184,9 +177,6 @@ const ContentTable = () => {
                 handleClick={handleGuestsDropdownClick}
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
               />
-              {/* <div>
-                Guests <ArrowDown />
-              </div> */}
             </th>
             <th> </th>
             <th>Inn</th>
