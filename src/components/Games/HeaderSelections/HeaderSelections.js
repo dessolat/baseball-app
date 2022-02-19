@@ -17,9 +17,7 @@ const HeaderSelections = () => {
 
   const getClassName = name => (name === currentGameType ? cl.active : '');
 
-  const handleYearClick = type => () => {
-    dispatch(setCurrentGameType(type));
-  };
+  const handleTypeClick = type => () => dispatch(setCurrentGameType(type));
 
   return (
     <div className={cl.selections}>
@@ -27,10 +25,10 @@ const HeaderSelections = () => {
         <Dropdown title={currentYear} options={YEARS} currentOption={currentYear} handleClick={handleClick} />
       </div>
       <ul className={cl.types}>
-        <li className={getClassName('Baseball')} onClick={handleYearClick('Baseball')}>
+        <li className={getClassName('Baseball')} onClick={handleTypeClick('Baseball')}>
           Baseball
         </li>
-        <li className={getClassName('Softball')} onClick={handleYearClick('Softball')}>
+        <li className={getClassName('Softball')} onClick={handleTypeClick('Softball')}>
           Softball
         </li>
       </ul>
