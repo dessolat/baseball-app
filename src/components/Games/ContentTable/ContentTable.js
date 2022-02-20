@@ -89,8 +89,9 @@ const ROWS_DATA = [
   }
 ];
 
-const ContentTable = () => {
+const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
   const dispatch = useDispatch();
@@ -133,11 +134,12 @@ const ContentTable = () => {
     )
   );
 
-  const filteredData = ROWS_DATA.filter(row => {
+  const filteredData = games.filter(game => {
     return (
-      (currentStadium !== 'All' ? row.stadium === currentStadium : true) &&
-      (currentHome !== 'All' ? row.home === currentHome : true) &&
-      (currentGuests !== 'All' ? row.guests === currentGuests : true)
+      (currentStadium !== 'All' ? game.stadium === currentStadium : true) &&
+      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
+      (currentHome !== 'All' ? game.home === currentHome : true) &&
+      (currentGuests !== 'All' ? game.guests === currentGuests : true)
     );
   });
 
@@ -183,22 +185,22 @@ const ContentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map(row => (
-            <tr key={row.id}>
-              <td>{row.id}</td>
-              <td>{row.time}</td>
-              <td>{row.stadium}</td>
-              <td>{row.home}</td>
-              <td>{row.score}</td>
-              <td>{row.guests}</td>
+          {filteredData.map(game => (
+            <tr key={game.id}>
+              <td>{game.id}</td>
+              <td>{game.start_time.slice(0, 8)}</td>
+              <td>{game.stadium_name}</td>
+              <td>{game.home}</td>
+              <td>{game.score}</td>
+              <td>{game.guests}</td>
               <td className={cl.links}>
                 <div>
-                  <Link to={`/game/${row.id}?tab=box`}>Box</Link>
-                  <Link to={`/game/${row.id}?tab=plays`}>Plays</Link>
-                  {row.isVideo && <Link to={`/game/${row.id}?tab=videos`}>Videos</Link>}
+                  <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                  <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                  {game.isVideo && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
                 </div>
               </td>
-              <td>{row.inn} inn</td>
+              <td>{game.inn} inn</td>
             </tr>
           ))}
         </tbody>
