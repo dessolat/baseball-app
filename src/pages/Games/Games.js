@@ -4,7 +4,8 @@ import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentLeague } from 'redux/gamesReducer';
 
 const LEAGUES = [
   { id: 1, name: 'All' },
@@ -25,6 +26,7 @@ const Games = () => {
   const cancelTokenRef = useRef();
 
   const currentYear = useSelector(state => state.games.currentYear);
+	const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -37,6 +39,7 @@ const Games = () => {
         });
         console.log(response.data);
         setGamesData(response.data);
+				dispatch(setCurrentLeague({id: -1, name: 'All'}))
       } catch (err) {
         err.message !== null && console.log(err.message);
       } finally {
@@ -58,7 +61,7 @@ const Games = () => {
         <></>
       ) : (
         <>
-          <Header leagues={LEAGUES} />
+          <Header leagues={gamesData.leagues} />
           <Content />
         </>
       )}
