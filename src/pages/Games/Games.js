@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cl from './Games.module.scss';
+// import cl from './Games.module.scss';
 import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
-import Loader from 'components/UI/loaders/Loader/Loader';
+// import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 
@@ -55,9 +55,10 @@ const Games = () => {
 
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Loader />
-      ) : gamesData === null ? (
+      ) :  */}
+			{gamesData === null ? (
         <></>
       ) : (
         <>
