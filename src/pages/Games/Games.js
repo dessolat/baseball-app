@@ -63,7 +63,7 @@ const Games = () => {
       ) : (
         <>
           <Header leagues={gamesData.leagues} />
-          <Content />
+          <Content games={gamesData.games}/>
         </>
       )}
     </>
