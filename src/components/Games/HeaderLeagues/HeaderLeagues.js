@@ -13,7 +13,6 @@ const HeaderLeagues = ({ leagues }) => {
   const leaguesRef = useRef();
 
   const currentGameType = useSelector(state => state.games.currentGameType);
-  // const currentYear = useSelector(state => state.games.currentYear);
 	const dispatch = useDispatch()
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const HeaderLeagues = ({ leagues }) => {
   }, [currentScroll]);
 	
   useEffect(() => {
-		// if (currentScroll === 0) return;
 		leaguesRef.current.scrollLeft = 0
 
 		setIsLeftScroll(false);
