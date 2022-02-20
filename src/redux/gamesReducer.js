@@ -1,5 +1,5 @@
 const defaultState = {
-  currentLeague: { id: 1, name: 'All' },
+  currentLeague: { id: -1, name: 'All' },
 	currentYear: new Date().getFullYear(),
 	currentDate: new Date(),
 	currentGameType: 'Baseball',
