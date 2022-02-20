@@ -3,6 +3,7 @@ import cl from './Games.module.scss';
 import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
+import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector } from 'react-redux';
 
 const LEAGUES = [
@@ -19,9 +20,9 @@ const LEAGUES = [
 
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [gamesData, setGamesData] = useState({});
+  const [gamesData, setGamesData] = useState(null);
 
-	const cancelTokenRef = useRef();
+  const cancelTokenRef = useRef();
 
   const currentYear = useSelector(state => state.games.currentYear);
 
@@ -49,11 +50,18 @@ const Games = () => {
     };
   }, [currentYear]);
 
-	
   return (
     <>
-      <Header leagues={LEAGUES} />
-      <Content />
+      {isLoading ? (
+        <Loader />
+      ) : gamesData === null ? (
+        <></>
+      ) : (
+        <>
+          <Header leagues={LEAGUES} />
+          <Content />
+        </>
+      )}
     </>
   );
 };
