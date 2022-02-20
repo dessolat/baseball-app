@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentLeague } from 'redux/gamesReducer';
 
 const HeaderLeagues = ({ leagues }) => {
   const [currentScroll, setCurrentScroll] = useState(0);
@@ -10,10 +12,23 @@ const HeaderLeagues = ({ leagues }) => {
 
   const leaguesRef = useRef();
 
+  const currentGameType = useSelector(state => state.games.currentGameType);
+  // const currentYear = useSelector(state => state.games.currentYear);
+	const dispatch = useDispatch()
+
   useEffect(() => {
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [currentScroll]);
+	
+  useEffect(() => {
+		// if (currentScroll === 0) return;
+		leaguesRef.current.scrollLeft = 0
+
+		setIsLeftScroll(false);
+    setIsRightScroll(leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+		dispatch(setCurrentLeague({id: -1, name: 'All'}))
+  }, [currentGameType, leagues]);
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
@@ -27,11 +42,11 @@ const HeaderLeagues = ({ leagues }) => {
     setCurrentScroll(scrollValue);
   };
 
-	const filteredLeagues = useMemo(() => {
-		const newLeagues = leagues.slice()
-		newLeagues.unshift({id: -1, name: 'All'});
-		return newLeagues
-	}, [leagues])
+  const filteredLeagues = useMemo(() => {
+    const newLeagues = leagues.filter(league => league.game_type === currentGameType);
+    newLeagues.unshift({ id: -1, name: 'All' });
+    return newLeagues;
+  }, [leagues, currentGameType]);
 
   return (
     <div className={cl.leaguesWrapper}>
