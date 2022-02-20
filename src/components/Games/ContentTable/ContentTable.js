@@ -190,14 +190,14 @@ const ContentTable = ({ games }) => {
               <td>{game.id}</td>
               <td>{game.start_time.slice(0, 8)}</td>
               <td>{game.stadium_name}</td>
-              <td>{game.home}</td>
+              <td>{game.owners_name}</td>
               <td>{game.score}</td>
-              <td>{game.guests}</td>
+              <td>{game.guests_name}</td>
               <td className={cl.links}>
                 <div>
                   <Link to={`/game/${game.id}?tab=box`}>Box</Link>
                   <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                  {game.isVideo && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                  {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
                 </div>
               </td>
               <td>{game.inn} inn</td>
