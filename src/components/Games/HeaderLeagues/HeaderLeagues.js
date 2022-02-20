@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
@@ -27,10 +27,16 @@ const HeaderLeagues = ({ leagues }) => {
     setCurrentScroll(scrollValue);
   };
 
+	const filteredLeagues = useMemo(() => {
+		const newLeagues = leagues.slice()
+		newLeagues.unshift({id: -1, name: 'All'});
+		return newLeagues
+	}, [leagues])
+
   return (
     <div className={cl.leaguesWrapper}>
       <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
-      <HeaderLeaguesList leagues={leagues} ref={leaguesRef} />
+      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
