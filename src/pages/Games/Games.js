@@ -5,7 +5,8 @@ import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 // import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/gamesReducer';
+import { addLeagueImage, setCurrentLeague } from 'redux/gamesReducer';
+import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const LEAGUES = [
   { id: 1, name: 'All' },
@@ -21,12 +22,14 @@ const LEAGUES = [
 
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const [gamesData, setGamesData] = useState(null);
 
   const cancelTokenRef = useRef();
 
   const currentYear = useSelector(state => state.games.currentYear);
-	const dispatch = useDispatch()
+  const leaguesImages = useSelector(state => state.games.leaguesImages);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -35,13 +38,17 @@ const Games = () => {
       try {
         setIsLoading(true);
         const response = await axios.get(`http://51.250.11.151:3030/main/year-${currentYear}`, {
-          cancelToken: cancelTokenRef.current.token
+          cancelToken: cancelTokenRef.current.token,
+					timeout: 5000
         });
         console.log(response.data);
+				setError('')
         setGamesData(response.data);
-				dispatch(setCurrentLeague({id: -1, name: 'All'}))
+        dispatch(setCurrentLeague({ id: -1, name: 'All' }));
       } catch (err) {
-        err.message !== null && console.log(err.message);
+				if (err.message === null) return
+        console.log(err.message);
+				setError(err.message)
       } finally {
         setIsLoading(false);
       }
@@ -53,17 +60,46 @@ const Games = () => {
     };
   }, [currentYear]);
 
+  useEffect(() => {
+    if (gamesData === null) return;
+
+    const fetchImage = async (id, url) => {
+      try {
+        const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
+          responseType: 'arraybuffer',
+          timeout: 2500
+        });
+
+        dispatch(
+          addLeagueImage({
+            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+          })
+        );
+      } catch (err) {
+        // err.message === 'Request failed with status code 523' &&
+        setTimeout(() => fetchImage(id, url), 2500);
+        console.log(err.message);
+      }
+    };
+
+    gamesData.leagues
+      .filter(league => league.logo !== '' && !leaguesImages[league.id])
+      .forEach(league => fetchImage(league.id, league.logo));
+  }, [gamesData]);
+
   return (
     <>
       {/* {isLoading ? (
         <Loader />
       ) :  */}
-			{gamesData === null ? (
+      {error ? (
+        <ErrorLoader error={error} />
+      ) : gamesData === null ? (
         <></>
       ) : (
         <>
           <Header leagues={gamesData.leagues} />
-          <Content games={gamesData.games}/>
+          <Content games={gamesData.games} />
         </>
       )}
     </>
