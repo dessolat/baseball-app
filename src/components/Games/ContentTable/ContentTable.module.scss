@@ -54,7 +54,8 @@
       text-align: left;
 
       &:first-child {
-				width: 4.2rem;
+				text-align: center;
+				width: 4.4rem;
       }
 			&:nth-child(2) {
 				width: 5rem;
@@ -71,7 +72,7 @@
 				padding-right: .5rem;
 			}
 			&:nth-child(6) {
-				width: 12.5rem;
+				width: 12.3rem;
 			}
 			&:nth-child(7) {
 				width: 3rem;
@@ -116,6 +117,10 @@
 			
       > td {
         font: 300 0.875rem var(--font-nunito);
+
+				&:first-child {
+					text-align: center;
+				}
 
         &:nth-child(4) {
           text-align: center;
