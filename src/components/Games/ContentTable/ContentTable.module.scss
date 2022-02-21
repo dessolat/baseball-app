@@ -54,31 +54,27 @@
       text-align: left;
 
       &:first-child {
-        width: 2.5rem;
-        text-align: center;
+				width: 4.2rem;
       }
 			&:nth-child(2) {
-			  width: 4.2rem;
+				width: 5rem;
+				padding-right: .5rem;
 			}
 			&:nth-child(3) {
-			  width: 5rem;
-			  padding-right: .5rem;
+				width: 10.5rem;
 			}
 			&:nth-child(4) {
-			  width: 10.5rem;
+				width: 5rem;
 			}
 			&:nth-child(5) {
-			  width: 5rem;
+				width: 11rem;
+				padding-right: .5rem;
 			}
 			&:nth-child(6) {
-			  width: 11rem;
-			  padding-right: .5rem;
+				width: 12.5rem;
 			}
 			&:nth-child(7) {
-			  width: 10rem;
-			}
-			&:nth-child(8) {
-			  width: 3rem;
+				width: 3rem;
 			}
       // &:first-child {
       //   width: 3.6rem;
@@ -121,18 +117,15 @@
       > td {
         font: 300 0.875rem var(--font-nunito);
 
-        &:first-child {
-          text-align: center;
-        }
-        &:nth-child(5) {
+        &:nth-child(4) {
           text-align: center;
           font: 700 0.875rem var(--font-athiti);
         }
-        &:nth-child(6) {
+        &:nth-child(5) {
           padding-right: .5rem;
         }
 
-        &:nth-child(7) {
+        &:nth-child(6) {
           a {
             color: var(--side-color);
             text-decoration: underline;
