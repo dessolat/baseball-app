@@ -43,8 +43,8 @@ const Header = ({ currentTab, handleTabClick }) => {
       }
     };
 
-    !imagesData[preview.guests.name] && fetchImage(preview.guests.name, preview.guests.logo);
-    !imagesData[preview.owners.name] && fetchImage(preview.owners.name, preview.owners.logo);
+    !imagesData[preview.guests.name] && preview.guests.logo !== '' && fetchImage(preview.guests.name, preview.guests.logo);
+    !imagesData[preview.owners.name] && preview.owners.logo !== '' && fetchImage(preview.owners.name, preview.owners.logo);
     // eslint-disable-next-line
   }, []);
 
