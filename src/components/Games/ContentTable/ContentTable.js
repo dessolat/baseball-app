@@ -154,7 +154,6 @@ const ContentTable = ({ games }) => {
       <table className={cl.table}>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Time</th>
             <th>
               <Dropdown
@@ -191,7 +190,6 @@ const ContentTable = ({ games }) => {
         <tbody>
           {filteredData.map(game => (
             <tr key={game.id}>
-              <td>{game.id}</td>
               <td>{game.start_time.slice(0, 8)}</td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
