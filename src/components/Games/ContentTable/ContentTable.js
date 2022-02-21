@@ -1,8 +1,8 @@
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setCurrentGuests, setCurrentHome, setCurrentStadium } from 'redux/gamesReducer';
+import { setCurrentGuests, setCurrentHome, setCurrentStadium, resetTableFilters } from 'redux/gamesReducer';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -94,20 +94,26 @@ const ContentTable = ({ games }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
+  const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentYear = useSelector(state => state.games.currentYear);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetTableFilters());
+  }, [currentGameType, currentYear, currentLeague]);
 
   const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
   const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
   const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
   const filteredHeadings = games.filter(game => {
-    return currentLeague.id !== -1 ? game.league_id === currentLeague.id : true;
+    return currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type;
   });
 
   const filteredData = games.filter(game => {
     return (
       (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
+      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type) &&
       (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
       (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
     );
@@ -193,7 +199,9 @@ const ContentTable = ({ games }) => {
               <td>{game.start_time.slice(0, 8)}</td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
-              <td>{game.score_owners} - {game.score_guests}</td>
+              <td>
+                {game.score_owners} - {game.score_guests}
+              </td>
               <td>{game.guests_name}</td>
               <td className={cl.links}>
                 <div>
