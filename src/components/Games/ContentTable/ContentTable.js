@@ -193,7 +193,7 @@ const ContentTable = ({ games }) => {
               <td>{game.start_time.slice(0, 8)}</td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
-              <td>{game.score}</td>
+              <td>{game.score_owners} - {game.score_guests}</td>
               <td>{game.guests_name}</td>
               <td className={cl.links}>
                 <div>
