@@ -100,11 +100,24 @@ const ContentTable = ({ games }) => {
   const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
   const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
+  const filteredHeadings = games.filter(game => {
+    return currentLeague.id !== -1 ? game.league_id === currentLeague.id : true;
+  });
+
+  const filteredData = games.filter(game => {
+    return (
+      (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
+      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
+      (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+      (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+    );
+  });
+
   const stadiumOptions = Array.from(
     new Set(
-      ROWS_DATA.reduce(
+      filteredHeadings.reduce(
         (sum, cur) => {
-          sum.push(cur.stadium);
+          sum.push(cur.stadium_name);
           return sum;
         },
         ['All']
@@ -113,9 +126,9 @@ const ContentTable = ({ games }) => {
   );
   const homeOptions = Array.from(
     new Set(
-      ROWS_DATA.reduce(
+      filteredHeadings.reduce(
         (sum, cur) => {
-          sum.push(cur.home);
+          sum.push(cur.owners_name);
           return sum;
         },
         ['All']
@@ -124,24 +137,15 @@ const ContentTable = ({ games }) => {
   );
   const guestsOptions = Array.from(
     new Set(
-      ROWS_DATA.reduce(
+      filteredHeadings.reduce(
         (sum, cur) => {
-          sum.push(cur.guests);
+          sum.push(cur.guests_name);
           return sum;
         },
         ['All']
       )
     )
   );
-
-  const filteredData = games.filter(game => {
-    return (
-      (currentStadium !== 'All' ? game.stadium === currentStadium : true) &&
-      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
-      (currentHome !== 'All' ? game.home === currentHome : true) &&
-      (currentGuests !== 'All' ? game.guests === currentGuests : true)
-    );
-  });
 
   return (
     <div className={cl.wrapper}>
