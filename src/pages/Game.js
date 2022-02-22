@@ -29,7 +29,7 @@ const Game = () => {
   useEffect(() => {
     axios
       .get(`http://51.250.11.151:3030/game_${gameId}`, {
-        timeout: 15000
+        timeout: 2500
       })
       .then(() => {
         dispatch(getFullData(true));
@@ -37,7 +37,7 @@ const Game = () => {
       })
       .catch(() => {
         dispatch(setCurrentGameId(gameId));
-        navigate('/game/359');
+        navigate('/games');
       });
 
 			return () => {
