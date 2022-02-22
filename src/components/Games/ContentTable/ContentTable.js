@@ -96,6 +96,7 @@ const ContentTable = ({ games }) => {
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.games.currentGameType);
   const currentYear = useSelector(state => state.games.currentYear);
+  const currentDate = useSelector(state => state.games.currentDate);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -195,7 +196,9 @@ const ContentTable = ({ games }) => {
         </thead>
         <tbody>
           {filteredData.map(game => (
-            <tr key={game.id}>
+            <tr
+              key={game.id}
+              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}>
               <td>{game.start_time.slice(0, 8)}</td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
