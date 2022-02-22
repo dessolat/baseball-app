@@ -9,16 +9,14 @@ const ContentSideTables = () => {
 
   const isTables = currentLeague.id !== -1;
   return (
-    <>
-      <div className={cl.side} style={!isTables ? { height: '70vh' } : null}>
-        {isTables && (
-          <>
-            <PctTable currentLeague={currentLeague} />
-            <SwitchTable />
-          </>
-        )}
-      </div>
-    </>
+    <div className={cl.side} style={!isTables ? { height: '70vh' } : null}>
+      {isTables && (
+        <>
+          <PctTable currentLeague={currentLeague} />
+          <SwitchTable />
+        </>
+      )}
+    </div>
   );
 };
 
