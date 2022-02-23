@@ -5,7 +5,7 @@ import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 
-const HeaderLeagues = ({ leagues }) => {
+const HeaderLeagues = () => {
   const [currentScroll, setCurrentScroll] = useState(0);
   const [isLeftScroll, setIsLeftScroll] = useState(false);
   const [isRightScroll, setIsRightScroll] = useState(true);
@@ -13,6 +13,7 @@ const HeaderLeagues = ({ leagues }) => {
   const leaguesRef = useRef();
 
   const currentGameType = useSelector(state => state.games.currentGameType);
+	const leagues = useSelector(state => state.games.leagues)
 	const dispatch = useDispatch()
 
   useEffect(() => {

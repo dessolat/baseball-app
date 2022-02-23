@@ -100,7 +100,7 @@ const Games = () => {
         <></>
       ) : (
         <>
-          <Header leagues={leagues} />
+          <Header />
           <Content games={games} />
         </>
       )}
