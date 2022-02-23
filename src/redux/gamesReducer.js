@@ -11,6 +11,7 @@ const defaultState = {
   leaguesImages: {}
 };
 
+const SET_GAMES_AND_LEAGUES = 'SET_GAMES_AND_LEAGUES';
 const SET_CURRENT_LEAGUE = 'SET_CURRENT_LEAGUE';
 const SET_CURRENT_YEAR = 'SET_CURRENT_YEAR';
 const SET_CURRENT_DATE = 'SET_CURRENT_DATE';
@@ -23,6 +24,8 @@ const RESET_TABLE_FILTERS = 'RESET_TABLE_FILTERS';
 
 export const gamesReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case SET_GAMES_AND_LEAGUES:
+      return { ...state, games: action.payload.games, leagues: action.payload.leagues };
     case SET_CURRENT_LEAGUE:
       return { ...state, currentLeague: action.payload };
     case SET_CURRENT_YEAR:
@@ -46,6 +49,7 @@ export const gamesReducer = (state = defaultState, action) => {
   }
 };
 
+export const setGamesAndLeagues = payload => ({ type: SET_GAMES_AND_LEAGUES, payload });
 export const setCurrentLeague = payload => ({ type: SET_CURRENT_LEAGUE, payload });
 export const setCurrentYear = payload => ({ type: SET_CURRENT_YEAR, payload });
 export const setCurrentDate = payload => ({ type: SET_CURRENT_DATE, payload });
