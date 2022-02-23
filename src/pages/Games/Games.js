@@ -5,7 +5,7 @@ import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 // import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLeagueImage, setCurrentLeague } from 'redux/gamesReducer';
+import { addLeagueImage, setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const LEAGUES = [
@@ -23,10 +23,11 @@ const LEAGUES = [
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [gamesData, setGamesData] = useState(null);
 
   const cancelTokenRef = useRef();
-
+	
+	const games = useSelector(state => state.games.games)
+	const leagues = useSelector(state => state.games.leagues)
   const currentYear = useSelector(state => state.games.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
@@ -43,7 +44,8 @@ const Games = () => {
         });
         console.log(response.data);
 				setError('')
-        setGamesData(response.data);
+        dispatch(setGamesAndLeagues(response.data));
+        // setGamesData(response.data);
         dispatch(setCurrentLeague({ id: -1, name: 'All' }));
       } catch (err) {
 				if (err.message === null) return
@@ -61,7 +63,7 @@ const Games = () => {
   }, [currentYear]);
 
   useEffect(() => {
-    if (gamesData === null) return;
+    if (games.length === 0) return;
 
     const fetchImage = async (id, url) => {
       try {
@@ -82,10 +84,10 @@ const Games = () => {
       }
     };
 
-    gamesData.leagues
+    leagues
       .filter(league => league.logo !== '' && !leaguesImages[league.id])
       .forEach(league => fetchImage(league.id, league.logo));
-  }, [gamesData]);
+  }, [games, leagues]);
 
   return (
     <>
@@ -94,12 +96,12 @@ const Games = () => {
       ) :  */}
       {error ? (
         <ErrorLoader error={error} />
-      ) : gamesData === null ? (
+      ) : games.length === 0 ? (
         <></>
       ) : (
         <>
-          <Header leagues={gamesData.leagues} />
-          <Content games={gamesData.games} />
+          <Header leagues={leagues} />
+          <Content games={games} />
         </>
       )}
     </>
