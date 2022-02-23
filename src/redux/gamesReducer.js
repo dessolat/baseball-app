@@ -1,4 +1,6 @@
 const defaultState = {
+	games: [],
+	leagues: [],
   currentLeague: { id: -1, name: 'All' },
   currentYear: new Date().getFullYear(),
   currentDate: new Date(),
