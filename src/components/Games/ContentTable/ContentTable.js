@@ -1,5 +1,5 @@
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setCurrentGuests, setCurrentHome, setCurrentStadium, resetTableFilters } from 'redux/gamesReducer';
@@ -28,14 +28,23 @@ const ContentTable = ({ games }) => {
     return currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type;
   });
 
-  const filteredData = games.filter(game => {
-    return (
-      (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-      (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type) &&
-      (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-      (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
-    );
-  });
+	//Games filtering
+  let filteredData = useMemo(
+    () =>
+      games.filter(
+        game =>
+          (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
+          (currentLeague.id !== -1
+            ? game.league_id === currentLeague.id
+            : currentGameType === game.game_type) &&
+          (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+          (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+      ),
+    [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]
+  );
+
+	//Games sorting
+  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? -1 : 1)), [filteredData]);
 
   const stadiumOptions = Array.from(
     new Set(
