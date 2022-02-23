@@ -125,7 +125,7 @@ const ContentTable = ({ games }) => {
             <tr
               key={game.id}
               style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}>
-              <td>{game.start_time.slice(0, 8)}</td>
+              <td>{game.start_time.slice(0, 5)}</td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
               <td>
