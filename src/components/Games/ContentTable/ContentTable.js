@@ -6,6 +6,21 @@ import { setCurrentGuests, setCurrentHome, setCurrentStadium, resetTableFilters 
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
+const MONTHS = {
+  '01': 'january',
+  '02': 'february',
+  '03': 'march',
+  '04': 'april',
+  '05': 'may',
+  '06': 'june',
+  '07': 'july',
+  '08': 'august',
+  '09': 'september',
+  '10': 'october',
+  '11': 'november',
+  '12': 'december'
+};
+
 const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -28,7 +43,7 @@ const ContentTable = ({ games }) => {
     return currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type;
   });
 
-	//Games filtering
+  //Games filtering
   let filteredData = useMemo(
     () =>
       games.filter(
@@ -43,7 +58,7 @@ const ContentTable = ({ games }) => {
     [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]
   );
 
-	//Games sorting
+  //Games sorting
   filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? -1 : 1)), [filteredData]);
 
   const stadiumOptions = Array.from(
@@ -121,11 +136,21 @@ const ContentTable = ({ games }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map(game => (
+          {filteredData.map((game, index) => (
             <tr
               key={game.id}
-              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}>
-              <td>{game.start_time.slice(0, 5)}</td>
+              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
+              className={
+                index === 0 || filteredData[index].date !== filteredData[index - 1].date ? cl.withDate : ''
+              }>
+              <td
+                data-before={
+                  index === 0 || filteredData[index].date !== filteredData[index - 1].date
+                    ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
+                    : null
+                }>
+                {game.start_time.slice(0, 5)}
+              </td>
               <td>{game.stadium_name}</td>
               <td>{game.owners_name}</td>
               <td>
