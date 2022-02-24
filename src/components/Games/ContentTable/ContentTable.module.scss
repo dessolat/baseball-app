@@ -41,105 +41,107 @@
 }
 
 .table {
-  border-collapse: collapse;
   margin: 1rem 1.5rem 0 5rem;
 
-  > thead {
-    font: 700 0.75rem var(--font-nunito);
-    color: #838383;
-    border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
-    box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
+  > div {
+		min-height: 2rem;
+		display: flex;
+		align-items: center;
 
-    th {
-      text-align: left;
+		> div {
+			text-align: left;
 
-      &:first-child {
-        text-align: center;
-        width: 3.4rem;
-      }
-      &:nth-child(2) {
-        width: 5rem;
-        padding-right: 0.5rem;
-      }
-      &:nth-child(3) {
-        width: 12rem;
-      }
-      &:nth-child(4) {
-        width: 5rem;
-      }
-      &:nth-child(5) {
-        width: 12.5rem;
-        padding-right: 0.5rem;
-      }
-      &:nth-child(6) {
-        width: 10.3rem;
-      }
-      &:nth-child(7) {
-        width: 3rem;
-      }
-    }
-  }
-  > tbody {
-    > tr {
-      &:nth-child(2n) {
-        background-color: #eaeaea;
-      }
-
-      > td {
-        font: 300 0.875rem var(--font-nunito);
-
-        &:first-child {
-          text-align: center;
-        }
-
-        &:nth-child(4) {
-          text-align: center;
-          font: 700 0.875rem var(--font-athiti);
-        }
-        &:nth-child(5) {
-          padding-right: 0.5rem;
-        }
-
-        &:nth-child(6) {
-          a {
-            color: var(--side-color);
-            text-decoration: underline;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        }
-      }
-    }
-  }
-
-  tr {
-    height: 2rem;
+			&:first-child {
+				text-align: center;
+				width: 3.4rem;
+			}
+			&:nth-child(2) {
+				width: 5rem;
+				padding-right: 0.5rem;
+			}
+			&:nth-child(3) {
+				width: 12rem;
+			}
+			&:nth-child(4) {
+				width: 5rem;
+			}
+			&:nth-child(5) {
+				width: 12.5rem;
+				padding-right: 0.5rem;
+			}
+			&:nth-child(6) {
+				width: 10.3rem;
+			}
+			&:nth-child(7) {
+				width: 3rem;
+			}
+		}
 
     &.withDate {
-      // position: relative;
-
-      > td {
         height: 3.2rem;
         padding-top: 1.2rem;
 
         &[data-before] {
-					position: relative;
+          position: relative;
 
           &::before {
             content: attr(data-before);
             left: 0;
             top: 0;
             position: absolute;
-						width: 160%;
-						text-align: left;
-						padding-left: 5px;
-						color: #838383;
-						font: 400 .75rem / 1.5rem var(--font-nunito);
+            width: 160%;
+            text-align: left;
+            padding-left: 5px;
+            color: #838383;
+            font: 400 0.75rem / 1.5rem var(--font-nunito);
           }
+        }
+      
+    }
+
+    &:first-child {
+			color: #838383;
+      border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
+      box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
+			
+			> div {
+				font: 700 0.75rem var(--font-nunito);
+			}
+    }
+
+    &:nth-child(2n+3) {
+      background-color: #eaeaea;
+    }
+
+    > div {
+      font: 300 0.875rem var(--font-nunito);
+
+      &:first-child {
+        text-align: center;
+      }
+
+      &:nth-child(4) {
+        text-align: center;
+        font: 700 0.875rem var(--font-athiti);
+      }
+      &:nth-child(5) {
+        padding-right: 0.5rem;
+      }
+
+      &:nth-child(6) {
+        a {
+          color: var(--side-color);
+          text-decoration: underline;
+        }
+
+        a + a {
+          margin-left: 1rem;
         }
       }
     }
+  }
+
+  tr {
+    
   }
 }
