@@ -63,7 +63,7 @@ const Games = () => {
   }, [currentYear]);
 
   useEffect(() => {
-    if (games.length === 0) return;
+    if (games === null) return;
 
     const fetchImage = async (id, url) => {
       try {
@@ -96,7 +96,7 @@ const Games = () => {
       ) :  */}
       {error ? (
         <ErrorLoader error={error} />
-      ) : games.length === 0 ? (
+      ) : games === null ? (
         <></>
       ) : (
         <>
