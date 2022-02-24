@@ -164,7 +164,7 @@ const ContentTable = ({ games }) => {
                   {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
                 </div>
               </td>
-              <td>{game.inn} inn</td>
+              <td>{game.inn !== null ? `${game.inn} inn` : '—'} </td>
             </tr>
           ))}
         </tbody>
