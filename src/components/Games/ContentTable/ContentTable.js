@@ -16,9 +16,9 @@ const MONTHS = {
   '07': 'july',
   '08': 'august',
   '09': 'september',
-  '10': 'october',
-  '11': 'november',
-  '12': 'december'
+  10: 'october',
+  11: 'november',
+  12: 'december'
 };
 
 const ContentTable = ({ games }) => {
@@ -99,76 +99,71 @@ const ContentTable = ({ games }) => {
     <div className={cl.wrapper}>
       <ContentTableHeader />
 
-      <table className={cl.table}>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>
-              <Dropdown
-                title={'Stadium'}
-                options={stadiumOptions}
-                currentOption={currentStadium}
-                handleClick={handleStadiumDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </th>
-            <th>
-              <Dropdown
-                title={'Home'}
-                options={homeOptions}
-                currentOption={currentHome}
-                handleClick={handleHomeDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </th>
-            <th> </th>
-            <th>
-              <Dropdown
-                title={'Guests'}
-                options={guestsOptions}
-                currentOption={currentGuests}
-                handleClick={handleGuestsDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </th>
-            <th> </th>
-            <th>Inn</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((game, index) => (
-            <tr
-              key={game.id}
-              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
-              className={
-                index === 0 || filteredData[index].date !== filteredData[index - 1].date ? cl.withDate : ''
-              }>
-              <td
-                data-before={
-                  index === 0 || filteredData[index].date !== filteredData[index - 1].date
-                    ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
-                    : null
-                }>
-                {game.start_time.slice(0, 5)}
-              </td>
-              <td>{game.stadium_name}</td>
-              <td>{game.owners_name}</td>
-              <td>
-                {game.score_owners} - {game.score_guests}
-              </td>
-              <td>{game.guests_name}</td>
-              <td className={cl.links}>
-                <div>
-                  <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-                  <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                  {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
-                </div>
-              </td>
-              <td>{game.inn !== null ? `${game.inn} inn` : '—'} </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className={cl.table}>
+        <div>
+          <div>Time</div>
+          <div>
+            <Dropdown
+              title={'Stadium'}
+              options={stadiumOptions}
+              currentOption={currentStadium}
+              handleClick={handleStadiumDropdownClick}
+              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+            />
+          </div>
+          <div>
+            <Dropdown
+              title={'Home'}
+              options={homeOptions}
+              currentOption={currentHome}
+              handleClick={handleHomeDropdownClick}
+              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+            />
+          </div>
+          <div> </div>
+          <div>
+            <Dropdown
+              title={'Guests'}
+              options={guestsOptions}
+              currentOption={currentGuests}
+              handleClick={handleGuestsDropdownClick}
+              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+            />
+          </div>
+          <div> </div>
+          <div>Inn</div>
+        </div>
+
+        {filteredData.map((game, index) => (
+          <div
+            key={game.id}
+            style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
+            className={
+              index === 0 || filteredData[index].date !== filteredData[index - 1].date ? cl.withDate : ''
+            }
+            data-before={
+              index === 0 || filteredData[index].date !== filteredData[index - 1].date
+                ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
+                : null
+            }>
+            <div>{game.start_time.slice(0, 5)}</div>
+            <div>{game.stadium_name}</div>
+            <div>{game.owners_name}</div>
+            <div>
+              {game.score_owners} - {game.score_guests}
+            </div>
+            <div>{game.guests_name}</div>
+            <div className={cl.links}>
+              <div>
+                <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+              </div>
+            </div>
+            <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
