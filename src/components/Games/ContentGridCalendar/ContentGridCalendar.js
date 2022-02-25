@@ -46,11 +46,6 @@ const ContentGridCalendar = ({ value, onChange }) => {
     [games, currentLeague, currentGameType]
   );
 
-  //Games sorting
-  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? -1 : 1)), [filteredData]);
-
-  console.log(filteredData);
-
   return (
     <div ref={menuRef} className='content-grid-calendar-wrapper'>
       <img src={CalendarImage} alt='calendar' onClick={toggleCalendar} />
