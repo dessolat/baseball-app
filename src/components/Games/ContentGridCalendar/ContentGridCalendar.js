@@ -27,6 +27,9 @@ const ContentGridCalendar = ({ value, onChange }) => {
   const games = useSelector(state => state.games.games);
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentStadium = useSelector(state => state.games.currentStadium);
+  const currentHome = useSelector(state => state.games.currentHome);
+  const currentGuests = useSelector(state => state.games.currentGuests);
 
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsVisible));
 
@@ -40,10 +43,16 @@ const ContentGridCalendar = ({ value, onChange }) => {
   //Games filtering
   let filteredData = useMemo(
     () =>
-      games.filter(game =>
-        currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type
+      games.filter(
+        game =>
+          (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
+          (currentLeague.id !== -1
+            ? game.league_id === currentLeague.id
+            : currentGameType === game.game_type) &&
+          (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+          (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
       ),
-    [games, currentLeague, currentGameType]
+    [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]
   );
 
   return (
