@@ -25,7 +25,7 @@ const ContentCalendar = ({ onChange }) => {
     ref.current.style.transform = `translate(${60.5 - 60.5 * daysDelta}px)`;
     timeoutRef.current = setTimeout(() => {
       onChange(date);
-    }, 400);
+    }, 250);
   };
 
   const handleArrowClick = dir => () => {
