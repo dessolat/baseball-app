@@ -133,38 +133,39 @@ const ContentTable = ({ games }) => {
           <div> </div>
           <div>Inn</div>
         </div>
-
-        {filteredData.map((game, index) => (
-          <div
-            key={game.id}
-            style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
-            className={
-              index === 0 || filteredData[index].date !== filteredData[index - 1].date
-                ? `${cl.tableRow} ${cl.withDate}`
-                : cl.tableRow
-            }
-            data-before={
-              index === 0 || filteredData[index].date !== filteredData[index - 1].date
-                ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
-                : null
-            }>
-            <div>{game.start_time.slice(0, 5)}</div>
-            <div>{game.stadium_name}</div>
-            <div>{game.owners_name}</div>
-            <div>
-              {game.score_owners} - {game.score_guests}
-            </div>
-            <div>{game.guests_name}</div>
-            <div className={cl.links}>
+        <ul className={cl.rows}>
+          {filteredData.map((game, index) => (
+            <li
+              key={game.id}
+              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
+              className={
+                index === 0 || filteredData[index].date !== filteredData[index - 1].date
+                  ? `${cl.tableRow} ${cl.withDate}`
+                  : cl.tableRow
+              }
+              data-before={
+                index === 0 || filteredData[index].date !== filteredData[index - 1].date
+                  ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
+                  : null
+              }>
+              <div>{game.start_time.slice(0, 5)}</div>
+              <div>{game.stadium_name}</div>
+              <div>{game.owners_name}</div>
               <div>
-                <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-                <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                {game.score_owners} - {game.score_guests}
               </div>
-            </div>
-            <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-          </div>
-        ))}
+              <div>{game.guests_name}</div>
+              <div className={cl.links}>
+                <div>
+                  <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                  <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                  {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                </div>
+              </div>
+              <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
