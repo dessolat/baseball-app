@@ -139,7 +139,7 @@
     }
 
     &.withDate {
-      height: 3.2rem;
+      min-height: 3.2rem;
       padding-top: 1.2rem;
 
       &[data-before] {
@@ -159,7 +159,7 @@
       }
     }
 
-    &:nth-child(2n + 3) {
+    &:nth-child(2n) {
       background-color: #eaeaea;
     }
   }
