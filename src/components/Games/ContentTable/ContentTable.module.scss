@@ -86,6 +86,11 @@
 		max-height: calc(55vh + 7px);
 		overflow-y: scroll;
 		scroll-behavior: smooth;
+		position: relative;
+		
+		&::-webkit-scrollbar {
+			width: 0;
+		}
 	}
 
   .tableRow {
