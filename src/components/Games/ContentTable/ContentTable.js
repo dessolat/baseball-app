@@ -1,5 +1,5 @@
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setCurrentGuests, setCurrentHome, setCurrentStadium, resetTableFilters } from 'redux/gamesReducer';
@@ -31,9 +31,17 @@ const ContentTable = ({ games }) => {
   const currentDate = useSelector(state => state.games.currentDate);
   const dispatch = useDispatch();
 
+  const scrollItemRef = useRef(null);
+
   useEffect(() => {
     dispatch(resetTableFilters());
   }, [currentGameType, currentYear, currentLeague]);
+
+  useEffect(() => {
+    if (scrollItemRef.current === null) return;
+
+    scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
+  }, [currentDate, currentLeague]);
 
   const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
   const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
@@ -137,6 +145,12 @@ const ContentTable = ({ games }) => {
           {filteredData.map((game, index) => (
             <li
               key={game.id}
+              ref={
+                game.date === currentDate.toJSON().slice(0, 10) &&
+                (index === 0 || filteredData[index].date !== filteredData[index - 1].date)
+                  ? scrollItemRef
+                  : null
+              }
               style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
               className={
                 index === 0 || filteredData[index].date !== filteredData[index - 1].date
