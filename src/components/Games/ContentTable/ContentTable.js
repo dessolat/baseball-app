@@ -59,7 +59,7 @@ const ContentTable = ({ games }) => {
   );
 
   //Games sorting
-  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? -1 : 1)), [filteredData]);
+  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? 1 : -1)), [filteredData]);
 
   const stadiumOptions = Array.from(
     new Set(
@@ -100,7 +100,7 @@ const ContentTable = ({ games }) => {
       <ContentTableHeader />
 
       <div className={cl.table}>
-        <div>
+        <div className={cl.tableHeader}>
           <div>Time</div>
           <div>
             <Dropdown
@@ -139,7 +139,9 @@ const ContentTable = ({ games }) => {
             key={game.id}
             style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
             className={
-              index === 0 || filteredData[index].date !== filteredData[index - 1].date ? cl.withDate : ''
+              index === 0 || filteredData[index].date !== filteredData[index - 1].date
+                ? `${cl.tableRow} ${cl.withDate}`
+                : cl.tableRow
             }
             data-before={
               index === 0 || filteredData[index].date !== filteredData[index - 1].date
