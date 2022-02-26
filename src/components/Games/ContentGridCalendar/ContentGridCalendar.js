@@ -66,6 +66,16 @@ const ContentGridCalendar = ({ value, onChange }) => {
           className='gamesCalendar'
           locale='EN-en'
           showNeighboringMonth={false}
+          tileClassName={({ activeStartDate, date, view }) => {
+            let tileDate = date;
+            tileDate.setHours(0, tileDate.getTimezoneOffset() * -1, 0, 0);
+
+            return filteredData.some(game => game.date === tileDate.toJSON().slice(0, 10))
+              ? tileDate.getDay() === 0 || tileDate.getDay() === 6
+                ? 'fontBold activeWeekend'
+                : 'fontBold'
+              : null;
+          }}
           tileDisabled={({ activeStartDate, date, view }) =>
             !filteredData.some(game => {
               let tileDate = date;
