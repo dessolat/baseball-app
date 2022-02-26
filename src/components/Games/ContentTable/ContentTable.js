@@ -2,7 +2,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setCurrentGuests, setCurrentHome, setCurrentStadium, resetTableFilters } from 'redux/gamesReducer';
+import { setCurrentGuests, setCurrentHome, setCurrentStadium } from 'redux/gamesReducer';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -159,11 +159,15 @@ const ContentTable = ({ games }) => {
               }>
               <div>{game.start_time.slice(0, 5)}</div>
               <div>{game.stadium_name}</div>
-              <div>{game.owners_name}</div>
+              <div>
+                <Link to={`/games/team/${game.owners_name}`}> {game.owners_name}</Link>
+              </div>
               <div>
                 {game.score_owners} - {game.score_guests}
               </div>
-              <div>{game.guests_name}</div>
+              <div>
+                <Link to={`/games/team/${game.guests_name}`}> {game.guests_name}</Link>
+              </div>
               <div className={cl.links}>
                 <div>
                   <Link to={`/game/${game.id}?tab=box`}>Box</Link>
