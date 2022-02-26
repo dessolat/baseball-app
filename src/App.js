@@ -5,6 +5,7 @@ import { QueryParamProvider } from 'use-query-params';
 import NavBar from './components/NavBar/NavBar';
 import Game from './pages/Game';
 import Games from 'pages/Games/Games';
+import TeamGames from 'pages/TeamGames';
 const App = () => {
   const RouteAdapter = ({ children }) => {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ const App = () => {
           <Route path=':gameId' element={<Game />} />
         </Route> */}
           <Route path='/games' element={<Games />} />
+          <Route path='/games/team/:teamName' element={<TeamGames />} />
           <Route path='/game/:gameId' element={<Game />} />
           <Route path='*' element={<Navigate to='/games' replace={true} />} />
         </Routes>
