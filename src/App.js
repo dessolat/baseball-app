@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocat
 import { QueryParamProvider } from 'use-query-params';
 import NavBar from './components/NavBar/NavBar';
 import Game from './pages/Game';
-import Games from 'pages/Games/Games';
+import Games from 'pages/Games';
 import TeamGames from 'pages/TeamGames';
 const App = () => {
   const RouteAdapter = ({ children }) => {
@@ -30,9 +30,6 @@ const App = () => {
       <QueryParamProvider ReactRouterRoute={RouteAdapter}>
         <NavBar />
         <Routes>
-          {/* <Route path='/game' element={<Game />}>
-          <Route path=':gameId' element={<Game />} />
-        </Route> */}
           <Route path='/games' element={<Games />} />
           <Route path='/games/team/:teamName' element={<TeamGames />} />
           <Route path='/game/:gameId' element={<Game />} />
