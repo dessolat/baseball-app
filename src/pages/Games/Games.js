@@ -1,24 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import cl from './Games.module.scss';
 import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
-// import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { addLeagueImage, resetTableFilters, setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
-
-const LEAGUES = [
-  { id: 1, name: 'All' },
-  { id: 2, name: 'Pervenstvo Russian Unior (19 years)' },
-  { id: 3, name: 'Russian championship' },
-  { id: 4, name: 'Russian championship' },
-  { id: 5, name: 'Russian championship' },
-  { id: 6, name: 'Russian championship' },
-  { id: 7, name: 'Russian championship' },
-  { id: 8, name: 'Russian championship' },
-  { id: 9, name: 'Russian championship' }
-];
 
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +34,6 @@ const Games = () => {
         console.log(response.data);
         setError('');
         dispatch(setGamesAndLeagues(response.data));
-        // setGamesData(response.data);
 
         if (games === null) {
           console.log('dispatched after fetching');
