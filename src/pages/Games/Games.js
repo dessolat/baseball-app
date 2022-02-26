@@ -5,7 +5,7 @@ import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 // import Loader from 'components/UI/loaders/Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLeagueImage, setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
+import { addLeagueImage, resetTableFilters, setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const LEAGUES = [
@@ -25,9 +25,12 @@ const Games = () => {
   const [error, setError] = useState('');
 
   const cancelTokenRef = useRef();
-	
-	const games = useSelector(state => state.games.games)
-	const leagues = useSelector(state => state.games.leagues)
+  const firstMountRef = useRef(true);
+
+  const games = useSelector(state => state.games.games);
+  const leagues = useSelector(state => state.games.leagues);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentGameType = useSelector(state => state.games.currentGameType);
   const currentYear = useSelector(state => state.games.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
@@ -40,17 +43,21 @@ const Games = () => {
         setIsLoading(true);
         const response = await axios.get(`http://51.250.11.151:3030/main/year-${currentYear}`, {
           cancelToken: cancelTokenRef.current.token,
-					timeout: 5000
+          timeout: 5000
         });
         console.log(response.data);
-				setError('')
+        setError('');
         dispatch(setGamesAndLeagues(response.data));
         // setGamesData(response.data);
-        dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+
+        if (games === null) {
+          console.log('dispatched after fetching');
+          dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+        }
       } catch (err) {
-				if (err.message === null) return
+        if (err.message === null) return;
         console.log(err.message);
-				setError(err.message)
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -89,12 +96,27 @@ const Games = () => {
       .forEach(league => fetchImage(league.id, league.logo));
   }, [games, leagues]);
 
+  useEffect(() => {
+    if (firstMountRef.current === true) return;
+
+    dispatch(resetTableFilters());
+  }, [currentGameType, currentYear, currentLeague]);
+
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+  }, [currentGameType, currentYear]);
+
   return (
     <>
       {/* {isLoading ? (
         <Loader />
       ) :  */}
-      {error ? (
+      {error && games === null ? (
         <ErrorLoader error={error} />
       ) : games === null ? (
         <></>

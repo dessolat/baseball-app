@@ -27,15 +27,10 @@ const ContentTable = ({ games }) => {
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.games.currentGameType);
-  const currentYear = useSelector(state => state.games.currentYear);
   const currentDate = useSelector(state => state.games.currentDate);
   const dispatch = useDispatch();
 
   const scrollItemRef = useRef(null);
-
-  useEffect(() => {
-    dispatch(resetTableFilters());
-  }, [currentGameType, currentYear, currentLeague]);
 
   useEffect(() => {
     if (scrollItemRef.current === null) return;

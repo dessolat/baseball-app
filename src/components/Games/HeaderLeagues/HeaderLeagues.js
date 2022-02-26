@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/gamesReducer';
+import { useSelector } from 'react-redux';
 
 const HeaderLeagues = () => {
   const [currentScroll, setCurrentScroll] = useState(0);
@@ -13,20 +12,18 @@ const HeaderLeagues = () => {
   const leaguesRef = useRef();
 
   const currentGameType = useSelector(state => state.games.currentGameType);
-	const leagues = useSelector(state => state.games.leagues)
-	const dispatch = useDispatch()
+  const leagues = useSelector(state => state.games.leagues);
 
   useEffect(() => {
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [currentScroll]);
-	
-  useEffect(() => {
-		leaguesRef.current.scrollLeft = 0
 
-		setIsLeftScroll(false);
+  useEffect(() => {
+    leaguesRef.current.scrollLeft = 0;
+
+    setIsLeftScroll(false);
     setIsRightScroll(leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-		dispatch(setCurrentLeague({id: -1, name: 'All'}))
   }, [currentGameType, leagues]);
 
   const scrollLeagues = e => {
