@@ -1,45 +1,70 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentLeaguesScroll } from 'redux/gamesReducer';
 
 const HeaderLeagues = () => {
-  const [currentScroll, setCurrentScroll] = useState(0);
   const [isLeftScroll, setIsLeftScroll] = useState(false);
   const [isRightScroll, setIsRightScroll] = useState(true);
 
   const leaguesRef = useRef();
+  const firstMountRef = useRef(true);
 
+  const games = useSelector(state => state.games.games);
   const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentYear = useSelector(state => state.games.currentYear);
   const leagues = useSelector(state => state.games.leagues);
+  const currentScroll = useSelector(state => state.games.currentLeaguesScroll);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    leaguesRef.current.style.scrollBehavior = 'unset';
+    leaguesRef.current.scrollLeft = currentScroll;
+    leaguesRef.current.style.scrollBehavior = 'smooth';
+  }, []);
+
+  useLayoutEffect(() => {
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [currentScroll]);
 
   useEffect(() => {
-    leaguesRef.current.scrollLeft = 0;
+    if (firstMountRef.current === true) {
+      return;
+    }
 
-    setIsLeftScroll(false);
-    setIsRightScroll(leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  }, [currentGameType, leagues]);
+    leaguesRef.current.scrollLeft = 0;
+    dispatch(setCurrentLeaguesScroll(0));
+  }, [currentGameType, currentYear]);
+
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
+    setIsLeftScroll(currentScroll <= 0 ? false : true);
+    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  }, [leagues, currentGameType]);
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
       const scrollValue = leaguesRef.current.scrollLeft - 249;
       leaguesRef.current.scrollLeft -= 249;
-      setCurrentScroll(scrollValue);
+      dispatch(setCurrentLeaguesScroll(scrollValue));
       return;
     }
     const scrollValue = leaguesRef.current.scrollLeft + 249;
     leaguesRef.current.scrollLeft += 249;
-    setCurrentScroll(scrollValue);
+    dispatch(setCurrentLeaguesScroll(scrollValue));
   };
 
   const filteredLeagues = useMemo(() => {
-    const newLeagues = leagues.filter(league => league.game_type === currentGameType);
+    const newLeagues = leagues.filter(
+      league => league.game_type === currentGameType && games.some(game => game.league_id === league.id)
+    );
     newLeagues.unshift({ id: -1, name: 'All' });
     return newLeagues;
   }, [leagues, currentGameType]);
