@@ -1,0 +1,15 @@
+.content {
+  position: relative;
+  display: flex;
+	align-items: flex-start;
+
+  > * {
+		position: relative;
+    background-color: #fff;
+		padding: 3rem 0 1rem;
+  }
+
+  > * + * {
+    margin-left: 6px;
+  }
+}
