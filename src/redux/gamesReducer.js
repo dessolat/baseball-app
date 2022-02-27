@@ -8,6 +8,7 @@ const defaultState = {
   currentStadium: 'All',
   currentHome: 'All',
   currentGuests: 'All',
+	currentLeaguesScroll: 0,
   leaguesImages: {}
 };
 
@@ -19,6 +20,7 @@ const SET_CURRENT_GAME_TYPE = 'SET_CURRENT_GAME_TYPE';
 const SET_CURRENT_STADIUM = 'SET_CURRENT_STADIUM';
 const SET_CURRENT_HOME = 'SET_CURRENT_HOME';
 const SET_CURRENT_GUESTS = 'SET_CURRENT_GUESTS';
+const SET_CURRENT_LEAGUES_SCROLL = 'SET_CURRENT_LEAGUES_SCROLL';
 const ADD_LEAGUE_IMAGE = 'ADD_LEAGUE_IMAGE';
 const RESET_TABLE_FILTERS = 'RESET_TABLE_FILTERS';
 
@@ -41,6 +43,8 @@ export const gamesReducer = (state = defaultState, action) => {
       return { ...state, currentHome: action.payload };
     case SET_CURRENT_GUESTS:
       return { ...state, currentGuests: action.payload };
+    case SET_CURRENT_LEAGUES_SCROLL:
+      return { ...state, currentLeaguesScroll: action.payload };
     case ADD_LEAGUE_IMAGE:
       return { ...state, leaguesImages: { ...state.leaguesImages, ...action.payload } };
     case RESET_TABLE_FILTERS:
@@ -58,5 +62,6 @@ export const setCurrentGameType = payload => ({ type: SET_CURRENT_GAME_TYPE, pay
 export const setCurrentStadium = payload => ({ type: SET_CURRENT_STADIUM, payload });
 export const setCurrentHome = payload => ({ type: SET_CURRENT_HOME, payload });
 export const setCurrentGuests = payload => ({ type: SET_CURRENT_GUESTS, payload });
+export const setCurrentLeaguesScroll = payload => ({ type: SET_CURRENT_LEAGUES_SCROLL, payload });
 export const addLeagueImage = payload => ({ type: ADD_LEAGUE_IMAGE, payload });
 export const resetTableFilters = () => ({ type: RESET_TABLE_FILTERS });
