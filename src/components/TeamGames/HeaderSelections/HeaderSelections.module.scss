@@ -1,0 +1,25 @@
+@import 'scss/vars.scss';
+
+.selections {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.teamInfo {
+  display: flex;
+  align-items: center;
+}
+
+.teamName {
+  font: 700 1.125rem var(--font-comfortaa);
+  margin-left: 0.8rem;
+}
+
+.years {
+  align-items: center;
+  cursor: pointer;
+  width: 5rem;
+  margin-left: -1.22rem;
+  text-align: center;
+}
