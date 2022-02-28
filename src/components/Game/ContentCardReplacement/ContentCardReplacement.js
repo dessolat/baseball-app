@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { getShortName } from 'utils';
 import cl from './ContentCardReplacement.module.scss';
 import ContentCardReplacementItem from './ContentCardReplacementItem';
 
@@ -12,7 +13,6 @@ const ContentCardReplacement = ({ events }) => {
 
   //   ref.current.innerHTML = text + '.';
   // }, [text]);
-  const getShortName = name => (name.length > 8 ? name.slice(0, 17) + '…' : name);
 
   let teamName;
   return (
@@ -23,8 +23,8 @@ const ContentCardReplacement = ({ events }) => {
 
           return (
             <React.Fragment key={i}>
-              {isVideo && <p className={cl.title}>{getShortName(event.team)} replacements:</p>}
-              <ContentCardReplacementItem event={event} header={`${getShortName(event.team)} replacements:`}/>
+              {isVideo && <p className={cl.title}>{getShortName(event.team, 18)} replacements:</p>}
+              <ContentCardReplacementItem event={event} header={`${getShortName(event.team, 18)} replacements:`}/>
             </React.Fragment>
           );
         }

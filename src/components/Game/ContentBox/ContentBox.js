@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentBox.module.scss';
 import ContentBoxTable from './ContentBoxTable';
-import { setSearchParam } from 'utils';
+import { getShortName, setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -52,9 +52,7 @@ const ContentBox = () => {
   const getClassName = name => (name === activeButton ? cl.active : null);
 
   const handleButtonClick = name => () => dispatch(setBoxActiveButton(name));
-
-  const getShortName = name => (name.length > 8 ? name.slice(0, 7) + '…' : name);
-
+	
   const tableData = boxData[activeButton];
   return (
     <>
@@ -97,10 +95,10 @@ const ContentBox = () => {
               {/* </div> */}
               <div className={cl.buttons}>
                 <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
-                  {preview && getShortName(preview.guests.name)}
+                  {preview && getShortName(preview.guests.name, 8)}
                 </span>
                 <span className={getClassName('owners')} onClick={handleButtonClick('owners')}>
-                  {preview && getShortName(preview.owners.name)}
+                  {preview && getShortName(preview.owners.name, 8)}
                 </span>
               </div>
             </div>

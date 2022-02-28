@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setCurrentGuests, setCurrentHome, setCurrentStadium } from 'redux/gamesReducer';
+import { getShortName } from 'utils';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 
@@ -86,6 +87,7 @@ const ContentTable = ({ games }) => {
       )
     )
   );
+	
   const guestsOptions = Array.from(
     new Set(
       filteredHeadings.reduce(
@@ -97,8 +99,6 @@ const ContentTable = ({ games }) => {
       )
     )
   );
-
-  const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader />

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
+import { getShortName } from 'utils';
 import cl from './ContentSideTables.module.scss';
+import { Link } from 'react-router-dom';
 
 const PctTable = ({ currentLeague }) => {
-  const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
-
   const sortedTeams = useMemo(
     () =>
       currentLeague.teams
@@ -13,26 +13,33 @@ const PctTable = ({ currentLeague }) => {
   );
 
   return (
-    <table className={cl.pctTable}>
-      <thead>
-        <tr>
-          <th>Team</th>
-          <th>W</th>
-          <th>L</th>
-          <th>PCT</th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedTeams.map(team => (
-          <tr key={team.id}>
-            <td>{getShortName(team.name, 23)}</td>
-            <td>{team.wins}</td>
-            <td>{team.loses}</td>
-            <td>0000</td>
+    <>
+      <div className={cl.header}>
+        <Link to='/stats/team'>Go to Team Stat</Link>
+      </div>
+      <table className={cl.pctTable}>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>W</th>
+            <th>L</th>
+            <th>PCT</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sortedTeams.map(team => (
+            <tr key={team.id}>
+              <td>
+                <Link to={`/games/team/${team.name}`}> {getShortName(team.name, 23)}</Link>
+              </td>
+              <td>{team.wins}</td>
+              <td>{team.loses}</td>
+              <td>0000</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 

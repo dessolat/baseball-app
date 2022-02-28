@@ -52,3 +52,5 @@ export const getBeforeAfterFlags = (cards, innings) => {
 
 	return result
 };
+
+export const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
