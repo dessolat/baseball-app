@@ -46,19 +46,18 @@ const TeamGames = () => {
     };
     fetchGamesData();
 
-    return () => {
-      cancelTokenRef.current.cancel(null);
-    };
-  }, [currentYear]);
-
-	useEffect(() => {
-    if (firstMountRef.current === true) {
+		if (firstMountRef.current === true) {
       firstMountRef.current = false;
       return;
     }
 
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+
+    return () => {
+      cancelTokenRef.current.cancel(null);
+    };
   }, [currentYear]);
+
   return (
     <>
       {/* {isLoading ? (
