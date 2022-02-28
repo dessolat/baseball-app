@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from './ContentSideTables.module.scss';
 import ArrowDown from 'components/UI/icons/ArrowDown';
+import { Link } from 'react-router-dom';
 
 const SECOND_TABLE_DATA = [
   { id: 1, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
@@ -13,9 +14,12 @@ const SECOND_TABLE_DATA = [
 const SwitchTable = () => {
   return (
     <>
-      <p className={cl.drop}>
-        Batting <ArrowDown />
-      </p>
+      <div className={cl.header}>
+        <p className={cl.drop}>
+          Batting <ArrowDown />
+        </p>
+        <Link to='/stats/player'>Go to Player Stat</Link>
+      </div>
       <table className={cl.switchTable}>
         <thead>
           <tr>
