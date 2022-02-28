@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import Game from './pages/Game';
 import Games from 'pages/Games';
 import TeamGames from 'pages/TeamGames';
+import Stats from 'pages/Stats';
 const App = () => {
   const RouteAdapter = ({ children }) => {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ const App = () => {
           <Route path='/games' element={<Games />} />
           <Route path='/games/team/:teamName' element={<TeamGames />} />
           <Route path='/game/:gameId' element={<Game />} />
+          <Route path='/stats/:statsType' element={<Stats />} />
           <Route path='*' element={<Navigate to='/games' replace={true} />} />
         </Routes>
       </QueryParamProvider>
