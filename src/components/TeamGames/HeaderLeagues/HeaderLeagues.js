@@ -67,7 +67,8 @@ const HeaderLeagues = () => {
     const newLeagues = leagues.filter(league =>
       games.some(
         game =>
-          game.league_id === league.id && (game.owners_name === teamName || game.guests_name === teamName)
+          // game.league_id === league.id && (game.owners_name === teamName || game.guests_name === teamName)
+          game.league_id === league.id
       )
     );
     newLeagues.unshift({ id: -1, name: 'All' });
