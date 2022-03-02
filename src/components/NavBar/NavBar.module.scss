@@ -1,16 +1,15 @@
 @import 'scss/vars.scss';
 
 .navbar {
-	height: 2.1875rem;
-	font: bold 1.125rem var(--font-comfortaa);
-	border-bottom: .5px solid #CDCCCC;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: linear-gradient(
-		90deg, #f4f5f7 12.5%, #eeeeef 100%);
+  height: 2.1875rem;
+  font: bold 1.125rem var(--font-comfortaa);
+  border-bottom: 0.5px solid #cdcccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
 
-	> a {
-		// margin-left: 1rem;
-	}
+  > a + a {
+    margin-left: 1rem;
+  }
 }
