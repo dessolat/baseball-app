@@ -22,23 +22,6 @@ const PLAYERS_DATA = [
 ];
 
 const ContentPlayersTable = () => {
-  // //Games filtering
-  // let filteredData = useMemo(
-  //   () =>
-  //     games.filter(
-  //       game =>
-  //         (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-  //         (currentLeague.id !== -1
-  //           ? game.league_id === currentLeague.id
-  //           : currentGameType === game.game_type) &&
-  //         (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-  //         (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
-  //     ),
-  //   [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]
-  // );
-
-  // //Games sorting
-  // filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? 1 : -1)), [filteredData]);
   return (
     <div className={cl.wrapper}>
       <div className={cl.table}>
