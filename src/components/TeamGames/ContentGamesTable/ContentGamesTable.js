@@ -53,14 +53,12 @@ const ContentGamesTable = () => {
             <li key={game.id} className={cl.tableRow}>
               <div>{game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]}</div>
               <div>
-                {/* {game.owners_name} */}
                 <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 22)}</Link>
               </div>
               <div>
                 {game.score_owners} - {game.score_guests}
               </div>
               <div>
-                {/* {game.guests_name} */}
                 <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 22)}</Link>
               </div>
               <div className={cl.links}>
