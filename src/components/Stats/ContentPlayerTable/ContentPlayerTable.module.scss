@@ -3,69 +3,53 @@
   padding: 2rem;
 }
 
-.table {
-  > .tableHeader {
-    color: #838383;
-    border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
-    box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
-    display: flex;
-    align-items: center;
-    min-height: 2rem;
-    justify-content: space-between;
+.tableHeader {
+  color: #838383;
+  border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
+  box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
 
-    > div {
-      font: 700 0.75rem var(--font-nunito);
-      text-align: center;
-      width: 1.8rem;
+  > div {
+    font: 700 0.75rem var(--font-nunito);
+  }
+}
 
-      &:first-child,
-      &:nth-child(3) {
-        text-align: left;
-        width: 14.5rem;
-        padding-left: 1rem;
-      }
-
-      &:nth-child(17),
-      &:nth-child(18),
-      &:nth-child(19),
-      &:nth-child(20) {
-        width: 3.2rem;
-      }
-    }
+.tableRow {
+  > div {
+    font: 300 0.875rem var(--font-nunito);
   }
 
-  .rows {
-    position: relative;
+  &:nth-child(2n) {
+    background-color: #eaeaea;
   }
+}
 
-  .tableRow {
-    min-height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.tableHeader,
+.tableRow {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    > div {
-      text-align: center;
-      font: 300 0.875rem var(--font-nunito);
-      width: 1.8rem;
+  > div {
+    text-align: center;
+    width: 1.8rem;
 
-      &:first-child,
-      &:nth-child(3) {
-        text-align: left;
-        width: 14.5rem;
-        padding-left: 1rem;
-      }
-
-      &:nth-child(17),
-      &:nth-child(18),
-      &:nth-child(19),
-      &:nth-child(20) {
-        width: 3.2rem;
-      }
+    &:first-child,
+    &:nth-child(3) {
+      text-align: left;
+      width: 14.5rem;
+      padding-left: 1rem;
     }
 
-    &:nth-child(2n) {
-      background-color: #eaeaea;
+    &:nth-child(17),
+    &:nth-child(18),
+    &:nth-child(19),
+    &:nth-child(20) {
+      width: 3.2rem;
     }
   }
+}
+
+.rows {
+  position: relative;
 }
