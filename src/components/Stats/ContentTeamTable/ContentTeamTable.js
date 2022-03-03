@@ -208,7 +208,7 @@ const TABLE_DATA = [
 const ContentTeamTable = () => {
   return (
     <div className={cl.wrapper}>
-      <div className={cl.table}>
+      <div>
         <div className={cl.tableHeader}>
           <div>Team</div>
           <div>AB</div>
