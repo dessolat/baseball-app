@@ -228,7 +228,7 @@ const TABLE_DATA = [
 const ContentPlayerTable = () => {
   return (
     <div className={cl.wrapper}>
-      <div className={cl.table}>
+      <div>
         <div className={cl.tableHeader}>
           <div> </div>
           <div>POS</div>
