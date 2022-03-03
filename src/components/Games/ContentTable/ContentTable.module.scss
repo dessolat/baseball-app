@@ -84,6 +84,7 @@
 
 	.rows {
 		max-height: calc(55vh + 7px);
+		overflow-x: hidden;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
 		position: relative;
