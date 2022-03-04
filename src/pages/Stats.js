@@ -4,21 +4,21 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import axios from 'axios';
-import Header from 'components/Stats/Header/Header'
+import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
 
 const Stats = () => {
-	const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-	const cancelTokenRef = useRef();
-	const firstMountRef = useRef(true);
+  const cancelTokenRef = useRef();
+  const firstMountRef = useRef(true);
 
-	const games = useSelector(state => state.games.games);
-	const currentYear = useSelector(state => state.games.currentYear);
-	const dispatch = useDispatch()
+  const games = useSelector(state => state.games.games);
+  const currentYear = useSelector(state => state.games.currentYear);
+  const dispatch = useDispatch();
 
-	useEffect(() => {
+  useEffect(() => {
     const fetchGamesData = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
 
@@ -46,12 +46,12 @@ const Stats = () => {
     };
     fetchGamesData();
 
-		if (firstMountRef.current === true) {
-			firstMountRef.current = false;
-			return;
-		}
-	
-		dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
 
     return () => {
       cancelTokenRef.current.cancel(null);
