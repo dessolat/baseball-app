@@ -33,7 +33,6 @@ export const gamesReducer = (state = defaultState, action) => {
     case SET_CURRENT_YEAR:
       return { ...state, currentYear: action.payload };
     case SET_CURRENT_DATE:
-			console.log(action.payload);
       return { ...state, currentDate: action.payload };
     case SET_CURRENT_GAME_TYPE:
       return { ...state, currentGameType: action.payload };
