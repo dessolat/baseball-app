@@ -25,28 +25,36 @@ const HeaderLeagues = () => {
     leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
+
+		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+		dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft))
   }, []);
 
   useLayoutEffect(() => {
+		if (firstMountRef.current === true) {
+      return;
+    }
+
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [currentScroll]);
-
+	
   useEffect(() => {
-    if (firstMountRef.current === true) {
-      return;
+		if (firstMountRef.current === true) {
+			return;
     }
-
+		
     leaguesRef.current.scrollLeft = 0;
     dispatch(setCurrentLeaguesScroll(0));
   }, [currentYear]);
-
+	
   useEffect(() => {
-    if (firstMountRef.current === true) {
-      firstMountRef.current = false;
+		if (firstMountRef.current === true) {
+			firstMountRef.current = false;
       return;
     }
-
+		
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [leagues]);
@@ -67,8 +75,7 @@ const HeaderLeagues = () => {
     const newLeagues = leagues.filter(league =>
       games.some(
         game =>
-          // game.league_id === league.id && (game.owners_name === teamName || game.guests_name === teamName)
-          game.league_id === league.id
+          game.league_id === league.id && (game.owners_name === teamName || game.guests_name === teamName)
       )
     );
     newLeagues.unshift({ id: -1, name: 'All' });
