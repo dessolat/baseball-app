@@ -87,7 +87,7 @@ const ContentTable = ({ games }) => {
       )
     )
   );
-	
+
   const guestsOptions = Array.from(
     new Set(
       filteredHeadings.reduce(
@@ -99,6 +99,7 @@ const ContentTable = ({ games }) => {
       )
     )
   );
+
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader />
@@ -138,47 +139,42 @@ const ContentTable = ({ games }) => {
           <div>Inn</div>
         </div>
         <ul className={cl.rows}>
-          {filteredData.map((game, index) => (
-            <li
-              key={game.id}
-              ref={
-                game.date === currentDate.toJSON().slice(0, 10) &&
-                (index === 0 || filteredData[index].date !== filteredData[index - 1].date)
-                  ? scrollItemRef
-                  : null
-              }
-              style={currentDate.toJSON().slice(0, 10) === game.date ? { backgroundColor: '#E0F0FF' } : null}
-              className={
-                index === 0 || filteredData[index].date !== filteredData[index - 1].date
-                  ? `${cl.tableRow} ${cl.withDate}`
-                  : cl.tableRow
-              }
-              data-before={
-                index === 0 || filteredData[index].date !== filteredData[index - 1].date
-                  ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
-                  : null
-              }>
-              <div>{game.start_time.slice(0, 5)}</div>
-              <div>{game.stadium_name}</div>
-              <div>
-                <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 28)}</Link>
-              </div>
-              <div>
-                {game.score_owners} - {game.score_guests}
-              </div>
-              <div>
-                <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 28)}</Link>
-              </div>
-              <div className={cl.links}>
+          {filteredData.map((game, index, arr) => {
+            const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
+            const isActive = currentDate.toJSON().slice(0, 10) === game.date;
+            const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] : null;
+
+            const classes = [cl.tableRow];
+            isDate && classes.push(cl.withDate);
+            isActive && classes.push(cl.active);
+            return (
+              <li
+                key={game.id}
+                ref={isActive && isDate ? scrollItemRef : null}
+                className={classes.join(' ')}
+                data-before={dataBefore}>
+                <div>{game.start_time.slice(0, 5)}</div>
+                <div>{game.stadium_name}</div>
                 <div>
-                  <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-                  <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                  {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                  <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 28)}</Link>
                 </div>
-              </div>
-              <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-            </li>
-          ))}
+                <div>
+                  {game.score_owners} - {game.score_guests}
+                </div>
+                <div>
+                  <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 28)}</Link>
+                </div>
+                <div className={cl.links}>
+                  <div>
+                    <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                    <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                    {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                  </div>
+                </div>
+                <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
