@@ -65,6 +65,8 @@ const ContentGridCalendar = ({ value, onChange }) => {
           onChange={changeHandler}
           className='gamesCalendar'
           locale='EN-en'
+          // minDate={new Date(2021, 1, 1)}
+          // maxDate={new Date(2022, 9, 1)}
           showNeighboringMonth={false}
           tileClassName={({ activeStartDate, date, view }) => {
             let tileDate = date;
