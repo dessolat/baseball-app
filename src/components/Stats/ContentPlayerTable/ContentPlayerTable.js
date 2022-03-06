@@ -254,7 +254,9 @@ const ContentPlayerTable = () => {
         <ul className={cl.rows}>
           {TABLE_DATA.map((row, index) => (
             <li key={index} className={cl.tableRow}>
-              <div>{row.player_name}</div>
+              <div>
+                <Link to={`/stats/player/${row.player_name}`}> {row.player_name}</Link>
+              </div>
               <div>{row.pos}</div>
               <div>
                 <Link to={`/games/team/${row.team_name}`}> {row.team_name}</Link>
