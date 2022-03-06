@@ -1,0 +1,57 @@
+@import 'scss/vars.scss';
+
+.selections {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.types {
+  display: flex;
+	font-size: 1.125rem;
+
+  > * {
+		border-bottom: 2.15px solid transparent;
+		transition: all var(--transition-speed);
+
+    &:hover {
+      cursor: pointer;
+			border-bottom: 2.15px solid var(--side-color);
+    }
+  }
+
+  > * + * {
+    margin-left: 1.95rem;
+  }
+}
+
+.teamName {
+  font: 700 1.125rem var(--font-comfortaa);
+  margin-left: 0.8rem;
+}
+
+.years {
+  align-items: center;
+  cursor: pointer;
+  width: 5rem;
+  margin-left: -1.22rem;
+  text-align: center;
+}
+
+.active {
+	border-bottom: 2.15px solid var(--side-color);
+}
+
+.bottom {
+	display: flex;
+
+	> * + * {
+		margin-left: 1rem;
+	}
+}
+
+.batting {
+	display: flex;
+	align-items: center;
+	font-size: .875rem;
+}
