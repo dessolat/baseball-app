@@ -52,13 +52,13 @@ const ContentGamesTable = () => {
           {filteredData.map((game, index) => (
             <li key={game.id} className={cl.tableRow}>
               <div>{game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]}</div>
-              <div>
+              <div className={cl.underlineHover}>
                 <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 22)}</Link>
               </div>
               <div>
                 {game.score_owners} - {game.score_guests}
               </div>
-              <div>
+              <div className={cl.underlineHover}>
                 <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 22)}</Link>
               </div>
               <div className={cl.links}>

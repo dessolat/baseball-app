@@ -29,7 +29,7 @@ const PctTable = ({ currentLeague }) => {
         <tbody>
           {sortedTeams.map(team => (
             <tr key={team.id}>
-              <td>
+              <td className={cl.underlineHover}>
                 <Link to={`/games/team/${team.name}`}> {getShortName(team.name, 23)}</Link>
               </td>
               <td>{team.wins}</td>
