@@ -16,7 +16,7 @@ function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen) {
   };
 }
 
-const Dropdown = ({ title, options, currentOption, handleClick, listStyles = null }) => {
+const Dropdown = ({ title, options, currentOption, handleClick, listStyles = null, itemStyles = null }) => {
   const [listening, setListening] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,7 +47,7 @@ const Dropdown = ({ title, options, currentOption, handleClick, listStyles = nul
             <li
               key={i}
               onClick={handleOptionClick(option)}
-              style={currentOption === option ? { backgroundColor: '#E0F0FF' } : null}>
+              style={currentOption === option ? { backgroundColor: '#E0F0FF', ...itemStyles } : itemStyles}>
               {option}
             </li>
           ))}
