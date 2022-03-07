@@ -5,17 +5,18 @@ import { useDispatch } from 'react-redux';
 import { setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import axios from 'axios';
 import Header from 'components/PlayerStats/Header/Header';
-// import Content from 'components/Stats/Content/Content';
+import Content from 'components/PlayerStats/Content/Content';
 
 const PlayerStats = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const currentYear = useSelector(state => state.games.currentYear);
+	const [playerYears, setPlayerYears] = useState(currentYear);
 
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
 
   const games = useSelector(state => state.games.games);
-  const currentYear = useSelector(state => state.games.currentYear);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -69,8 +70,8 @@ const PlayerStats = () => {
         <></>
       ) : (
         <>
-          <Header />
-          {/* <Content games={games} /> */}
+          <Header playerYears={playerYears} setPlayerYears={setPlayerYears}/>
+          <Content games={games} playerYears={playerYears}/>
         </>
       )}
     </>
