@@ -4,11 +4,11 @@ import HeaderWrapper from 'components/HeaderWrapper/HeaderWrapper';
 import HeaderSelections from '../HeaderSelections/HeaderSelections';
 import HeaderLeagues from '../HeaderLeagues/HeaderLeagues';
 
-const Header = () => {
+const Header = ({ playerYears, setPlayerYears }) => {
   return (
     <HeaderWrapper>
       <div className={cl.headerContent}>
-        <HeaderSelections />
+        <HeaderSelections playerYears={playerYears} setPlayerYears={setPlayerYears}/>
         <HeaderLeagues />
       </div>
     </HeaderWrapper>
