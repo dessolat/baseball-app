@@ -6,36 +6,22 @@
   justify-content: space-evenly;
 }
 
-.types {
-  display: flex;
-	font-size: 1.125rem;
-
-  > * {
-		border-bottom: 2.15px solid transparent;
-		transition: all var(--transition-speed);
-
-    &:hover {
-      cursor: pointer;
-			border-bottom: 2.15px solid var(--side-color);
-    }
-  }
-
-  > * + * {
-    margin-left: 1.95rem;
-  }
+.playerInfo {
+	display: flex;
+	align-items: center;
 }
 
-.teamName {
+.fullName {
   font: 700 1.125rem var(--font-comfortaa);
-  margin-left: 0.8rem;
+  margin-left: 1.2rem;
 }
 
 .years {
   align-items: center;
   cursor: pointer;
-  width: 5rem;
-  margin-left: -1.22rem;
-  text-align: center;
+  width: 5.8rem;
+  // margin-left: -1.1rem;
+  text-align: left;
 }
 
 .active {
@@ -44,6 +30,7 @@
 
 .bottom {
 	display: flex;
+	align-items: baseline;
 
 	> * + * {
 		margin-left: 1rem;
@@ -53,5 +40,5 @@
 .batting {
 	display: flex;
 	align-items: center;
-	font-size: .875rem;
+	font-size: .75rem;
 }
