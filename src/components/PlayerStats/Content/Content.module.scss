@@ -1,0 +1,21 @@
+.content {
+  position: relative;
+  background-color: #fff;
+  padding: 1.34rem 2.12rem;
+
+  > * {
+    position: relative;
+  }
+}
+
+.playerChr {
+  font-size: 0.875rem;
+}
+
+.dropWrapper {
+	width: 5.5rem;
+	text-align: center;
+	margin-left: -1.1rem;
+	margin-top: .5rem;
+	font-size: .875rem;
+}
