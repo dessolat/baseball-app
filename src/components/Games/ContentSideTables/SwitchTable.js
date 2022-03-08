@@ -36,7 +36,7 @@ const SwitchTable = () => {
         <tbody>
           {SECOND_TABLE_DATA.map(row => (
             <tr key={row.id}>
-              <td>{row.name}</td>
+              <td className={cl.underlineHover}><Link to={`/stats/player/${row.name}`}>{row.name}</Link></td>
               <td>{row.team}</td>
               <td>{row.avr}</td>
             </tr>

@@ -38,7 +38,7 @@ const ContentPlayersTable = () => {
           {PLAYERS_DATA.map((player, index) => (
             <li key={index} className={cl.tableRow}>
               <div>{index + 1}</div>
-              <div>
+              <div className={cl.underlineHover}>
                 <Link to={`/stats/player/${player.surname} ${player.name}`}>
                   {player.surname + ' ' + player.name}
                 </Link>
