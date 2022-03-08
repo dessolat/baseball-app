@@ -1,0 +1,64 @@
+@import 'scss/vars.scss';
+
+.wrapper {
+  flex: 1;
+	margin-top: -.2rem;
+}
+
+.tableHeader {
+  color: #838383;
+  border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
+  box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
+
+  > div {
+    font: 700 0.75rem var(--font-nunito);
+    position: relative;
+  }
+}
+
+.tableRow {
+  > div {
+    font: 300 0.875rem var(--font-nunito);
+  }
+
+  &:nth-child(2n) {
+    background-color: #eaeaea;
+  }
+}
+
+.tableHeader,
+.tableRow {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+
+  > .year {
+    width: 4rem;
+  }
+
+  > .league {
+    text-align: left;
+    width: 14rem;
+    padding-left: 0.5rem;
+  }
+
+  > .game {
+    text-align: left;
+    width: 18rem;
+    padding-left: 0.5rem;
+  }
+
+  .wider {
+    width: 2.8rem;
+  }
+
+  > div {
+    width: 1.5rem;
+  }
+}
+
+.rows {
+  position: relative;
+}
