@@ -4,9 +4,9 @@ import ContentCalendarListItem from './ContentCalendarListItem';
 
 const ContentCalendarList = ({ currentDate, handleClick }, ref) => {
   const dates = [];
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 15; i++) {
     const tempDate = new Date(currentDate);
-    tempDate.setDate(tempDate.getDate() - 4 + i);
+    tempDate.setDate(tempDate.getDate() - 6 + i);
     dates.push(tempDate);
   }
 
