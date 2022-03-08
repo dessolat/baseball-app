@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cl from './ContentPitchingTable.module.scss';
+import ContentPitchingTableHeader from './ContentPitchingTableHeader';
 
 const ContentPitchingTable = ({ TABLE_DATA, playerYears }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -8,29 +9,7 @@ const ContentPitchingTable = ({ TABLE_DATA, playerYears }) => {
   return (
     <div className={cl.wrapper}>
       <div>
-        <div className={cl.tableHeader}>
-          {playerYears === 'All years' && <div className={cl.year}>Years</div>}
-          {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-          {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
-          <div>PA</div>
-          <div>R</div>
-          <div>ER</div>
-          <div>H</div>
-          <div>2B</div>
-          <div>3B</div>
-          <div>HR</div>
-          <div>BB</div>
-          <div>IBB</div>
-          <div>HP</div>
-          <div>SH</div>
-          <div>SF</div>
-          <div>SO</div>
-          <div>WP</div>
-          <div className={cl.wider}>ERA</div>
-          <div>NP</div>
-          <div>NS</div>
-          <div>NB</div>
-        </div>
+        <ContentPitchingTableHeader playerYear={playerYears} currentLeague={currentLeague} />
         <ul className={cl.rows}>
           {TABLE_DATA.pitching.map((row, index) => (
             <li key={index} className={cl.tableRow}>
