@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import cl from './ContentCalendar.module.scss';
 import ContentCalendarList from './ContentCalendarList';
 
-const ContentCalendar = ({ onChange }) => {
+const ContentCalendar = ({ onChange, calendarScroll }) => {
   const ref = useRef();
   const timeoutRef = useRef(null);
 
@@ -12,17 +12,25 @@ const ContentCalendar = ({ onChange }) => {
 
   useEffect(() => {
     ref.current.style.transition = 'none';
-    ref.current.style.transform = `translate(60.5px)`;
+    ref.current.style.transform = `translate(0px)`;
+
     setTimeout(() => {
       ref.current.style.transition = 'all .4s';
       timeoutRef.current = null;
     }, 100);
   }, [currentDate]);
 
+	useEffect(() => {
+		if (!calendarScroll.isScroll) return
+
+		ref.current.style.transform = `translate(${0 - 60.5 * calendarScroll.amount}px)`;
+	}, [calendarScroll])
+	
+
   const handleDateClick = date => () => {
     if (timeoutRef.current !== null) return;
     const daysDelta = (date - currentDate) / 1000 / 60 / 60 / 24;
-    ref.current.style.transform = `translate(${60.5 - 60.5 * daysDelta}px)`;
+    ref.current.style.transform = `translate(${0 - 60.5 * daysDelta}px)`;
     timeoutRef.current = setTimeout(() => {
       onChange(date);
     }, 250);
