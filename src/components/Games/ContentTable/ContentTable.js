@@ -63,7 +63,13 @@ const ContentTable = ({ games }) => {
   );
 
   //Games sorting
-  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? 1 : -1)), [filteredData]);
+  filteredData = useMemo(
+    () =>
+      filteredData
+        .sort((a, b) => (a.date > b.date ? 1 : -1))
+        .sort((a, b) => (a.date === b.date && a.start_time < b.start_time ? -1 : 1)),
+    [filteredData]
+  );
 
   const stadiumOptions = Array.from(
     new Set(
