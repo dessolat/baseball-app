@@ -67,9 +67,7 @@ const TABLES_INFO = {
 const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
   const getFieldSum = (table, field) =>
     table === 'fielding'
-      ? tableData
-          // .filter(player => player.is_catcher)
-          .reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
+      ? tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
       : table === 'catching'
       ? tableData
           .filter(player => player.is_catcher)
@@ -86,22 +84,12 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
           {TABLES_INFO[tableName].headers.map((title, i) => (
             <th key={i}>{title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title}</th>
           ))}
-          {/* {Object.keys(tableData[0])
-            .slice(1)
-            .map((title, i) => (
-              <th key={i}>{title.toUpperCase()}</th>
-            ))} */}
         </tr>
       </thead>
       <tbody>
         {tableData
           .filter(player =>
-            tableName === 'pitching'
-              ? player.is_pitcher
-              : tableName === 'catching'
-              ? // : tableName === 'catching' || tableName === 'fielding'
-                player.is_catcher
-              : true
+            tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
           )
           .map((player, i) => {
             if (player.is_substituted && tableName === 'batting') rowDelta++;
@@ -132,20 +120,9 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
                       : player.content[tableName][title]}
                   </td>
                 ))}
-                {/* {Object.entries(player).map((entry, j) => (
-              <td key={j}>{toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}</td>
-            ))} */}
               </tr>
             );
           })}
-        {/* {tableData.map((player, i) => (
-          <tr key={i}>
-            <td>{i + 1}</td>
-            {Object.entries(player).map((entry, j) => (
-              <td key={j}>{toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}</td>
-            ))}
-          </tr>
-        ))} */}
       </tbody>
       <tfoot>
         <tr
@@ -162,7 +139,6 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
           }>
           <td></td>
           <td>TOTALS</td>
-          {/* {footerOffset > 1 && <td></td>} */}
           {TABLES_INFO[tableName].headers.map((title, i) => (
             <td key={i}>
               {title === 'PB'
@@ -183,27 +159,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
                   )}
             </td>
           ))}
-
-          {/* {Object.entries(tableData[0])
-            .slice(footerOffset)
-            .map((entry, j) => (
-              <td key={j} style={toFixList.includes(entry[0]) ? { width: '3rem' } : null}>
-                {toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}
-              </td>
-            ))} */}
         </tr>
-        {/* <tr style={tableData.length % 2 ? { backgroundColor: '#eaeaea' } : {}}>
-          <td></td>
-          <td>TOTALS</td>
-          {footerOffset > 1 && <td></td>}
-          {Object.entries(tableData[0])
-            .slice(footerOffset)
-            .map((entry, j) => (
-              <td key={j} style={toFixList.includes(entry[0]) ? { width: '3rem' } : null}>
-                {toFixList.includes(entry[0]) ? entry[1].toFixed(3) : entry[1]}
-              </td>
-            ))}
-        </tr> */}
       </tfoot>
     </table>
   );
