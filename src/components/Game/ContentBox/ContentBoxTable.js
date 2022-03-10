@@ -109,7 +109,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
             return (
               <tr key={i}>
                 <td>
-                  {(player.is_substituted && tableName === 'batting') || i > 8 || tableName !== 'batting'
+                  {(player.is_substituted && tableName === 'batting') || tableName !== 'batting'
                     ? ' '
                     : i + 1 - rowDelta}
                 </td>
