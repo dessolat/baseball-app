@@ -16,8 +16,8 @@ const ContentBox = () => {
   const { gameId } = useParams();
 
   const preview = useSelector(state => state.game.preview);
-	const activeButton = useSelector(state => state.game.boxActiveButton)
-	const dispatch = useDispatch()
+  const activeButton = useSelector(state => state.game.boxActiveButton);
+  const dispatch = useDispatch();
 
   const cancelTokenRef = useRef();
 
@@ -52,7 +52,7 @@ const ContentBox = () => {
   const getClassName = name => (name === activeButton ? cl.active : null);
 
   const handleButtonClick = name => () => dispatch(setBoxActiveButton(name));
-	
+
   const tableData = boxData[activeButton];
   return (
     <>
@@ -78,21 +78,12 @@ const ContentBox = () => {
                 footerOffset={1}
                 toFixList={['ERA']}
               />
-              {/* <div className={cl.wrapper}> */}
-                {/* <ContentBoxTable
-                  tableData={tableData}
-                  tableClass={cl.fieldingTable}
-                  tableName='fielding'
-                  toFixList={['FLD']}
-                  footerOffset={1}
-                /> */}
-                <ContentBoxTable
-                  tableData={tableData}
-                  tableClass={cl.catchingTable}
-                  tableName='catching'
-                  footerOffset={1}
-                />
-              {/* </div> */}
+              <ContentBoxTable
+                tableData={tableData}
+                tableClass={cl.catchingTable}
+                tableName='catching'
+                footerOffset={1}
+              />
               <div className={cl.buttons}>
                 <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
                   {preview && getShortName(preview.guests.name, 8)}
