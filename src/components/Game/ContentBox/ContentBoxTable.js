@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './ContentBoxTable.module.scss';
+import ContentBoxTableHeader from './ContentBoxTableHeader';
 
 const TABLES_INFO = {
   batting: {
@@ -77,15 +78,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
   let rowDelta = 0;
   return (
     <table className={cl.table + ' ' + tableClass}>
-      <thead>
-        <tr>
-          <th></th>
-          <th></th>
-          {TABLES_INFO[tableName].headers.map((title, i) => (
-            <th key={i}>{title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title}</th>
-          ))}
-        </tr>
-      </thead>
+      <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
       <tbody>
         {tableData
           .filter(player =>
