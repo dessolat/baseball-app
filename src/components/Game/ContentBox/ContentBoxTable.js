@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from './ContentBoxTable.module.scss';
 import ContentBoxTableBody from './ContentBoxTableBody';
+import ContentBoxTableFooter from './ContentBoxTableFooter';
 import ContentBoxTableHeader from './ContentBoxTableHeader';
 
 const TABLES_INFO = {
@@ -66,64 +67,22 @@ const TABLES_INFO = {
   }
 };
 
-const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
-  const getFieldSum = (table, field) =>
-    table === 'fielding'
-      ? tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
-      : table === 'catching'
-      ? tableData
-          .filter(player => player.is_catcher)
-          .reduce((sum, cur) => sum + Number(cur.content['running'][field]), 0)
-      : tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0);
-
-  return (
-    <table className={cl.table + ' ' + tableClass}>
-      <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
-      <ContentBoxTableBody
-        TABLES_INFO={TABLES_INFO}
-        tableName={tableName}
-        tableData={tableData}
-        toFixList={toFixList}
-      />
-      <tfoot>
-        <tr
-          style={
-            tableData.filter(player =>
-              tableName === 'pitching'
-                ? player.is_pitcher
-                : tableName === 'catching'
-                ? player.is_catcher
-                : true
-            ).length % 2
-              ? { backgroundColor: '#eaeaea' }
-              : {}
-          }>
-          <td></td>
-          <td>TOTALS</td>
-          {TABLES_INFO[tableName].headers.map((title, i) => (
-            <td key={i}>
-              {title === 'PB'
-                ? '--'
-                : title === 'POS'
-                ? ' '
-                : title === 'SB_pr'
-                ? getFieldSum('running', title).toFixed(3)
-                : title === 'FLD'
-                ? getFieldSum('fielding', title).toFixed(3)
-                : ['CH', 'PO', 'A', 'E', 'DP'].includes(title)
-                ? getFieldSum('fielding', title)
-                : toFixList.includes(title)
-                ? getFieldSum(tableName, title).toFixed(3)
-                : getFieldSum(
-                    ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching' ? 'running' : tableName,
-                    title
-                  )}
-            </td>
-          ))}
-        </tr>
-      </tfoot>
-    </table>
-  );
-};
+const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => (
+  <table className={cl.table + ' ' + tableClass}>
+    <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
+    <ContentBoxTableBody
+      TABLES_INFO={TABLES_INFO}
+      tableName={tableName}
+      tableData={tableData}
+      toFixList={toFixList}
+    />
+    <ContentBoxTableFooter
+      TABLES_INFO={TABLES_INFO}
+      tableName={tableName}
+      tableData={tableData}
+      toFixList={toFixList}
+    />
+  </table>
+);
 
 export default ContentBoxTable;
