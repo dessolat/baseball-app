@@ -55,19 +55,15 @@
   }
 
   .dataAfterNoVideo {
-    // left: unset;
     left: calc(50% - 1px);
 		transform: translateX(-50%);
-    // right: 0;
     width: calc(100% + 2px);
 		background-color: white;
 		border-left: 2px solid white;
-    // width: 32%;
 		display: flex;
 		justify-content: center;
 		> span {
 			border-left: 2px solid lightgray;
-			// width: 6.2rem;
 			width: calc((100% - 33rem) / 4 + 2px);
 			@media screen and (max-width: 1275px) {
 				width: calc((100% - 31rem) / 4 + 2px);
@@ -111,8 +107,6 @@
   }
 
   &.dataBeforeNoVideo {
-		// padding-left: 5.89rem;
-		// padding-right: 5.89rem;
 		padding-left: 16.5rem;
 		padding-right: 16.5rem;
 		
@@ -130,7 +124,6 @@
 		}
 
     &::before {
-      // width: 32%;
       width: calc(100% + 2px);
 			text-align: center;
     }
