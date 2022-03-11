@@ -21,7 +21,7 @@ const Dropdown = ({ title, options, currentOption, handleClick, listStyles = nul
   const [isOpen, setIsOpen] = useState(false);
 
   const menuRef = useRef(null);
-
+// eslint-disable-next-line
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen));
 
   const handleTitleClick = () => {

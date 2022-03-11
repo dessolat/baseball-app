@@ -8,6 +8,7 @@ import Header from 'components/PlayerStats/Header/Header';
 import Content from 'components/PlayerStats/Content/Content';
 
 const PlayerStats = () => {
+	// eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const currentYear = useSelector(state => state.games.currentYear);
@@ -57,6 +58,7 @@ const PlayerStats = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
+		// eslint-disable-next-line
   }, [currentYear]);
 
   return (

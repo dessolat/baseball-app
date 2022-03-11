@@ -8,6 +8,7 @@ import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
 
 const Stats = () => {
+	// eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -56,6 +57,7 @@ const Stats = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
+		// eslint-disable-next-line
   }, [currentYear]);
 
   return (

@@ -7,6 +7,7 @@ import { addLeagueImage, resetTableFilters, setCurrentLeague, setGamesAndLeagues
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const Games = () => {
+	// eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -52,6 +53,7 @@ const Games = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
+		// eslint-disable-next-line
   }, [currentYear]);
 
   useEffect(() => {
@@ -79,12 +81,14 @@ const Games = () => {
     leagues
       .filter(league => league.logo !== '' && !leaguesImages[league.id])
       .forEach(league => fetchImage(league.id, league.logo));
+			// eslint-disable-next-line
   }, [games, leagues]);
 
   useEffect(() => {
     if (firstMountRef.current === true) return;
 
     dispatch(resetTableFilters());
+		// eslint-disable-next-line
   }, [currentGameType, currentYear, currentLeague]);
 
   useEffect(() => {
@@ -94,6 +98,7 @@ const Games = () => {
     }
 
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+		// eslint-disable-next-line
   }, [currentGameType, currentYear]);
 
   return (

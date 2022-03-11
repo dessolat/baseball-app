@@ -8,6 +8,7 @@ import { setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
 import axios from 'axios';
 
 const TeamGames = () => {
+	// eslint-disable-next-line
 	const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -56,6 +57,7 @@ const TeamGames = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
+		// eslint-disable-next-line
   }, [currentYear]);
 
   return (
