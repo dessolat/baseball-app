@@ -8,14 +8,11 @@
 		width: 12rem;
 		
 		@media screen and (max-width: 1230px) {
-			
 			width: 11rem;
 		}
 	}
 
 	&.noVideo {
-		// justify-content: flex-start;
-
 		> *:nth-child(2) {
 			width: 18rem;
 		}

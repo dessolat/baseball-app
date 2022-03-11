@@ -34,31 +34,6 @@ const ContentCardReplacement = ({ events }) => {
             <ContentCardReplacementItem event={event} />
           </React.Fragment>
         );
-
-        // return i === 0 || event.team !== teamName ? (
-        //   <>
-        //     <p className={cl.title}>{getShortName(event.team)} replacements:</p>
-        //     <div className={cl.replace} key={i}>
-        //       <div className={cl.portrait}>
-        //         <img className={cl.default} src={PortraitImg} alt='Portrait' />
-        //       </div>
-        //       <p className={cl.text}>{event.description}</p>
-        //       <div className={cl.portrait}>
-        //         <img className={cl.default} src={PortraitImg} alt='Portrait' />
-        //       </div>
-        //     </div>
-        //   </>
-        // ) : (
-        //   <div className={cl.replace} key={i}>
-        //     <div className={cl.portrait}>
-        //       <img className={cl.default} src={PortraitImg} alt='Portrait' />
-        //     </div>
-        //     <p className={cl.text}>{event.description}</p>
-        //     <div className={cl.portrait}>
-        //       <img className={cl.default} src={PortraitImg} alt='Portrait' />
-        //     </div>
-        //   </div>
-        // );
       })}
     </div>
   );
