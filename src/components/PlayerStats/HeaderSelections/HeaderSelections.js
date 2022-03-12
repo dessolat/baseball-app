@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch } from 'react-redux';
-import { setCurrentYear, setCurrentDate } from 'redux/gamesReducer';
+import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
 import ArrowDown from 'components/UI/icons/ArrowDown';
 import PortraitImg from 'images/portrait.png';

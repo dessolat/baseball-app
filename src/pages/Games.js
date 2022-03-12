@@ -3,7 +3,8 @@ import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLeagueImage, resetTableFilters, setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
+import { addLeagueImage, resetTableFilters, setGamesAndLeagues } from 'redux/gamesReducer';
+import { setCurrentLeague } from 'redux/sharedReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 
 const Games = () => {

@@ -3,7 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeaguesScroll } from 'redux/gamesReducer';
+import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
 
 const HeaderLeagues = () => {

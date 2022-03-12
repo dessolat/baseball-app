@@ -4,7 +4,8 @@ import Header from 'components/TeamGames/Header/Header';
 import Content from 'components/TeamGames/Content/Content';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCurrentLeague, setGamesAndLeagues } from 'redux/gamesReducer';
+import { setGamesAndLeagues } from 'redux/gamesReducer';
+import { setCurrentLeague } from 'redux/sharedReducer';
 import axios from 'axios';
 
 const TeamGames = () => {
