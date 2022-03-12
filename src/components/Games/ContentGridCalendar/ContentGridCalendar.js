@@ -31,6 +31,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
 
+	// eslint-disable-next-line
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsVisible));
 
   const toggleCalendar = () => setIsVisible(!isVisible);

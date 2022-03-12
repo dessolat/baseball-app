@@ -26,13 +26,15 @@ const ContentGamesTable = () => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
 
   //Games filtering
-  let filteredData = useMemo(() =>
-    games.filter(
-      game =>
-        (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
-        (game.owners_name === teamName || game.guests_name === teamName),
-      [games, currentLeague]
-    )
+  let filteredData = useMemo(
+    () =>
+      games.filter(
+        game =>
+          (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
+          (game.owners_name === teamName || game.guests_name === teamName)
+      ),
+			// eslint-disable-next-line
+    [games, currentLeague]
   );
 
   //Games sorting
@@ -73,7 +75,7 @@ const ContentGamesTable = () => {
           ))}
         </ul>
       </div>
-			<div className={cl.linkWrapper}>
+      <div className={cl.linkWrapper}>
         <Link to='/stats/team'>Go to Team Stat</Link>
       </div>
     </div>

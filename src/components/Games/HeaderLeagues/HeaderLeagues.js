@@ -23,6 +23,7 @@ const HeaderLeagues = () => {
     leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
+		// eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
@@ -37,6 +38,7 @@ const HeaderLeagues = () => {
 
     leaguesRef.current.scrollLeft = 0;
     dispatch(setCurrentLeaguesScroll(0));
+		// eslint-disable-next-line
   }, [currentGameType, currentYear]);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const HeaderLeagues = () => {
 
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+		// eslint-disable-next-line
   }, [leagues, currentGameType]);
 
   const scrollLeagues = e => {
@@ -67,6 +70,7 @@ const HeaderLeagues = () => {
     );
     newLeagues.unshift({ id: -1, name: 'All' });
     return newLeagues;
+		// eslint-disable-next-line
   }, [leagues, currentGameType]);
 
   return (
