@@ -1,8 +1,11 @@
+const newDate = new Date();
+newDate.setHours(newDate.getHours() - newDate.getTimezoneOffset() / 60);
+
 const defaultState = {
   currentLeague: { id: -1, name: 'All' },
-  currentYear: new Date().getFullYear(),
-  currentDate: new Date(),
-	currentLeaguesScroll: 0
+  currentYear: newDate.getFullYear(),
+  currentDate: newDate,
+  currentLeaguesScroll: 0
 };
 
 const SET_CURRENT_LEAGUE = 'SET_CURRENT_LEAGUE';
@@ -12,7 +15,6 @@ const SET_CURRENT_LEAGUES_SCROLL = 'SET_CURRENT_LEAGUES_SCROLL';
 
 export const sharedReducer = (state = defaultState, action) => {
   switch (action.type) {
-
     case SET_CURRENT_LEAGUE:
       return { ...state, currentLeague: action.payload };
     case SET_CURRENT_YEAR:
