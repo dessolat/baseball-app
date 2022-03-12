@@ -11,7 +11,7 @@ const PlayerStats = () => {
 	// eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const currentYear = useSelector(state => state.games.currentYear);
+  const currentYear = useSelector(state => state.shared.currentYear);
 	const [playerYears, setPlayerYears] = useState(currentYear);
 
   const cancelTokenRef = useRef();

@@ -16,7 +16,7 @@ const TeamGames = () => {
 	const firstMountRef = useRef(true);
 
 	const games = useSelector(state => state.games.games);
-	const currentYear = useSelector(state => state.games.currentYear);
+	const currentYear = useSelector(state => state.shared.currentYear);
 	const dispatch = useDispatch()
 
 	useEffect(() => {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import cl from './ContentBattingTable.module.scss';
 
 const ContentBattingTable = ({ TABLE_DATA, playerYears }) => {
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
 
   return (
     <div className={cl.wrapper}>

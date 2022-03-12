@@ -8,7 +8,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
   const ref = useRef();
   const timeoutRef = useRef(null);
 
-  const currentDate = useSelector(state => state.games.currentDate);
+  const currentDate = useSelector(state => state.shared.currentDate);
 
   useEffect(() => {
     ref.current.style.transition = 'none';

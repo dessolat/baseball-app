@@ -17,8 +17,8 @@ const HeaderLeagues = () => {
 
   const leagues = useSelector(state => state.games.leagues);
   const games = useSelector(state => state.games.games);
-  const currentScroll = useSelector(state => state.games.currentLeaguesScroll);
-  const currentYear = useSelector(state => state.games.currentYear);
+  const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
+  const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {

@@ -4,7 +4,7 @@ import LeagueImage from 'images/league_image.png';
 import { useSelector } from 'react-redux';
 
 const ContentTeam = () => {
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
 	const leaguesImages = useSelector(state => state.games.leaguesImages);
 
   return (

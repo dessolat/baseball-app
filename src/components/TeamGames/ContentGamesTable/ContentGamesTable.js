@@ -23,7 +23,7 @@ const ContentGamesTable = () => {
   const { teamName } = useParams();
 
   const games = useSelector(state => state.games.games);
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
 
   //Games filtering
   let filteredData = useMemo(() =>

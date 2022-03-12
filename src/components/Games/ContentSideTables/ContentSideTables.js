@@ -5,7 +5,7 @@ import PctTable from './PctTable';
 import SwitchTable from './SwitchTable';
 
 const ContentSideTables = () => {
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
 
   const isTables = currentLeague.id !== -1;
   return (

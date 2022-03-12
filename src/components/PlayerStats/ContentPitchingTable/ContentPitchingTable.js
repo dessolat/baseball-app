@@ -5,7 +5,7 @@ import ContentPitchingTableBody from './ContentPitchingTableBody';
 import ContentPitchingTableHeader from './ContentPitchingTableHeader';
 
 const ContentPitchingTable = ({ TABLE_DATA, playerYears }) => {
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
 
   return (
     <div className={cl.wrapper}>

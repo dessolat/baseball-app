@@ -24,11 +24,11 @@ const MONTHS = {
 
 const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
-  const currentLeague = useSelector(state => state.games.currentLeague);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.games.currentGameType);
-  const currentDate = useSelector(state => state.games.currentDate);
+  const currentDate = useSelector(state => state.shared.currentDate);
   const dispatch = useDispatch();
 
   const scrollItemRef = useRef(null);

@@ -3,7 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeaguesScroll } from 'redux/gamesReducer';
+import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
 
 const HeaderLeagues = () => {
   const [isLeftScroll, setIsLeftScroll] = useState(false);
@@ -14,9 +14,9 @@ const HeaderLeagues = () => {
 
   const games = useSelector(state => state.games.games);
   const currentGameType = useSelector(state => state.games.currentGameType);
-  const currentYear = useSelector(state => state.games.currentYear);
+  const currentYear = useSelector(state => state.shared.currentYear);
   const leagues = useSelector(state => state.games.leagues);
-  const currentScroll = useSelector(state => state.games.currentLeaguesScroll);
+  const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {

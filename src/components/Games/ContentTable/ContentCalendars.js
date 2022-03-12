@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import cl from './ContentTable.module.scss';
 import ContentGridCalendar from '../ContentGridCalendar/ContentGridCalendar';
 import ContentCalendar from '../ContentCalendar/ContentCalendar';
-import { setCurrentDate } from 'redux/gamesReducer';
+import { setCurrentDate } from 'redux/sharedReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ContentCalendars = () => {
   const [calendarScroll, setCalendarScroll] = useState({ isScroll: false, amount: 0 });
 
-  const currentDate = useSelector(state => state.games.currentDate);
+  const currentDate = useSelector(state => state.shared.currentDate);
   const dispatch = useDispatch();
 
   const calendarChangeHandler = value => {
