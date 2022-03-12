@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
-import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
+// import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { setCurrentCard, setSituationFilter, setCurrentGameId, resetData } from 'redux/gameReducer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -74,7 +74,7 @@ const Game = () => {
   const isFilters = currentTab !== 'box';
   return (
     <>
-      <GameIdForm isLoading={isLoading} />
+      {/* <GameIdForm isLoading={isLoading} /> */}
       {error ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
