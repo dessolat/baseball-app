@@ -7,7 +7,6 @@
   grid-template-areas:
     'list graphics'
     'controls graphics';
-  // animation: rise var(--transition-speed) linear forwards;
 }
 
 .contentNoVideo {
@@ -15,5 +14,4 @@
   grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   grid-template-areas:
     'list graphics';
-  // animation: rise var(--transition-speed) linear forwards;
 }
