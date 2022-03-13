@@ -4,11 +4,11 @@ import ArrowDown from 'components/UI/icons/ArrowDown';
 import { Link } from 'react-router-dom';
 
 const SECOND_TABLE_DATA = [
-  { id: 1, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
-  { id: 2, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
-  { id: 3, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
-  { id: 4, name: 'SURNAME Name', team: 'RusStar', avr: '0000' },
-  { id: 5, name: 'SURNAME Name', team: 'RusStar', avr: '0000' }
+  { id: 1, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 2, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 3, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 4, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 5, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' }
 ];
 
 const SwitchTable = () => {
@@ -36,7 +36,7 @@ const SwitchTable = () => {
         <tbody>
           {SECOND_TABLE_DATA.map(row => (
             <tr key={row.id}>
-              <td className={cl.underlineHover}><Link to={`/stats/player/${row.name}`}>{row.name}</Link></td>
+              <td className={cl.underlineHover}><Link to={`/stats/player/${row.name}/${row.surname}`}>{row.surname} {row.name}</Link></td>
               <td>{row.team}</td>
               <td>{row.avr}</td>
             </tr>
