@@ -3,14 +3,14 @@ import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ArrowDown from 'components/UI/icons/ArrowDown';
 import PortraitImg from 'images/portrait.png';
 
 const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
 
 const HeaderSelections = ({ playerYears, setPlayerYears }) => {
-  // const { playerName } = useParams();
+  const { playerName, playerSurname } = useParams();
 
   const dispatch = useDispatch();
 
@@ -29,10 +29,10 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>
-        <img src={PortraitImg} alt='' srcset='' />
+        <img src={PortraitImg} alt='' />
         <div className={cl.fullName}>
-          Name
-          <p>Surname</p>
+          {playerName}
+          <p>{playerSurname}</p>
         </div>
       </div>
       <div className={cl.bottom}>
@@ -42,8 +42,8 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             options={YEARS}
             currentOption={playerYears}
             handleClick={handleClick}
-						listStyles={{textAlign: 'center'}}
-						itemStyles={{padding: 0}}
+            listStyles={{ textAlign: 'center' }}
+            itemStyles={{ padding: 0 }}
           />
         </div>
         <div className={cl.batting}>
