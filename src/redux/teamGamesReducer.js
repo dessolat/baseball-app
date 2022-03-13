@@ -1,5 +1,5 @@
 const defaultState = {
-  teamData: null
+  teamData: []
 };
 
 const SET_TEAM_DATA = 'SET_TEAM_DATA';
