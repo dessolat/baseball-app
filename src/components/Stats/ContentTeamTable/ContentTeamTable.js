@@ -224,10 +224,10 @@ const ContentTeamTable = () => {
           <div>SF</div>
           <div>SO</div>
           <div>TB</div>
-          <div>AVG</div>
-          <div>SLG</div>
-          <div>OBP</div>
-          <div>OPS</div>
+          <div className={cl.wider}>AVG</div>
+          <div className={cl.wider}>SLG</div>
+          <div className={cl.wider}>OBP</div>
+          <div className={cl.wider}>OPS</div>
         </div>
         <ul className={cl.rows}>
           {TABLE_DATA.map((row, index) => (
@@ -248,10 +248,10 @@ const ContentTeamTable = () => {
               <div>{row.sf}</div>
               <div>{row.so}</div>
               <div>{row.tb}</div>
-              <div>{row.avg.toFixed(3)}</div>
-              <div>{row.slg.toFixed(3)}</div>
-              <div>{row.obp.toFixed(3)}</div>
-              <div>{row.ops.toFixed(3)}</div>
+              <div className={cl.wider}>{row.avg.toFixed(3)}</div>
+              <div className={cl.wider}>{row.slg.toFixed(3)}</div>
+              <div className={cl.wider}>{row.obp.toFixed(3)}</div>
+              <div className={cl.wider}>{row.ops.toFixed(3)}</div>
             </li>
           ))}
         </ul>
