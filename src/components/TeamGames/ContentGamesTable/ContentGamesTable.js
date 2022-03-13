@@ -34,7 +34,7 @@ const ContentGamesTable = () => {
           (game.owners_name === teamName || game.guests_name === teamName)
       ),
 			// eslint-disable-next-line
-    [games, currentLeague]
+    [games, currentLeague, teamName]
   );
 
   //Games sorting
