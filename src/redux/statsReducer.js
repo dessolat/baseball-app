@@ -1,6 +1,6 @@
 const defaultState = {
   statsData: [],
-	tableMode: 'batting'
+	tableMode: 'Batting'
 };
 
 const SET_STATS_DATA = 'SET_STATS_DATA';
