@@ -49,7 +49,7 @@ const ContentPlayersTable = () => {
 
   const PLAYERS_DATA =
     currentLeague.id !== -1
-      ? teamData.find(item => item.league.id === currentLeague.id)?.roster
+      ? teamData.find(item => item.league.id === currentLeague.id)?.roster || []
       : teamData.reduce((sum, cur) => {
           if (cur.league.year === currentYear) {
             cur.roster.forEach(
