@@ -4,7 +4,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { Link, useParams } from 'react-router-dom';
-import ArrowDown from 'components/UI/icons/ArrowDown';
+import { setTableMode } from 'redux/statsReducer';
 
 const YEARS = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
 const TABLE_MODES = ['Batting', 'Fielding', 'Pitching', 'Running']
@@ -27,7 +27,7 @@ const HeaderSelections = () => {
   const getClassName = name =>
     name === statsType || (name === 'player' && statsType !== 'team') ? cl.active : '';
 	
-	const handleModeClick = () => {}
+	const handleModeClick = mode => dispatch(setTableMode(mode))
   return (
     <div className={cl.selections}>
       <div className={cl.types}>
@@ -45,6 +45,8 @@ const HeaderSelections = () => {
             options={TABLE_MODES}
             currentOption={tableMode}
             handleClick={handleModeClick}
+						listStyles={{marginLeft: '-.75rem', width: '115%'}}
+						itemStyles={{padding: 0, textAlign: 'center'}}
           />
           {/* Batting 
           <ArrowDown /> */}
