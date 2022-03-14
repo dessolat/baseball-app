@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
-import { setTeamData } from 'redux/teamGamesReducer';
 import { setStatsData } from 'redux/statsReducer';
 
 const Content = ({ games }) => {
@@ -19,7 +18,8 @@ const Content = ({ games }) => {
   const cancelStatsTokenRef = useRef();
 
   const currentYear = useSelector(state => state.shared.currentYear);
-	const dispatch = useDispatch()
+  const statsData = useSelector(state => state.stats.statsData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -54,10 +54,12 @@ const Content = ({ games }) => {
     <section>
       <div className='container'>
         <div className={cl.content}>
-          {error ? (
+          {error !== '' ? (
             <ErrorLoader />
           ) : isStatsLoading ? (
             <Loader />
+          ) : statsData.length === 0 ? (
+            <></>
           ) : statsType !== 'player' ? (
             <ContentTeamTable />
           ) : (
