@@ -1,11 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
+import Loader from 'components/UI/loaders/Loader/Loader';
+import { setStatsData } from 'redux/playerStatsReducer';
 
 const Content = ({ games, playerYears }) => {
+  const [error, setError] = useState('');
+  const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [tableType, setTableType] = useState('Batting');
+
+  const statsData = useSelector(state => state.playerStats.statsData);
+	const dispatch = useDispatch()
+
+  const cancelTokenRef = useRef();
+
+  const { playerName, playerSurname } = useParams();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      cancelTokenRef.current = axios.CancelToken.source();
+
+      try {
+        setIsStatsLoading(true);
+        const response = await axios.get(
+          `http://51.250.11.151:3030/player?surname=${playerSurname}&name=${playerName}`,
+          {
+            cancelToken: cancelTokenRef.current.token,
+            timeout: 5000
+          }
+        );
+        console.log(response.data);
+        setError('');
+        dispatch(setStatsData(response.data));
+      } catch (err) {
+        if (err.message === null) return;
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setIsStatsLoading(false);
+      }
+    };
+    fetchStats();
+
+    return () => {
+      cancelTokenRef.current.cancel(null);
+    };
+    // eslint-disable-next-line
+  }, [playerName, playerSurname]);
 
   const TABLE_DATA = {
     batting: [
@@ -331,7 +378,7 @@ const Content = ({ games, playerYears }) => {
       }
     ],
     pitching: [
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -354,7 +401,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -377,7 +424,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -400,7 +447,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -423,7 +470,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -446,7 +493,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -469,7 +516,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -492,7 +539,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -515,7 +562,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -538,7 +585,7 @@ const Content = ({ games, playerYears }) => {
         ns: 0,
         nb: 0
       },
-			{
+      {
         year: '0000',
         league: 'Name League',
         game: '01 sep, Name team - Name Team',
@@ -560,30 +607,40 @@ const Content = ({ games, playerYears }) => {
         np: 0,
         ns: 0,
         nb: 0
-      },
-		]
+      }
+    ]
   };
 
-  const TABLE_OPTIONS = ['Batting', 'Running'];
+  const TABLE_OPTIONS = ['Batting', 'Pitching'];
 
   const handleTableOptionClick = option => setTableType(option);
   return (
     <section>
       <div className='container'>
         <div className={cl.content}>
-          <p className={cl.playerChr}>P | B/T: R/R | 6' 4" 220LBS | Age: 31</p>
-          <div className={cl.dropWrapper}>
-            <Dropdown
-              title={tableType}
-              options={TABLE_OPTIONS}
-              currentOption={tableType}
-              handleClick={handleTableOptionClick}
-            />
-          </div>
-          {tableType === 'Batting' ? (
-            <ContentBattingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+          {error !== '' ? (
+            <ErrorLoader />
+          ) : isStatsLoading ? (
+            <Loader styles={{margin: '5rem auto 10rem'}}/>
+          ) : statsData.length === 0 ? (
+            <></>
           ) : (
-            <ContentPitchingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+            <>
+              <p className={cl.playerChr}>P | B/T: R/R | 6' 4" 220LBS | Age: 31</p>
+              <div className={cl.dropWrapper}>
+                <Dropdown
+                  title={tableType}
+                  options={TABLE_OPTIONS}
+                  currentOption={tableType}
+                  handleClick={handleTableOptionClick}
+                />
+              </div>
+              {tableType === 'Batting' ? (
+                <ContentBattingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+              ) : (
+                <ContentPitchingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+              )}
+            </>
           )}
         </div>
       </div>
