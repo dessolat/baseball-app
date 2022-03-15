@@ -10,13 +10,13 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setStatsData } from 'redux/playerStatsReducer';
 
-const Content = ({ games, playerYears }) => {
+const Content = ({ playerYears }) => {
   const [error, setError] = useState('');
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [tableType, setTableType] = useState('Batting');
 
   const statsData = useSelector(state => state.playerStats.statsData);
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const cancelTokenRef = useRef();
 
@@ -621,12 +621,15 @@ const Content = ({ games, playerYears }) => {
           {error !== '' ? (
             <ErrorLoader />
           ) : isStatsLoading ? (
-            <Loader styles={{margin: '5rem auto 10rem'}}/>
+            <Loader styles={{ margin: '5rem auto 10rem' }} />
           ) : statsData.length === 0 ? (
             <></>
           ) : (
             <>
-              <p className={cl.playerChr}>P | B/T: R/R | 6' 4" 220LBS | Age: 31</p>
+              <p className={cl.playerChr}>
+                {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} | {statsData.height}{' '}
+                {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
+              </p>
               <div className={cl.dropWrapper}>
                 <Dropdown
                   title={tableType}
@@ -636,9 +639,9 @@ const Content = ({ games, playerYears }) => {
                 />
               </div>
               {tableType === 'Batting' ? (
-                <ContentBattingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+                <ContentBattingTable leagues={statsData.leagues} playerYears={playerYears} />
               ) : (
-                <ContentPitchingTable TABLE_DATA={TABLE_DATA} playerYears={playerYears} />
+                <ContentPitchingTable leagues={statsData.leagues} playerYears={playerYears} />
               )}
             </>
           )}
