@@ -54,3 +54,13 @@ export const getBeforeAfterFlags = (cards, innings) => {
 };
 
 export const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
+
+export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
+	const result = {};
+
+	for (let key in obj1) {
+		result[key] = ignoredKeys.includes(key) ? obj1[key] : +obj1[key] + +obj2[key];
+	}
+
+	return result;
+};
