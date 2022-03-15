@@ -1,16 +1,16 @@
 const defaultState = {
-  statsData: []
+  playerStatsData: []
 };
 
-const SET_STATS_DATA = 'SET_STATS_DATA';
+const SET_PLAYER_STATS_DATA = 'SET_PLAYER_STATS_DATA';
 
 export const playerStatsReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case SET_STATS_DATA:
-      return { ...state, statsData: action.payload };
+    case SET_PLAYER_STATS_DATA:
+      return { ...state, playerStatsData: action.payload };
     default:
       return state;
   }
 };
 
-export const setStatsData = payload => ({ type: SET_STATS_DATA, payload });
+export const setPlayerStatsData = payload => ({ type: SET_PLAYER_STATS_DATA, payload });

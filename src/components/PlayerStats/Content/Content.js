@@ -8,14 +8,14 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { setStatsData } from 'redux/playerStatsReducer';
+import { setPlayerStatsData } from 'redux/playerStatsReducer';
 
 const Content = ({ playerYears }) => {
   const [error, setError] = useState('');
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [tableType, setTableType] = useState('Batting');
 
-  const statsData = useSelector(state => state.playerStats.statsData);
+  const statsData = useSelector(state => state.playerStats.playerStatsData);
   const dispatch = useDispatch();
 
   const cancelTokenRef = useRef();
@@ -37,7 +37,7 @@ const Content = ({ playerYears }) => {
         );
         console.log(response.data);
         setError('');
-        dispatch(setStatsData(response.data));
+        dispatch(setPlayerStatsData(response.data));
       } catch (err) {
         if (err.message === null) return;
         console.log(err.message);
