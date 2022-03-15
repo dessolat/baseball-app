@@ -2,6 +2,7 @@ import React from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getObjectsSum } from 'utils';
 
 const ContentTeamTable = () => {
   const tableMode = useSelector(state => state.stats.tableMode);
@@ -135,17 +136,6 @@ const ContentTeamTable = () => {
         <div className={cl.wider}>{Number(row.SB_pr).toFixed(3)}</div>
       </>
     );
-  console.log(statsData);
-
-  const getObjectsSum = (obj1, obj2) => {
-    const result = {};
-
-    for (let key in obj1) {
-      result[key] = key === 'name' ? obj1[key] : +obj1[key] + +obj2[key];
-    }
-
-    return result;
-  };
 
   const filteredStatsData =
     currentLeague.id !== -1
@@ -155,7 +145,7 @@ const ContentTeamTable = () => {
             const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
 						
 						if (teamIndex !== -1) {
-							sum[teamIndex] = getObjectsSum(sum[teamIndex], team)
+							sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name'])
 						} else {
 							sum.push(team)
 						}
@@ -164,7 +154,7 @@ const ContentTeamTable = () => {
 
           return sum;
         }, []) || [];
-console.log(filteredStatsData);
+
   return (
     <div className={cl.wrapper}>
       <div>
