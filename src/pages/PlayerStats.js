@@ -74,7 +74,7 @@ const PlayerStats = () => {
       ) : (
         <>
           <Header playerYears={playerYears} setPlayerYears={setPlayerYears}/>
-          <Content games={games} playerYears={playerYears}/>
+          <Content playerYears={playerYears}/>
         </>
       )}
     </>
