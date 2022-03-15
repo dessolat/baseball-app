@@ -4,14 +4,14 @@ import cl from './ContentPitchingTable.module.scss';
 import ContentPitchingTableBody from './ContentPitchingTableBody';
 import ContentPitchingTableHeader from './ContentPitchingTableHeader';
 
-const ContentPitchingTable = ({ TABLE_DATA, playerYears }) => {
+const ContentPitchingTable = ({ leagues, playerYears }) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
 
   return (
     <div className={cl.wrapper}>
       <div>
-        <ContentPitchingTableHeader playerYear={playerYears} currentLeague={currentLeague} />
-        <ContentPitchingTableBody playerYears={playerYears} TABLE_DATA={TABLE_DATA} currentLeague={currentLeague}/>
+        <ContentPitchingTableHeader playerYears={playerYears} currentLeague={currentLeague} />
+        <ContentPitchingTableBody playerYears={playerYears} leagues={leagues} currentLeague={currentLeague}/>
       </div>
     </div>
   );
