@@ -2,6 +2,7 @@ import React from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getObjectsSum } from 'utils';
 
 const ContentPlayerTable = () => {
   const tableMode = useSelector(state => state.stats.tableMode);
@@ -89,10 +90,10 @@ const ContentPlayerTable = () => {
         <div>{row.SF}</div>
         <div>{row.SO}</div>
         <div>{row.TB}</div>
-        <div className={cl.wider}>{row.AVG}</div>
-        <div className={cl.wider}>{row.SLG}</div>
-        <div className={cl.wider}>{row.OBP}</div>
-        <div className={cl.wider}>{row.OPS}</div>
+        <div className={cl.wider}>{Number(row.AVG).toFixed(3)}</div>
+        <div className={cl.wider}>{Number(row.SLG).toFixed(3)}</div>
+        <div className={cl.wider}>{Number(row.OBP).toFixed(3)}</div>
+        <div className={cl.wider}>{Number(row.OPS).toFixed(3)}</div>
       </>
     ) : tableMode === 'Fielding' ? (
       <>
@@ -100,7 +101,7 @@ const ContentPlayerTable = () => {
         <div>{row.CH}</div>
         <div>{row.DP}</div>
         <div>{row.E}</div>
-        <div className={cl.wider}>{row.FLD}</div>
+        <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
         <div>{row.PO}</div>
       </>
     ) : tableMode === 'Pitching' ? (
@@ -110,12 +111,12 @@ const ContentPlayerTable = () => {
         <div>{row.BB}</div>
         <div>{row.BK}</div>
         <div>{row.ER}</div>
-        <div className={cl.wider}>{row.ERA}</div>
+        <div className={cl.wider}>{Number(row.ERA).toFixed(2)}</div>
         <div>{row.H}</div>
         <div>{row.HP}</div>
         <div>{row.HR}</div>
         <div>{row.IBB}</div>
-        <div>{row.IP}</div>
+        <div>{Number(row.IP).toFixed(1)}</div>
         <div>{row.NB}</div>
         <div>{row.NP}</div>
         <div>{row.NS}</div>
@@ -132,26 +133,25 @@ const ContentPlayerTable = () => {
         <div>{row.LOB}</div>
         <div>{row.R}</div>
         <div>{row.SB}</div>
-        <div className={cl.wider}>{row.SB_pr}</div>
+        <div className={cl.wider}>{Number(row.SB_pr).toFixed(3)}</div>
       </>
     );
-  console.log(statsData);
-
-  const getObjectsSum = (obj1, obj2) => {
-    const result = {};
-
-    for (let key in obj1) {
-      result[key] = obj1[key] + obj2[key];
-    }
-
-    return result;
-  };
 
   const filteredStatsData =
     currentLeague.id !== -1
       ? statsData.find(item => item.title === currentLeague.name).players[tableMode.toLowerCase()]
-      : statsData.players?.reduce((sum, league) => {
-          return []; 
+      : statsData.reduce((sum, league) => {
+          league.players[tableMode.toLowerCase()].forEach(player => {
+            const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
+
+            if (playerIndex !== -1) {
+              sum[playerIndex] = getObjectsSum(sum[playerIndex], player, ['name', 'surname', 'teams', 'id']);
+            } else {
+              sum.push(player);
+            }
+          });
+
+          return sum;
         }, []) || [];
 
   return (
@@ -170,7 +170,7 @@ const ContentPlayerTable = () => {
                 <div>
                   <Link to={`/stats/player/${row.name}/${row.name}`}> {row.name}</Link>
                 </div>
-                <div>00</div>
+                <div>{index}</div>
                 <div>
                   <Link to={`/games/team/${row.teams[0].name}`}>{row.teams[0].name}</Link>
                   {row.teams[1] && (
