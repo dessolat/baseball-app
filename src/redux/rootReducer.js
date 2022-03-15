@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { gameReducer } from './gameReducer';
 import { gamesReducer } from './gamesReducer';
+import { playerStatsReducer } from './playerStatsReducer';
 import { sharedReducer } from './sharedReducer';
 import { statsReducer } from './statsReducer';
 import { teamGamesReducer } from './teamGamesReducer';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   games: gamesReducer,
   teamGames: teamGamesReducer,
 	stats: statsReducer,
+	playerStats: playerStatsReducer,
   shared: sharedReducer
 });
 
