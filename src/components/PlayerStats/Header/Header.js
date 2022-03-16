@@ -9,7 +9,7 @@ const Header = ({ playerYears, setPlayerYears }) => {
     <HeaderWrapper>
       <div className={cl.headerContent}>
         <HeaderSelections playerYears={playerYears} setPlayerYears={setPlayerYears}/>
-        <HeaderLeagues />
+        <HeaderLeagues playerYears={playerYears} />
       </div>
     </HeaderWrapper>
   );
