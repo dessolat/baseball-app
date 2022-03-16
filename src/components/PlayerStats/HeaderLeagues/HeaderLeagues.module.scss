@@ -39,6 +39,10 @@
   overflow-x: hidden;
   scroll-behavior: smooth;
 
+	&.disabled > .league {
+		color: lightgrey;
+	}
+
   @media screen and (max-width: 1242px) {
     width: 60.8rem;
   }
@@ -57,7 +61,7 @@
   justify-content: center;
   text-align: center;
   position: relative;
-  transition: all var(--transition-speed);
+  // transition: all var(--transition-speed);
 
   border-bottom: 0.5px solid #dfdfdf;
   border-right: 0.5px solid #dfdfdf;
