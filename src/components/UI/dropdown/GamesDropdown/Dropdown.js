@@ -16,7 +16,15 @@ function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen) {
   };
 }
 
-const Dropdown = ({ title, options, currentOption, handleClick, listStyles = null, itemStyles = null }) => {
+const Dropdown = ({
+  title,
+  options,
+  currentOption,
+  handleClick,
+  listStyles = null,
+  itemStyles = null,
+  titleStyles = null
+}) => {
   const [listening, setListening] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +43,7 @@ const Dropdown = ({ title, options, currentOption, handleClick, listStyles = nul
 
   return (
     <div ref={menuRef} className={cl.dropdownWrapper}>
-      <div className={cl.title} onClick={handleTitleClick}>
+      <div className={cl.title} onClick={handleTitleClick} style={titleStyles}>
         {title}
         <div style={{ position: 'absolute', right: 3, top: 0 }}>
           <ArrowDown />
