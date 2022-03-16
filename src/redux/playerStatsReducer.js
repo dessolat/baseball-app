@@ -1,5 +1,5 @@
 const defaultState = {
-  playerStatsData: []
+  playerStatsData: {}
 };
 
 const SET_PLAYER_STATS_DATA = 'SET_PLAYER_STATS_DATA';
