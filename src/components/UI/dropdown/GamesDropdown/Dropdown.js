@@ -21,7 +21,7 @@ const Dropdown = ({ title, options, currentOption, handleClick, listStyles = nul
   const [isOpen, setIsOpen] = useState(false);
 
   const menuRef = useRef(null);
-// eslint-disable-next-line
+  // eslint-disable-next-line
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen));
 
   const handleTitleClick = () => {
@@ -47,8 +47,9 @@ const Dropdown = ({ title, options, currentOption, handleClick, listStyles = nul
             <li
               key={i}
               onClick={handleOptionClick(option)}
-              style={currentOption === option ? { backgroundColor: '#E0F0FF', ...itemStyles } : itemStyles}>
-              {option}
+              className={currentOption === option ? cl.active : null}
+              style={itemStyles}>
+              <span>{option}</span>
             </li>
           ))}
         </ul>

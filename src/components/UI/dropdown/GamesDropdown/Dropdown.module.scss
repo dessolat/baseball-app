@@ -12,7 +12,7 @@
 }
 
 .title {
-	position: relative;
+  position: relative;
 }
 
 .list {
@@ -21,17 +21,28 @@
   left: 0;
   width: 100%;
   list-style: none;
-	background-color: white;
-	z-index: 5;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	animation: popUp .2s linear;
+  background-color: white;
+  z-index: 5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  animation: popUp 0.2s linear;
 
   > * {
-		border-bottom: 2px solid transparent;
-		padding: 0 1rem;
-		
+		> span {
+
+			border-bottom: 2px solid transparent;
+		}
+    padding: 0.2rem 1rem;
+
+    &.active > span {
+      border-bottom: 2px solid var(--side-color);
+    }
+
     &:hover {
-			border-bottom: 2px solid var(--side-color);
+      background-color: #e0f0ff;
+    }
+
+    > span {
+      color: #838383;
     }
   }
 }
