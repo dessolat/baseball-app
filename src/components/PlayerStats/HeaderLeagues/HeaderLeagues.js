@@ -3,29 +3,35 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeague, setCurrentLeaguesScroll } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
 
-const HeaderLeagues = () => {
+const HeaderLeagues = ({ playerYears }) => {
   const [isLeftScroll, setIsLeftScroll] = useState(false);
   const [isRightScroll, setIsRightScroll] = useState(true);
 
-  const { statsType } = useParams();
+  const { playerName, playerSurname } = useParams();
 
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  const leagues = useSelector(state => state.games.leagues);
-  const games = useSelector(state => state.games.games);
+  const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
+  // const leagues = useSelector(state => state.games.leagues);
+  // const games = useSelector(state => state.games.games);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
+
+  const setScrollArrows = () => {
+    setIsLeftScroll(currentScroll <= 0 ? false : true);
+    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  };
 
   useLayoutEffect(() => {
     leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
@@ -40,8 +46,10 @@ const HeaderLeagues = () => {
 
     leaguesRef.current.scrollLeft = 0;
     dispatch(setCurrentLeaguesScroll(0));
-		// eslint-disable-next-line
-  }, [currentYear]);
+    setScrollArrows();
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    // eslint-disable-next-line
+  }, [playerYears]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -51,8 +59,8 @@ const HeaderLeagues = () => {
 
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-		// eslint-disable-next-line
-  }, [leagues]);
+    // eslint-disable-next-line
+  }, [playerStatsData.leagues]);
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
@@ -67,16 +75,20 @@ const HeaderLeagues = () => {
   };
 
   const filteredLeagues = useMemo(() => {
-    const newLeagues = leagues.filter(league => games.some(game => game.league_id === league.id));
-    newLeagues.unshift({ id: -1, name: 'All' });
+    const newLeagues =
+      playerYears === 'All years'
+        ? playerStatsData.leagues.slice()
+        : playerStatsData.leagues.filter(league => league.year == playerYears);
+    newLeagues.unshift({ id: -1, title: 'All' });
+
     return newLeagues;
-		// eslint-disable-next-line
-  }, [leagues, games, statsType]);
+    // eslint-disable-next-line
+  }, [playerName, playerSurname, playerYears]);
 
   return (
     <div className={cl.leaguesWrapper}>
       <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
-      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} />
+      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} playerYears={playerYears} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
