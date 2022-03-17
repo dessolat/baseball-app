@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
 import ArrowDown from 'components/UI/icons/ArrowDown';
@@ -12,9 +12,41 @@ const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014
 const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const { playerName, playerSurname } = useParams();
 
+  const [currentTeam, setCurrentTeam] = useState('');
+
+  const statsData = useSelector(state => state.playerStats.playerStatsData);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
   const dispatch = useDispatch();
 
-  const handleClick = option => {
+  useEffect(() => {
+    const teamsArray =
+      currentLeague.id !== -1
+        ? statsData.leagues
+            .find(league => league.id === currentLeague.id)
+            .teams.reduce((sum, team) => {
+              sum.push(team.name);
+              return sum;
+            }, [])
+        : playerYears === 'All years'
+        ? Array.from(
+            statsData.leagues.reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+          )
+        : Array.from(
+            statsData.leagues
+              .filter(league => league.year === playerYears)
+              .reduce((sum, league) => {
+                league.teams.forEach(team => sum.add(team.name));
+                return sum;
+              }, new Set())
+          );
+
+    setCurrentTeam(teamsArray[0]);
+  }, [currentLeague, playerYears]);
+
+  const handleYearClick = option => {
     setPlayerYears(option);
 
     if (option === 'All years') return;
@@ -25,6 +57,43 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
     dispatch(setCurrentDate(tempDate));
     dispatch(setCurrentYear(option));
   };
+
+  const handleTeamClick = team => setCurrentTeam(team);
+
+  // const getTeamNames = () => {
+  //   const result = [];
+
+  //   statsData.leagues
+  //     .find(league => league.id === currentLeague.id)
+  //     .teams.forEach(team => result.push(team.name));
+
+  //   return result;
+  // };
+  // currentLeague.id !== -1 && console.log(getTeamNames());
+
+  const teamsArray =
+    currentLeague.id !== -1
+      ? statsData.leagues
+          .find(league => league.id === currentLeague.id)
+          .teams.reduce((sum, team) => {
+            sum.push(team.name);
+            return sum;
+          }, [])
+      : playerYears === 'All years'
+      ? Array.from(
+          statsData.leagues.reduce((sum, league) => {
+            league.teams.forEach(team => sum.add(team.name));
+            return sum;
+          }, new Set())
+        )
+      : Array.from(
+          statsData.leagues
+            .filter(league => league.year === playerYears)
+            .reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+        );
 
   return (
     <div className={cl.selections}>
@@ -41,14 +110,25 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             title={playerYears}
             options={YEARS}
             currentOption={playerYears}
-            handleClick={handleClick}
+            handleClick={handleYearClick}
             listStyles={{ textAlign: 'center' }}
-            itemStyles={{ padding: 0 }}
+            itemStyles={{ padding: '.3rem 0' }}
           />
         </div>
         <div className={cl.batting}>
-          Name team 
-          <ArrowDown />
+          {teamsArray.length > 1 ? (
+            <Dropdown
+              title={currentTeam}
+              options={teamsArray}
+              currentOption={currentTeam}
+              handleClick={handleTeamClick}
+              titleStyles={{ padding: '0 1rem', textAlign: 'center' }}
+              listStyles={{ textAlign: 'center' }}
+              itemStyles={{ padding: '.25rem 0' }}
+            />
+          ) : (
+            currentTeam
+          )}
         </div>
       </div>
     </div>
