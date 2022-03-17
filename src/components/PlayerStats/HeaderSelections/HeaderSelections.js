@@ -4,7 +4,6 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
-import ArrowDown from 'components/UI/icons/ArrowDown';
 import PortraitImg from 'images/portrait.png';
 
 const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
