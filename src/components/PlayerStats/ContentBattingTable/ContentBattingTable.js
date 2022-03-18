@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cl from './ContentBattingTable.module.scss';
 
-const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears }) => {
+const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS }) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
 
@@ -86,7 +86,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             : filteredLeague?.batting?.games_batting.map((row, index) => (
                 <li key={index} className={cl.tableRow}>
                   <div className={cl.game}>
-                    {row.date.slice(8, 10)} sep, {row.home_team.name} - {row.visit_team.name}
+                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]}, {row.home_team.name} - {row.visit_team.name}
                   </div>
                   <div>{row.AB}</div>
                   <div>{row.H}</div>

@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import cl from './Content.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector } from 'react-redux';
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
 const Content = ({ playerYears }) => {
   const [tableType, setTableType] = useState('Batting');
@@ -50,9 +52,15 @@ const Content = ({ playerYears }) => {
                   filteredLeagues={filteredLeagues}
                   filteredLeague={filteredLeague}
                   playerYears={playerYears}
+                  MONTHS={MONTHS}
                 />
               ) : (
-                <ContentPitchingTable leagues={statsData.leagues} playerYears={playerYears} />
+                <ContentPitchingTable
+                  filteredLeagues={filteredLeagues}
+                  filteredLeague={filteredLeague}
+                  playerYears={playerYears}
+                  MONTHS={MONTHS}
+                />
               )}
             </>
           )}
