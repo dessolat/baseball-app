@@ -16,10 +16,8 @@ const HeaderLeagues = ({ playerYears }) => {
   const firstMountRef = useRef(true);
 
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
-  // const leagues = useSelector(state => state.games.leagues);
-  // const games = useSelector(state => state.games.games);
+  const playerCurrentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
-  const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
   const setScrollArrows = () => {
@@ -77,13 +75,15 @@ const HeaderLeagues = ({ playerYears }) => {
   const filteredLeagues = useMemo(() => {
     const newLeagues =
       playerYears === 'All years'
-        ? playerStatsData.leagues.slice()
-        : playerStatsData.leagues.filter(league => league.year == playerYears);
+        ? playerStatsData.leagues.filter(league => league.teams.find(team => team.name === playerCurrentTeam))
+        : playerStatsData.leagues.filter(
+            league => league.year == playerYears && league.teams.find(team => team.name === playerCurrentTeam)
+          );
     newLeagues.unshift({ id: -1, title: 'All' });
 
     return newLeagues;
     // eslint-disable-next-line
-  }, [playerName, playerSurname, playerYears]);
+  }, [playerName, playerSurname, playerYears, playerCurrentTeam]);
 
   return (
     <div className={cl.leaguesWrapper}>
