@@ -3,6 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/sharedReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
+// import { setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 
 const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
@@ -11,6 +12,7 @@ const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const handleLeagueClick = league => () => {
     if (playerYears === 'All years') return;
     dispatch(setCurrentLeague(league));
+		// league.teams && dispatch(setPlayerCurrentTeam(league.teams[0].name))
   };
 
   const classes = [cl.leagues];
