@@ -3,33 +3,33 @@ import cl from './Content.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
-import Loader from 'components/UI/loaders/Loader/Loader';
-import { setPlayerStatsData } from 'redux/playerStatsReducer';
+import { useSelector } from 'react-redux';
 
 const Content = ({ playerYears }) => {
-  const [error, setError] = useState('');
-  const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [tableType, setTableType] = useState('Batting');
 
   const statsData = useSelector(state => state.playerStats.playerStatsData);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
 
   const TABLE_OPTIONS = ['Batting', 'Pitching'];
 
   const handleTableOptionClick = option => setTableType(option);
 
+  const filteredLeagues =
+    playerYears === 'All years'
+      ? statsData.leagues.filter(league => league.teams.find(team => team.name === currentTeam))
+      : statsData.leagues.filter(
+          league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
+        );
+
+  const filteredLeague =
+    currentLeague.id === -1 ? null : currentLeague.teams.find(team => team.name === currentTeam);
   return (
     <section>
       <div className='container'>
         <div className={cl.content}>
-          {error !== '' ? (
-            <ErrorLoader />
-          ) : isStatsLoading ? (
-            <Loader styles={{ margin: '5rem auto 10rem' }} />
-          ) : Object.keys(statsData).length === 0  ? (
+          {Object.keys(statsData).length === 0 ? (
             <></>
           ) : (
             <>
@@ -46,7 +46,11 @@ const Content = ({ playerYears }) => {
                 />
               </div>
               {tableType === 'Batting' ? (
-                <ContentBattingTable leagues={statsData.leagues} playerYears={playerYears} />
+                <ContentBattingTable
+                  filteredLeagues={filteredLeagues}
+                  filteredLeague={filteredLeague}
+                  playerYears={playerYears}
+                />
               ) : (
                 <ContentPitchingTable leagues={statsData.leagues} playerYears={playerYears} />
               )}
