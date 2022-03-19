@@ -12,11 +12,32 @@ const ContentPitchingTableBody = ({
   MONTHS
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
-	
+
+  const sortedLeagueGames =
+    filteredLeague &&
+    filteredLeague.pitching.games_pitching
+      .slice()
+      .sort((a, b) =>
+        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+      );
+
+  const sortedLeagues = filteredLeagues
+    .slice()
+    .sort((a, b) =>
+      a.teams.find(team => team.name === currentTeam).pitching[sortField] >
+      b.teams.find(team => team.name === currentTeam).pitching[sortField]
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
+    );
   return (
     <ul className={cl.rows}>
       {currentLeague.id === -1
-        ? filteredLeagues.map((row, index) => {
+        ? //All leagues
+          sortedLeagues.map((row, index) => {
             const team = row.teams.find(team => team.name === currentTeam);
             return (
               <li key={index} className={cl.tableRow}>
@@ -43,7 +64,8 @@ const ContentPitchingTableBody = ({
               </li>
             );
           })
-        : filteredLeague?.pitching?.games_pitching.map((row, index) => (
+        : //Selected league
+				sortedLeagueGames.map((row, index) => (
             <li key={index} className={cl.tableRow}>
               <div className={cl.game}>
                 {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]}, {row.home_team.name} -{' '}
@@ -67,7 +89,6 @@ const ContentPitchingTableBody = ({
               <div>{row.NP}</div>
               <div>{row.NS}</div>
               <div>{row.NB}</div>
-
             </li>
           ))}
     </ul>
