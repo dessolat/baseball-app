@@ -73,6 +73,11 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
         ? -1
         : 1
     );
+
+  const handleFieldClick = field => () => {
+    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <div className={cl.wrapper}>
       <div>
