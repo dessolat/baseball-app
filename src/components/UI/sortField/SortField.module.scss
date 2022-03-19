@@ -1,0 +1,19 @@
+.cell {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+	user-select: none;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.invisibleArrow {
+  visibility: hidden;
+}
+
+.arrow {
+  display: inline-block;
+  transform: translateY(-1px);
+}
