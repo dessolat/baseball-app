@@ -2,6 +2,38 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cl from './ContentBattingTable.module.scss';
 
+const FIELDS_OBJ = {
+  AB: 'batting',
+  H: 'batting',
+  '1B': 'batting',
+  '2B': 'batting',
+  '3B': 'batting',
+  HR: 'batting',
+  RBI: 'batting',
+  GDP: 'batting',
+  BB: 'batting',
+  HP: 'batting',
+  SH: 'batting',
+  SF: 'batting',
+  SO: 'batting',
+  TB: 'batting',
+  AVG: 'batting',
+  SLG: 'batting',
+  OBP: 'batting',
+  OPS: 'batting',
+  CH: 'fielding',
+  PO: 'fielding',
+  A: 'fielding',
+  E: 'fielding',
+  DP: 'fielding',
+  FLD: 'fielding',
+  R: 'running',
+  SB: 'running',
+  CS: 'running',
+  SB_pr: 'running',
+  LOB: 'running'
+};
+
 const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS }) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
