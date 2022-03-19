@@ -1,7 +1,13 @@
 import React from 'react';
 import cl from './ContentPitchingTable.module.scss';
 
-const ContentPitchingTableHeader = ({ playerYears, currentLeague }) => {
+const ContentPitchingTableHeader = ({
+  playerYears,
+  currentLeague,
+  sortField,
+  sortDirection,
+  handleFieldClick
+}) => {
   return (
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}

@@ -16,13 +16,21 @@ const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYear
   return (
     <div className={cl.wrapper}>
       <div>
-        <ContentPitchingTableHeader playerYears={playerYears} currentLeague={currentLeague} />
+        <ContentPitchingTableHeader
+          playerYears={playerYears}
+          currentLeague={currentLeague}
+          sortField={sortField}
+          sortDirection={sortDirection}
+					handleFieldClick={handleFieldClick}
+					/>
         <ContentPitchingTableBody
           filteredLeagues={filteredLeagues}
           filteredLeague={filteredLeague}
           playerYears={playerYears}
           currentLeague={currentLeague}
-					MONTHS={MONTHS}
+          sortField={sortField}
+          sortDirection={sortDirection}
+          MONTHS={MONTHS}
         />
       </div>
     </div>
