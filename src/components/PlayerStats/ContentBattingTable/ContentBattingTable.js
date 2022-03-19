@@ -40,6 +40,18 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
 
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
+
+  const filteredLeagueGamesSummary =
+    filteredLeague &&
+    filteredLeague.batting.games_batting.reduce((sum, game, i) => {
+      const sumGame = {
+        ...game,
+        ...filteredLeague.fielding.games_fielding[i],
+        ...filteredLeague.running.games_running[i]
+      };
+      sum.push(sumGame);
+      return sum;
+    }, []);
   return (
     <div className={cl.wrapper}>
       <div>
