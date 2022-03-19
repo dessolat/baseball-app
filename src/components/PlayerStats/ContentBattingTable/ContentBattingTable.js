@@ -1,6 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import cl from './ContentBattingTable.module.scss';
+import SortField from 'components/UI/sortField/SortField';
+import { useSelector } from 'react-redux';
 
 const FIELDS_OBJ = {
   AB: 'batting',
@@ -85,39 +86,124 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           {playerYears === 'All years' && <div className={cl.year}>Years</div>}
           {currentLeague.id === -1 && <div className={cl.league}>League</div>}
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
-          <div>AB</div>
-          <div>H</div>
-          <div>1B</div>
-          <div>2B</div>
-          <div>3B</div>
-          <div>HR</div>
-          <div>RBI</div>
-          <div>GDP</div>
-          <div>BB</div>
-          <div>HP</div>
-          <div>SH</div>
-          <div>SF</div>
-          <div>SO</div>
-          <div>TB</div>
-          <div className={cl.wider}>AVG</div>
-          <div className={cl.wider}>SLG</div>
-          <div className={cl.wider}>OBP</div>
-          <div className={cl.wider}>OPS</div>
-          <div>CH</div>
-          <div>PO</div>
-          <div>A</div>
-          <div>E</div>
-          <div>DP</div>
-          <div className={cl.wider}>FLD%</div>
-          <div>R</div>
-          <div>SB</div>
-          <div>CS</div>
-          <div className={cl.wider}>%SB</div>
-          <div>LOB</div>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            AB
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            H
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            1B
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            2B
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            3B
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            HR
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            RBI
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            GDP
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            BB
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            HP
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            SH
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            SF
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            SO
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            TB
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}>
+            AVG
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}>
+            SLG
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}>
+            OBP
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}>
+            OPS
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            CH
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            PO
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            A
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            E
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            DP
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}
+            renamedField='FLD'>
+            FLD%
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            R
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            SB
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            CS
+          </SortField>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wider}
+            renamedField='SB_pr'>
+            %SB
+          </SortField>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+            LOB
+          </SortField>
         </div>
         <ul className={cl.rows}>
           {currentLeague.id === -1
-            ? filteredLeagues.map((row, index) => {
+            ? // All leagues
+              sortedLeagues.map((row, index) => {
                 const team = row.teams.find(team => team.name === currentTeam);
                 return (
                   <li key={index} className={cl.tableRow}>
@@ -155,10 +241,12 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   </li>
                 );
               })
-            : filteredLeague?.batting?.games_batting.map((row, index) => (
+            : // Selected league
+              sortedLeagueGames.map((row, index) => (
                 <li key={index} className={cl.tableRow}>
                   <div className={cl.game}>
-                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]}, {row.home_team.name} - {row.visit_team.name}
+                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]}, {row.home_team.name} -{' '}
+                    {row.visit_team.name}
                   </div>
                   <div>{row.AB}</div>
                   <div>{row.H}</div>
@@ -178,19 +266,17 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <div className={cl.wider}>{Number(row.SLG).toFixed(3)}</div>
                   <div className={cl.wider}>{Number(row.OBP).toFixed(3)}</div>
                   <div className={cl.wider}>{Number(row.OPS).toFixed(3)}</div>
-                  <div>{filteredLeague.fielding.games_fielding[index].CH}</div>
-                  <div>{filteredLeague.fielding.games_fielding[index].PO}</div>
-                  <div>{filteredLeague.fielding.games_fielding[index].A}</div>
-                  <div>{filteredLeague.fielding.games_fielding[index].E}</div>
-                  <div>{filteredLeague.fielding.games_fielding[index].DP}</div>
-                  <div className={cl.wider}>
-                    {Number(filteredLeague.fielding.games_fielding[index].FLD).toFixed(3)}
-                  </div>
-                  <div>{filteredLeague.running.games_running[index].R}</div>
-                  <div>{filteredLeague.running.games_running[index].SB}</div>
-                  <div>{filteredLeague.running.games_running[index].CS}</div>
-                  <div className={cl.wider}>{filteredLeague.running.games_running[index].SB_pr}</div>
-                  <div>{filteredLeague.running.games_running[index].LOB}</div>
+                  <div>{row.CH}</div>
+                  <div>{row.PO}</div>
+                  <div>{row.A}</div>
+                  <div>{row.E}</div>
+                  <div>{row.DP}</div>
+                  <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
+                  <div>{row.R}</div>
+                  <div>{row.SB}</div>
+                  <div>{row.CS}</div>
+                  <div className={cl.wider}>{row.SB_pr}</div>
+                  <div>{row.LOB}</div>
                 </li>
               ))}
         </ul>
