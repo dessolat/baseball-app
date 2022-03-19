@@ -10,6 +10,9 @@ const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYear
 
   const currentLeague = useSelector(state => state.shared.currentLeague);
 
+	const handleFieldClick = field => () => {
+    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
   return (
     <div className={cl.wrapper}>
       <div>
