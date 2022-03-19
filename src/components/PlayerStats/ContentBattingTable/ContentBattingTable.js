@@ -38,6 +38,8 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
 
+  const [sortField, setSortField] = useState('AB');
+  const [sortDirection, setSortDirection] = useState('asc');
   return (
     <div className={cl.wrapper}>
       <div>
