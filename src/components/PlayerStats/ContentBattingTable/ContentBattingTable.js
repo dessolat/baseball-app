@@ -52,6 +52,27 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
       sum.push(sumGame);
       return sum;
     }, []);
+
+  const sortedLeagueGames =
+    filteredLeague &&
+    filteredLeagueGamesSummary
+      .slice()
+      .sort((a, b) =>
+        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+      );
+
+  const sortedLeagues = filteredLeagues
+    .slice()
+    .sort((a, b) =>
+      a.teams.find(team => team.name === currentTeam)[FIELDS_OBJ[sortField]][sortField] >
+      b.teams.find(team => team.name === currentTeam)[FIELDS_OBJ[sortField]][sortField]
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
+    );
   return (
     <div className={cl.wrapper}>
       <div>
