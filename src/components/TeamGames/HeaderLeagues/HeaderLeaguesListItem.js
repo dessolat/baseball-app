@@ -6,7 +6,7 @@ const HeaderLeaguesListItem = ({ league, handleClick, currentLeague }) => {
     <li
       className={league.id === currentLeague.id ? cl.league + ' ' + cl.active : cl.league}
       onClick={handleClick(league)}>
-      {league.name}
+      {league.title}
     </li>
   );
 };
