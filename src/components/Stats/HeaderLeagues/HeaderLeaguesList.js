@@ -8,13 +8,13 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const dispatch = useDispatch();
 
-  const handleLeagueClick = league => () => dispatch(setCurrentLeague(league));
+  const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title }));
 
   return (
     <ul className={cl.leagues} ref={ref}>
-      {leagues.map(league => (
+      {leagues.map((league, index) => (
         <HeaderLeaguesListItem
-          key={league.id}
+          key={index}
           league={league}
           handleClick={handleLeagueClick}
           currentLeague={currentLeague}
