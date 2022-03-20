@@ -3,12 +3,12 @@ import ContentPlayersTable from '../ContentPlayersTable/ContentPlayersTable';
 import ContentGamesTable from '../ContentGamesTable/ContentGamesTable';
 import cl from './Content.module.scss';
 
-const Content = ({ games }) => {
+const Content = () => {
   return (
     <section>
       <div className='container'>
         <div className={cl.content}>
-          <ContentPlayersTable games={games} />
+          <ContentPlayersTable />
           <ContentGamesTable />
         </div>
       </div>
