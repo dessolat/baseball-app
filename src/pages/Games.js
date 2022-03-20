@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addLeagueImage, resetTableFilters, setGamesAndLeagues } from 'redux/gamesReducer';
 import { setCurrentLeague } from 'redux/sharedReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
+import Loader from 'components/UI/loaders/Loader/Loader';
 
 const Games = () => {
-	// eslint-disable-next-line
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,6 +23,8 @@ const Games = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
+
+  useEffect(() => () => dispatch(setGamesAndLeagues({ games: null, leagues: null })), []);
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -54,7 +57,7 @@ const Games = () => {
     return () => {
       cancelTokenRef.current.cancel(null);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentYear]);
 
   useEffect(() => {
@@ -82,33 +85,30 @@ const Games = () => {
     leagues
       .filter(league => league.logo !== '' && !leaguesImages[league.id])
       .forEach(league => fetchImage(league.id, league.logo));
-			// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [games, leagues]);
 
   useEffect(() => {
-    if (firstMountRef.current === true) return;
-
-    dispatch(resetTableFilters());
-		// eslint-disable-next-line
-  }, [currentGameType, currentYear, currentLeague]);
-
-  useEffect(() => {
+    // if (firstMountRef.current === true) return;
     if (firstMountRef.current === true) {
       firstMountRef.current = false;
       return;
     }
 
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-		// eslint-disable-next-line
-  }, [currentGameType, currentYear]);
+    dispatch(resetTableFilters());
+    // eslint-disable-next-line
+  }, [currentGameType, currentYear, currentLeague]);
 
+  useEffect(() => {
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    // eslint-disable-next-line
+  }, [currentGameType, currentYear]);
   return (
     <>
-      {/* {isLoading ? (
-        <Loader />
-      ) :  */}
-      {error && games === null ? (
+      {error !== '' ? (
         <ErrorLoader error={error} />
+      ) : isLoading && games === null ? (
+        <Loader />
       ) : games === null ? (
         <></>
       ) : (
