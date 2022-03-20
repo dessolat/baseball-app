@@ -168,7 +168,7 @@ const ContentPlayerTable = () => {
             return (
               <li key={index} className={cl.tableRow}>
                 <div>
-                  <Link to={`/stats/player/${row.name}/${row.name}`}> {row.name}</Link>
+                  <Link to={`/stats/player/${row.name}/${row.surname}`}> {row.name} {row.surname}</Link>
                 </div>
                 <div>{index}</div>
                 <div>
