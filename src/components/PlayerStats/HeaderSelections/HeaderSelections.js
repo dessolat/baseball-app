@@ -6,6 +6,7 @@ import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedRe
 import { useParams } from 'react-router-dom';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
+import { getShortName } from 'utils';
 
 const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
 
@@ -61,7 +62,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
 
   const handleTeamClick = team => {
     dispatch(setCurrentTeam(team));
-		dispatch(setCurrentLeague({id: -1, name: 'All'}))
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
   // const getTeamNames = () => {
@@ -123,7 +124,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
         <div className={cl.batting}>
           {teamsArray.length > 1 ? (
             <Dropdown
-              title={currentTeam}
+              title={getShortName(currentTeam || '', 13)}
               options={teamsArray}
               currentOption={currentTeam}
               handleClick={handleTeamClick}
@@ -132,7 +133,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               itemStyles={{ padding: '.25rem 0' }}
             />
           ) : (
-            currentTeam
+            getShortName(currentTeam || '', 16)
           )}
         </div>
       </div>
