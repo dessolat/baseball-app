@@ -15,52 +15,61 @@ const HeaderLeagues = () => {
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  const leagues = useSelector(state => state.games.leagues);
-  const games = useSelector(state => state.games.games);
+  // const leagues = useSelector(state => state.games.leagues);
+  // const games = useSelector(state => state.games.games);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const currentYear = useSelector(state => state.shared.currentYear);
+  const teamData = useSelector(state => state.teamGames.teamData);
   const dispatch = useDispatch();
+
+	const setScrollArrows = () => {
+    setIsLeftScroll(currentScroll <= 0 ? false : true);
+    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  };
 
   useLayoutEffect(() => {
     leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
 
-		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-		dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft))
-		// eslint-disable-next-line
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
+    dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
-		if (firstMountRef.current === true) {
+    if (firstMountRef.current === true) {
       return;
     }
 
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   }, [currentScroll]);
-	
+
   useEffect(() => {
-		if (firstMountRef.current === true) {
-			return;
-    }
-		
-    leaguesRef.current.scrollLeft = 0;
-    dispatch(setCurrentLeaguesScroll(0));
-		// eslint-disable-next-line
-  }, [currentYear]);
-	
-  useEffect(() => {
-		if (firstMountRef.current === true) {
-			firstMountRef.current = false;
+    if (firstMountRef.current === true) {
       return;
     }
-		
+
+    leaguesRef.current.scrollLeft = 0;
+    dispatch(setCurrentLeaguesScroll(0));
+		setScrollArrows()
+    // eslint-disable-next-line
+  }, [currentYear]);
+
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-		// eslint-disable-next-line
-  }, [leagues]);
+    // eslint-disable-next-line
+  }, [teamData]);
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
@@ -74,21 +83,19 @@ const HeaderLeagues = () => {
     dispatch(setCurrentLeaguesScroll(scrollValue));
   };
 
-  const filteredLeagues = useMemo(() => {
-    const newLeagues = leagues.filter(league =>
-      games.some(
-        game =>
-          game.league_id === league.id && (game.owners_name === teamName || game.guests_name === teamName)
-      )
-    );
-    newLeagues.unshift({ id: -1, name: 'All' });
+  const leaguesArr = useMemo(() => {
+    const newLeagues = [];
+    teamData
+      .filter(curLeague => curLeague.league.year === currentYear)
+      .forEach(curLeague => newLeagues.push(curLeague.league));
+    newLeagues.unshift({ id: -1, title: 'All' });
     return newLeagues;
-  }, [leagues, teamName, games]);
+  }, [teamName, teamData, currentYear]);
 
   return (
     <div className={cl.leaguesWrapper}>
       <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
-      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} />
+      <HeaderLeaguesList leagues={leaguesArr} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
