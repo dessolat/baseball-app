@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
+import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedReducer';
 import TeamLogo from 'images/team_logo.png';
 import { useParams } from 'react-router-dom';
 import { getShortName } from 'utils';
@@ -21,6 +21,7 @@ const HeaderSelections = () => {
 
     dispatch(setCurrentDate(tempDate));
     dispatch(setCurrentYear(option));
+    dispatch(setCurrentLeague({ id: -1, title: 'All' }));
   };
   return (
     <div className={cl.selections}>
