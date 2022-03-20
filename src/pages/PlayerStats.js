@@ -101,10 +101,10 @@ const PlayerStats = () => {
 
   return (
     <>
-      {isStatsLoading ? (
-        <Loader />
-      ) : error !== '' ? (
+      {error !== '' ? (
         <ErrorLoader error={error} />
+      ) : isStatsLoading ? (
+        <Loader />
       ) : Object.keys(playerStatsData).length === 0 ? (
         <></>
       ) : (
