@@ -22,23 +22,42 @@ const MONTHS = {
 const ContentGamesTable = () => {
   const { teamName } = useParams();
 
-  const games = useSelector(state => state.games.games);
   const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentYear = useSelector(state => state.shared.currentYear);
+  const teamData = useSelector(state => state.teamGames.teamData);
 
-  //Games filtering
-  let filteredData = useMemo(
-    () =>
-      games.filter(
-        game =>
-          (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
-          (game.owners_name === teamName || game.guests_name === teamName)
-      ),
-			// eslint-disable-next-line
-    [games, currentLeague, teamName]
+  //Filtering teamData leagues by current year
+  const currentYearLeagues = useMemo(
+    () => teamData.filter(curLeague => curLeague.league.year === currentYear),
+    [teamData, currentYear]
   );
 
+  //Games summary by currentLeague
+  const gamesArray = useMemo(
+    () =>
+      currentLeague.id === -1
+        ? currentYearLeagues.reduce((sum, curLeague) => {
+            curLeague.games.forEach(game => sum.push(game));
+            return sum;
+          }, [])
+        : currentYearLeagues.find(curLeague => curLeague.league.id === currentLeague.id).games,
+    [currentYearLeagues, currentLeague]
+  );
+
+  //Games filtering
+  // let filteredData = useMemo(
+  //   () =>
+  //     teamData.filter(
+  //       game =>
+  //         (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
+  //         (game.owners_name === teamName || game.guests_name === teamName)
+  //     ),
+  //   // eslint-disable-next-line
+  //   [teamData, currentLeague, teamName]
+  // );
+
   //Games sorting
-  filteredData = useMemo(() => filteredData.sort((a, b) => (a.date > b.date ? 1 : -1)), [filteredData]);
+  const sortedGamesArray = useMemo(() => gamesArray.sort((a, b) => (a.date > b.date ? 1 : -1)), [gamesArray]);
   return (
     <div className={cl.wrapper}>
       <div className={cl.table}>
@@ -51,26 +70,26 @@ const ContentGamesTable = () => {
           <div>Inn</div>
         </div>
         <ul className={cl.rows}>
-          {filteredData.map((game, index) => (
+          {sortedGamesArray.map((game, index) => (
             <li key={game.id} className={cl.tableRow}>
               <div>{game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]}</div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 22)}</Link>
+                <Link to={`/games/team/${game.homies.name}`}> {getShortName(game.homies.name, 22)}</Link>
               </div>
               <div>
-                {game.score_owners} - {game.score_guests}
+                {game.homies.score} - {game.visitors.score}
               </div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 22)}</Link>
+                <Link to={`/games/team/${game.visitors.name}`}> {getShortName(game.visitors.name, 22)}</Link>
               </div>
               <div className={cl.links}>
                 <div>
                   <Link to={`/game/${game.id}?tab=box`}>Box</Link>
                   <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                  {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                  {game.has_records && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
                 </div>
               </div>
-              <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+              <div>{game.inn !== null ? `${game.last_inn} inn` : '—'} </div>
             </li>
           ))}
         </ul>
