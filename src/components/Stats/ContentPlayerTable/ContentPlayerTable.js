@@ -139,7 +139,7 @@ const ContentPlayerTable = () => {
 
   const filteredStatsData =
     currentLeague.id !== -1
-      ? statsData.find(item => item.title === currentLeague.name).players[tableMode.toLowerCase()] || []
+      ? statsData.find(item => item.title === currentLeague.name)?.players[tableMode.toLowerCase()] || []
       : statsData.reduce((sum, league) => {
           league.players[tableMode.toLowerCase()].forEach(player => {
             const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
