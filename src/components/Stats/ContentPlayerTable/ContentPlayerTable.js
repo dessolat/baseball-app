@@ -13,6 +13,8 @@ const ContentPlayerTable = () => {
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
 
+  const handleTeamClick = team => setCurrentTeam(team);
+
   const tableHeaders =
     tableMode === 'Batting' ? (
       <>
