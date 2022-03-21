@@ -273,7 +273,7 @@ const ContentPlayerTable = () => {
       </>
     );
 
-  const filteredStatsData =
+  let filteredStatsData =
     currentLeague.id !== -1
       ? statsData.find(item => item.title === currentLeague.name)?.players[tableMode.toLowerCase()] || []
       : statsData.reduce((sum, league) => {
@@ -305,6 +305,14 @@ const ContentPlayerTable = () => {
         )
       ),
     [filteredStatsData]
+  );
+  //Filtering by team
+  filteredStatsData = useMemo(
+    () =>
+      currentTeam !== 'All'
+        ? filteredStatsData.filter(player => player.teams.find(team => team.name === currentTeam))
+        : filteredStatsData,
+    [filteredStatsData, currentTeam]
   );
   return (
     <div className={cl.wrapper}>
