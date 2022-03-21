@@ -290,6 +290,22 @@ const ContentPlayerTable = () => {
           return sum;
         }, []) || [];
 
+  const teamOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          filteredStatsData.reduce(
+            (sum, cur) => {
+              cur.teams.forEach(team => sum.push(team.name));
+              // sum.push(cur.owners_name);
+              return sum;
+            },
+            ['All']
+          )
+        )
+      ),
+    [filteredStatsData]
+  );
   return (
     <div className={cl.wrapper}>
       <div>
