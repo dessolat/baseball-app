@@ -45,11 +45,9 @@ const HeaderSelections = () => {
             options={TABLE_MODES}
             currentOption={tableMode}
             handleClick={handleModeClick}
-						listStyles={{marginLeft: '-.75rem', width: '115%'}}
-						itemStyles={{padding: 0, textAlign: 'center'}}
+            listStyles={{ marginLeft: '-.75rem', width: '115%' }}
+            itemStyles={{ padding: '.3rem 0', textAlign: 'center' }}
           />
-          {/* Batting 
-          <ArrowDown /> */}
         </div>
         <div className={cl.years}>
           <Dropdown
