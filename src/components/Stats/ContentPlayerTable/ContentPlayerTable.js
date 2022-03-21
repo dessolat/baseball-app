@@ -3,6 +3,7 @@ import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getObjectsSum } from 'utils';
+import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import SortField from 'components/UI/sortField/SortField';
 
 const ContentPlayerTable = () => {
@@ -295,7 +296,15 @@ const ContentPlayerTable = () => {
         <div className={cl.tableHeader}>
           <div></div>
           <div>POS</div>
-          <div>Team</div>
+          <div>
+            <Dropdown
+              title={'Team'}
+              options={teamOptions}
+              currentOption={currentTeam}
+              handleClick={handleTeamClick}
+              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+            />
+          </div>
           {tableHeaders}
         </div>
         <ul className={cl.rows}>
