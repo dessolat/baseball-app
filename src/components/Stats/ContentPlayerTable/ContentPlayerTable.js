@@ -314,6 +314,12 @@ const ContentPlayerTable = () => {
         : filteredStatsData,
     [filteredStatsData, currentTeam]
   );
+
+  //Sorting filtered array
+  const sortedStatsData = filteredStatsData.sort((a, b) =>
+    a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+  );
+
   return (
     <div className={cl.wrapper}>
       <div>
@@ -332,11 +338,14 @@ const ContentPlayerTable = () => {
           {tableHeaders}
         </div>
         <ul className={cl.rows}>
-          {filteredStatsData.map((row, index) => {
+          {sortedStatsData.map((row, index) => {
             return (
               <li key={index} className={cl.tableRow}>
                 <div>
-                  <Link to={`/stats/player/${row.name}/${row.surname}`}> {row.name} {row.surname}</Link>
+                  <Link to={`/stats/player/${row.name}/${row.surname}`}>
+                    {' '}
+                    {row.name} {row.surname}
+                  </Link>
                 </div>
                 <div>{index}</div>
                 <div>
