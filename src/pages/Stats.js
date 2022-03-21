@@ -13,7 +13,7 @@ const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const firstMountRef = useRef(true);
+  // const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
 
   const statsData = useSelector(state => state.stats.statsData);
@@ -21,6 +21,33 @@ const Stats = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const refactorData = leagues => {
+      const result = leagues.reduce((sum, league) => {
+        const resultLeague = {};
+        resultLeague.title = league.title;
+        resultLeague.players = {};
+        resultLeague.players.batting = league.players.batting;
+        resultLeague.players.pitching = league.players.pitching;
+        resultLeague.players['fielding / running'] = league.players.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...league.players.running[index] });
+          return sum;
+        }, []);
+        resultLeague.teams = {};
+        resultLeague.teams.batting = league.teams.batting;
+        resultLeague.teams.pitching = league.teams.pitching;
+        resultLeague.teams['fielding / running'] = league.teams.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...league.teams.running[index] });
+          return sum;
+        }, []);
+
+        sum.push(resultLeague);
+
+        return sum;
+      }, []);
+
+      return result;
+    };
+
     const fetchStats = async () => {
       cancelStatsTokenRef.current = axios.CancelToken.source();
 
@@ -32,7 +59,7 @@ const Stats = () => {
         });
         console.log(response.data);
         setError('');
-        dispatch(setStatsData(response.data));
+        dispatch(setStatsData(refactorData(response.data)));
       } catch (err) {
         if (err.message === null) return;
         console.log(err.message);
