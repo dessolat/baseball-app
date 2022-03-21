@@ -83,7 +83,7 @@ const ContentPlayerTable = () => {
       </>
     );
 
-  const tableRows = row =>
+  const getTableRows = row =>
     tableMode === 'Batting' ? (
       <>
         <div>{row.AB}</div>
@@ -194,7 +194,7 @@ const ContentPlayerTable = () => {
                     </>
                   )}
                 </div>
-                {tableRows(row)}
+                {getTableRows(row)}
               </li>
             );
           })}
