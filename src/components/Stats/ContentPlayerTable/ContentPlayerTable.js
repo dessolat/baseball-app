@@ -3,6 +3,7 @@ import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getObjectsSum } from 'utils';
+import SortField from 'components/UI/sortField/SortField';
 
 const ContentPlayerTable = () => {
   const [currentTeam, setCurrentTeam] = useState('All');
@@ -22,64 +23,188 @@ const ContentPlayerTable = () => {
   const tableHeaders =
     tableMode === 'Batting' ? (
       <>
-        <div>AB</div>
-        <div>H</div>
-        <div>1B</div>
-        <div>2B</div>
-        <div>3B</div>
-        <div>HR</div>
-        <div>RBI</div>
-        <div>GDP</div>
-        <div>BB</div>
-        <div>HP</div>
-        <div>SH</div>
-        <div>SF</div>
-        <div>SO</div>
-        <div>TB</div>
-        <div className={cl.wider}>AVG</div>
-        <div className={cl.wider}>SLG</div>
-        <div className={cl.wider}>OBP</div>
-        <div className={cl.wider}>OPS</div>
-      </>
-    ) : tableMode === 'Fielding' ? (
-      <>
-        <div>A</div>
-        <div>CH</div>
-        <div>DP</div>
-        <div>E</div>
-        <div className={cl.wider}>FLD</div>
-        <div>PO</div>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          AB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          H
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          1B
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          2B
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          3B
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          HR
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          RBI
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          GDP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          BB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          HP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SH
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SF
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SO
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          TB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          AVG
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          SLG
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          OBP
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          OPS
+        </SortField>
       </>
     ) : tableMode === 'Pitching' ? (
       <>
-        <div>2B</div>
-        <div>3B</div>
-        <div>BB</div>
-        <div>BK</div>
-        <div>ER</div>
-        <div className={cl.wider}>ERA</div>
-        <div>H</div>
-        <div>HP</div>
-        <div>HR</div>
-        <div>IBB</div>
-        <div>IP</div>
-        <div>NB</div>
-        <div>NP</div>
-        <div>NS</div>
-        <div>PA</div>
-        <div>R</div>
-        <div>SF</div>
-        <div>SH</div>
-        <div>SO</div>
-        <div>WP</div>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          2B
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          3B
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          BB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          BK
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          ER
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          ERA
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          H
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          HP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          HR
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          IBB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          IP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          NB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          NP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          NS
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          PA
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          R
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SF
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SH
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SO
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          WP
+        </SortField>
       </>
     ) : (
       <>
-        <div>CS</div>
-        <div>LOB</div>
-        <div>R</div>
-        <div>SB</div>
-        <div className={cl.wider}>SB_pr</div>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          A
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          CH
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          DP
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          E
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}>
+          FLD
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          PO
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          CS
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          LOB
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          R
+        </SortField>
+        <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          SB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.wider}
+          renamedField='SB_pr'>
+          %SB
+        </SortField>
       </>
     );
 
