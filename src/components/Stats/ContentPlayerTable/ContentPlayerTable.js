@@ -231,15 +231,6 @@ const ContentPlayerTable = () => {
         <div className={cl.wider}>{Number(row.OBP).toFixed(3)}</div>
         <div className={cl.wider}>{Number(row.OPS).toFixed(3)}</div>
       </>
-    ) : tableMode === 'Fielding' ? (
-      <>
-        <div>{row.A}</div>
-        <div>{row.CH}</div>
-        <div>{row.DP}</div>
-        <div>{row.E}</div>
-        <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
-        <div>{row.PO}</div>
-      </>
     ) : tableMode === 'Pitching' ? (
       <>
         <div>{row['2B']}</div>
@@ -265,6 +256,12 @@ const ContentPlayerTable = () => {
       </>
     ) : (
       <>
+        <div>{row.A}</div>
+        <div>{row.CH}</div>
+        <div>{row.DP}</div>
+        <div>{row.E}</div>
+        <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
+        <div>{row.PO}</div>
         <div>{row.CS}</div>
         <div>{row.LOB}</div>
         <div>{row.R}</div>
