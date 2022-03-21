@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getObjectsSum } from 'utils';
 
 const ContentPlayerTable = () => {
+  const [currentTeam, setCurrentTeam] = useState('All');
+  const [sortField, setSortField] = useState('AB');
+  const [sortDirection, setSortDirection] = useState('desc');
+
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
