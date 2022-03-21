@@ -7,13 +7,13 @@ import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
 
 const YEARS = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
-const TABLE_MODES = ['Batting', 'Fielding', 'Pitching', 'Running']
+const TABLE_MODES = ['Batting', 'Fielding / Running', 'Pitching'];
 
 const HeaderSelections = () => {
   const { statsType } = useParams();
 
   const currentYear = useSelector(state => state.shared.currentYear);
-	const tableMode = useSelector(state => state.stats.tableMode)
+  const tableMode = useSelector(state => state.stats.tableMode);
   const dispatch = useDispatch();
 
   const handleClick = option => {
@@ -26,8 +26,8 @@ const HeaderSelections = () => {
 
   const getClassName = name =>
     name === statsType || (name === 'player' && statsType !== 'team') ? cl.active : '';
-	
-	const handleModeClick = mode => dispatch(setTableMode(mode))
+
+  const handleModeClick = mode => dispatch(setTableMode(mode));
   return (
     <div className={cl.selections}>
       <div className={cl.types}>
@@ -41,7 +41,7 @@ const HeaderSelections = () => {
       <div className={cl.bottom}>
         <div className={cl.batting}>
           <Dropdown
-            title={tableMode}
+            title={tableMode === 'Fielding / Running' ? 'Fld / Run' : tableMode}
             options={TABLE_MODES}
             currentOption={tableMode}
             handleClick={handleModeClick}
