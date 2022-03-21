@@ -15,6 +15,10 @@ const ContentPlayerTable = () => {
 
   const handleTeamClick = team => setCurrentTeam(team);
 
+  const handleFieldClick = field => () => {
+    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
+
   const tableHeaders =
     tableMode === 'Batting' ? (
       <>
