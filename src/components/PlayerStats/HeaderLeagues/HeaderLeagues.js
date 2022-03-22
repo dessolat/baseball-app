@@ -77,7 +77,7 @@ const HeaderLeagues = ({ playerYears }) => {
       playerYears === 'All years'
         ? playerStatsData.leagues.filter(league => league.teams.find(team => team.name === playerCurrentTeam))
         : playerStatsData.leagues.filter(
-            league => league.year == playerYears && league.teams.find(team => team.name === playerCurrentTeam)
+            league => league.year === playerYears && league.teams.find(team => team.name === playerCurrentTeam)
           );
     newLeagues.unshift({ id: -1, title: 'All' });
 
