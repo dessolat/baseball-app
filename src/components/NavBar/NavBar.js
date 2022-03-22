@@ -9,7 +9,7 @@ const ROUTES = {
 
 const NavBar = () => {
   const location = useLocation();
-  console.log(location);
+
   const getClass = name => (ROUTES[name].includes(location.pathname) ? cl.active : '');
   return (
     <nav className={cl.navbar}>
