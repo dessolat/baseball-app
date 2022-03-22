@@ -2,15 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Header from 'components/TeamGames/Header/Header';
 import Content from 'components/TeamGames/Content/Content';
-// import { useSelector } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
-// import { setGamesAndLeagues } from 'redux/gamesReducer';
-// import { setCurrentLeague } from 'redux/sharedReducer';
 import axios from 'axios';
 import { setTeamData } from 'redux/teamGamesReducer';
 import { useParams } from 'react-router-dom';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { setCurrentLeague } from 'redux/sharedReducer';
 
 const TeamGames = () => {
   const [isTeamLoading, setIsTeamLoading] = useState(false);
@@ -18,15 +14,10 @@ const TeamGames = () => {
 
   const { teamName } = useParams();
 
-  // const cancelGamesTokenRef = useRef();
-  // const games = useSelector(state => state.games.games);
-  // const dispatch = useDispatch();
-  const currentYear = useSelector(state => state.shared.currentYear);
   const teamData = useSelector(state => state.teamGames.teamData);
   const dispatch = useDispatch();
 
   const cancelTeamTokenRef = useRef();
-  const firstMountRef = useRef();
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -56,16 +47,6 @@ const TeamGames = () => {
     };
     // eslint-disable-next-line
   }, [teamName]);
-
-  // useEffect(() => {
-  //   if (firstMountRef.current === true) {
-  //     firstMountRef.current = false;
-  //     return;
-  //   }
-
-  //   dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-  //   // eslint-disable-next-line
-  // }, [currentYear]);
 
   return (
     <>
