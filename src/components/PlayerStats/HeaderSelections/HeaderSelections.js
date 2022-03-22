@@ -45,7 +45,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
           );
 
     dispatch(setCurrentTeam(teamsArray[0]));
-    // }, [currentLeague, playerYears]);
+    // eslint-disable-next-line
   }, [playerYears]);
 
   const handleYearClick = option => {

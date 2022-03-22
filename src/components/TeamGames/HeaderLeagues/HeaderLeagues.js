@@ -90,6 +90,7 @@ const HeaderLeagues = () => {
       .forEach(curLeague => newLeagues.push(curLeague.league));
     newLeagues.unshift({ id: -1, title: 'All' });
     return newLeagues;
+		// eslint-disable-next-line
   }, [teamName, teamData, currentYear]);
 
   return (

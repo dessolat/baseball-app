@@ -24,6 +24,7 @@ const Games = () => {
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
 
+	// eslint-disable-next-line
   useEffect(() => () => dispatch(setGamesAndLeagues({ games: null, leagues: null })), []);
 
   useEffect(() => {
