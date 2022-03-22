@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import cl from './ContentGamesTable.module.scss';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getShortName } from 'utils';
 
@@ -20,8 +20,6 @@ const MONTHS = {
 };
 
 const ContentGamesTable = () => {
-  const { teamName } = useParams();
-
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentYear = useSelector(state => state.shared.currentYear);
   const teamData = useSelector(state => state.teamGames.teamData);
@@ -43,18 +41,6 @@ const ContentGamesTable = () => {
         : currentYearLeagues.find(curLeague => curLeague.league.id === currentLeague.id).games,
     [currentYearLeagues, currentLeague]
   );
-
-  //Games filtering
-  // let filteredData = useMemo(
-  //   () =>
-  //     teamData.filter(
-  //       game =>
-  //         (currentLeague.id !== -1 ? game.league_id === currentLeague.id : true) &&
-  //         (game.owners_name === teamName || game.guests_name === teamName)
-  //     ),
-  //   // eslint-disable-next-line
-  //   [teamData, currentLeague, teamName]
-  // );
 
   //Games sorting
   const sortedGamesArray = useMemo(() => gamesArray.sort((a, b) => (a.date > b.date ? 1 : -1)), [gamesArray]);
