@@ -2,38 +2,59 @@
 
 .selections {
   padding-top: 1.2rem;
+
   > * + * {
     margin-top: 1rem;
+  }
+
+  @media screen and (max-width: 800px) {
+    padding: .1rem 0;
+    font-size: 1rem;
+		border-bottom: 0.5px solid #cdcccc;
+
+    > * + * {
+      margin-top: 0;
+    }
   }
 }
 
 .years {
-	align-items: center;
-	cursor: pointer;
-	width: 5rem;
-	margin-left: -1.22rem;
-	text-align: center;
+  align-items: center;
+  cursor: pointer;
+  width: 5rem;
+  margin-left: -1.22rem;
+  text-align: center;
+
+  @media screen and (max-width: 800px) {
+    position: absolute;
+    margin-left: 0;
+  }
 }
 
 .types {
   display: flex;
-	font-size: 0.875rem;
+  font-size: 0.875rem;
 
   > * {
-		border-bottom: 2.15px solid transparent;
-		transition: all var(--transition-speed);
+    border-bottom: 2.15px solid transparent;
+    transition: all var(--transition-speed);
 
     &:hover {
       cursor: pointer;
-			border-bottom: 2.15px solid var(--side-color);
+      border-bottom: 2.15px solid var(--side-color);
     }
   }
 
   > * + * {
     margin-left: 1.95rem;
   }
+
+  @media screen and (max-width: 800px) {
+    font-size: 1rem;
+		justify-content: center;
+  }
 }
 
 .active {
-	border-bottom: 2.15px solid var(--side-color);
+  border-bottom: 2.15px solid var(--side-color);
 }
