@@ -13,14 +13,33 @@
     height: 100%;
     width: 0.5px;
     background-color: #dfdfdf;
+
+    @media screen and (max-width: 800px) {
+      right: 1.8rem;
+    }
   }
 
   > *:first-child {
-    margin-right: 0.2rem;
+    margin-right: 0.5rem;
+		
+		@media screen and (max-width: 800px) {
+			margin-right: 0;
+			height: auto;
+		}
   }
 
   > *:last-child {
     margin-left: 0.5rem;
+		
+		@media screen and (max-width: 800px) {
+			margin-left: 0;
+			height: auto;
+		}
+  }
+
+  @media screen and (max-width: 800px) {
+    justify-content: space-between;
+		align-items: stretch;
   }
 }
 
@@ -41,6 +60,12 @@
 
   @media screen and (max-width: 1080px) {
     width: 59rem;
+  }
+	
+  @media screen and (max-width: 800px) {
+		width: calc(100vw - 3.6rem);
+		grid-auto-columns: 50%;
+		overflow-x: scroll;
   }
 }
 
