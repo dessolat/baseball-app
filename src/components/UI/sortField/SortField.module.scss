@@ -3,17 +3,64 @@
   justify-content: center;
   align-content: center;
 	user-select: none;
+	position: relative;
 
 	&:hover {
 		cursor: pointer;
 	}
+
+	&::before {
+		content: '';
+		background-color: transparent;
+		transition: all var(--transition-speed);
+	}
 }
 
-.invisibleArrow {
-  visibility: hidden;
+.active {
+	background-color: #E0F0FF;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+	transition: all var(--transition-speed);
+	position: relative;
+	
+	&::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: -2rem;
+		width: 100%;
+		// width: 1.8rem;
+		height: 2rem;
+		background-color: #E0F0FF;
+		// animation: blueBg var(--transition-speed) linear forwards;
+		// @media screen and (max-width: 1040px) {
+		// 	width: 1.5rem;
+		// }
+	}
 }
 
-.arrow {
-  display: inline-block;
-  transform: translateY(-1px);
+.arrows {
+	position: absolute;
+	left: 50%;
+	top: -.9rem;
+	transform: translateX(-50%);
 }
+
+// .invisibleArrow {
+//   visibility: hidden;
+// }
+
+// .arrow {
+//   display: inline-block;
+//   transform: translateY(-1px);
+// }
+// @keyframes blueBg {
+// 	from {
+// 		background-color: white;
+// 	}
+
+// 	to {
+// 		background-color: #E0F0FF;
+// 	}
+// }
