@@ -1,0 +1,7 @@
+.activeCell {
+  background-color: #E0F0FF;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+	transition: all var(--transition-speed);
+}
