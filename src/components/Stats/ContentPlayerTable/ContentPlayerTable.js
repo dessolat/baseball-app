@@ -110,7 +110,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                     </>
                   )}
                 </div>
-                {getTableRows(row, cl)}
+                {getTableRows(row, cl, sortField)}
               </li>
             );
           })}

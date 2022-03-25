@@ -199,7 +199,7 @@ const Content = () => {
       </>
     );
 
-  const getTableRows = (row, cl) =>
+  const getTableRows = (row, cl, sortField) =>
     tableMode === 'Batting' ? (
       <>
         <div>{row.AB}</div>
