@@ -1,3 +1,14 @@
 .wrapper {
 	display: flex;
+	animation: showing var(--transition-speed) linear forwards;
+}
+
+@keyframes showing {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }
