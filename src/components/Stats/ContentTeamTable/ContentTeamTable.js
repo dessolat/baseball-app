@@ -47,7 +47,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                 <div>
                   <Link to={`/games/team/${row.name}`}> {row.name}</Link>
                 </div>
-                {getTableRows(row, cl)}
+                {getTableRows(row, cl, sortField)}
               </li>
             );
           })}
