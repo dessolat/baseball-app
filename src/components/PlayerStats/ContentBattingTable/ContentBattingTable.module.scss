@@ -2,7 +2,7 @@
 
 .wrapper {
   flex: 1;
-	margin-top: -.2rem;
+  margin-top: 1.6rem;
 }
 
 .tableHeader {
@@ -15,14 +15,15 @@
     position: relative;
 
     &:nth-last-child(11) {
-      padding-left: 1rem;
+      margin-left: 1rem;
+      // padding-left: 1rem;
       width: 2.5rem;
 
-      &::before {
+      &::after {
         content: 'Fielding';
         position: absolute;
-        left: 1.2rem;
-        top: -1.4rem;
+        left: 0.5rem;
+        top: -3.2rem;
         font: 400 0.875rem var(--font-nunito);
         color: black;
 
@@ -36,15 +37,15 @@
       }
     }
 
-    &:nth-last-child(4) {
-      padding-left: 1rem;
-      width: 2.5rem;
+    &:nth-last-child(5) {
+      margin-left: 1rem;
+      // width: 2.5rem;
 
-      &::before {
+      &::after {
         content: 'Running';
         position: absolute;
-        left: 1.2rem;
-        top: -1.4rem;
+        left: .2rem;
+        top: -3.2rem;
         font: 400 0.875rem var(--font-nunito);
         color: black;
 
@@ -64,10 +65,13 @@
   > div {
     font: 300 0.875rem var(--font-nunito);
 
-    &:nth-last-child(4),
     &:nth-last-child(11) {
-      padding-left: 1rem;
+      margin-left: 1rem;
       width: 2.5rem;
+    }
+
+    &:nth-last-child(5) {
+      margin-left: 1rem;
     }
   }
 
@@ -99,9 +103,13 @@
     width: 14rem;
     padding-left: 0.5rem;
 
-		> .teams {
-			font-weight: 700;
-		}
+    > .teams {
+      font-weight: 700;
+    }
+  }
+
+  .wide {
+    width: 1.8rem;
   }
 
   .wider {
@@ -115,4 +123,9 @@
 
 .rows {
   position: relative;
+}
+
+.sortFieldWrapper {
+  align-self: stretch;
+  display: grid;
 }
