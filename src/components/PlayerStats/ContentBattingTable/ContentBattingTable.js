@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import cl from './ContentBattingTable.module.scss';
 import SortField from 'components/UI/sortField/SortField';
 import { useSelector } from 'react-redux';
+import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 
 const FIELDS_OBJ = {
   AB: 'batting',
@@ -107,7 +108,11 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             RBI
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={cl.wide}>
             GDP
           </SortField>
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -156,12 +161,16 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             addedClass={cl.wider}>
             OPS
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-            CH
-          </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-            PO
-          </SortField>
+          <div className={cl.sortFieldWrapper}>
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+              CH
+            </SortField>
+          </div>
+          <div className={cl.sortFieldWrapper}>
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+              PO
+            </SortField>
+          </div>
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             A
           </SortField>
@@ -179,15 +188,21 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             renamedField='FLD'>
             FLD%
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-            R
-          </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-            SB
-          </SortField>
+          <div className={cl.sortFieldWrapper}>
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+              R
+            </SortField>
+          </div>
+          <div className={cl.sortFieldWrapper}>
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+              SB
+            </SortField>
+          </div>
+
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             CS
           </SortField>
+
           <SortField
             sortField={sortField}
             sortDirection={sortDirection}
@@ -209,35 +224,83 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <li key={index} className={cl.tableRow}>
                     {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                     <div className={cl.league}>{row.title}</div>
-                    <div>{team.batting.AB}</div>
-                    <div>{team.batting.H}</div>
-                    <div>{team.batting['1B']}</div>
-                    <div>{team.batting['2B']}</div>
-                    <div>{team.batting['3B']}</div>
-                    <div>{team.batting.HR}</div>
-                    <div>{team.batting.RBI}</div>
-                    <div>{team.batting.GDP}</div>
-                    <div>{team.batting.BB}</div>
-                    <div>{team.batting.HP}</div>
-                    <div>{team.batting.SH}</div>
-                    <div>{team.batting.SF}</div>
-                    <div>{team.batting.SO}</div>
-                    <div>{team.batting.TB}</div>
-                    <div className={cl.wider}>{Number(team.batting.AVG).toFixed(3)}</div>
-                    <div className={cl.wider}>{Number(team.batting.SLG).toFixed(3)}</div>
-                    <div className={cl.wider}>{Number(team.batting.OBP).toFixed(3)}</div>
-                    <div className={cl.wider}>{Number(team.batting.OPS).toFixed(3)}</div>
-                    <div>{team.fielding.CH}</div>
-                    <div>{team.fielding.PO}</div>
-                    <div>{team.fielding.A}</div>
-                    <div>{team.fielding.E}</div>
-                    <div>{team.fielding.DP}</div>
-                    <div className={cl.wider}>{Number(team.fielding.FLD).toFixed(3)}</div>
-                    <div>{team.running.R}</div>
-                    <div>{team.running.SB}</div>
-                    <div>{team.running.CS}</div>
-                    <div className={cl.wider}>{team.running.SB_pr}</div>
-                    <div>{team.running.LOB}</div>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      AB
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      H
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      1B
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      2B
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      3B
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      HR
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      RBI
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting} addedClass={cl.wide}>
+                      GDP
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      BB
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      HP
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      SH
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      SF
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      SO
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting}>
+                      TB
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting} fixed={3} addedClass={cl.wider}>
+                      AVG
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting} fixed={3} addedClass={cl.wider}>
+                      SLG
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting} fixed={3} addedClass={cl.wider}>
+                      OBP
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.batting} fixed={3} addedClass={cl.wider}>
+                      OPS
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                      CH
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                      PO
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                      A
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                      E
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                      DP
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.fielding} fixed={3} addedClass={cl.wider}>
+                      FLD
+                    </ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.running}>R</ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.running}>SB</ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.running}>CS</ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.running} addedClass={cl.wider}>SB_pr</ActiveBodyCell>
+                    <ActiveBodyCell sortField={sortField} row={team.running}>LOB</ActiveBodyCell>
                   </li>
                 );
               })
@@ -250,35 +313,35 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       {row.home_team.name} - {row.visit_team.name}
                     </span>
                   </div>
-                  <div>{row.AB}</div>
-                  <div>{row.H}</div>
-                  <div>{row['1B']}</div>
-                  <div>{row['2B']}</div>
-                  <div>{row['3B']}</div>
-                  <div>{row.HR}</div>
-                  <div>{row.RBI}</div>
-                  <div>{row.GDP}</div>
-                  <div>{row.BB}</div>
-                  <div>{row.HP}</div>
-                  <div>{row.SH}</div>
-                  <div>{row.SF}</div>
-                  <div>{row.SO}</div>
-                  <div>{row.TB}</div>
-                  <div className={cl.wider}>{Number(row.AVG).toFixed(3)}</div>
-                  <div className={cl.wider}>{Number(row.SLG).toFixed(3)}</div>
-                  <div className={cl.wider}>{Number(row.OBP).toFixed(3)}</div>
-                  <div className={cl.wider}>{Number(row.OPS).toFixed(3)}</div>
-                  <div>{row.CH}</div>
-                  <div>{row.PO}</div>
-                  <div>{row.A}</div>
-                  <div>{row.E}</div>
-                  <div>{row.DP}</div>
-                  <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
-                  <div>{row.R}</div>
-                  <div>{row.SB}</div>
-                  <div>{row.CS}</div>
-                  <div className={cl.wider}>{row.SB_pr}</div>
-                  <div>{row.LOB}</div>
+                  <ActiveBodyCell sortField={sortField} row={row}>AB</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>H</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>1B</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>2B</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>3B</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>HR</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>RBI</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>GDP</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>BB</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>HP</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>SH</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>SF</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>SO</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>TB</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>AVG</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>SLG</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>OBP</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>OPS</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>CH</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>PO</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>A</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>E</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>DP</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>FLD</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>SB</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>CS</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wider}>SB_pr</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>LOB</ActiveBodyCell>
                 </li>
               ))}
         </ul>
