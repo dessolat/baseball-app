@@ -245,8 +245,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
               sortedLeagueGames.map((row, index) => (
                 <li key={index} className={cl.tableRow}>
                   <div className={cl.game}>
-                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]}, {row.home_team.name} -{' '}
-                    {row.visit_team.name}
+                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},{' '}
+                    <span className={cl.teams}>
+                      {row.home_team.name} - {row.visit_team.name}
+                    </span>
                   </div>
                   <div>{row.AB}</div>
                   <div>{row.H}</div>
