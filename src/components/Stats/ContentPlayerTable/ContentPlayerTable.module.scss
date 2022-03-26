@@ -16,6 +16,10 @@
 .tableRow {
   > div {
     font: 300 0.875rem var(--font-nunito);
+
+		.fullName {
+			font-weight: 700;
+		}
   }
 
   &:nth-child(2n) {
