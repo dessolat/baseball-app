@@ -17,10 +17,14 @@
   > div {
     font: 300 0.875rem var(--font-nunito);
 
-		.fullName {
-			font-weight: 700;
-		}
+    .fullName {
+      font-weight: 700;
+    }
   }
+	
+	> .teamNames {
+		font-weight: 700;
+	}
 
   &:nth-child(2n) {
     background-color: #eaeaea;
@@ -38,9 +42,9 @@
     text-align: center;
     width: 1.8rem;
 
-		@media screen and (max-width: 1040px) {
-			width: 1.5rem;
-		}
+    @media screen and (max-width: 1040px) {
+      width: 1.5rem;
+    }
 
     &:first-child,
     &:nth-child(3) {
