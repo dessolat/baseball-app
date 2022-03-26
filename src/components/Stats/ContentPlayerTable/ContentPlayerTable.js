@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getObjectsSum } from 'utils';
+import { getObjectsSum, getShortName } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
@@ -100,10 +100,10 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 </div>
                 <div>{index}</div>
                 <div className={cl.teamNames}>
-                  <Link to={`/games/team/${row.teams[0].name}`}>{row.teams[0].name}</Link>
+                  <Link to={`/games/team/${row.teams[0].name}`}>{getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}</Link>
                   {row.teams[1] && (
                     <>
-                       / <Link to={`/games/team/${row.teams[1].name}`}>{row.teams[1].name}</Link>
+                       / <Link to={`/games/team/${row.teams[1].name}`}>{getShortName(row.teams[1].name, 12)}</Link>
                     </>
                   )}
                   {row.teams[2] && (
