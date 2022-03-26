@@ -5,6 +5,7 @@ import ContentTeamTable from '../ContentTeamTable/ContentTeamTable';
 import ContentPlayerTable from '../ContentPlayerTable/ContentPlayerTable';
 import SortField from 'components/UI/sortField/SortField';
 import { useSelector } from 'react-redux';
+import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 
 const Content = () => {
   const { statsType } = useParams();
@@ -202,61 +203,61 @@ const Content = () => {
   const getTableRows = (row, cl, sortField) =>
     tableMode === 'Batting' ? (
       <>
-        <div>{row.AB}</div>
-        <div>{row.H}</div>
-        <div>{row['1B']}</div>
-        <div>{row['2B']}</div>
-        <div>{row['3B']}</div>
-        <div>{row.HR}</div>
-        <div>{row.RBI}</div>
-        <div>{row.GDP}</div>
-        <div>{row.BB}</div>
-        <div>{row.HP}</div>
-        <div>{row.SH}</div>
-        <div>{row.SF}</div>
-        <div>{row.SO}</div>
-        <div>{row.TB}</div>
-        <div className={cl.wider}>{Number(row.AVG).toFixed(3)}</div>
-        <div className={cl.wider}>{Number(row.SLG).toFixed(3)}</div>
-        <div className={cl.wider}>{Number(row.OBP).toFixed(3)}</div>
-        <div className={cl.wider}>{Number(row.OPS).toFixed(3)}</div>
+        <ActiveBodyCell sortField={sortField} row={row}>AB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>H</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>1B</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>2B</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>3B</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>HR</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>RBI</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>GDP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>BB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>HP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SH</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SF</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SO</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>TB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>AVG</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>SLG</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>OBP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>OPS</ActiveBodyCell>
       </>
     ) : tableMode === 'Pitching' ? (
       <>
-        <div>{row['2B']}</div>
-        <div>{row['3B']}</div>
-        <div>{row.BB}</div>
-        <div>{row.BK}</div>
-        <div>{row.ER}</div>
-        <div className={cl.wider}>{Number(row.ERA).toFixed(2)}</div>
-        <div>{row.H}</div>
-        <div>{row.HP}</div>
-        <div>{row.HR}</div>
-        <div>{row.IBB}</div>
-        <div>{Number(row.IP).toFixed(1)}</div>
-        <div>{row.NB}</div>
-        <div>{row.NP}</div>
-        <div>{row.NS}</div>
-        <div>{row.PA}</div>
-        <div>{row.R}</div>
-        <div>{row.SF}</div>
-        <div>{row.SH}</div>
-        <div>{row.SO}</div>
-        <div>{row.WP}</div>
+        <ActiveBodyCell sortField={sortField} row={row}>2B</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>3B</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>BB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>BK</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>ER</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>ERA</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>H</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>HP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>HR</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>IBB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={1}>IP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>NB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>NP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>NS</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>PA</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SF</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SH</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SO</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>WP</ActiveBodyCell>
       </>
     ) : (
       <>
-        <div>{row.A}</div>
-        <div>{row.CH}</div>
-        <div>{row.DP}</div>
-        <div>{row.E}</div>
-        <div className={cl.wider}>{Number(row.FLD).toFixed(3)}</div>
-        <div>{row.PO}</div>
-        <div>{row.CS}</div>
-        <div>{row.LOB}</div>
-        <div>{row.R}</div>
-        <div>{row.SB}</div>
-        <div className={cl.wider}>{Number(row.SB_pr).toFixed(3)}</div>
+        <ActiveBodyCell sortField={sortField} row={row}>A</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>CH</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>DP</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>E</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>FLD</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>PO</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>CS</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>LOB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>SB</ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>SB_pr</ActiveBodyCell>
       </>
     );
 
