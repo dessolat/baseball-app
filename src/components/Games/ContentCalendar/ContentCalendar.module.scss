@@ -7,6 +7,10 @@
 .wrapper {
 	width: 423.5px;
 	overflow-x: hidden;
+	
+	@media screen and (max-width: 800px) {
+		width: calc(43px * 3);
+  }
 }
 
 .list {
@@ -15,6 +19,10 @@
 	transform: translateX(0px);
 	transition: all .25s;
 	list-style: none;
+	
+	@media screen and (max-width: 800px) {
+		transform: translateX(43px);
+  }
 }
 
 .item {
@@ -22,8 +30,13 @@
 	user-select: none;
 	font: 700 12px 'Nunito', sans-serif;
 	color: #838383;
-
+	
 	&:hover {
 		cursor: pointer;
 	}
+	
+	@media screen and (max-width: 800px) {
+		flex: 0 0 43px;
+		font-size: 10px;
+  }
 }

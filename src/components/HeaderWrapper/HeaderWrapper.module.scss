@@ -4,4 +4,8 @@
 	position: relative;
 	z-index: 2;
 	user-select: none;
+	
+	@media screen and (max-width: 800px) {
+		box-shadow: none;
+	}
 }

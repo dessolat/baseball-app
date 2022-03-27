@@ -10,9 +10,16 @@
   align-items: center;
   height: 2.9925rem;
   padding: 0 1.5rem 0 1.106rem;
+	
+	@media screen and (max-width: 800px) {
+		padding: 7px 10px;
+		background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
+		border-top: 0.5px solid #cdcccc;
+		height: auto;
+	}
 
   img {
-    width: 3.34rem;
+		width: 3.34rem;
   }
 }
 
@@ -23,6 +30,10 @@
 
   > * {
     margin-left: 1rem;
+
+		@media screen and (max-width: 800px) {
+			margin-left: 0;
+		}
   }
 }
 
@@ -32,6 +43,10 @@
 
   > * + * {
     margin-left: 1.106rem;
+  }
+
+	@media screen and (max-width: 800px) {
+		display: none;
   }
 }
 
@@ -43,6 +58,10 @@
 .table {
   margin: 1rem 1.5rem 0 5rem;
 
+	@media screen and (max-width: 800px) {
+		margin: 0;
+	}
+
   > .tableHeader {
     color: #838383;
     border-bottom: 0.5px solid rgb(16, 16, 16, 0.01);
@@ -50,6 +69,10 @@
     display: flex;
     align-items: center;
     min-height: 2rem;
+
+		@media screen and (max-width: 800px) {
+			display: none;
+		}
 
     > div {
       font: 700 0.75rem var(--font-nunito);
@@ -88,6 +111,10 @@
     overflow-y: scroll;
     scroll-behavior: smooth;
     position: relative;
+
+		@media screen and (max-width: 800px) {
+			max-height: calc(100vh - 30.63px - 127.92px - 43px);
+		}
 
     &::-webkit-scrollbar {
       width: 0;
@@ -177,4 +204,12 @@
 
 .underlineHover > a:hover {
 	border-bottom: 2px solid var(--side-color);
+}
+
+.tableModes {
+	display: none;
+
+	@media screen and (max-width: 800px) {
+		display: block;
+	}
 }
