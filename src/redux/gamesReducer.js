@@ -1,11 +1,12 @@
 const defaultState = {
-	games: null,
-	leagues: null,
+  games: null,
+  leagues: null,
   currentGameType: 'Baseball',
   currentStadium: 'All',
   currentHome: 'All',
   currentGuests: 'All',
-  leaguesImages: {}
+  leaguesImages: {},
+  mobileTableMode: 'Calendar'
 };
 
 const SET_GAMES_AND_LEAGUES = 'SET_GAMES_AND_LEAGUES';
@@ -14,6 +15,7 @@ const SET_CURRENT_STADIUM = 'SET_CURRENT_STADIUM';
 const SET_CURRENT_HOME = 'SET_CURRENT_HOME';
 const SET_CURRENT_GUESTS = 'SET_CURRENT_GUESTS';
 const ADD_LEAGUE_IMAGE = 'ADD_LEAGUE_IMAGE';
+const SET_MOBILE_TABLE_MODE = 'SET_MOBILE_TABLE_MODE';
 const RESET_TABLE_FILTERS = 'RESET_TABLE_FILTERS';
 
 export const gamesReducer = (state = defaultState, action) => {
@@ -30,6 +32,8 @@ export const gamesReducer = (state = defaultState, action) => {
       return { ...state, currentGuests: action.payload };
     case ADD_LEAGUE_IMAGE:
       return { ...state, leaguesImages: { ...state.leaguesImages, ...action.payload } };
+    case SET_MOBILE_TABLE_MODE:
+      return { ...state, mobileTableMode: action.payload };
     case RESET_TABLE_FILTERS:
       return { ...state, currentStadium: 'All', currentHome: 'All', currentGuests: 'All' };
     default:
@@ -43,4 +47,5 @@ export const setCurrentStadium = payload => ({ type: SET_CURRENT_STADIUM, payloa
 export const setCurrentHome = payload => ({ type: SET_CURRENT_HOME, payload });
 export const setCurrentGuests = payload => ({ type: SET_CURRENT_GUESTS, payload });
 export const addLeagueImage = payload => ({ type: ADD_LEAGUE_IMAGE, payload });
+export const setMobileTableMode = payload => ({ type: SET_MOBILE_TABLE_MODE, payload });
 export const resetTableFilters = () => ({ type: RESET_TABLE_FILTERS });
