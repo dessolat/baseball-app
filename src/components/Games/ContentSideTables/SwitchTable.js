@@ -13,7 +13,7 @@ const SECOND_TABLE_DATA = [
 
 const SwitchTable = () => {
   return (
-    <>
+    <div className={cl.switchWrapper}>
       <div className={cl.header}>
         <p className={cl.drop}>
           Batting <ArrowDown />
@@ -43,7 +43,7 @@ const SwitchTable = () => {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
