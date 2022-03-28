@@ -4,6 +4,15 @@
   flex: 0 1 315px;
 }
 
+.pctWrapper {
+	@media screen and (max-width: 800px) {
+		padding: 6px 10px;
+		display: flex;
+    flex-direction: column;
+    align-items: stretch;
+	}
+}
+
 .pctTable {
   text-align: left;
   border-collapse: collapse;

@@ -13,7 +13,7 @@ const PctTable = ({ currentLeague }) => {
   );
 
   return (
-    <>
+    <div className={cl.pctWrapper}>
       <div className={cl.header}>
         <Link to='/stats/team'>Go to Team Stat</Link>
       </div>
@@ -39,7 +39,7 @@ const PctTable = ({ currentLeague }) => {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
