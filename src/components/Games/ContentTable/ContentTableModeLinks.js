@@ -10,7 +10,11 @@ const ContentTableModeLinks = () => {
 
 	const handleModeClick = mode => () => dispatch(setMobileTableMode(mode))
 	return (
-		<div className={cl.tableModes}>ContentTableModeLinks</div>
+		<div className={cl.tableModes}>
+			{mobileTableMode !== 'Team tablo' && <button onClick={handleModeClick('Team tablo')}>Team tablo</button>}
+			{mobileTableMode !== 'Calendar' && <button onClick={handleModeClick('Calendar')}>Calendar</button>}
+			{mobileTableMode !== 'Leaders' && <button onClick={handleModeClick('Leaders')}>Leaders</button>}
+		</div>
 	)
 }
 
