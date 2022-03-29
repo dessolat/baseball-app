@@ -19,14 +19,26 @@
 
   thead {
     border-bottom: 0.5px solid #dfdfdf;
+		
+		@media screen and (max-width: 800px) {
+			border-bottom: 1px solid #dfdfdf;
+		}
 
     th {
       font: 700 0.75rem / 1.9rem var(--font-nunito);
       color: #838383;
       width: 2rem;
 
+			@media screen and (max-width: 800px) {
+				font-size: 12px;
+			}
+
       &:first-child {
         width: 12.1rem;
+				
+				@media screen and (max-width: 800px) {
+					width: 16rem;
+				}
       }
 
       &:nth-child(2),
@@ -41,6 +53,10 @@
     > tr {
       > td {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
+
+				@media screen and (max-width: 800px) {
+					font-size: 14px;
+				}
 
         &:first-child {
 					padding-right: 0.5rem;
@@ -62,11 +78,21 @@
 	align-items: center;
 	margin-top: 2rem;
 
+	@media screen and (max-width: 800px) {
+		margin-top: 0;
+		// margin-left: auto;
+		padding-bottom: 2px;
+	}
+
 	> a {
 		font: 300 .875rem var(--font-nunito);
 		text-decoration: underline;
 		color: var(--side-color);
 		margin-left: auto;
+
+		@media screen and (max-width: 800px) {
+			font-size: 14px;
+		}
 	}
 }
 
@@ -95,16 +121,27 @@
   thead {
     border-bottom: 0.5px solid #dfdfdf;
 
+		@media screen and (max-width: 800px) {
+			border-bottom: 1px solid #dfdfdf;
+		}
+
     th {
       font: 700 0.75rem / 1.9rem var(--font-nunito);
       color: #838383;
       width: 2rem;
+
+			@media screen and (max-width: 800px) {
+				font-size: 12px;
+			}
 
       &:first-child {
         width: 11.5rem;
       }
       &:nth-child(2) {
         width: 4rem;
+      }
+      &:last-child > div{
+				justify-content: flex-end;
       }
     }
   }
@@ -113,8 +150,17 @@
     td {
       font: 300 0.875rem / 1.9rem var(--font-nunito);
 
+			@media screen and (max-width: 800px) {
+				font-size: 14px;
+			}
+
       &:first-child {
         padding-right: 0.5rem;
+      }
+
+			&:last-child {
+        text-align: right;
+				padding-right: .2rem;
       }
     }
   }
