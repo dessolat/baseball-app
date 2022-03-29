@@ -29,6 +29,8 @@ const ContentTable = ({ games }) => {
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.games.currentGameType);
   const currentDate = useSelector(state => state.shared.currentDate);
+  const isMobile = useSelector(state => state.shared.isMobile);
+  const mobileTableMode = useSelector(state => state.games.mobileTableMode);
   const dispatch = useDispatch();
 
   const scrollItemRef = useRef(null);
@@ -110,79 +112,87 @@ const ContentTable = ({ games }) => {
     <div className={cl.wrapper}>
       <ContentTableHeader />
 
-      <div className={cl.table}>
-        <div className={cl.tableHeader}>
-          <div>Time</div>
-          <div>
-            <Dropdown
-              title={'Stadium'}
-              options={stadiumOptions}
-              currentOption={currentStadium}
-              handleClick={handleStadiumDropdownClick}
-              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-            />
+      {mobileTableMode === 'Calendar' && (
+        <div className={cl.table}>
+          <div className={cl.tableHeader}>
+            <div>Time</div>
+            <div>
+              <Dropdown
+                title={'Stadium'}
+                options={stadiumOptions}
+                currentOption={currentStadium}
+                handleClick={handleStadiumDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
+            </div>
+            <div>
+              <Dropdown
+                title={'Home'}
+                options={homeOptions}
+                currentOption={currentHome}
+                handleClick={handleHomeDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
+            </div>
+            <div> </div>
+            <div>
+              <Dropdown
+                title={'Guests'}
+                options={guestsOptions}
+                currentOption={currentGuests}
+                handleClick={handleGuestsDropdownClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              />
+            </div>
+            <div> </div>
+            <div>Inn</div>
           </div>
-          <div>
-            <Dropdown
-              title={'Home'}
-              options={homeOptions}
-              currentOption={currentHome}
-              handleClick={handleHomeDropdownClick}
-              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-            />
-          </div>
-          <div> </div>
-          <div>
-            <Dropdown
-              title={'Guests'}
-              options={guestsOptions}
-              currentOption={currentGuests}
-              handleClick={handleGuestsDropdownClick}
-              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-            />
-          </div>
-          <div> </div>
-          <div>Inn</div>
-        </div>
-        <ul className={cl.rows}>
-          {filteredData.map((game, index, arr) => {
-            const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
-            const isActive = currentDate.toJSON().slice(0, 10) === game.date;
-            const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] : null;
+          <ul className={cl.rows}>
+            {filteredData.map((game, index, arr) => {
+              const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
+              const isActive = currentDate.toJSON().slice(0, 10) === game.date;
+              const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] : null;
 
-            const classes = [cl.tableRow];
-            isDate && classes.push(cl.withDate);
-            isActive && classes.push(cl.active);
-            return (
-              <li
-                key={game.id}
-                ref={isActive && isDate ? scrollItemRef : null}
-                className={classes.join(' ')}
-                data-before={dataBefore}>
-                <div>{game.start_time.slice(0, 5)}</div>
-                <div>{game.stadium_name}</div>
-                <div className={cl.underlineHover}>
-                  <Link to={`/games/team/${game.owners_name}`}> {getShortName(game.owners_name, 28)}</Link>
-                </div>
-                <div>
-                  {game.score_owners} - {game.score_guests}
-                </div>
-                <div className={cl.underlineHover}>
-                  <Link to={`/games/team/${game.guests_name}`}> {getShortName(game.guests_name, 28)}</Link>
-                </div>
-                <div className={cl.links}>
-                  <div>
-                    <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-                    <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                    {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+              const classes = [cl.tableRow];
+              isDate && classes.push(cl.withDate);
+              isActive && classes.push(cl.active);
+              return (
+                <li
+                  key={game.id}
+                  ref={isActive && isDate ? scrollItemRef : null}
+                  className={classes.join(' ')}
+                  data-before={dataBefore}>
+                  <div>{game.start_time.slice(0, 5)}</div>
+                  <div>{game.stadium_name}</div>
+                  <div className={cl.underlineHover}>
+                    <Link to={`/games/team/${game.owners_name}`}>
+                      {' '}
+                      {getShortName(game.owners_name, isMobile ? 20 : 28)}
+                    </Link>
                   </div>
-                </div>
-                <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+                  <div>
+                    {game.score_owners} - {game.score_guests}
+                  </div>
+                  <div className={cl.underlineHover}>
+                    <Link to={`/games/team/${game.guests_name}`}>
+                      {' '}
+                      {getShortName(game.guests_name, isMobile ? 20 : 28)}
+                    </Link>
+                  </div>
+                  <div className={cl.links}>
+                    <div>
+                      <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                      <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                      {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                    </div>
+                  </div>
+                  <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
