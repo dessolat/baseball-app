@@ -3,7 +3,7 @@ import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLeagueImage, resetTableFilters, setGamesAndLeagues } from 'redux/gamesReducer';
+import { addLeagueImage, resetTableFilters, setGamesAndLeagues, setMobileTableMode } from 'redux/gamesReducer';
 import { setCurrentLeague } from 'redux/sharedReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
@@ -102,6 +102,7 @@ const Games = () => {
 
   useEffect(() => {
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+		dispatch(setMobileTableMode('Calendar'))
     // eslint-disable-next-line
   }, [currentGameType, currentYear]);
   return (
