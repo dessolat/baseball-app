@@ -17,6 +17,7 @@ const HeaderLeagues = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const leagues = useSelector(state => state.games.leagues);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,16 +43,16 @@ const HeaderLeagues = () => {
   }, []);
 
   useLayoutEffect(() => {
-    leaguesRef.current.style.scrollBehavior = 'unset';
-    leaguesRef.current.scrollLeft = currentScroll;
-    leaguesRef.current.style.scrollBehavior = 'smooth';
+    // leaguesRef.current.style.scrollBehavior = 'unset';
+    // leaguesRef.current.scrollLeft = currentScroll;
+    // leaguesRef.current.style.scrollBehavior = 'smooth';
     // eslint-disable-next-line
   }, []);
 
-  useLayoutEffect(() => {
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  }, [currentScroll]);
+  // useEffect(() => {
+  //   setIsLeftScroll(currentScroll <= 0 ? false : true);
+  //   setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  // }, [currentScroll]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
