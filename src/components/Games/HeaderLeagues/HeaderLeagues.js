@@ -97,12 +97,17 @@ const HeaderLeagues = () => {
 
   return (
     <div className={cl.leaguesWrapper}>
-      <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
+      <Arrow
+        onClick={scrollLeagues}
+        style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
+      />
       <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
-        style={!isRightScroll ? { visibility: 'hidden' } : null}
+        style={!isRightScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isRightScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
     </div>
   );
