@@ -31,6 +31,11 @@ const HeaderLeagues = () => {
     const ref = leaguesRef.current;
     ref.addEventListener('scroll', leaguesScrollDispatch);
 
+		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+		setIsRightScroll(
+			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+		);
+
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
     };
