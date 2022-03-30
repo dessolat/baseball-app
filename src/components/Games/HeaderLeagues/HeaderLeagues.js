@@ -22,6 +22,10 @@ const HeaderLeagues = () => {
   useEffect(() => {
     const leaguesScrollDispatch = () => {
       dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
+      setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+      setIsRightScroll(
+        leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+      );
     };
 
     const ref = leaguesRef.current;
