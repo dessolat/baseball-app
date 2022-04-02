@@ -8,9 +8,15 @@
   }
 
   @media screen and (max-width: 800px) {
-    padding: .1rem 0;
+    // padding: .1rem 0;
+    padding: 0;
     font-size: 1rem;
 		border-bottom: 0.5px solid #cdcccc;
+		position: relative;
+		height: 29px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
     > * + * {
       margin-top: 0;
@@ -28,6 +34,10 @@
   @media screen and (max-width: 800px) {
     position: absolute;
     margin-left: 0;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 777;
   }
 }
 
