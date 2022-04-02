@@ -70,8 +70,10 @@ const HeaderLeagues = () => {
       return;
     }
 
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    // setIsLeftScroll(currentScroll <= 0 ? false : true);
+    // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
     // eslint-disable-next-line
   }, [leagues, currentGameType]);
 
