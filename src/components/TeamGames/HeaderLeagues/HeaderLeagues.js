@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
@@ -20,34 +20,57 @@ const HeaderLeagues = () => {
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const currentYear = useSelector(state => state.shared.currentYear);
   const teamData = useSelector(state => state.teamGames.teamData);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
 
-	const setScrollArrows = () => {
+  const setScrollArrows = () => {
     setIsLeftScroll(currentScroll <= 0 ? false : true);
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   };
 
-  useLayoutEffect(() => {
-    leaguesRef.current.style.scrollBehavior = 'unset';
-    leaguesRef.current.scrollLeft = currentScroll;
-    leaguesRef.current.style.scrollBehavior = 'smooth';
+	useEffect(() => {
+    const leaguesScrollDispatch = () => {
+      dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
+      setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+      setIsRightScroll(
+        leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+      );
+    };
 
-    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-    setIsRightScroll(
-      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
-    );
-    dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
-    // eslint-disable-next-line
+    const ref = leaguesRef.current;
+    ref.addEventListener('scroll', leaguesScrollDispatch);
+
+		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+		setIsRightScroll(
+			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+		);
+
+    return () => {
+      ref.removeEventListener('scroll', leaguesScrollDispatch);
+    };
   }, []);
 
-  useLayoutEffect(() => {
-    if (firstMountRef.current === true) {
-      return;
-    }
+  // useLayoutEffect(() => {
+  //   leaguesRef.current.style.scrollBehavior = 'unset';
+  //   leaguesRef.current.scrollLeft = currentScroll;
+  //   leaguesRef.current.style.scrollBehavior = 'smooth';
 
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  }, [currentScroll]);
+  //   setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+  //   setIsRightScroll(
+  //     leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+  //   );
+  //   dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // useLayoutEffect(() => {
+  //   if (firstMountRef.current === true) {
+  //     return;
+  //   }
+
+  //   setIsLeftScroll(currentScroll <= 0 ? false : true);
+  //   setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  // }, [currentScroll]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -56,7 +79,7 @@ const HeaderLeagues = () => {
 
     leaguesRef.current.scrollLeft = 0;
     dispatch(setCurrentLeaguesScroll(0));
-		setScrollArrows()
+    setScrollArrows();
     // eslint-disable-next-line
   }, [currentYear]);
 
@@ -66,8 +89,10 @@ const HeaderLeagues = () => {
       return;
     }
 
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    // setIsLeftScroll(currentScroll <= 0 ? false : true);
+    // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
     // eslint-disable-next-line
   }, [teamData]);
 
@@ -90,17 +115,22 @@ const HeaderLeagues = () => {
       .forEach(curLeague => newLeagues.push(curLeague.league));
     newLeagues.unshift({ id: -1, title: 'All' });
     return newLeagues;
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [teamName, teamData, currentYear]);
 
   return (
     <div className={cl.leaguesWrapper}>
-      <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
+      <Arrow
+        onClick={scrollLeagues}
+        style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
+      />
       <HeaderLeaguesList leagues={leaguesArr} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
-        style={!isRightScroll ? { visibility: 'hidden' } : null}
+        style={!isRightScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isRightScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
     </div>
   );
