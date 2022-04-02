@@ -4,16 +4,35 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+	@media screen and (max-width: 800px) {
+		flex-direction: row-reverse;
+		font-size: 1rem;
+		border-bottom: 0.5px solid #cdcccc;
+		position: relative;
+	}
 }
 
 .teamInfo {
   display: flex;
   align-items: center;
+
+	@media screen and (max-width: 800px) {
+		flex-direction: row-reverse;
+	}
 }
 
 .teamName {
   font: 700 1.125rem var(--font-comfortaa);
   margin-left: 0.8rem;
+
+	@media screen and (max-width: 800px) {
+		line-height: 2rem;
+		font-size: 1rem;
+		margin-left: 0;
+	}
+}
+
 .teamImg {
 	@media screen and (max-width: 800px) {
 		position: absolute;
@@ -28,4 +47,13 @@
   width: 5rem;
   margin-left: -1.22rem;
   text-align: center;
+
+	@media screen and (max-width: 800px) {
+		position: absolute;
+		margin-left: 0;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 777;
+	}
 }
