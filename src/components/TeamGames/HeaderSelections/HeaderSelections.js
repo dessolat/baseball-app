@@ -26,7 +26,7 @@ const HeaderSelections = () => {
   return (
     <div className={cl.selections}>
       <div className={cl.teamInfo}>
-        <img src={TeamLogo} alt='' />
+        <img src={TeamLogo} alt='' className={cl.teamImg} />
         <h2 className={cl.teamName}>{getShortName(teamName, 24)}</h2>
       </div>
       <div className={cl.years}>

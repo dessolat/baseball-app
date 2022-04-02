@@ -14,6 +14,12 @@
 .teamName {
   font: 700 1.125rem var(--font-comfortaa);
   margin-left: 0.8rem;
+.teamImg {
+	@media screen and (max-width: 800px) {
+		position: absolute;
+		right: 1rem;
+		height: 25.2px;
+	}
 }
 
 .years {
