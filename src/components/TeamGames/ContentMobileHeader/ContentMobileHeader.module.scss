@@ -1,0 +1,31 @@
+.mobileHeader {
+  background-color: #f4f5f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+	border-top: .5px solid #CDCCCC;
+}
+
+.tableModes {
+  > button {
+    font: 400 14px var(--font-nunito);
+		border-bottom: 2px solid transparent;
+		color: black;
+
+		&.active {
+			border-bottom: 2px solid var(--side-color);
+		}
+  }
+
+  > button + button {
+    margin-left: 15px;
+  }
+}
+
+.linkWrapper > a {
+  font: 300 1rem / 32px var(--font-nunito);
+  text-decoration: underline;
+  color: var(--side-color);
+  margin-left: auto;
+}
