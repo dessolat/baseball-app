@@ -15,7 +15,7 @@
     padding: 7px 10px;
     background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
     border-top: 0.5px solid #cdcccc;
-    height: 43px;
+		height: auto;
   }
 
   img {
@@ -113,7 +113,7 @@
     position: relative;
 
     @media screen and (max-width: 800px) {
-      max-height: calc(100vh - 30.63px - 127.92px - 43px);
+      max-height: calc(100vh - 30.63px - 132px - 43px);
     }
 
     &::-webkit-scrollbar {
