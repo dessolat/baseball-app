@@ -5,6 +5,7 @@
 
 	@media screen and (max-width: 800px) {
 		display: block;
+		min-height: calc(100vh - 30.63px - 132px);
 	}
 
   > * {
