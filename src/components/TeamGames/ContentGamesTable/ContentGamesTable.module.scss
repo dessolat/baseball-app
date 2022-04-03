@@ -1,10 +1,18 @@
 .wrapper {
   flex: 2;
   position: relative;
+
+	@media screen and (max-width: 800px) {
+		padding: .5rem 0 0 0 !important;
+	}
 }
 
 .table {
   margin: 0 0.625rem;
+
+	@media screen and (max-width: 800px) {
+		margin: 0;
+	}
 
   > .tableHeader {
     color: #838383;
@@ -137,6 +145,10 @@
   position: absolute;
   right: 0.625rem;
   top: 1.5rem;
+
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 
   > a {
     font: 300 0.875rem var(--font-nunito);
