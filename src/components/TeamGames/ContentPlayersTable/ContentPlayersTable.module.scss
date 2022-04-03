@@ -3,10 +3,18 @@
 .wrapper {
   flex: 1;
   position: relative;
+
+  @media screen and (max-width: 800px) {
+    padding: 0.5rem 0 0 0 !important;
+  }
 }
 
 .table {
   margin: 0 0.625rem;
+
+  @media screen and (max-width: 800px) {
+    margin: 0;
+  }
 
   > .tableHeader {
     color: #838383;
@@ -16,9 +24,17 @@
     align-items: center;
     min-height: 2rem;
 
+    @media screen and (max-width: 800px) {
+      justify-content: space-between;
+    }
+
     > div {
       font: 700 0.75rem var(--font-nunito);
       text-align: left;
+
+      @media screen and (max-width: 800px) {
+        font-size: 12px;
+      }
 
       &:first-child {
         text-align: center;
@@ -49,6 +65,11 @@
     scroll-behavior: smooth;
     position: relative;
 
+    @media screen and (max-width: 800px) {
+      // max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 33px - 7px - 28px);
+      max-height: calc(100vh - 30.63px - 132px - 33px - 7px - 28px);
+    }
+
     &::-webkit-scrollbar {
       width: 0;
     }
@@ -59,9 +80,17 @@
     display: flex;
     align-items: center;
 
+    @media screen and (max-width: 800px) {
+      justify-content: space-between;
+    }
+
     > div {
       text-align: left;
       font: 300 0.875rem var(--font-nunito);
+
+      @media screen and (max-width: 800px) {
+        font-size: 1rem;
+      }
 
       &:first-child {
         text-align: center;
@@ -113,18 +142,22 @@
 }
 
 .linkWrapper {
-	position: absolute;
-	right: .625rem;
-	top: 1.5rem;
+  position: absolute;
+  right: 0.625rem;
+  top: 1.5rem;
 
-	> a {
-		font: 300 .875rem var(--font-nunito);
-		text-decoration: underline;
-		color: var(--side-color);
-		margin-left: auto;
-	}
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+
+  > a {
+    font: 300 0.875rem var(--font-nunito);
+    text-decoration: underline;
+    color: var(--side-color);
+    margin-left: auto;
+  }
 }
 
 .underlineHover > a:hover {
-	border-bottom: 2px solid var(--side-color);
+  border-bottom: 2px solid var(--side-color);
 }
