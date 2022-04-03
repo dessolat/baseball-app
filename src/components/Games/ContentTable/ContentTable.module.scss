@@ -113,6 +113,7 @@
     position: relative;
 
     @media screen and (max-width: 800px) {
+      // max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 43px);
       max-height: calc(100vh - 30.63px - 132px - 43px);
     }
 
