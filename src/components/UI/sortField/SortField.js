@@ -8,6 +8,7 @@ const SortField = ({
   handleClick,
   addedClass = null,
   renamedField = null,
+	arrowStyles = null,
   children
 }) => {
   const isActive = sortField === (renamedField || children);
@@ -17,7 +18,7 @@ const SortField = ({
     <div onClick={handleClick(renamedField || children)} className={classes.join(' ')}>
       {children}
       {isActive && (
-        <div className={cl.arrows}>
+        <div className={cl.arrows} style={arrowStyles}>
           <SortArrows direction={sortDirection}/>
         </div>
       )}
