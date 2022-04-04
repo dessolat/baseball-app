@@ -4,11 +4,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+	
+	@media screen and (max-width: 800px) {
+		position: relative;
+		flex-direction: row;
+		align-items: center;
+		padding: 2px 0;
+		border-bottom: 0.5px solid #cdcccc;
+		height: 29px;
+	}
 }
 
 .types {
   display: flex;
   font-size: 1.125rem;
+
+	@media screen and (max-width: 800px) {
+		font-size: 1rem;
+	}
 
   > * {
     border-bottom: 2.15px solid transparent;
@@ -36,6 +49,15 @@
   width: 5rem;
   margin-left: -1.22rem;
   text-align: center;
+
+	@media screen and (max-width: 800px) {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 777;
+		font-size: 1rem;
+	}
 }
 
 .active {
@@ -45,6 +67,10 @@
 .bottom {
   display: flex;
   align-items: baseline;
+
+	@media screen and (max-width: 800px) {
+		display: contents;
+	}
 
   > * + * {
     margin-left: 0.5rem;
@@ -59,4 +85,14 @@
   text-align: left;
   width: 4.375rem;
   font-size: 0.875rem;
+	
+	@media screen and (max-width: 800px) {
+		position: absolute;
+		right: 6px;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 777;
+		font-size: 1rem;
+		width: 5rem;
+	}
 }
