@@ -5,6 +5,11 @@
   align-items: center;
   position: relative;
 
+	@media screen and (max-width: 800px) {
+    justify-content: space-between;
+		align-items: stretch;
+  }
+
   &:after {
     content: '';
     position: absolute;
@@ -13,14 +18,28 @@
     height: 100%;
     width: 0.5px;
     background-color: #dfdfdf;
+
+		@media screen and (max-width: 800px) {
+      right: 1.8rem;
+    }
   }
 
   > *:first-child {
     margin-right: 0.2rem;
+
+		@media screen and (max-width: 800px) {
+			margin-right: 0;
+			height: auto;
+		}
   }
 
   > *:last-child {
     margin-left: 0.5rem;
+
+		@media screen and (max-width: 800px) {
+			margin-left: 0;
+			height: auto;
+		}
   }
 }
 
@@ -42,6 +61,14 @@
   @media screen and (max-width: 1080px) {
     width: 58rem;
   }
+
+	@media screen and (max-width: 800px) {
+		width: calc(100vw - 3.6rem);
+		grid-auto-columns: 50%;
+		grid-template-rows: 51.5px 51.5px;
+		overflow-x: scroll;
+		overflow-y: hidden;
+  }
 }
 
 .league {
@@ -54,9 +81,18 @@
   text-align: center;
   position: relative;
   transition: all var(--transition-speed);
-
   border-bottom: 0.5px solid #dfdfdf;
   border-right: 0.5px solid #dfdfdf;
+
+	@media screen and (max-width: 800px) {
+		font-size: 14px;
+		padding: 0 .1rem;
+		line-height: 15px;
+  }
+
+	@media screen and (orientation: landscape) and (max-height: 760px) {
+		// 
+  }
 
   &:nth-child(2n) {
     border-bottom: none;
@@ -119,6 +155,10 @@
     font: 700 0.875rem var(--font-comfortaa);
     z-index: 5;
     position: relative;
+
+		@media screen and (max-width: 800px) {
+			font-size: 14px;
+		}
 
     &::before {
       content: '';
