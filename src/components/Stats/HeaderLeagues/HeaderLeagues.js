@@ -12,31 +12,56 @@ const HeaderLeagues = () => {
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const currentYear = useSelector(state => state.shared.currentYear);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const statsData = useSelector(state => state.stats.statsData);
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
-    leaguesRef.current.style.scrollBehavior = 'unset';
-    leaguesRef.current.scrollLeft = currentScroll;
-    leaguesRef.current.style.scrollBehavior = 'smooth';
-		// eslint-disable-next-line
+	useEffect(() => {
+    const leaguesScrollDispatch = () => {
+      dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
+      setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+      setIsRightScroll(
+        leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+      );
+    };
+
+    const ref = leaguesRef.current;
+    ref.addEventListener('scroll', leaguesScrollDispatch);
+
+		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+		setIsRightScroll(
+			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+		);
+
+    return () => {
+      ref.removeEventListener('scroll', leaguesScrollDispatch);
+    };
   }, []);
 
-  useLayoutEffect(() => {
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  }, [currentScroll]);
+  // useLayoutEffect(() => {
+  //   leaguesRef.current.style.scrollBehavior = 'unset';
+  //   leaguesRef.current.scrollLeft = currentScroll;
+  //   leaguesRef.current.style.scrollBehavior = 'smooth';
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // useLayoutEffect(() => {
+  //   setIsLeftScroll(currentScroll <= 0 ? false : true);
+  //   setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+  // }, [currentScroll]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
       return;
     }
 
+    leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = 0;
+    leaguesRef.current.style.scrollBehavior = 'smooth';
+
     dispatch(setCurrentLeaguesScroll(0));
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentYear]);
 
   useEffect(() => {
@@ -45,9 +70,11 @@ const HeaderLeagues = () => {
       return;
     }
 
-    setIsLeftScroll(currentScroll <= 0 ? false : true);
-    setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-		// eslint-disable-next-line
+    // setIsLeftScroll(currentScroll <= 0 ? false : true);
+    // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    // eslint-disable-next-line
   }, [statsData]);
 
   const scrollLeagues = e => {
@@ -62,27 +89,32 @@ const HeaderLeagues = () => {
     dispatch(setCurrentLeaguesScroll(scrollValue));
   };
 
-const leaguesArr = useMemo(() => {
+  const leaguesArr = useMemo(() => {
     const newLeagues = statsData.slice();
     newLeagues.unshift({ id: -1, title: 'All' });
     return newLeagues;
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [statsData]);
   // const filteredLeagues = useMemo(() => {
   //   const newLeagues = leagues.filter(league => games.some(game => game.league_id === league.id));
   //   newLeagues.unshift({ id: -1, name: 'All' });
   //   return newLeagues;
-	// 	// eslint-disable-next-line
+  // 	// eslint-disable-next-line
   // }, [leagues, games, statsType]);
 
   return (
     <div className={cl.leaguesWrapper}>
-      <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
+      <Arrow
+        onClick={scrollLeagues}
+        style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
+      />
       <HeaderLeaguesList leagues={leaguesArr} ref={leaguesRef} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
-        style={!isRightScroll ? { visibility: 'hidden' } : null}
+        style={!isRightScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isRightScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
     </div>
   );
