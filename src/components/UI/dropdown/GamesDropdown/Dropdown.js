@@ -1,5 +1,6 @@
 import ArrowDown from 'components/UI/icons/ArrowDown';
 import React, { useState, useEffect, useRef } from 'react';
+import { getShortName } from 'utils';
 import cl from './Dropdown.module.scss';
 
 function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen) {
@@ -23,7 +24,8 @@ const Dropdown = ({
   handleClick,
   listStyles = null,
   itemStyles = null,
-  titleStyles = null
+  titleStyles = null,
+  shortNames = false
 }) => {
   const [listening, setListening] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +59,7 @@ const Dropdown = ({
               onClick={handleOptionClick(option)}
               className={currentOption === option ? cl.active : null}
               style={itemStyles}>
-              <span>{option}</span>
+              <span>{shortNames ? getShortName(option, shortNames) : option}</span>
             </li>
           ))}
         </ul>
