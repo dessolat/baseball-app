@@ -16,7 +16,6 @@ const HeaderLeagues = () => {
   const currentGameType = useSelector(state => state.games.currentGameType);
   const currentYear = useSelector(state => state.shared.currentYear);
   const leagues = useSelector(state => state.games.leagues);
-  const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
 
