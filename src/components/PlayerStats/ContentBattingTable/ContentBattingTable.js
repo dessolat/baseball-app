@@ -320,7 +320,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <ActiveBodyCell sortField={sortField} row={row}>3B</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>HR</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>RBI</ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>GDP</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide}>GDP</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>BB</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>HP</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>SH</ActiveBodyCell>
