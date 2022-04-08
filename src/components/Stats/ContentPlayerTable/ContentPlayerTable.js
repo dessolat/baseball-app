@@ -170,7 +170,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
             </div>
             <div
               className={cl.rightRows}
-              onScroll={e => setScrollPosition(e.target.scrollLeft)}
+              onScroll={e => {
+                if (anotherScroll.current) return;
+                anotherScroll.current = true;
+                headerScroll.current.scrollLeft = e.target.scrollLeft;
+                anotherScroll.current = false;
+              }}
+              // onScroll={e => setScrollPosition(e.target.scrollLeft)}
               ref={rowsScroll}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
                 return (
