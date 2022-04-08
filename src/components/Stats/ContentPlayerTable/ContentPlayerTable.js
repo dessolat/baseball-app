@@ -51,7 +51,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     // console.log(headerScroll.current);
     // console.log(headerScroll.current.style.scrollBehavior);
     // console.log(headerScroll.current.leftScroll);
-  	headerScroll.current.style.scrollBehavior	= 'smooth';
+    // headerScroll.current.style.scrollBehavior	= 'smooth';
 
       headerScroll.current.scrollLeft = scrollPosition;
       // rowsScroll.current.leftScroll = scrollPosition;
