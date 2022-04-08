@@ -13,37 +13,14 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
-	// const scrollPosition = useRef(0)
+  // const scrollPosition = useRef(0)
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
+  const anotherScroll = useRef(false);
 
   const isMobile = useSelector(state => state.shared.isMobile);
 
-  // useEffect(() => {
-  //   if (!isMobile) return;
 
-  //   const handleHeaderScroll = e => {
-  //     if (isScrolling.current) return;
-  //     isScrolling.current = true;
-  //     rowsScroll.current.scrollLeft = e.target.scrollLeft;
-  //     setTimeout(() => (isScrolling.current = false), 200);
-  //   };
-
-  //   const handleRowsScroll = e => {
-  //     if (isScrolling.current) return;
-  //     isScrolling.current = true;
-  //     headerScroll.current.scrollLeft = e.target.scrollLeft;
-  //     setTimeout(() => (isScrolling.current = false), 200);
-  //   };
-
-  //   headerScroll.current.addEventListener('scroll', handleHeaderScroll);
-  //   rowsScroll.current.addEventListener('scroll', handleRowsScroll);
-
-  //   return () => {
-  //     headerScroll.current.removeEventListener('scroll', handleHeaderScroll);
-  //     rowsScroll.current.removeEventListener('scroll', handleRowsScroll);
-  //   };
-  // }, [isMobile]);
 
   useLayoutEffect(() => {
     if (headerScroll.current === null) return;
@@ -53,9 +30,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     // console.log(headerScroll.current.leftScroll);
     // headerScroll.current.style.scrollBehavior	= 'smooth';
 
-      headerScroll.current.scrollLeft = scrollPosition;
-      // rowsScroll.current.leftScroll = scrollPosition;
-
+    headerScroll.current.scrollLeft = scrollPosition;
+    // rowsScroll.current.leftScroll = scrollPosition;
   }, [scrollPosition]);
 
   const tableMode = useSelector(state => state.stats.tableMode);
@@ -140,7 +116,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
             <div
               className={cl.rightHeader}
               ref={headerScroll}
-              onScroll={e => setScrollPosition(e.target.scrollLeft)}>
+            >
               {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
                 top: '.1rem',
                 transform: 'translateX(-50%) scale(0.7)'
