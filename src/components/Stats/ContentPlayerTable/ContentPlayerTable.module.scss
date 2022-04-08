@@ -113,7 +113,8 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     width: fit-content;
-    overflow-x: scroll;
+    overflow-x: hidden;
+		scroll-behavior: initial;
 
     > div {
       flex: 0 0 2rem;
@@ -208,41 +209,5 @@
 		&:nth-child(2n) {
 			background-color: #eaeaea;
 		}
-
-		// > div {
-		// 	font: 300 0.875rem / 38.5px var(--font-nunito);
-
-		// 	&:first-child {
-		// 		padding-left: 8.5px;
-		// 		flex: 1 100px;
-		// 	}
-		// 	&:nth-child(2) {
-		// 		width: 40px;
-		// 		text-align: center;
-		// 	}
-		// 	&:nth-child(3) {
-		// 		width: 50px;
-		// 		padding-left: 0;
-		// 		text-align: center;
-		// 		display: grid;
-		// 		place-items: center;
-
-		// 		> img {
-		// 			width: 40px;
-		// 		}
-		// 	}
-
-		// 	.fullName {
-		// 		font-weight: 700;
-		// 	}
-		// }
-
-		// > .teamNames {
-		// 	font-weight: 700;
-		// }
-
-		// &:nth-child(2n) {
-		// 	background-color: #eaeaea;
-		// }
 	}
 }
