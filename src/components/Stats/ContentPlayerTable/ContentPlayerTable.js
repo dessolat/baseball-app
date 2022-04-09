@@ -15,16 +15,12 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
-  const anotherScroll = useRef(false);
+
 
   const isMobile = useSelector(state => state.shared.isMobile);
 
-
-
   useLayoutEffect(() => {
     if (headerScroll.current === null) return;
-
-
 
     headerScroll.current.scrollLeft = scrollPosition;
   }, [scrollPosition]);
@@ -107,10 +103,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 />
               </div>
             </div>
-            <div
-              className={cl.rightHeader}
-              ref={headerScroll}
-            >
+            <div className={cl.rightHeader} ref={headerScroll}>
               {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
                 top: '.1rem',
                 transform: 'translateX(-50%) scale(0.7)'
@@ -140,12 +133,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
             </div>
             <div
               className={cl.rightRows}
-              onScroll={e => {
-                if (anotherScroll.current) return;
-                anotherScroll.current = true;
-                headerScroll.current.scrollLeft = e.target.scrollLeft;
-                anotherScroll.current = false;
-              }}
+              onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
               ref={rowsScroll}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
                 return (
