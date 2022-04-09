@@ -58,14 +58,8 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                 return (
                   <div key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/stats/player/${row.name}/${row.surname}`}>
-                        {' '}
-                        <span>
-                          {row.name} {row.surname}
-                        </span>
-                      </Link>
+                      <Link to={`/games/team/${row.name}`}> {row.name}</Link>
                     </div>
-                    <div>{index}</div>
                   </div>
                 );
               })}
