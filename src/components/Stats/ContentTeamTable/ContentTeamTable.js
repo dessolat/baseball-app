@@ -40,19 +40,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
         <div className={cl.mobileWrapper}>
           <div className={cl.fullHeader}>
             <div className={cl.leftHeader}>
-              <div>Players</div>
-              <div>POS</div>
-              <div>
-                <Dropdown
-                  title={'Team'}
-                  options={teamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
-                  itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                  shortNames={13}
-                />
-              </div>
+              <div>Team</div>
             </div>
             <div className={cl.rightHeader} ref={headerScroll}>
               {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
