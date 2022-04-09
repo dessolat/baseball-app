@@ -13,7 +13,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  // const scrollPosition = useRef(0)
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
   const anotherScroll = useRef(false);
@@ -24,14 +23,10 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   useLayoutEffect(() => {
     if (headerScroll.current === null) return;
-    // console.log(scrollPosition);
-    // console.log(headerScroll.current);
-    // console.log(headerScroll.current.style.scrollBehavior);
-    // console.log(headerScroll.current.leftScroll);
-    // headerScroll.current.style.scrollBehavior	= 'smooth';
+
+
 
     headerScroll.current.scrollLeft = scrollPosition;
-    // rowsScroll.current.leftScroll = scrollPosition;
   }, [scrollPosition]);
 
   const tableMode = useSelector(state => state.stats.tableMode);
@@ -75,7 +70,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           filteredStatsData.reduce(
             (sum, cur) => {
               cur.teams.forEach(team => sum.push(team.name));
-              // sum.push(cur.owners_name);
               return sum;
             },
             ['All']
@@ -152,7 +146,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 headerScroll.current.scrollLeft = e.target.scrollLeft;
                 anotherScroll.current = false;
               }}
-              // onScroll={e => setScrollPosition(e.target.scrollLeft)}
               ref={rowsScroll}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
                 return (
