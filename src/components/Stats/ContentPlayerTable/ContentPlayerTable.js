@@ -11,11 +11,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('desc');
 
-  const [scrollPosition, setScrollPosition] = useState(0);
-
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
-
 
   const isMobile = useSelector(state => state.shared.isMobile);
 
