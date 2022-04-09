@@ -16,12 +16,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   const isMobile = useSelector(state => state.shared.isMobile);
 
-  useLayoutEffect(() => {
-    if (headerScroll.current === null) return;
-
-    headerScroll.current.scrollLeft = scrollPosition;
-  }, [scrollPosition]);
-
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
