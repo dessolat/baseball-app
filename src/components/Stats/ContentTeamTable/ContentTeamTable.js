@@ -11,6 +11,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
+  const isMobile = useSelector(state => state.shared.isMobile);
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
