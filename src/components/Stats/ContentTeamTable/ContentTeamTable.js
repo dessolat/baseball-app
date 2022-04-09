@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,9 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const isMobile = useSelector(state => state.shared.isMobile);
+
+	const headerScroll = useRef(null);
+  const rowsScroll = useRef(null);
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -63,9 +66,6 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                       </Link>
                     </div>
                     <div>{index}</div>
-                    <div>
-                      <img src={TeamLogo} alt='team-logo' />
-                    </div>
                   </div>
                 );
               })}
