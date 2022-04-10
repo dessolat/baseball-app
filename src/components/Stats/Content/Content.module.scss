@@ -3,6 +3,10 @@
   display: flex;
 	align-items: flex-start;
 
+	@media screen and (max-width: 800px) {
+		min-height: calc(100vh - 30.63px - 132px);
+	}
+	
   > * {
 		position: relative;
     background-color: #fff;
