@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import cl from './ContentMobileTable.module.scss';
 import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import SortField from 'components/UI/sortField/SortField';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS }) => {
-  const [sortField, setSortField] = useState('AB');
+	const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
-
+	
   const currentLeague = useSelector(state => state.shared.currentLeague);
-  const tableMode = useSelector(state => state.shared.tableType);
+  const tableMode = useSelector(state => state.playerStats.tableType);
+	const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   console.log(filteredLeagues);
   console.log(filteredLeague);
+  const headerScroll = useRef(null);
+
+  const handleFieldClick = field => () => {
+    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
 
   const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
     tableMode === 'Batting' ? (
@@ -500,6 +506,24 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           WP
         </ActiveBodyCell>
       </>
+    ) : tableMode === 'Running' ? (
+      <>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          CS
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          LOB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          R
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          SB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+          SB_pr
+        </ActiveBodyCell>
+      </>
     ) : (
       <>
         <ActiveBodyCell sortField={sortField} row={row}>
@@ -520,22 +544,29 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         <ActiveBodyCell sortField={sortField} row={row}>
           PO
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          CS
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          LOB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          R
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          SB_pr
-        </ActiveBodyCell>
       </>
+    );
+
+
+  const sortedLeagueGames =
+    filteredLeague &&
+    filteredLeague.pitching.games_pitching
+      .slice()
+      .sort((a, b) =>
+        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+      );
+
+  const sortedLeagues = filteredLeagues
+    .slice()
+    .sort((a, b) =>
+      a.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField] >
+      b.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField]
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
     );
   return (
     <div className={cl.mobileWrapper}>
@@ -556,19 +587,21 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           })}
         </div>
       </div>
-      {/* <div className={cl.sides}>
+      <div className={cl.sides}>
         <div className={cl.leftRows}>
-          {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
+          {currentLeague.id === -1
+        && //All leagues
+          sortedLeagues.map((row, index) => {
+            const team = row.teams.find(team => team.name === currentTeam);
             return (
               <div key={index} className={cl.tableRow}>
-                <div>
-                  <Link to={`/games/team/${row.name}`}> {row.name}</Link>
-                </div>
+                {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
+                <div className={cl.league}>{row.title}</div>
               </div>
             );
           })}
         </div>
-        <div
+        {/* <div
           className={cl.rightRows}
           onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
           ref={rowsScroll}>
@@ -579,8 +612,8 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
               </div>
             );
           })}
-        </div>
-      </div> */}
+        </div> */}
+      </div>
     </div>
   );
 };
