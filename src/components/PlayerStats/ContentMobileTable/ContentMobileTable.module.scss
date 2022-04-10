@@ -20,21 +20,20 @@
     flex: 0 0 185px;
 
     > div {
-			
-			&.years {
-				width: 60px;
-				text-align: center;
-			}
+      &.years {
+        width: 60px;
+        text-align: center;
+      }
 
-			&.league {
-				padding-left: 10.5px;
-				width: 150px;
-			}
+      &.league {
+        padding-left: 10.5px;
+        width: 150px;
+      }
 
-			&.game {
-				padding-left: 10.5px;
-				width: 260px;
-			}
+      &.game {
+        padding-left: 10.5px;
+        width: 260px;
+      }
     }
   }
 
@@ -57,6 +56,92 @@
       &.wider {
         flex: 0 0 3rem;
       }
+    }
+  }
+}
+
+.sides {
+  width: 100%;
+  max-height: calc(100vh - 30.63px - 132px - 39px);
+  overflow-y: scroll;
+  display: flex;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.leftRows {
+  max-width: 280px;
+  border-right: 0.5px solid #dfdfdf;
+  box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.25);
+  height: fit-content;
+
+  > .tableRow {
+    display: flex;
+    height: 38.5px;
+
+    > div {
+      font: 300 1rem / 38.5px var(--font-nunito);
+
+      &.years {
+        width: 60px;
+        text-align: center;
+      }
+
+      &.league {
+        padding-left: 10.5px;
+        width: 150px;
+				height: 38.5px;
+				line-height: 15px;
+				display: flex;
+				align-items: center;
+      }
+
+      &.game {
+        padding-left: 10.5px;
+        width: 260px;
+      }
+
+      .fullName {
+        font-weight: 700;
+      }
+    }
+
+    > .teamNames {
+      font-weight: 700;
+    }
+
+    &:nth-child(2n) {
+      background-color: rgba($color: #eaeaea, $alpha: 0.4);
+    }
+  }
+}
+
+.rightRows {
+  overflow-x: scroll;
+  height: fit-content;
+
+  > .tableRow {
+    display: flex;
+    width: fit-content;
+    justify-content: unset;
+    height: 38.5px;
+
+    > div {
+      width: 2rem !important;
+      flex: 0 0 2rem;
+      text-align: center;
+      font: 300 1rem/38.5px var(--font-nunito);
+
+      &.wider {
+        width: 3rem !important;
+        flex: 0 0 3rem;
+      }
+    }
+
+    &:nth-child(2n) {
+      background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
   }
 }
