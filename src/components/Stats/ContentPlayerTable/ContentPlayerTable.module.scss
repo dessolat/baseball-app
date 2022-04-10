@@ -139,13 +139,16 @@
 
 .leftRows {
   max-width: 280px;
-	// flex: 0 0 280px;
+	border-right: .5px solid #DFDFDF;
+	box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.25);
+	height: fit-content;
+
     > .tableRow {
       display: flex;
 			height: 38.5px;
 
       > div {
-        font: 300 0.875rem / 38.5px var(--font-nunito);
+        font: 300 1rem / 38.5px var(--font-nunito);
 
         &:first-child {
           padding-left: 8.5px;
@@ -192,13 +195,12 @@
 		width: fit-content;
 		justify-content: unset;
 		height: 38.5px;
-		// width: 560px;
 
 		> div {
 			width: 2rem !important;
       flex: 0 0 2rem;
 			text-align: center;
-			font: 300 0.875rem/38.5px var(--font-nunito);
+			font: 300 1rem/38.5px var(--font-nunito);
 
       &.wider {
 				width: 3rem !important;
