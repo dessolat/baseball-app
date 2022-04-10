@@ -5,7 +5,7 @@ import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import SortField from 'components/UI/sortField/SortField';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS }) => {
-  const [sortField, setSortField] = useState('PA');
+  const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
 
   const currentLeague = useSelector(state => state.shared.currentLeague);
@@ -13,7 +13,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   console.log(filteredLeagues);
   console.log(filteredLeague);
 
-	const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
+  const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
     tableMode === 'Batting' ? (
       <>
         <SortField
@@ -291,6 +291,46 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           WP
         </SortField>
       </>
+    ) : tableMode === 'Running' ? (
+      <>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          CS
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          LOB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          R
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          SB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}
+          addedClass={cl.wider}
+          renamedField='SB_pr'>
+          %SB
+        </SortField>
+      </>
     ) : (
       <>
         <SortField
@@ -335,43 +375,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
           PO
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          LOB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          R
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}
-          renamedField='SB_pr'>
-          %SB
         </SortField>
       </>
     );
@@ -546,12 +549,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           {currentLeague.id === -1 && <div className={cl.league}>League</div>}
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
         </div>
-        {/* <div className={cl.rightHeader} ref={headerScroll}>
+        <div className={cl.rightHeader} ref={headerScroll}>
           {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
             top: '.1rem',
             transform: 'translateX(-50%) scale(0.7)'
           })}
-        </div> */}
+        </div>
       </div>
       {/* <div className={cl.sides}>
         <div className={cl.leftRows}>
