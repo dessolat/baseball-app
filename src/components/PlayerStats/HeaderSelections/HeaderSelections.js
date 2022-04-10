@@ -5,16 +5,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedReducer';
 import { useParams } from 'react-router-dom';
 import PortraitImg from 'images/portrait.png';
-import { setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
+import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
 
 const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
+const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
 
 const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const { playerName, playerSurname } = useParams();
 
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
+  const isMobile = useSelector(state => state.shared.isMobile);
+  const tableType = useSelector(state => state.playerStats.tableType);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -101,6 +105,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             }, new Set())
         );
 
+  const handleTableOptionClick = option => dispatch(setTableType(option));
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>
@@ -121,10 +126,10 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             itemStyles={{ padding: '.3rem 0' }}
           />
         </div>
-        <div className={cl.batting}>
+        <div className={cl.teamsSelector}>
           {teamsArray.length > 1 ? (
             <Dropdown
-              title={getShortName(currentTeam || '', 13)}
+              title={getShortName(currentTeam || '', isMobile ? 10 : 13)}
               options={teamsArray}
               currentOption={currentTeam}
               handleClick={handleTeamClick}
@@ -136,6 +141,16 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             getShortName(currentTeam || '', 16)
           )}
         </div>
+        {isMobile && (
+          <div className={cl.dropWrapper}>
+            <Dropdown
+              title={tableType}
+              options={TABLE_OPTIONS}
+              currentOption={tableType}
+              handleClick={handleTableOptionClick}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
