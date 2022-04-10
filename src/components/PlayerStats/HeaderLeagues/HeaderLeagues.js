@@ -18,6 +18,7 @@ const HeaderLeagues = ({ playerYears }) => {
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
   const playerCurrentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
 
   const setScrollArrows = () => {
@@ -77,7 +78,8 @@ const HeaderLeagues = ({ playerYears }) => {
       playerYears === 'All years'
         ? playerStatsData.leagues.filter(league => league.teams.find(team => team.name === playerCurrentTeam))
         : playerStatsData.leagues.filter(
-            league => league.year === playerYears && league.teams.find(team => team.name === playerCurrentTeam)
+            league =>
+              league.year === playerYears && league.teams.find(team => team.name === playerCurrentTeam)
           );
     newLeagues.unshift({ id: -1, title: 'All' });
 
@@ -87,12 +89,17 @@ const HeaderLeagues = ({ playerYears }) => {
 
   return (
     <div className={cl.leaguesWrapper}>
-      <Arrow onClick={scrollLeagues} style={!isLeftScroll ? { visibility: 'hidden' } : null} />
+      <Arrow
+        onClick={scrollLeagues}
+        style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
+      />
       <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} playerYears={playerYears} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
-        style={!isRightScroll ? { visibility: 'hidden' } : null}
+        style={!isRightScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
+        fillColor={!isRightScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
     </div>
   );
