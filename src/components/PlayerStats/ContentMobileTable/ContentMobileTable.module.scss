@@ -1,0 +1,62 @@
+.mobileWrapper {
+  border-top: 0.5px solid #cdcccc;
+  width: 100%;
+  padding: 0;
+}
+
+.fullHeader {
+  width: 100%;
+  display: flex;
+
+  > .leftHeader {
+    background-color: white;
+    display: flex;
+    font-size: 12px;
+    font-weight: 700;
+    color: #838383;
+    height: 38.5px;
+    align-items: center;
+    border-bottom: 0.5px solid #dfdfdf;
+    flex: 0 0 185px;
+
+    > div {
+			
+			&.years {
+				width: 60px;
+				text-align: center;
+			}
+
+			&.league {
+				padding-left: 10.5px;
+				width: 150px;
+			}
+
+			&.game {
+				padding-left: 10.5px;
+				width: 260px;
+			}
+    }
+  }
+
+  > .rightHeader {
+    background-color: white;
+    display: flex;
+    font-size: 12px;
+    font-weight: 700;
+    color: #838383;
+    height: 38.5px;
+    align-items: center;
+    border-bottom: 0.5px solid #dfdfdf;
+    width: inherit;
+    overflow-x: hidden;
+    scroll-behavior: initial;
+
+    > div {
+      flex: 0 0 2rem;
+
+      &.wider {
+        flex: 0 0 3rem;
+      }
+    }
+  }
+}
