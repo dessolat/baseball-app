@@ -3,6 +3,10 @@
   background-color: #fff;
   padding: 1.34rem 2.12rem;
 
+  @media screen and (max-width: 800px) {
+    padding: 0;
+  }
+
   > * {
     position: relative;
   }
@@ -10,12 +14,47 @@
 
 .playerChr {
   font-size: 0.875rem;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
+.mobilePlayerChr {
+  background-color: #f4f5f7;
+  border-top: 0.5px solid #cdcccc;
+  padding: 7px;
+	
+	.fullName {
+		font-size: 14px;
+	}
+	
+  .playerChr {
+		display: block;
+		margin-left: 1.2rem;
+		margin-top: .3rem;
+		font-size: 14px;
+  }
 }
 
 .dropWrapper {
-	width: 5.5rem;
-	text-align: center;
-	margin-left: -1.1rem;
-	margin-top: .5rem;
-	font-size: .875rem;
+  width: 5.5rem;
+  text-align: center;
+  margin-left: -1.1rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
+.playerInfo {
+  display: flex;
+  align-items: center;
+}
+
+.fullName {
+  font: 700 1.125rem var(--font-comfortaa);
+  margin-left: 1.2rem;
 }
