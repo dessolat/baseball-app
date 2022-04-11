@@ -2,14 +2,16 @@
   border-top: 0.5px solid #cdcccc;
   width: 100%;
   padding: 0;
+	height: calc(100vh - 30.63px - 132px - 56px);
+
 }
 
 .fullHeader {
-  width: 100%;
+	width: 100%;
   display: flex;
-
+	
   > .leftHeader {
-    background-color: white;
+		background-color: white;
     display: flex;
     font-size: 12px;
     font-weight: 700;
@@ -18,6 +20,7 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     flex: 0 0 185px;
+		border-right: 0.5px solid transparent;
 
     > div {
       &.years {
@@ -49,6 +52,8 @@
     width: inherit;
     overflow-x: hidden;
     scroll-behavior: initial;
+		justify-content: space-between;
+		// padding-right: 7px;
 
     > div {
       flex: 0 0 2rem;
@@ -62,9 +67,10 @@
 
 .sides {
   width: 100%;
-  max-height: calc(100vh - 30.63px - 132px - 39px);
+  max-height: calc(100vh - 30.63px - 132px - 57px - 38.5px);
   overflow-y: scroll;
   display: flex;
+
 
   &::-webkit-scrollbar {
     width: 0;
@@ -101,6 +107,19 @@
       &.game {
         padding-left: 10.5px;
         width: 260px;
+				height: 38.5px;
+				line-height: 15px;
+				display: flex;
+				align-items: center;
+
+				> .date {
+					flex: 0 0 48px;
+				}
+
+				> .teamNames {
+					font-weight: 700;
+					padding-left: 5px;
+				}
       }
 
       .fullName {
@@ -121,12 +140,14 @@
 .rightRows {
   overflow-x: scroll;
   height: fit-content;
-
+	width: inherit;
+	
   > .tableRow {
-    display: flex;
-    width: fit-content;
-    justify-content: unset;
+		display: flex;
+    justify-content: space-between;
     height: 38.5px;
+		width: max-content;
+		// padding-right: 7px;
 
     > div {
       width: 2rem !important;
