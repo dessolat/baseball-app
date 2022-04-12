@@ -88,6 +88,7 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     flex: 0 0 280px;
+		border-right: 0.5px solid transparent;
 
     > div {
       &:first-child {
