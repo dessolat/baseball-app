@@ -7,6 +7,10 @@
   margin-top: 1rem;
   margin-bottom: 5px;
 
+	@media screen and (max-width: 800px) {
+    display: none;
+  }
+
   > li + li {
     margin-left: 2rem;
   }
