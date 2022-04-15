@@ -10,6 +10,10 @@
   font-weight: normal;
   height: 100%;
 
+	@media screen and (max-width: 800px) {
+		width: 207px;
+	}
+
   > div {
     display: flex;
     flex-direction: column;
@@ -17,6 +21,11 @@
     flex: 0 0 1.875rem;
     transition: all var(--transition-speed);
     border-bottom: 2px solid transparent;
+
+		@media screen and (max-width: 800px) {
+			flex: 0 0 23px;
+		}
+
     @media (hover: hover) {
       > span + span:hover {
 				background-color: white;
