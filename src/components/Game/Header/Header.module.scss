@@ -16,6 +16,7 @@
 
   @media screen and (max-width: 800px) {
     display: block;
+    font-size: 14px;
   }
 }
 
@@ -25,6 +26,8 @@
     align-items: center;
     justify-content: space-between;
     height: 29px;
+    border-bottom: 0.5px solid #cdcccc;
+    font-size: 1rem;
   }
 }
 
@@ -57,6 +60,19 @@
 
   @media screen and (max-width: 800px) {
     display: block;
+    width: 5rem;
+    text-align: center;
+  }
+}
+
+.dateLocation {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+    padding-right: 1.5rem;
+    color: #838383;
+    font-size: 12px;
   }
 }
 
@@ -75,9 +91,14 @@
 }
 
 .scoresWrapper {
-  display: flex;
+	display: flex;
   align-items: flex-end;
   align-self: stretch;
+
+	@media screen and (max-width: 800px) {
+		height: 83.5px;
+		justify-content: space-between;
+	}
 }
 
 .scoresListWrapper {
@@ -102,6 +123,19 @@
 
 ::-webkit-scrollbar {
   height: 0;
+}
+
+.arrowGroup {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+	@media screen and (max-width: 800px) {
+		> button {
+			display: none;
+		}
+  }
 }
 
 @supports (scrollbar-width: thin) {
