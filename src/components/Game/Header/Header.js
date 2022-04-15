@@ -12,6 +12,7 @@ import useFullDate from 'hooks/useFullDate';
 import { useDispatch, useSelector } from 'react-redux';
 import { setImagesData } from 'redux/gameReducer';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
+import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -21,6 +22,7 @@ const Header = ({ currentTab, handleTabClick }) => {
   const imagesData = useSelector(state => state.game.imagesData);
   const inningNumber = useSelector(state => state.game.inningNumber);
   const playbackMode = useSelector(state => state.game.playbackMode);
+  const isVideo = useSelector(state => state.game.isVideo);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,8 +45,12 @@ const Header = ({ currentTab, handleTabClick }) => {
       }
     };
 
-    !imagesData[preview.guests.name] && preview.guests.logo !== '' && fetchImage(preview.guests.name, preview.guests.logo);
-    !imagesData[preview.owners.name] && preview.owners.logo !== '' && fetchImage(preview.owners.name, preview.owners.logo);
+    !imagesData[preview.guests.name] &&
+      preview.guests.logo !== '' &&
+      fetchImage(preview.guests.name, preview.guests.logo);
+    !imagesData[preview.owners.name] &&
+      preview.owners.logo !== '' &&
+      fetchImage(preview.owners.name, preview.owners.logo);
     // eslint-disable-next-line
   }, []);
 
@@ -118,20 +124,32 @@ const Header = ({ currentTab, handleTabClick }) => {
   );
 
   const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
+  const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
 
   return (
     <header className={cl.header}>
       <div className='container'>
         <div className={cl.headerContent}>
-          <div>
+          <div className={cl.geo}>
             <p className={cl.date}>{useFullDate(preview.game_date)}</p>
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
+            <div className={cl.mainModeSelector}>
+              <Dropdown
+                title={currentTab[0].toUpperCase() + currentTab.slice(1)}
+                options={tabsArr}
+                currentOption={currentTab[0].toUpperCase() + currentTab.slice(1)}
+                handleClick={handleTabClick}
+                listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
+                itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
+                shortNames={13}
+              />
+            </div>
             <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <div className={cl.scoresWrapper}>
-            <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab}/>
+            <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>
               {leftArrowGroup}
               <HeaderScoresList ref={scrollRef} innings={innings} currentTab={currentTab} />
