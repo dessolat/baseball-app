@@ -3,9 +3,9 @@
 .header {
   background: linear-gradient(90deg, #f4f5f7 12.5%, #eeeeef 100%);
   box-shadow: 0px 11px 30px -10px rgba(0, 0, 0, 0.15);
-	position: relative;
-	z-index: 2;
-	user-select: none;
+  position: relative;
+  z-index: 2;
+  user-select: none;
 }
 
 .headerContent {
@@ -13,6 +13,19 @@
   justify-content: space-between;
   align-items: center;
   font-size: 1.125rem;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
+}
+
+.geo {
+  @media screen and (max-width: 800px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 29px;
+  }
 }
 
 .date {
@@ -20,6 +33,10 @@
 
   @media screen and (max-width: 1070px) {
     margin-top: 0.3rem;
+  }
+  @media screen and (max-width: 800px) {
+    margin-top: 0;
+    display: none;
   }
 }
 
@@ -29,16 +46,31 @@
   @media screen and (max-width: 1070px) {
     margin-top: 0.55rem;
   }
+  @media screen and (max-width: 800px) {
+    margin-top: 0;
+    display: none;
+  }
+}
+
+.mainModeSelector {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
 }
 
 .teamScore {
-	font: 700 4.75rem var(--font-comfortaa);
-	padding-top: 7px;
+  font: 700 4.75rem var(--font-comfortaa);
+  padding-top: 7px;
   width: 7rem;
   text-align: center;
 
   @media screen and (max-width: 1070px) {
     font-size: 3.4rem;
+  }
+  @media screen and (max-width: 800px) {
+    display: none;
   }
 }
 
