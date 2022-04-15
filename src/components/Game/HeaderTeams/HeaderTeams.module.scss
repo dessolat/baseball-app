@@ -6,6 +6,12 @@
 	flex-direction: column;
 	align-items: flex-start;
 	padding-bottom: 0.5rem;
+
+	@media screen and (max-width: 800px) {
+		padding-bottom: 0.35rem;
+		padding-left: .5rem;
+		width: 5.5rem;
+	}
 }
 
 .guests {
@@ -20,6 +26,9 @@
 
 	@media screen and (max-width: 1030px) {
 		padding-top: .1rem;
+	}
+	@media screen and (max-width: 800px) {
+		padding-top: .2rem;
 	}
 }
 
