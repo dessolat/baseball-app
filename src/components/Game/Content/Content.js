@@ -27,7 +27,6 @@ const Content = ({ currentTab }) => {
   const playersInfo = useSelector(state => state.game.playersInfo);
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
-  const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
@@ -269,26 +268,22 @@ const Content = ({ currentTab }) => {
   const contentClass = isVideo ? cl.content : cl.contentNoVideo;
   return (
     <>
-      {!isMobile ? (
-        currentTab !== 'box' ? (
-          <section className='container'>
-            <div className={contentClass}>
-              <ContentSituationsList
-                ref={situationsChildRef}
-                filteredCards={filteredCards}
-                currentCard={currentCard}
-                beforeAfterData={beforeAfterRef.current}
-                isVideo={isVideo}
-              />
-              {isVideo && <ContentFooter />}
-              <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
-            </div>
-          </section>
-        ) : (
-          <ContentBox />
-        )
+      {currentTab !== 'box' ? (
+        <section className='container'>
+          <div className={contentClass}>
+            <ContentSituationsList
+              ref={situationsChildRef}
+              filteredCards={filteredCards}
+              currentCard={currentCard}
+              beforeAfterData={beforeAfterRef.current}
+              isVideo={isVideo}
+            />
+            {isVideo && <ContentFooter />}
+            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+          </div>
+        </section>
       ) : (
-        <></>
+        <ContentBox />
       )}
     </>
   );
