@@ -27,6 +27,7 @@ const Content = ({ currentTab }) => {
   const playersInfo = useSelector(state => state.game.playersInfo);
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
@@ -208,18 +209,18 @@ const Content = ({ currentTab }) => {
   }, [filteredCards]);
 
   useEffect(() => {
-		if (currentTab === 'box') {
-			scrollToRef.current = true;
-			return;
-		}
-		if (filteredCards.length === 0) return;
+    if (currentTab === 'box') {
+      scrollToRef.current = true;
+      return;
+    }
+    if (filteredCards.length === 0) return;
 
-		if (scrollToRef.current && situationsChildRef.current) {
+    if (scrollToRef.current && situationsChildRef.current) {
       situationsChildRef.current.parentNode.scrollTop =
         situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
       scrollToRef.current = false;
     }
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentTab]);
 
   useEffect(() => {
@@ -268,22 +269,26 @@ const Content = ({ currentTab }) => {
   const contentClass = isVideo ? cl.content : cl.contentNoVideo;
   return (
     <>
-      {currentTab !== 'box' ? (
-        <section className='container'>
-          <div className={contentClass}>
-            <ContentSituationsList
-              ref={situationsChildRef}
-              filteredCards={filteredCards}
-              currentCard={currentCard}
-              beforeAfterData={beforeAfterRef.current}
-              isVideo={isVideo}
-            />
-            {isVideo && <ContentFooter />}
-            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
-          </div>
-        </section>
+      {!isMobile ? (
+        currentTab !== 'box' ? (
+          <section className='container'>
+            <div className={contentClass}>
+              <ContentSituationsList
+                ref={situationsChildRef}
+                filteredCards={filteredCards}
+                currentCard={currentCard}
+                beforeAfterData={beforeAfterRef.current}
+                isVideo={isVideo}
+              />
+              {isVideo && <ContentFooter />}
+              <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+            </div>
+          </section>
+        ) : (
+          <ContentBox />
+        )
       ) : (
-        <ContentBox />
+        <></>
       )}
     </>
   );
