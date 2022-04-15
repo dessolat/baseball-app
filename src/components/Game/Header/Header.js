@@ -133,27 +133,27 @@ const Header = ({ currentTab, handleTabClick }) => {
           <div className={cl.geo}>
             <p className={cl.date}>{useFullDate(preview.game_date)}</p>
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
+            <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
             <div className={cl.mainModeSelector}>
               <Dropdown
                 title={currentTab[0].toUpperCase() + currentTab.slice(1)}
                 options={tabsArr}
                 currentOption={currentTab[0].toUpperCase() + currentTab.slice(1)}
                 handleClick={handleTabClick}
-                listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
-                itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                shortNames={13}
               />
             </div>
-            <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
+            <div className={cl.dateLocation}>
+              {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}
+            </div>
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <div className={cl.scoresWrapper}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>
-              {leftArrowGroup}
+              <div className={cl.arrowGroup}>{leftArrowGroup}</div>
               <HeaderScoresList ref={scrollRef} innings={innings} currentTab={currentTab} />
-              {rightArrowGroup}
+              <div className={cl.arrowGroup}>{rightArrowGroup}</div>
             </div>
             <HeaderInfo innings={innings} />
           </div>
