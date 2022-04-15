@@ -41,6 +41,10 @@
   height: 2px;
 	width: calc(100% - 7px);
   background-color: var(--side-color);
+
+	@media screen and (max-width: 800px) {
+    display: none;
+  }
 }
 
 .wider {
