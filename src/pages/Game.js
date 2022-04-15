@@ -67,8 +67,8 @@ const Game = () => {
   }, [gameId]);
 
   const handleTabClick = e => {
-    setSearchParam('tab', e.target.name);
-    setCurrentTab(e.target.name);
+    setSearchParam('tab', e.target ? e.target.name : e.toLowerCase());
+    setCurrentTab(e.target ? e.target.name : e.toLowerCase());
   };
 
   const isFilters = currentTab !== 'box';
