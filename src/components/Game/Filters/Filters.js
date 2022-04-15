@@ -68,7 +68,7 @@ const Filters = () => {
   );
 
   return (
-    <section className='container'>
+    <section className={'container ' + cl.filtersContainer} >
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
           {leftScrollArrow}
