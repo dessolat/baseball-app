@@ -30,6 +30,18 @@ const PlaysEventsList = ({ moments }) => {
     ref.current.scrollHeight > ref.current.clientHeight
       ? classes.push(...[cl.listBottomShadow, cl.beforeBlue])
       : classes.push([cl.beforeBlue]);
+
+    const shadowsArr = [];
+    if (ref.current.scrollLeft > 0) {
+      shadowsArr.push('8px 0 8px -8px inset rgba(0,0,0, .7)');
+    }
+
+    if (ref.current.scrollWidth > (ref.current.scrollLeft + ref.current.clientWidth)) {
+      shadowsArr.push('-8px 0 8px -8px inset rgba(0,0,0, .7)');
+    }
+
+      ref.current.style.boxShadow = shadowsArr.length > 0 ? shadowsArr.join(',') : 'none';
+
     activeCardList === 'events' && classes.push(cl.blueTopLoad);
     setClasses(classes);
     // eslint-disable-next-line
@@ -46,19 +58,34 @@ const PlaysEventsList = ({ moments }) => {
   }, [activeCardList]);
 
   useEffect(() => {
+		console.log(eventsChildRef.current);
     if (!eventsChildRef.current) return;
 
     eventsChildRef.current.parentNode.scrollTop =
       eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
+    eventsChildRef.current.parentNode.scrollLeft =
+      eventsChildRef.current.offsetLeft + eventsChildRef.current.clientWidth / 2 - 150;
   }, [currentMoment]);
 
   const handleMomentClick = moment => () => {
-		
-		dispatch(setPlaybackMode('pause'))
+    dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentMoment(moment));
   };
   return (
-    <ul className={classes.join(' ') + ' ' + animationClass} ref={ref}>
+    <ul
+      className={classes.join(' ') + ' ' + animationClass}
+      ref={ref}
+      onScroll={e => {
+        const shadowsArr = []
+        if (e.target.scrollLeft > 0) {
+					shadowsArr.push('8px 0 8px -8px inset rgba(0,0,0, .7)')
+        }
+				if (e.target.scrollWidth > (e.target.scrollLeft + e.target.clientWidth)) {
+					
+					shadowsArr.push('-8px 0 8px -8px inset rgba(0,0,0, .7)')
+				}
+				e.target.style.boxShadow = shadowsArr.length > 0 ? shadowsArr.join(',') : 'none';
+      }}>
       {moments.length !== 0 &&
         moments.map((moment, i) => (
           <PlaysEventsItem
