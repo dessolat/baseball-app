@@ -7,6 +7,10 @@
 	font-family: var(--font-comfortaa);
   font-weight: normal;
 
+	@media screen and (max-width: 800px) {
+		width: 69px;
+	}
+
   > div {
     display: flex;
     flex-direction: column;
@@ -14,6 +18,10 @@
     flex: 0 0 1.875rem;
     transition: all var(--transition-speed);
     border-bottom: 2px solid transparent;
+		
+		@media screen and (max-width: 800px) {
+			flex: 0 0 23px;
+		}
 
     > span:first-child {
       font-weight: bold;
