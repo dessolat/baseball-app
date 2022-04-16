@@ -3,6 +3,15 @@
 .wrapper {
   position: relative;
   grid-area: list;
+
+	@media screen and (max-width: 800px) {
+		// overflow-y: scroll;
+		// scroll-behavior: smooth;
+
+		// &::-webkit-scrollbar {
+		// 	width: 0;
+		// }
+  }
 }
 
 .list {
@@ -10,12 +19,21 @@
 	overflow-y: scroll;
 	scroll-behavior: smooth;
 
+	@media screen and (max-width: 800px) {
+		background: #f4f5f7;
+		max-height: calc(100vh - 30.63px - 112.5px);
+	}
+
   > * + * {
     margin-top: 2px;
   }
 
 	&::-webkit-scrollbar {
 		width: 7px;
+
+		@media screen and (max-width: 800px) {
+			width: 0;
+		}
   }
 	
   &::-webkit-scrollbar-track {
