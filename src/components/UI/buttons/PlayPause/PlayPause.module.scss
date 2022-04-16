@@ -1,10 +1,10 @@
 .play {
   > * {
     margin-left: 3px;
-		
-		> * {
-			animation: animate 1s;
-		}
+
+    > * {
+      animation: animate 1s;
+    }
   }
 }
 
@@ -24,5 +24,12 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+.playBtn {
+  @media screen and (max-width: 800px) {
+    width: 12px;
+    height: 12.5px;
   }
 }
