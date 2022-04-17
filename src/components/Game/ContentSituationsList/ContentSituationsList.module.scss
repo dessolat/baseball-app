@@ -5,13 +5,20 @@
   grid-area: list;
 
 	@media screen and (max-width: 800px) {
-		// overflow-y: scroll;
-		// scroll-behavior: smooth;
-
-		// &::-webkit-scrollbar {
-		// 	width: 0;
-		// }
+		> .controls {
+			display: none;
+		}
   }
+}
+
+.controlsWrapper {
+	position: absolute; 
+	right: 15px; 
+	bottom: 10px;
+
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 }
 
 .list {
