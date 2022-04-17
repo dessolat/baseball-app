@@ -5,6 +5,7 @@ import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useSelector } from 'react-redux';
 import { getSearchParam, setSearchParam } from 'utils';
+import MobilePitcherFilters from './MobilePitcherFilters';
 
 const Plays = ({ isVideo }) => {
   const ptab = getSearchParam('ptab');
@@ -40,13 +41,14 @@ const Plays = ({ isVideo }) => {
 
   return (
     <div className={classes.join(' ')}>
-      <PlaysEvents moments={moments} />
       {isVideo && (
-        <>
+				<>
           <PlaysContent moments={moments} currentTab={currentTab} />
           <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
         </>
       )}
+			<PlaysEvents moments={moments} />
+			<MobilePitcherFilters />
     </div>
   );
 };
