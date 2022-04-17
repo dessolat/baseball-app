@@ -4,6 +4,10 @@
 .events {
   grid-area: events;
   position: relative;
+
+	@media screen and (max-width: 800px) {
+    height: 26px;
+  }
 }
 
 .beforeBlue::before {
@@ -14,50 +18,69 @@
   width: 0;
   height: 2px;
   background-color: var(--side-color);
-	z-index: 5;
+  z-index: 5;
 }
 
 .blueTopLoad::before {
-	width: calc(100% - 6px);
+  width: calc(100% - 6px);
 }
 
 .wider::before {
-	animation: slideToRight .2s linear forwards;
+  animation: slideToRight 0.2s linear forwards;
 }
 
 .taller::before {
-	animation: slideToLeft .2s linear forwards;
+  animation: slideToLeft 0.2s linear forwards;
 }
 
 @keyframes slideToLeft {
-	from {
-		width: calc(100% - 6px);
-	}
+  from {
+    width: calc(100% - 6px);
+  }
 
-	to {
-		width: 0;
-	}
+  to {
+    width: 0;
+  }
 }
 
 @keyframes slideToRight {
-	from {
-		width: 0;
-	}
+  from {
+    width: 0;
+  }
 
-	to {
-		width: 100%;
-	}
+  to {
+    width: 100%;
+  }
 }
 
 .list {
   overflow-y: scroll;
   height: 92%;
   background: white;
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 
-  &::-webkit-scrollbar {
-    width: 6px;
+  &.leftShadow {
+    box-shadow: 9px 0 9px -9px inset rgba(0, 0, 0, 0.8);
   }
+  &.rightShadow {
+    box-shadow: -9px 0 9px -9px inset rgba(0, 0, 0, 0.8);
+  }
+
+	&::-webkit-scrollbar {
+		width: 6px;
+	}
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    background: #f4f5f7;
+		overflow-y: hidden;
+		height: 100%;
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+  }
+
 
   &::-webkit-scrollbar-track {
     background: #e5e5e5;
@@ -77,6 +100,13 @@
     cursor: pointer;
     padding: 4px 8px;
 
+    @media screen and (max-width: 800px) {
+      // flex: 0 0 91.36px;
+      flex: 0 0 25%;
+      padding: 0 4px;
+      height: 26px;
+    }
+
     &.active {
       animation: backgroundChange var(--transition-speed) forwards;
     }
@@ -94,6 +124,15 @@
     text-align: center;
     position: relative;
 
+    @media screen and (max-width: 800px) {
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      flex: 0 0 20px;
+      font-size: 13px;
+      line-height: 22px;
+    }
+
     &.obr {
       font-size: 0.75rem;
     }
@@ -109,11 +148,23 @@
           left: 52%;
           top: 22%;
           transform: translate(-50%);
+
+          @media screen and (max-width: 800px) {
+            top: 15%;
+						transform-origin: left;
+						transform: scale(.7) translate(-50%);
+          }
         }
         &:last-child {
-          left: 48%;
+					left: 48%;
           bottom: 18%;
           transform: translate(-50%);
+
+					@media screen and (max-width: 800px) {
+						bottom: 11%;
+						transform-origin: left;
+						transform: scale(.7) translate(-50%);
+					}
         }
       }
     }
@@ -125,6 +176,12 @@
       top: -11.9px;
       font-size: 8px;
       color: black;
+
+      @media screen and (max-width: 800px) {
+        left: -3px;
+        top: -9.9px;
+        font-size: 6px;
+      }
     }
   }
 
@@ -136,6 +193,11 @@
 .listBottomShadow {
   border-bottom: 0.5px solid #dfdfdf;
   box-shadow: 0px 4px 6px -6px rgba(0, 0, 0, 0.25);
+
+	@media screen and (max-width: 800px) {
+    border-bottom: none;
+		box-shadow: none;
+  }
 }
 
 .total {
@@ -146,6 +208,10 @@
   border-right: 6px solid #e5e5e5;
   background: white;
 
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+
   > span {
     font-weight: 400;
   }
@@ -153,6 +219,11 @@
 
 .text {
   font: 400 0.875rem var(--font-nunito);
+
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+		line-height: 12px;
+  }
 }
 
 .red {
