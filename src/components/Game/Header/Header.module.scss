@@ -6,6 +6,10 @@
   position: relative;
   z-index: 2;
   user-select: none;
+
+	@media screen and (max-width: 800px) {
+    box-shadow: none;
+  }
 }
 
 .headerContent {
@@ -17,6 +21,7 @@
   @media screen and (max-width: 800px) {
     display: block;
     font-size: 14px;
+		background: #F4F5F7;
   }
 }
 
