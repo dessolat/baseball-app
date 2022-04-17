@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentBox.module.scss';
 import ContentBoxTable from './ContentBoxTable';
-import { getShortName, setSearchParam } from 'utils';
+import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
-import { setBoxActiveButton } from 'redux/gameReducer';
+import ContentMobileBox from './ContentMobileBox';
+import ContentBoxButtons from './ContentBoxButtons';
 
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +16,7 @@ const ContentBox = () => {
 
   const { gameId } = useParams();
 
-  const preview = useSelector(state => state.game.preview);
   const activeButton = useSelector(state => state.game.boxActiveButton);
-  const dispatch = useDispatch();
 
   const cancelTokenRef = useRef();
 
@@ -49,10 +48,6 @@ const ContentBox = () => {
     // eslint-disable-next-line
   }, []);
 
-  const getClassName = name => (name === activeButton ? cl.active : null);
-
-  const handleButtonClick = name => () => dispatch(setBoxActiveButton(name));
-
   const tableData = boxData[activeButton];
   return (
     <>
@@ -61,41 +56,37 @@ const ContentBox = () => {
       ) : Object.keys(boxData).length === 0 ? (
         <></>
       ) : (
-        <div className={cl.box}>
-          <div className='container'>
-            <div className={cl.tables}>
-              <ContentBoxTable
-                tableData={tableData}
-                tableClass={cl.battingTable}
-                tableName='batting'
-                footerOffset={2}
-                toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr', 'FLD']}
-              />
-              <ContentBoxTable
-                tableData={tableData}
-                tableClass={cl.pitchingTable}
-                tableName='pitching'
-                footerOffset={1}
-                toFixList={['ERA']}
-              />
-              <ContentBoxTable
-                tableData={tableData}
-                tableClass={cl.catchingTable}
-                tableName='catching'
-                footerOffset={1}
-              />
-              <div className={cl.buttons}>
-                <span className={getClassName('guests')} onClick={handleButtonClick('guests')}>
-                  {preview && getShortName(preview.guests.name, 8)}
-                </span>
-                <span className={getClassName('owners')} onClick={handleButtonClick('owners')}>
-                  {preview && getShortName(preview.owners.name, 8)}
-                </span>
+        <>
+          <div className={cl.box}>
+            <div className='container'>
+              <div className={cl.tables}>
+                <ContentBoxTable
+                  tableData={tableData}
+                  tableClass={cl.battingTable}
+                  tableName='batting'
+                  footerOffset={2}
+                  toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr', 'FLD']}
+                />
+                <ContentBoxTable
+                  tableData={tableData}
+                  tableClass={cl.pitchingTable}
+                  tableName='pitching'
+                  footerOffset={1}
+                  toFixList={['ERA']}
+                />
+                <ContentBoxTable
+                  tableData={tableData}
+                  tableClass={cl.catchingTable}
+                  tableName='catching'
+                  footerOffset={1}
+                />
+                <ContentBoxButtons />
               </div>
             </div>
+            <ContentBoxFooter footer={footer} />
           </div>
-          <ContentBoxFooter footer={footer} />
-        </div>
+          <ContentMobileBox />
+        </>
       )}
     </>
   );

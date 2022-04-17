@@ -1,9 +1,13 @@
 @import 'scss/vars.scss';
 @import 'scss/animations.scss';
 
-// .box {
-//   animation: rise var(--transition-speed) linear forwards;
-// }
+.box {
+  animation: rise var(--transition-speed) linear forwards;
+
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
+}
 
 .tables {
   padding: 4.3rem 3rem;
