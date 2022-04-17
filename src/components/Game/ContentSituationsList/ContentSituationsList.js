@@ -27,10 +27,12 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   const classes = [cl.blueDiv];
   classes.push(activeCardList === 'cards' ? cl.wider : cl.taller);
 
-	const controlsStyles = {position: 'absolute', right: 15, bottom: 10}
+  const listClasses = [cl.list];
+  !isVideo && listClasses.push(cl.listNoVideo);
+
   return (
     <div className={cl.wrapper}>
-      <ul className={cl.list}>
+      <ul className={listClasses.join(' ')}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem
             key={i}
@@ -44,7 +46,11 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
         ))}
       </ul>
       <div className={classes.join(' ')}></div>
-			{!isVideo && <ContentControls style={controlsStyles} noPlayPause/>}
+      {!isVideo && (
+        <div className={cl.controlsWrapper}>
+          <ContentControls noPlayPause />
+        </div>
+      )}
     </div>
   );
 };
