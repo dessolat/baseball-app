@@ -71,21 +71,22 @@ const PlaysEventsList = ({ moments }) => {
     dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentMoment(moment));
   };
+
+	const scrollHandle = e => {
+		const shadowsArr = []
+		if (e.target.scrollLeft > 0) {
+			shadowsArr.push('8px 0 8px -8px inset rgba(0,0,0, .7)')
+		}
+		if (e.target.scrollWidth > (e.target.scrollLeft + e.target.clientWidth)) {
+			shadowsArr.push('-8px 0 8px -8px inset rgba(0,0,0, .7)')
+		}
+		e.target.style.boxShadow = shadowsArr.length > 0 ? shadowsArr.join(',') : 'none';
+	}
   return (
     <ul
       className={classes.join(' ') + ' ' + animationClass}
       ref={ref}
-      onScroll={e => {
-        const shadowsArr = []
-        if (e.target.scrollLeft > 0) {
-					shadowsArr.push('8px 0 8px -8px inset rgba(0,0,0, .7)')
-        }
-				if (e.target.scrollWidth > (e.target.scrollLeft + e.target.clientWidth)) {
-					
-					shadowsArr.push('-8px 0 8px -8px inset rgba(0,0,0, .7)')
-				}
-				e.target.style.boxShadow = shadowsArr.length > 0 ? shadowsArr.join(',') : 'none';
-      }}>
+      onScroll={e => scrollHandle(e)}>
       {moments.length !== 0 &&
         moments.map((moment, i) => (
           <PlaysEventsItem
