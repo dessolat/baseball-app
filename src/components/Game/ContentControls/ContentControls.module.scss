@@ -1,6 +1,12 @@
 .controls {
   display: flex;
 
+  @media screen and (max-width: 800px) {
+    > * + * {
+      margin-left: 5px;
+    }
+  }
+
   > button {
     width: 2.5rem;
     height: 2.5rem;
@@ -9,6 +15,11 @@
     justify-content: center;
     align-items: center;
     transition: all var(--transition-speed);
+
+    @media screen and (max-width: 800px) {
+      width: 20.4px;
+      height: 20.4px;
+    }
 
     &.active {
       background-color: white;
