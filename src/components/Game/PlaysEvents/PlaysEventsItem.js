@@ -29,7 +29,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
         </li>
       )}
       {icons.circ_color_play && (
-        <li className={classes} onClick={handleClick(moment)}>
+        <li className={classes} onClick={handleClick(moment)} ref={icons.circ_color_pitch ? null : refValue}>
           <div className={playClasses.join(' ')} data-before={playDataBefore}>
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
