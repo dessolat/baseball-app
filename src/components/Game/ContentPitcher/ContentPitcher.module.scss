@@ -3,6 +3,10 @@
 .playerName {
   font: 700 0.875rem var(--font-nunito);
 
+	@media screen and (max-width: 800px) {
+		font-size: 12px;
+	}
+
   > span {
     font-weight: 400;
   }
