@@ -9,7 +9,8 @@
     'controls graphics';
 
   @media screen and (max-width: 800px) {
-    display: block;
+    display: flex;
+		flex-direction: column-reverse;
   }
 }
 
@@ -19,6 +20,7 @@
   grid-template-areas: 'list graphics';
 
   @media screen and (max-width: 800px) {
-    display: block;
+    display: flex;
+		flex-direction: column-reverse;
   }
 }
