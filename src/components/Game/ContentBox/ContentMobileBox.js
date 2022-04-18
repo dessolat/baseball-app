@@ -3,7 +3,7 @@ import cl from './ContentMobileBox.module.scss';
 import MobileBoxHeader from './MobileBoxHeader';
 import MobileBoxTable from './MobileBoxTable';
 
-const ContentMobileBox = () => {
+const ContentMobileBox = ({ tableData, footer }) => {
   const [currentMode, setCurrentMode] = useState('Batting');
 
   return (

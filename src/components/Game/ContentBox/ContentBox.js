@@ -85,7 +85,7 @@ const ContentBox = () => {
             </div>
             <ContentBoxFooter footer={footer} />
           </div>
-          <ContentMobileBox />
+          <ContentMobileBox tableData={tableData} footer={footer}/>
         </>
       )}
     </>
