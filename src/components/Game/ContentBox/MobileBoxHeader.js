@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cl from './ContentMobileBox.module.scss';
 
 const STATE_VALUES = ['Batting', 'Running', 'Fielding', 'Pitching', 'Catching', 'Info'];
 
-const MobileBoxHeader = () => {
-  const [currentMode, setCurrentMode] = useState('Batting');
-
+const MobileBoxHeader = ({ currentMode, setCurrentMode }) => {
   const getClass = name => (currentMode === name ? cl.active : null);
 
   const handleClick = name => () => setCurrentMode(name);

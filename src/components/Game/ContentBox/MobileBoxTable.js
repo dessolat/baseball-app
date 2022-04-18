@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const MobileBoxTable = () => {
-	return (
-		<div>MobileBoxTable</div>
-	)
-}
+const MobileBoxTable = ({ currentMode }) => {
+  return <div>MobileBoxTable</div>;
+};
 
-export default MobileBoxTable
+export default MobileBoxTable;
