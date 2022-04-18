@@ -51,8 +51,8 @@ const ContentBox = () => {
   const tableData = boxData[activeButton];
   return (
     <>
-      {isLoading ? (
-        <Loader />
+      {isLoading ? (			
+        <Loader styles={{margin: 'calc((100vh - 30.63px - 112.5px) / 2) auto'}}/>
       ) : Object.keys(boxData).length === 0 ? (
         <></>
       ) : (
