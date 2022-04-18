@@ -18,7 +18,9 @@
 	
 	> button {
 		font: 400 14px var(--font-nunito);
-		
+		border-bottom: 2px solid transparent;
+		color: black;
+
 		&.active {
 			border-bottom: 2px solid var(--side-color);
 		}
