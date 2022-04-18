@@ -5,10 +5,16 @@ const STATE_VALUES = ['Batting', 'Running', 'Fielding', 'Pitching', 'Catching', 
 
 const MobileBoxHeader = () => {
   const [currentMode, setCurrentMode] = useState('Batting');
+
+  const getClass = name => (currentMode === name ? cl.active : null);
+
+  const handleClick = name => () => setCurrentMode(name);
   return (
     <div className={cl.boxHeader}>
       {STATE_VALUES.map((value, i) => (
-        <button key={i}>{value}</button>
+        <button key={i} className={getClass(value)} onClick={handleClick(value)}>
+          {value}
+        </button>
       ))}
     </div>
   );
