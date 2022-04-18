@@ -8,20 +8,20 @@ const ContentBoxFooter = ({ footer }) => {
     <div className={cl.footer}>
       <div className={cl.footerContainer}>
         <div>
-          <p>Location: {location}</p>
-          <p>Stadium: {stadium}</p>
-          <p>Weather: {weather}</p>
-          <p>Att: {att}</p>
-          <p>T: {t}</p>
-          <p>HP Umpire: {umpires ? umpires[0] : ' '}</p>
+          <p>Location: <span>{location}</span></p>
+          <p>Stadium: <span>{stadium}</span></p>
+          <p>Weather: <span>{weather}</span></p>
+          <p>Att: <span>{att}</span></p>
+          <p>Time: <span>{t}</span></p>
+          <p>HP Umpire: <span>{umpires ? umpires[0] : ' '}</span></p>
         </div>
         <div>
-          <p>1B Umpire: {umpires ? umpires[1] : ' '}</p>
-          <p>Scorer: {scorers ? scorers[0] : ' '}</p>
-          <p>Scorer: {scorers ? scorers[1] : ' '}</p>
-          <p>Scorer: {scorers ? scorers[2] : ' '}</p>
-          <p>TC: {tc ? tc[0] : ' '}</p>
-          <p>TC: {tc ? tc[1] : ' '}</p>
+          <p>1B Umpire: <span>{umpires ? umpires[1] : ' '}</span></p>
+          <p>Scorer: <span>{scorers ? scorers[0] : ' '}</span></p>
+          <p>Scorer: <span>{scorers ? scorers[1] : ' '}</span></p>
+          <p>Scorer: <span>{scorers ? scorers[2] : ' '}</span></p>
+          <p>TC: <span>{tc ? tc[0] : ' '}</span></p>
+          <p>TC: <span>{tc ? tc[1] : ' '}</span></p>
         </div>
       </div>
     </div>
