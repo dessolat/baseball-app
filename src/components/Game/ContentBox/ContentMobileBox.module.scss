@@ -5,3 +5,22 @@
 		display: block;
 	}
 }
+
+.boxHeader {
+	height: 26px;
+	background: #F4F5F7;
+	padding: 0 7px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-top: 0.5px solid #CDCCCC;
+	border-bottom: 0.5px solid #CDCCCC;
+	
+	> button {
+		font: 400 14px var(--font-nunito);
+		
+		&.active {
+			border-bottom: 2px solid var(--side-color);
+		}
+	}
+}
