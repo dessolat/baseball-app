@@ -31,6 +31,8 @@ body {
 
   @media screen and (max-width: 800px) {
     background-color: white;
+		// height: var(--vh);
+		// overflow: hidden;
   }
 
   &::-webkit-scrollbar {
