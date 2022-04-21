@@ -19,8 +19,8 @@ const HeaderInfo = ({ innings }) => {
       </div>
       <div>
         <span>E</span>
-        <span>{summaryRHE.top_err}</span>
         <span>{summaryRHE.bot_err}</span>
+        <span>{summaryRHE.top_err}</span>
       </div>
     </div>
   );
