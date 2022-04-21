@@ -12,7 +12,7 @@ export const getBeforeAfterFlags = (cards, innings) => {
     const { inning_number } = cards[i];
     const inning = innings[inning_number - 1];
     const { side } = cards[i];
-    const { top_runs = 0, bot_runs = 0, top_hits = 0, bot_hits = 0, top_err = 0, bot_err = 0 } = inning;
+    const { top_runs = 0, bot_runs = 0, top_hits = 0, bot_hits = 0, top_err = 0, bot_err = 0, top_lob = 0, bot_lob = 0 } = inning;
 
     if (i === 0 && i === cards.length) {
       result[i] = {
@@ -21,7 +21,7 @@ export const getBeforeAfterFlags = (cards, innings) => {
           runs: side === 'top' ? top_runs : bot_runs,
           hits: side === 'top' ? top_hits : bot_hits,
           err: side === 'top' ? top_err : bot_err,
-          lob: 0
+          lob: side === 'top' ? top_lob : bot_lob
         }
       };
       continue;
@@ -44,7 +44,7 @@ export const getBeforeAfterFlags = (cards, innings) => {
           runs: side === 'top' ? top_runs : bot_runs,
           hits: side === 'top' ? top_hits : bot_hits,
           err: side === 'top' ? top_err : bot_err,
-          lob: 0
+          lob: side === 'top' ? top_lob : bot_lob
         }
       };
     }
