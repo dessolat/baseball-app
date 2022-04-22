@@ -56,21 +56,3 @@
     border-right: none;
   }
 }
-
-.mobilePitcherFilters {
-  display: none;
-
-  @media screen and (max-width: 800px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 27px;
-    padding: 0 7px;
-  }
-}
-
-.filtersWrapper {
-	width: 4.5rem;
-	margin-left: auto;
-	margin-right: 2rem;
-}
