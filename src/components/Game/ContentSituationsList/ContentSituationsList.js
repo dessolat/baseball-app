@@ -6,7 +6,7 @@ import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 
-const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo }, ref) => {
+const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const activeCardList = useSelector(state => state.game.activeCardList);
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
 
   const listClasses = [cl.list];
   !isVideo && listClasses.push(cl.listNoVideo);
+	isVideo && currentTab !== 'videos' && listClasses.push(cl.mobilePlaysListHeight);
 
   return (
     <div className={cl.wrapper}>
