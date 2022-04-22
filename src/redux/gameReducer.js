@@ -14,7 +14,8 @@ const defaultState = {
   currentGameId: null,
 	activeCardList: 'cards',
 	boxActiveButton: 'guests',
-	isVideo: false
+	isVideo: false,
+	pitchState: 'Field'
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -32,6 +33,7 @@ const SET_CURRENT_GAME_ID = 'SET_CURRENT_GAME_ID';
 const SET_ACTIVE_CARD_LIST = 'SET_ACTIVE_CARD_LIST';
 const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
 const SET_IS_VIDEO = 'SET_IS_VIDEO';
+const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const RESET_DATA = 'RESET_DATA';
 
 export const gameReducer = (state = defaultState, action) => {
@@ -66,6 +68,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, boxActiveButton: action.payload };
     case SET_IS_VIDEO:
       return { ...state, isVideo: action.payload };
+    case SET_PITCH_STATE:
+      return { ...state, pitchState: action.payload };
     case RESET_DATA:
       return defaultState;
     default:
@@ -88,4 +92,5 @@ export const setCurrentGameId = payload => ({ type: SET_CURRENT_GAME_ID, payload
 export const setActiveCardList = payload => ({ type: SET_ACTIVE_CARD_LIST, payload });
 export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, payload });
 export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
+export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const resetData = () => ({ type: RESET_DATA });
