@@ -10,7 +10,7 @@
 
   @media screen and (max-width: 800px) {
     display: flex;
-		flex-direction: column-reverse;
+		flex-direction: column;
   }
 }
 
@@ -21,6 +21,25 @@
 
   @media screen and (max-width: 800px) {
     display: flex;
-		flex-direction: column-reverse;
+		flex-direction: column;
   }
+}
+
+.mobilePitcherFilters {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 27px;
+    padding: 0 7px;
+		border-bottom: 0.5px solid #CDCCCC;
+  }
+}
+
+.filtersWrapper {
+	width: 4.5rem;
+	margin-left: auto;
+	margin-right: 2rem;
 }
