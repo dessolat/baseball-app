@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode, setSituationFilter } from 'redux/gameReducer';
 import ContentControls from '../ContentControls/ContentControls';
 import ContentPitcher from '../ContentPitcher/ContentPitcher';
-import cl from './Plays.module.scss';
+import cl from './Content.module.scss';
 
 const MobilePitcherFilters = () => {
   const isVideo = useSelector(state => state.game.isVideo);
