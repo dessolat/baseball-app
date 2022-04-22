@@ -5,8 +5,9 @@
   grid-area: events;
   position: relative;
 
-	@media screen and (max-width: 800px) {
-    height: 26px;
+  @media screen and (max-width: 800px) {
+    height: 26px !important;
+		width: 100%;
   }
 }
 
@@ -66,21 +67,20 @@
     box-shadow: -9px 0 9px -9px inset rgba(0, 0, 0, 0.8);
   }
 
-	&::-webkit-scrollbar {
-		width: 6px;
-	}
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
   @media screen and (max-width: 800px) {
     display: flex;
     background: #f4f5f7;
-		overflow-y: hidden;
-		height: 100%;
+    overflow-y: hidden;
+    height: 100%;
 
-		&::-webkit-scrollbar {
-			width: 0;
-		}
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
-
 
   &::-webkit-scrollbar-track {
     background: #e5e5e5;
@@ -99,9 +99,10 @@
     column-gap: 8px;
     cursor: pointer;
     padding: 4px 8px;
-
+		
     @media screen and (max-width: 800px) {
-      // flex: 0 0 91.36px;
+			// flex: 0 0 91.36px;
+			column-gap: 4px;
       flex: 0 0 25%;
       padding: 0 4px;
       height: 26px;
@@ -151,20 +152,20 @@
 
           @media screen and (max-width: 800px) {
             top: 15%;
-						transform-origin: left;
-						transform: scale(.7) translate(-50%);
+            transform-origin: left;
+            transform: scale(0.7) translate(-50%);
           }
         }
         &:last-child {
-					left: 48%;
+          left: 48%;
           bottom: 18%;
           transform: translate(-50%);
 
-					@media screen and (max-width: 800px) {
-						bottom: 11%;
-						transform-origin: left;
-						transform: scale(.7) translate(-50%);
-					}
+          @media screen and (max-width: 800px) {
+            bottom: 11%;
+            transform-origin: left;
+            transform: scale(0.7) translate(-50%);
+          }
         }
       }
     }
@@ -194,9 +195,9 @@
   border-bottom: 0.5px solid #dfdfdf;
   box-shadow: 0px 4px 6px -6px rgba(0, 0, 0, 0.25);
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     border-bottom: none;
-		box-shadow: none;
+    box-shadow: none;
   }
 }
 
@@ -222,7 +223,11 @@
 
   @media screen and (max-width: 800px) {
     font-size: 12px;
-		line-height: 12px;
+    line-height: 12px;
+
+    > p {
+      font-size: 11px;
+    }
   }
 }
 
