@@ -3,9 +3,10 @@ import cl from './Plays.module.scss';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam, setSearchParam } from 'utils';
-import MobilePitcherFilters from './MobilePitcherFilters';
+import { setPitchState } from 'redux/gameReducer';
+// import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
 const Plays = ({ isVideo }) => {
   const ptab = getSearchParam('ptab');
@@ -13,6 +14,7 @@ const Plays = ({ isVideo }) => {
   const [currentTab, setCurrentTab] = useState(defaultPtab);
   const [moments, setMoments] = useState([]);
   const currentCard = useSelector(state => state.game.currentCard);
+	const dispatch = useDispatch()
 
   useEffect(() => {
     const newMoments = [];
@@ -37,18 +39,19 @@ const Plays = ({ isVideo }) => {
   const handleTabClick = e => {
     setSearchParam('ptab', e.target.name);
     setCurrentTab(e.target.name);
+		dispatch(setPitchState('Field'))
   };
 
   return (
     <div className={classes.join(' ')}>
       {isVideo && (
 				<>
-          <PlaysContent moments={moments} currentTab={currentTab} />
           <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
+          <PlaysContent moments={moments} currentTab={currentTab} />
         </>
       )}
 			<PlaysEvents moments={moments} />
-			<MobilePitcherFilters />
+			{/* <MobilePitcherFilters /> */}
     </div>
   );
 };
