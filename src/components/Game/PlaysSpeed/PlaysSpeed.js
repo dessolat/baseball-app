@@ -1,6 +1,8 @@
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useState, useLayoutEffect, useRef } from 'react';
 // import Chart from 'react-google-charts';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPitchState } from 'redux/gameReducer';
 import cl from './PlaysSpeed.module.scss';
 import PlaysSpeedChart from './PlaysSpeedChart';
 
@@ -10,6 +12,8 @@ const PlaysSpeed = ({ currentMoment }) => {
   const ref = useRef(null);
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
+  const pitchState = useSelector(state => state.game.pitchState);
+	const dispatch = useDispatch()
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
@@ -107,7 +111,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   // };
 
   return (
-    <div ref={ref} className={cl.speed}>
+    <div ref={ref} className={pitchState !== 'Field' ? cl.speed : (cl.speed + ' ' + cl.dnone)}>
       {chartData.length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
@@ -152,6 +156,8 @@ const PlaysSpeed = ({ currentMoment }) => {
         //   />
         // </>
       )}
+			
+			<Arrow onClick={() => dispatch(setPitchState('Field'))} style={{position: 'absolute', transform: 'scale(2.4)', bottom: '-10px', left: '20px', opacity: .5}} />
     </div>
   );
 };
