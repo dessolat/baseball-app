@@ -1,24 +1,37 @@
 @import 'scss/vars.scss';
 
 .footer {
-	grid-area: footer;
-	padding-left: 10px;
+  grid-area: footer;
+  padding-left: 10px;
   display: flex;
-	align-items: center;
+  align-items: center;
   font-size: 0.875rem;
   line-height: 1rem;
-  margin-top: .6rem;
+  margin-top: 0.6rem;
   margin-bottom: 5px;
+
+  @media screen and (max-width: 800px) {
+    height: 26px;
+		margin: 0;
+		line-height: 15px;
+		font-size: 14px;
+  }
 
   > li + li {
     margin-left: 1.875rem;
   }
 
   button {
-		font: inherit;
+    font: inherit;
     border-bottom: 2px solid transparent;
-    padding-bottom: .25rem;
+    padding-bottom: 0.25rem;
     transition: border-bottom var(--transition-speed);
+
+		@media screen and (max-width: 800px) {
+			padding-top: .1rem;
+			padding-bottom: 0.08rem;
+			color: black;
+		}
 
     &:hover,
     &.active {
