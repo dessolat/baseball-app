@@ -8,9 +8,9 @@ const PlaysPitch = () => {
 	const currentMoment = useSelector(state => state.game.currentMoment)
   return (
     <>
+      <PlaysField currentMoment={currentMoment} />
       <PlaysSpeed currentMoment={currentMoment} />
       <PlaysSpin pitch={currentMoment?.metering?.pitch} />
-      <PlaysField currentMoment={currentMoment} />
     </>
   );
 };
