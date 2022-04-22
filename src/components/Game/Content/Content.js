@@ -16,6 +16,7 @@ import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
 import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
 import ContentBox from '../ContentBox/ContentBox';
+import MobilePitcherFilters from './MobilePitcherFilters';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -271,15 +272,17 @@ const Content = ({ currentTab }) => {
       {currentTab !== 'box' ? (
         <section className='container'>
           <div className={contentClass}>
+						<ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+						<MobilePitcherFilters />
             <ContentSituationsList
               ref={situationsChildRef}
               filteredCards={filteredCards}
               currentCard={currentCard}
               beforeAfterData={beforeAfterRef.current}
               isVideo={isVideo}
+							currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
-            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
           </div>
         </section>
       ) : (
