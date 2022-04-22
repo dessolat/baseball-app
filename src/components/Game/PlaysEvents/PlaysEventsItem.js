@@ -24,7 +24,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>slider {topEventText}</p>({table.balls} - {table.strikes})
+            <p>cu {topEventText}</p>({table.balls} - {table.strikes})
           </div>
         </li>
       )}
@@ -40,7 +40,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
               </>
             ) : (
               <>
-                <p>slider {topEventText}</p>({table.balls} - {table.strikes})
+                <p>cu {topEventText}</p>({table.balls} - {table.strikes})
               </>
             )}
           </div>
