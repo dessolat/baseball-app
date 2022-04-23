@@ -9,14 +9,38 @@
 	padding: 5px 0;
 	margin-left: 6px;
 
+	@media screen and (max-width: 800px) {
+    margin-left: 0;
+		padding: 0;
+  }
+	
+	
 	> * {
 		flex: 1 1 50%;
-
+		
 		&:last-child {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			height: 100%;
+
+			@media screen and (max-width: 800px) {
+				display: none;
+			}
+		}
+	}
+
+	@media screen and (max-width: 800px) {
+		aspect-ratio: 16 / 4;
+		justify-content: space-evenly;
+
+		> * {
+			flex: unset;
+
+			&:first-child {
+				height: auto;
+				width: calc(100vw / 16 * 3);
+			}
 		}
 	}
 }
@@ -33,4 +57,10 @@
 .breakValue {
 	color: var(--red-color);
 	font: 700 .875rem var(--font-athiti);
+}
+
+.dnone {
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 }
