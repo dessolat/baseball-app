@@ -28,6 +28,9 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+	top: calc(43 * 100% / 330);
+	width: calc(102 * 100% / 746);
+	height: calc(148 * 100% / 330);
 }
 
 .ball,
