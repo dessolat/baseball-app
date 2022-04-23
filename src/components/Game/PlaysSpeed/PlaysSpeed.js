@@ -13,7 +13,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
   const pitchState = useSelector(state => state.game.pitchState);
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
@@ -111,7 +111,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   // };
 
   return (
-    <div ref={ref} className={pitchState !== 'Field' ? cl.speed : (cl.speed + ' ' + cl.dnone)}>
+    <div ref={ref} className={pitchState !== 'Field' ? cl.speed : cl.speed + ' ' + cl.dnone}>
       {chartData.length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
@@ -156,8 +156,9 @@ const PlaysSpeed = ({ currentMoment }) => {
         //   />
         // </>
       )}
-			
-			<Arrow onClick={() => dispatch(setPitchState('Field'))} style={{position: 'absolute', transform: 'scale(2.4)', bottom: '-10px', left: '20px', opacity: .5}} />
+      <div className={cl.arrowWrapper}>
+        <Arrow onClick={() => dispatch(setPitchState('Field'))} />
+      </div>
     </div>
   );
 };
