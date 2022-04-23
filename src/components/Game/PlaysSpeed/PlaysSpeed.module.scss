@@ -4,7 +4,7 @@
   grid-area: spd;
   background: white;
   padding: 1.05rem 0.2rem 5px;
-	position: relative;
+  position: relative;
 
   @media screen and (max-width: 800px) {
     padding: 3.5px 0;
@@ -42,5 +42,17 @@
 .dnone {
   @media screen and (max-width: 800px) {
     display: none;
+  }
+}
+
+.arrowWrapper {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    position: absolute;
+    transform: scale(2.4);
+    bottom: -10px;
+    left: 20px;
+    opacity: 0.5;
   }
 }
