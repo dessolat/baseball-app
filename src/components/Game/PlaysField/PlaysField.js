@@ -102,18 +102,18 @@ const PlaysField = ({ currentMoment }) => {
     };
   }, [currentMoment]);
 
-  const imgStyles = {
-    top: parent.current ? (43 * parent.current.clientHeight) / 330 : 43,
-    width: parent.current ? (102 * parent.current.clientWidth) / 746 : 102,
-    height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
-  };
+  // const imgStyles = {
+    // top: parent.current ? (43 * parent.current.clientHeight) / 330 : 43,
+    // width: parent.current ? (102 * parent.current.clientWidth) / 746 : 102,
+    // height: parent.current ? (148 * parent.current.clientHeight) / 330 : 148
+  // };
 
   const initSpeed = currentMoment?.metering?.pitch?.init_speed_x;
   const releaseValue = initSpeed ? initSpeed.toFixed(1) : '';
 
   return (
     <div className={pitchState === 'Field' ? cl.field : cl.dnone} ref={parent}>
-      <img className={cl.grid} style={imgStyles} src={gridImg} alt='grid' />
+      <img className={cl.grid} src={gridImg} alt='grid' />
       <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
       <div className={cl.top}>
         <div className={cl.speedData}>
