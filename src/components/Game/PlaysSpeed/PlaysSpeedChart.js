@@ -81,7 +81,8 @@ const PlaysSpeedChart = ({ dataArr, currentDot = 0 }) => {
     : null;
 
   return (
-    <svg width='95%' height='85%' viewBox='0 0 440 110' className={cl.chart}>
+    <svg viewBox='0 0 440 110' className={cl.chart}>
+    {/* <svg width='95%' height='85%' viewBox='0 0 440 110' className={cl.chart}> */}
       <text x='10' y='20' className={cl.plainText}>
         {yAxisValues[0]}
       </text>
