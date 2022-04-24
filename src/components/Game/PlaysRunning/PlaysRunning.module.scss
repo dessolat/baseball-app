@@ -1,43 +1,121 @@
 @import 'scss/vars.scss';
 
-.field {
+.fieldWrapper {
   grid-area: field;
   overflow: hidden;
+  background-color: white;
+
+  @media screen and (max-width: 800px) {
+    aspect-ratio: 16/9;
+    text-align: center;
+    position: relative;
+  }
+}
+
+.field {
   background: no-repeat url('../../../images/field_up.png') center / 100% 100%, #fff;
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 800px) {
+    height: 100%;
+    width: auto;
+  }
 }
 
 .info {
   grid-area: info;
   background: white;
   padding: 0.6875rem;
-	border-left: 6px solid #e5e5e5;
+  border-left: 6px solid #e5e5e5;
+
+	@media screen and (max-width: 800px) {
+    aspect-ratio: 16/9;
+		overflow: hidden;
+		border-left: none;
+		padding: .2rem;
+		position: relative;
+
+		> .list {
+			margin-left: 15%;
+			width: 50%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
 }
 
 .subHeader {
-  font: 400 0.875rem/1.36 var(--font-nunito);
+	font: 400 0.875rem/1.36 var(--font-nunito);
   color: var(--side-color);
+
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 }
 
 .infoItem {
-	padding: .875rem 0 .625rem;
-	position: relative;
+  padding: 0.875rem 0 0.625rem;
+  position: relative;
 
-	& + &:before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 75%;
-		height: 1px;
-		background-color: black;
-	}
+  & + &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    height: 1px;
+    background-color: black;
+  }
+
+	@media screen and (max-width: 800px) {
+    padding: .2rem 0;
+
+		& + &:before {
+			top: -2px;
+			left: 50%;
+			width: 50%;
+			background-color: #E8E8E8;
+		}
+  }
 }
 
 .infoTitle {
   font: 400 0.875rem/1.07 var(--font-nunito);
+
+	@media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
 }
 
 .infoValue {
-	font: 700 0.875rem/1.2 var(--font-athiti);
+  font: 700 0.875rem/1.2 var(--font-athiti);
+
+	@media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
+}
+
+.rightArrowWrapper,
+.leftArrowWrapper {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: inline;
+    position: absolute;
+    top: 50%;
+    transform: scale(2.4) translateY(-35%);
+    opacity: 0.5;
+  }
+}
+
+.rightArrowWrapper {
+  right: 20px;
+}
+
+.leftArrowWrapper {
+  left: 20px;
 }
