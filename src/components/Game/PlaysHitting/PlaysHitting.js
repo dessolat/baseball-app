@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PlaysBat from '../PlaysBat/PlaysBat';
 import PlaysStats from '../PlaysStats/PlaysStats';
 
 const PlaysHitting = () => {
-	const currentMoment = useSelector(state => state.game.currentMoment)
+  const [hittingMode, setHittingMode] = useState('Bat');
   return (
     <>
       <PlaysBat currentMoment={currentMoment} />
