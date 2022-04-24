@@ -11,6 +11,7 @@ import { setCurrentCard, setSituationFilter, setCurrentGameId, resetData } from 
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
+import { setMobileWidth } from 'redux/sharedReducer';
 // import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
@@ -40,17 +41,24 @@ const Game = () => {
         navigate('/games');
       });
 
-			return () => {
-				console.log(cancelTokenRef.current, intervalRef.current);
-				// eslint-disable-next-line
-				typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
-				// eslint-disable-next-line
-				clearInterval(intervalRef.current);
-				dispatch(resetData())
-				// dispatch(setCurrentCard({}));
-				// dispatch(setCurrentGameId(null));
-				// dispatch(setSituationFilter('All'));
-			};
+    const resizeHandle = () => {
+      dispatch(setMobileWidth(window.innerWidth))
+    };
+
+		resizeHandle()
+    window.addEventListener('resize', resizeHandle);
+
+    return () => {
+      // eslint-disable-next-line
+      typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+      // eslint-disable-next-line
+      clearInterval(intervalRef.current);
+      dispatch(resetData());
+			window.removeEventListener('resize', resizeHandle)
+      // dispatch(setCurrentCard({}));
+      // dispatch(setCurrentGameId(null));
+      // dispatch(setSituationFilter('All'));
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -81,11 +89,11 @@ const Game = () => {
         <Loader />
       ) : // <Skeleton />
       innings.length > 0 ? (
-        <>
+        <div>
           <Header currentTab={currentTab} handleTabClick={handleTabClick} />
           {isFilters && <Filters />}
           <Content currentTab={currentTab} />
-        </>
+        </div>
       ) : (
         <></>
       )}
