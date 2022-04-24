@@ -1,9 +1,10 @@
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useEffect, useRef, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import cl from './PlaysRunning.module.scss';
 
-const PlaysRunningField = ({ field }) => {
+const PlaysRunningField = ({ field, setRunningMode }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const playbackMode = useSelector(state => state.game.playbackMode);
@@ -41,7 +42,7 @@ const PlaysRunningField = ({ field }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentMoment]);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const PlaysRunningField = ({ field }) => {
       return;
     }
 
-		const newMoments = [];
+    const newMoments = [];
     currentCard.type !== 'Replacement'
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
@@ -74,7 +75,7 @@ const PlaysRunningField = ({ field }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [playbackMode]);
 
   let ballPath = '';
@@ -87,21 +88,20 @@ const PlaysRunningField = ({ field }) => {
     });
 
   return (
-    <svg
-      className={cl.field}
-      width='100%'
-      height='100%'
-      viewBox='0 0 2560 2560'
-      fill='none'
-      preserveAspectRatio='none'>
-      <path
-        d={ballPath}
-        stroke='red'
-        strokeWidth='25'
-        strokeLinejoin='round'
-        strokeLinecap='round'
-        strokeDasharray='1 35'></path>
-    </svg>
+    <div className={cl.fieldWrapper}>
+      <svg className={cl.field} viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'>
+        <path
+          d={ballPath}
+          stroke='red'
+          strokeWidth='25'
+          strokeLinejoin='round'
+          strokeLinecap='round'
+          strokeDasharray='1 35'></path>
+      </svg>
+			<div className={cl.rightArrowWrapper}>
+        <Arrow direction='right' onClick={() => setRunningMode('Info')} />
+      </div>
+    </div>
   );
 };
 
