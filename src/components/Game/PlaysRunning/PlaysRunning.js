@@ -7,10 +7,13 @@ const PlaysRunning = () => {
   const [runningMode, setRunningMode] = useState('Field');
 
   const currentMoment = useSelector(state => state.game.currentMoment);
+  const mobileWidth = useSelector(state => state.shared.mobileWidth);
   return (
     <>
-      <PlaysRunningField field={currentMoment.metering?.field} />
-      <PlaysRunningInfo />
+      {(mobileWidth > 1000 || runningMode === 'Field') && (
+        <PlaysRunningField field={currentMoment.metering?.field} setRunningMode={setRunningMode} />
+      )}
+      {(mobileWidth > 1000 || runningMode === 'Info') && <PlaysRunningInfo setRunningMode={setRunningMode} />}
     </>
   );
 };
