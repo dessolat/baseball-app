@@ -1,3 +1,4 @@
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
@@ -6,7 +7,7 @@ import PlaysBatFooter from './PlaysBatFooter';
 import PlaysBatHeader from './PlaysBatHeader';
 import PlaysBatMedia from './PlaysBatMedia';
 
-const PlaysBat = ({ currentMoment }) => {
+const PlaysBat = ({ currentMoment, setHittingMode }) => {
   const { metering, events } = currentMoment;
   const { data_2d, swing_index, plane_index, impact_index } = metering?.bat || {};
 
@@ -24,10 +25,13 @@ const PlaysBat = ({ currentMoment }) => {
   const timeoutRef = useRef(null);
   const playRef = useRef(null);
 
-  useEffect(() => () => {
-		clearTimeout(timeoutRef.current)
-		clearTimeout(playRef.current)
-	}, []);
+  useEffect(
+    () => () => {
+      clearTimeout(timeoutRef.current);
+      clearTimeout(playRef.current);
+    },
+    []
+  );
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
@@ -70,15 +74,14 @@ const PlaysBat = ({ currentMoment }) => {
     maxFrameRef.current = data_2d?.length || 0;
     setFrame(1);
     setLinesPaths(['', '', '']);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentMoment, data_2d, events]);
 
   useEffect(() => {
     if (playbackMode === 'pause') clearTimeout(playRef.current);
-    console.log(frame);
+
     if (frame === 0 || (!data_2d && playbackMode === 'pause')) return;
 
-    console.log(playbackMode);
     const xShift = -450;
     const yShift = -200;
 
@@ -156,7 +159,7 @@ const PlaysBat = ({ currentMoment }) => {
     return () => {
       clearTimeout(playRef.current);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [frame]);
 
   useEffect(() => {
@@ -191,7 +194,7 @@ const PlaysBat = ({ currentMoment }) => {
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
     }, 2000);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [playbackMode]);
 
   const handleDotClick = str => () => setCurrentLine(str);
@@ -211,6 +214,9 @@ const PlaysBat = ({ currentMoment }) => {
         handleDotClick={handleDotClick}
         frame={frame}
       />
+      <div className={cl.arrowWrapper}>
+        <Arrow direction='right' onClick={() => setHittingMode('Stats')} />
+      </div>
     </div>
   );
 };
