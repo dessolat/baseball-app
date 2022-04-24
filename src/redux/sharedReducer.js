@@ -6,6 +6,7 @@ const defaultState = {
   currentYear: newDate.getFullYear(),
   currentDate: newDate,
   currentLeaguesScroll: 0,
+	mobileWidth: 0,
 	isMobile: false
 };
 
@@ -13,6 +14,7 @@ const SET_CURRENT_LEAGUE = 'SET_CURRENT_LEAGUE';
 const SET_CURRENT_YEAR = 'SET_CURRENT_YEAR';
 const SET_CURRENT_DATE = 'SET_CURRENT_DATE';
 const SET_CURRENT_LEAGUES_SCROLL = 'SET_CURRENT_LEAGUES_SCROLL';
+const SET_MOBILE_WIDTH = 'SET_MOBILE_WIDTH';
 const SET_IS_MOBILE = 'SET_IS_MOBILE';
 
 export const sharedReducer = (state = defaultState, action) => {
@@ -25,6 +27,8 @@ export const sharedReducer = (state = defaultState, action) => {
       return { ...state, currentDate: action.payload };
     case SET_CURRENT_LEAGUES_SCROLL:
       return { ...state, currentLeaguesScroll: action.payload };
+    case SET_MOBILE_WIDTH:
+      return { ...state, mobileWidth: action.payload };
     case SET_IS_MOBILE:
       return { ...state, isMobile: action.payload };
     default:
@@ -36,4 +40,5 @@ export const setCurrentLeague = payload => ({ type: SET_CURRENT_LEAGUE, payload 
 export const setCurrentYear = payload => ({ type: SET_CURRENT_YEAR, payload });
 export const setCurrentDate = payload => ({ type: SET_CURRENT_DATE, payload });
 export const setCurrentLeaguesScroll = payload => ({ type: SET_CURRENT_LEAGUES_SCROLL, payload });
+export const setMobileWidth = payload => ({ type: SET_MOBILE_WIDTH, payload });
 export const setIsMobile = payload => ({ type: SET_IS_MOBILE, payload });
