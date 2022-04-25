@@ -9,17 +9,47 @@
 	overflow: hidden;
 	padding: 0.2rem 0.3rem 1.125rem 0.9rem;
 	border-left: 6px solid #e5e5e5;
+
+	@media screen and (max-width: 800px) {
+		border-left: none;
+		aspect-ratio: 16/9;
+		position: relative;
+		padding: 0;
+		border-top: 0.5px solid #CDCCCC;
+	}
 }
 
 .field {
 	height: 55%;
 	background: no-repeat url('../../../images/field_right.png') center / 100% 100%;
+
+	@media screen and (max-width: 800px) {
+		aspect-ratio: 321 / 237.5;
+		height: 95%;
+		margin-left: 25px;
+	}
 }
 
 .info {
 	padding-left: 7.5rem;
+
 	@media screen and (max-width: 1155px) {
 		padding-left: 5rem;
+	}
+
+	@media screen and (max-width: 800px) {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		display: flex;
+		align-items: flex-end;
+
+		> div:first-child {
+			width: 80px;
+		}
+		> div:last-child {
+			width: 150px;
+		}
 	}
 }
 
@@ -36,11 +66,26 @@
 			flex: 1 1 57%;
 		}
 	}
+
+	@media screen and (max-width: 800px) {
+		> * {
+			&:first-child {
+				flex: 1 1 60%;
+			}
+			&:last-child {
+				flex: 1 1 40%;
+			}
+		}
+	}
 }
 
 .title {
   font: 400 0.875rem var(--font-nunito);
   color: var(--side-color);
+
+	@media screen and (max-width: 800px) {
+		font-size: 12px;
+	}
 }
 
 .value {
@@ -56,4 +101,22 @@
 		font-size: .9rem;
 		line-height: 1.9;
 	}
+
+	@media screen and (max-width: 800px) {
+		font-size: 12px;
+		line-height: 1;
+	}
+}
+
+.arrowWrapper {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+		display: inline;
+    position: absolute;
+    top: 50%;
+    transform: scale(2.4) translateY(-35%);
+    left: 20px;
+    opacity: 0.5;
+  }
 }
