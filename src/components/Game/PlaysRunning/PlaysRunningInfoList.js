@@ -1,4 +1,5 @@
 import React from 'react';
+import cl from './PlaysRunning.module.scss';
 import PlaysRunningInfoItem from './PlaysRunningInfoItem';
 
 const runningList = [
@@ -12,11 +13,11 @@ const runningList = [
 
 const PlaysRunningInfoList = () => {
   return (
-    <ul>
+    <div className={cl.list}>
       {runningList.map((item, i) => (
         <PlaysRunningInfoItem key={i} item={item} />
       ))}
-    </ul>
+    </div>
   );
 };
 
