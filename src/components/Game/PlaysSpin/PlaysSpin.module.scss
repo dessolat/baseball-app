@@ -8,12 +8,6 @@
 	background-color: white;
 	padding: 5px 0;
 	margin-left: 6px;
-
-	@media screen and (max-width: 800px) {
-    margin-left: 0;
-		padding: 0;
-  }
-	
 	
 	> * {
 		flex: 1 1 50%;
@@ -23,16 +17,14 @@
 			flex-direction: column;
 			justify-content: space-between;
 			height: 100%;
-
-			@media screen and (max-width: 800px) {
-				display: none;
-			}
 		}
 	}
 
 	@media screen and (max-width: 800px) {
+		margin-left: 0;
+		padding: 0 10px;
+		justify-content: space-between;
 		aspect-ratio: 16 / 4;
-		justify-content: space-evenly;
 
 		> * {
 			flex: unset;
@@ -62,5 +54,22 @@
 .dnone {
 	@media screen and (max-width: 800px) {
 		display: none;
+	}
+}
+
+.spinInfo {
+	@media screen and (max-width: 800px) {
+		flex-direction: row !important;
+		align-items: center;
+		flex: 1;
+		margin-left: 10px;
+
+		* {
+			font-size: 12px;
+		}
+
+		> * + * {
+			margin-left: 5px;
+		}
 	}
 }
