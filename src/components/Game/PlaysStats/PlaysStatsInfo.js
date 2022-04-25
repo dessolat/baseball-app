@@ -10,34 +10,38 @@ const PlaysStatsInfo = ({ hit }) => {
 
   return (
     <div className={cl.info}>
-      <p className={cl.row}>
-        <span className={cl.title}>At Bats</span>
-        <span className={cl.value}>2</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Hits</span>
-        <span className={cl.value}>0</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Runs</span>
-        <span className={cl.value}>0</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Exit Velocity</span>
-        <span className={cl.value}>{exitVelocityValue}</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Launch Angle</span>
-        <span className={cl.value}>{angleValue}</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Height</span>
-        <span className={cl.value}>37.2 m</span>
-      </p>
-      <p className={cl.row}>
-        <span className={cl.title}>Distance</span>
-        <span className={cl.value}>{distanceValue}</span>
-      </p>
+      <div>
+        <p className={cl.row}>
+          <span className={cl.title}>At Bats</span>
+          <span className={cl.value}>2</span>
+        </p>
+        <p className={cl.row}>
+          <span className={cl.title}>Hits</span>
+          <span className={cl.value}>0</span>
+        </p>
+        <p className={cl.row}>
+          <span className={cl.title}>Runs</span>
+          <span className={cl.value}>0</span>
+        </p>
+      </div>
+      <div>
+        <p className={cl.row}>
+          <span className={cl.title}>Exit Velocity</span>
+          <span className={cl.value}>{exitVelocityValue}</span>
+        </p>
+        <p className={cl.row}>
+          <span className={cl.title}>Launch Angle</span>
+          <span className={cl.value}>{angleValue}</span>
+        </p>
+        <p className={cl.row}>
+          <span className={cl.title}>Height</span>
+          <span className={cl.value}>37.2 m</span>
+        </p>
+        <p className={cl.row}>
+          <span className={cl.title}>Distance</span>
+          <span className={cl.value}>{distanceValue}</span>
+        </p>
+      </div>
     </div>
   );
 };
