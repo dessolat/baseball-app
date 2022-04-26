@@ -11,7 +11,7 @@ const PlaysEventsTotal = ({moments}) => {
         <>
           Total:{' '}
           <span>
-            {balls_count + strikes_count} ({strikes_count} ball, {balls_count} strike)
+            {balls_count + strikes_count} ({balls_count} ball, {strikes_count} strike)
           </span>
         </>
       )}
