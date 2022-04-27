@@ -5,7 +5,7 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
 
   return (
     <tbody>
-      {tableData
+      {tableData.players_stats
         .filter(player =>
           tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
         )
@@ -27,14 +27,14 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
                   {title === 'POS'
                     ? player.content.position.join('/')
                     : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title)
-                    ? player.content.running[title]
+                    ? player.content.stat.running[title]
                     : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
-                    ? player.content.fielding[title]
+                    ? player.content.stat.fielding[title]
                     : title === 'PB'
                     ? '--'
                     : toFixList.includes(title)
-                    ? Number(player.content[tableName][title]).toFixed(3)
-                    : player.content[tableName][title]}
+                    ? Number(player.content.stat[tableName][title]).toFixed(3)
+                    : player.content.stat[tableName][title]}
                 </td>
               ))}
             </tr>

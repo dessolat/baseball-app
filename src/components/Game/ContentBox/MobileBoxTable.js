@@ -115,7 +115,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
       </div>
       <div className={cl.sides}>
         <div className={cl.leftRows}>
-          {tableData
+          {tableData.players_stats
             .filter(player =>
               currentMode === 'Pitching'
                 ? player.is_pitcher
@@ -151,7 +151,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
           className={cl.rightRows}
           onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
           ref={rowsRef}>
-          {tableData
+          {tableData.players_stats
             .filter(player =>
               currentMode === 'Pitching'
                 ? player.is_pitcher
@@ -175,18 +175,18 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                       {title.name === 'POS'
                         ? player.content.position.join('/')
                         : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title.name)
-                        ? player.content.running[title.name]
+                        ? player.content.stat.running[title.name]
                         : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
-                        ? player.content.fielding[title.name]
+                        ? player.content.stat.fielding[title.name]
                         : title.name === 'PB'
                         ? '--'
                         : title.isWider
                         ? Number(
-                            player.content[
+                            player.content.stat[
                               BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                             ][title.name]
                           ).toFixed(3)
-                        : player.content[
+                        : player.content.stat[
                             BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                           ][title.name]}
                     </div>

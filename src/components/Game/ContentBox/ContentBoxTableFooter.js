@@ -3,18 +3,19 @@ import React from 'react';
 const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, toFixList }) => {
   const getFieldSum = (table, field) =>
     table === 'fielding'
-      ? tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0)
+      ? tableData.players_stats.reduce((sum, cur) => sum + Number(cur.content.stat[table][field]), 0)
       : table === 'catching'
-      ? tableData
+      ? tableData.players_stats
           .filter(player => player.is_catcher)
-          .reduce((sum, cur) => sum + Number(cur.content['running'][field]), 0)
-      : tableData.reduce((sum, cur) => sum + Number(cur.content[table][field]), 0);
+          .reduce((sum, cur) => sum + Number(cur.content.stat['running'][field]), 0)
+      : tableData.players_stats.reduce((sum, cur) => sum + Number(cur.content.stat[table][field]), 0);
 
   return (
     <tfoot>
       <tr
         style={
-          tableData.filter(player =>
+          tableData.players_stats
+					.filter(player =>
             tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
           ).length % 2
             ? { backgroundColor: '#eaeaea' }
