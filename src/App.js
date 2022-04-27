@@ -80,10 +80,10 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path='/games' element={<Games />} />
-          <Route path='/games/team/:teamName' element={<TeamGames />} />
+          <Route path='/games/team/:gameType/:teamName' element={<TeamGames />} />
           <Route path='/game/:gameId' element={<Game />} />
           <Route path='/stats/:statsType' element={<Stats />} />
-          <Route path='/stats/player/:playerName/:playerSurname' element={<PlayerStats />} />
+          <Route path='/stats/player/:playerId' element={<PlayerStats />} />
           <Route path='*' element={<Navigate to='/games' replace={true} />} />
         </Routes>
       </QueryParamProvider>
