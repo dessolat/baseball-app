@@ -3,7 +3,6 @@ import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedReducer';
-import { useParams } from 'react-router-dom';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
@@ -12,8 +11,6 @@ const YEARS = ['All years', 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014
 const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
 
 const HeaderSelections = ({ playerYears, setPlayerYears }) => {
-  const { playerName, playerSurname } = useParams();
-
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
@@ -111,8 +108,8 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
       <div className={cl.playerInfo}>
         <img src={PortraitImg} alt='' />
         <div className={cl.fullName}>
-          {playerName}
-          <p>{playerSurname}</p>
+          {statsData.name}
+          <p>{statsData.surname}</p>
         </div>
       </div>
       <div className={cl.bottom}>
