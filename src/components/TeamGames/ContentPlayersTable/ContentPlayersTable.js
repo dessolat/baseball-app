@@ -40,7 +40,7 @@ const ContentPlayersTable = () => {
             <li key={index} className={cl.tableRow}>
               <div>{index + 1}</div>
               <div className={cl.underlineHover}>
-                <Link to={`/stats/player/${player.name}/${player.surname}`}>
+                <Link to={`/stats/player/${player.id}`}>
                   {player.name + ' ' + player.surname}
                 </Link>
               </div>

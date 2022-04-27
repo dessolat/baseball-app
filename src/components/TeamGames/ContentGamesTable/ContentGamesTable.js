@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import cl from './ContentGamesTable.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getShortName } from 'utils';
 
@@ -20,6 +20,8 @@ const MONTHS = {
 };
 
 const ContentGamesTable = () => {
+	const { gameType } = useParams();
+
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentYear = useSelector(state => state.shared.currentYear);
   const isMobile = useSelector(state => state.shared.isMobile);
@@ -65,13 +67,13 @@ const ContentGamesTable = () => {
                   (!isMobile ? MONTHS[game.date.slice(5, 7)].slice(0, 3) : MONTHS[game.date.slice(5, 7)])}
               </div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${game.homies.name}`}> {getShortName(game.homies.name, 22)}</Link>
+                <Link to={`/games/team/${gameType}/${game.homies.name}`}> {getShortName(game.homies.name, 22)}</Link>
               </div>
               <div>
                 {game.homies.score} - {game.visitors.score}
               </div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${game.visitors.name}`}> {getShortName(game.visitors.name, 22)}</Link>
+                <Link to={`/games/team/${gameType}/${game.visitors.name}`}> {getShortName(game.visitors.name, 22)}</Link>
               </div>
               <div className={cl.links}>
                 <div>

@@ -165,7 +165,7 @@ const ContentTable = ({ games }) => {
                   <div>{game.start_time.slice(0, 5)}</div>
                   <div>{game.stadium_name}</div>
                   <div className={cl.underlineHover}>
-                    <Link to={`/games/team/${game.owners_name}`}>
+                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${game.owners_name}`}>
                       {' '}
                       {getShortName(game.owners_name, isMobile ? 20 : 28)}
                     </Link>
@@ -174,7 +174,7 @@ const ContentTable = ({ games }) => {
                     {game.score_owners} - {game.score_guests}
                   </div>
                   <div className={cl.underlineHover}>
-                    <Link to={`/games/team/${game.guests_name}`}>
+                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${game.guests_name}`}>
                       {' '}
                       {getShortName(game.guests_name, isMobile ? 20 : 28)}
                     </Link>

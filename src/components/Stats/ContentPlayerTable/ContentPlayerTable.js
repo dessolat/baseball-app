@@ -158,7 +158,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 return (
                   <li key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/stats/player/${row.name}/${row.surname}`}>
+                      <Link to={`/stats/player/${row.id}`}>
                         {' '}
                         <span className={cl.fullName}>
                           {row.name} {row.surname}
