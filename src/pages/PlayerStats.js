@@ -19,7 +19,7 @@ const PlayerStats = () => {
   const cancelTokenRef = useRef();
   // const firstMountRef = useRef(true);
 
-  const { playerName, playerSurname } = useParams();
+  const { playerId } = useParams();
 
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
   // const games = useSelector(state => state.games.games);
@@ -32,7 +32,7 @@ const PlayerStats = () => {
       try {
         setIsStatsLoading(true);
         const response = await axios.get(
-          `http://51.250.11.151:3030/player?surname=${playerSurname}&name=${playerName}`,
+          `http://51.250.11.151:3030/player?id=${playerId}`,
           {
             cancelToken: cancelTokenRef.current.token,
             timeout: 5000
@@ -57,7 +57,7 @@ const PlayerStats = () => {
       cancelTokenRef.current.cancel(null);
     };
     // eslint-disable-next-line
-  }, [playerName, playerSurname]);
+  }, [playerId]);
   // useEffect(() => {
   //   const fetchGamesData = async () => {
   //     cancelTokenRef.current = axios.CancelToken.source();

@@ -12,7 +12,7 @@ const TeamGames = () => {
   const [isTeamLoading, setIsTeamLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { teamName } = useParams();
+  const { gameType, teamName } = useParams();
 
   const teamData = useSelector(state => state.teamGames.teamData);
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const TeamGames = () => {
 
       try {
         setIsTeamLoading(true);
-        const response = await axios.get(`http://51.250.11.151:3030/team/${teamName}`, {
+        const response = await axios.get(`http://51.250.11.151:3030/${gameType}/team?team_name=${teamName}`, {
           cancelToken: cancelTeamTokenRef.current.token,
           timeout: 5000
         });
