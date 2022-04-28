@@ -56,7 +56,7 @@
 
 .list {
   overflow-y: scroll;
-  height: 92%;
+  height: 89.5%;
   background: white;
   scroll-behavior: smooth;
 
@@ -202,7 +202,7 @@
 }
 
 .total {
-  height: 8%;
+  height: 10.5%;
   padding-left: 10px;
   padding-top: 10px;
   font: 700 0.8rem / 1.36 var(--font-nunito);
@@ -245,4 +245,10 @@
 
 .yellow {
   background: var(--yellow-color);
+}
+
+.pitcherWrapper {
+	@media screen and (max-width: 800px) {
+    display: none;
+  }
 }
