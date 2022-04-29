@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
+import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
 import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
 
