@@ -25,6 +25,7 @@ const Stats = () => {
       const result = leagues.reduce((sum, league) => {
         const resultLeague = {};
         resultLeague.title = league.title;
+        resultLeague.type = league.type;
         resultLeague.players = {};
         resultLeague.players.batting = league.players.batting;
         resultLeague.players.pitching = league.players.pitching;
