@@ -13,14 +13,16 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
 
   return (
     <ul className={cl.leagues} ref={ref}>
-      {leagues.map((league, index) => (
-        <HeaderLeaguesListItem
-          key={index}
-          league={league}
-          handleClick={handleLeagueClick}
-          currentLeague={currentLeague}
-        />
-      ))}
+      {leagues
+        .filter(league => league.type === currentGameType || league.id === -1)
+        .map((league, index) => (
+          <HeaderLeaguesListItem
+            key={index}
+            league={league}
+            handleClick={handleLeagueClick}
+            currentLeague={currentLeague}
+          />
+        ))}
     </ul>
   );
 };
