@@ -15,6 +15,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const rowsScroll = useRef(null);
 
   const isMobile = useSelector(state => state.shared.isMobile);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
 
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);

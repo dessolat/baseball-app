@@ -13,6 +13,7 @@ const HeaderSelections = () => {
   const { statsType } = useParams();
 
   const currentYear = useSelector(state => state.shared.currentYear);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const tableMode = useSelector(state => state.stats.tableMode);
   const dispatch = useDispatch();
 

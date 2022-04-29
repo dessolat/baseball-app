@@ -6,6 +6,7 @@ import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title }));

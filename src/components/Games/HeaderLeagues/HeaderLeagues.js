@@ -13,7 +13,7 @@ const HeaderLeagues = () => {
   const firstMountRef = useRef(true);
 
   const games = useSelector(state => state.games.games);
-  const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentYear = useSelector(state => state.shared.currentYear);
   const leagues = useSelector(state => state.games.leagues);
   const isMobile = useSelector(state => state.shared.isMobile);

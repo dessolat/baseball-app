@@ -13,6 +13,7 @@ const HeaderLeagues = () => {
   const firstMountRef = useRef(true);
 
   const currentYear = useSelector(state => state.shared.currentYear);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
   const statsData = useSelector(state => state.stats.statsData);
   const dispatch = useDispatch();

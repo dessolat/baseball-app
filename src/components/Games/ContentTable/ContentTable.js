@@ -27,7 +27,7 @@ const ContentTable = ({ games }) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
-  const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentDate = useSelector(state => state.shared.currentDate);
   const isMobile = useSelector(state => state.shared.isMobile);
   const mobileTableMode = useSelector(state => state.games.mobileTableMode);

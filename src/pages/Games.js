@@ -19,7 +19,7 @@ const Games = () => {
   const games = useSelector(state => state.games.games);
   const leagues = useSelector(state => state.games.leagues);
   const currentLeague = useSelector(state => state.shared.currentLeague);
-  const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentYear = useSelector(state => state.shared.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();

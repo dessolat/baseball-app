@@ -26,7 +26,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
 
   const games = useSelector(state => state.games.games);
   const currentLeague = useSelector(state => state.shared.currentLeague);
-  const currentGameType = useSelector(state => state.games.currentGameType);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentStadium = useSelector(state => state.games.currentStadium);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
