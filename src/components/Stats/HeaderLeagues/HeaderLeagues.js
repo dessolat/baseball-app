@@ -3,7 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeague, setCurrentLeaguesScroll } from 'redux/sharedReducer';
 
 const HeaderLeagues = () => {
   const [isLeftScroll, setIsLeftScroll] = useState(false);
@@ -18,7 +18,7 @@ const HeaderLeagues = () => {
   const statsData = useSelector(state => state.stats.statsData);
   const dispatch = useDispatch();
 
-	useEffect(() => {
+  useEffect(() => {
     const leaguesScrollDispatch = () => {
       dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
       setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
@@ -30,10 +30,10 @@ const HeaderLeagues = () => {
     const ref = leaguesRef.current;
     ref.addEventListener('scroll', leaguesScrollDispatch);
 
-		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-		setIsRightScroll(
-			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
-		);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
 
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
@@ -62,8 +62,27 @@ const HeaderLeagues = () => {
     leaguesRef.current.style.scrollBehavior = 'smooth';
 
     dispatch(setCurrentLeaguesScroll(0));
+
     // eslint-disable-next-line
   }, [currentYear]);
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      return;
+    }
+
+    leaguesRef.current.style.scrollBehavior = 'unset';
+    leaguesRef.current.scrollLeft = 0;
+    leaguesRef.current.style.scrollBehavior = 'smooth';
+
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
+
+    dispatch(setCurrentLeaguesScroll(0));
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    // eslint-disable-next-line
+  }, [currentGameType]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -74,7 +93,9 @@ const HeaderLeagues = () => {
     // setIsLeftScroll(currentScroll <= 0 ? false : true);
     // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
     setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
     // eslint-disable-next-line
   }, [statsData]);
 
