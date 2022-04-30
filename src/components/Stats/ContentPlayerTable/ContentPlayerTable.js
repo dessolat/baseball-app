@@ -117,7 +117,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 return (
                   <div key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/stats/player/${row.name}/${row.surname}`}>
+                      <Link to={`/stats/player/${row.id}`}>
                         {' '}
                         <span>
                           {row.name} {row.surname}
@@ -184,20 +184,20 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                     </div>
                     <div>{posValue}</div>
                     <div className={cl.teamNames}>
-                      <Link to={`/games/team/${row.teams[0].name}`}>
+                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
                         {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
                       </Link>
                       {row.teams[1] && (
                         <>
                            /{' '}
-                          <Link to={`/games/team/${row.teams[1].name}`}>
+                          <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
                             {getShortName(row.teams[1].name, 12)}
                           </Link>
                         </>
                       )}
                       {row.teams[2] && (
                         <>
-                           / <Link to={`/games/team/${row.teams[2].name}`}>{row.teams[2].name}</Link>
+                           / <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>{row.teams[2].name}</Link>
                         </>
                       )}
                     </div>
