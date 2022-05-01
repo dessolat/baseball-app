@@ -6,20 +6,23 @@ import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title }));
 
   return (
     <ul className={cl.leagues} ref={ref}>
-      {leagues.map((league, index) => (
-        <HeaderLeaguesListItem
-          key={index}
-          league={league}
-          handleClick={handleLeagueClick}
-          currentLeague={currentLeague}
-        />
-      ))}
+      {leagues
+        .filter(league => league.type === currentGameType || league.id === -1)
+        .map((league, index) => (
+          <HeaderLeaguesListItem
+            key={index}
+            league={league}
+            handleClick={handleLeagueClick}
+            currentLeague={currentLeague}
+          />
+        ))}
     </ul>
   );
 };

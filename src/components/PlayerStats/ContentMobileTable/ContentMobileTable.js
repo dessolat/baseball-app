@@ -23,7 +23,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 		console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
 		// setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth)
     setTimeout(
-      () => setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth),
+      () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
       500
     );
   }, []);

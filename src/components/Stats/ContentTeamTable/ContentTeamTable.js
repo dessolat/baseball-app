@@ -11,9 +11,10 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
 
-	const headerScroll = useRef(null);
+  const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
 
   const handleFieldClick = field => () => {
@@ -22,8 +23,10 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
   const filteredStatsData =
     currentLeague.id !== -1
-      ? statsData.find(item => item.title === currentLeague.name)?.teams[tableMode.toLowerCase()] || []
-      : statsData.reduce((sum, league) => {
+      ? statsData
+          
+          .find(item => item.title === currentLeague.name)?.teams[tableMode.toLowerCase()] || []
+      : statsData.filter(league => league.type === currentGameType).reduce((sum, league) => {
           league.teams[tableMode.toLowerCase()].forEach(team => {
             const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
 
@@ -58,7 +61,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                 return (
                   <div key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/games/team/${row.name}`}> {row.name}</Link>
+                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}> {row.name}</Link>
                     </div>
                   </div>
                 );
@@ -90,7 +93,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                 return (
                   <li key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/games/team/${row.name}`}> {row.name}</Link>
+                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}> {row.name}</Link>
                     </div>
                     {getTableRows(row, cl, sortField)}
                   </li>

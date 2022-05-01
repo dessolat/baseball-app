@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
+import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
 import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
 
@@ -13,6 +13,7 @@ const HeaderSelections = () => {
   const { statsType } = useParams();
 
   const currentYear = useSelector(state => state.shared.currentYear);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
   const tableMode = useSelector(state => state.stats.tableMode);
   const dispatch = useDispatch();
 
@@ -28,6 +29,7 @@ const HeaderSelections = () => {
     name === statsType || (name === 'player' && statsType !== 'team') ? cl.active : '';
 
   const handleModeClick = mode => dispatch(setTableMode(mode));
+  const handleGameTypeClick = gameType => dispatch(setCurrentGameType(gameType));
   return (
     <div className={cl.selections}>
       <div className={cl.types}>
@@ -37,6 +39,16 @@ const HeaderSelections = () => {
         <Link to={'/stats/team'} className={getClassName('team')}>
           Team
         </Link>
+				<div className={cl.gameTypes}>
+          <Dropdown
+            title={currentGameType}
+            options={['Baseball', 'Softball']}
+            currentOption={currentGameType}
+            handleClick={handleGameTypeClick}
+            listStyles={{ marginLeft: '-.75rem', width: '115%' }}
+            itemStyles={{ padding: '.3rem 0', textAlign: 'center' }}
+          />
+        </div>
       </div>
       <div className={cl.bottom}>
         <div className={cl.batting}>

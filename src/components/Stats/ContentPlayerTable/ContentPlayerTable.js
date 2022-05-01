@@ -15,6 +15,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const rowsScroll = useRef(null);
 
   const isMobile = useSelector(state => state.shared.isMobile);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
 
   const tableMode = useSelector(state => state.stats.tableMode);
   const statsData = useSelector(state => state.stats.statsData);
@@ -30,26 +31,29 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     () =>
       currentLeague.id !== -1
         ? statsData.find(item => item.title === currentLeague.name)?.players[tableMode.toLowerCase()] || []
-        : statsData.reduce((sum, league) => {
-            league.players[tableMode.toLowerCase()].forEach(player => {
-              const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
+        : statsData
+            .filter(league => league.type === currentGameType)
+            .reduce((sum, league) => {
+              league.players[tableMode.toLowerCase()].forEach(player => {
+                const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
 
-              if (playerIndex !== -1) {
-                sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
-                  'name',
-                  'surname',
-                  'teams',
-                  'id'
-                ]);
-              } else {
-                sum.push(player);
-              }
-            });
+                if (playerIndex !== -1) {
+                  sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
+                    'name',
+                    'surname',
+                    'teams',
+                    'id'
+                  ]);
+                } else {
+                  sum.push(player);
+                }
+              });
 
-            return sum;
-          }, []) || [],
-    [currentLeague, statsData, tableMode]
+              return sum;
+            }, []) || [],
+    [currentLeague, statsData, tableMode, currentGameType]
   );
+
   const teamOptions = useMemo(
     () =>
       Array.from(
@@ -104,17 +108,23 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           <div className={cl.sides}>
             <div className={cl.leftRows}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
+								const posValue = row.teams
+								.reduce((sum, team) => {
+									sum.push(team.pos);
+									return sum;
+								}, [])
+								.join(' / ');
                 return (
                   <div key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/stats/player/${row.name}/${row.surname}`}>
+                      <Link to={`/stats/player/${row.id}`}>
                         {' '}
                         <span>
                           {row.name} {row.surname}
                         </span>
                       </Link>
                     </div>
-                    <div>{index}</div>
+                    <div>{posValue}</div>
                     <div>
                       <img src={TeamLogo} alt='team-logo' />
                     </div>
@@ -155,6 +165,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
             </div>
             <ul className={cl.rows}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
+                const posValue = row.teams
+                  .reduce((sum, team) => {
+                    sum.push(team.pos);
+                    return sum;
+                  }, [])
+                  .join(' / ');
+
                 return (
                   <li key={index} className={cl.tableRow}>
                     <div>
@@ -165,22 +182,22 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                         </span>
                       </Link>
                     </div>
-                    <div>{index}</div>
+                    <div>{posValue}</div>
                     <div className={cl.teamNames}>
-                      <Link to={`/games/team/${row.teams[0].name}`}>
+                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
                         {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
                       </Link>
                       {row.teams[1] && (
                         <>
                            /{' '}
-                          <Link to={`/games/team/${row.teams[1].name}`}>
+                          <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
                             {getShortName(row.teams[1].name, 12)}
                           </Link>
                         </>
                       )}
                       {row.teams[2] && (
                         <>
-                           / <Link to={`/games/team/${row.teams[2].name}`}>{row.teams[2].name}</Link>
+                           / <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>{row.teams[2].name}</Link>
                         </>
                       )}
                     </div>
