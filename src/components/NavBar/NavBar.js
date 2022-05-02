@@ -19,6 +19,9 @@ const NavBar = () => {
       <Link to='/stats/player' className={getClass('stats')}>
         Stats
       </Link>
+      <Link to='/stats/player' className={getClass('stats')}>
+        Stats
+      </Link>
     </nav>
   );
 };
