@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import cl from './ContentMobileBox.module.scss';
 
 const TABLES_INFO = {
@@ -146,7 +147,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                         : null
                     }
                     className={cl.playerName}>
-                    {player.content.player_name}
+                    <Link to={`/stats/player/${player.id}`}>{player.content.player_name}</Link>
                   </div>
                 </div>
               );
