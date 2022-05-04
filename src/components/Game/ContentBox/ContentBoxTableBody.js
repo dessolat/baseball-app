@@ -2,13 +2,17 @@ import React from 'react';
 
 const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) => {
   let rowDelta = 0;
-
+  tableName === 'pitching' &&
+    tableData.pitchers_order.forEach((orderId, i) => {
+      tableData.players_stats.find(player => player.id === orderId).order = i + 1;
+    });
   return (
     <tbody>
       {tableData.players_stats
         .filter(player =>
           tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
         )
+        .sort((a, b) => (tableName === 'pitching' ? (a.order > b.order ? 1 : -1) : 0))
         .map((player, i) => {
           if (player.is_substituted && tableName === 'batting') rowDelta++;
 
