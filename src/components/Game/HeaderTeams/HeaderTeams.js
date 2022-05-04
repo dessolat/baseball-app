@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBoxActiveButton } from 'redux/gameReducer';
 import { getShortName } from 'utils';
 import cl from './HeaderTeams.module.scss';
 
 const HeaderTeams = ({ names, currentTab }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const boxActiveButton = useSelector(state => state.game.boxActiveButton);
+  const dispatch = useDispatch();
 
   const guestsClasses = [cl.guests];
   const ownersClasses = [cl.owners];
@@ -17,10 +19,15 @@ const HeaderTeams = ({ names, currentTab }) => {
     ? guestsClasses.push(cl.active)
     : ownersClasses.push(cl.active);
 
+  const handleTeamClick = name => () => dispatch(setBoxActiveButton(name));
   return (
     <div className={cl.teamNames}>
-      <span className={guestsClasses.join(' ')}>{getShortName(names[0], 8)}</span>
-      <span className={ownersClasses.join(' ')}>{getShortName(names[1], 8)}</span>
+      <span className={guestsClasses.join(' ')} onClick={handleTeamClick('guests')}>
+        {getShortName(names[0], 8)}
+      </span>
+      <span className={ownersClasses.join(' ')} onClick={handleTeamClick('owners')}>
+        {getShortName(names[1], 8)}
+      </span>
     </div>
   );
 };
