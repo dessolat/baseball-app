@@ -100,8 +100,12 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
       </div>
     ));
 
-  console.log(tableData);
   let rowDelta = 0;
+
+  currentMode === 'Pitching' &&
+    tableData.pitchers_order.forEach((orderId, i) => {
+      tableData.players_stats.find(player => player.id === orderId).order = i + 1;
+    });
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -123,6 +127,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                 ? player.is_catcher
                 : true
             )
+            .sort((a, b) => (currentMode === 'Pitching' ? (a.order > b.order ? 1 : -1) : 0))
             .map((player, i) => {
               if (player.is_substituted && BATTING_TITLES.includes(currentMode)) rowDelta++;
 
@@ -159,17 +164,15 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                 ? player.is_catcher
                 : true
             )
+            .sort((a, b) => (currentMode === 'Pitching' ? (a.order > b.order ? 1 : -1) : 0))
             .map((player, i) => {
               return (
                 <div
                   key={i}
                   className={cl.tableRow}
-                  style={
-                    // currentMode === 'Catching' || currentMode === 'Running' ? { width: '100%' } : null
-                    {
-                      width: isScrollable ? 'fit-content' : '100%'
-                    }
-                  }>
+                  style={{
+                    width: isScrollable ? 'fit-content' : '100%'
+                  }}>
                   {TABLES_INFO[currentMode].headers.map((title, i) => (
                     <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
                       {title.name === 'POS'
