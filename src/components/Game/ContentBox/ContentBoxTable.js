@@ -9,6 +9,7 @@ const TABLES_INFO = {
     headers: [
       'POS',
       'AB',
+      'R',
       'H',
       '2B',
       '3B',
@@ -16,6 +17,7 @@ const TABLES_INFO = {
       'RBI',
       'GDP',
       'BB',
+      'IBB',
       'HP',
       'SH',
       'SF',
