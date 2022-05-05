@@ -29,7 +29,7 @@ const FIELDS_OBJ = {
   E: 'fielding',
   DP: 'fielding',
   FLD: 'fielding',
-  R: 'running',
+  R: 'batting',
   SB: 'running',
   CS: 'running',
   SB_pr: 'running',
@@ -90,6 +90,11 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             AB
           </SortField>
+					<div className={cl.sortFieldWrapper}>
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+              R
+            </SortField>
+          </div>
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             H
           </SortField>
@@ -188,11 +193,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             renamedField='FLD'>
             FLD%
           </SortField>
-          <div className={cl.sortFieldWrapper}>
-            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-              R
-            </SortField>
-          </div>
+          
           <div className={cl.sortFieldWrapper}>
             <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
               SB
@@ -227,6 +228,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     <ActiveBodyCell sortField={sortField} row={team.batting}>
                       AB
                     </ActiveBodyCell>
+										<ActiveBodyCell sortField={sortField} row={team.batting}>R</ActiveBodyCell>
                     <ActiveBodyCell sortField={sortField} row={team.batting}>
                       H
                     </ActiveBodyCell>
@@ -296,7 +298,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     <ActiveBodyCell sortField={sortField} row={team.fielding} fixed={3} addedClass={cl.wider}>
                       FLD
                     </ActiveBodyCell>
-                    <ActiveBodyCell sortField={sortField} row={team.running}>R</ActiveBodyCell>
+                    
                     <ActiveBodyCell sortField={sortField} row={team.running}>SB</ActiveBodyCell>
                     <ActiveBodyCell sortField={sortField} row={team.running}>CS</ActiveBodyCell>
                     <ActiveBodyCell sortField={sortField} row={team.running} addedClass={cl.wider}>SB_pr</ActiveBodyCell>

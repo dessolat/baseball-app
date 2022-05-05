@@ -1,5 +1,8 @@
 const newDate = new Date();
-newDate.setHours(newDate.getHours() - newDate.getTimezoneOffset() / 60);
+// console.log(newDate);
+// console.log(newDate.getHours());
+// console.log(newDate.getTimezoneOffset());
+// newDate.setHours(newDate.getHours() - newDate.getTimezoneOffset() / 60);
 
 const defaultState = {
   currentLeague: { id: -1, name: 'All' },

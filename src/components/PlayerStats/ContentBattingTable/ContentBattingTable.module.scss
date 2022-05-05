@@ -14,7 +14,7 @@
     font: 700 0.75rem var(--font-nunito);
     position: relative;
 
-    &:nth-last-child(11) {
+    &:nth-last-child(10) {
       margin-left: 1rem;
       width: 2.5rem;
 
@@ -36,7 +36,7 @@
       }
     }
 
-    &:nth-last-child(5) {
+    &:nth-last-child(4) {
       margin-left: 1rem;
 
       &::after {
@@ -63,12 +63,12 @@
   > div {
     font: 300 0.875rem var(--font-nunito);
 
-    &:nth-last-child(11) {
+    &:nth-last-child(10) {
       margin-left: 1rem;
       width: 2.5rem;
     }
 
-    &:nth-last-child(5) {
+    &:nth-last-child(4) {
       margin-left: 1rem;
     }
   }
