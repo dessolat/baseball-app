@@ -7,6 +7,7 @@ const TABLES_INFO = {
     headers: [
       { name: 'POS', isWider: false, isWidest: true },
       { name: 'AB', isWider: false },
+      { name: 'R', isWider: false },
       { name: 'H', isWider: false },
       { name: '2B', isWider: false },
       { name: '3B', isWider: false },
@@ -14,6 +15,7 @@ const TABLES_INFO = {
       { name: 'RBI', isWider: false },
       { name: 'GDP', isWider: false },
       { name: 'BB', isWider: false },
+      { name: 'IBB', isWider: false },
       { name: 'HP', isWider: false },
       { name: 'SH', isWider: false },
       { name: 'SF', isWider: false },
@@ -22,13 +24,7 @@ const TABLES_INFO = {
       { name: 'AVG', isWider: true },
       { name: 'SLG', isWider: true },
       { name: 'OBP', isWider: true },
-      { name: 'OPS', isWider: true },
-      { name: 'CH', isWider: false },
-      { name: 'PO', isWider: false },
-      { name: 'A', isWider: false },
-      { name: 'E', isWider: false },
-      { name: 'DP', isWider: false },
-      { name: 'FLD', isWider: true }
+      { name: 'OPS', isWider: true }
     ]
   },
   Running: {
@@ -134,16 +130,20 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 
               return (
                 <div key={i} className={cl.tableRow}>
-                  <div>
-                    {(player.is_substituted && BATTING_TITLES.includes(currentMode)) ||
-                    !BATTING_TITLES.includes(currentMode)
-                      ? ' '
-                      : i + 1 - rowDelta}
-                  </div>
+                  {currentMode !== 'Pitching' && currentMode !== 'Catching' && (
+                    <div>
+                      {(player.is_substituted && BATTING_TITLES.includes(currentMode)) ||
+                      !BATTING_TITLES.includes(currentMode)
+                        ? ' '
+                        : i + 1 - rowDelta}
+                    </div>
+                  )}
                   <div
                     style={
                       player.is_substituted && BATTING_TITLES.includes(currentMode)
                         ? { paddingLeft: '2.5rem' }
+                        : !BATTING_TITLES.includes(currentMode)
+                        ? { flex: '0 0 192px', paddingLeft: '10px' }
                         : null
                     }
                     className={cl.playerName}>
@@ -152,6 +152,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                 </div>
               );
             })}
+          <div className={cl.tableRow + ' ' + cl.footerRow}>TOTALS</div>
         </div>
         <div
           className={cl.rightRows}
@@ -198,6 +199,61 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                 </div>
               );
             })}
+          <div
+            className={cl.tableRow + ' ' + cl.footerRow}
+            style={{
+              width: isScrollable ? 'fit-content' : '100%'
+            }}>
+            {TABLES_INFO[currentMode].headers.map((title, i) => (
+              <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
+                {title.name === 'PB'
+                  ? '--'
+                  : title.name === 'POS'
+                  ? ' '
+                  : title.name === 'SB_pr'
+                  ? // ? getFieldSum('running', title).toFixed(3)
+                    tableData.total_stats.running.SB_pr
+                  : title.name === 'FLD'
+                  ? // ? getFieldSum('fielding', title).toFixed(3)
+                    Number(tableData.total_stats.fielding.FLD).toFixed(3)
+                  : ['CH', 'PO', 'A', 'E', 'DP'].includes(title.name)
+                  ? // ? getFieldSum('fielding', title)
+                    tableData.total_stats.fielding[title.name]
+                  : title.isWider
+                  ? // ? getFieldSum(tableName, title).toFixed(3)
+                    Number(tableData.total_stats[currentMode.toLowerCase()][title.name]).toFixed(3)
+                  : // : getFieldSum(
+                  //     ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching' ? 'running' : tableName,
+                  //     title
+                  //   )
+                  // ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching'
+                  ['SB', 'CS', 'LOB'].includes(title.name)
+                  ? tableData.total_stats.running[title.name]
+                  : tableData.total_stats[BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()][title.name]}
+              </div>
+            ))}
+            {/* {TABLES_INFO[currentMode].headers.map((title, i) => (
+              <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
+                {title.name === 'POS'
+                  ? player.content.position.join('/')
+                  : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title.name)
+                  ? player.content.stat.running[title.name]
+                  : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
+                  ? player.content.stat.fielding[title.name]
+                  : title.name === 'PB'
+                  ? '--'
+                  : title.isWider
+                  ? Number(
+                      player.content.stat[
+                        BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                      ][title.name]
+                    ).toFixed(3)
+                  : player.content.stat[
+                      BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                    ][title.name]}
+              </div>
+            ))} */}
+          </div>
         </div>
       </div>
     </div>
