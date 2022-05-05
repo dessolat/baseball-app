@@ -51,8 +51,8 @@ const ContentBox = () => {
   const tableData = boxData[activeButton];
   return (
     <>
-      {isLoading ? (			
-        <Loader styles={{margin: 'calc((100vh - 30.63px - 112.5px) / 2) auto'}}/>
+      {isLoading ? (
+        <Loader />
       ) : Object.keys(boxData).length === 0 ? (
         <></>
       ) : (
@@ -85,7 +85,7 @@ const ContentBox = () => {
             </div>
             <ContentBoxFooter footer={footer} />
           </div>
-          <ContentMobileBox tableData={tableData} footer={footer}/>
+          <ContentMobileBox tableData={tableData} footer={footer} />
         </>
       )}
     </>
