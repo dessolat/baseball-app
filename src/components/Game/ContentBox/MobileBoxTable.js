@@ -38,6 +38,7 @@ const TABLES_INFO = {
   },
   Pitching: {
     headers: [
+      { name: 'IP', isWider: false },
       { name: 'PA', isWider: false },
       { name: 'R', isWider: false },
       { name: 'ER', isWider: false },
@@ -52,6 +53,7 @@ const TABLES_INFO = {
       { name: 'SF', isWider: false },
       { name: 'SO', isWider: false },
       { name: 'WP', isWider: false },
+      { name: 'BK', isWider: false },
       { name: 'ERA', isWider: true },
       { name: 'NP', isWider: false },
       { name: 'NS', isWider: false },
