@@ -76,7 +76,7 @@ const Content = ({ currentTab }) => {
       const token = axios.CancelToken.source();
       tokens[id] = token;
       try {
-        const response = await axios.get(`http://51.250.11.151:3030/logo/${playersInfo[id]}`, {
+        const response = await axios.get(`http://51.250.71.224:3030/logo/${playersInfo[id]}`, {
           responseType: 'arraybuffer',
           timeout: 2500,
           cancelToken: token.token
