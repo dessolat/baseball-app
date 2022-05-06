@@ -33,7 +33,7 @@ const Games = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://51.250.11.151:3030/main/year-${currentYear}`, {
+        const response = await axios.get(`http://51.250.71.224:3030/main/year-${currentYear}`, {
           cancelToken: cancelTokenRef.current.token,
           timeout: 5000
         });
@@ -66,7 +66,7 @@ const Games = () => {
 
     const fetchImage = async (id, url) => {
       try {
-        const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
+        const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
           responseType: 'arraybuffer',
           timeout: 2500
         });

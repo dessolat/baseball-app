@@ -28,7 +28,7 @@ const Header = ({ currentTab, handleTabClick }) => {
   useEffect(() => {
     const fetchImage = async (teamName, url) => {
       try {
-        const response = await axios.get(`http://51.250.11.151:3030/logo/${url}`, {
+        const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
           responseType: 'arraybuffer',
           timeout: 2500
         });

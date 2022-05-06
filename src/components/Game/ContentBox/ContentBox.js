@@ -30,7 +30,7 @@ const ContentBox = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://51.250.11.151:3030/game_${gameId}/box`, {
+        const response = await axios.get(`http://51.250.71.224:3030/game_${gameId}/box`, {
           cancelToken: cancelTokenRef.current.token
         });
         setBoxData(response.data);

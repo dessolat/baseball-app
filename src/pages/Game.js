@@ -24,12 +24,12 @@ const Game = () => {
   const currentGameId = useSelector(state => state.game.currentGameId);
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
-    `http://51.250.11.151:3030/game_${gameId}`
+    `http://51.250.71.224:3030/game_${gameId}`
   );
 
   useEffect(() => {
     axios
-      .get(`http://51.250.11.151:3030/game_${gameId}`, {
+      .get(`http://51.250.71.224:3030/game_${gameId}`, {
         timeout: 7000
       })
       .then(() => {
@@ -70,7 +70,7 @@ const Game = () => {
     dispatch(setCurrentGameId(gameId));
     dispatch(setSituationFilter('All'));
     clearInterval(intervalRef.current);
-    dispatch(getFullData(true, 'http://51.250.11.151:3030/game_' + gameId));
+    dispatch(getFullData(true, 'http://51.250.71.224:3030/game_' + gameId));
     // eslint-disable-next-line
   }, [gameId]);
 
