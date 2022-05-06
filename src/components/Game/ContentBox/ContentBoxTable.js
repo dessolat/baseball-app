@@ -41,6 +41,7 @@ const TABLES_INFO = {
   },
   pitching: {
     headers: [
+      'IP',
       'PA',
       'R',
       'ER',
@@ -55,6 +56,7 @@ const TABLES_INFO = {
       'SF',
       'SO',
       'WP',
+      'BK',
       'ERA',
       'NP',
       'NS',

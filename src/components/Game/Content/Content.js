@@ -51,7 +51,8 @@ const Content = ({ currentTab }) => {
         ...member,
         moments: [moments[0]],
         type: 'Replacement',
-        side
+        side,
+				who_id: 'replace'
       });
       if (moments.length <= 1) return;
 
@@ -65,7 +66,7 @@ const Content = ({ currentTab }) => {
         member.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...member, side })
           : member.moments.length === 1
-          ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side })
+          ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side, who_id: 'replace' })
           : momentsDecompose(member, member.moments, inning, side);
         situationsConcat(member);
       });
@@ -94,6 +95,9 @@ const Content = ({ currentTab }) => {
 
     const newSituations = ['All'];
     const newCards = [];
+
+		console.log(innings);
+
 
     innings.forEach(inning => {
       newCardsConcat(inning['top/guests'], inning, 'top');
