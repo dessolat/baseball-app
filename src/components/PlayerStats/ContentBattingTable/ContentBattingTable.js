@@ -316,6 +316,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     </span>
                   </div>
                   <ActiveBodyCell sortField={sortField} row={row}>AB</ActiveBodyCell>
+                  <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>H</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>1B</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>2B</ActiveBodyCell>
@@ -339,7 +340,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <ActiveBodyCell sortField={sortField} row={row}>E</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>DP</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>FLD</ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell>
+                  {/* <ActiveBodyCell sortField={sortField} row={row}>R</ActiveBodyCell> */}
                   <ActiveBodyCell sortField={sortField} row={row}>SB</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>CS</ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wider}>SB_pr</ActiveBodyCell>
