@@ -22,15 +22,24 @@ const Content = ({ playerYears }) => {
 
   const handleTableOptionClick = option => dispatch(setTableType(option));
 
+  console.log(statsData);
   const filteredLeagues =
     playerYears === 'All years'
-      ? statsData.leagues.filter(league => league.teams.find(team => team.name === currentTeam))
+      ? currentTeam === 'All teams'
+        ? statsData.leagues
+        : statsData.leagues.filter(league => league.teams.find(team => team.name === currentTeam))
+      : currentTeam === 'All teams'
+      ? statsData.leagues.filter(league => league.year === playerYears)
       : statsData.leagues.filter(
           league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
         );
 
   const filteredLeague =
-    currentLeague.id === -1 ? null : currentLeague.teams.find(team => team.name === currentTeam);
+    currentLeague.id === -1
+      ? null
+      : currentTeam === 'All teams'
+      ? currentLeague.teams
+      : currentLeague.teams.find(team => team.name === currentTeam);
   return (
     <section>
       <div className='container'>
