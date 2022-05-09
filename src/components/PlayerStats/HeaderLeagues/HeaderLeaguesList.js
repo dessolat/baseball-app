@@ -29,16 +29,6 @@ const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
 		}
 		
 		dispatch(setPlayerCurrentTeam(league.teams.length > 1 ? 'All teams' : league.teams[0].name))
-		// const teamsArr = Array.from(
-		// 	statsData.leagues
-		// 		.filter(league => league.year === playerYears)
-		// 		.reduce((sum, league) => {
-		// 			league.teams.forEach(team => sum.add(team.name));
-		// 			return sum;
-		// 		}, new Set())
-		// );
-		// dispatch(setPlayerCurrentTeam(league.teams ? ))
-		// league.teams && dispatch(setPlayerCurrentTeam(league.teams[0].name))
   };
 
   const classes = [cl.leagues];
