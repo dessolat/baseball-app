@@ -63,7 +63,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
 
   const handleTeamClick = team => {
     dispatch(setCurrentTeam(team));
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
   // const getTeamNames = () => {

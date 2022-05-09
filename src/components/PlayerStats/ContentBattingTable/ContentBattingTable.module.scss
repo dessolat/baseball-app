@@ -77,6 +77,10 @@
   &:nth-child(2n) {
     background-color:  rgba($color: #eaeaea, $alpha: .4);
   }
+
+	&.tableFooter > div {
+		font-weight: 700;
+	}
 }
 
 .tableHeader,
@@ -105,6 +109,12 @@
     > .teams {
       font-weight: 700;
     }
+  }
+
+  > .teamName {
+    text-align: left;
+    width: 6rem;
+    padding-left: 0.5rem;
   }
 
   .wide {

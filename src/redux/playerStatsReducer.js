@@ -1,6 +1,6 @@
 const defaultState = {
   playerStatsData: {},
-	playerCurrentTeam: '',
+	playerCurrentTeam: 'All teams',
 	tableType: 'Batting'
 };
 

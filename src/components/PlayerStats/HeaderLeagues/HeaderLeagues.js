@@ -46,7 +46,12 @@ const HeaderLeagues = ({ playerYears }) => {
     leaguesRef.current.scrollLeft = 0;
     dispatch(setCurrentLeaguesScroll(0));
     setScrollArrows();
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+
+		//Set currentLeague to first if leagues count === 1, else set to All
+    const filteredLeagues = playerStatsData.leagues.filter(league => league.year === playerYears);
+    filteredLeagues.length !== 1
+      ? dispatch(setCurrentLeague({ id: -1, name: 'All' }))
+      : dispatch(setCurrentLeague(filteredLeagues[0]));
     // eslint-disable-next-line
   }, [playerYears]);
 
@@ -76,11 +81,8 @@ const HeaderLeagues = ({ playerYears }) => {
   const filteredLeagues = useMemo(() => {
     const newLeagues =
       playerYears === 'All years'
-        ? playerStatsData.leagues.filter(league => league.teams.find(team => team.name === playerCurrentTeam))
-        : playerStatsData.leagues.filter(
-            league =>
-              league.year === playerYears && league.teams.find(team => team.name === playerCurrentTeam)
-          );
+        ? playerStatsData.leagues.slice()
+        : playerStatsData.leagues.filter(league => league.year === playerYears);
     newLeagues.unshift({ id: -1, title: 'All' });
 
     return newLeagues;
