@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
@@ -14,21 +14,13 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
+  const currentLeague = useSelector(state => state.shared.currentLeague);
   const tableType = useSelector(state => state.playerStats.tableType);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const teamsArray =
-      // currentLeague.id !== -1
-      //   ?
-      // statsData.leagues
-      //     .find(league => league.id === currentLeague.id)
-      //     .teams.reduce((sum, team) => {
-      //       sum.push(team.name);
-      //       return sum;
-      //     }, [])
-      // :
       playerYears === 'All years'
         ? Array.from(
             statsData.leagues.reduce((sum, league) => {
@@ -45,7 +37,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               }, new Set())
           );
 
-    dispatch(setCurrentTeam(teamsArray[0]));
+    dispatch(setCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
     // eslint-disable-next-line
   }, [playerYears]);
 
@@ -63,29 +55,9 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
 
   const handleTeamClick = team => {
     dispatch(setCurrentTeam(team));
-    // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
-  // const getTeamNames = () => {
-  //   const result = [];
-
-  //   statsData.leagues
-  //     .find(league => league.id === currentLeague.id)
-  //     .teams.forEach(team => result.push(team.name));
-
-  //   return result;
-  // };
-  // currentLeague.id !== -1 && console.log(getTeamNames());
-
   const teamsArray =
-    // currentLeague.id !== -1
-    //   ? statsData.leagues
-    //       .find(league => league.id === currentLeague.id)
-    //       .teams.reduce((sum, team) => {
-    //         sum.push(team.name);
-    //         return sum;
-    //       }, [])
-    //   :
     playerYears === 'All years'
       ? Array.from(
           statsData.leagues.reduce((sum, league) => {
@@ -93,14 +65,22 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
             return sum;
           }, new Set())
         )
-      : Array.from(
+      : currentLeague.id === -1
+      ? Array.from(
           statsData.leagues
             .filter(league => league.year === playerYears)
             .reduce((sum, league) => {
               league.teams.forEach(team => sum.add(team.name));
               return sum;
             }, new Set())
-        );
+        )
+      : currentLeague.teams.length > 1
+      ? currentLeague.teams.reduce((sum, team) => {
+          sum.push(team.name);
+          return sum;
+        }, [])
+      : [currentLeague.teams[0].name];
+  teamsArray.unshift('All teams');
 
   const handleTableOptionClick = option => dispatch(setTableType(option));
   return (
@@ -124,7 +104,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
           />
         </div>
         <div className={cl.teamsSelector}>
-          {teamsArray.length > 1 ? (
+          {teamsArray.length > 2 ? (
             <Dropdown
               title={getShortName(currentTeam || '', isMobile ? 10 : 13)}
               options={teamsArray}

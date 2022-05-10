@@ -14,6 +14,7 @@ const ContentPitchingTableHeader = ({
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
       {currentLeague.id === -1 && <div className={cl.league}>League</div>}
       {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
+			<div className={cl.teamName}>Team</div>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         PA
       </SortField>
