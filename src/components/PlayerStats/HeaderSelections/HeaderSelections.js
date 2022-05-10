@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentYear, setCurrentDate, setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
