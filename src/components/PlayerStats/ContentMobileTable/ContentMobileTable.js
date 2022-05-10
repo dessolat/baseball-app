@@ -21,7 +21,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   useEffect(() => {
 		if (rowScrollRef.current === null) return
 		console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
-		// setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth)
+
     setTimeout(
       () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
       500
