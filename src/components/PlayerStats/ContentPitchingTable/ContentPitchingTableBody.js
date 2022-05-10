@@ -22,8 +22,6 @@ const ContentPitchingTableBody = ({
       ? filteredLeague.pitching.games_pitching.reduce((sum, game, i) => {
           const sumGame = {
             ...game,
-            // ...filteredLeague.fielding.games_fielding[i],
-            // ...filteredLeague.running.games_running[i],
             team_name: filteredLeague.name
           };
           sum.push(sumGame);
@@ -33,8 +31,6 @@ const ContentPitchingTableBody = ({
           const teamGamesArr = team.pitching.games_pitching.reduce((sum, game, i) => {
             const sumGame = {
               ...game,
-              // ...team.fielding.games_fielding[i],
-              // ...team.running.games_running[i],
               team_name: team.name
             };
             sum.push(sumGame);
@@ -51,27 +47,6 @@ const ContentPitchingTableBody = ({
       .sort((a, b) =>
         a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
       );
-
-  // const sortedLeagueGames =
-  //   filteredLeague &&
-  //   filteredLeague.pitching.games_pitching
-  //     .slice()
-  //     .sort((a, b) =>
-  //       a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
-  //     );
-
-  // const sortedLeagues = filteredLeagues
-  //   .slice()
-  //   .sort((a, b) =>
-  //     a.teams.find(team => team.name === currentTeam).pitching[sortField] >
-  //     b.teams.find(team => team.name === currentTeam).pitching[sortField]
-  //       ? sortDirection === 'asc'
-  //         ? 1
-  //         : -1
-  //       : sortDirection === 'asc'
-  //       ? -1
-  //       : 1
-  //   );
 
   let sortedLeagues = [];
   let allTeamGames = [];
@@ -395,7 +370,6 @@ const ContentPitchingTableBody = ({
         </>
       ) : (
         //Selected league
-        // currentTeam === 'All teams' ? currentLeague.total.batting : filteredLeague.batting
         <>
           {sortedLeagueGames.map((row, index) => (
             <li key={index} className={cl.tableRow}>
