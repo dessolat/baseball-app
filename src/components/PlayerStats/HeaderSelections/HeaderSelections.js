@@ -21,15 +21,6 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
 
   useEffect(() => {
     const teamsArray =
-      // currentLeague.id !== -1
-      //   ?
-      // statsData.leagues
-      //     .find(league => league.id === currentLeague.id)
-      //     .teams.reduce((sum, team) => {
-      //       sum.push(team.name);
-      //       return sum;
-      //     }, [])
-      // :
       playerYears === 'All years'
         ? Array.from(
             statsData.leagues.reduce((sum, league) => {
@@ -64,29 +55,9 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
 
   const handleTeamClick = team => {
     dispatch(setCurrentTeam(team));
-    // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
-  // const getTeamNames = () => {
-  //   const result = [];
-
-  //   statsData.leagues
-  //     .find(league => league.id === currentLeague.id)
-  //     .teams.forEach(team => result.push(team.name));
-
-  //   return result;
-  // };
-  // currentLeague.id !== -1 && console.log(getTeamNames());
-
   const teamsArray =
-    // currentLeague.id !== -1
-    //   ? statsData.leagues
-    //       .find(league => league.id === currentLeague.id)
-    //       .teams.reduce((sum, team) => {
-    //         sum.push(team.name);
-    //         return sum;
-    //       }, [])
-    //   :
     playerYears === 'All years'
       ? Array.from(
           statsData.leagues.reduce((sum, league) => {
