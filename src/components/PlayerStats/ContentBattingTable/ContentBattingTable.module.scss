@@ -16,13 +16,11 @@
 
     &:nth-last-child(10) {
       margin-left: 1rem;
-      // width: 2.5rem;
 
       &::after {
         content: 'Fielding';
         position: absolute;
         left: 0;
-        // left: 0.5rem;
         top: -3.2rem;
         font: 400 0.875rem var(--font-nunito);
         color: black;
@@ -66,7 +64,6 @@
 
     &:nth-last-child(10) {
       margin-left: 1rem;
-      // width: 2.5rem;
     }
 
     &:nth-last-child(4) {
