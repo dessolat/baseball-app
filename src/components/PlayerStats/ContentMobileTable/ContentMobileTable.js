@@ -13,14 +13,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const currentLeague = useSelector(state => state.shared.currentLeague);
   const tableMode = useSelector(state => state.playerStats.tableType);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
-  console.log(filteredLeagues);
-  console.log(filteredLeague);
+
   const headerScroll = useRef(null);
   const rowScrollRef = useRef();
 
   useEffect(() => {
 		if (rowScrollRef.current === null) return
-		console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
 
     setTimeout(
       () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
