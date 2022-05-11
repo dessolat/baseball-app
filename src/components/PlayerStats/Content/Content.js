@@ -22,7 +22,6 @@ const Content = ({ playerYears }) => {
 
   const handleTableOptionClick = option => dispatch(setTableType(option));
 
-  console.log(statsData);
   const filteredLeagues =
     playerYears === 'All years'
       ? currentTeam === 'All teams'
