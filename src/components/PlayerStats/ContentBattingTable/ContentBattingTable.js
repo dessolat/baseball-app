@@ -45,7 +45,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
 
-  console.log(Array.isArray(filteredLeague));
   const filteredLeagueGamesSummary =
     filteredLeague &&
     (!Array.isArray(filteredLeague)
@@ -100,7 +99,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
   }
 
   if (currentTeam === 'All teams') {
-    console.log(filteredLeagues);
     allTeamGames = filteredLeagues.reduce((totalGames, league) => {
       league.teams.forEach(team =>
         totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name })
@@ -118,14 +116,11 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
         ? -1
         : 1
     );
-    console.log(allTeamGames);
   }
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
   };
 
-  console.log(sortedLeagues);
-  console.log(currentTeam);
   const allYearsAllLeagueTeamTotals =
     playerYears === 'All years' &&
     currentLeague.id === -1 &&
@@ -138,7 +133,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
       ? playerStatsData.total
       : null;
 	
-  console.log(allYearsAllLeagueTeamTotals);
   return (
     <div className={cl.wrapper}>
       <div>
