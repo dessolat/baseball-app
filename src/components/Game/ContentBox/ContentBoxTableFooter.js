@@ -24,9 +24,11 @@ const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, toFixList })
         <td>TOTALS</td>
         {TABLES_INFO[tableName].headers.map((title, i) => (
           <td key={i}>
-            {title === 'PB'
-              ? '--'
-              : title === 'POS'
+            {
+						// title === 'PB'
+            //   ? '--'
+            //   : 
+							title === 'POS'
               ? ' '
               : title === 'SB_pr'
               ? // ? getFieldSum('running', title).toFixed(3)
@@ -45,8 +47,8 @@ const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, toFixList })
               //     title
               //   )
               // ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching'
-              ['SB', 'CS', 'LOB'].includes(title)
-              ? tableData.total_stats.running[title]
+              ['SB', 'CS', 'LOB', 'PB'].includes(title)
+              ? tableData.total_stats[tableName==='batting' ? 'running' : 'catching'][title]
               : tableData.total_stats[tableName][title]}
           </td>
         ))}
