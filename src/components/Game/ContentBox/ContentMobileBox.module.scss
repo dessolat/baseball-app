@@ -55,8 +55,6 @@
       }
       &:nth-child(2) {
         flex: 0 0 162px;
-        // width: 40px;
-        // text-align: left;
       }
     }
   }
@@ -71,7 +69,6 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     width: calc(100vw - 192px);
-    // width: fit-content;
     overflow-x: hidden;
     scroll-behavior: initial;
     text-align: center;
@@ -91,7 +88,6 @@
 
 .sides {
   width: 100%;
-  // height: calc(var(--vh) * 100 - 30.63px - 112.5px - 27px - 38.5px);
   max-height: calc(100vh - 30.63px - 112.5px - 27px - 38.5px);
 
   overflow-y: scroll;
@@ -167,14 +163,12 @@
     height: 38.5px;
 
     > div {
-      // width: 2rem !important;
       flex: 1 0 2rem;
       width: 2rem;
       text-align: center;
       font: 300 1rem/38.5px var(--font-nunito);
 
       &.wider {
-        // width: 3rem !important;
         flex: 1 0 3rem;
         width: 3rem;
       }

@@ -181,12 +181,11 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                     <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
                       {title.name === 'POS'
                         ? player.content.position.join('/')
-                        : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title.name)
-                        ? player.content.stat.running[title.name]
+                        : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
+                        ? player.content.stat[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                         : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
                         ? player.content.stat.fielding[title.name]
-                        : title.name === 'PB'
-                        ? '--'
+                        
                         : title.isWider
                         ? Number(
                             player.content.stat[
@@ -208,53 +207,29 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
             }}>
             {TABLES_INFO[currentMode].headers.map((title, i) => (
               <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                {title.name === 'PB'
-                  ? '--'
-                  : title.name === 'POS'
+                {
+								
+									title.name === 'POS'
                   ? ' '
                   : title.name === 'SB_pr'
-                  ? // ? getFieldSum('running', title).toFixed(3)
+                  ? 
                     tableData.total_stats.running.SB_pr
                   : title.name === 'FLD'
-                  ? // ? getFieldSum('fielding', title).toFixed(3)
+                  ? 
                     Number(tableData.total_stats.fielding.FLD).toFixed(3)
                   : ['CH', 'PO', 'A', 'E', 'DP'].includes(title.name)
-                  ? // ? getFieldSum('fielding', title)
+                  ? 
                     tableData.total_stats.fielding[title.name]
                   : title.isWider
-                  ? // ? getFieldSum(tableName, title).toFixed(3)
+                  ? 
                     Number(tableData.total_stats[currentMode.toLowerCase()][title.name]).toFixed(3)
-                  : // : getFieldSum(
-                  //     ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching' ? 'running' : tableName,
-                  //     title
-                  //   )
-                  // ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching'
-                  ['SB', 'CS', 'LOB'].includes(title.name)
-                  ? tableData.total_stats.running[title.name]
+                  : 
+                  ['SB', 'CS', 'LOB', 'PB'].includes(title.name)
+                  ? tableData.total_stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                   : tableData.total_stats[BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()][title.name]}
               </div>
             ))}
-            {/* {TABLES_INFO[currentMode].headers.map((title, i) => (
-              <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                {title.name === 'POS'
-                  ? player.content.position.join('/')
-                  : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title.name)
-                  ? player.content.stat.running[title.name]
-                  : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
-                  ? player.content.stat.fielding[title.name]
-                  : title.name === 'PB'
-                  ? '--'
-                  : title.isWider
-                  ? Number(
-                      player.content.stat[
-                        BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                      ][title.name]
-                    ).toFixed(3)
-                  : player.content.stat[
-                      BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                    ][title.name]}
-              </div>
-            ))} */}
+            
           </div>
         </div>
       </div>

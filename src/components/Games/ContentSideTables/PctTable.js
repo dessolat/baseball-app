@@ -11,8 +11,7 @@ const PctTable = ({ currentLeague }) => {
   const sortedTeams = useMemo(
     () =>
       currentLeague.teams
-        .sort((a, b) => (a.wins > b.wins ? -1 : 1))
-        .sort((a, b) => (a.wins === b.wins && a.loses < b.loses ? -1 : 1)),
+        .sort((a, b) => (a.pct > b.pct ? -1 : 1)),
     [currentLeague.teams]
   );
 
@@ -38,7 +37,7 @@ const PctTable = ({ currentLeague }) => {
               </td>
               <td>{team.wins}</td>
               <td>{team.loses}</td>
-              <td>0000</td>
+              <td>{team.pct !== -1 ? team.pct : '—'}</td>
             </tr>
           ))}
         </tbody>
