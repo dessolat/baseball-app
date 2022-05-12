@@ -7,7 +7,7 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
     tableData.pitchers_order.forEach((orderId, i) => {
       tableData.players_stats.find(player => player.id === orderId).order = i + 1;
     });
-		
+
   return (
     <tbody>
       {tableData.players_stats
@@ -35,8 +35,6 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
                     ? player.content.stat[tableName === 'batting' ? 'running' : 'catching'][title]
                     : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
                     ? player.content.stat.fielding[title]
-                    // : title === 'PB'
-                    // ? '--'
                     : toFixList.includes(title)
                     ? Number(player.content.stat[tableName][title]).toFixed(3)
                     : player.content.stat[tableName][title]}
