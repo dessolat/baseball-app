@@ -38,7 +38,7 @@ const PctTable = ({ currentLeague }) => {
               </td>
               <td>{team.wins}</td>
               <td>{team.loses}</td>
-              <td>0000</td>
+              <td>{team.pct !== -1 ? team.pct : '—'}</td>
             </tr>
           ))}
         </tbody>
