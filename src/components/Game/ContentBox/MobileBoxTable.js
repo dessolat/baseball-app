@@ -181,12 +181,12 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                     <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
                       {title.name === 'POS'
                         ? player.content.position.join('/')
-                        : ['SB', 'CS', 'SB_pr', 'LOB'].includes(title.name)
-                        ? player.content.stat.running[title.name]
+                        : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
+                        ? player.content.stat[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                         : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
                         ? player.content.stat.fielding[title.name]
-                        : title.name === 'PB'
-                        ? '--'
+                        // : title.name === 'PB'
+                        // ? '--'
                         : title.isWider
                         ? Number(
                             player.content.stat[
@@ -208,9 +208,11 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
             }}>
             {TABLES_INFO[currentMode].headers.map((title, i) => (
               <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                {title.name === 'PB'
-                  ? '--'
-                  : title.name === 'POS'
+                {
+								// title.name === 'PB'
+                //   ? '--'
+                //   : 
+									title.name === 'POS'
                   ? ' '
                   : title.name === 'SB_pr'
                   ? // ? getFieldSum('running', title).toFixed(3)
@@ -229,8 +231,8 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                   //     title
                   //   )
                   // ['SB', 'CS', 'LOB'].includes(title) && tableName !== 'catching'
-                  ['SB', 'CS', 'LOB'].includes(title.name)
-                  ? tableData.total_stats.running[title.name]
+                  ['SB', 'CS', 'LOB', 'PB'].includes(title.name)
+                  ? tableData.total_stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                   : tableData.total_stats[BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()][title.name]}
               </div>
             ))}
