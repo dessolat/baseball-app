@@ -17,7 +17,7 @@
   border-radius: 4px;
   width: 350px;
 	max-width: calc(100vw - 20px);
-	max-height: 50vh;
+	max-height: 47vh;
   background: white;
   font: inherit;
   line-height: 1.125em;
@@ -57,7 +57,7 @@
     background: none;
 
 		@media screen and (max-width: 800px) {
-			padding: 0.4em 0.35em;
+			padding: 0.3em 0.3em;
 		}
   }
 
