@@ -16,6 +16,7 @@
 .react-calendar {
   border-radius: 4px;
   width: 350px;
+	max-width: calc(100vw - 20px);
   background: white;
   font: inherit;
   line-height: 1.125em;
