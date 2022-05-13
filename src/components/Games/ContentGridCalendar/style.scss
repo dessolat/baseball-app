@@ -57,14 +57,18 @@
     background: none;
 
 		@media screen and (max-width: 800px) {
-			padding: 0.3em 0.3em;
+			padding: 0.15em 0.3em;
 		}
   }
-
+	
   .react-calendar__navigation {
-    display: flex;
+		display: flex;
     height: 44px;
     margin-bottom: 10px;
+
+		@media screen and (max-width: 800px) {
+			height: 28px;
+		}
   }
 
   .react-calendar__navigation button {
