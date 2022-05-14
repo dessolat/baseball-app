@@ -30,7 +30,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   let filteredStatsData = useMemo(
     () =>
       currentLeague.id !== -1
-        ? statsData.find(item => item.title === currentLeague.name)?.players[tableMode.toLowerCase()] || []
+        ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.players[tableMode.toLowerCase()] || []
         : statsData
             .filter(league => league.type === currentGameType)
             .reduce((sum, league) => {
