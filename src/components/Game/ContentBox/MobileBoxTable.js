@@ -187,11 +187,13 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                         ? player.content.stat.fielding[title.name]
                         
                         : title.isWider
-                        ? Number(
+                        ? (player.content.stat[
+													BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+												][title.name] === 'INF' ? 'INF' : Number(
                             player.content.stat[
                               BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                             ][title.name]
-                          ).toFixed(3)
+                          ).toFixed(3))
                         : player.content.stat[
                             BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                           ][title.name]}
