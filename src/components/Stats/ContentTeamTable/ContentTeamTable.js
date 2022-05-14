@@ -25,7 +25,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     currentLeague.id !== -1
       ? statsData
           
-          .find(item => item.title === currentLeague.name)?.teams[tableMode.toLowerCase()] || []
+          .find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[tableMode.toLowerCase()] || []
       : statsData.filter(league => league.type === currentGameType).reduce((sum, league) => {
           league.teams[tableMode.toLowerCase()].forEach(team => {
             const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
