@@ -21,6 +21,10 @@
   &:nth-child(2n) {
     background-color:  rgba($color: #eaeaea, $alpha: .4);
   }
+
+	.teamName {
+		font-weight: 700;
+	}
 }
 
 .tableHeader,
