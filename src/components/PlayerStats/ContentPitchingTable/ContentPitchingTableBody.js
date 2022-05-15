@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import cl from './ContentPitchingTable.module.scss';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import { getShortName } from 'utils';
+import { Link } from 'react-router-dom';
 
 const ContentPitchingTableBody = ({
   filteredLeagues = [],
@@ -375,9 +376,9 @@ const ContentPitchingTableBody = ({
             <li key={index} className={cl.tableRow}>
               <div className={cl.game}>
                 {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
-                <span className={cl.teams}>
+                <Link className={cl.teams} to={`/game/${row.game_id}?tab=box`}>
                    {getShortName(row.home_team.name, 20)} - {getShortName(row.visit_team.name, 20)}
-                </span>
+                </Link>
               </div>
               <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
               <ActiveBodyCell sortField={sortField} row={row}>
