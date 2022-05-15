@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import SortField from 'components/UI/sortField/SortField';
 import { getShortName } from 'utils';
+import { Link } from 'react-router-dom';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS }) => {
   const [sortField, setSortField] = useState('AB');
@@ -18,7 +19,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const rowScrollRef = useRef();
 
   useEffect(() => {
-		if (rowScrollRef.current === null) return
+    if (rowScrollRef.current === null) return;
 
     setTimeout(
       () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
@@ -623,9 +624,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                     <div className={cl.date}>
                       {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
                     </div>
-                    <div className={cl.teamNames}>
+                    <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
                       {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
-                    </div>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -643,8 +644,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                     className={cl.tableRow}
                     style={{
                       width: !isScrollable ? '100%' : 'fit-content'
-                    }}
-										>
+                    }}>
                     {getTableRows(team[tableMode.toLowerCase()], cl, sortField)}
                   </div>
                 );
