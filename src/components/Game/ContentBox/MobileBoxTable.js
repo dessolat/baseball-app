@@ -9,6 +9,7 @@ const TABLES_INFO = {
       { name: 'AB', isWider: false },
       { name: 'R', isWider: false },
       { name: 'H', isWider: false },
+      { name: '1B', isWider: false },
       { name: '2B', isWider: false },
       { name: '3B', isWider: false },
       { name: 'HR', isWider: false },
