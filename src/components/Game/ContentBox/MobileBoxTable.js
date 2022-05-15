@@ -101,9 +101,11 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 
   let rowDelta = 0;
 
+  const orderedPlayersStats = tableData.players_stats.slice();
+
   currentMode === 'Pitching' &&
     tableData.pitchers_order.forEach((orderId, i) => {
-      tableData.players_stats.find(player => player.id === orderId).order = i + 1;
+      orderedPlayersStats.find(player => player.id === orderId).order = i + 1;
     });
   return (
     <div className={cl.mobileWrapper}>
@@ -118,7 +120,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
       </div>
       <div className={cl.sides}>
         <div className={cl.leftRows}>
-          {tableData.players_stats
+          {orderedPlayersStats
             .filter(player =>
               currentMode === 'Pitching'
                 ? player.is_pitcher
@@ -160,7 +162,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
           className={cl.rightRows}
           onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
           ref={rowsRef}>
-          {tableData.players_stats
+          {orderedPlayersStats
             .filter(player =>
               currentMode === 'Pitching'
                 ? player.is_pitcher
@@ -185,15 +187,16 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                         ? player.content.stat[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                         : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
                         ? player.content.stat.fielding[title.name]
-                        
                         : title.isWider
-                        ? (player.content.stat[
-													BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-												][title.name] === 'INF' ? 'INF' : Number(
-                            player.content.stat[
-                              BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                            ][title.name]
-                          ).toFixed(3))
+                        ? player.content.stat[
+                            BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                          ][title.name] === 'INF'
+                          ? 'INF'
+                          : Number(
+                              player.content.stat[
+                                BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                              ][title.name]
+                            ).toFixed(3)
                         : player.content.stat[
                             BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                           ][title.name]}
@@ -209,29 +212,23 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
             }}>
             {TABLES_INFO[currentMode].headers.map((title, i) => (
               <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                {
-								
-									title.name === 'POS'
+                {title.name === 'POS'
                   ? ' '
                   : title.name === 'SB_pr'
-                  ? 
-                    tableData.total_stats.running.SB_pr
+                  ? tableData.total_stats.running.SB_pr
                   : title.name === 'FLD'
-                  ? 
-                    Number(tableData.total_stats.fielding.FLD).toFixed(3)
+                  ? Number(tableData.total_stats.fielding.FLD).toFixed(3)
                   : ['CH', 'PO', 'A', 'E', 'DP'].includes(title.name)
-                  ? 
-                    tableData.total_stats.fielding[title.name]
+                  ? tableData.total_stats.fielding[title.name]
                   : title.isWider
-                  ? 
-                    Number(tableData.total_stats[currentMode.toLowerCase()][title.name]).toFixed(3)
-                  : 
-                  ['SB', 'CS', 'LOB', 'PB'].includes(title.name)
+                  ? Number(tableData.total_stats[currentMode.toLowerCase()][title.name]).toFixed(3)
+                  : ['SB', 'CS', 'LOB', 'PB'].includes(title.name)
                   ? tableData.total_stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
-                  : tableData.total_stats[BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()][title.name]}
+                  : tableData.total_stats[
+                      BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                    ][title.name]}
               </div>
             ))}
-            
           </div>
         </div>
       </div>
