@@ -23,22 +23,24 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
   const filteredStatsData =
     currentLeague.id !== -1
-      ? statsData
-          
-          .find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[tableMode.toLowerCase()] || []
-      : statsData.filter(league => league.type === currentGameType).reduce((sum, league) => {
-          league.teams[tableMode.toLowerCase()].forEach(team => {
-            const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
+      ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[
+          tableMode.toLowerCase()
+        ] || []
+      : statsData
+          .filter(league => league.type === currentGameType)
+          .reduce((sum, league) => {
+            league.teams[tableMode.toLowerCase()].forEach(team => {
+              const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
 
-            if (teamIndex !== -1) {
-              sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name']);
-            } else {
-              sum.push(team);
-            }
-          });
+              if (teamIndex !== -1) {
+                sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name']);
+              } else {
+                sum.push(team);
+              }
+            });
 
-          return sum;
-        }, []) || [];
+            return sum;
+          }, []) || [];
 
   return (
     <>
@@ -93,7 +95,12 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
                 return (
                   <li key={index} className={cl.tableRow}>
                     <div>
-                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}> {row.name}</Link>
+                      <Link
+                        className={cl.teamName}
+                        to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}>
+                        {' '}
+                        {row.name}
+                      </Link>
                     </div>
                     {getTableRows(row, cl, sortField)}
                   </li>
