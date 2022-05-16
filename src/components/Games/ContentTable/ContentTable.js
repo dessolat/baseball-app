@@ -73,7 +73,7 @@ const ContentTable = ({ games }) => {
       : currentGuests !== 'All'
       ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
       : filteredGames;
-			
+
   }, [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]);
 
   //Games sorting
@@ -139,7 +139,7 @@ const ContentTable = ({ games }) => {
             </div>
             <div className={cl.homeTitle}>
               <Dropdown
-                title={currentHome}
+                title={getShortName(currentHome, 29)}
                 options={homeOptions}
                 currentOption={currentHome}
                 handleClick={handleHomeDropdownClick}
@@ -149,7 +149,7 @@ const ContentTable = ({ games }) => {
             <div> </div>
             <div className={cl.guestsTitle}>
               <Dropdown
-                title={currentGuests}
+                title={getShortName(currentGuests, 29)}
                 options={guestsOptions}
                 currentOption={currentGuests}
                 handleClick={handleGuestsDropdownClick}
