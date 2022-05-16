@@ -24,7 +24,7 @@ const MONTHS = {
 
 const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.shared.currentGameType);
@@ -50,19 +50,31 @@ const ContentTable = ({ games }) => {
   });
 
   //Games filtering
-  let filteredData = useMemo(
-    () =>
-      games.filter(
+  let filteredData = useMemo(() => {
+    const filteredGames = games.filter(
+      game =>
+        (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
+        (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type)
+      // 	&&
+      // (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+      // (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+    );
+
+    if (currentHome !== 'All' && currentGuests !== 'All') {
+      return filteredGames.filter(
         game =>
-          (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-          (currentLeague.id !== -1
-            ? game.league_id === currentLeague.id
-            : currentGameType === game.game_type) &&
-          (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-          (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
-      ),
-    [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]
-  );
+          (game.owners_name === currentHome || game.owners_name === currentGuests) &&
+          (game.guests_name === currentHome || game.guests_name === currentGuests)
+      );
+    }
+
+    return currentHome !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
+      : currentGuests !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
+      : filteredGames;
+			
+  }, [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]);
 
   //Games sorting
   filteredData = useMemo(
@@ -125,9 +137,9 @@ const ContentTable = ({ games }) => {
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
               />
             </div>
-            <div>
+            <div className={cl.homeTitle}>
               <Dropdown
-                title={'Home'}
+                title={currentHome}
                 options={homeOptions}
                 currentOption={currentHome}
                 handleClick={handleHomeDropdownClick}
@@ -135,9 +147,9 @@ const ContentTable = ({ games }) => {
               />
             </div>
             <div> </div>
-            <div>
+            <div className={cl.guestsTitle}>
               <Dropdown
-                title={'Guests'}
+                title={currentGuests}
                 options={guestsOptions}
                 currentOption={currentGuests}
                 handleClick={handleGuestsDropdownClick}
