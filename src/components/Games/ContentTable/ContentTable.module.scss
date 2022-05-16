@@ -13,9 +13,9 @@
 
   @media screen and (max-width: 800px) {
     padding: 7px 10px;
-    background: #F4F5F7;
+    background: #f4f5f7;
     border-top: 0.5px solid #cdcccc;
-		height: auto;
+    height: auto;
   }
 
   img {
@@ -103,6 +103,24 @@
         width: 3rem;
       }
     }
+
+    > .homeTitle,
+    > .guestsTitle {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        left: 0;
+        top: -1.2rem;
+      }
+    }
+
+    > .homeTitle::before {
+      content: 'Home';
+    }
+    > .guestsTitle::before {
+      content: 'Guests';
+    }
   }
 
   .rows {
@@ -147,7 +165,7 @@
         @media screen and (max-width: 800px) {
           flex: 1 14%;
           text-align: left;
-					width: auto;
+          width: auto;
         }
       }
       &:nth-child(2) {
@@ -156,8 +174,8 @@
 
         @media screen and (max-width: 800px) {
           flex: 1 86%;
-					width: auto;
-					text-align: left;
+          width: auto;
+          text-align: left;
         }
       }
       &:nth-child(3) {
@@ -176,7 +194,7 @@
 
         @media screen and (max-width: 800px) {
           flex: 1 15%;
-					font-size: 14px;
+          font-size: 14px;
         }
       }
       &:nth-child(5) {
@@ -186,7 +204,7 @@
         @media screen and (max-width: 800px) {
           width: auto;
           flex: 1 42.5%;
-					padding-right: 0;
+          padding-right: 0;
         }
       }
       &:nth-child(6) {
@@ -219,7 +237,7 @@
     }
 
     &:nth-child(2n) {
-      background-color:  rgba($color: #eaeaea, $alpha: .4);
+      background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
 
     &.withDate {
@@ -269,11 +287,11 @@
   @media screen and (max-width: 800px) {
     display: block;
 
-		> button {
-			font: 300 14px var(--font-nunito);
-			text-decoration: underline;
-			color: var(--side-color);
-		}
+    > button {
+      font: 300 14px var(--font-nunito);
+      text-decoration: underline;
+      color: var(--side-color);
+    }
 
     > button + button {
       margin-left: 15px;
@@ -282,5 +300,5 @@
 }
 
 .modeTitle {
-	border-bottom: 2px solid var(--side-color);
+  border-bottom: 2px solid var(--side-color);
 }
