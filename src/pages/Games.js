@@ -25,7 +25,7 @@ const Games = () => {
   const dispatch = useDispatch();
 
 	// eslint-disable-next-line
-  useEffect(() => () => dispatch(setGamesAndLeagues({ games: null, leagues: null })), []);
+  // useEffect(() => () => dispatch(setGamesAndLeagues({ games: null, leagues: null })), []);
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -92,7 +92,6 @@ const Games = () => {
   useEffect(() => {
     // if (firstMountRef.current === true) return;
     if (firstMountRef.current === true) {
-      firstMountRef.current = false;
       return;
     }
 
@@ -101,6 +100,11 @@ const Games = () => {
   }, [currentGameType, currentYear, currentLeague]);
 
   useEffect(() => {
+		if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
 		dispatch(setMobileTableMode('Calendar'))
     // eslint-disable-next-line
