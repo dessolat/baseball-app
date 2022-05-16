@@ -4,7 +4,7 @@ import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import { addLeagueImage, resetTableFilters, setGamesAndLeagues, setMobileTableMode } from 'redux/gamesReducer';
-import { setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
 
@@ -18,7 +18,7 @@ const Games = () => {
 
   const games = useSelector(state => state.games.games);
   const leagues = useSelector(state => state.games.leagues);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentYear = useSelector(state => state.shared.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
