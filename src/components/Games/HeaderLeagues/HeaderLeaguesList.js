@@ -1,12 +1,11 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/sharedReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
-import { setMobileTableMode } from 'redux/gamesReducer';
+import { setMobileTableMode, setCurrentLeague } from 'redux/gamesReducer';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => {
