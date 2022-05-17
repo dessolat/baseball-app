@@ -1,13 +1,13 @@
-import React, { useState, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getObjectsSum, getShortName } from 'utils';
+import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import TeamLogo from 'images/team_logo.png';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
-  const [currentTeam, setCurrentTeam] = useState('All');
+  const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('desc');
 
@@ -21,7 +21,10 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.shared.currentLeague);
 
-  const handleTeamClick = team => setCurrentTeam(team);
+  const handleTeamClick = team => {
+    setCurrentTeam(team);
+		setSearchParam('team', team)
+  };
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -30,7 +33,9 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   let filteredStatsData = useMemo(
     () =>
       currentLeague.id !== -1
-        ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.players[tableMode.toLowerCase()] || []
+        ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.players[
+            tableMode.toLowerCase()
+          ] || []
         : statsData
             .filter(league => league.type === currentGameType)
             .reduce((sum, league) => {
@@ -108,12 +113,12 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           <div className={cl.sides}>
             <div className={cl.leftRows}>
               {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
-								const posValue = row.teams
-								.reduce((sum, team) => {
-									sum.push(team.pos);
-									return sum;
-								}, [])
-								.join(' / ');
+                const posValue = row.teams
+                  .reduce((sum, team) => {
+                    sum.push(team.pos);
+                    return sum;
+                  }, [])
+                  .join(' / ');
                 return (
                   <div key={index} className={cl.tableRow}>
                     <div>
@@ -197,7 +202,10 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                       )}
                       {row.teams[2] && (
                         <>
-                           / <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>{row.teams[2].name}</Link>
+                           /{' '}
+                          <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>
+                            {row.teams[2].name}
+                          </Link>
                         </>
                       )}
                     </div>
