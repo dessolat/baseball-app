@@ -96,11 +96,14 @@ const ContentTable = ({ games }) => {
       )
     )
   );
-  const homeOptions = Array.from(
+
+
+  const teamOptions = Array.from(
     new Set(
       filteredHeadings.reduce(
         (sum, cur) => {
           sum.push(cur.owners_name);
+					sum.push(cur.guests_name);
           return sum;
         },
         ['All']
@@ -152,7 +155,7 @@ const ContentTable = ({ games }) => {
             <div className={cl.homeTitle}>
               <Dropdown
                 title={getShortName(currentHome, 29)}
-                options={homeOptions}
+                options={teamOptions}
                 currentOption={currentHome}
                 handleClick={handleHomeDropdownClick}
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
@@ -162,7 +165,7 @@ const ContentTable = ({ games }) => {
             <div className={cl.guestsTitle}>
               <Dropdown
                 title={getShortName(currentGuests, 29)}
-                options={guestsOptions}
+                options={teamOptions}
                 currentOption={currentGuests}
                 handleClick={handleGuestsDropdownClick}
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
