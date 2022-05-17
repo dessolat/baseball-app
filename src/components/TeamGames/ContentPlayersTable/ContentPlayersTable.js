@@ -1,9 +1,11 @@
 import React from 'react';
 import cl from './ContentPlayersTable.module.scss';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const ContentPlayersTable = () => {
+	const { teamName } = useParams();
+
   const teamData = useSelector(state => state.teamGames.teamData);
   const currentYear = useSelector(state => state.shared.currentYear);
   const currentLeague = useSelector(state => state.shared.currentLeague);
@@ -56,7 +58,7 @@ const ContentPlayersTable = () => {
         </ul>
       </div>
       <div className={cl.linkWrapper}>
-        <Link to='/stats/player'>Go to Player Stat</Link>
+        <Link to={`/stats/player?team=${teamName}`}>Go to Player Stat</Link>
       </div>
     </div>
   );
