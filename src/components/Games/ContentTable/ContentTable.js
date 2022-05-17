@@ -73,7 +73,6 @@ const ContentTable = ({ games }) => {
       : currentGuests !== 'All'
       ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
       : filteredGames;
-
   }, [games, currentStadium, currentLeague, currentGameType, currentHome, currentGuests]);
 
   //Games sorting
@@ -97,23 +96,27 @@ const ContentTable = ({ games }) => {
     )
   );
 
-	//teamOptions calculation
-  const teamOptions = Array.from(
-    new Set(
-      filteredHeadings.reduce(
-        (sum, cur) => {
-          sum.push(cur.owners_name);
-					sum.push(cur.guests_name);
-          return sum;
-        },
-        ['All']
-      )
-    )
+  //teamOptions calculation
+  const teamOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          filteredHeadings.reduce(
+            (sum, cur) => {
+              sum.push(cur.owners_name);
+              sum.push(cur.guests_name);
+              return sum;
+            },
+            ['All']
+          )
+        )
+      ),
+    [filteredHeadings]
   );
 
-	//teamOptions sorting
-	teamOptions.sort((a,b) => a > b ? 1 : -1)
-	
+  //teamOptions sorting
+  useMemo(() => teamOptions.sort((a, b) => (a > b ? 1 : -1)), [teamOptions]);
+
   // const homeOptions = Array.from(
   //   new Set(
   //     filteredHeadings.reduce(
