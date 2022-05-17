@@ -84,7 +84,8 @@ const ContentTable = ({ games }) => {
     [filteredData]
   );
 
-  const stadiumOptions = Array.from(
+	//stadiumOptions calculation
+  const stadiumOptions = useMemo(() => Array.from(
     new Set(
       filteredHeadings.reduce(
         (sum, cur) => {
@@ -94,7 +95,7 @@ const ContentTable = ({ games }) => {
         ['All']
       )
     )
-  );
+  ), [filteredHeadings])
 
   //teamOptions calculation
   const teamOptions = useMemo(
