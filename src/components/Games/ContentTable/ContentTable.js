@@ -97,7 +97,7 @@ const ContentTable = ({ games }) => {
     )
   );
 
-
+	//teamOptions calculation
   const teamOptions = Array.from(
     new Set(
       filteredHeadings.reduce(
@@ -111,6 +111,9 @@ const ContentTable = ({ games }) => {
     )
   );
 
+	//teamOptions sorting
+	teamOptions.sort((a,b) => a > b ? 1 : -1)
+	
   // const homeOptions = Array.from(
   //   new Set(
   //     filteredHeadings.reduce(
