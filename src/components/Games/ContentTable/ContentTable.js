@@ -108,17 +108,29 @@ const ContentTable = ({ games }) => {
     )
   );
 
-  const guestsOptions = Array.from(
-    new Set(
-      filteredHeadings.reduce(
-        (sum, cur) => {
-          sum.push(cur.guests_name);
-          return sum;
-        },
-        ['All']
-      )
-    )
-  );
+  // const homeOptions = Array.from(
+  //   new Set(
+  //     filteredHeadings.reduce(
+  //       (sum, cur) => {
+  //         sum.push(cur.owners_name);
+  //         return sum;
+  //       },
+  //       ['All']
+  //     )
+  //   )
+  // );
+
+  // const guestsOptions = Array.from(
+  //   new Set(
+  //     filteredHeadings.reduce(
+  //       (sum, cur) => {
+  //         sum.push(cur.guests_name);
+  //         return sum;
+  //       },
+  //       ['All']
+  //     )
+  //   )
+  // );
 
   return (
     <div className={cl.wrapper}>
