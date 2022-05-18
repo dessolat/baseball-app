@@ -90,6 +90,13 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
+          IBB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
           HP
         </SortField>
         <SortField
@@ -414,6 +421,9 @@ const Content = () => {
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           BB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          IBB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           HP
