@@ -156,7 +156,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           <div>
             <div className={cl.tableHeader}>
               <div></div>
-              <div>POS</div>
+              <div className={cl.pos}>POS</div>
               <div>
                 <Dropdown
                   title={'Team'}
@@ -187,7 +187,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                         </span>
                       </Link>
                     </div>
-                    <div>{posValue}</div>
+                    <div className={cl.pos}>{posValue}</div>
                     <div className={cl.teamNames}>
                       <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
                         {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
