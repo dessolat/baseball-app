@@ -38,8 +38,11 @@
     text-align: center;
     width: 2.5rem;
 
-    @media screen and (max-width: 1050px) {
-      width: 2.2rem;
+    @media screen and (max-width: 1282px) {
+      width: 2.3rem;
+    }
+    @media screen and (max-width: 1075px) {
+      width: 2rem;
     }
 
     &:first-child {
