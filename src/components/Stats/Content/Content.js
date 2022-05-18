@@ -311,7 +311,37 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          A
+          G
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          SB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          CS
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}
+          addedClass={cl.wider}
+          renamedField='SB_pr'>
+          %SB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          LOB
         </SortField>
         <SortField
           sortField={sortField}
@@ -325,7 +355,14 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          DP
+          PO
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          A
         </SortField>
         <SortField
           sortField={sortField}
@@ -333,6 +370,13 @@ const Content = () => {
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
           E
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          DP
         </SortField>
         <SortField
           sortField={sortField}
@@ -347,44 +391,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          PO
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          LOB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
           R
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}
-          renamedField='SB_pr'>
-          %SB
         </SortField>
       </>
     );
@@ -519,37 +526,41 @@ const Content = () => {
     ) : (
       <>
         <ActiveBodyCell sortField={sortField} row={row}>
-          A
+          G
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          CH
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          DP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          E
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          FLD
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          PO
+          SB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           CS
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+          SB_pr
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           LOB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          R
+          CH
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          SB
+          PO
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          A
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          E
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          DP
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          SB_pr
+          FLD
+        </ActiveBodyCell>
+
+        <ActiveBodyCell sortField={sortField} row={row}>
+          R
         </ActiveBodyCell>
       </>
     );
