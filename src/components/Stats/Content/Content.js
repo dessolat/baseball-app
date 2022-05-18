@@ -20,6 +20,13 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
+          G
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
           AB
         </SortField>
         <SortField
@@ -27,14 +34,14 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          H
+          R
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          1B
+          H
         </SortField>
         <SortField
           sortField={sortField}
@@ -379,13 +386,16 @@ const Content = () => {
     tableMode === 'Batting' ? (
       <>
         <ActiveBodyCell sortField={sortField} row={row}>
+          G
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
           AB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          H
+          R
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          1B
+          H
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           2B
