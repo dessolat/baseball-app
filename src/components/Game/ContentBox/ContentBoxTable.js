@@ -11,7 +11,6 @@ const TABLES_INFO = {
       'AB',
       'R',
       'H',
-      '1B',
       '2B',
       '3B',
       'HR',
