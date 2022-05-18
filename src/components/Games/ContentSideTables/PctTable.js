@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PctTable = ({ currentLeague }) => {
-	const isMobile = useSelector(state => state.shared.isMobile)
-	const currentGameType = useSelector(state => state.shared.currentGameType)
+  const isMobile = useSelector(state => state.shared.isMobile);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
 
   const sortedTeams = useMemo(
     () =>
-      currentLeague.teams
-        .sort((a, b) => (a.pct > b.pct ? -1 : 1)),
+      currentLeague.teams.sort((a, b) =>
+        a.wins > b.wins || (a.wins === b.wins && a.loses < b.loses) ? -1 : 1
+      ),
     [currentLeague.teams]
   );
 
@@ -33,7 +34,10 @@ const PctTable = ({ currentLeague }) => {
           {sortedTeams.map(team => (
             <tr key={team.id}>
               <td className={cl.underlineHover}>
-                <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}> {getShortName(team.name, isMobile ? 30 : 23)}</Link>
+                <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
+                  {' '}
+                  {getShortName(team.name, isMobile ? 30 : 23)}
+                </Link>
               </td>
               <td>{team.wins}</td>
               <td>{team.loses}</td>
