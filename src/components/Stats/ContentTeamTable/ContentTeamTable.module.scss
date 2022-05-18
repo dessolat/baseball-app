@@ -36,13 +36,10 @@
 
   > div {
     text-align: center;
-    width: 2.5rem;
+    width: 1.9rem;
 
-    @media screen and (max-width: 1282px) {
-      width: 2.3rem;
-    }
-    @media screen and (max-width: 1075px) {
-      width: 2rem;
+    @media screen and (max-width: 1078px) {
+      width: 1.7rem;
     }
 
     &:first-child {
