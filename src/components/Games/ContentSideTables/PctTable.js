@@ -8,12 +8,15 @@ const PctTable = ({ currentLeague }) => {
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentGameType = useSelector(state => state.shared.currentGameType);
 
+	const leagueTeams = leagues.slice().find(league => league.id === currentLeague.id)?.teams
   const sortedTeams = useMemo(
     () =>
-      currentLeague.teams.sort((a, b) =>
-        a.wins > b.wins || (a.wins === b.wins && a.loses < b.loses) ? -1 : 1
-      ),
-    [currentLeague.teams]
+		leagueTeams
+        ? leagueTeams.sort((a, b) =>
+            a.wins > b.wins || (a.wins === b.wins && a.loses < b.loses) ? -1 : 1
+          )
+        : [],
+    [leagueTeams]
   );
 
   return (
