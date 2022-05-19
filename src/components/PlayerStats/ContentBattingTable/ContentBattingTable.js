@@ -123,17 +123,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
   };
 
-  const allYearsAllLeagueTeamTotals =
-    playerYears === 'All years' &&
+  const yearsAllLeagueTeamTotals =
     currentLeague.id === -1 &&
     currentTeam !== 'All teams' &&
-    currentTeam !== undefined
-      ? playerStatsData.teams.find(team => team.name === currentTeam).stats
-      : null;
-  const allYearsAllLeagueAllTeamTotals =
-    playerYears === 'All years' && currentLeague.id === -1 && currentTeam === 'All teams'
-      ? playerStatsData.total
-      : null;
+    (playerYears === 'All years'
+      ? // currentTeam !== undefined
+        playerStatsData.teams.find(team => team.name === currentTeam).stats
+      : playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]);
+    // : null
+
+  const yearsAllLeagueAllTeamTotals =
+     currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
+      ? playerStatsData.total 
+      : playerStatsData.total_annual[playerYears]
 
   return (
     <div className={cl.wrapper}>
@@ -225,7 +227,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             addedClass={cl.wider}>
             OPS
           </SortField>
-          
 
           <div className={cl.sortFieldWrapper}>
             <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -249,7 +250,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             LOB
           </SortField>
 
-					<div className={cl.sortFieldWrapper}>
+          <div className={cl.sortFieldWrapper}>
             <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
               CH
             </SortField>
@@ -367,7 +368,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                           addedClass={cl.wider}>
                           OPS
                         </ActiveBodyCell>
-                        
 
                         <ActiveBodyCell sortField={sortField} row={team.running}>
                           SB
@@ -382,7 +382,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                           LOB
                         </ActiveBodyCell>
 
-												<ActiveBodyCell sortField={sortField} row={team.fielding}>
+                        <ActiveBodyCell sortField={sortField} row={team.fielding}>
                           CH
                         </ActiveBodyCell>
                         <ActiveBodyCell sortField={sortField} row={team.fielding}>
@@ -407,125 +407,125 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       </li>
                     );
                   })}
-                  {allYearsAllLeagueTeamTotals && (
+                  {yearsAllLeagueTeamTotals && (
                     <li className={cl.tableRow + ' ' + cl.tableFooter}>
-                      <div className={cl.year}></div>
+                      {playerYears === 'All years' && <div className={cl.year}></div>}
                       <div className={cl.league}>TOTALS</div>
                       <div className={cl.teamName}></div>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         AB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         R
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         H
                       </ActiveBodyCell>
-                      {/* <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      {/* <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         1B
                       </ActiveBodyCell> */}
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         2B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         3B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         HR
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         RBI
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.batting}
+                        row={yearsAllLeagueTeamTotals.batting}
                         addedClass={cl.wide}>
                         GDP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         BB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         IBB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         HP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         SH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         SF
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         SO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         TB
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.batting}
+                        row={yearsAllLeagueTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         AVG
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.batting}
+                        row={yearsAllLeagueTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         SLG
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.batting}
+                        row={yearsAllLeagueTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         OBP
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.batting}
+                        row={yearsAllLeagueTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         OPS
                       </ActiveBodyCell>
-                      
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.running}>
+
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}>
                         SB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}>
                         CS
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.running}
+                        row={yearsAllLeagueTeamTotals.running}
                         addedClass={cl.wider}>
                         SB_pr
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}>
                         LOB
                       </ActiveBodyCell>
 
-											<ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         CH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         PO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         A
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         E
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         DP
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueTeamTotals.fielding}
+                        row={yearsAllLeagueTeamTotals.fielding}
                         fixed={3}
                         addedClass={cl.wider}>
                         FLD
@@ -616,7 +616,6 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         addedClass={cl.wider}>
                         OPS
                       </ActiveBodyCell>
-                      
 
                       <ActiveBodyCell sortField={sortField} row={row.game.running}>
                         SB
@@ -630,7 +629,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={row.game.running}>
                         LOB
                       </ActiveBodyCell>
-											<ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
                         CH
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
@@ -654,124 +653,124 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       </ActiveBodyCell>
                     </li>
                   ))}
-                  {allYearsAllLeagueAllTeamTotals && (
+                  {yearsAllLeagueAllTeamTotals && (
                     <li className={cl.tableRow + ' ' + cl.tableFooter}>
-                      <div className={cl.year}></div>
+                      {playerYears === 'All years' && <div className={cl.year}></div>}
                       <div className={cl.league}>TOTALS</div>
                       <div className={cl.teamName}></div>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         AB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         R
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         H
                       </ActiveBodyCell>
-                      {/* <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      {/* <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         1B
                       </ActiveBodyCell> */}
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         2B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         3B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         HR
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         RBI
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.batting}
+                        row={yearsAllLeagueAllTeamTotals.batting}
                         addedClass={cl.wide}>
                         GDP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         BB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         IBB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         HP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         SH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         SF
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         SO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         TB
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.batting}
+                        row={yearsAllLeagueAllTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         AVG
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.batting}
+                        row={yearsAllLeagueAllTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         SLG
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.batting}
+                        row={yearsAllLeagueAllTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         OBP
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.batting}
+                        row={yearsAllLeagueAllTeamTotals.batting}
                         fixed={3}
                         addedClass={cl.wider}>
                         OPS
                       </ActiveBodyCell>
-                      
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.running}>
+
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
                         SB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
                         CS
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.running}
+                        row={yearsAllLeagueAllTeamTotals.running}
                         addedClass={cl.wider}>
                         SB_pr
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
                         LOB
                       </ActiveBodyCell>
-											<ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         CH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         PO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         A
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         E
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={allYearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         DP
                       </ActiveBodyCell>
                       <ActiveBodyCell
                         sortField={sortField}
-                        row={allYearsAllLeagueAllTeamTotals.fielding}
+                        row={yearsAllLeagueAllTeamTotals.fielding}
                         fixed={3}
                         addedClass={cl.wider}>
                         FLD
@@ -853,7 +852,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
                     OPS
                   </ActiveBodyCell>
-                  
+
                   <ActiveBodyCell sortField={sortField} row={row}>
                     SB
                   </ActiveBodyCell>
@@ -867,7 +866,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     LOB
                   </ActiveBodyCell>
 
-									<ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}>
                     CH
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>
@@ -1000,7 +999,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   addedClass={cl.wider}>
                   OPS
                 </ActiveBodyCell>
-                
+
                 <ActiveBodyCell
                   sortField={sortField}
                   row={currentTeam === 'All teams' ? currentLeague.total.running : filteredLeague.running}>
@@ -1023,7 +1022,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   LOB
                 </ActiveBodyCell>
 
-								<ActiveBodyCell
+                <ActiveBodyCell
                   sortField={sortField}
                   row={currentTeam === 'All teams' ? currentLeague.total.fielding : filteredLeague.fielding}>
                   CH
