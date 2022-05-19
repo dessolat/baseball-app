@@ -43,7 +43,7 @@ const Games = () => {
 
         if (games === null) {
           console.log('dispatched after fetching');
-          dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+          // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
         }
       } catch (err) {
         if (err.message === null) return;
