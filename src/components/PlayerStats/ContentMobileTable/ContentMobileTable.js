@@ -52,13 +52,13 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           arrowStyles={arrowStyles}>
           H
         </SortField>
-        <SortField
+        {/* <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
           1B
-        </SortField>
+        </SortField> */}
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -410,9 +410,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         <ActiveBodyCell sortField={sortField} row={row}>
           H
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        {/* <ActiveBodyCell sortField={sortField} row={row}>
           1B
-        </ActiveBodyCell>
+        </ActiveBodyCell> */}
         <ActiveBodyCell sortField={sortField} row={row}>
           2B
         </ActiveBodyCell>
