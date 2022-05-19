@@ -9,7 +9,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const dispatch = useDispatch();
 
-  const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title }));
+  const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title, title: league.title }));
 
   return (
     <ul className={cl.leagues} ref={ref}>
