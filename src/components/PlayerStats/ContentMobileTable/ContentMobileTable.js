@@ -563,19 +563,73 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     );
 
+  const filteredLeagueGamesSummary =
+    filteredLeague &&
+    (!Array.isArray(filteredLeague)
+      ? filteredLeague.batting.games_batting.reduce((sum, game, i) => {
+          const sumGame = {
+            ...game,
+            ...filteredLeague.fielding.games_fielding[i],
+            ...filteredLeague.running.games_running[i],
+            ...filteredLeague.pitching.games_pitching[i],
+            team_name: filteredLeague.name
+          };
+          sum.push(sumGame);
+          return sum;
+        }, [])
+      : filteredLeague.reduce((totalSum, team) => {
+          const teamGamesArr = team.batting.games_batting.reduce((sum, game, i) => {
+            const sumGame = {
+              ...game,
+              ...team.fielding.games_fielding[i],
+              ...team.running.games_running[i],
+              ...team.pitching.games_pitching[i],
+              team_name: team.name
+            };
+            sum.push(sumGame);
+            return sum;
+          }, []);
+
+          return totalSum.concat(teamGamesArr);
+        }, []));
+
   const sortedLeagueGames =
     filteredLeague &&
-    filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`]
+    filteredLeagueGamesSummary
+      // filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`]
       .slice()
       .sort((a, b) =>
         a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
       );
 
-  const sortedLeagues = filteredLeagues
-    .slice()
-    .sort((a, b) =>
-      a.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField] >
-      b.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField]
+  let sortedLeagues = [];
+  let allTeamGames = [];
+  if (currentTeam !== 'All teams') {
+    sortedLeagues = filteredLeagues
+      .slice()
+      .sort((a, b) =>
+        a.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField] >
+        b.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField]
+          ? sortDirection === 'asc'
+            ? 1
+            : -1
+          : sortDirection === 'asc'
+          ? -1
+          : 1
+      );
+  }
+
+  if (currentTeam === 'All teams') {
+    allTeamGames = filteredLeagues.reduce((totalGames, league) => {
+      league.teams.forEach(team =>
+        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name })
+      );
+
+      return totalGames;
+    }, []);
+
+    allTeamGames.sort((a, b) =>
+      a.game[tableMode.toLowerCase()][sortField] > b.game[tableMode.toLowerCase()][sortField]
         ? sortDirection === 'asc'
           ? 1
           : -1
@@ -583,12 +637,14 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         ? -1
         : 1
     );
+  }
 
   let leftHeaderStyles = {
     flex: `0 0 ${currentLeague.id !== -1 ? 260 : playerYears === 'All years' ? 210 : 150}px`
   };
   !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
 
+	console.log(allTeamGames);
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -608,52 +664,97 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         <div
           className={cl.leftRows}
           style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
-          {currentLeague.id === -1 //All leagues
-            ? sortedLeagues.map((row, index) => {
-                const team = row.teams.find(team => team.name === currentTeam);
-                return (
-                  <div key={index} className={cl.tableRow}>
-                    {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                    <div className={cl.league}>{row.title}</div>
+          {currentLeague.id === -1 ? ( //All leagues
+            <>
+              {currentTeam !== 'All teams' ? (
+                <>
+                  {sortedLeagues.map((row, index) => {
+                    const team = row.teams.find(team => team.name === currentTeam);
+                    return (
+                      <div key={index} className={cl.tableRow}>
+                        {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
+                        <div className={cl.league}>{row.title}</div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {allTeamGames.map((row, index) => {
+                    return (
+                      <div key={index} className={cl.tableRow}>
+                        {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
+                        <div className={cl.league}>{row.title}</div>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </>
+          ) : (
+            //Selected league
+            sortedLeagueGames.map((row, index) => (
+              <div key={index} className={cl.tableRow}>
+                <div className={cl.game}>
+                  <div className={cl.date}>
+                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
                   </div>
-                );
-              }) //Selected league
-            : sortedLeagueGames.map((row, index) => (
-                <div key={index} className={cl.tableRow}>
-                  <div className={cl.game}>
-                    <div className={cl.date}>
-                      {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
-                    </div>
-                    <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
-                      {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
-                    </Link>
-                  </div>
+                  <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
+                    {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
+                  </Link>
                 </div>
-              ))}
+              </div>
+            ))
+          )}
         </div>
         <div
           className={cl.rightRows}
           onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
           ref={rowScrollRef}>
-          {currentLeague.id === -1 //All leagues
-            ? sortedLeagues.map((row, index) => {
-                const team = row.teams.find(team => team.name === currentTeam);
-                return (
-                  <div
-                    key={index}
-                    className={cl.tableRow}
-                    style={{
-                      width: !isScrollable ? '100%' : 'fit-content'
-                    }}>
-                    {getTableRows(team[tableMode.toLowerCase()], cl, sortField)}
-                  </div>
-                );
-              }) //Selected league
-            : sortedLeagueGames.map((row, index) => (
-                <div key={index} className={cl.tableRow}>
-                  {getTableRows(row, cl, sortField)}
-                </div>
-              ))}
+          {currentLeague.id === -1 ? ( //All leagues
+            <>
+              {currentTeam !== 'All teams' ? (
+                <>
+                  {sortedLeagues.map((row, index) => {
+                    const team = row.teams.find(team => team.name === currentTeam);
+                    return (
+                      <div
+                        key={index}
+                        className={cl.tableRow}
+                        style={{
+                          width: !isScrollable ? '100%' : 'fit-content'
+                        }}>
+                        {getTableRows(team[tableMode.toLowerCase()], cl, sortField)}
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {allTeamGames.map((row, index) => {
+                    
+                    return (
+                      <div
+                        key={index}
+                        className={cl.tableRow}
+                        style={{
+                          width: !isScrollable ? '100%' : 'fit-content'
+                        }}>
+                        {getTableRows(row.game[tableMode.toLowerCase()], cl, sortField)}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </>
+          ) : (
+            //Selected league
+            sortedLeagueGames.map((row, index) => (
+              <div key={index} className={cl.tableRow}>
+                {getTableRows(row, cl, sortField)}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
