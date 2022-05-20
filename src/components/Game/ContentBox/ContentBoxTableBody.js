@@ -28,20 +28,21 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
                   : i + 1 - rowDelta}
               </td>
               <td style={player.is_substituted && tableName === 'batting' ? { paddingLeft: '2.5rem' } : null}>
-                <Link to={`/stats/player/${player.id}`}>{player.content.player_name}</Link>
+                <Link to={`/stats/player/${player.id}`}>{player.content.name}</Link>
               </td>
               {TABLES_INFO[tableName].headers.map((title, i) => {
+								console.log(player.content);
 								const value = title === 'POS'
-								? player.content.position.join('/')
+								? player.content.positions.join('/')
 								: ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title)
-								? player.content.stat[tableName === 'batting' ? 'running' : 'catching'][title]
+								? player.content.stats[tableName === 'batting' ? 'running' : 'catching'][title]
 								: ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
-								? player.content.stat.fielding[title]
+								? player.content.stats.fielding[title]
 								: toFixList.includes(title)
-								? player.content.stat[tableName][title] === 'INF'
+								? player.content.stats[tableName][title] === 'INF'
 									? 'INF'
-									: Number(player.content.stat[tableName][title]).toFixed(3)
-								: player.content.stat[tableName][title]
+									: Number(player.content.stats[tableName][title]).toFixed(3)
+								: player.content.stats[tableName][title]
 
                 return (
                   <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
