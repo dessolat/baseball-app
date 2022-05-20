@@ -64,7 +64,7 @@ const Games = () => {
   useEffect(() => {
     if (games === null) return;
 
-    const fetchImage = async (id, url) => {
+    const fetchImage = async (id, name, url) => {
       try {
         const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
           responseType: 'arraybuffer',
@@ -73,19 +73,20 @@ const Games = () => {
 
         dispatch(
           addLeagueImage({
-            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64'),
+            [name]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
           })
         );
       } catch (err) {
         // err.message === 'Request failed with status code 523' &&
-        setTimeout(() => fetchImage(id, url), 2500);
+        setTimeout(() => fetchImage(id, name, url), 2500);
         console.log(err.message);
       }
     };
 
     leagues
       .filter(league => league.logo !== '' && !leaguesImages[league.id])
-      .forEach(league => fetchImage(league.id, league.logo));
+      .forEach(league => league.id !== -1 && fetchImage(league.id, league.name, league.logo));
     // eslint-disable-next-line
   }, [games, leagues]);
 
