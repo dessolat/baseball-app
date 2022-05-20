@@ -50,15 +50,15 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          H
+          R
         </SortField>
-        {/* <SortField
+        <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          1B
-        </SortField> */}
+          H
+        </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -100,6 +100,13 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
           BB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          IBB
         </SortField>
         <SortField
           sortField={sortField}
@@ -176,99 +183,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          2B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          3B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          BB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          BK
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          ER
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          ERA
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          H
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HR
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          IBB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
           IP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NS
         </SortField>
         <SortField
           sortField={sortField}
@@ -289,7 +204,56 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          SF
+          ER
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          H
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          2B
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          3B
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          HR
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          BB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          IBB
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          HP
         </SortField>
         <SortField
           sortField={sortField}
@@ -297,6 +261,13 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
           SH
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          SF
         </SortField>
         <SortField
           sortField={sortField}
@@ -312,30 +283,45 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           arrowStyles={arrowStyles}>
           WP
         </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          BK
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}
+          addedClass={cl.wider}>
+          ERA
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          NP
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          NS
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          NB
+        </SortField>
       </>
     ) : tableMode === 'Running' ? (
       <>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          LOB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          R
-        </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -347,21 +333,28 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          CS
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
           addedClass={cl.wider}
           renamedField='SB_pr'>
           %SB
         </SortField>
-      </>
-    ) : (
-      <>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          A
+          LOB
         </SortField>
+      </>
+    ) : (
+      <>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -374,7 +367,14 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          DP
+          PO
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          A
         </SortField>
         <SortField
           sortField={sortField}
@@ -387,16 +387,16 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          FLD
+          arrowStyles={arrowStyles}>
+          DP
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          PO
+          arrowStyles={arrowStyles}
+          addedClass={cl.wider}>
+          FLD
         </SortField>
       </>
     );
@@ -408,11 +408,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           AB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
+          R
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
           H
         </ActiveBodyCell>
-        {/* <ActiveBodyCell sortField={sortField} row={row}>
-          1B
-        </ActiveBodyCell> */}
         <ActiveBodyCell sortField={sortField} row={row}>
           2B
         </ActiveBodyCell>
@@ -430,6 +430,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           BB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          IBB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           HP
@@ -461,47 +464,8 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     ) : tableMode === 'Pitching' ? (
       <>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          2B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          3B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          BB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          BK
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          ER
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>
-          ERA
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          H
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HR
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          IBB
-        </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
           IP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NS
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           PA
@@ -510,10 +474,34 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           R
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          SF
+          ER
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          H
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          2B
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          3B
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          HR
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          BB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          IBB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          HP
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           SH
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          SF
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           SO
@@ -521,44 +509,56 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         <ActiveBodyCell sortField={sortField} row={row}>
           WP
         </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          BK
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>
+          ERA
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          NP
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          NS
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          NB
+        </ActiveBodyCell>
       </>
     ) : tableMode === 'Running' ? (
       <>
         <ActiveBodyCell sortField={sortField} row={row}>
-          CS
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          LOB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          R
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
           SB
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          CS
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
           SB_pr
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          LOB
         </ActiveBodyCell>
       </>
     ) : (
       <>
         <ActiveBodyCell sortField={sortField} row={row}>
-          A
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
           CH
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          DP
+          PO
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          A
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           E
         </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          DP
+        </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
           FLD
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          PO
         </ActiveBodyCell>
       </>
     );
@@ -644,7 +644,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   };
   !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
 
-	console.log(allTeamGames);
+  console.log(allTeamGames);
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -732,7 +732,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
               ) : (
                 <>
                   {allTeamGames.map((row, index) => {
-                    
                     return (
                       <div
                         key={index}
@@ -750,7 +749,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           ) : (
             //Selected league
             sortedLeagueGames.map((row, index) => (
-              <div key={index} className={cl.tableRow}>
+              <div
+                key={index}
+                className={cl.tableRow}
+                style={{
+                  width: !isScrollable ? '100%' : 'fit-content'
+                }}>
                 {getTableRows(row, cl, sortField)}
               </div>
             ))
