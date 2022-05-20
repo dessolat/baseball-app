@@ -16,6 +16,9 @@ const ContentPitchingTableHeader = ({
       {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
 			<div className={cl.teamName}>Team</div>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        IP
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         PA
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -56,6 +59,9 @@ const ContentPitchingTableHeader = ({
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         WP
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        BK
       </SortField>
       <SortField
         sortField={sortField}
