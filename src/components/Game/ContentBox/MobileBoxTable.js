@@ -151,7 +151,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                         : null
                     }
                     className={cl.playerName}>
-                    <Link to={`/stats/player/${player.id}`}>{player.content.player_name}</Link>
+                    <Link to={`/stats/player/${player.id}`}>{player.content.name}</Link>
                   </div>
                 </div>
               );
@@ -182,22 +182,22 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                   {TABLES_INFO[currentMode].headers.map((title, i) => (
                     <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
                       {title.name === 'POS'
-                        ? player.content.position.join('/')
+                        ? player.content.positions.join('/')
                         : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
-                        ? player.content.stat[currentMode === 'Running' ? 'running' : 'catching'][title.name]
+                        ? player.content.stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
                         : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
-                        ? player.content.stat.fielding[title.name]
+                        ? player.content.stats.fielding[title.name]
                         : title.isWider
-                        ? player.content.stat[
+                        ? player.content.stats[
                             BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                           ][title.name] === 'INF'
                           ? 'INF'
                           : Number(
-                              player.content.stat[
+                              player.content.stats[
                                 BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                               ][title.name]
                             ).toFixed(3)
-                        : player.content.stat[
+                        : player.content.stats[
                             BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
                           ][title.name]}
                     </div>
