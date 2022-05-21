@@ -7,9 +7,20 @@ import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentYear = useSelector(state => state.shared.currentYear);
+  const allYearsLeagues = useSelector(state => state.shared.allYearsLeagues);
   const dispatch = useDispatch();
 
-  const handleLeagueClick = league => () => dispatch(setCurrentLeague({ ...league, name: league.title, title: league.title }));
+  const handleLeagueClick = league => () => {
+    const leagueId =
+      league.id === -1
+        ? -1
+        : allYearsLeagues[currentYear].find(
+            curLeague => curLeague.name === league.title && curLeague.game_type === currentGameType
+          ).id;
+
+    dispatch(setCurrentLeague({ ...league, name: league.title, title: league.title, id: leagueId }));
+  };
 
   return (
     <ul className={cl.leagues} ref={ref}>

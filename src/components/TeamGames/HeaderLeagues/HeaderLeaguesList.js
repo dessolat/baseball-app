@@ -8,7 +8,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const dispatch = useDispatch();
 
-  const handleLeagueClick = league => () => dispatch(setCurrentLeague(league));
+  const handleLeagueClick = league => () => dispatch(setCurrentLeague({...league, name: league.title, title: league.title}));
 
   return (
     <ul className={cl.leagues} ref={ref}>
