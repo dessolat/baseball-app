@@ -8,7 +8,7 @@ const ContentPlayersTable = () => {
 
   const teamData = useSelector(state => state.teamGames.teamData);
   const currentYear = useSelector(state => state.shared.currentYear);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
 
   const PLAYERS_DATA =
     currentLeague.id !== -1

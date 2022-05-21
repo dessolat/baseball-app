@@ -22,7 +22,7 @@ const MONTHS = {
 const ContentGamesTable = () => {
 	const { gameType } = useParams();
 
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const currentYear = useSelector(state => state.shared.currentYear);
   const isMobile = useSelector(state => state.shared.isMobile);
   const teamData = useSelector(state => state.teamGames.teamData);

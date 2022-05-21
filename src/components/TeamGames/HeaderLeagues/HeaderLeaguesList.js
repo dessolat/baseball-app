@@ -5,7 +5,7 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => dispatch(setCurrentLeague(league));

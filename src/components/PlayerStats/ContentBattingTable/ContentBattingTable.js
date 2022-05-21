@@ -40,7 +40,7 @@ const FIELDS_OBJ = {
 };
 
 const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS }) => {
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
 

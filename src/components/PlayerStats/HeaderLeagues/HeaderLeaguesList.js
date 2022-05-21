@@ -6,7 +6,7 @@ import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 import { setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 
 const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
 	const statsData = useSelector(state => state.playerStats.playerStatsData);
   const dispatch = useDispatch();
 

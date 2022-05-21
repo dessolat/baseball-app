@@ -14,7 +14,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const tableType = useSelector(state => state.playerStats.tableType);
 
   const dispatch = useDispatch();
