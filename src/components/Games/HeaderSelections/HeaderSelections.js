@@ -4,7 +4,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
 
-const YEARS = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
+const YEARS = [2022, 2021, 2020];
 
 const HeaderSelections = () => {
   const currentYear = useSelector(state => state.shared.currentYear);

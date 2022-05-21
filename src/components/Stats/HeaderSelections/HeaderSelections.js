@@ -6,7 +6,7 @@ import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/shared
 import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
 
-const YEARS = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014];
+const YEARS = [2022, 2021, 2020];
 const TABLE_MODES = ['Batting', 'Fielding / Running', 'Pitching'];
 
 const HeaderSelections = () => {
