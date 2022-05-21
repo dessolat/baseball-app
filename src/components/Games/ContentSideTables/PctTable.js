@@ -5,16 +5,21 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PctTable = ({ currentLeague }) => {
+  const leagues = useSelector(state => state.games.leagues);
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentGameType = useSelector(state => state.shared.currentGameType);
 
-	const leagueTeams = leagues.slice().find(league => league.id === currentLeague.id)?.teams
+  const leagueTeams = leagues
+    .slice()
+    .find(league =>
+      currentLeague.id === undefined
+        ? league.name === currentLeague.name || league.name === currentLeague.title
+        : league.id === currentLeague.id
+    )?.teams;
   const sortedTeams = useMemo(
     () =>
-		leagueTeams
-        ? leagueTeams.sort((a, b) =>
-            a.wins > b.wins || (a.wins === b.wins && a.loses < b.loses) ? -1 : 1
-          )
+      leagueTeams
+        ? leagueTeams.sort((a, b) => (a.wins > b.wins || (a.wins === b.wins && a.loses < b.loses) ? -1 : 1))
         : [],
     [leagueTeams]
   );

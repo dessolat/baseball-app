@@ -41,7 +41,7 @@ const ContentGamesTable = () => {
             curLeague.games.forEach(game => sum.push(game));
             return sum;
           }, [])
-        : currentYearLeagues.find(curLeague => curLeague.league.id === currentLeague.id).games,
+        : currentYearLeagues.find(curLeague => currentLeague.id === undefined ? curLeague.league.title === currentLeague.title : curLeague.league.id === currentLeague.id).games,
     [currentYearLeagues, currentLeague]
   );
 
