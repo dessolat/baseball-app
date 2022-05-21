@@ -6,9 +6,13 @@ const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', '
 
 const ContentCalendarListItem = ({ date, handleClick, ...props }) => {
   return (
-    <li className={cl.item} {...props} onClick={handleClick(date)}>
-      <p>{DAYS[date.getDay()]}</p>
-      <p>{`${MONTHS[date.getMonth()]} ${date.getDate()}`}</p>
+    <li className={cl.item} {...props} onClick={date && handleClick(date)}>
+      {date && (
+        <>
+          <p>{DAYS[date.getDay()]}</p>
+          <p>{`${MONTHS[date.getMonth()]} ${date.getDate()}`}</p>
+        </>
+      )}
     </li>
   );
 };
