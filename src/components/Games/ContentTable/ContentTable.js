@@ -46,7 +46,7 @@ const ContentTable = ({ games }) => {
   const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
   const filteredHeadings = games.filter(game => {
-    return currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type;
+    return currentLeague.id === -1 ? currentGameType === game.game_type : game.league_id === currentLeague.id;
   });
 
   //Games filtering
@@ -146,7 +146,7 @@ const ContentTable = ({ games }) => {
     <div className={cl.wrapper}>
       <ContentTableHeader />
 
-      {mobileTableMode === 'Calendar' && (
+      {mobileTableMode === 'Calendar' && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
           <div className={cl.tableHeader}>
             <div>Time</div>
