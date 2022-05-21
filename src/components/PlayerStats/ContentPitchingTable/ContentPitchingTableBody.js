@@ -89,13 +89,11 @@ const ContentPitchingTableBody = ({
   const yearsAllLeagueTeamTotals =
     currentLeague.id === -1 &&
     currentTeam !== 'All teams' &&
-    (playerYears === 'All years'
-      ? // currentTeam !== undefined
-        playerStatsData.teams.find(team => team.name === currentTeam).stats
-      : currentTeam !== undefined
-      ? playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]
+    (currentTeam !== undefined
+      ? playerYears === 'All years'
+        ? playerStatsData.teams.find(team => team.name === currentTeam).stats
+        : playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]
       : null);
-  // : null
 
   const yearsAllLeagueAllTeamTotals =
     currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
