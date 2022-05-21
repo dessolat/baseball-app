@@ -129,13 +129,15 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
     (playerYears === 'All years'
       ? // currentTeam !== undefined
         playerStatsData.teams.find(team => team.name === currentTeam).stats
-      : playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]);
-    // : null
+      : currentTeam !== undefined
+      ? playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]
+      : null);
+  // : null
 
   const yearsAllLeagueAllTeamTotals =
-     currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
-      ? playerStatsData.total 
-      : playerStatsData.total_annual[playerYears]
+    currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
+      ? playerStatsData.total
+      : playerStatsData.total_annual[playerYears];
 
   return (
     <div className={cl.wrapper}>
