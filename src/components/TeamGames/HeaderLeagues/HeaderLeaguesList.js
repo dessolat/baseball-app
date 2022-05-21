@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {

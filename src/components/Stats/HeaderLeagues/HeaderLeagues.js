@@ -3,7 +3,8 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague, setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 
 const HeaderLeagues = () => {
   const [isLeftScroll, setIsLeftScroll] = useState(false);
