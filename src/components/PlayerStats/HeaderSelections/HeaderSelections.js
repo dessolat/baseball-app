@@ -74,12 +74,12 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               return sum;
             }, new Set())
         )
-      : currentLeague.teams.length > 1
+      : currentLeague.teams ? (currentLeague.teams.length > 1
       ? currentLeague.teams.reduce((sum, team) => {
           sum.push(team.name);
           return sum;
         }, [])
-      : [currentLeague.teams[0].name];
+      : [currentLeague.teams[0].name]) : [];
   teamsArray.unshift('All teams');
 
   const handleTableOptionClick = option => dispatch(setTableType(option));

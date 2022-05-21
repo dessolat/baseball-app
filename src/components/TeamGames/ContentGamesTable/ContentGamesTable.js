@@ -20,7 +20,7 @@ const MONTHS = {
 };
 
 const ContentGamesTable = () => {
-	const { gameType } = useParams();
+  const { gameType } = useParams();
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentYear = useSelector(state => state.shared.currentYear);
@@ -41,7 +41,11 @@ const ContentGamesTable = () => {
             curLeague.games.forEach(game => sum.push(game));
             return sum;
           }, [])
-        : currentYearLeagues.find(curLeague => currentLeague.id === undefined ? curLeague.league.title === currentLeague.title : curLeague.league.id === currentLeague.id).games,
+        : currentYearLeagues.find(curLeague =>
+            currentLeague.id === undefined
+              ? curLeague.league.title === currentLeague.title
+              : curLeague.league.id === currentLeague.id
+          )?.games || [],
     [currentYearLeagues, currentLeague]
   );
 
@@ -67,13 +71,19 @@ const ContentGamesTable = () => {
                   (!isMobile ? MONTHS[game.date.slice(5, 7)].slice(0, 3) : MONTHS[game.date.slice(5, 7)])}
               </div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${gameType}/${game.homies.name}`}> {getShortName(game.homies.name, 22)}</Link>
+                <Link to={`/games/team/${gameType}/${game.homies.name}`}>
+                  {' '}
+                  {getShortName(game.homies.name, 22)}
+                </Link>
               </div>
               <div>
                 {game.homies.score} - {game.visitors.score}
               </div>
               <div className={cl.underlineHover}>
-                <Link to={`/games/team/${gameType}/${game.visitors.name}`}> {getShortName(game.visitors.name, 22)}</Link>
+                <Link to={`/games/team/${gameType}/${game.visitors.name}`}>
+                  {' '}
+                  {getShortName(game.visitors.name, 22)}
+                </Link>
               </div>
               <div className={cl.links}>
                 <div>
