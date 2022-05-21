@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import axios from 'axios';
 import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
@@ -13,7 +13,7 @@ const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // const firstMountRef = useRef(true);
+  const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
 
   const statsData = useSelector(state => state.stats.statsData);
@@ -71,10 +71,10 @@ const Stats = () => {
     };
     fetchStats();
 
-    // if (firstMountRef.current === true) {
-    //   firstMountRef.current = false;
-    //   return;
-    // }
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
 
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
 
