@@ -31,7 +31,6 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
                 <Link to={`/stats/player/${player.id}`}>{player.content.name}</Link>
               </td>
               {TABLES_INFO[tableName].headers.map((title, i) => {
-								console.log(player.content);
 								const value = title === 'POS'
 								? player.content.positions.join('/')
 								: ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title)
@@ -46,7 +45,7 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
 
                 return (
                   <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
-                    {value !== -1 ? value : '—'}
+                    {Number(value) !== -1 ? value : '—'}
                   </td>
                 );
               })}
