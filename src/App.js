@@ -9,7 +9,8 @@ import TeamGames from 'pages/TeamGames';
 import Stats from 'pages/Stats';
 import PlayerStats from 'pages/PlayerStats';
 import { useDispatch } from 'react-redux';
-import { setIsMobile } from 'redux/sharedReducer';
+import { setAllYearsLeagues, setIsMobile } from 'redux/sharedReducer';
+import axios from 'axios';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,17 +36,40 @@ const App = () => {
 
     dispatch(setIsMobile(IsMobileCard()));
 
-    // const setVh = () => {
+    // function setVh  ()  {
     //   // получаем текущее значение высоты
-    //   let vh = window.innerHeight * 0.01;
-    //   document.documentElement.style.setProperty('--vh', `${vh}px`);
+    //   let newHeight = window.innerHeight * 0.01;
+    //   // let vh = window.innerHeight * 0.01;
+    //   document.documentElement.style.setProperty('--vh', `${newHeight}px`);
     // };
 
     // window.addEventListener('resize', setVh);
+    // setInterval(() => setVh(), 600);
 
     // return () => {
     //   window.removeEventListener('resize', setVh);
     // };
+
+    const fetchGamesData = async () => {
+      try {
+        let response = await axios.get(`http://51.250.71.224:3030/main/year-2020`, {
+          timeout: 5000
+        });
+        dispatch(setAllYearsLeagues({ year: 2020, data: response.data.leagues }));
+        response = await axios.get(`http://51.250.71.224:3030/main/year-2021`, {
+          timeout: 5000
+        });
+        dispatch(setAllYearsLeagues({ year: 2021, data: response.data.leagues }));
+        response = await axios.get(`http://51.250.71.224:3030/main/year-2022`, {
+          timeout: 5000
+        });
+        dispatch(setAllYearsLeagues({ year: 2022, data: response.data.leagues }));
+      } catch (err) {
+        if (err.message === null) return;
+        console.log(err.message);
+      }
+    };
+    fetchGamesData();
   }, []);
 
   const RouteAdapter = ({ children }) => {
