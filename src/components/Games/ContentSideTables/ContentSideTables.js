@@ -11,7 +11,8 @@ const ContentSideTables = () => {
 
   const isTables = currentLeague.id !== -1;
   return (
-    <div className={cl.side} style={!isTables ? { height: isMobile ? 'auto' : '70vh' } : null}>
+    // <div className={cl.side} style={{ maxHeight: '70vh' }}>
+    <div className={cl.side} style={!isTables ? { height: isMobile ? 'auto' : '70vh' } : { maxHeight: isMobile ? 'auto' : '70vh' }}>
       {isTables && (
         <>
           {(!isMobile || mobileTableMode === 'Team tablo') && <PctTable currentLeague={currentLeague} />}
