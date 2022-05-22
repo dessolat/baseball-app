@@ -1,6 +1,7 @@
 const defaultState = {
   games: null,
   leagues: null,
+  players: null,
 	currentLeague: { id: -1, name: 'All' },
   currentStadium: 'All',
   currentHome: 'All',
@@ -21,7 +22,7 @@ const RESET_TABLE_FILTERS = 'RESET_TABLE_FILTERS';
 export const gamesReducer = (state = defaultState, action) => {
   switch (action.type) {
     case SET_GAMES_AND_LEAGUES:
-      return { ...state, games: action.payload.games, leagues: action.payload.leagues };
+      return { ...state, games: action.payload.games, leagues: action.payload.leagues, players: action.payload.players };
     case SET_CURRENT_GAMES_LEAGUE:
       return { ...state, currentLeague: action.payload };
     case SET_CURRENT_STADIUM:
