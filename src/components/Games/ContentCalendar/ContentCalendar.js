@@ -17,7 +17,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
-	const currentYear = useSelector(state => state.shared.currentYear)
+  const currentYear = useSelector(state => state.shared.currentYear);
 
   const dispatch = useDispatch();
 
@@ -41,15 +41,31 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
   }, [calendarScroll]);
 
   useEffect(() => {
-    const filteredGames = games.filter(
+    let filteredGames = games.filter(
       game =>
         (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-        (currentLeague.id !== -1
-          ? game.league_id === currentLeague.id
-          : currentGameType === game.game_type) &&
-        (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-        (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+        (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type)
+      // 	&&
+      // (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+      // (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
     );
+
+    if (currentHome !== 'All' && currentGuests !== 'All') {
+      filteredGames = filteredGames.filter(
+        game =>
+          (game.owners_name === currentHome || game.owners_name === currentGuests) &&
+          (game.guests_name === currentHome || game.guests_name === currentGuests)
+      );
+    } else {
+      filteredGames =
+        currentHome !== 'All'
+          ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
+          : currentGuests !== 'All'
+          ? filteredGames.filter(
+              game => game.owners_name === currentGuests || game.guests_name === currentGuests
+            )
+          : filteredGames;
+    }
 
     const sortedDates = filteredGames
       .reduce((sum, game) => {
@@ -66,41 +82,52 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     let minDate = new Date();
 
     if (!isDate) {
-			minDate = new Date(uniqueSortedDates[0] || new Date().toJSON().slice(0, 10))
+      minDate = new Date(uniqueSortedDates[0] || new Date().toJSON().slice(0, 10));
       uniqueSortedDates.forEach(date => {
         const tempDelta = Math.abs(new Date(date) - new Date());
         if (tempDelta < minDateDelta) {
           minDate = new Date(date);
-					minDateDelta = tempDelta
+          minDateDelta = tempDelta;
         }
       });
     }
 
-    !isDate ? dispatch(setCurrentDate(minDate)) : dispatch(setCurrentDate(new Date()))
-  }, [currentLeague, currentYear, games]);
+    !isDate ? dispatch(setCurrentDate(minDate)) : dispatch(setCurrentDate(new Date()));
+  }, [currentLeague, currentYear, games, currentHome, currentGuests]);
 
   let availableDates = useMemo(() => {
     const filteredGames = games.filter(
       game =>
         (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-        (currentLeague.id !== -1
-          ? game.league_id === currentLeague.id
-          : currentGameType === game.game_type) &&
-        (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-        (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+        (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type)
+      // 	&&
+      // (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+      // (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
     );
 
-    const sortedDates = filteredGames
-      .reduce((sum, game) => {
-        sum.push(game.date);
-        return sum;
-      }, [])
-      .sort((a, b) => (a > b ? 1 : -1));
+    if (currentHome !== 'All' && currentGuests !== 'All') {
+      return filteredGames.filter(
+        game =>
+          (game.owners_name === currentHome || game.owners_name === currentGuests) &&
+          (game.guests_name === currentHome || game.guests_name === currentGuests)
+      );
+    }
 
-    const uniqueSortedDates = Array.from(new Set(sortedDates));
-
-    return uniqueSortedDates;
+    return currentHome !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
+      : currentGuests !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
+      : filteredGames;
   }, [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]);
+
+  availableDates = availableDates
+    .reduce((sum, game) => {
+      sum.push(game.date);
+      return sum;
+    }, [])
+    .sort((a, b) => (a > b ? 1 : -1));
+
+  availableDates = Array.from(new Set(availableDates));
 
   const handleDateClick = date => () => {
     if (timeoutRef.current !== null) return;

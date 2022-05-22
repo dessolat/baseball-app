@@ -31,7 +31,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
 
-	// eslint-disable-next-line
+  // eslint-disable-next-line
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsVisible));
 
   const toggleCalendar = () => setIsVisible(!isVisible);
@@ -42,19 +42,30 @@ const ContentGridCalendar = ({ value, onChange }) => {
   };
 
   //Games filtering
-  let filteredData = useMemo(
-    () =>
-      games.filter(
+  let filteredData = useMemo(() => {
+    const filteredGames = games.filter(
+      game =>
+        (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
+        (currentLeague.id !== -1 ? game.league_id === currentLeague.id : currentGameType === game.game_type)
+      // 	&&
+      // (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
+      // (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
+    );
+
+		if (currentHome !== 'All' && currentGuests !== 'All') {
+      return filteredGames.filter(
         game =>
-          (currentStadium !== 'All' ? game.stadium_name === currentStadium : true) &&
-          (currentLeague.id !== -1
-            ? game.league_id === currentLeague.id
-            : currentGameType === game.game_type) &&
-          (currentHome !== 'All' ? game.owners_name === currentHome : true) &&
-          (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
-      ),
-    [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]
-  );
+          (game.owners_name === currentHome || game.owners_name === currentGuests) &&
+          (game.guests_name === currentHome || game.guests_name === currentGuests)
+      );
+    }
+
+    return currentHome !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
+      : currentGuests !== 'All'
+      ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
+      : filteredGames;
+  }, [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]);
 
   return (
     <div ref={menuRef} className='content-grid-calendar-wrapper'>
