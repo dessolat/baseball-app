@@ -8,7 +8,14 @@ const SECOND_TABLE_DATA = [
   { id: 2, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
   { id: 3, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
   { id: 4, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 5, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' }
+  { id: 5, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 6, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 7, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 8, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 9, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 10, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 11, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
+  { id: 12, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' }
 ];
 
 const SwitchTable = () => {
@@ -20,29 +27,33 @@ const SwitchTable = () => {
         </p>
         <Link to='/stats/player'>Go to Player Stat</Link>
       </div>
-      <table className={cl.switchTable}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Team</th>
-            <th>
-              <div className={cl.avr}>
-                AVR 
-                <ArrowDown />
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className={cl.switchTable}>
+        <div className={cl.tableHeader}>
+          <div>Name</div>
+          <div>
+          <div>Team</div>
+            <div className={cl.avr}>
+              AVR 
+              <ArrowDown />
+            </div>
+          </div>
+        </div>
+        <div className={cl.tableBody}>
           {SECOND_TABLE_DATA.map(row => (
-            <tr key={row.id}>
-              <td className={cl.underlineHover}><Link to={`/stats/player/${row.name}/${row.surname}`}>{row.surname} {row.name}</Link></td>
-              <td>{row.team}</td>
-              <td>{row.avr}</td>
-            </tr>
+            <div key={row.id} className={cl.tableRow}>
+              <div className={cl.underlineHover}>
+                <Link to={`/stats/player/${row.name}/${row.surname}`}>
+                  {row.surname} {row.name}
+                </Link>
+              </div>
+              <div>
+                <div>{row.team}</div>
+                <div>{row.avr}</div>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

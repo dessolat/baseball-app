@@ -29,31 +29,33 @@ const PctTable = ({ currentLeague }) => {
       <div className={cl.header}>
         <Link to='/stats/team'>Go to Team Stat</Link>
       </div>
-      <table className={cl.pctTable}>
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>W</th>
-            <th>L</th>
-            <th>PCT</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className={cl.pctTable}>
+        <div className={cl.tableHeader}>
+          <div>Team</div>
+          <div>
+            <div>W</div>
+            <div>L</div>
+            <div>PCT</div>
+          </div>
+        </div>
+        <div className={cl.tableBody}>
           {sortedTeams.map(team => (
-            <tr key={team.id}>
-              <td className={cl.underlineHover}>
+            <div key={team.id} className={cl.tableRow}>
+              <div className={cl.underlineHover}>
                 <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
                   {' '}
-                  {getShortName(team.name, isMobile ? 30 : 23)}
+                  {getShortName(team.name, isMobile ? 30 : 21)}
                 </Link>
-              </td>
-              <td>{team.wins}</td>
-              <td>{team.loses}</td>
-              <td>{team.pct !== -1 ? team.pct : '—'}</td>
-            </tr>
+              </div>
+              <div>
+                <div>{team.wins}</div>
+                <div>{team.loses}</div>
+                <div>{team.pct !== -1 ? team.pct : '—'}</div>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };
