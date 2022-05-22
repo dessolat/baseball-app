@@ -5,14 +5,14 @@ import ContentTeam from './ContentTeam';
 import ContentTableModeLinks from './ContentTableModeLinks';
 import { useSelector } from 'react-redux';
 
-const ContentTableHeader = () => {
+const ContentTableHeader = ({ games }) => {
   const isMobile = useSelector(state => state.shared.isMobile);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const mobileTableMode = useSelector(state => state.games.mobileTableMode);
 
   return (
     <div className={cl.header}>
-      <ContentTeam />
+      <ContentTeam games={games} />
       {(!isMobile || (isMobile && mobileTableMode === 'Calendar')) && <ContentCalendars />}
       {mobileTableMode !== 'Calendar' && (
         <div className={cl.modeTitle}>{mobileTableMode === 'Team tablo' ? 'Team tablo' : 'Leaders'}</div>

@@ -42,8 +42,8 @@ const ContentTable = ({ games }) => {
   }, [currentDate, currentLeague]);
 
   const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
-  const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
-  const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
+  // const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
+  // const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
   const filteredHeadings = games.filter(game => {
     return currentLeague.id === -1 ? currentGameType === game.game_type : game.league_id === currentLeague.id;
@@ -84,18 +84,22 @@ const ContentTable = ({ games }) => {
     [filteredData]
   );
 
-	//stadiumOptions calculation
-  const stadiumOptions = useMemo(() => Array.from(
-    new Set(
-      filteredHeadings.reduce(
-        (sum, cur) => {
-          sum.push(cur.stadium_name);
-          return sum;
-        },
-        ['All']
-      )
-    )
-  ), [filteredHeadings])
+  //stadiumOptions calculation
+  const stadiumOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          filteredHeadings.reduce(
+            (sum, cur) => {
+              sum.push(cur.stadium_name);
+              return sum;
+            },
+            ['All']
+          )
+        )
+      ),
+    [filteredHeadings]
+  );
 
   //teamOptions calculation
   const teamOptions = useMemo(
@@ -144,7 +148,7 @@ const ContentTable = ({ games }) => {
 
   return (
     <div className={cl.wrapper}>
-      <ContentTableHeader />
+      <ContentTableHeader games={games} />
 
       {mobileTableMode === 'Calendar' && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
@@ -159,25 +163,9 @@ const ContentTable = ({ games }) => {
                 listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
               />
             </div>
-            <div className={cl.homeTitle}>
-              <Dropdown
-                title={getShortName(currentHome, 29)}
-                options={teamOptions}
-                currentOption={currentHome}
-                handleClick={handleHomeDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </div>
+            <div>Home</div>
             <div> </div>
-            <div className={cl.guestsTitle}>
-              <Dropdown
-                title={getShortName(currentGuests, 29)}
-                options={teamOptions}
-                currentOption={currentGuests}
-                handleClick={handleGuestsDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </div>
+            <div>Guests</div>
             <div> </div>
             <div>Inn</div>
           </div>
