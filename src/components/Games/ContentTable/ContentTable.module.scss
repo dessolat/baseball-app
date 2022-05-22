@@ -11,6 +11,10 @@
   height: 2.9925rem;
   padding: 0 1.5rem 0 1.106rem;
 
+  @media screen and (max-width: 1100px) {
+    padding: 0 0.4rem 0 0.5rem;
+  }
+
   @media screen and (max-width: 800px) {
     padding: 7px 10px;
     background: #f4f5f7;
@@ -51,8 +55,26 @@
 }
 
 .teamName {
-  font: 700 1.125rem var(--font-comfortaa);
-  max-width: 15.67rem;
+  width: 15.67rem;
+  height: 3.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.teamName > h2 {
+  font: 700 0.95rem var(--font-comfortaa);
+  line-height: 1;
+}
+
+.teamFilters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.teamSelector {
+  font: 400 0.75rem var(--font-nunito);
+  width: 50%;
 }
 
 .table {
@@ -107,6 +129,7 @@
     > .homeTitle,
     > .guestsTitle {
       position: relative;
+      font: 400 0.75rem var(--font-nunito);
 
       &::before {
         position: absolute;
