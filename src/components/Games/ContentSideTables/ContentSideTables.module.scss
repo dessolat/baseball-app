@@ -5,67 +5,118 @@
 }
 
 .pctWrapper {
-	@media screen and (max-width: 800px) {
-		padding: 6px 10px;
-		display: flex;
+  @media screen and (max-width: 800px) {
+    padding: 6px 10px;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
-	}
+  }
 }
 
 .pctTable {
   text-align: left;
-  border-collapse: collapse;
+  // border-collapse: collapse;
 
-  thead {
+  > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
-		
-		@media screen and (max-width: 800px) {
-			border-bottom: 1px solid #dfdfdf;
-		}
+    display: flex;
+    justify-content: space-between;
 
-    th {
+    @media screen and (max-width: 800px) {
+      border-bottom: 1px solid #dfdfdf;
+    }
+
+    > div {
       font: 700 0.75rem / 1.9rem var(--font-nunito);
       color: #838383;
-      width: 2rem;
 
-			@media screen and (max-width: 800px) {
-				font-size: 12px;
-			}
+      @media screen and (max-width: 800px) {
+        font-size: 12px;
+      }
 
       &:first-child {
-        width: 12.1rem;
-				
-				@media screen and (max-width: 800px) {
-					width: 16rem;
-				}
+        max-width: 11.6rem;
+
+        @media screen and (max-width: 800px) {
+          width: 16rem;
+        }
       }
 
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4) {
-        text-align: center;
-      }
+      &:nth-child(2) {
+				display: flex;
+				> div {
+					width: 2rem;
+
+					@media screen and (max-width: 1100px) {
+						width: 1rem;
+					}
+
+					&:nth-child(3) {
+						width: 2.5rem;
+
+						@media screen and (max-width: 1100px) {
+							width: 2.3rem;
+						}
+					}
+
+					&:first-child,
+					&:nth-child(2),
+					&:nth-child(3) {
+						text-align: center;
+					}
+				}
+			}
     }
   }
 
-  > tbody {
-    > tr {
-      > td {
+  > .tableBody {
+    max-height: calc((45vh + 7px) / 2);
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+
+    > .tableRow {
+      display: flex;
+      justify-content: space-between;
+
+      > div {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
 
-				@media screen and (max-width: 800px) {
-					font-size: 14px;
-				}
+        @media screen and (max-width: 800px) {
+          font-size: 14px;
+        }
 
         &:first-child {
-					padding-right: 0.5rem;
+          padding-right: 0.5rem;
+          max-width: 11.6rem;
         }
-				
-        &:nth-child(2),
-        &:nth-child(3),
-        &:nth-child(4) {
-					text-align: center;
+
+        &:nth-child(2) {
+					display: flex;
+          > div {
+            width: 2rem;
+
+						@media screen and (max-width: 1100px) {
+							width: 1rem;
+						}
+
+            &:nth-child(3) {
+              width: 2.5rem;
+
+							@media screen and (max-width: 1100px) {
+								width: 2.3rem;
+							}
+            }
+
+            &:first-child,
+            &:nth-child(2),
+            &:nth-child(3) {
+              text-align: center;
+            }
+          }
         }
       }
     }
@@ -73,31 +124,31 @@
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
 
-	@media screen and (max-width: 800px) {
-		margin-top: 0;
-		padding-bottom: 2px;
-	}
+  @media screen and (max-width: 800px) {
+    margin-top: 0;
+    padding-bottom: 2px;
+  }
 
-	> a {
-		font: 300 .875rem var(--font-nunito);
-		text-decoration: underline;
-		color: var(--side-color);
-		margin-left: auto;
+  > a {
+    font: 300 0.875rem var(--font-nunito);
+    text-decoration: underline;
+    color: var(--side-color);
+    margin-left: auto;
 
-		@media screen and (max-width: 800px) {
-			font-size: 14px;
-		}
-	}
+    @media screen and (max-width: 800px) {
+      font-size: 14px;
+    }
+  }
 }
 
 .avr {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .drop {
@@ -105,66 +156,195 @@
 }
 
 .switchWrapper {
-	@media screen and (max-width: 800px) {
-		padding: 6px 10px;
-		display: flex;
+  @media screen and (max-width: 800px) {
+    padding: 6px 10px;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
-	}
+  }
 }
 
 .switchTable {
   text-align: left;
-  border-collapse: collapse;
+  // border-collapse: collapse;
 
-  thead {
+  > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
+    display: flex;
+    justify-content: space-between;
 
-		@media screen and (max-width: 800px) {
-			border-bottom: 1px solid #dfdfdf;
-		}
+    @media screen and (max-width: 800px) {
+      border-bottom: 1px solid #dfdfdf;
+    }
 
-    th {
+    > div {
       font: 700 0.75rem / 1.9rem var(--font-nunito);
       color: #838383;
-      width: 2rem;
 
-			@media screen and (max-width: 800px) {
-				font-size: 12px;
-			}
+      @media screen and (max-width: 800px) {
+        font-size: 12px;
+      }
 
       &:first-child {
-        width: 11.5rem;
+        max-width: 11.5rem;
+
+        // @media screen and (max-width: 800px) {
+        //   width: 16rem;
+        // }
       }
+
       &:nth-child(2) {
-        width: 4rem;
-      }
-      &:last-child > div{
-				justify-content: flex-end;
-      }
+				display: flex;
+				> div {
+					
+					&:first-child {
+						width: 4rem;
+
+					// 	@media screen and (max-width: 1150px) {
+					// 	width: 3rem;
+					// }
+					}
+
+					&:nth-child(2) > div {
+						justify-content: flex-end;
+					}
+					// @media screen and (max-width: 1100px) {
+					// 	width: 1rem;
+					// }
+
+					// &:nth-child(3) {
+					// 	width: 2.5rem;
+
+					// 	@media screen and (max-width: 1100px) {
+					// 		width: 1.6rem;
+					// 	}
+					// }
+
+					// &:first-child,
+					// &:nth-child(2),
+					// &:nth-child(3) {
+					// 	text-align: center;
+					// }
+				}
+			}
     }
   }
 
-  > tbody {
-    td {
-      font: 300 0.875rem / 1.9rem var(--font-nunito);
+  > .tableBody {
+    max-height: calc((47vh + 12px) / 2);
+    overflow-x: hidden;
+    overflow-y: scroll;
 
-			@media screen and (max-width: 800px) {
-				font-size: 14px;
-			}
+		&::-webkit-scrollbar {
+			width: 0;
+		}
 
-      &:first-child {
-        padding-right: 0.5rem;
-      }
+    > .tableRow {
+      display: flex;
+      justify-content: space-between;
 
-			&:last-child {
-        text-align: right;
-				padding-right: .2rem;
+      > div {
+        font: 300 0.875rem / 1.9rem var(--font-nunito);
+
+        @media screen and (max-width: 800px) {
+          font-size: 14px;
+        }
+
+        &:first-child {
+          max-width: 11.5rem;
+        }
+
+        &:nth-child(2) {
+					display: flex;
+					> div {
+						
+						&:first-child {
+							width: 4rem;
+	
+						// 	@media screen and (max-width: 1150px) {
+						// 	width: 3rem;
+						// }
+						}
+	
+						&:nth-child(2) {
+							padding-right: .2rem;
+						}
+						// @media screen and (max-width: 1100px) {
+						// 	width: 1rem;
+						// }
+	
+						// &:nth-child(3) {
+						// 	width: 2.5rem;
+	
+						// 	@media screen and (max-width: 1100px) {
+						// 		width: 1.6rem;
+						// 	}
+						// }
+	
+						// &:first-child,
+						// &:nth-child(2),
+						// &:nth-child(3) {
+						// 	text-align: center;
+						// }
+					}
+				}
       }
     }
   }
 }
 
+// .switchTable {
+//   text-align: left;
+//   border-collapse: collapse;
+
+//   thead {
+//     border-bottom: 0.5px solid #dfdfdf;
+
+//     @media screen and (max-width: 800px) {
+//       border-bottom: 1px solid #dfdfdf;
+//     }
+
+//     th {
+//       font: 700 0.75rem / 1.9rem var(--font-nunito);
+//       color: #838383;
+//       width: 2rem;
+
+//       @media screen and (max-width: 800px) {
+//         font-size: 12px;
+//       }
+
+//       &:first-child {
+//         width: 11.5rem;
+//       }
+//       &:nth-child(2) {
+//         width: 4rem;
+//       }
+//       &:last-child > div {
+//         justify-content: flex-end;
+//       }
+//     }
+//   }
+
+//   > tbody {
+//     td {
+//       font: 300 0.875rem / 1.9rem var(--font-nunito);
+
+//       @media screen and (max-width: 800px) {
+//         font-size: 14px;
+//       }
+
+//       &:first-child {
+//         padding-right: 0.5rem;
+//       }
+
+//       &:last-child {
+//         text-align: right;
+//         padding-right: 0.2rem;
+//       }
+//     }
+//   }
+// }
+
 .underlineHover > a:hover {
-	border-bottom: 2px solid var(--side-color);
+  border-bottom: 2px solid var(--side-color);
 }
