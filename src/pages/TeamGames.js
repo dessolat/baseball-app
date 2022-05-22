@@ -29,7 +29,7 @@ const TeamGames = () => {
           cancelToken: cancelTeamTokenRef.current.token,
           timeout: 5000
         });
-        console.log(response.data);
+
         setError('');
         dispatch(setTeamData(response.data));
       } catch (err) {

@@ -38,7 +38,7 @@ const PlayerStats = () => {
             timeout: 5000
           }
         );
-        console.log(response.data);
+
         setError('');
         dispatch(setPlayerStatsData(response.data));
       } catch (err) {

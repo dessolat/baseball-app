@@ -61,8 +61,6 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     const uniqueSortedDates = Array.from(new Set(sortedDates));
 
     const isDate = uniqueSortedDates.find(date => date === new Date().toJSON().slice(0, 10));
-    console.log(uniqueSortedDates);
-    console.log(isDate);
 
     let minDateDelta = Math.abs(new Date(uniqueSortedDates[0]) - new Date());
     let minDate = new Date();

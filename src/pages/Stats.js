@@ -58,7 +58,7 @@ const Stats = () => {
           cancelToken: cancelStatsTokenRef.current.token,
           timeout: 5000
         });
-        console.log(response.data);
+
         setError('');
         dispatch(setStatsData(refactorData(response.data)));
       } catch (err) {
