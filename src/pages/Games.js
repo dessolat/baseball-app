@@ -37,7 +37,7 @@ const Games = () => {
           cancelToken: cancelTokenRef.current.token,
           timeout: 5000
         });
-        console.log(response.data);
+
         setError('');
         dispatch(setGamesAndLeagues(response.data));
 
