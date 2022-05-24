@@ -12,7 +12,7 @@ const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', '
 
 const Content = ({ playerYears }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const tableType = useSelector(state => state.playerStats.tableType);
@@ -33,12 +33,16 @@ const Content = ({ playerYears }) => {
           league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
         );
 
+	const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id)
+
   const filteredLeague =
     currentLeague.id === -1
       ? null
       : currentTeam === 'All teams'
-      ? currentLeague.teams
-      : currentLeague.teams.find(team => team.name === currentTeam);
+      // ? statsData.teams
+      // : statsData.teams.find(team => team.name === currentTeam);
+      ? selectedLeague.teams
+      : selectedLeague.teams.find(team => team.name === currentTeam) || [];
   return (
     <section>
       <div className='container'>
