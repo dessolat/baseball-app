@@ -179,29 +179,35 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
                   style={{
                     width: isScrollable ? 'fit-content' : '100%'
                   }}>
-                  {TABLES_INFO[currentMode].headers.map((title, i) => (
-                    <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                      {title.name === 'POS'
-                        ? player.content.positions.join('/')
-                        : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
-                        ? player.content.stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
-                        : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
-                        ? player.content.stats.fielding[title.name]
-                        : title.isWider
-                        ? player.content.stats[
-                            BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                          ][title.name] === 'INF'
-                          ? 'INF'
-                          : Number(
-                              player.content.stats[
-                                BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                              ][title.name]
-                            ).toFixed(3)
-                        : player.content.stats[
-                            BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                          ][title.name]}
-                    </div>
-                  ))}
+                  {TABLES_INFO[currentMode].headers.map((title, i) => {
+										const value = title.name === 'POS'
+										? player.content.positions.join('/')
+										: ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
+										? player.content.stats[currentMode === 'Running' ? 'running' : 'catching'][
+												title.name
+											]
+										: ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
+										? player.content.stats.fielding[title.name]
+										: title.isWider
+										? player.content.stats[
+												BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+											][title.name] === 'INF'
+											? 'INF'
+											: Number(
+													player.content.stats[
+														BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+													][title.name]
+												).toFixed(3)
+										: player.content.stats[
+												BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+											][title.name]
+
+                    return (
+                      <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
+                        {Number(value) !== -1 ? value : '—'}
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}
