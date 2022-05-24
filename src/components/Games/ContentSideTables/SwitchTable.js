@@ -1,29 +1,90 @@
 import React from 'react';
 import cl from './ContentSideTables.module.scss';
-import ArrowDown from 'components/UI/icons/ArrowDown';
 import { Link } from 'react-router-dom';
+import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentSwitchDropdownValue, setCurrentSwitchTableMode } from 'redux/gamesReducer';
+import { getShortName } from 'utils';
 
-const SECOND_TABLE_DATA = [
-  { id: 1, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 2, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 3, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 4, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 5, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 6, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 7, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 8, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 9, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 10, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 11, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' },
-  { id: 12, name: 'Name', surname: 'SURNAME', team: 'RusStar', avr: '0000' }
-];
+const DROPDOWN_VALUES = {
+  batting: [
+    'AB',
+    'R',
+    'H',
+    '2B',
+    '3B',
+    'HR',
+    'RBI',
+    'GDP',
+    'BB',
+    'IBB',
+    'HP',
+    'SH',
+    'SF',
+    'SO',
+    'TB',
+    'AVG',
+    'SLG',
+    'OBP',
+    'OPS'
+  ],
+  running: ['SB', 'CS', '%SB', 'LOB'],
+  fielding: ['CH', 'PO', 'A', 'E', 'DP', 'FLD%'],
+  pitching: [
+    'IP',
+    'PA',
+    'R',
+    'ER',
+    'H',
+    '2B',
+    '3B',
+    'HR',
+    'BB',
+    'IBB',
+    'HP',
+    'SH',
+    'SF',
+    'SO',
+    'WP',
+    'BK',
+    'ERA',
+    'NP',
+    'NS',
+    'NB'
+  ]
+};
+
+const REPLACES = { 'FLD%': 'FLD', '%SB': 'SB_pr' };
 
 const SwitchTable = () => {
+  const players = useSelector(state => state.games.players);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+  const tableMode = useSelector(state => state.games.currentSwitchTableMode);
+  const dropdownValue = useSelector(state => state.games.currentSwitchDropdownValue);
+	const currentGameType = useSelector(state => state.shared.currentGameType)
+
+  const dispatch = useDispatch();
+
+  const handleTableModeClick = mode => dispatch(setCurrentSwitchTableMode(mode.toLowerCase()));
+  const handleDropdownClick = value => dispatch(setCurrentSwitchDropdownValue(value));
+
+  const tableModeValue = tableMode[0].toUpperCase() + tableMode.slice(1);
+
+  const league = players.find(
+    curLeague => curLeague.title === currentLeague.title || curLeague.title === currentLeague.name
+  );
+
   return (
     <div className={cl.switchWrapper}>
       <div className={cl.header}>
         <p className={cl.drop}>
-          Batting <ArrowDown />
+          <Dropdown
+            title={tableModeValue}
+            options={['Batting', 'Fielding', 'Running', 'Pitching']}
+            currentOption={tableModeValue}
+            handleClick={handleTableModeClick}
+            listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+          />
         </p>
         <Link to='/stats/player'>Go to Player Stat</Link>
       </div>
@@ -31,27 +92,54 @@ const SwitchTable = () => {
         <div className={cl.tableHeader}>
           <div>Name</div>
           <div>
-          <div>Team</div>
+            <div>Team</div>
             <div className={cl.avr}>
-              AVR 
-              <ArrowDown />
+              <Dropdown
+                title={dropdownValue[tableMode]}
+                options={DROPDOWN_VALUES[tableMode]}
+                currentOption={dropdownValue[tableMode]}
+                handleClick={handleDropdownClick}
+                listStyles={{ left: '-4px', width: 'calc(100% + .5rem)' }}
+                itemStyles={{ lineHeight: '.7rem', padding: '.2rem .5rem' }}
+              />
             </div>
           </div>
         </div>
         <div className={cl.tableBody}>
-          {SECOND_TABLE_DATA.map(row => (
-            <div key={row.id} className={cl.tableRow}>
-              <div className={cl.underlineHover}>
-                <Link to={`/stats/player/${row.name}/${row.surname}`}>
-                  {row.surname} {row.name}
+          {league && league.players[tableMode].map(row => {
+            const teams = row.teams.map((team, i) => {
+              if (i !== 0)
+                return (
+                  <>
+                    /
+										{/* {getShortName(team.name, 8)} */}
+                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
+                      {getShortName(team.name, 8)}
+                    </Link>
+                  </>
+                );
+              return (
+								// <>{getShortName(team.name, 8)}</>
+                <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
+                  {getShortName(team.name, 8)}
                 </Link>
+              );
+            });
+
+            return (
+              <div key={row.id} className={cl.tableRow}>
+                <div className={cl.underlineHover}>
+                  <Link to={`/stats/player/${row.id}`}>
+                    {row.surname} {row.name}
+                  </Link>
+                </div>
+                <div>
+                  <div>{teams}</div>
+                  <div>{row[REPLACES[dropdownValue[tableMode]]] || row[dropdownValue[tableMode]]}</div>
+                </div>
               </div>
-              <div>
-                <div>{row.team}</div>
-                <div>{row.avr}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
