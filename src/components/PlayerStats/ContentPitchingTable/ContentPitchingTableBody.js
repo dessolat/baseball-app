@@ -89,7 +89,7 @@ const ContentPitchingTableBody = ({
   const yearsAllLeagueTeamTotals =
     currentLeague.id === -1 &&
     currentTeam !== 'All teams' &&
-    (currentTeam !== undefined
+    ((currentTeam !== undefined && playerStatsData.teams.find(team => team.name === currentTeam))
       ? playerYears === 'All years'
         ? playerStatsData.teams.find(team => team.name === currentTeam).stats
         : playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]
@@ -99,6 +99,8 @@ const ContentPitchingTableBody = ({
     currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
       ? playerStatsData.total
       : playerStatsData.total_annual[playerYears];
+
+			const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id)
   return (
     <ul className={cl.rows}>
       {currentLeague.id === -1 ? (
@@ -112,7 +114,7 @@ const ContentPitchingTableBody = ({
                   <li key={index} className={cl.tableRow}>
                     {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                     <div className={cl.league}>{row.title}</div>
-                    <div className={cl.teamName}>{team.name}</div>
+                    <div className={cl.teamName}>{getShortName(team.name, 20)}</div>
                     <ActiveBodyCell sortField={sortField} row={team.pitching}>
                       IP
                     </ActiveBodyCell>
@@ -254,7 +256,7 @@ const ContentPitchingTableBody = ({
                 <li key={i} className={cl.tableRow}>
                   {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                   <div className={cl.league}>{row.title}</div>
-                  <div className={cl.teamName}>{row.team_name}</div>
+                  <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
                   <ActiveBodyCell sortField={sortField} row={row.game.pitching}>
                     IP
                   </ActiveBodyCell>
@@ -474,104 +476,104 @@ const ContentPitchingTableBody = ({
             <div className={cl.teamName}></div>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               IP
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               PA
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               R
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               ER
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               H
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               2B
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               3B
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               HR
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               BB
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               IBB
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               HP
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               SH
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               SF
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               SO
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               WP
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               BK
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
               fixed={3}
               addedClass={cl.wider}>
               ERA
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               NP
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               NS
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? currentLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
               NB
             </ActiveBodyCell>
           </li>
