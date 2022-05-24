@@ -6,6 +6,7 @@ import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
+import { setCurrentLeague } from 'redux/gamesReducer';
 
 const YEARS = ['All years', 2022, 2021, 2020];
 const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
@@ -44,6 +45,8 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const handleYearClick = option => {
     setPlayerYears(option);
 
+    dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
+
     if (option === 'All years') return;
 
     const tempDate = new Date(option, 0, 1);
@@ -56,6 +59,8 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
   const handleTeamClick = team => {
     dispatch(setCurrentTeam(team));
   };
+
+	const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id)
 
   const teamsArray =
     playerYears === 'All years'
@@ -74,12 +79,14 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               return sum;
             }, new Set())
         )
-      : currentLeague.teams ? (currentLeague.teams.length > 1
-      ? currentLeague.teams.reduce((sum, team) => {
-          sum.push(team.name);
-          return sum;
-        }, [])
-      : [currentLeague.teams[0].name]) : [];
+      : selectedLeague?.teams
+      ? selectedLeague.teams.length > 1
+        ? selectedLeague.teams.reduce((sum, team) => {
+            sum.push(team.name);
+            return sum;
+          }, [])
+        : [selectedLeague.teams[0].name]
+      : [];
   teamsArray.unshift('All teams');
 
   const handleTableOptionClick = option => dispatch(setTableType(option));
