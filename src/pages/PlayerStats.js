@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import { setPlayerStatsData } from 'redux/playerStatsReducer';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -14,10 +14,11 @@ const PlayerStats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [error, setError] = useState('');
   const currentYear = useSelector(state => state.shared.currentYear);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const [playerYears, setPlayerYears] = useState(currentYear);
 
   const cancelTokenRef = useRef();
-  // const firstMountRef = useRef(true);
+  const firstMountRef = useRef(true);
 
   const { playerId } = useParams();
 
@@ -25,21 +26,25 @@ const PlayerStats = () => {
   // const games = useSelector(state => state.games.games);
   const dispatch = useDispatch();
 
+  useEffect(() => () => dispatch(setPlayerStatsData({})), []);
+
   useEffect(() => {
+    const isLeague = data => data.leagues.find(league => league.id === currentLeague.id);
+
     const fetchStats = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
 
       try {
         setIsStatsLoading(true);
-        const response = await axios.get(
-          `http://51.250.71.224:3030/player?id=${playerId}`,
-          {
-            cancelToken: cancelTokenRef.current.token,
-            timeout: 5000
-          }
-        );
+        const response = await axios.get(`http://51.250.71.224:3030/player?id=${playerId}`, {
+          cancelToken: cancelTokenRef.current.token,
+          timeout: 5000
+        });
 
         setError('');
+
+        !isLeague(response.data) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
+
         dispatch(setPlayerStatsData(response.data));
       } catch (err) {
         if (err.message === null) return;
@@ -51,7 +56,12 @@ const PlayerStats = () => {
     };
     fetchStats();
 
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
+    dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
 
     return () => {
       cancelTokenRef.current.cancel(null);
