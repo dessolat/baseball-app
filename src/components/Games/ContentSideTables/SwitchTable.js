@@ -114,14 +114,14 @@ const SwitchTable = () => {
                     /
 										{/* {getShortName(team.name, 8)} */}
                     <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                      {getShortName(team.name, 8)}
+                      {getShortName(team.name, 7)}
                     </Link>
                   </>
                 );
               return (
 								// <>{getShortName(team.name, 8)}</>
                 <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                  {getShortName(team.name, 8)}
+                  {getShortName(team.name, 7)}
                 </Link>
               );
             });
