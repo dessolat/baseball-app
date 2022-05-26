@@ -1,24 +1,28 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getObjectsSum } from 'utils';
+import { setSortDirection, setSortField } from 'redux/statsReducer';
 
 const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
-  const [sortField, setSortField] = useState('AB');
-  const [sortDirection, setSortDirection] = useState('desc');
-
   const tableMode = useSelector(state => state.stats.tableMode);
+  const sortField = useSelector(state => state.stats.sortField);
+  const sortDirection = useSelector(state => state.stats.sortDirection);
   const statsData = useSelector(state => state.stats.statsData);
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
 
+	const dispatch = useDispatch()
+
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
 
   const handleFieldClick = field => () => {
-    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    sortField[tableMode] !== field
+      ? dispatch(setSortField(field))
+      : dispatch(setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'));
   };
 
   const filteredStatsData =
@@ -51,7 +55,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
               <div>Team</div>
             </div>
             <div className={cl.rightHeader} ref={headerScroll}>
-              {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
+              {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
                 top: '.1rem',
                 transform: 'translateX(-50%) scale(0.7)'
               })}
@@ -59,27 +63,34 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
           </div>
           <div className={cl.sides}>
             <div className={cl.leftRows}>
-              {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
-                return (
-                  <div key={index} className={cl.tableRow}>
-                    <div>
-                      <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}> {row.name}</Link>
+              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                (row, index) => {
+                  return (
+                    <div key={index} className={cl.tableRow}>
+                      <div>
+                        <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}>
+                          {' '}
+                          {row.name}
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
             <div
               className={cl.rightRows}
               onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
               ref={rowsScroll}>
-              {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
-                return (
-                  <div key={index} className={cl.tableRow}>
-                    {getTableRows(row, cl, sortField)}
-                  </div>
-                );
-              })}
+              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                (row, index) => {
+                  return (
+                    <div key={index} className={cl.tableRow}>
+                      {getTableRows(row, cl, sortField[tableMode])}
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
@@ -88,24 +99,26 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
           <div>
             <div className={cl.tableHeader}>
               <div>Team</div>
-              {getTableHeaders(sortField, sortDirection, handleFieldClick, cl)}
+              {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
             </div>
             <ul className={cl.rows}>
-              {getSortedStatsData(filteredStatsData, sortField, sortDirection).map((row, index) => {
-                return (
-                  <li key={index} className={cl.tableRow}>
-                    <div>
-                      <Link
-                        className={cl.teamName}
-                        to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}>
-                        {' '}
-                        {row.name}
-                      </Link>
-                    </div>
-                    {getTableRows(row, cl, sortField)}
-                  </li>
-                );
-              })}
+              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                (row, index) => {
+                  return (
+                    <li key={index} className={cl.tableRow}>
+                      <div>
+                        <Link
+                          className={cl.teamName}
+                          to={`/games/team/${currentGameType.toLowerCase()}/${row.name}`}>
+                          {' '}
+                          {row.name}
+                        </Link>
+                      </div>
+                      {getTableRows(row, cl, sortField[tableMode])}
+                    </li>
+                  );
+                }
+              )}
             </ul>
           </div>
         </div>
