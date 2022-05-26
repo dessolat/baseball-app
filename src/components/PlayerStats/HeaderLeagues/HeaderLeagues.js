@@ -3,7 +3,8 @@ import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentLeague, setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
 
 const HeaderLeagues = ({ playerYears }) => {
@@ -47,7 +48,7 @@ const HeaderLeagues = ({ playerYears }) => {
     dispatch(setCurrentLeaguesScroll(0));
     setScrollArrows();
 
-		//Set currentLeague to first if leagues count === 1, else set to All
+    //Set currentLeague to first if leagues count === 1, else set to All
     const filteredLeagues = playerStatsData.leagues.filter(league => league.year === playerYears);
     filteredLeagues.length !== 1
       ? dispatch(setCurrentLeague({ id: -1, name: 'All' }))
