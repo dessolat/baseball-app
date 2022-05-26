@@ -428,13 +428,6 @@ const Content = () => {
           addedClass={cl.wider}>
           FLD
         </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          R
-        </SortField>
       </>
     );
 
@@ -617,10 +610,6 @@ const Content = () => {
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
           FLD
-        </ActiveBodyCell>
-
-        <ActiveBodyCell sortField={sortField} row={row}>
-          R
         </ActiveBodyCell>
       </>
     );
