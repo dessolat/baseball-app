@@ -8,7 +8,7 @@ const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYear
   const [sortField, setSortField] = useState('PA');
   const [sortDirection, setSortDirection] = useState('asc');
 
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
 
 	const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');

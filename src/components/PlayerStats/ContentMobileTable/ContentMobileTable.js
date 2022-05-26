@@ -11,7 +11,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
 
-  const currentLeague = useSelector(state => state.shared.currentLeague);
+  const currentLeague = useSelector(state => state.games.currentLeague);
   const tableMode = useSelector(state => state.playerStats.tableType);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
 
