@@ -2,6 +2,7 @@ import React from 'react';
 import cl from './HeaderLeagues.module.scss';
 
 const HeaderLeaguesListItem = ({ league, handleClick, currentLeague }) => {
+  const leagueName = league.name !== 'All' ? league.name : 'All leagues';
   return (
     <li
       className={
@@ -14,7 +15,7 @@ const HeaderLeaguesListItem = ({ league, handleClick, currentLeague }) => {
           : cl.league
       }
       onClick={handleClick(league)}>
-      {league.name}
+      {leagueName}
     </li>
   );
 };
