@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import cl from './ContentSideTables.module.scss';
 import { Link } from 'react-router-dom';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
@@ -61,7 +61,7 @@ const SwitchTable = () => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const tableMode = useSelector(state => state.games.currentSwitchTableMode);
   const dropdownValue = useSelector(state => state.games.currentSwitchDropdownValue);
-	const currentGameType = useSelector(state => state.shared.currentGameType)
+  const currentGameType = useSelector(state => state.shared.currentGameType);
 
   const dispatch = useDispatch();
 
@@ -73,6 +73,18 @@ const SwitchTable = () => {
   const league = players.find(
     curLeague => curLeague.title === currentLeague.title || curLeague.title === currentLeague.name
   );
+
+  const sortedPlayers = useMemo(() => {
+    if (league) {
+      const sortField = REPLACES[dropdownValue[tableMode]] || dropdownValue[tableMode];
+      return league.players[tableMode]
+        .slice()
+        .sort((a, b) => (a[sortField] > b[sortField] ? -1 : 1))
+        .slice(0, 5);
+    }
+
+    return [];
+  }, [league, tableMode, dropdownValue]);
 
   return (
     <div className={cl.switchWrapper}>
@@ -106,21 +118,19 @@ const SwitchTable = () => {
           </div>
         </div>
         <div className={cl.tableBody}>
-          {league && league.players[tableMode].map(row => {
+          {sortedPlayers.map(row => {
             const teams = row.teams.map((team, i) => {
               if (i !== 0)
                 return (
                   <>
                     /
-										{/* {getShortName(team.name, 8)} */}
-                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
+                    <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
                       {getShortName(team.name, 7)}
                     </Link>
                   </>
                 );
               return (
-								// <>{getShortName(team.name, 8)}</>
-                <Link to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
+                <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
                   {getShortName(team.name, 7)}
                 </Link>
               );
