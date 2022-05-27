@@ -155,9 +155,21 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     // newDate.setDate(newDate.getDate() + (dir === 'right' ? 1 : -1));
     targetDate && handleDateClick(new Date(targetDate))();
   };
+
+	//Arrow classes handling
+  const leftArrowClasses = [cl.arrow];
+  const rightArrowClasses = [cl.arrow];
+  (availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)) &&
+    leftArrowClasses.push(cl.hidden);
+  (availableDates.length === 0 || availableDates.slice(-1)[0] === currentDate.toJSON().slice(0, 10)) &&
+    rightArrowClasses.push(cl.hidden);
   return (
     <div className={cl.calendar}>
-      <Arrow onClick={handleArrowClick('left')} style={{ marginRight: isMobile ? 0 : '.3rem' }} />
+      <Arrow
+        onClick={handleArrowClick('left')}
+        style={{ marginRight: isMobile ? 0 : '.3rem' }}
+        className={leftArrowClasses.join(' ')}
+      />
       <ContentCalendarList
         currentDate={currentDate}
         handleClick={handleDateClick}
@@ -168,6 +180,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
         direction='right'
         onClick={handleArrowClick('right')}
         style={{ marginLeft: isMobile ? 0 : '.5rem' }}
+        className={rightArrowClasses.join(' ')}
       />
     </div>
   );

@@ -44,3 +44,12 @@
 		font-size: 10px;
   }
 }
+
+.arrow {
+	opacity: 1;
+	transition: opacity var(--transition-speed);
+}
+
+.hidden {
+	opacity: 0;
+}
