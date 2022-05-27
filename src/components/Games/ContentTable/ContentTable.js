@@ -101,26 +101,7 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-  //teamOptions calculation
-  const teamOptions = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          filteredHeadings.reduce(
-            (sum, cur) => {
-              sum.push(cur.owners_name);
-              sum.push(cur.guests_name);
-              return sum;
-            },
-            ['All']
-          )
-        )
-      ),
-    [filteredHeadings]
-  );
 
-  //teamOptions sorting
-  useMemo(() => teamOptions.sort((a, b) => (a > b ? 1 : -1)), [teamOptions]);
 
   // const homeOptions = Array.from(
   //   new Set(

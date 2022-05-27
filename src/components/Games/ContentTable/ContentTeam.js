@@ -10,13 +10,13 @@ const ContentTeam = ({ games }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const currentHome = useSelector(state => state.games.currentHome);
-	const currentGuests = useSelector(state => state.games.currentGuests);
-	const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentGuests = useSelector(state => state.games.currentGuests);
+  const currentGameType = useSelector(state => state.shared.currentGameType);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
-	const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
+  const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
+  const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
   const filteredHeadings = games.filter(game => {
     return currentLeague.id === -1 ? currentGameType === game.game_type : game.league_id === currentLeague.id;
@@ -39,6 +39,9 @@ const ContentTeam = ({ games }) => {
       ),
     [filteredHeadings]
   );
+
+  //teamOptions sorting
+  useMemo(() => teamOptions.sort((a, b) => (a > b ? 1 : -1)), [teamOptions]);
   return (
     <div className={cl.teamWrapper}>
       <img
@@ -62,14 +65,14 @@ const ContentTeam = ({ games }) => {
             />
           </div>
           <div className={cl.teamSelector}>
-              <Dropdown
-                title={getShortName(currentGuests, 18)}
-                options={teamOptions}
-                currentOption={currentGuests}
-                handleClick={handleGuestsDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </div>
+            <Dropdown
+              title={getShortName(currentGuests, 18)}
+              options={teamOptions}
+              currentOption={currentGuests}
+              handleClick={handleGuestsDropdownClick}
+              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+            />
+          </div>
         </div>
       </div>
     </div>
