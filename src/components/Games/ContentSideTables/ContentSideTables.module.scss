@@ -70,9 +70,14 @@
   }
 
   > .tableBody {
-    max-height: calc((45vh + 7px) / 2);
+    // max-height: calc((45vh + 7px) / 2);
+		max-height: 15.2rem;
     overflow-x: hidden;
     overflow-y: scroll;
+
+		@media screen and (max-height: 1000px) {
+			max-height: 13.3rem;
+		}
 
     &::-webkit-scrollbar {
       width: 0;
@@ -84,6 +89,10 @@
 
       > div {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
+
+				@media screen and (max-height: 1000px) {
+					line-height: 1.65rem;
+				}
 
         @media screen and (max-width: 800px) {
           font-size: 14px;
@@ -235,9 +244,9 @@
   }
 
   > .tableBody {
-    max-height: calc((47vh + 12px) / 2);
-    overflow-x: hidden;
-    overflow-y: scroll;
+    // max-height: calc((47vh + 12px) / 2);
+    // overflow-x: hidden;
+    // overflow-y: scroll;
 
     @media screen and (max-width: 800px) {
       max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 35px);
@@ -253,6 +262,10 @@
 
       > div {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
+
+				@media screen and (max-height: 1000px) {
+					line-height: 1.65rem;
+				}
 
         @media screen and (max-width: 800px) {
           font-size: 14px;
