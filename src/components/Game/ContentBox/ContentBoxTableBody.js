@@ -38,7 +38,7 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
 								: ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
 								? player.content.stats.fielding[title]
 								: toFixList.includes(title)
-								? player.content.stats[tableName][title] === 'INF'
+								? player.content.stats[tableName][title] === 'Infinity'
 									? 'INF'
 									: Number(player.content.stats[tableName][title]).toFixed(3)
 								: player.content.stats[tableName][title]
