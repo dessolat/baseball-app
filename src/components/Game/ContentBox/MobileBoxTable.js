@@ -191,7 +191,7 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 										: title.isWider
 										? player.content.stats[
 												BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-											][title.name] === 'INF'
+											][title.name] === 'Infinity'
 											? 'INF'
 											: Number(
 													player.content.stats[
