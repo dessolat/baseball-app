@@ -89,7 +89,7 @@ const SwitchTable = () => {
   return (
     <div className={cl.switchWrapper}>
       <div className={cl.header}>
-        <p className={cl.drop}>
+        <div className={cl.drop}>
           <Dropdown
             title={tableModeValue}
             options={['Batting', 'Fielding', 'Running', 'Pitching']}
@@ -97,7 +97,7 @@ const SwitchTable = () => {
             handleClick={handleTableModeClick}
             listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
           />
-        </p>
+        </div>
         <Link to='/stats/player'>Go to Player Stat</Link>
       </div>
       <div className={cl.switchTable}>
