@@ -2,7 +2,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setCurrentGuests, setCurrentHome, setCurrentStadium } from 'redux/gamesReducer';
+import { setCurrentStadium } from 'redux/gamesReducer';
 import { getShortName } from 'utils';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
@@ -21,6 +21,8 @@ const MONTHS = {
   11: 'november',
   12: 'december'
 };
+
+const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
@@ -101,8 +103,6 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-
-
   // const homeOptions = Array.from(
   //   new Set(
   //     filteredHeadings.reduce(
@@ -154,7 +154,10 @@ const ContentTable = ({ games }) => {
             {filteredData.map((game, index, arr) => {
               const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
               const isActive = currentDate.toJSON().slice(0, 10) === game.date;
-              const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] : null;
+              const weekDay = isActive ? WEEK_DAYS[new Date(game.date).getDay()] + ', ' : '';
+              const dataBefore = isDate
+                ? weekDay + game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
+                : null;
 
               const classes = [cl.tableRow];
               isDate && classes.push(cl.withDate);
