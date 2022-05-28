@@ -202,7 +202,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
-          SHO
+          SV
         </SortField>
         <SortField
           sortField={sortField}
@@ -513,7 +513,7 @@ const Content = () => {
           CG
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
-          SHO
+          SV
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
           IP
