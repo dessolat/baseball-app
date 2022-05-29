@@ -42,10 +42,10 @@ const Game = () => {
       });
 
     const resizeHandle = () => {
-      dispatch(setMobileWidth(window.innerWidth))
+      dispatch(setMobileWidth(window.innerWidth));
     };
 
-		resizeHandle()
+    resizeHandle();
     window.addEventListener('resize', resizeHandle);
 
     return () => {
@@ -54,10 +54,7 @@ const Game = () => {
       // eslint-disable-next-line
       clearInterval(intervalRef.current);
       dispatch(resetData());
-			window.removeEventListener('resize', resizeHandle)
-      // dispatch(setCurrentCard({}));
-      // dispatch(setCurrentGameId(null));
-      // dispatch(setSituationFilter('All'));
+      window.removeEventListener('resize', resizeHandle);
     };
     // eslint-disable-next-line
   }, []);
@@ -82,7 +79,6 @@ const Game = () => {
   const isFilters = currentTab !== 'box';
   return (
     <>
-      {/* <GameIdForm isLoading={isLoading} /> */}
       {error ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
