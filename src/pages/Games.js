@@ -9,7 +9,6 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
 
 const Games = () => {
-  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -23,9 +22,6 @@ const Games = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
-
-	// eslint-disable-next-line
-  // useEffect(() => () => dispatch(setGamesAndLeagues({ games: null, leagues: null })), []);
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -91,7 +87,6 @@ const Games = () => {
   }, [games, leagues]);
 
   useEffect(() => {
-    // if (firstMountRef.current === true) return;
     if (firstMountRef.current === true) {
       return;
     }
