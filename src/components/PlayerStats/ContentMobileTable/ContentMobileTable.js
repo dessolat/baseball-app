@@ -14,6 +14,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const currentLeague = useSelector(state => state.games.currentLeague);
   const tableMode = useSelector(state => state.playerStats.tableType);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
+  const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
 
   const headerScroll = useRef(null);
   const rowScrollRef = useRef();
@@ -644,7 +645,22 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   };
   !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
 
-  console.log(allTeamGames);
+  const yearsAllLeagueTeamTotals =
+    currentLeague.id === -1 &&
+    currentTeam !== 'All teams' &&
+    (currentTeam !== undefined && playerStatsData.teams.find(team => team.name === currentTeam)
+      ? playerYears === 'All years'
+        ? playerStatsData.teams.find(team => team.name === currentTeam).stats
+        : playerStatsData.teams.find(team => team.name === currentTeam).annual_stats[playerYears]
+      : null);
+
+  const yearsAllLeagueAllTeamTotals =
+    currentLeague.id === -1 && currentTeam === 'All teams' && playerYears === 'All years'
+      ? playerStatsData.total
+      : playerStatsData.total_annual[playerYears];
+
+  const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
+  console.log(yearsAllLeagueTeamTotals);
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -668,43 +684,60 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             <>
               {currentTeam !== 'All teams' ? (
                 <>
-                  {sortedLeagues.map((row, index) => {
-                    const team = row.teams.find(team => team.name === currentTeam);
-                    return (
-                      <div key={index} className={cl.tableRow}>
-                        {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                        <div className={cl.league}>{row.title}</div>
-                      </div>
-                    );
-                  })}
+                  {sortedLeagues.map((row, index) => (
+                    <div key={index} className={cl.tableRow}>
+                      {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
+                      <div className={cl.league}>{row.title}</div>
+                    </div>
+                  ))}
+                  {sortedLeagues.length > 0 && (
+                    <div className={cl.tableRow + ' ' + cl.tableFooter}>
+                      {playerYears === 'All years' && <div className={cl.years}></div>}
+                      <div className={cl.league}>TOTALS</div>
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
-                  {allTeamGames.map((row, index) => {
-                    return (
-                      <div key={index} className={cl.tableRow}>
-                        {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                        <div className={cl.league}>{row.title}</div>
-                      </div>
-                    );
-                  })}
+                  {allTeamGames.map((row, index) => (
+                    <div key={index} className={cl.tableRow}>
+                      {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
+                      <div className={cl.league}>{row.title}</div>
+                    </div>
+                  ))}
+                  {allTeamGames.length > 0 && (
+                    <div className={cl.tableRow + ' ' + cl.tableFooter}>
+                      {playerYears === 'All years' && <div className={cl.years}></div>}
+                      <div className={cl.league}>TOTALS</div>
+                    </div>
+                  )}
                 </>
               )}
             </>
           ) : (
             //Selected league
-            sortedLeagueGames.map((row, index) => (
-              <div key={index} className={cl.tableRow}>
-                <div className={cl.game}>
-                  <div className={cl.date}>
-                    {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
+            <>
+              {sortedLeagueGames.map((row, index) => (
+                <div key={index} className={cl.tableRow}>
+                  <div className={cl.game}>
+                    <div className={cl.date}>
+                      {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
+                    </div>
+                    <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
+                      {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
+                    </Link>
                   </div>
-                  <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
-                    {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
-                  </Link>
                 </div>
-              </div>
-            ))
+              ))}
+              {sortedLeagueGames.length > 0 && (
+                <div className={cl.tableRow + ' ' + cl.tableFooter}>
+                  <div className={cl.game}>
+                    <div className={cl.date}></div>
+                    <div className={cl.teamNames}>TOTALS</div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
         <div
@@ -728,36 +761,65 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       </div>
                     );
                   })}
+                  {sortedLeagues.length > 0 && (
+                    <div
+                      className={cl.tableRow + ' ' + cl.tableFooter}
+                      style={{
+                        width: !isScrollable ? '100%' : 'fit-content'
+                      }}>
+                      {getTableRows(yearsAllLeagueTeamTotals[tableMode.toLowerCase()], cl, sortField)}
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
-                  {allTeamGames.map((row, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className={cl.tableRow}
-                        style={{
-                          width: !isScrollable ? '100%' : 'fit-content'
-                        }}>
-                        {getTableRows(row.game[tableMode.toLowerCase()], cl, sortField)}
-                      </div>
-                    );
-                  })}
+                  {allTeamGames.map((row, index) => (
+                    <div
+                      key={index}
+                      className={cl.tableRow}
+                      style={{
+                        width: !isScrollable ? '100%' : 'fit-content'
+                      }}>
+                      {getTableRows(row.game[tableMode.toLowerCase()], cl, sortField)}
+                    </div>
+                  ))}
+                  {allTeamGames.length > 0 && (
+                    <div
+                      className={cl.tableRow + ' ' + cl.tableFooter}
+                      style={{
+                        width: !isScrollable ? '100%' : 'fit-content'
+                      }}>
+                      {getTableRows(yearsAllLeagueAllTeamTotals[tableMode.toLowerCase()], cl, sortField)}
+                    </div>
+                  )}
                 </>
               )}
             </>
           ) : (
             //Selected league
-            sortedLeagueGames.map((row, index) => (
-              <div
-                key={index}
-                className={cl.tableRow}
-                style={{
-                  width: !isScrollable ? '100%' : 'fit-content'
-                }}>
-                {getTableRows(row, cl, sortField)}
-              </div>
-            ))
+            <>
+              {sortedLeagueGames.map((row, index) => (
+                <div
+                  key={index}
+                  className={cl.tableRow}
+                  style={{
+                    width: !isScrollable ? '100%' : 'fit-content'
+                  }}>
+                  {getTableRows(row, cl, sortField)}
+                </div>
+              ))}
+              {sortedLeagueGames.length > 0 && (
+                <div className={cl.tableRow + ' ' + cl.tableFooter}>
+                  {getTableRows(
+                    currentTeam === 'All teams'
+                      ? selectedLeague.total[tableMode.toLowerCase()]
+                      : filteredLeague[tableMode.toLowerCase()],
+                    cl,
+                    sortField
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
