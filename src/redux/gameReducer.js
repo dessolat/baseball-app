@@ -5,17 +5,18 @@ const defaultState = {
   situations: ['All'],
   situationFilter: 'All',
   currentCard: {},
-	currentMoment: {},
-	playersInfo: {},
-	imagesData: {},
-	filteredCards: [],
+  currentMoment: {},
+  playersInfo: {},
+  imagesData: {},
+  filteredCards: [],
   playbackMode: 'pause',
   viewMode: 'mode-1',
   currentGameId: null,
-	activeCardList: 'cards',
-	boxActiveButton: 'guests',
-	isVideo: false,
-	pitchState: 'Field'
+  activeCardList: 'cards',
+  boxActiveButton: 'guests',
+  isVideo: false,
+  pitchState: 'Field',
+  errorMsg: null
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -35,6 +36,7 @@ const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
 const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const RESET_DATA = 'RESET_DATA';
+const SET_ERROR_MSG = 'SET_ERROR_MSG';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -53,7 +55,7 @@ export const gameReducer = (state = defaultState, action) => {
     case SET_PLAYERS_INFO:
       return { ...state, playersInfo: action.payload };
     case SET_IMAGES_DATA:
-      return { ...state, imagesData: {...state.imagesData, ...action.payload} };
+      return { ...state, imagesData: { ...state.imagesData, ...action.payload } };
     case SET_FILTERED_CARDS:
       return { ...state, filteredCards: action.payload };
     case SET_PLAYBACK_MODE:
@@ -72,6 +74,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, pitchState: action.payload };
     case RESET_DATA:
       return defaultState;
+    case SET_ERROR_MSG:
+      return { ...state, errorMsg: action.payload };
     default:
       return state;
   }
@@ -94,3 +98,4 @@ export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, pay
 export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const resetData = () => ({ type: RESET_DATA });
+export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
