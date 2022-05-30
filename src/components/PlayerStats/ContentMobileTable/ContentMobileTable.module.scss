@@ -2,16 +2,15 @@
   border-top: 0.5px solid #cdcccc;
   width: 100%;
   padding: 0;
-	height: calc(100vh - 30.63px - 132px - 56px);
-
+  height: calc(100vh - 30.63px - 132px - 56px);
 }
 
 .fullHeader {
-	width: 100%;
+  width: 100%;
   display: flex;
-	
+
   > .leftHeader {
-		background-color: white;
+    background-color: white;
     display: flex;
     font-size: 12px;
     font-weight: 700;
@@ -20,7 +19,7 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     flex: 0 0 185px;
-		border-right: 0.5px solid transparent;
+    border-right: 0.5px solid transparent;
 
     > div {
       &.years {
@@ -52,7 +51,7 @@
     width: inherit;
     overflow-x: hidden;
     scroll-behavior: initial;
-		justify-content: space-between;
+    justify-content: space-between;
 
     > div {
       flex: 0 0 2rem;
@@ -69,7 +68,6 @@
   max-height: calc(100vh - 30.63px - 132px - 57px - 38.5px);
   overflow-y: scroll;
   display: flex;
-
 
   &::-webkit-scrollbar {
     width: 0;
@@ -97,28 +95,28 @@
       &.league {
         padding-left: 10.5px;
         width: 150px;
-				height: 38.5px;
-				line-height: 15px;
-				display: flex;
-				align-items: center;
+        height: 38.5px;
+        line-height: 15px;
+        display: flex;
+        align-items: center;
       }
 
       &.game {
         padding-left: 10.5px;
         width: 260px;
-				height: 38.5px;
-				line-height: 15px;
-				display: flex;
-				align-items: center;
+        height: 38.5px;
+        line-height: 15px;
+        display: flex;
+        align-items: center;
 
-				> .date {
-					flex: 0 0 50px;
-				}
+        > .date {
+          flex: 0 0 50px;
+        }
 
-				> .teamNames {
-					font-weight: 700;
-					padding-left: 5px;
-				}
+        > .teamNames {
+          font-weight: 700;
+          padding-left: 5px;
+        }
       }
 
       .fullName {
@@ -134,18 +132,22 @@
       background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
   }
+
+  > .tableFooter > div {
+    font-weight: 700;
+  }
 }
 
 .rightRows {
   overflow-x: scroll;
   height: fit-content;
-	width: inherit;
-	
+  width: inherit;
+
   > .tableRow {
-		display: flex;
+    display: flex;
     justify-content: space-between;
     height: 38.5px;
-		width: max-content;
+    width: max-content;
 
     > div {
       width: 2rem !important;
@@ -162,5 +164,9 @@
     &:nth-child(2n) {
       background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
+  }
+
+	> .tableFooter > div {
+    font-weight: 700;
   }
 }
