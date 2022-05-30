@@ -4,7 +4,6 @@ import { setMobileTableMode } from 'redux/teamGamesReducer';
 import cl from './ContentMobileHeader.module.scss';
 
 const ContentHeaderModeLinks = () => {
-  const isMobile = useSelector(state => state.shared.isMobile);
   const mobileTableMode = useSelector(state => state.teamGames.mobileTableMode);
   const dispatch = useDispatch();
 
