@@ -10,7 +10,7 @@ const PlaysEventsTotal = ({ moments }) => {
   const { balls_count, strikes_count } = (isTotal && moments.slice(-1)[0].pitcher) || '';
 
   return (
-    <p className={cl.total}>
+    <div className={cl.total}>
       {isTotal && (
         <>
           {!isVideo && (
@@ -24,7 +24,7 @@ const PlaysEventsTotal = ({ moments }) => {
           </span>
         </>
       )}
-    </p>
+    </div>
   );
 };
 
