@@ -3,12 +3,18 @@ import cl from './ActiveBodyCell.module.scss';
 
 const ActiveBodyCell = ({ sortField, addedClass = null, row, fixed = null, children }) => {
   const isRow = row !== undefined;
-
+	
   return (
     <>
       {isRow && (
         <div className={sortField === children ? cl.activeCell + ' ' + addedClass : addedClass}>
-          {fixed ? Number(row[children]).toFixed(fixed) : row[children]}
+          {row[children] < 0
+            ? '—'
+            : row[children] === 'inf'
+            ? 'INF'
+            : fixed
+            ? Number(row[children]).toFixed(fixed)
+            : row[children]}
         </div>
       )}
     </>
