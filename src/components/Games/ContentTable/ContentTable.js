@@ -154,7 +154,7 @@ const ContentTable = ({ games }) => {
             {filteredData.map((game, index, arr) => {
               const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
               const isActive = currentDate.toJSON().slice(0, 10) === game.date;
-              const weekDay = isActive ? WEEK_DAYS[new Date(game.date).getDay()] + ', ' : '';
+              const weekDay = WEEK_DAYS[new Date(game.date).getDay()] + ', ';
               const dataBefore = isDate
                 ? weekDay + game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
                 : null;
