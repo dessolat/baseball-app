@@ -45,7 +45,7 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
 
                 return (
                   <td key={i} style={toFixList.includes(title) ? { width: '3rem' } : null}>
-                    {Number(value) !== -1 ? value : '—'}
+                    {Number(value) < 0 ? '—' : value}
                   </td>
                 );
               })}
