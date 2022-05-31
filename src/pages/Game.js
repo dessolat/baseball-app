@@ -22,6 +22,7 @@ const Game = () => {
   const navigate = useNavigate();
   const innings = useSelector(state => state.game.innings);
   const currentGameId = useSelector(state => state.game.currentGameId);
+  const errorMsg = useSelector(state => state.game.errorMsg);
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
     `http://51.250.71.224:3030/game_${gameId}`
@@ -71,15 +72,23 @@ const Game = () => {
     // eslint-disable-next-line
   }, [gameId]);
 
+	useEffect(() => {
+		console.log(error);
+	}, [error])
+	
+
   const handleTabClick = e => {
     setSearchParam('tab', e.target ? e.target.name : e.toLowerCase());
     setCurrentTab(e.target ? e.target.name : e.toLowerCase());
   };
 
   const isFilters = currentTab !== 'box';
+
+	console.log(error);
+	console.log(errorMsg);
   return (
     <>
-      {error ? (
+      {errorMsg !== null && innings.length === 0 ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
         <Loader />

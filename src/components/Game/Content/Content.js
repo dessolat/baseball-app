@@ -26,6 +26,7 @@ const Content = ({ currentTab }) => {
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const playersInfo = useSelector(state => state.game.playersInfo);
+  const errorMsg = useSelector(state => state.game.errorMsg);
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
   const dispatch = useDispatch();
@@ -274,7 +275,7 @@ const Content = ({ currentTab }) => {
   return (
     <>
       {currentTab !== 'box' ? (
-        <section className='container'>
+        <section className='container' style={{position: 'relative'}}>
           <div className={contentClass}>
 						<ContentGraphics currentTab={currentTab} isVideo={isVideo} />
 						<MobilePitcherFilters />
@@ -288,6 +289,7 @@ const Content = ({ currentTab }) => {
             />
             {isVideo && <ContentFooter />}
           </div>
+					{errorMsg !== null && <p style={{position: 'absolute', left: '50%', bottom: -30, zIndex: 1000, color: 'red', fontWeight: 700}}>{errorMsg}</p>}
         </section>
       ) : (
         <ContentBox />

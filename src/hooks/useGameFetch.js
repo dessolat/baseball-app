@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
-import { useSelector } from 'react-redux';
+import { setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const innings = useSelector(state => state.game.innings);
+  const dispatch = useDispatch()
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
@@ -35,6 +36,7 @@ const useGameFetch = url => {
         firstTime && setIsLoading(true);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
+				dispatch(setErrorMsg(null))
         error && setError(null);
         const dataLength = JSON.stringify(resp.data).length;
         if (dataRef.current === dataLength) return;
@@ -56,6 +58,7 @@ const useGameFetch = url => {
         dispatch(setFullData(resp.data));
       } catch (err) {
         setError(err.message);
+				dispatch(setErrorMsg(err.message))
       } finally {
         if (firstTime) {
           setIsLoading(false);
