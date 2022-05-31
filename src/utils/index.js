@@ -12,7 +12,16 @@ export const getBeforeAfterFlags = (cards, innings) => {
     const { inning_number } = cards[i];
     const inning = innings[inning_number - 1];
     const { side } = cards[i];
-    const { top_runs = 0, bot_runs = 0, top_hits = 0, bot_hits = 0, top_err = 0, bot_err = 0, top_lob = 0, bot_lob = 0 } = inning;
+    const {
+      top_runs = 0,
+      bot_runs = 0,
+      top_hits = 0,
+      bot_hits = 0,
+      top_err = 0,
+      bot_err = 0,
+      top_lob = 0,
+      bot_lob = 0
+    } = inning;
 
     if (i === 0 && i === cards.length) {
       result[i] = {
@@ -50,17 +59,17 @@ export const getBeforeAfterFlags = (cards, innings) => {
     }
   }
 
-	return result
+  return result;
 };
 
 export const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
 
 export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
-	const result = {};
+  const result = {};
 
-	for (let key in obj1) {
-		result[key] = ignoredKeys.includes(key) ? obj1[key] : +obj1[key] + +obj2[key];
-	}
+  for (let key in obj1) {
+    result[key] = ignoredKeys.includes(key) || obj1[key] === 'inf' ? obj1[key] : +obj1[key] + +obj2[key];
+  }
 
-	return result;
+  return result;
 };
