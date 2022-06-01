@@ -27,8 +27,10 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     ref.current.style.transform = `translate(${isMobile ? 43 : 0}px)`;
 
     setTimeout(() => {
-      ref.current.style.transition = 'all .25s';
-      timeoutRef.current = null;
+      if (ref.current) {
+        ref.current.style.transition = 'all .25s';
+        timeoutRef.current = null;
+      }
     }, 30);
   }, [currentDate]);
 
@@ -156,7 +158,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     targetDate && handleDateClick(new Date(targetDate))();
   };
 
-	//Arrow classes handling
+  //Arrow classes handling
   const leftArrowClasses = [cl.arrow];
   const rightArrowClasses = [cl.arrow];
   (availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)) &&
