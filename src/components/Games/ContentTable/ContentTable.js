@@ -44,8 +44,6 @@ const ContentTable = ({ games }) => {
   }, [currentDate, currentLeague]);
 
   const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
-  // const handleHomeDropdownClick = option => dispatch(setCurrentHome(option));
-  // const handleGuestsDropdownClick = option => dispatch(setCurrentGuests(option));
 
   const filteredHeadings = games.filter(game => {
     return currentLeague.id === -1 ? currentGameType === game.game_type : game.league_id === currentLeague.id;
@@ -103,35 +101,11 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-  // const homeOptions = Array.from(
-  //   new Set(
-  //     filteredHeadings.reduce(
-  //       (sum, cur) => {
-  //         sum.push(cur.owners_name);
-  //         return sum;
-  //       },
-  //       ['All']
-  //     )
-  //   )
-  // );
-
-  // const guestsOptions = Array.from(
-  //   new Set(
-  //     filteredHeadings.reduce(
-  //       (sum, cur) => {
-  //         sum.push(cur.guests_name);
-  //         return sum;
-  //       },
-  //       ['All']
-  //     )
-  //   )
-  // );
-
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader games={games} />
 
-      {mobileTableMode === 'Calendar' && JSON.stringify(currentDate) !== null && (
+      {(!isMobile || mobileTableMode === 'Calendar') && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
           <div className={cl.tableHeader}>
             <div>Time</div>
