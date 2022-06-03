@@ -26,7 +26,13 @@ const PlayerStats = () => {
   // const games = useSelector(state => state.games.games);
   const dispatch = useDispatch();
 
-  useEffect(() => () => dispatch(setPlayerStatsData({})), []);
+  useEffect(
+    () => () => {
+      dispatch(setPlayerStatsData({}));
+      cancelTokenRef.current.cancel(null);
+    },
+    []
+  );
 
   useEffect(() => {
     const isLeague = data => data.leagues.find(league => league.id === currentLeague.id);
@@ -63,9 +69,6 @@ const PlayerStats = () => {
 
     dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
 
-    return () => {
-      cancelTokenRef.current.cancel(null);
-    };
     // eslint-disable-next-line
   }, [playerId]);
   // useEffect(() => {
