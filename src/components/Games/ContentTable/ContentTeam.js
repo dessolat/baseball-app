@@ -54,6 +54,7 @@ const ContentTeam = ({ games }) => {
       />
       <div className={cl.teamName}>
         <h2>{currentLeague.name}</h2>
+				<p className={cl.teamSearch}>Search game:</p>
         <div className={cl.teamFilters}>
           <div className={cl.teamSelector}>
             <Dropdown
@@ -64,6 +65,7 @@ const ContentTeam = ({ games }) => {
               listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
             />
           </div>
+					<span>VS</span>
           <div className={cl.teamSelector}>
             <Dropdown
               title={getShortName(currentGuests, 18)}
