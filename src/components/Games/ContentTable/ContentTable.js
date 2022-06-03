@@ -31,6 +31,7 @@ const ContentTable = ({ games }) => {
   const currentGuests = useSelector(state => state.games.currentGuests);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentDate = useSelector(state => state.shared.currentDate);
+  const leagues = useSelector(state => state.games.leagues);
   const isMobile = useSelector(state => state.shared.isMobile);
   const mobileTableMode = useSelector(state => state.games.mobileTableMode);
   const dispatch = useDispatch();
@@ -123,6 +124,7 @@ const ContentTable = ({ games }) => {
             <div>Guests</div>
             <div> </div>
             <div>Inn</div>
+						{currentLeague.id === -1 && <div>League</div>}
           </div>
           <ul className={cl.rows}>
             {filteredData.map((game, index, arr) => {
@@ -167,6 +169,7 @@ const ContentTable = ({ games }) => {
                     </div>
                   </div>
                   <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+									{currentLeague.id === -1 && <div>{leagues.find(league => league.id === game.league_id)?.name}</div>}
                 </li>
               );
             })}
