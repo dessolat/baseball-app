@@ -19,6 +19,8 @@ const TeamGames = () => {
 
   const cancelTeamTokenRef = useRef();
 
+  useEffect(() => () => cancelTeamTokenRef.current.cancel(null), []);
+
   useEffect(() => {
     const fetchGamesData = async () => {
       cancelTeamTokenRef.current = axios.CancelToken.source();
@@ -41,10 +43,6 @@ const TeamGames = () => {
       }
     };
     fetchGamesData();
-
-    return () => {
-      cancelTeamTokenRef.current.cancel(null);
-    };
     // eslint-disable-next-line
   }, [teamName]);
 

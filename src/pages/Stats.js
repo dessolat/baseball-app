@@ -20,6 +20,8 @@ const Stats = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
+  useEffect(() => () => cancelStatsTokenRef.current.cancel(null), []);
+
   useEffect(() => {
     const refactorData = leagues => {
       const result = leagues.reduce((sum, league) => {
@@ -77,10 +79,6 @@ const Stats = () => {
     }
 
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-
-    return () => {
-      cancelStatsTokenRef.current.cancel(null);
-    };
     // eslint-disable-next-line
   }, [currentYear]);
   // useEffect(() => {
