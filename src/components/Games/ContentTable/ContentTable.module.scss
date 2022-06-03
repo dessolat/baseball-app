@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   align-content: center;
-	align-self: flex-end;
+  align-self: flex-end;
 
   > * {
     margin-left: 1rem;
@@ -45,6 +45,7 @@
 .teamWrapper {
   display: flex;
   align-items: center;
+  height: 100%;
 
   > * + * {
     margin-left: 1.106rem;
@@ -57,30 +58,41 @@
 
 .teamName {
   width: 15.67rem;
-  height: 3.3rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-	position: relative;
+  position: relative;
 }
 
 .teamName > h2 {
-  font: 700 1.2rem var(--font-comfortaa);
+  font: 700 1.125rem var(--font-comfortaa);
   line-height: 1;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: max-content;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: max-content;
+}
+
+.teamSearch {
+  color: var(--side-color);
+  font-weight: 700;
 }
 
 .teamFilters {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+
+  > span {
+    color: var(--side-color);
+    font-weight: 700;
+  }
 }
 
 .teamSelector {
   font: 400 0.75rem var(--font-nunito);
-  width: 50%;
+  width: calc(50% - 1rem);
 }
 
 .table {
