@@ -343,6 +343,7 @@
 
   @media screen and (max-width: 800px) {
     display: block;
+		margin-left: auto;
 
     > button {
       font: 300 14px var(--font-nunito);
