@@ -3,10 +3,17 @@ import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLeagueImage, resetTableFilters, setGamesAndLeagues, setMobileTableMode } from 'redux/gamesReducer';
+import {
+  addLeagueImage,
+  resetTableFilters,
+  setGamesAndLeagues,
+  setMobileTableMode
+} from 'redux/gamesReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
+import { getSearchParam } from 'utils';
+import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
 
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +31,60 @@ const Games = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getSearchParam('mode') && dispatch(setMobileTableMode(getSearchParam('mode')));
+    // getSearchParam('league_id') && dispatch(setCurrentLeague({ id: +getSearchParam('league_id') }));
+
+    const fetchGamesData = async () => {
+      cancelTokenRef.current = axios.CancelToken.source();
+
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`http://51.250.71.224:3030/main/year-${getSearchParam('year') || currentYear}`, {
+          cancelToken: cancelTokenRef.current.token,
+          timeout: 5000
+        });
+
+        setError('');
+        dispatch(setGamesAndLeagues(response.data));
+
+        if (games === null) {
+          console.log('dispatched after fetching');
+          // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+        }
+
+				if (getSearchParam('year')) {
+					const YEARS = [2020, 2021, 2022]
+					YEARS.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')))
+				}
+
+        if (getSearchParam('league_id')) {
+          const tempLeague = response.data.leagues.find(league => league.id === +getSearchParam('league_id'));
+
+          tempLeague && dispatch(setCurrentGameType(tempLeague.game_type));
+					console.log('set');
+          setTimeout(() => tempLeague && dispatch(setCurrentLeague(tempLeague)));
+        }
+      } catch (err) {
+        if (err.message === null) return;
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchGamesData();
+
+    return () => {
+      cancelTokenRef.current.cancel(null);
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      return;
+    }
+
     const fetchGamesData = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
 
@@ -57,34 +118,34 @@ const Games = () => {
     // eslint-disable-next-line
   }, [currentYear]);
 
-  useEffect(() => {
-    if (games === null) return;
+  // useEffect(() => {
+  //   if (games === null) return;
 
-    const fetchImage = async (id, name, url) => {
-      try {
-        const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
-          responseType: 'arraybuffer',
-          timeout: 2500
-        });
+  //   const fetchImage = async (id, name, url) => {
+  //     try {
+  //       const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
+  //         responseType: 'arraybuffer',
+  //         timeout: 2500
+  //       });
 
-        dispatch(
-          addLeagueImage({
-            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64'),
-            [name]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-          })
-        );
-      } catch (err) {
-        // err.message === 'Request failed with status code 523' &&
-        setTimeout(() => fetchImage(id, name, url), 2500);
-        console.log(err.message);
-      }
-    };
+  //       dispatch(
+  //         addLeagueImage({
+  //           [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64'),
+  //           [name]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+  //         })
+  //       );
+  //     } catch (err) {
+  //       // err.message === 'Request failed with status code 523' &&
+  //       setTimeout(() => fetchImage(id, name, url), 2500);
+  //       console.log(err.message);
+  //     }
+  //   };
 
-    leagues
-      .filter(league => league.logo !== '' && !leaguesImages[league.id])
-      .forEach(league => league.id !== -1 && fetchImage(league.id, league.name, league.logo));
-    // eslint-disable-next-line
-  }, [games, leagues]);
+  //   leagues
+  //     .filter(league => league.logo !== '' && !leaguesImages[league.id])
+  //     .forEach(league => league.id !== -1 && fetchImage(league.id, league.name, league.logo));
+  //   // eslint-disable-next-line
+  // }, [games, leagues]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -96,13 +157,13 @@ const Games = () => {
   }, [currentGameType, currentYear, currentLeague]);
 
   useEffect(() => {
-		if (firstMountRef.current === true) {
+    if (firstMountRef.current === true) {
       firstMountRef.current = false;
       return;
     }
 
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-		dispatch(setMobileTableMode('Calendar'))
+    dispatch(setMobileTableMode('Calendar'));
     // eslint-disable-next-line
   }, [currentGameType, currentYear]);
   return (

@@ -3,6 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 import { setMobileTableMode, setCurrentLeague } from 'redux/gamesReducer';
+import { setSearchParam } from 'utils';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -11,6 +12,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   const handleLeagueClick = league => () => {
 		league.id === -1 && dispatch(setMobileTableMode('Calendar'))
     dispatch(setCurrentLeague(league));
+		setSearchParam('league_id', league.id)
   };
 
   return (
