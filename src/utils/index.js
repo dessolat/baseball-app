@@ -2,8 +2,12 @@ export const getSearchParam = param => new URL(window.location).searchParams.get
 
 export const setSearchParam = (param, value) => {
   const url = new URL(window.location);
-  url.searchParams.set(param, value);
-  window.history.pushState({}, '', url);
+	if (typeof param === 'string') {
+		url.searchParams.set(param, value);
+	} else {
+		param.forEach(curParam => url.searchParams.set(curParam.param, curParam.value))
+	}
+  window.history.replaceState({}, '', url);
 };
 
 export const getBeforeAfterFlags = (cards, innings) => {
