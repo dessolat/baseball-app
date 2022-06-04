@@ -15,7 +15,8 @@ const ContentTableHeader = ({ games }) => {
       <ContentTeam games={games} />
       {(!isMobile || (isMobile && mobileTableMode === 'Calendar')) && <ContentCalendars />}
       {mobileTableMode !== 'Calendar' && (
-        <div className={cl.modeTitle}>{mobileTableMode === 'Team tablo' ? 'Team tablo' : 'Leaders'}</div>
+        <div className={cl.modeTitle}>Team tablo/Leader</div>
+        // <div className={cl.modeTitle}>{mobileTableMode === 'Team tablo' ? 'Team tablo' : 'Leaders'}</div>
       )}
       {currentLeague.id !== -1 && <ContentTableModeLinks />}
     </div>
