@@ -9,10 +9,24 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const dispatch = useDispatch();
 
+  const firstMountRef = useRef(true);
+
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
+
+    if (currentLeague.id === -1) {
+      setSearchParam('mode', 'Calendar');
+			dispatch(setMobileTableMode('Calendar'));
+    }
+  }, [currentLeague]);
+
   const handleLeagueClick = league => () => {
 		league.id === -1 && dispatch(setMobileTableMode('Calendar'))
     dispatch(setCurrentLeague(league));
-		setSearchParam('league_id', league.id)
+    // setSearchParam('league_id', league.id)
   };
 
   return (
