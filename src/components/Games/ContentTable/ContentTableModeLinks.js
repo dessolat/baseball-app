@@ -14,11 +14,11 @@ const ContentTableModeLinks = () => {
   };
   return (
     <div className={cl.tableModes}>
-      {mobileTableMode !== 'Team tablo' && (
-        <button onClick={handleModeClick('Team tablo')}>Team tablo</button>
+			{mobileTableMode !== 'Calendar' && <button onClick={handleModeClick('Calendar')}>Calendar</button>}
+      {mobileTableMode !== 'Team tablo/Leader' && (
+        <button onClick={handleModeClick('Team tablo/Leader')}>Team tablo/Leader</button>
       )}
-      {mobileTableMode !== 'Calendar' && <button onClick={handleModeClick('Calendar')}>Calendar</button>}
-      {mobileTableMode !== 'Leaders' && <button onClick={handleModeClick('Leaders')}>Leaders</button>}
+      {/* {mobileTableMode !== 'Leaders' && <button onClick={handleModeClick('Leaders')}>Leaders</button>} */}
     </div>
   );
 };
