@@ -222,11 +222,15 @@
           &:first-child {
             width: 4rem;
 
+						@media screen and (max-width: 800px) {
+							width: 4.5rem;
+						}
             // 	@media screen and (max-width: 1150px) {
             // 	width: 3rem;
             // }
           }
 
+					
           &:nth-child(2) {
             width: 2.3rem;
 
@@ -294,6 +298,9 @@
             &:first-child {
               width: 4rem;
 
+							@media screen and (max-width: 800px) {
+								width: 4.5rem;
+							}
               // 	@media screen and (max-width: 1150px) {
               // 	width: 3rem;
               // }
