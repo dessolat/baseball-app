@@ -16,6 +16,9 @@
 .pctTable {
   text-align: left;
   // border-collapse: collapse;
+  @media screen and (max-width: 800px) {
+    padding: 0 3.68rem;
+  }
 
   > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
@@ -48,14 +51,14 @@
           width: 2rem;
 
           @media screen and (max-width: 1100px) {
-            width: 1rem;
+            width: 1.5rem;
           }
 
           &:nth-child(3) {
             width: 2.5rem;
 
             @media screen and (max-width: 1100px) {
-              width: 2.3rem;
+              width: 2.6rem;
             }
           }
 
@@ -71,13 +74,16 @@
 
   > .tableBody {
     // max-height: calc((45vh + 7px) / 2);
-		max-height: 15.2rem;
+    max-height: 15.2rem;
     overflow-x: hidden;
     overflow-y: scroll;
 
-		@media screen and (max-height: 1000px) {
-			max-height: 13.3rem;
-		}
+    @media screen and (max-height: 1000px) {
+      max-height: 13.3rem;
+    }
+    @media screen and (max-width: 800px) {
+      max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 27px - 6px - 6px - 192px);
+    }
 
     &::-webkit-scrollbar {
       width: 0;
@@ -90,9 +96,9 @@
       > div {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
 
-				@media screen and (max-height: 1000px) {
-					line-height: 1.65rem;
-				}
+        @media screen and (max-height: 1000px) {
+          line-height: 1.65rem;
+        }
 
         @media screen and (max-width: 800px) {
           font-size: 14px;
@@ -109,14 +115,14 @@
             width: 2rem;
 
             @media screen and (max-width: 1100px) {
-              width: 1rem;
+              width: 1.5rem;
             }
 
             &:nth-child(3) {
               width: 2.5rem;
 
               @media screen and (max-width: 1100px) {
-                width: 2.3rem;
+                width: 2.6rem;
               }
             }
 
@@ -163,6 +169,10 @@
 .drop {
   font-size: 0.875rem;
   width: 4rem;
+
+  @media screen and (max-width: 800px) {
+    margin-left: 2.6rem;
+  }
 }
 
 .switchWrapper {
@@ -177,6 +187,9 @@
 .switchTable {
   text-align: left;
   // border-collapse: collapse;
+  @media screen and (max-width: 800px) {
+    padding: 0 3.68rem;
+  }
 
   > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
@@ -215,7 +228,7 @@
           }
 
           &:nth-child(2) {
-						width: 2.3rem;
+            width: 2.3rem;
 
             > div {
               justify-content: flex-end;
@@ -263,9 +276,9 @@
       > div {
         font: 300 0.875rem / 1.9rem var(--font-nunito);
 
-				@media screen and (max-height: 1000px) {
-					line-height: 1.55rem;
-				}
+        @media screen and (max-height: 1000px) {
+          line-height: 1.55rem;
+        }
 
         @media screen and (max-width: 800px) {
           font-size: 14px;
@@ -287,11 +300,10 @@
             }
 
             &:nth-child(2) {
-						width: 2.3rem;
-						text-align: center;
-						padding-right: .4rem;
-            
-          }
+              width: 2.3rem;
+              text-align: center;
+              padding-right: 0.4rem;
+            }
             // @media screen and (max-width: 1100px) {
             // 	width: 1rem;
             // }
