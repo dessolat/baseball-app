@@ -119,19 +119,19 @@ const SwitchTable = () => {
         </div>
         <div className={cl.tableBody}>
           {sortedPlayers.map(row => {
-            const teams = row.teams.map((team, i) => {
+            const teams = row.teams.map((team, i, arr) => {
               if (i !== 0)
                 return (
                   <>
                     /
                     <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                      {getShortName(team.name, 7)}
+                      {getShortName(team.name, arr.length > 1 ? 3 : 7)}
                     </Link>
                   </>
                 );
               return (
                 <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                  {getShortName(team.name, 7)}
+                  {getShortName(team.name, arr.length > 1 ? 3 : 7)}
                 </Link>
               );
             });
