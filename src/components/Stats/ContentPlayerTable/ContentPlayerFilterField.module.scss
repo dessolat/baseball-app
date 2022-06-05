@@ -11,3 +11,9 @@
 	outline: none;
 	font: 700 12px var(--font-nunito);
 }
+
+.mobile {
+	left: 50%;
+	top: 5px;
+	transform: translateX(-50%);
+}
