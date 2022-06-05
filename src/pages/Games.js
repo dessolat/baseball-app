@@ -12,7 +12,7 @@ import {
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { getSearchParam } from 'utils';
+import { getSearchParam, setSearchParam } from 'utils';
 import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
 
 const Games = () => {
@@ -25,24 +25,37 @@ const Games = () => {
   const games = useSelector(state => state.games.games);
   const leagues = useSelector(state => state.games.leagues);
   const currentLeague = useSelector(state => state.games.currentLeague);
+  const mobileTableMode = useSelector(state => state.games.mobileTableMode);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const currentYear = useSelector(state => state.shared.currentYear);
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (currentLeague.id !== -1) {
+      const paramsArray = [
+        { param: 'year', value: currentYear },
+        { param: 'mode', value: mobileTableMode },
+        { param: 'league_id', value: currentLeague.id }
+      ];
+      setSearchParam(paramsArray);
+    }
+
     getSearchParam('mode') && dispatch(setMobileTableMode(getSearchParam('mode')));
-    // getSearchParam('league_id') && dispatch(setCurrentLeague({ id: +getSearchParam('league_id') }));
+    getSearchParam('game_type') && dispatch(setCurrentGameType(getSearchParam('game_type')));
 
     const fetchGamesData = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://51.250.71.224:3030/main/year-${getSearchParam('year') || currentYear}`, {
-          cancelToken: cancelTokenRef.current.token,
-          timeout: 5000
-        });
+        const response = await axios.get(
+          `http://51.250.71.224:3030/main/year-${getSearchParam('year') || currentYear}`,
+          {
+            cancelToken: cancelTokenRef.current.token,
+            timeout: 5000
+          }
+        );
 
         setError('');
         dispatch(setGamesAndLeagues(response.data));
@@ -52,16 +65,14 @@ const Games = () => {
           // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
         }
 
-				if (getSearchParam('year')) {
-					const YEARS = [2020, 2021, 2022]
-					YEARS.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')))
-				}
+        if (getSearchParam('year')) {
+          const YEARS = [2020, 2021, 2022];
+          YEARS.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
+        }
 
         if (getSearchParam('league_id')) {
           const tempLeague = response.data.leagues.find(league => league.id === +getSearchParam('league_id'));
-
           tempLeague && dispatch(setCurrentGameType(tempLeague.game_type));
-					console.log('set');
           setTimeout(() => tempLeague && dispatch(setCurrentLeague(tempLeague)));
         }
       } catch (err) {
@@ -162,8 +173,8 @@ const Games = () => {
       return;
     }
 
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-    dispatch(setMobileTableMode('Calendar'));
+    // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    // dispatch(setMobileTableMode('Calendar'));
     // eslint-disable-next-line
   }, [currentGameType, currentYear]);
   return (
