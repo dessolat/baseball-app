@@ -211,6 +211,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               )}
             </div>
           </div>
+					<ContentPlayerFilterField setPlayerFilter={setPlayerFilter} mobile={true}/>
         </div>
       ) : (
         <div className={cl.wrapper}>
