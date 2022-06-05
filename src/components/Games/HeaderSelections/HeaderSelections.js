@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
+import { setSearchParam } from 'utils';
+import { setCurrentLeague } from 'redux/gamesReducer';
 
 const YEARS = [2022, 2021, 2020];
 
@@ -11,6 +13,24 @@ const HeaderSelections = () => {
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const dispatch = useDispatch();
 
+	const firstMountRef = useRef(true)
+
+  useEffect(() => {
+		if (firstMountRef.current === true) {
+			firstMountRef.current = false
+			return
+		}
+    setSearchParam('year', currentYear);
+  }, [currentYear]);
+
+  // useEffect(() => {
+	// 	if (firstMountRef.current === true) {
+	// 		firstMountRef.current = false
+	// 		return
+	// 	}
+  //   setSearchParam('game_type', currentGameType);
+  // }, [currentGameType]);
+
   const handleClick = option => {
     // const tempDate = new Date(option, 0, 1);
     // tempDate.setHours(0, tempDate.getTimezoneOffset() * -1, 0, 0);
@@ -18,11 +38,15 @@ const HeaderSelections = () => {
     dispatch(setCurrentDate(new Date()));
     // dispatch(setCurrentDate(tempDate));
     dispatch(setCurrentYear(option));
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
-
+	
   const getClassName = name => (name === currentGameType ? cl.active : '');
-
-  const handleTypeClick = type => () => dispatch(setCurrentGameType(type));
+	
+  const handleTypeClick = type => () => {
+		dispatch(setCurrentGameType(type));
+		dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+  };
 
   return (
     <div className={cl.selections}>
