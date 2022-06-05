@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import cl from './ContentPlayerFilterField.module.scss';
 
 const ContentPlayerFilterField = ({setPlayerFilter}) => {
-  const [tempPlayerFilter, setTempPlayerFilter] = useState('mir');
+  const [tempPlayerFilter, setTempPlayerFilter] = useState('');
 
 	const filterTimeoutRef = useRef();
 
