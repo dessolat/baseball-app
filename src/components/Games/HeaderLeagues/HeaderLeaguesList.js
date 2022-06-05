@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
@@ -17,6 +17,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
       return;
     }
 
+    setSearchParam('league_id', currentLeague.id);
     if (currentLeague.id === -1) {
       setSearchParam('mode', 'Calendar');
 			dispatch(setMobileTableMode('Calendar'));
@@ -24,7 +25,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   }, [currentLeague]);
 
   const handleLeagueClick = league => () => {
-		league.id === -1 && dispatch(setMobileTableMode('Calendar'))
+    league.id === -1 && dispatch(setMobileTableMode('Calendar'));
     dispatch(setCurrentLeague(league));
     // setSearchParam('league_id', league.id)
   };
