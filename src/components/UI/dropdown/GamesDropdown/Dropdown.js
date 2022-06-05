@@ -22,6 +22,7 @@ const Dropdown = ({
   options,
   currentOption,
   handleClick,
+  wrapperStyles = null,
   listStyles = null,
   itemStyles = null,
   titleStyles = null,
@@ -44,7 +45,7 @@ const Dropdown = ({
   };
 
   return (
-    <div ref={menuRef} className={cl.dropdownWrapper}>
+    <div ref={menuRef} className={cl.dropdownWrapper} style={wrapperStyles}>
       <div className={cl.title} onClick={handleTitleClick} style={titleStyles}>
         {title}
         <div style={{ position: 'absolute', right: 3, top: 0 }}>
