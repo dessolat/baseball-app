@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import TeamLogo from 'images/team_logo.png';
+// import TeamLogo from 'images/team_logo.png';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
+import ContentPlayerFilterField from './ContentPlayerFilterField';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
+  const [playerFilter, setPlayerFilter] = useState('');
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
@@ -89,6 +91,24 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         : filteredStatsData,
     [filteredStatsData, currentTeam]
   );
+
+  const filterArr = playerFilter.split(' ');
+  filteredStatsData =
+    playerFilter !== ''
+      ? filteredStatsData.filter(player => {
+          return filterArr.reduce((sum, word) => {
+            if (
+              !(
+                player.name.toLowerCase().includes(word.toLowerCase()) ||
+                player.surname.toLowerCase().includes(word.toLowerCase())
+              )
+            ) {
+              sum = false;
+            }
+            return sum;
+          }, true);
+        })
+      : filteredStatsData;
 
   return (
     <>
@@ -175,10 +195,12 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   return (
                     <div key={index} className={cl.tableRow}>
                       <div>
-                        {row.teams.reduce((sum, team) => {
-													sum.push(team.name.slice(0,2).toUpperCase())
-													return sum
-												}, []).join('/')}
+                        {row.teams
+                          .reduce((sum, team) => {
+                            sum.push(team.name.slice(0, 2).toUpperCase());
+                            return sum;
+                          }, [])
+                          .join('/')}
 
                         {/* <img src={TeamLogo} alt='team-logo' /> */}
                       </div>
@@ -256,6 +278,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               )}
             </ul>
           </div>
+          <ContentPlayerFilterField setPlayerFilter={setPlayerFilter} />
         </div>
       )}
     </>
