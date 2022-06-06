@@ -12,7 +12,7 @@ const ContentTableHeader = ({ games }) => {
 
   return (
     <div className={cl.header}>
-      <ContentTeam games={games} />
+      {(!isMobile || (isMobile && mobileTableMode === 'Calendar')) && <ContentTeam games={games} />}
       {(!isMobile || (isMobile && mobileTableMode === 'Calendar')) && <ContentCalendars />}
       {mobileTableMode !== 'Calendar' && (
         <div className={cl.modeTitle}>Team tablo/Leader</div>
