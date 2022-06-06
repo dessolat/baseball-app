@@ -124,7 +124,7 @@ const ContentTable = ({ games }) => {
             <div>Guests</div>
             <div> </div>
             <div>Inn</div>
-						{currentLeague.id === -1 && <div>League</div>}
+            {currentLeague.id === -1 && <div>League</div>}
           </div>
           <ul className={cl.rows}>
             {filteredData.map((game, index, arr) => {
@@ -145,7 +145,12 @@ const ContentTable = ({ games }) => {
                   className={classes.join(' ')}
                   data-before={dataBefore}>
                   <div>{game.start_time.slice(0, 5)}</div>
-                  <div>{game.stadium_name}</div>
+                  <div className={cl.stadiumName}>
+                    {game.stadium_name}
+                    {currentLeague.id === -1 && (
+                      <span> / {leagues.find(league => league.id === game.league_id)?.name}</span>
+                    )}
+                  </div>
                   <div className={cl.underlineHover}>
                     <Link to={`/games/team/${currentGameType.toLowerCase()}/${game.owners_name}`}>
                       {' '}
@@ -169,7 +174,9 @@ const ContentTable = ({ games }) => {
                     </div>
                   </div>
                   <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-									{currentLeague.id === -1 && <div>{leagues.find(league => league.id === game.league_id)?.name}</div>}
+                  {currentLeague.id === -1 && (
+                    <div>{leagues.find(league => league.id === game.league_id)?.name}</div>
+                  )}
                 </li>
               );
             })}
