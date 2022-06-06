@@ -33,6 +33,10 @@
   align-content: center;
   align-self: flex-end;
 
+  @media screen and (max-width: 800px) {
+    order: 0;
+  }
+
   > * {
     margin-left: 1rem;
 
@@ -52,7 +56,15 @@
   }
 
   @media screen and (max-width: 800px) {
-    display: none;
+    order: 1;
+
+    > img,
+    > .teamName > h2 {
+      display: none;
+    }
+    > * + * {
+      margin-left: 0;
+    }
   }
 }
 
@@ -63,6 +75,11 @@
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
+
+  @media screen and (max-width: 800px) {
+    width: 14rem;
+    margin-left: 0.5rem;
+  }
 }
 
 .teamName > h2 {
@@ -77,12 +94,20 @@
 .teamSearch {
   color: var(--side-color);
   font-weight: 700;
+
+  @media screen and (max-width: 800px) {
+    line-height: 1;
+  }
 }
 
 .teamFilters {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+
+  @media screen and (max-width: 800px) {
+    line-height: 1;
+  }
 
   > span {
     color: var(--side-color);
@@ -93,6 +118,10 @@
 .teamSelector {
   font: 400 0.75rem var(--font-nunito);
   width: calc(50% - 1rem);
+
+  @media screen and (max-width: 800px) {
+    width: calc(50% - 1.5rem);
+  }
 }
 
 .table {
@@ -108,7 +137,7 @@
     box-shadow: 0px 6px 6px -6px rgb(16, 16, 16, 0.07);
     display: flex;
     align-items: center;
-		justify-content: space-between;
+    justify-content: space-between;
     min-height: 2rem;
 
     @media screen and (max-width: 800px) {
@@ -146,7 +175,7 @@
       &:nth-child(8) {
         width: 12rem;
 
-				@media screen and (max-width: 800px) {
+        @media screen and (max-width: 800px) {
           display: none;
         }
       }
@@ -180,8 +209,7 @@
     position: relative;
 
     @media screen and (max-width: 800px) {
-      // max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 43px);
-      max-height: calc(100vh - 30.63px - 132px - 43px);
+      max-height: calc(100vh - 30.63px - 132px - 44px);
     }
 
     &::-webkit-scrollbar {
@@ -193,7 +221,7 @@
     min-height: 2rem;
     display: flex;
     align-items: center;
-		justify-content: space-between;
+    justify-content: space-between;
 
     @media screen and (max-width: 800px) {
       flex-wrap: wrap;
@@ -284,10 +312,10 @@
           text-align: right;
         }
       }
-			&:nth-child(8) {
+      &:nth-child(8) {
         width: 12rem;
 
-				@media screen and (max-width: 800px) {
+        @media screen and (max-width: 800px) {
           display: none;
         }
       }
@@ -339,9 +367,9 @@
 }
 
 .stadiumName > span {
-	display: none;
+  display: none;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: inline;
   }
 }
@@ -350,8 +378,9 @@
   display: none;
 
   @media screen and (max-width: 800px) {
+    order: 2;
     display: block;
-		margin-left: auto;
+    margin-left: auto;
 
     > button {
       font: 300 14px var(--font-nunito);
