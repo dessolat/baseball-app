@@ -338,6 +338,14 @@
   border-bottom: 2px solid var(--side-color);
 }
 
+.stadiumName > span {
+	display: none;
+
+	@media screen and (max-width: 800px) {
+    display: inline;
+  }
+}
+
 .tableModes {
   display: none;
 
