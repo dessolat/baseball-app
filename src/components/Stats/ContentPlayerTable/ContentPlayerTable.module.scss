@@ -74,7 +74,7 @@
 
 .rows {
   position: relative;
-  max-height: calc(100vh - 2.1875rem - 6.4rem - 6rem);
+  max-height: calc(100vh - 2.1875rem - 6.4rem - 6rem - 1.5rem);
   overflow: scroll;
 
   &::-webkit-scrollbar {
