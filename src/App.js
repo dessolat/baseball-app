@@ -53,15 +53,15 @@ const App = () => {
     const fetchGamesData = async () => {
       try {
         let response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2020`, {
-          timeout: 5000
+          timeout: 10000
         });
         dispatch(setAllYearsLeagues({ year: 2020, data: response.data.leagues }));
         response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2021`, {
-          timeout: 5000
+          timeout: 10000
         });
         dispatch(setAllYearsLeagues({ year: 2021, data: response.data.leagues }));
         response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2022`, {
-          timeout: 5000
+          timeout: 10000
         });
         dispatch(setAllYearsLeagues({ year: 2022, data: response.data.leagues }));
       } catch (err) {
