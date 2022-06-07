@@ -13,19 +13,17 @@ const ContentPlayerFilterField = ({ setPlayerFilter, mobile = false }) => {
 
     filterTimeoutRef.current = setTimeout(() => {
       setPlayerFilter(value);
-    }, 1000);
+    }, 400);
   };
 
-	const styles = [cl.filterField]
-	mobile && styles.push(cl.mobile)
+  const styles = [cl.filterField];
+  mobile && styles.push(cl.mobile);
   return (
     <input
       className={styles.join(' ')}
       value={tempPlayerFilter}
       onChange={handleFilterFieldChange}
-      placeholder={'Search of player'}>
-				{/* <img src={filterIcon} /> */}
-			</input>
+      placeholder={'Search of player'}></input>
   );
 };
 
