@@ -53,7 +53,7 @@ const Games = () => {
           `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
           {
             cancelToken: cancelTokenRef.current.token,
-            timeout: 5000
+            timeout: 10000
           }
         );
 
@@ -103,7 +103,7 @@ const Games = () => {
         setIsLoading(true);
         const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
           cancelToken: cancelTokenRef.current.token,
-          timeout: 5000
+          timeout: 10000
         });
 
         setError('');
