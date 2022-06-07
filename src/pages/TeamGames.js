@@ -27,7 +27,7 @@ const TeamGames = () => {
 
       try {
         setIsTeamLoading(true);
-        const response = await axios.get(`http://51.250.71.224:3030/${gameType}/team?team_name=${teamName}`, {
+        const response = await axios.get(`http://baseball-gametrack.ru/api/${gameType}/team?team_name=${teamName}`, {
           cancelToken: cancelTeamTokenRef.current.token,
           timeout: 5000
         });

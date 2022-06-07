@@ -42,7 +42,7 @@ const PlayerStats = () => {
 
       try {
         setIsStatsLoading(true);
-        const response = await axios.get(`http://51.250.71.224:3030/player?id=${playerId}`, {
+        const response = await axios.get(`http://baseball-gametrack.ru/api/player?id=${playerId}`, {
           cancelToken: cancelTokenRef.current.token,
           timeout: 5000
         });
@@ -77,7 +77,7 @@ const PlayerStats = () => {
 
   //     try {
   //       setIsLoading(true);
-  //       const response = await axios.get(`http://51.250.71.224:3030/main/year-${currentYear}`, {
+  //       const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
   //         cancelToken: cancelTokenRef.current.token,
   //         timeout: 5000
   //       });
