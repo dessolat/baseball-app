@@ -50,7 +50,7 @@ const Games = () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `http://51.250.71.224:3030/main/year-${getSearchParam('year') || currentYear}`,
+          `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
           {
             cancelToken: cancelTokenRef.current.token,
             timeout: 5000
@@ -101,7 +101,7 @@ const Games = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://51.250.71.224:3030/main/year-${currentYear}`, {
+        const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
           cancelToken: cancelTokenRef.current.token,
           timeout: 5000
         });
@@ -134,7 +134,7 @@ const Games = () => {
 
   //   const fetchImage = async (id, name, url) => {
   //     try {
-  //       const response = await axios.get(`http://51.250.71.224:3030/logo/${url}`, {
+  //       const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${url}`, {
   //         responseType: 'arraybuffer',
   //         timeout: 2500
   //       });

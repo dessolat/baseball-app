@@ -14,7 +14,7 @@ const GameIdForm = ({ isLoading }) => {
   const testFetch = async id => {
     try {
       setIsURLChecking(true);
-      await axios.get(`http://51.250.71.224:3030/game_${id}`, {
+      await axios.get(`http://baseball-gametrack.ru/api/game_${id}`, {
         timeout: 5000
       });
       return true;
