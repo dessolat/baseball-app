@@ -26,6 +26,7 @@ const Stats = () => {
     const refactorData = leagues => {
       const result = leagues.reduce((sum, league) => {
         const resultLeague = {};
+        resultLeague.id = league.id;
         resultLeague.title = league.title;
         resultLeague.type = league.type;
         resultLeague.players = {};
