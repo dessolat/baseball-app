@@ -50,26 +50,26 @@ const App = () => {
     //   window.removeEventListener('resize', setVh);
     // };
 
-    const fetchGamesData = async () => {
-      try {
-        let response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2020`, {
-          timeout: 10000
-        });
-        dispatch(setAllYearsLeagues({ year: 2020, data: response.data.leagues }));
-        response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2021`, {
-          timeout: 10000
-        });
-        dispatch(setAllYearsLeagues({ year: 2021, data: response.data.leagues }));
-        response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2022`, {
-          timeout: 10000
-        });
-        dispatch(setAllYearsLeagues({ year: 2022, data: response.data.leagues }));
-      } catch (err) {
-        if (err.message === null) return;
-        console.log(err.message);
-      }
-    };
-    fetchGamesData();
+    // const fetchGamesData = async () => {
+    //   try {
+    //     let response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2020`, {
+    //       timeout: 10000
+    //     });
+    //     dispatch(setAllYearsLeagues({ year: 2020, data: response.data.leagues }));
+    //     response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2021`, {
+    //       timeout: 10000
+    //     });
+    //     dispatch(setAllYearsLeagues({ year: 2021, data: response.data.leagues }));
+    //     response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2022`, {
+    //       timeout: 10000
+    //     });
+    //     dispatch(setAllYearsLeagues({ year: 2022, data: response.data.leagues }));
+    //   } catch (err) {
+    //     if (err.message === null) return;
+    //     console.log(err.message);
+    //   }
+    // };
+    // fetchGamesData();
   }, []);
 
   const RouteAdapter = ({ children }) => {

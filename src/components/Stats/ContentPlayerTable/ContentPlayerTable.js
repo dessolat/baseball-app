@@ -110,15 +110,18 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
+  console.log(playerFilter);
   return (
     <>
       {isMobile ? (
         <div className={cl.mobileWrapper}>
-          <div className={cl.fullHeader}>
-            <div className={cl.leftHeader}>
-              <div>Players</div>
-              {/* <div>POS</div> */}
-              {/* <div>
+          {filteredStatsData.length !== 0 || playerFilter === '' ? (
+            <>
+              <div className={cl.fullHeader}>
+                <div className={cl.leftHeader}>
+                  <div>Players</div>
+                  {/* <div>POS</div> */}
+                  {/* <div>
                 <Dropdown
                   title={'Team'}
                   options={teamOptions}
@@ -129,156 +132,164 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   shortNames={13}
                 />
               </div> */}
-            </div>
-            <div className={cl.rightHeader} ref={headerScroll}>
-              <div>
-                <Dropdown
-                  title={'Team'}
-                  options={teamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  wrapperStyles={{ position: 'initial' }}
-                  listStyles={{
-                    maxWidth: 125,
-                    left: '125px',
-                    top: '34px',
-                    maxHeight: '65vh',
-                    overflowY: 'scroll'
-                  }}
-                  // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
-                  itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                  shortNames={13}
-                />
+                </div>
+                <div className={cl.rightHeader} ref={headerScroll}>
+                  <div>
+                    <Dropdown
+                      title={'Team'}
+                      options={teamOptions}
+                      currentOption={currentTeam}
+                      handleClick={handleTeamClick}
+                      wrapperStyles={{ position: 'initial' }}
+                      listStyles={{
+                        maxWidth: 125,
+                        left: '125px',
+                        top: '34px',
+                        maxHeight: '65vh',
+                        overflowY: 'scroll'
+                      }}
+                      // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
+                      itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
+                      shortNames={13}
+                    />
+                  </div>
+                  {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
+                    top: '.1rem',
+                    transform: 'translateX(-50%) scale(0.7)'
+                  })}
+                </div>
               </div>
-              {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
-                top: '.1rem',
-                transform: 'translateX(-50%) scale(0.7)'
-              })}
-            </div>
-          </div>
-          <div className={cl.sides}>
-            <div className={cl.leftRows}>
-              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                (row, index) => {
-                  // const posValue = row.teams
-                  //   .reduce((sum, team) => {
-                  //     sum.push(team.pos);
-                  //     return sum;
-                  //   }, [])
-                  //   .join(' / ');
-                  return (
-                    <div key={index} className={cl.tableRow}>
-                      <div>
-                        <Link to={`/stats/player/${row.id}`}>
-                          {' '}
-                          <span>
-                            {row.name} {row.surname}
-                          </span>
-                        </Link>
-                      </div>
-                      {/* <div>{posValue}</div> */}
-                      {/* <div>
+              <div className={cl.sides}>
+                <div className={cl.leftRows}>
+                  {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                    (row, index) => {
+                      // const posValue = row.teams
+                      //   .reduce((sum, team) => {
+                      //     sum.push(team.pos);
+                      //     return sum;
+                      //   }, [])
+                      //   .join(' / ');
+                      return (
+                        <div key={index} className={cl.tableRow}>
+                          <div>
+                            <Link to={`/stats/player/${row.id}`}>
+                              {' '}
+                              <span>
+                                {row.name} {row.surname}
+                              </span>
+                            </Link>
+                          </div>
+                          {/* <div>{posValue}</div> */}
+                          {/* <div>
                       <img src={TeamLogo} alt='team-logo' />
                     </div> */}
-                    </div>
-                  );
-                }
-              )}
-            </div>
-            <div
-              className={cl.rightRows}
-              onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
-              ref={rowsScroll}>
-              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                (row, index) => {
-                  console.log(row);
-                  return (
-                    <div key={index} className={cl.tableRow}>
-                      <div>
-                        {row.teams
-                          .reduce((sum, team) => {
-                            sum.push(team.name.slice(0, 2).toUpperCase());
-                            return sum;
-                          }, [])
-                          .join('/')}
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+                <div
+                  className={cl.rightRows}
+                  onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
+                  ref={rowsScroll}>
+                  {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                    (row, index) => {
+                      console.log(row);
+                      return (
+                        <div key={index} className={cl.tableRow}>
+                          <div>
+                            {row.teams
+                              .reduce((sum, team) => {
+                                sum.push(team.name.slice(0, 2).toUpperCase());
+                                return sum;
+                              }, [])
+                              .join('/')}
 
-                        {/* <img src={TeamLogo} alt='team-logo' /> */}
-                      </div>
-                      {getTableRows(row, cl, sortField[tableMode])}
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          </div>
-					<ContentPlayerFilterField setPlayerFilter={setPlayerFilter} mobile={true}/>
+                            {/* <img src={TeamLogo} alt='team-logo' /> */}
+                          </div>
+                          {getTableRows(row, cl, sortField[tableMode])}
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+            </>
+          ) : (
+            <p className={cl.noPlayersFound}>No players found.</p>
+          )}
+          <ContentPlayerFilterField setPlayerFilter={setPlayerFilter} mobile={true} />
         </div>
       ) : (
         <div className={cl.wrapper}>
-          <div>
-            <div className={cl.tableHeader}>
-              <div></div>
-              {/* <div className={cl.pos}>POS</div> */}
-              <div>
-                <Dropdown
-                  title={'Team'}
-                  options={teamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-                />
+          {filteredStatsData.length !== 0 || playerFilter === '' ? (
+            <div>
+              <div className={cl.tableHeader}>
+                <div></div>
+                {/* <div className={cl.pos}>POS</div> */}
+                <div>
+                  <Dropdown
+                    title={'Team'}
+                    options={teamOptions}
+                    currentOption={currentTeam}
+                    handleClick={handleTeamClick}
+                    listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+                  />
+                </div>
+                {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
               </div>
-              {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
-            </div>
-            <ul className={cl.rows}>
-              {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                (row, index) => {
-                  // const posValue = row.teams
-                  //   .reduce((sum, team) => {
-                  //     sum.push(team.pos);
-                  //     return sum;
-                  //   }, [])
-                  //   .join(' / ');
+              <ul className={cl.rows}>
+                {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
+                  (row, index) => {
+                    // const posValue = row.teams
+                    //   .reduce((sum, team) => {
+                    //     sum.push(team.pos);
+                    //     return sum;
+                    //   }, [])
+                    //   .join(' / ');
 
-                  return (
-                    <li key={index} className={cl.tableRow}>
-                      <div>
-                        <Link to={`/stats/player/${row.id}`}>
-                          {' '}
-                          <span className={cl.fullName}>
-                            {row.name} {row.surname}
-                          </span>
-                        </Link>
-                      </div>
-                      {/* <div className={cl.pos}>{posValue}</div> */}
-                      <div className={cl.teamNames}>
-                        <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
-                          {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
-                        </Link>
-                        {row.teams[1] && (
-                          <>
-                             /{' '}
-                            <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
-                              {getShortName(row.teams[1].name, 12)}
-                            </Link>
-                          </>
-                        )}
-                        {row.teams[2] && (
-                          <>
-                             /{' '}
-                            <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>
-                              {row.teams[2].name}
-                            </Link>
-                          </>
-                        )}
-                      </div>
-                      {getTableRows(row, cl, sortField[tableMode])}
-                    </li>
-                  );
-                }
-              )}
-            </ul>
-          </div>
+                    return (
+                      <li key={index} className={cl.tableRow}>
+                        <div>
+                          <Link to={`/stats/player/${row.id}`}>
+                            {' '}
+                            <span className={cl.fullName}>
+                              {row.name} {row.surname}
+                            </span>
+                          </Link>
+                        </div>
+                        {/* <div className={cl.pos}>{posValue}</div> */}
+                        <div className={cl.teamNames}>
+                          <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
+                            {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
+                          </Link>
+                          {row.teams[1] && (
+                            <>
+                               /{' '}
+                              <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
+                                {getShortName(row.teams[1].name, 12)}
+                              </Link>
+                            </>
+                          )}
+                          {row.teams[2] && (
+                            <>
+                               /{' '}
+                              <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>
+                                {row.teams[2].name}
+                              </Link>
+                            </>
+                          )}
+                        </div>
+                        {getTableRows(row, cl, sortField[tableMode])}
+                      </li>
+                    );
+                  }
+                )}
+              </ul>
+            </div>
+          ) : (
+            <p className={cl.noPlayersFound}>No players found.</p>
+          )}
           <ContentPlayerFilterField setPlayerFilter={setPlayerFilter} />
         </div>
       )}

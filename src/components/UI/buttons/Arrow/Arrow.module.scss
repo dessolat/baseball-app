@@ -5,6 +5,9 @@
   @media screen and (max-width: 800px) {
     width: 1.8rem;
   }
+  @media screen and (orientation: landscape) and (max-height: 800px) {
+    width: 1.8rem;
+  }
 }
 
 .arrowImg {

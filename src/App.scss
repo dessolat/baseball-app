@@ -11,6 +11,7 @@
 
 html {
   font-size: 16px;
+	-webkit-text-size-adjust: 100%;
 
   @media screen and (max-width: 1230px) {
     font-size: 15px;
@@ -74,6 +75,9 @@ button {
   margin: 0 auto;
 
   @media screen and (max-width: 800px) {
+    padding: 0;
+  }
+  @media screen and (orientation: landscape) and (max-height: 800px) {
     padding: 0;
   }
 }
