@@ -17,6 +17,20 @@ function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen) {
   };
 }
 
+const SearchField = ({ value, setValue }) => {
+  const handleSearchFieldChange = e => {
+    setValue(e.target.value);
+  };
+  return (
+    <input
+      className={cl.searchField}
+      value={value}
+      placeholder='Team name'
+      onChange={handleSearchFieldChange}
+    />
+  );
+};
+
 const Dropdown = ({
   title,
   options,
