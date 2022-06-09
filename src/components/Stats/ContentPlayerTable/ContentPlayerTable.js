@@ -143,8 +143,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                       listStyles={{
                         maxWidth: 125,
                         left: '125px',
-                        top: '34px',
-                        maxHeight: '65vh',
+                        top: '68px',
+                        maxHeight: '50vh',
                         overflowY: 'scroll'
                       }}
                       // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
