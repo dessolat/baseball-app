@@ -63,6 +63,7 @@ const ContentTeam = ({ games }) => {
               currentOption={currentHome}
               handleClick={handleHomeDropdownClick}
               listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+							searchField={true}
             />
           </div>
 					<span>VS</span>
