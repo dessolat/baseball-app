@@ -102,13 +102,16 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
+	const headerStyles = [cl.tableHeader]
+	currentLeague.id !== -1 && headerStyles.push(cl.paddingRightOne);
+
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader games={games} />
 
       {(!isMobile || mobileTableMode === 'Calendar') && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
-          <div className={cl.tableHeader}>
+          <div className={headerStyles.join(' ')}>
             <div>Time</div>
             <div>
               <Dropdown
@@ -138,6 +141,7 @@ const ContentTable = ({ games }) => {
               const classes = [cl.tableRow];
               isDate && classes.push(cl.withDate);
               isActive && classes.push(cl.active);
+							currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
               return (
                 <li
                   key={game.id}
