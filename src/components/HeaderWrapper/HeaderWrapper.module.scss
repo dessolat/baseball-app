@@ -8,4 +8,7 @@
 	@media screen and (max-width: 800px) {
 		box-shadow: none;
 	}
+	@media screen and (orientation: landscape) and (max-height: 800px) {
+		box-shadow: none;
+	}
 }
