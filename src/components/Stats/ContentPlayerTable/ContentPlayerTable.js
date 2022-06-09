@@ -99,8 +99,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           return filterArr.reduce((sum, word) => {
             if (
               !(
-                player.name.toLowerCase().includes(word.toLowerCase()) ||
-                player.surname.toLowerCase().includes(word.toLowerCase())
+                player.name.slice(0, word.length).toLowerCase() === word.toLowerCase() ||
+                player.surname.slice(0, word.length).toLowerCase() === word.toLowerCase()
               )
             ) {
               sum = false;
@@ -110,7 +110,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
-  console.log(playerFilter);
   return (
     <>
       {isMobile ? (
