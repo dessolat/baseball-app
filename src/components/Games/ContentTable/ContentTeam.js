@@ -74,6 +74,7 @@ const ContentTeam = ({ games }) => {
               currentOption={currentGuests}
               handleClick={handleGuestsDropdownClick}
               listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+							searchField={true}
             />
           </div>
         </div>

@@ -150,6 +150,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                       // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
                       itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
                       shortNames={13}
+											searchField={true}
                     />
                   </div>
                   {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
@@ -233,6 +234,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                     currentOption={currentTeam}
                     handleClick={handleTeamClick}
                     listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+										searchField={true}
                   />
                 </div>
                 {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
