@@ -15,6 +15,24 @@
   position: relative;
 }
 
+.searchFieldWrapper {
+	text-align: center;
+	position: relative;
+
+	&:hover {
+		background-color: unset !important;
+	}
+}
+
+.searchField {
+	font: 400 0.75rem var(--font-nunito);
+	border: 0.5px solid #838383;
+	outline: none;
+	width: 100%;
+	padding: .5px 2px;
+	border-radius: 0;
+}
+
 .list {
   position: absolute;
   top: 115%;
