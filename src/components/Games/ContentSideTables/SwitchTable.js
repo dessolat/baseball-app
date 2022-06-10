@@ -111,8 +111,9 @@ const SwitchTable = () => {
                 options={DROPDOWN_VALUES[tableMode]}
                 currentOption={dropdownValue[tableMode]}
                 handleClick={handleDropdownClick}
-                listStyles={{ left: '-4px', width: 'calc(100% + .5rem)' }}
-                itemStyles={{ lineHeight: '.7rem', padding: '.2rem .5rem' }}
+                listStyles={{ left: '-4px', width: 'calc(100% + .5rem)', top: '80%', maxHeight: '30vh' }}
+                itemStyles={{ lineHeight: 0, padding: '.1rem .5rem' }}
+                itemTextStyles={{ lineHeight: 1.1, display: 'inline-block' }}
               />
             </div>
           </div>
