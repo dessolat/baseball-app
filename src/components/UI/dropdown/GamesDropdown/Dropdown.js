@@ -40,6 +40,7 @@ const Dropdown = ({
   wrapperStyles = null,
   listStyles = null,
   itemStyles = null,
+  itemTextStyles = null,
   titleStyles = null,
   shortNames = false,
   searchField = false
@@ -67,7 +68,11 @@ const Dropdown = ({
 
     return options.filter(option => {
       return filterArr.reduce((sum, word) => {
-        if (!option.split(' ').find(optionWord => optionWord.slice(0, word.length).toLowerCase() === word.toLowerCase())) {
+        if (
+          !option
+            .split(' ')
+            .find(optionWord => optionWord.slice(0, word.length).toLowerCase() === word.toLowerCase())
+        ) {
           sum = false;
         }
         return sum;
@@ -97,7 +102,7 @@ const Dropdown = ({
               onClick={handleOptionClick(option)}
               className={currentOption === option ? cl.active : null}
               style={itemStyles}>
-              <span>{shortNames ? getShortName(option, shortNames) : option}</span>
+              <span style={itemTextStyles}>{shortNames ? getShortName(option, shortNames) : option}</span>
             </li>
           ))}
         </ul>
