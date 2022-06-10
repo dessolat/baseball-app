@@ -22,6 +22,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
       setSearchParam('mode', 'Calendar');
 			dispatch(setMobileTableMode('Calendar'));
     }
+		// eslint-disable-next-line
   }, [currentLeague]);
 
   const handleLeagueClick = league => () => {

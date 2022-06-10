@@ -48,6 +48,7 @@ const HeaderLeagues = () => {
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
     };
+    // eslint-disable-next-line
   }, []);
 
   // useLayoutEffect(() => {

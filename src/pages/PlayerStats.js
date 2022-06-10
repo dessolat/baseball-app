@@ -31,6 +31,7 @@ const PlayerStats = () => {
       dispatch(setPlayerStatsData({}));
       cancelTokenRef.current.cancel(null);
     },
+		// eslint-disable-next-line
     []
   );
 
