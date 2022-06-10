@@ -21,6 +21,20 @@
       margin-top: 0;
     }
   }
+  @media screen and (orientation: landscape) and (max-height: 800px) {
+    padding: 0;
+    font-size: 1rem;
+		border-bottom: 0.5px solid #cdcccc;
+		position: relative;
+		height: 29px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+
+    > * + * {
+      margin-top: 0;
+    }
+  }
 }
 
 .years {
@@ -36,6 +50,14 @@
 		left: 0;
 		top: 50%;
 		transform: translateY(-50%);
+		z-index: 777;
+  }
+  @media screen and (orientation: landscape) and (max-height: 800px) {
+    position: relative;
+    margin-left: 0;
+		left: unset;
+		top: unset;
+		transform: unset;
 		z-index: 777;
   }
 }
@@ -61,6 +83,11 @@
   @media screen and (max-width: 800px) {
     font-size: 1rem;
 		justify-content: center;
+  }
+  @media screen and (orientation: landscape) and (max-height: 800px) {
+    font-size: 1rem;
+		justify-content: center;
+		margin-left: 1rem;
   }
 }
 

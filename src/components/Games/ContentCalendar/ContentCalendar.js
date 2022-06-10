@@ -95,7 +95,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     }
 
     !isDate ? dispatch(setCurrentDate(minDate)) : dispatch(setCurrentDate(new Date()));
-  }, [currentLeague, currentYear, games, currentHome, currentGuests]);
+		// eslint-disable-next-line
 
   let availableDates = useMemo(() => {
     const filteredGames = games.filter(

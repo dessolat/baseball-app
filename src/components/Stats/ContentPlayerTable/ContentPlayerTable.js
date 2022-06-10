@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-// import TeamLogo from 'images/team_logo.png';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';
 
@@ -77,12 +76,20 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               cur.teams.forEach(team => sum.push(team.name));
               return sum;
             },
-            ['All']
+            []
           )
         )
       ),
     [filteredStatsData]
   );
+
+const sortedTeamOptions = useMemo(() => {
+	const sortedTeamsArr = teamOptions.sort((a,b) => a > b ? 1 : -1)
+	sortedTeamsArr.unshift('All')
+
+	return sortedTeamsArr
+}, [teamOptions, filteredStatsData])
+
   //Filtering by team
   filteredStatsData = useMemo(
     () =>
@@ -99,8 +106,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           return filterArr.reduce((sum, word) => {
             if (
               !(
-                player.name.toLowerCase().includes(word.toLowerCase()) ||
-                player.surname.toLowerCase().includes(word.toLowerCase())
+                player.name.slice(0, word.length).toLowerCase() === word.toLowerCase() ||
+                player.surname.slice(0, word.length).toLowerCase() === word.toLowerCase()
               )
             ) {
               sum = false;
@@ -110,7 +117,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
-  console.log(playerFilter);
   return (
     <>
       {isMobile ? (
@@ -121,36 +127,26 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 <div className={cl.leftHeader}>
                   <div>Players</div>
                   {/* <div>POS</div> */}
-                  {/* <div>
-                <Dropdown
-                  title={'Team'}
-                  options={teamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
-                  itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                  shortNames={13}
-                />
-              </div> */}
+                  {/* <div></div> */}
                 </div>
                 <div className={cl.rightHeader} ref={headerScroll}>
                   <div>
                     <Dropdown
                       title={'Team'}
-                      options={teamOptions}
+                      options={sortedTeamOptions}
                       currentOption={currentTeam}
                       handleClick={handleTeamClick}
                       wrapperStyles={{ position: 'initial' }}
                       listStyles={{
                         maxWidth: 125,
                         left: '125px',
-                        top: '34px',
-                        maxHeight: '65vh',
+                        top: '68px',
+                        maxHeight: '50vh',
                         overflowY: 'scroll'
                       }}
-                      // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
                       itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
                       shortNames={13}
+											searchField={true}
                     />
                   </div>
                   {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
@@ -180,9 +176,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                             </Link>
                           </div>
                           {/* <div>{posValue}</div> */}
-                          {/* <div>
-                      <img src={TeamLogo} alt='team-logo' />
-                    </div> */}
+                          {/* <div></div> */}
                         </div>
                       );
                     }
@@ -204,8 +198,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                                 return sum;
                               }, [])
                               .join('/')}
-
-                            {/* <img src={TeamLogo} alt='team-logo' /> */}
                           </div>
                           {getTableRows(row, cl, sortField[tableMode])}
                         </div>
@@ -234,6 +226,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                     currentOption={currentTeam}
                     handleClick={handleTeamClick}
                     listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+										searchField={true}
                   />
                 </div>
                 {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}

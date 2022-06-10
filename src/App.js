@@ -70,6 +70,7 @@ const App = () => {
     //   }
     // };
     // fetchGamesData();
+		// eslint-disable-next-line
   }, []);
 
   const RouteAdapter = ({ children }) => {
