@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-// import TeamLogo from 'images/team_logo.png';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';
 
@@ -128,17 +127,7 @@ const sortedTeamOptions = useMemo(() => {
                 <div className={cl.leftHeader}>
                   <div>Players</div>
                   {/* <div>POS</div> */}
-                  {/* <div>
-                <Dropdown
-                  title={'Team'}
-                  options={teamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
-                  itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                  shortNames={13}
-                />
-              </div> */}
+                  {/* <div></div> */}
                 </div>
                 <div className={cl.rightHeader} ref={headerScroll}>
                   <div>
@@ -155,7 +144,6 @@ const sortedTeamOptions = useMemo(() => {
                         maxHeight: '50vh',
                         overflowY: 'scroll'
                       }}
-                      // listStyles={{ left: '-.3rem', width: 'calc(100% + 4rem)' }}
                       itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
                       shortNames={13}
 											searchField={true}
@@ -188,9 +176,7 @@ const sortedTeamOptions = useMemo(() => {
                             </Link>
                           </div>
                           {/* <div>{posValue}</div> */}
-                          {/* <div>
-                      <img src={TeamLogo} alt='team-logo' />
-                    </div> */}
+                          {/* <div></div> */}
                         </div>
                       );
                     }
@@ -212,8 +198,6 @@ const sortedTeamOptions = useMemo(() => {
                                 return sum;
                               }, [])
                               .join('/')}
-
-                            {/* <img src={TeamLogo} alt='team-logo' /> */}
                           </div>
                           {getTableRows(row, cl, sortField[tableMode])}
                         </div>
