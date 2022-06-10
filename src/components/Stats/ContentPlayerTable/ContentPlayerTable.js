@@ -77,12 +77,20 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               cur.teams.forEach(team => sum.push(team.name));
               return sum;
             },
-            ['All']
+            []
           )
         )
       ),
     [filteredStatsData]
   );
+
+const sortedTeamOptions = useMemo(() => {
+	const sortedTeamsArr = teamOptions.sort((a,b) => a > b ? 1 : -1)
+	sortedTeamsArr.unshift('All')
+
+	return sortedTeamsArr
+}, [teamOptions, filteredStatsData])
+
   //Filtering by team
   filteredStatsData = useMemo(
     () =>
@@ -136,7 +144,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   <div>
                     <Dropdown
                       title={'Team'}
-                      options={teamOptions}
+                      options={sortedTeamOptions}
                       currentOption={currentTeam}
                       handleClick={handleTeamClick}
                       wrapperStyles={{ position: 'initial' }}
