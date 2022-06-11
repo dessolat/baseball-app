@@ -28,6 +28,7 @@ const Stats = () => {
     if (firstMountRef.current === true) return;
 
 		dispatch(setTableType(statsTableMode === 'Pitching' ? 'Pitching' : 'Batting'));
+		// eslint-disable-next-line
   }, [statsTableMode]);
 
   useEffect(() => {

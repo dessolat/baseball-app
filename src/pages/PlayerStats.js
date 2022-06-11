@@ -41,6 +41,7 @@ const PlayerStats = () => {
     if (firstMountRef.current === true) return;
 
 		dispatch(setTableMode(playerTableMode));
+		// eslint-disable-next-line
   }, [playerTableMode]);
 
   useEffect(() => {
