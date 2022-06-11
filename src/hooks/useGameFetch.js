@@ -7,7 +7,6 @@ const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const innings = useSelector(state => state.game.innings);
-  const dispatch = useDispatch()
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
