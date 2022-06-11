@@ -8,6 +8,7 @@ import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
+import { setTableType } from 'redux/playerStatsReducer';
 
 const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(false);
@@ -17,10 +18,17 @@ const Stats = () => {
   const cancelStatsTokenRef = useRef();
 
   const statsData = useSelector(state => state.stats.statsData);
+  const statsTableMode = useSelector(state => state.stats.tableMode);
   const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
   useEffect(() => () => cancelStatsTokenRef.current.cancel(null), []);
+
+	useEffect(() => {
+    if (firstMountRef.current === true) return;
+
+		dispatch(setTableType(statsTableMode === 'Pitching' ? 'Pitching' : 'Batting'));
+  }, [statsTableMode]);
 
   useEffect(() => {
     const refactorData = leagues => {

@@ -617,7 +617,7 @@ const Content = () => {
   //Sorting filtered array
   const getSortedStatsData = (filteredStatsData, sortField, sortDirection) =>
     filteredStatsData.sort((a, b) =>
-      Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf'
+      Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf' || isNaN(a[sortField])
         ? sortDirection === 'asc'
           ? 1
           : -1
