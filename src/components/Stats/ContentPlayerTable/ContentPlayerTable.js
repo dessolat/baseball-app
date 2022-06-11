@@ -88,7 +88,7 @@ const sortedTeamOptions = useMemo(() => {
 	sortedTeamsArr.unshift('All')
 
 	return sortedTeamsArr
-}, [teamOptions, filteredStatsData])
+}, [teamOptions])
 
   //Filtering by team
   filteredStatsData = useMemo(
