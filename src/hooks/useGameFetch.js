@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const innings = useSelector(state => state.game.innings);
-  const dispatch = useDispatch()
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
@@ -21,7 +20,6 @@ const useGameFetch = url => {
     return players
       .filter(player => player.photo !== '')
       .reduce((sum, player) => {
-        // sum[player.name + ' ' + player.surname] = player.photo;
         sum[player.id] = player.photo;
         return sum;
       }, summary);

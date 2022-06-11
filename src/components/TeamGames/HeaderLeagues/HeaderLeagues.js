@@ -15,8 +15,6 @@ const HeaderLeagues = () => {
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  // const leagues = useSelector(state => state.games.leagues);
-  // const games = useSelector(state => state.games.games);
   const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
   const currentYear = useSelector(state => state.shared.currentYear);
   const teamData = useSelector(state => state.teamGames.teamData);
@@ -28,7 +26,7 @@ const HeaderLeagues = () => {
     setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
   };
 
-	useEffect(() => {
+  useEffect(() => {
     const leaguesScrollDispatch = () => {
       dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
       setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
@@ -40,10 +38,10 @@ const HeaderLeagues = () => {
     const ref = leaguesRef.current;
     ref.addEventListener('scroll', leaguesScrollDispatch);
 
-		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-		setIsRightScroll(
-			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
-		);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
 
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
@@ -91,7 +89,9 @@ const HeaderLeagues = () => {
     }
 
     setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
     // setIsLeftScroll(currentScroll <= 0 ? false : true);
     // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
     // eslint-disable-next-line
