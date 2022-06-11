@@ -32,7 +32,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
         timeoutRef.current = null;
       }
     }, 30);
-  }, [currentDate]);
+  }, [currentDate, isMobile]);
 
   useEffect(() => {
     if (!calendarScroll.isScroll) return;
@@ -40,7 +40,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     ref.current.style.transform = `translate(${
       (isMobile ? 43 : 0) - (isMobile ? 43 : 60.5) * calendarScroll.amount
     }px)`;
-  }, [calendarScroll]);
+  }, [calendarScroll, isMobile]);
 
   useEffect(() => {
     let filteredGames = games.filter(
@@ -96,6 +96,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
 
     !isDate ? dispatch(setCurrentDate(minDate)) : dispatch(setCurrentDate(new Date()));
 		// eslint-disable-next-line
+  }, [currentLeague, currentYear, games, currentHome, currentGuests, currentStadium]);
 
   let availableDates = useMemo(() => {
     const filteredGames = games.filter(
