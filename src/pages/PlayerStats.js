@@ -8,14 +8,16 @@ import axios from 'axios';
 import Header from 'components/PlayerStats/Header/Header';
 import Content from 'components/PlayerStats/Content/Content';
 import Loader from 'components/UI/loaders/Loader/Loader';
+import { setTableMode } from 'redux/statsReducer';
 
 const PlayerStats = () => {
   // eslint-disable-next-line
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [error, setError] = useState('');
   const currentYear = useSelector(state => state.shared.currentYear);
-  const currentLeague = useSelector(state => state.games.currentLeague);
   const [playerYears, setPlayerYears] = useState(currentYear);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+  const playerTableMode = useSelector(state => state.playerStats.tableType);
 
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
@@ -31,9 +33,15 @@ const PlayerStats = () => {
       dispatch(setPlayerStatsData({}));
       cancelTokenRef.current.cancel(null);
     },
-		// eslint-disable-next-line
+    // eslint-disable-next-line
     []
   );
+
+  useEffect(() => {
+    if (firstMountRef.current === true) return;
+
+		dispatch(setTableMode(playerTableMode));
+  }, [playerTableMode]);
 
   useEffect(() => {
     const isLeague = data => data.leagues.find(league => league.id === currentLeague.id);
@@ -47,7 +55,6 @@ const PlayerStats = () => {
           cancelToken: cancelTokenRef.current.token,
           timeout: 10000
         });
-
         setError('');
 
         !isLeague(response.data) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
