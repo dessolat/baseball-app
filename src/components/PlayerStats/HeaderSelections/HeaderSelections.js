@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ const YEARS = ['All years', 2022, 2021, 2020];
 const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
 
 const HeaderSelections = ({ playerYears, setPlayerYears }) => {
+  const firstMountRef = useRef(true);
+
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
@@ -38,6 +40,11 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               }, new Set())
           );
 
+		if (firstMountRef.current === true) {
+			firstMountRef.current = false
+
+			if (currentTeam !== null && teamsArray.length !== 0) return
+		}
     dispatch(setCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
     // eslint-disable-next-line
   }, [playerYears]);
@@ -60,7 +67,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
     dispatch(setCurrentTeam(team));
   };
 
-	const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id)
+  const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
 
   const teamsArray =
     playerYears === 'All years'

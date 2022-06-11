@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
-import { setPlayerStatsData } from 'redux/playerStatsReducer';
+import { setPlayerStatsData, setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Header from 'components/PlayerStats/Header/Header';
@@ -31,6 +31,7 @@ const PlayerStats = () => {
   useEffect(
     () => () => {
       dispatch(setPlayerStatsData({}));
+      dispatch(setCurrentTeam(null));
       cancelTokenRef.current.cancel(null);
     },
     // eslint-disable-next-line
