@@ -617,7 +617,13 @@ const Content = () => {
   //Sorting filtered array
   const getSortedStatsData = (filteredStatsData, sortField, sortDirection) =>
     filteredStatsData.sort((a, b) =>
-      a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+      Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf'
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
     );
   return (
     <section>
