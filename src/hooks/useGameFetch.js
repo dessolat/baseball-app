@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const useGameFetch = url => {

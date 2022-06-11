@@ -4,7 +4,7 @@ import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  addLeagueImage,
+  // addLeagueImage,
   resetTableFilters,
   setGamesAndLeagues,
   setMobileTableMode
