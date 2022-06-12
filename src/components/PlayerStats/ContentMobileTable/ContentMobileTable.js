@@ -179,6 +179,15 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     ) : tableMode === 'Pitching' ? (
       <>
+        {currentLeague.id === -1 && (
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            arrowStyles={arrowStyles}>
+            G
+          </SortField>
+        )}
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -465,6 +474,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     ) : tableMode === 'Pitching' ? (
       <>
+			{currentLeague.id === -1 &&<ActiveBodyCell sortField={sortField} row={row}>
+          G
+        </ActiveBodyCell> }
         <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
           IP
         </ActiveBodyCell>
