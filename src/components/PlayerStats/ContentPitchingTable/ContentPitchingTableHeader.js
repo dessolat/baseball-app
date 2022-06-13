@@ -19,6 +19,21 @@ const ContentPitchingTableHeader = ({
         G
       </SortField>}
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        GS
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        W
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        L
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        CG
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        SV
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         IP
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
