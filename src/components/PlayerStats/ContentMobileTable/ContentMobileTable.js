@@ -193,6 +193,41 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}>
+          GS
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          W
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          L
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          CG
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          SV
+        </SortField>
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
           IP
         </SortField>
         <SortField
@@ -477,6 +512,21 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 			{currentLeague.id === -1 &&<ActiveBodyCell sortField={sortField} row={row}>
           G
         </ActiveBodyCell> }
+        <ActiveBodyCell sortField={sortField} row={row}>
+          GS
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          W
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          L
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          CG
+        </ActiveBodyCell>
+        <ActiveBodyCell sortField={sortField} row={row}>
+          SV
+        </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
           IP
         </ActiveBodyCell>
