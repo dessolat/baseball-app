@@ -400,35 +400,36 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+					addedClass={cl.wide2_5}>
           CH
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
           PO
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
           A
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
           E
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
           DP
         </SortField>
         <SortField
@@ -604,19 +605,19 @@ const Content = () => {
         <ActiveBodyCell sortField={sortField} row={row}>
           LOB
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           CH
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           PO
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           A
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           E
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           DP
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
