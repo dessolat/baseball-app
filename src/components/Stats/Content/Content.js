@@ -309,7 +309,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2}>
+					addedClass={cl.wide2_5}>
           SO
         </SortField>
         <SortField
@@ -565,7 +565,7 @@ const Content = () => {
         <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.tall}>
           SF
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           SO
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
