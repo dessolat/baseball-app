@@ -46,7 +46,7 @@ const ContentPitchingTableBody = ({
     filteredLeagueGamesSummary
       .slice()
       .sort((a, b) =>
-        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+        Number(a[sortField]) > Number(b[sortField]) ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
       );
 
   let sortedLeagues = [];
@@ -56,8 +56,8 @@ const ContentPitchingTableBody = ({
 		.filter(row => row.teams.find(team => team.name === currentTeam).pitching)
       .slice()
       .sort((a, b) =>
-        a.teams.find(team => team.name === currentTeam).pitching[sortField] >
-        b.teams.find(team => team.name === currentTeam).pitching[sortField]
+        Number(a.teams.find(team => team.name === currentTeam).pitching[sortField]) >
+        Number(b.teams.find(team => team.name === currentTeam).pitching[sortField])
           ? sortDirection === 'asc'
             ? 1
             : -1
@@ -77,7 +77,7 @@ const ContentPitchingTableBody = ({
     }, []);
 
     allTeamGames.filter(row => row.game.pitching).sort((a, b) =>
-      a.game.pitching[sortField] > b.game.pitching[sortField]
+      Number(a.game.pitching[sortField]) > Number(b.game.pitching[sortField])
         ? sortDirection === 'asc'
           ? 1
           : -1
