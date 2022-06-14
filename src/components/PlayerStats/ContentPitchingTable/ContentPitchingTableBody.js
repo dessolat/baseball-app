@@ -20,14 +20,14 @@ const ContentPitchingTableBody = ({
   const filteredLeagueGamesSummary =
     filteredLeague &&
     (!Array.isArray(filteredLeague)
-      ? filteredLeague.pitching.games_pitching.reduce((sum, game, i) => {
+      ? filteredLeague.pitching?.games_pitching.reduce((sum, game, i) => {
           const sumGame = {
             ...game,
             team_name: filteredLeague.name
           };
           sum.push(sumGame);
           return sum;
-        }, [])
+        }, []) || []
       : filteredLeague.reduce((totalSum, team) => {
           const teamGamesArr = team.pitching.games_pitching.reduce((sum, game, i) => {
             const sumGame = {
@@ -53,6 +53,7 @@ const ContentPitchingTableBody = ({
   let allTeamGames = [];
   if (currentTeam !== 'All teams') {
     sortedLeagues = filteredLeagues
+		.filter(row => row.teams.find(team => team.name === currentTeam).pitching)
       .slice()
       .sort((a, b) =>
         a.teams.find(team => team.name === currentTeam).pitching[sortField] >
@@ -75,7 +76,7 @@ const ContentPitchingTableBody = ({
       return totalGames;
     }, []);
 
-    allTeamGames.sort((a, b) =>
+    allTeamGames.filter(row => row.game.pitching).sort((a, b) =>
       a.game.pitching[sortField] > b.game.pitching[sortField]
         ? sortDirection === 'asc'
           ? 1
@@ -110,7 +111,7 @@ const ContentPitchingTableBody = ({
             <>
               {sortedLeagues.map((row, index) => {
                 const team = row.teams.find(team => team.name === currentTeam);
-                return (
+                return team.pitching ? (
                   <li key={index} className={cl.tableRow}>
                     {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                     <div className={cl.league}>{row.title}</div>
@@ -196,6 +197,8 @@ const ContentPitchingTableBody = ({
                       NB
                     </ActiveBodyCell>
                   </li>
+                ) : (
+                  <></>
                 );
               })}
               {yearsAllLeagueTeamTotals && (
@@ -292,7 +295,7 @@ const ContentPitchingTableBody = ({
             </>
           ) : (
             <>
-              {allTeamGames.map((row, i) => (
+              {allTeamGames.map((row, i) => {return row.game.pitching ? (
                 <li key={i} className={cl.tableRow}>
                   {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                   <div className={cl.league}>{row.title}</div>
@@ -382,15 +385,17 @@ const ContentPitchingTableBody = ({
                     NB
                   </ActiveBodyCell>
                 </li>
-              ))}
+              ) : <></>})}
               {yearsAllLeagueAllTeamTotals && (
                 <li className={cl.tableRow + ' ' + cl.tableFooter}>
                   {playerYears === 'All years' && <div className={cl.year}></div>}
                   <div className={cl.league}>TOTALS</div>
                   <div className={cl.teamName}></div>
-									{currentLeague.id === -1 && <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}>
-                    G
-                  </ActiveBodyCell>}
+                  {currentLeague.id === -1 && (
+                    <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}>
+                      G
+                    </ActiveBodyCell>
+                  )}
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}>
                     GS
                   </ActiveBodyCell>
