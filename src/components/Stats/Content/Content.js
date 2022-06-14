@@ -26,77 +26,82 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           AB
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           R
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           H
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2}>
           2B
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2}>
           3B
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2}>
           HR
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2_5}>
           RBI
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2}>
           GDP
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2_5}>
           BB
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2}>
           IBB
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2}>
           HP
         </SortField>
         <SortField
@@ -110,21 +115,21 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2}>
           SF
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2_5}>
           SO
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
+          arrowStyles={arrowStyles}addedClass={cl.wide2_5}>
           TB
         </SortField>
         <SortField
@@ -167,7 +172,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.tall}>
+          addedClass={cl.tall}>
           G
         </SortField>
         <SortField
@@ -196,14 +201,15 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.tall}>
+          addedClass={cl.tall}>
           CG
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           SV
         </SortField>
         <SortField
@@ -211,7 +217,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide3}>
+          addedClass={cl.wide3}>
           IP
         </SortField>
         <SortField
@@ -219,8 +225,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}
-					>
+          addedClass={cl.wide2_5}>
           PA
         </SortField>
         <SortField
@@ -228,7 +233,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}>
+          addedClass={cl.wide2_5}>
           R
         </SortField>
         <SortField
@@ -236,7 +241,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}>
+          addedClass={cl.wide2_5}>
           ER
         </SortField>
         <SortField
@@ -244,7 +249,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}>
+          addedClass={cl.wide2_5}>
           H
         </SortField>
         <SortField
@@ -265,7 +270,8 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           HR
         </SortField>
         <SortField
@@ -273,14 +279,15 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2}>
+          addedClass={cl.wide2}>
           BB
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           IBB
         </SortField>
         <SortField
@@ -294,14 +301,16 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           SH
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           SF
         </SortField>
         <SortField
@@ -309,7 +318,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}>
+          addedClass={cl.wide2_5}>
           SO
         </SortField>
         <SortField
@@ -323,7 +332,8 @@ const Content = () => {
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.tall}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.tall}>
           BK
         </SortField>
         <SortField
@@ -339,21 +349,23 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide3}>
+          addedClass={cl.wide3}>
           NP
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide3}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide3}>
           NS
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide3}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide3}>
           NB
         </SortField>
       </>
@@ -401,35 +413,39 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-					addedClass={cl.wide2_5}>
+          addedClass={cl.wide2_5}>
           CH
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           PO
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           A
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           E
         </SortField>
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
-          arrowStyles={arrowStyles} addedClass={cl.wide2_5}>
+          arrowStyles={arrowStyles}
+          addedClass={cl.wide2_5}>
           DP
         </SortField>
         <SortField
@@ -449,49 +465,49 @@ const Content = () => {
         <ActiveBodyCell sortField={sortField} row={row}>
           G
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           AB
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           R
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2_5}>
           H
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2}>
           2B
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2}>
           3B
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2}>
           HR
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2_5}>
           RBI
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2}>
           GDP
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2_5}>
           BB
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2}>
           IBB
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2}>
           HP
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
           SH
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2}>
           SF
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2_5}>
           SO
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide2_5}>
           TB
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
@@ -581,7 +597,7 @@ const Content = () => {
         <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide3}>
           NP
         </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}  addedClass={cl.wide3}>
+        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide3}>
           NS
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide3}>
