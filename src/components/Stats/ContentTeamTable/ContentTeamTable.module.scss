@@ -1,6 +1,6 @@
 .wrapper {
   flex: 1;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
 }
 
 .tableHeader {
@@ -36,7 +36,7 @@
 
   > div {
     text-align: center;
-    width: 1.9rem;
+    width: 1.7rem;
 
     @media screen and (max-width: 1078px) {
       width: 1.7rem;
@@ -44,13 +44,26 @@
 
     &:first-child {
       text-align: left;
-      width: 20rem;
+      width: 17rem;
       padding-left: 1rem;
 
       @media screen and (max-width: 800px) {
         padding-left: 0;
       }
     }
+
+&.tall {
+	width: 1.4rem;
+}
+&.wide2 {
+	width: 2rem;
+}
+&.wide2_5 {
+	width: 2.5rem;
+}
+&.wide3 {
+	width: 3rem;
+}
 
     &.wider {
       width: 3.5rem;
@@ -121,6 +134,18 @@
     > div {
       flex: 0 0 2rem;
 
+			&.tall {
+				flex: 0 0 1.6rem;
+			}
+			&.wide2 {
+				flex: 0 0 2.3rem;
+			}
+			&.wide2_5 {
+				flex: 0 0 3rem;
+			}
+			&.wide3 {
+				flex: 0 0 3rem;
+			}
       &.wider {
         flex: 0 0 3rem;
       }
@@ -190,6 +215,22 @@
       text-align: center;
       font: 300 1rem/38.5px var(--font-nunito);
 
+			&.tall {
+				width: 1.6rem !important;
+				flex: 0 0 1.6rem;
+			}
+			&.wide2 {
+				width: 2.3rem !important;
+				flex: 0 0 2.3rem;
+			}
+			&.wide2_5 {
+				width: 3rem !important;
+				flex: 0 0 3rem;
+			}
+			&.wide3 {
+				width: 3rem !important;
+				flex: 0 0 3rem;
+			}
       &.wider {
         width: 3rem !important;
         flex: 0 0 3rem;
