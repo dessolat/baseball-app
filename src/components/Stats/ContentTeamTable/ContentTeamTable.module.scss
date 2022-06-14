@@ -134,6 +134,18 @@
     > div {
       flex: 0 0 2rem;
 
+			&.tall {
+				flex: 0 0 1.6rem;
+			}
+			&.wide2 {
+				flex: 0 0 2.3rem;
+			}
+			&.wide2_5 {
+				flex: 0 0 3rem;
+			}
+			&.wide3 {
+				flex: 0 0 3rem;
+			}
       &.wider {
         flex: 0 0 3rem;
       }
@@ -203,6 +215,22 @@
       text-align: center;
       font: 300 1rem/38.5px var(--font-nunito);
 
+			&.tall {
+				width: 1.6rem !important;
+				flex: 0 0 1.6rem;
+			}
+			&.wide2 {
+				width: 2.3rem !important;
+				flex: 0 0 2.3rem;
+			}
+			&.wide2_5 {
+				width: 3rem !important;
+				flex: 0 0 3rem;
+			}
+			&.wide3 {
+				width: 3rem !important;
+				flex: 0 0 3rem;
+			}
       &.wider {
         width: 3rem !important;
         flex: 0 0 3rem;
