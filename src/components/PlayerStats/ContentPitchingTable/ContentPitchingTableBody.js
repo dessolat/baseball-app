@@ -12,7 +12,8 @@ const ContentPitchingTableBody = ({
   currentLeague,
   sortField,
   sortDirection,
-  MONTHS
+  MONTHS,
+	handleLeagueClick
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);

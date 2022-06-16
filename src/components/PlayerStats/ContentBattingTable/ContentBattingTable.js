@@ -39,7 +39,7 @@ const FIELDS_OBJ = {
   LOB: 'running'
 };
 
-const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS }) => {
+const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);

@@ -6,7 +6,7 @@ import SortField from 'components/UI/sortField/SortField';
 import { getShortName } from 'utils';
 import { Link } from 'react-router-dom';
 
-const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS }) => {
+const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
