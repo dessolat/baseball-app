@@ -31,6 +31,7 @@ const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYear
           sortField={sortField}
           sortDirection={sortDirection}
           MONTHS={MONTHS}
+					handleLeagueClick={handleLeagueClick}
         />
       </div>
     </div>
