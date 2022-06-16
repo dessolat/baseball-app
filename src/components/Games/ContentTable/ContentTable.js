@@ -22,7 +22,7 @@ const MONTHS = {
   12: 'december'
 };
 
-const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const WEEK_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const ContentTable = ({ games }) => {
   const currentStadium = useSelector(state => state.games.currentStadium);
@@ -102,8 +102,8 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-	const headerStyles = [cl.tableHeader]
-	currentLeague.id !== -1 && headerStyles.push(cl.paddingRightOne);
+  const headerStyles = [cl.tableHeader];
+  currentLeague.id !== -1 && headerStyles.push(cl.paddingRightOne);
 
   return (
     <div className={cl.wrapper}>
@@ -133,15 +133,15 @@ const ContentTable = ({ games }) => {
             {filteredData.map((game, index, arr) => {
               const isDate = index === 0 || arr[index].date !== arr[index - 1].date;
               const isActive = currentDate.toJSON().slice(0, 10) === game.date;
-              const weekDay = WEEK_DAYS[new Date(game.date).getDay()] + ', ';
+              const weekDay = ', ' + WEEK_DAYS[new Date(game.date).getDay()];
               const dataBefore = isDate
-                ? weekDay + game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)]
+                ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] + weekDay
                 : null;
 
               const classes = [cl.tableRow];
               isDate && classes.push(cl.withDate);
               isActive && classes.push(cl.active);
-							currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
+              currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
               return (
                 <li
                   key={game.id}
