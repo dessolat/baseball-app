@@ -509,9 +509,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     ) : tableMode === 'Pitching' ? (
       <>
-			{currentLeague.id === -1 &&<ActiveBodyCell sortField={sortField} row={row}>
-          G
-        </ActiveBodyCell> }
+        {currentLeague.id === -1 && (
+          <ActiveBodyCell sortField={sortField} row={row}>
+            G
+          </ActiveBodyCell>
+        )}
         <ActiveBodyCell sortField={sortField} row={row}>
           GS
         </ActiveBodyCell>
@@ -685,7 +687,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   if (currentTeam === 'All teams') {
     allTeamGames = filteredLeagues.reduce((totalGames, league) => {
       league.teams.forEach(team =>
-        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name })
+        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name, id: league.id, teams: league.teams })
       );
 
       return totalGames;
@@ -722,7 +724,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       : playerStatsData.total_annual[playerYears];
 
   const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
-  console.log(yearsAllLeagueTeamTotals);
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -749,7 +750,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   {sortedLeagues.map((row, index) => (
                     <div key={index} className={cl.tableRow}>
                       {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                      <div className={cl.league}>{row.title}</div>
+                      <div className={cl.league} onClick={handleLeagueClick(row)}>{row.title}</div>
                     </div>
                   ))}
                   {sortedLeagues.length > 0 && (
@@ -764,7 +765,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   {allTeamGames.map((row, index) => (
                     <div key={index} className={cl.tableRow}>
                       {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                      <div className={cl.league}>{row.title}</div>
+                      <div className={cl.league} onClick={handleLeagueClick(row)}>{row.title}</div>
                     </div>
                   ))}
                   {allTeamGames.length > 0 && (
