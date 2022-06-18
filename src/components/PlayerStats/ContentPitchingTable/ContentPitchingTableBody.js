@@ -12,7 +12,8 @@ const ContentPitchingTableBody = ({
   currentLeague,
   sortField,
   sortDirection,
-  MONTHS
+  MONTHS,
+	handleLeagueClick
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
@@ -70,7 +71,7 @@ const ContentPitchingTableBody = ({
   if (currentTeam === 'All teams') {
     allTeamGames = filteredLeagues.reduce((totalGames, league) => {
       league.teams.forEach(team =>
-        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name })
+        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name, id: league.id, teams: league.teams })
       );
 
       return totalGames;
@@ -86,6 +87,9 @@ const ContentPitchingTableBody = ({
         : 1
     );
   }
+
+	const leagueStyles = [cl.league]
+	playerYears === 'All years' && leagueStyles.push(cl.noCursor)
 
   const yearsAllLeagueTeamTotals =
     currentLeague.id === -1 &&
@@ -114,7 +118,7 @@ const ContentPitchingTableBody = ({
                 return team.pitching ? (
                   <li key={index} className={cl.tableRow}>
                     {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
-                    <div className={cl.league}>{row.title}</div>
+                    <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>{row.title}</div>
                     <div className={cl.teamName}>{getShortName(team.name, 20)}</div>
                     {currentLeague.id === -1 && (
                       <ActiveBodyCell sortField={sortField} row={team.pitching}>
@@ -298,7 +302,7 @@ const ContentPitchingTableBody = ({
               {allTeamGames.map((row, i) => {return row.game.pitching ? (
                 <li key={i} className={cl.tableRow}>
                   {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
-                  <div className={cl.league}>{row.title}</div>
+                  <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>{row.title}</div>
                   <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
                   {currentLeague.id === -1 && (
                     <ActiveBodyCell sortField={sortField} row={row.game.pitching}>
