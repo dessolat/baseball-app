@@ -149,27 +149,27 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           {currentLeague.id === -1 && <div className={cl.league}>League</div>}
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
           <div className={cl.teamName}>Team</div>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}  addedClass={cl.wide}>
             AB
           </SortField>
-          <div className={cl.sortFieldWrapper}>
-            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          {/* <div className={cl.sortFieldWrapper}> */}
+            <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
               R
             </SortField>
-          </div>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          {/* </div> */}
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             H
           </SortField>
           {/* <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             1B
           </SortField> */}
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={cl.tall}>
             2B
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             3B
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             HR
           </SortField>
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -188,19 +188,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             IBB
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             HP
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             SH
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             SF
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             SO
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
             TB
           </SortField>
           <SortField
@@ -232,13 +232,13 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             OPS
           </SortField>
 
-          <div className={cl.sortFieldWrapper}>
+          <div className={cl.sortFieldWrapper + ' ' + cl.tall}>
             <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
               SB
             </SortField>
           </div>
 
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={cl.tall}>
             CS
           </SortField>
 
@@ -254,7 +254,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
             LOB
           </SortField>
 
-          <div className={cl.sortFieldWrapper}>
+          <div className={cl.sortFieldWrapper + ' ' + cl.wide}>
             <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
               CH
             </SortField>
@@ -267,10 +267,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
           <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
             A
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             E
           </SortField>
-          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+          <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.tall}>
             DP
           </SortField>
           <SortField
@@ -295,25 +295,25 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                         <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>{row.title}</div>
                         <div className={cl.teamName}>{getShortName(team.name, 20)}</div>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting} addedClass={cl.wide}>
                           AB
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           R
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           H
                         </ActiveBodyCell>
                         {/* <ActiveBodyCell sortField={sortField} row={team.batting}>
                           1B
                         </ActiveBodyCell> */}
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           2B
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           3B
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           HR
                         </ActiveBodyCell>
                         <ActiveBodyCell sortField={sortField} row={team.batting}>
@@ -328,19 +328,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         <ActiveBodyCell sortField={sortField} row={team.batting}>
                           IBB
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           HP
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           SH
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           SF
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.tall}>
                           SO
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.batting}>
+                        <ActiveBodyCell sortField={sortField} row={team.batting}addedClass={cl.wide}>
                           TB
                         </ActiveBodyCell>
                         <ActiveBodyCell
@@ -372,10 +372,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                           OPS
                         </ActiveBodyCell>
 
-                        <ActiveBodyCell sortField={sortField} row={team.running}>
+                        <ActiveBodyCell sortField={sortField} row={team.running}addedClass={cl.tall}>
                           SB
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.running}>
+                        <ActiveBodyCell sortField={sortField} row={team.running}addedClass={cl.tall}>
                           CS
                         </ActiveBodyCell>
                         <ActiveBodyCell sortField={sortField} row={team.running} addedClass={cl.wider}>
@@ -385,7 +385,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                           LOB
                         </ActiveBodyCell>
 
-                        <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                        <ActiveBodyCell sortField={sortField} row={team.fielding}addedClass={cl.wide}>
                           CH
                         </ActiveBodyCell>
                         <ActiveBodyCell sortField={sortField} row={team.fielding}>
@@ -394,10 +394,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         <ActiveBodyCell sortField={sortField} row={team.fielding}>
                           A
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                        <ActiveBodyCell sortField={sortField} row={team.fielding}addedClass={cl.tall}>
                           E
                         </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={team.fielding}>
+                        <ActiveBodyCell sortField={sortField} row={team.fielding}addedClass={cl.tall}>
                           DP
                         </ActiveBodyCell>
                         <ActiveBodyCell
@@ -415,25 +415,25 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       {playerYears === 'All years' && <div className={cl.year}></div>}
                       <div className={cl.league}>TOTALS</div>
                       <div className={cl.teamName}></div>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}  addedClass={cl.wide}>
                         AB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         R
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         H
                       </ActiveBodyCell>
                       {/* <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         1B
                       </ActiveBodyCell> */}
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         2B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         3B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         HR
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
@@ -451,19 +451,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
                         IBB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         HP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         SH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         SF
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.tall}>
                         SO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.batting}addedClass={cl.wide}>
                         TB
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -495,10 +495,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         OPS
                       </ActiveBodyCell>
 
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}addedClass={cl.tall}>
                         SB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.running}addedClass={cl.tall}>
                         CS
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -511,7 +511,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         LOB
                       </ActiveBodyCell>
 
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}addedClass={cl.wide}>
                         CH
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
@@ -520,10 +520,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
                         A
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}addedClass={cl.tall}>
                         E
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.fielding}addedClass={cl.tall}>
                         DP
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -543,25 +543,25 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
                       <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>{row.title}</div>
                       <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}  addedClass={cl.wide}>
                         AB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         R
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         H
                       </ActiveBodyCell>
                       {/* <ActiveBodyCell sortField={sortField} row={row.game.batting}>
                         1B
                       </ActiveBodyCell> */}
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         2B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         3B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         HR
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={row.game.batting}>
@@ -576,19 +576,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={row.game.batting}>
                         IBB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         HP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         SH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         SF
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.tall}>
                         SO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.batting}addedClass={cl.wide}>
                         TB
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -620,10 +620,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         OPS
                       </ActiveBodyCell>
 
-                      <ActiveBodyCell sortField={sortField} row={row.game.running}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.running}addedClass={cl.tall}>
                         SB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.running}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.running}addedClass={cl.tall}>
                         CS
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.wider}>
@@ -632,7 +632,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={row.game.running}>
                         LOB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}addedClass={cl.wide}>
                         CH
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
@@ -641,10 +641,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
                         A
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}addedClass={cl.tall}>
                         E
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={row.game.fielding}addedClass={cl.tall}>
                         DP
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -661,25 +661,25 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       {playerYears === 'All years' && <div className={cl.year}></div>}
                       <div className={cl.league}>TOTALS</div>
                       <div className={cl.teamName}></div>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}  addedClass={cl.wide}>
                         AB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         R
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         H
                       </ActiveBodyCell>
                       {/* <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         1B
                       </ActiveBodyCell> */}
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         2B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         3B
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         HR
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
@@ -697,19 +697,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
                         IBB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         HP
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         SH
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         SF
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.tall}>
                         SO
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.batting}addedClass={cl.wide}>
                         TB
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -741,10 +741,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                         OPS
                       </ActiveBodyCell>
 
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}addedClass={cl.tall}>
                         SB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}addedClass={cl.tall}>
                         CS
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -756,7 +756,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.running}>
                         LOB
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}addedClass={cl.wide}>
                         CH
                       </ActiveBodyCell>
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
@@ -765,10 +765,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                       <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
                         A
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}addedClass={cl.tall}>
                         E
                       </ActiveBodyCell>
-                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}>
+                      <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.fielding}addedClass={cl.tall}>
                         DP
                       </ActiveBodyCell>
                       <ActiveBodyCell
@@ -795,25 +795,25 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     </Link>
                   </div>
                   <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}  addedClass={cl.wide}>
                     AB
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     R
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     H
                   </ActiveBodyCell>
                   {/* <ActiveBodyCell sortField={sortField} row={row}>
                     1B
                   </ActiveBodyCell> */}
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     2B
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     3B
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     HR
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>
@@ -828,19 +828,19 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <ActiveBodyCell sortField={sortField} row={row}>
                     IBB
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     HP
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     SH
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     SF
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     SO
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide}>
                     TB
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
@@ -856,10 +856,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     OPS
                   </ActiveBodyCell>
 
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     SB
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     CS
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wider}>
@@ -869,7 +869,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                     LOB
                   </ActiveBodyCell>
 
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide}>
                     CH
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row}>
@@ -878,10 +878,10 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                   <ActiveBodyCell sortField={sortField} row={row}>
                     A
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     E
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row}>
+                  <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.tall}>
                     DP
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
@@ -895,17 +895,17 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                 <div className={cl.teamName}></div>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}  addedClass={cl.wide}>
                   AB
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   R
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   H
                 </ActiveBodyCell>
                 {/* <ActiveBodyCell
@@ -915,17 +915,17 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                 </ActiveBodyCell> */}
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   2B
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   3B
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   HR
                 </ActiveBodyCell>
                 <ActiveBodyCell
@@ -951,27 +951,27 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   HP
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   SH
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   SF
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.tall}>
                   SO
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.batting : filteredLeague.batting}addedClass={cl.wide}>
                   TB
                 </ActiveBodyCell>
                 <ActiveBodyCell
@@ -1005,12 +1005,12 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
 
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.running : filteredLeague.running}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.running : filteredLeague.running}addedClass={cl.tall}>
                   SB
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.running : filteredLeague.running}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.running : filteredLeague.running}addedClass={cl.tall}>
                   CS
                 </ActiveBodyCell>
                 <ActiveBodyCell
@@ -1027,7 +1027,7 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
 
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}addedClass={cl.wide}>
                   CH
                 </ActiveBodyCell>
                 <ActiveBodyCell
@@ -1042,12 +1042,12 @@ const ContentBattingTable = ({ filteredLeagues = [], filteredLeague, playerYears
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}addedClass={cl.tall}>
                   E
                 </ActiveBodyCell>
                 <ActiveBodyCell
                   sortField={sortField}
-                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}>
+                  row={currentTeam === 'All teams' ? selectedLeague.total.fielding : filteredLeague.fielding}addedClass={cl.tall}>
                   DP
                 </ActiveBodyCell>
                 <ActiveBodyCell

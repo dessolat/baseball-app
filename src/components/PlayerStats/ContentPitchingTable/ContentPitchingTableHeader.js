@@ -36,7 +36,7 @@ const ContentPitchingTableHeader = ({
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         IP
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         PA
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -88,13 +88,13 @@ const ContentPitchingTableHeader = ({
         addedClass={cl.wider}>
         ERA
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NP
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NS
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NB
       </SortField>
     </div>
