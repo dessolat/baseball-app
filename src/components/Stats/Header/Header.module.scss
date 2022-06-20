@@ -9,4 +9,8 @@
 		display: block;
 		background: #F4F5F7;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+		background: #F4F5F7;
+  }
 }
