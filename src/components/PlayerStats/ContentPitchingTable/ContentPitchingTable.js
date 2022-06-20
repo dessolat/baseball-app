@@ -4,7 +4,7 @@ import cl from './ContentPitchingTable.module.scss';
 import ContentPitchingTableBody from './ContentPitchingTableBody';
 import ContentPitchingTableHeader from './ContentPitchingTableHeader';
 
-const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS }) => {
+const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
   const [sortField, setSortField] = useState('IP');
   const [sortDirection, setSortDirection] = useState('asc');
 
@@ -31,6 +31,7 @@ const ContentPitchingTable = ({ filteredLeagues = [], filteredLeague, playerYear
           sortField={sortField}
           sortDirection={sortDirection}
           MONTHS={MONTHS}
+					handleLeagueClick={handleLeagueClick}
         />
       </div>
     </div>

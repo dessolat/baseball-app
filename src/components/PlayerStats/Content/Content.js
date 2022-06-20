@@ -4,7 +4,8 @@ import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTableType } from 'redux/playerStatsReducer';
+import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
+import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
 import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
 
@@ -33,16 +34,38 @@ const Content = ({ playerYears }) => {
           league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
         );
 
-	const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id)
+  const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
 
   const filteredLeague =
     currentLeague.id === -1
       ? null
       : currentTeam === 'All teams'
-      // ? statsData.teams
-      // : statsData.teams.find(team => team.name === currentTeam);
-      ? selectedLeague.teams
+      ? // ? statsData.teams
+        // : statsData.teams.find(team => team.name === currentTeam);
+        selectedLeague.teams
       : selectedLeague.teams.find(team => team.name === currentTeam) || [];
+
+  const handleLeagueClick = league => () => {
+    if (playerYears === 'All years') return;
+    dispatch(setCurrentLeague(league));
+
+    if (league.id === -1) {
+      const teamsArr = Array.from(
+        statsData.leagues
+          .filter(league => league.year === playerYears)
+          .reduce((sum, league) => {
+            league.teams.forEach(team => sum.add(team.name));
+            return sum;
+          }, new Set())
+      );
+
+      dispatch(setPlayerCurrentTeam(teamsArr.length > 1 ? 'All teams' : teamsArr[0]));
+      return;
+    }
+
+    dispatch(setPlayerCurrentTeam(league.teams.length > 1 ? 'All teams' : league.teams[0].name));
+  };
+
   return (
     <section>
       <div className='container'>
@@ -70,6 +93,7 @@ const Content = ({ playerYears }) => {
                   filteredLeague={filteredLeague}
                   playerYears={playerYears}
                   MONTHS={MONTHS}
+                  handleLeagueClick={handleLeagueClick}
                 />
               ) : tableType === 'Batting' ? (
                 <ContentBattingTable
@@ -77,6 +101,7 @@ const Content = ({ playerYears }) => {
                   filteredLeague={filteredLeague}
                   playerYears={playerYears}
                   MONTHS={MONTHS}
+                  handleLeagueClick={handleLeagueClick}
                 />
               ) : (
                 <ContentPitchingTable
@@ -84,6 +109,7 @@ const Content = ({ playerYears }) => {
                   filteredLeague={filteredLeague}
                   playerYears={playerYears}
                   MONTHS={MONTHS}
+                  handleLeagueClick={handleLeagueClick}
                 />
               )}
             </>

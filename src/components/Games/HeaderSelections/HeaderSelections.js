@@ -5,29 +5,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
 import { setSearchParam } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
+import ContentTableModeLinks from '../ContentTable/ContentTableModeLinks';
+import ContentTeam from '../ContentTable/ContentTeam';
+import ContentCalendars from '../ContentTable/ContentCalendars';
 
 const YEARS = [2022, 2021, 2020];
 
 const HeaderSelections = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+  const games = useSelector(state => state.games.games);
+
   const dispatch = useDispatch();
 
-	const firstMountRef = useRef(true)
+  const firstMountRef = useRef(true);
 
   useEffect(() => {
-		if (firstMountRef.current === true) {
-			firstMountRef.current = false
-			return
-		}
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
     setSearchParam('year', currentYear);
   }, [currentYear]);
 
   // useEffect(() => {
-	// 	if (firstMountRef.current === true) {
-	// 		firstMountRef.current = false
-	// 		return
-	// 	}
+  // 	if (firstMountRef.current === true) {
+  // 		firstMountRef.current = false
+  // 		return
+  // 	}
   //   setSearchParam('game_type', currentGameType);
   // }, [currentGameType]);
 
@@ -40,12 +46,12 @@ const HeaderSelections = () => {
     dispatch(setCurrentYear(option));
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
-	
+
   const getClassName = name => (name === currentGameType ? cl.active : '');
-	
+
   const handleTypeClick = type => () => {
-		dispatch(setCurrentGameType(type));
-		dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    dispatch(setCurrentGameType(type));
+    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
   return (
@@ -61,6 +67,13 @@ const HeaderSelections = () => {
           Softball
         </li>
       </ul>
+      <div className={cl.modeLinks}>{currentLeague.id !== -1 && <ContentTableModeLinks />}</div>
+      <div className={cl.contentTeamWrapper}>
+        <ContentTeam games={games} />
+      </div>
+      <div className={cl.contentGridCalendarWrapper}>
+        <ContentCalendars />
+      </div>
     </div>
   );
 };

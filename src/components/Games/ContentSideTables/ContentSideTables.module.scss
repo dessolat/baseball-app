@@ -2,22 +2,37 @@
 
 .side {
   flex: 0 1 315px;
-	padding: 2.23rem 1.35rem 1rem;
+  padding: 2.23rem 1.35rem 1rem;
 
-		@media screen and (max-width: 1100px) {
-			padding: 2.23rem .5rem 1rem;
-		}
+  @media screen and (max-width: 1100px) {
+    padding: 2.23rem 0.5rem 1rem;
+  }
 
-		@media screen and (max-width: 800px) {
-			padding: 0;
-		}
-		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-			padding: 0;
-		}
+  @media screen and (max-width: 800px) {
+    padding: 0;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 0;
+    display: flex;
+
+    &.addHeight {
+      height: calc(100vh - 3.0875rem - 95px);
+    }
+
+    > div {
+      flex: 1;
+    }
+  }
 }
 
 .pctWrapper {
   @media screen and (max-width: 800px) {
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     padding: 6px 10px;
     display: flex;
     flex-direction: column;
@@ -31,6 +46,9 @@
   @media screen and (max-width: 800px) {
     padding: 0 3.68rem;
   }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 0 2rem;
+  }
 
   > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
@@ -38,6 +56,9 @@
     justify-content: space-between;
 
     @media screen and (max-width: 800px) {
+      border-bottom: 1px solid #dfdfdf;
+    }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
       border-bottom: 1px solid #dfdfdf;
     }
 
@@ -48,11 +69,18 @@
       @media screen and (max-width: 800px) {
         font-size: 12px;
       }
+      @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+        font-size: 12px;
+      }
 
       &:first-child {
         max-width: 11.6rem;
 
         @media screen and (max-width: 800px) {
+          width: 16rem;
+        }
+        @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+          max-width: 13rem;
           width: 16rem;
         }
       }
@@ -96,6 +124,9 @@
     @media screen and (max-width: 800px) {
       max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 27px - 6px - 6px - 192px);
     }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      max-height: calc(100vh - 30.63px - 96.5px - 6px - 21px - 6px - 45px);
+    }
 
     &::-webkit-scrollbar {
       width: 0;
@@ -115,10 +146,18 @@
         @media screen and (max-width: 800px) {
           font-size: 14px;
         }
+        @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+          font-size: 14px;
+          line-height: 1.55rem;
+        }
 
         &:first-child {
           padding-right: 0.5rem;
           max-width: 11.6rem;
+
+          @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+            max-width: 15rem;
+          }
         }
 
         &:nth-child(2) {
@@ -160,6 +199,10 @@
     margin-top: 0;
     padding-bottom: 2px;
   }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    margin-top: 0;
+    padding-bottom: 2px;
+  }
 
   > a {
     font: 300 0.875rem var(--font-nunito);
@@ -168,6 +211,9 @@
     margin-left: auto;
 
     @media screen and (max-width: 800px) {
+      font-size: 14px;
+    }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
       font-size: 14px;
     }
   }
@@ -185,10 +231,19 @@
   @media screen and (max-width: 800px) {
     margin-left: 2.6rem;
   }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    margin-left: 2.6rem;
+  }
 }
 
 .switchWrapper {
   @media screen and (max-width: 800px) {
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     padding: 6px 10px;
     display: flex;
     flex-direction: column;
@@ -202,6 +257,9 @@
   @media screen and (max-width: 800px) {
     padding: 0 3.68rem;
   }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 0 3.68rem;
+  }
 
   > .tableHeader {
     border-bottom: 0.5px solid #dfdfdf;
@@ -211,12 +269,18 @@
     @media screen and (max-width: 800px) {
       border-bottom: 1px solid #dfdfdf;
     }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      border-bottom: 1px solid #dfdfdf;
+    }
 
     > div {
       font: 700 0.75rem / 1.9rem var(--font-nunito);
       color: #838383;
 
       @media screen and (max-width: 800px) {
+        font-size: 12px;
+      }
+      @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
         font-size: 12px;
       }
 
@@ -234,15 +298,17 @@
           &:first-child {
             width: 4rem;
 
-						@media screen and (max-width: 800px) {
-							width: 4.5rem;
-						}
+            @media screen and (max-width: 800px) {
+              width: 4.5rem;
+            }
+            @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+              width: 4.5rem;
+            }
             // 	@media screen and (max-width: 1150px) {
             // 	width: 3rem;
             // }
           }
 
-					
           &:nth-child(2) {
             width: 2.3rem;
 
@@ -280,6 +346,9 @@
     @media screen and (max-width: 800px) {
       max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 35px);
     }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      max-height: calc(100vh - 30.63px - 96.5px - 6px - 21px - 6px - 45px);
+    }
 
     &::-webkit-scrollbar {
       width: 0;
@@ -299,6 +368,9 @@
         @media screen and (max-width: 800px) {
           font-size: 14px;
         }
+        @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+          font-size: 14px;
+        }
 
         &:first-child {
           max-width: 11.5rem;
@@ -310,9 +382,12 @@
             &:first-child {
               width: 4rem;
 
-							@media screen and (max-width: 800px) {
-								width: 4.5rem;
-							}
+              @media screen and (max-width: 800px) {
+                width: 4.5rem;
+              }
+              @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+                width: 4.5rem;
+              }
               // 	@media screen and (max-width: 1150px) {
               // 	width: 3rem;
               // }

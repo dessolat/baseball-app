@@ -10,10 +10,14 @@ const ContentSideTables = () => {
   const mobileTableMode = useSelector(state => state.games.mobileTableMode);
 
   const isTables = currentLeague.id !== -1;
+
+  const sideStyles = [cl.side];
+  mobileTableMode === 'Team tablo/Leader' && sideStyles.push(cl.addHeight);
+
   return (
     // <div className={cl.side} style={{ maxHeight: '70vh' }}>
     <div
-      className={cl.side}
+      className={sideStyles.join(' ')}
       style={!isTables ? { height: isMobile ? 'auto' : '70vh' } : { maxHeight: isMobile ? 'auto' : '75vh' }}>
       {isTables && (
         <>

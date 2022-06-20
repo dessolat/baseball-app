@@ -7,6 +7,9 @@
     display: none;
     // margin-left: 10px;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
+  }
 }
 
 .wrapper {
