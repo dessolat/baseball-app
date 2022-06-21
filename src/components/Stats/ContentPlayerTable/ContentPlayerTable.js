@@ -114,6 +114,14 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
+	const rightRowStyles = [cl.tableRow]
+	const rightHeaderStyles = [cl.rightHeader]
+	if (tableMode === 'Fielding / Running') {
+		rightRowStyles.push(cl.widthAuto)
+		rightHeaderStyles.push(cl.widthAuto)
+	}
+
+
   return (
     <>
       {isMobile ? (
@@ -126,7 +134,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   {/* <div>POS</div> */}
                   {/* <div></div> */}
                 </div>
-                <div className={cl.rightHeader} ref={headerScroll}>
+                <div className={rightHeaderStyles.join(' ')} ref={headerScroll}>
                   <div>
                     <Dropdown
                       title={'Team'}
@@ -185,9 +193,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   ref={rowsScroll}>
                   {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                     (row, index) => {
-                      console.log(row);
                       return (
-                        <div key={index} className={cl.tableRow}>
+                        <div key={index} className={rightRowStyles.join(' ')}>
                           <div>
                             {row.teams
                               .reduce((sum, team) => {
