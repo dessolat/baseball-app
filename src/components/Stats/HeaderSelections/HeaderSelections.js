@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
 import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
+import ContentPlayerFilterField from '../ContentPlayerTable/ContentPlayerFilterField';
 
 const YEARS = [2022, 2021, 2020];
 const TABLE_MODES = ['Batting', 'Fielding / Running', 'Pitching'];
@@ -39,7 +40,7 @@ const HeaderSelections = () => {
         <Link to={'/stats/team'} className={getClassName('team')}>
           Team
         </Link>
-				<div className={cl.gameTypes}>
+        <div className={cl.gameTypes}>
           <Dropdown
             title={currentGameType}
             options={['Baseball', 'Softball']}
@@ -50,6 +51,11 @@ const HeaderSelections = () => {
           />
         </div>
       </div>
+      {statsType === 'player' && (
+        <div className={cl.filterFieldWrapper}>
+          <ContentPlayerFilterField />
+        </div>
+      )}
       <div className={cl.bottom}>
         <div className={cl.batting}>
           <Dropdown
