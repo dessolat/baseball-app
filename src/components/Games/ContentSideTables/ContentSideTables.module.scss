@@ -42,7 +42,6 @@
 
 .pctTable {
   text-align: left;
-  // border-collapse: collapse;
   @media screen and (max-width: 800px) {
     padding: 0 3.68rem;
   }
@@ -113,7 +112,6 @@
   }
 
   > .tableBody {
-    // max-height: calc((45vh + 7px) / 2);
     max-height: 15.2rem;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -253,7 +251,6 @@
 
 .switchTable {
   text-align: left;
-  // border-collapse: collapse;
   @media screen and (max-width: 800px) {
     padding: 0 3.68rem;
   }
@@ -304,9 +301,6 @@
             @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
               width: 4.5rem;
             }
-            // 	@media screen and (max-width: 1150px) {
-            // 	width: 3rem;
-            // }
           }
 
           &:nth-child(2) {
@@ -316,32 +310,14 @@
               justify-content: flex-end;
             }
           }
-          // @media screen and (max-width: 1100px) {
-          // 	width: 1rem;
-          // }
 
-          // &:nth-child(3) {
-          // 	width: 2.5rem;
-
-          // 	@media screen and (max-width: 1100px) {
-          // 		width: 1.6rem;
-          // 	}
-          // }
-
-          // &:first-child,
-          // &:nth-child(2),
-          // &:nth-child(3) {
-          // 	text-align: center;
-          // }
         }
       }
     }
   }
 
   > .tableBody {
-    // max-height: calc((47vh + 12px) / 2);
-    // overflow-x: hidden;
-    // overflow-y: scroll;
+
 
     @media screen and (max-width: 800px) {
       max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 35px);
@@ -388,9 +364,7 @@
               @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
                 width: 4.5rem;
               }
-              // 	@media screen and (max-width: 1150px) {
-              // 	width: 3rem;
-              // }
+
             }
 
             &:nth-child(2) {
@@ -398,23 +372,7 @@
               text-align: center;
               padding-right: 0.4rem;
             }
-            // @media screen and (max-width: 1100px) {
-            // 	width: 1rem;
-            // }
 
-            // &:nth-child(3) {
-            // 	width: 2.5rem;
-
-            // 	@media screen and (max-width: 1100px) {
-            // 		width: 1.6rem;
-            // 	}
-            // }
-
-            // &:first-child,
-            // &:nth-child(2),
-            // &:nth-child(3) {
-            // 	text-align: center;
-            // }
           }
         }
       }
@@ -422,57 +380,6 @@
   }
 }
 
-// .switchTable {
-//   text-align: left;
-//   border-collapse: collapse;
-
-//   thead {
-//     border-bottom: 0.5px solid #dfdfdf;
-
-//     @media screen and (max-width: 800px) {
-//       border-bottom: 1px solid #dfdfdf;
-//     }
-
-//     th {
-//       font: 700 0.75rem / 1.9rem var(--font-nunito);
-//       color: #838383;
-//       width: 2rem;
-
-//       @media screen and (max-width: 800px) {
-//         font-size: 12px;
-//       }
-
-//       &:first-child {
-//         width: 11.5rem;
-//       }
-//       &:nth-child(2) {
-//         width: 4rem;
-//       }
-//       &:last-child > div {
-//         justify-content: flex-end;
-//       }
-//     }
-//   }
-
-//   > tbody {
-//     td {
-//       font: 300 0.875rem / 1.9rem var(--font-nunito);
-
-//       @media screen and (max-width: 800px) {
-//         font-size: 14px;
-//       }
-
-//       &:first-child {
-//         padding-right: 0.5rem;
-//       }
-
-//       &:last-child {
-//         text-align: right;
-//         padding-right: 0.2rem;
-//       }
-//     }
-//   }
-// }
 
 .underlineHover > a:hover {
   border-bottom: 2px solid var(--side-color);
