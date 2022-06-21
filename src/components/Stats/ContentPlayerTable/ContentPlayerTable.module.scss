@@ -89,7 +89,7 @@
 
 .rows {
   position: relative;
-  max-height: calc(100vh - 2.1875rem - 6.4rem - 6rem - 1.5rem);
+  max-height: calc(100vh - var(--desktop-nav-height) - 6.4rem - 6rem - 1.5rem);
   overflow: scroll;
 
   &::-webkit-scrollbar {
@@ -194,12 +194,16 @@
 
 .sides {
   width: 100%;
-  max-height: calc(100vh - 30.63px - 132px - 39px - 40px);
+  max-height: calc(100vh - var(--desktop-nav-height) - 132px - 39px - 40px);
   overflow-y: scroll;
   display: flex;
 
   &::-webkit-scrollbar {
     width: 0;
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    max-height: calc(100vh - var(--landscape-nav-height) - 80.5px - 38.5px);
   }
 }
 
