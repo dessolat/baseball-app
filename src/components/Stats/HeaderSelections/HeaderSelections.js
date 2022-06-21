@@ -40,7 +40,7 @@ const HeaderSelections = () => {
         <Link to={'/stats/team'} className={getClassName('team')}>
           Team
         </Link>
-				<div className={cl.gameTypes}>
+        <div className={cl.gameTypes}>
           <Dropdown
             title={currentGameType}
             options={['Baseball', 'Softball']}
@@ -51,9 +51,11 @@ const HeaderSelections = () => {
           />
         </div>
       </div>
-			<div className={cl.filterFieldWrapper}>
-					<ContentPlayerFilterField />
-				</div>
+      {statsType === 'player' && (
+        <div className={cl.filterFieldWrapper}>
+          <ContentPlayerFilterField />
+        </div>
+      )}
       <div className={cl.bottom}>
         <div className={cl.batting}>
           <Dropdown
