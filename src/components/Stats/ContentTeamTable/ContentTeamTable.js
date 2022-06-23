@@ -14,7 +14,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
@@ -30,21 +30,24 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
       ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[
           tableMode.toLowerCase()
         ] || []
-      : statsData
-          .filter(league => league.type === currentGameType)
-          .reduce((sum, league) => {
-            league.teams[tableMode.toLowerCase()].forEach(team => {
-              const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
+      : statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.teams[
+          tableMode.toLowerCase()
+        ] || [];
+  // statsData
+  //     .filter(league => league.type === currentGameType)
+  //     .reduce((sum, league) => {
+  //       league.teams[tableMode.toLowerCase()].forEach(team => {
+  //         const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
 
-              if (teamIndex !== -1) {
-                sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name']);
-              } else {
-                sum.push(team);
-              }
-            });
+  //         if (teamIndex !== -1) {
+  //           sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name']);
+  //         } else {
+  //           sum.push(team);
+  //         }
+  //       });
 
-            return sum;
-          }, []) || [];
+  //       return sum;
+  //     }, [])
 
   return (
     <>
