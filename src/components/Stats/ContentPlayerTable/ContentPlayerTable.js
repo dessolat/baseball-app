@@ -44,26 +44,30 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               (item.title === currentLeague.name || item.title === currentLeague.title) &&
               item.type === currentGameType
           )?.players[tableMode.toLowerCase()] || []
-        : statsData
-            .filter(league => league.type === currentGameType)
-            .reduce((sum, league) => {
-              league.players[tableMode.toLowerCase()].forEach(player => {
-                const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
+        : // : statsData
+          //     .filter(league => league.type === currentGameType)
+          //     .reduce((sum, league) => {
+          //       league.players[tableMode.toLowerCase()].forEach(player => {
+          //         const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
 
-                if (playerIndex !== -1) {
-                  sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
-                    'name',
-                    'surname',
-                    'teams',
-                    'id'
-                  ]);
-                } else {
-                  sum.push(player);
-                }
-              });
+          //         if (playerIndex !== -1) {
+          //           sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
+          //             'name',
+          //             'surname',
+          //             'teams',
+          //             'id'
+          //           ]);
+          //         } else {
+          //           sum.push(player);
+          //         }
+          //       });
 
-              return sum;
-            }, []) || [],
+          //       return sum;
+          //     }, [])
+          statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.players[
+            tableMode.toLowerCase()
+          ] || [],
+
     [currentLeague, statsData, tableMode, currentGameType]
   );
 
@@ -114,13 +118,12 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
-	const rightRowStyles = [cl.tableRow]
-	const rightHeaderStyles = [cl.rightHeader]
-	if (tableMode === 'Fielding / Running') {
-		rightRowStyles.push(cl.widthAuto)
-		rightHeaderStyles.push(cl.widthAuto)
-	}
-
+  const rightRowStyles = [cl.tableRow];
+  const rightHeaderStyles = [cl.rightHeader];
+  if (tableMode === 'Fielding / Running') {
+    rightRowStyles.push(cl.widthAuto);
+    rightHeaderStyles.push(cl.widthAuto);
+  }
 
   return (
     <>

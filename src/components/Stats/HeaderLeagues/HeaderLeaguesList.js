@@ -27,7 +27,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   return (
     <ul className={cl.leagues} ref={ref}>
       {leagues
-        .filter(league => league.type === currentGameType || league.id === -1)
+        .filter(league => (league.type === currentGameType || league.id === -1) && league.id !== null)
         .map((league, index) => (
           <HeaderLeaguesListItem
             key={index}
