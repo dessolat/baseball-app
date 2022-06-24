@@ -31,7 +31,7 @@ const Game = () => {
   useEffect(() => {
     axios
       .get(`http://baseball-gametrack.ru/api/game_${gameId}`, {
-        timeout: 7000
+        timeout: 10000
       })
       .then(() => {
         dispatch(getFullData(true));
