@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getObjectsSum } from 'utils';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 
 const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
+  const [isScrollable, setIsScrollable] = useState(true);
+
   const tableMode = useSelector(state => state.stats.tableMode);
   const sortField = useSelector(state => state.stats.sortField);
   const sortDirection = useSelector(state => state.stats.sortDirection);
@@ -18,6 +19,16 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
+
+  useEffect(() => {
+    if (rowsScroll.current === null) return;
+
+    setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
+  }, []);
+
+  useEffect(() => {
+    setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
+  }, [tableMode, currentLeague.id]);
 
   const handleFieldClick = field => () => {
     sortField[tableMode] !== field
@@ -49,12 +60,13 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   //       return sum;
   //     }, [])
 
+  const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
   return (
     <>
       {isMobile ? (
         <div className={cl.mobileWrapper}>
           <div className={cl.fullHeader}>
-            <div className={cl.leftHeader}>
+            <div className={cl.leftHeader} style={leftHeaderStyles}>
               <div>Team</div>
             </div>
             <div className={cl.rightHeader} ref={headerScroll}>
@@ -65,7 +77,9 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
             </div>
           </div>
           <div className={cl.sides}>
-            <div className={cl.leftRows}>
+            <div
+              className={cl.leftRows}
+              style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
               {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                 (row, index) => {
                   return (
@@ -88,7 +102,12 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
               {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                 (row, index) => {
                   return (
-                    <div key={index} className={cl.tableRow}>
+                    <div
+                      key={index}
+                      className={cl.tableRow}
+                      style={{
+                        width: !isScrollable ? '100%' : 'fit-content'
+                      }}>
                       {getTableRows(row, cl, sortField[tableMode])}
                     </div>
                   );
