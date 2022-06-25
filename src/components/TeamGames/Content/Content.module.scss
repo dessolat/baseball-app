@@ -5,7 +5,7 @@
 
 	@media screen and (max-width: 800px) {
 		display: block;
-		min-height: calc(100vh - 30.63px - 131px);
+		min-height: calc(100vh - var(--desktop-nav-height) - 126px);
 	}
 
   > * {
