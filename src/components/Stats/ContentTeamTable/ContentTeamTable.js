@@ -21,12 +21,14 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const rowsScroll = useRef(null);
 
   useEffect(() => {
-    if (rowsScroll.current === null) return;
+    if (rowsScroll.current === null || !isMobile) return;
 
     setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
   }, []);
 
   useEffect(() => {
+		if (!isMobile) return
+
     setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
   }, [tableMode, currentLeague.id]);
 
