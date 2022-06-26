@@ -24,13 +24,14 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     if (rowsScroll.current === null || !isMobile) return;
 
     setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
+		// eslint-disable-next-line
   }, []);
 
   useEffect(() => {
 		if (!isMobile) return
 
     setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
-  }, [tableMode, currentLeague.id]);
+  }, [tableMode, currentLeague.id, isMobile]);
 
   const handleFieldClick = field => () => {
     sortField[tableMode] !== field
