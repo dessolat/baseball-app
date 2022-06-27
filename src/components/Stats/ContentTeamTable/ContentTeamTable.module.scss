@@ -50,6 +50,9 @@
       @media screen and (max-width: 800px) {
         padding-left: 0;
       }
+			@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+				padding-left: 0;
+			}
     }
 
 &.tall {
@@ -85,6 +88,10 @@
   border-top: 0.5px solid #cdcccc;
   width: 100%;
   padding: 0;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    height: calc(100vh - var(--landscape-nav-height) - 80.5px);
+  }
 }
 
 .fullHeader {
@@ -131,6 +138,10 @@
     overflow-x: hidden;
     scroll-behavior: initial;
 
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			justify-content: space-between;
+		}
+
     > div {
       flex: 0 0 2rem;
 
@@ -158,6 +169,10 @@
   max-height: calc(100vh - 30.63px - 132px - 39px);
   overflow-y: scroll;
   display: flex;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    max-height: calc(100vh - var(--landscape-nav-height) - 80.5px - 38.5px);
+  }
 
   &::-webkit-scrollbar {
     width: 0;
@@ -203,11 +218,19 @@
   overflow-x: scroll;
   height: fit-content;
 
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		flex: 1;
+	}
+
   > .tableRow {
     display: flex;
     width: fit-content;
     justify-content: unset;
     height: 38.5px;
+
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			justify-content: space-between;
+		}
 
     > div {
       width: 2rem !important;

@@ -9,6 +9,9 @@
     justify-content: space-between;
 		align-items: stretch;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		justify-content: space-between;
+  }
 
   &:after {
     content: '';
@@ -22,6 +25,9 @@
 		@media screen and (max-width: 800px) {
       right: 1.8rem;
     }
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      right: 1.8rem;
+    }
   }
 
   > *:first-child {
@@ -31,12 +37,20 @@
 			margin-right: 0;
 			height: auto;
 		}
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			margin-right: 0;
+			height: auto;
+		}
   }
 
   > *:last-child {
     margin-left: 0.5rem;
 
 		@media screen and (max-width: 800px) {
+			margin-left: 0;
+			height: auto;
+		}
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 			margin-left: 0;
 			height: auto;
 		}
@@ -75,6 +89,13 @@
 		overflow-x: scroll;
 		overflow-y: hidden;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		width: calc(100vw - 3.6rem);
+		grid-auto-columns: 25%;
+		grid-template-rows: 51.5px;
+		overflow-x: scroll;
+		overflow-y: hidden;
+  }
 }
 
 .league {
@@ -93,6 +114,12 @@
 		font-size: 14px;
 		padding: 0 .1rem;
 		line-height: 15px;
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		font-size: 14px;
+		padding: 0 .1rem;
+		line-height: 15px;
+		border-bottom: none;
   }
 
 	@media screen and (orientation: landscape) and (max-height: 760px) {

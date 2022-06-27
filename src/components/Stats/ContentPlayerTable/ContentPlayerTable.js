@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
+import { getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';

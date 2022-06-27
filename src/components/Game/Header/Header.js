@@ -25,34 +25,34 @@ const Header = ({ currentTab, handleTabClick }) => {
   const isVideo = useSelector(state => state.game.isVideo);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchImage = async (teamName, url) => {
-      try {
-        const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${url}`, {
-          responseType: 'arraybuffer',
-          timeout: 2500
-        });
+  // useEffect(() => {
+  //   const fetchImage = async (teamName, url) => {
+  //     try {
+  //       const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${url}`, {
+  //         responseType: 'arraybuffer',
+  //         timeout: 2500
+  //       });
 
-        dispatch(
-          setImagesData({
-            [teamName]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-          })
-        );
-      } catch (err) {
-        // err.message === 'Request failed with status code 523' &&
-        setTimeout(() => fetchImage(teamName, url), 2500);
-        console.log(err.message);
-      }
-    };
+  //       dispatch(
+  //         setImagesData({
+  //           [teamName]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+  //         })
+  //       );
+  //     } catch (err) {
+  //       // err.message === 'Request failed with status code 523' &&
+  //       setTimeout(() => fetchImage(teamName, url), 2500);
+  //       console.log(err.message);
+  //     }
+  //   };
 
-    !imagesData[preview.guests.name] &&
-      preview.guests.logo !== '' &&
-      fetchImage(preview.guests.name, preview.guests.logo);
-    !imagesData[preview.owners.name] &&
-      preview.owners.logo !== '' &&
-      fetchImage(preview.owners.name, preview.owners.logo);
-    // eslint-disable-next-line
-  }, []);
+  //   !imagesData[preview.guests.name] &&
+  //     preview.guests.logo !== '' &&
+  //     fetchImage(preview.guests.name, preview.guests.logo);
+  //   !imagesData[preview.owners.name] &&
+  //     preview.owners.logo !== '' &&
+  //     fetchImage(preview.owners.name, preview.owners.logo);
+  //   // eslint-disable-next-line
+  // }, []);
 
   useEffect(() => {
     const ref = scrollRef.current;

@@ -3,6 +3,10 @@
   width: 100%;
   padding: 0;
   height: calc(100vh - 30.63px - 132px - 56px);
+	
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px);
+  }
 }
 
 .fullHeader {
@@ -68,6 +72,11 @@
   max-height: calc(100vh - 30.63px - 132px - 57px - 38.5px);
   overflow-y: scroll;
   display: flex;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px - 38.5px);
+		max-height: unset;
+  }
 
   &::-webkit-scrollbar {
     width: 0;

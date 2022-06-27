@@ -7,6 +7,7 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 import TeamLogo from 'images/team_logo.png';
 import { useParams } from 'react-router-dom';
 import { getShortName } from 'utils';
+import ContentHeaderModeLinks from '../ContentMobileHeader/ContentHeaderModeLinks';
 
 const YEARS = [2022, 2021, 2020];
 
@@ -29,6 +30,9 @@ const HeaderSelections = () => {
       <div className={cl.teamInfo}>
         <img src={TeamLogo} alt='' className={cl.teamImg} />
         <h2 className={cl.teamName}>{getShortName(teamName, 24)}</h2>
+        <div className={cl.linksWrapper}>
+          <ContentHeaderModeLinks />
+        </div>
       </div>
       <div className={cl.years}>
         <Dropdown title={currentYear} options={YEARS} currentOption={currentYear} handleClick={handleClick} />

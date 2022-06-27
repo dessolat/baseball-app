@@ -53,7 +53,7 @@ const Content = ({ currentTab }) => {
         moments: [moments[0]],
         type: 'Replacement',
         side,
-				who_id: 'replace'
+        who_id: 'replace'
       });
       if (moments.length <= 1) return;
 
@@ -67,7 +67,13 @@ const Content = ({ currentTab }) => {
         member.moments[0]?.icons?.rect_text !== 'Replacement'
           ? newCards.push({ inning_number: inning.number, ...member, side })
           : member.moments.length === 1
-          ? newCards.push({ inning_number: inning.number, ...member, type: 'Replacement', side, who_id: 'replace' })
+          ? newCards.push({
+              inning_number: inning.number,
+              ...member,
+              type: 'Replacement',
+              side,
+              who_id: 'replace'
+            })
           : momentsDecompose(member, member.moments, inning, side);
         situationsConcat(member);
       });
@@ -97,9 +103,6 @@ const Content = ({ currentTab }) => {
     const newSituations = ['All'];
     const newCards = [];
 
-		console.log(innings);
-
-
     innings.forEach(inning => {
       newCardsConcat(inning['top/guests'], inning, 'top');
       inning['bottom/owners'] && newCardsConcat(inning['bottom/owners'], inning, 'bottom');
@@ -113,17 +116,14 @@ const Content = ({ currentTab }) => {
     // console.log(testArr.includes(166));
 
     const tokens = {};
-    Object.entries(playersInfo)
-
-      // .filter(card => playersInfo[card.who_id])
-      .forEach(entry => {
-        if (queriesRef.current.includes(entry[0])) return;
-        // if (queriesRef.current.includes(card.who_id)) return;
-        queriesRef.current.push(entry[0]);
-        // queriesRef.current.push(card.who_id);
-        fetchImage(entry[0]);
-        // fetchImage(card.who_id);
-      });
+    
+		//Fetch players images
+		// Object.entries(playersInfo)
+    // .forEach(entry => {
+    //   if (queriesRef.current.includes(entry[0])) return;
+    //   queriesRef.current.push(entry[0]);
+    //   fetchImage(entry[0]);
+    // });
 
     /************************************************/
 
@@ -275,21 +275,33 @@ const Content = ({ currentTab }) => {
   return (
     <>
       {currentTab !== 'box' ? (
-        <section className='container' style={{position: 'relative'}}>
+        <section className='container' style={{ position: 'relative' }}>
           <div className={contentClass}>
-						<ContentGraphics currentTab={currentTab} isVideo={isVideo} />
-						<MobilePitcherFilters />
+            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+            <MobilePitcherFilters />
             <ContentSituationsList
               ref={situationsChildRef}
               filteredCards={filteredCards}
               currentCard={currentCard}
               beforeAfterData={beforeAfterRef.current}
               isVideo={isVideo}
-							currentTab={currentTab}
+              currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
           </div>
-					{errorMsg !== null && <p style={{position: 'absolute', left: '50%', bottom: -30, zIndex: 1000, color: 'red', fontWeight: 700}}>{errorMsg}</p>}
+          {errorMsg !== null && (
+            <p
+              style={{
+                position: 'absolute',
+                left: '50%',
+                bottom: -30,
+                zIndex: 1000,
+                color: 'red',
+                fontWeight: 700
+              }}>
+              {errorMsg}
+            </p>
+          )}
         </section>
       ) : (
         <ContentBox />
