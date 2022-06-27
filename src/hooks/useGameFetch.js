@@ -37,6 +37,11 @@ const useGameFetch = url => {
 				dispatch(setErrorMsg(null))
         error && setError(null);
         const dataLength = JSON.stringify(resp.data).length;
+
+				intervalRef.current = setTimeout(() => {
+					dispatch(getFullData(false, innerUrl));
+				}, 5000);
+
         if (dataRef.current === dataLength) return;
         // dataRef.current = resp.data;
         dataRef.current = dataLength;
@@ -54,16 +59,29 @@ const useGameFetch = url => {
         }
 
         dispatch(setFullData(resp.data));
+
       } catch (err) {
-        setError(err.message);
+				setError(err.message);
 				dispatch(setErrorMsg(err.message))
+				console.log(err.__CANCEL__);
+				if (!err.__CANCEL__) {
+					intervalRef.current = setTimeout(() => {
+						dispatch(getFullData(false, innerUrl));
+					}, 5000);
+				}
       } finally {
-        if (firstTime) {
+				// console.log('aaaaaaa');
+				if (firstTime) {
           setIsLoading(false);
-          intervalRef.current = setInterval(() => {
-            dispatch(getFullData(false, innerUrl));
-          }, 3000);
         }
+				
+        // if (firstTime) {
+        //   setIsLoading(false);
+        //   intervalRef.current = setInterval(() => {
+				// 		console.log('request');
+        //     dispatch(getFullData(false, innerUrl));
+        //   }, 3000);
+        // }
       }
     };
 
