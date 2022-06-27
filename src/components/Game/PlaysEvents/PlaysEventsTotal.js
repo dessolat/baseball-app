@@ -9,8 +9,9 @@ const PlaysEventsTotal = ({ moments }) => {
   const isTotal = moments.length > 0;
   const { balls_count, strikes_count } = (isTotal && moments.slice(-1)[0].pitcher) || '';
 
+  const totalStyles = !isVideo ? { borderRight: 'none' } : null;
   return (
-    <div className={cl.total}>
+    <div className={cl.total} style={totalStyles}>
       {isTotal && (
         <>
           {!isVideo && (
