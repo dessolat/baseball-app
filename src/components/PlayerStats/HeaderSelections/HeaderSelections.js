@@ -40,11 +40,11 @@ const HeaderSelections = ({ playerYears, setPlayerYears }) => {
               }, new Set())
           );
 
-		if (firstMountRef.current === true) {
-			firstMountRef.current = false
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
 
-			if (currentTeam !== null && teamsArray.length > 1) return
-		}
+      if (currentTeam !== null && teamsArray.length > 1) return;
+    }
     dispatch(setCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
     // eslint-disable-next-line
   }, [playerYears]);
