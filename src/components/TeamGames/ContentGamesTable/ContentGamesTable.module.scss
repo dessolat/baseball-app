@@ -5,6 +5,9 @@
   @media screen and (max-width: 800px) {
     padding: 0 !important;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		padding: 2rem 0 0 0 !important;
+	}
 }
 
 .table {
@@ -13,6 +16,9 @@
   @media screen and (max-width: 800px) {
     margin: 0;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		margin: 0;
+	}
 
   > .tableHeader {
     color: #838383;
@@ -26,6 +32,9 @@
     @media screen and (max-width: 800px) {
       display: none;
     }
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			display: none;
+		}
 
     > div {
       font: 700 0.75rem var(--font-nunito);
@@ -77,6 +86,17 @@
 				width: 0;
 			}
     }
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			overflow-x: hidden;
+			overflow-y: scroll;
+			scroll-behavior: smooth;
+			// max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 43px);
+			max-height: calc(100vh - var(--landscape-nav-height) - 80.5px - 2rem);
+	
+			&::-webkit-scrollbar {
+				width: 0;
+			}
+		}
   }
 
   .tableRow {
@@ -92,6 +112,15 @@
         font-size: 14px;
       }
     }
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			flex-wrap: wrap;
+			
+			
+			* {
+				font-size: 14px;
+				line-height: 1.2 !important;
+			}
+		}
 
     > div {
       text-align: left;
@@ -109,6 +138,14 @@
           background-color: white;
           padding: 3px 12px 0 12px;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					flex: 1 100%;
+					text-align: left;
+					font: 600 12px var(--font-nunito);
+					color: var(--side-color);
+					background-color: white;
+					padding: 3px 12px 0 92px;
+				}
       }
 
       &:nth-child(2) {
@@ -117,6 +154,11 @@
           padding-left: 12px;
           padding-right: 0 !important;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					text-align: right;
+					padding-left: 12px;
+					padding-right: 0 !important;
+				}
       }
 
       &:nth-child(2),
@@ -136,6 +178,9 @@
         @media screen and (max-width: 800px) {
           flex: 1 42.5%;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					flex: 1 42.5%;
+				}
       }
       &:nth-child(3) {
         text-align: center;
@@ -146,6 +191,10 @@
           flex: 1 15%;
           font-size: 14px;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					flex: 1 15%;
+					font-size: 14px;
+				}
       }
 
       &:nth-child(4) {
@@ -159,6 +208,10 @@
           flex: 1 86%;
           text-align: right;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					flex: 1 80%;
+					text-align: right;
+				}
 
         a {
           color: var(--side-color);
@@ -178,6 +231,12 @@
           padding-right: 12px;
           font-size: 14px;
         }
+				@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+					flex: 1 20%;
+					text-align: right;
+					padding-right: 92px;
+					font-size: 14px;
+				}
       }
     }
 
@@ -216,12 +275,20 @@
   @media screen and (max-width: 800px) {
     display: none;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+		top: .2rem;
+	}
 
   > a {
     font: 300 0.875rem var(--font-nunito);
     text-decoration: underline;
     color: var(--side-color);
     margin-left: auto;
+
+		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+			font-size: 1rem;
+		}
   }
 }
 
