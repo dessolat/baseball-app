@@ -40,9 +40,7 @@ const Content = ({ playerYears }) => {
     currentLeague.id === -1
       ? null
       : currentTeam === 'All teams'
-      ? // ? statsData.teams
-        // : statsData.teams.find(team => team.name === currentTeam);
-        selectedLeague.teams
+      ? selectedLeague.teams
       : selectedLeague.teams.find(team => team.name === currentTeam) || [];
 
   const handleLeagueClick = league => () => {
