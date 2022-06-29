@@ -140,7 +140,7 @@ const ContentPitchingTableBody = ({
                     <ActiveBodyCell sortField={sortField} row={team.pitching}>
                       SV
                     </ActiveBodyCell>
-                    <ActiveBodyCell sortField={sortField} row={team.pitching}>
+                    <ActiveBodyCell sortField={sortField} row={team.pitching}addedClass={cl.wide}>
                       IP
                     </ActiveBodyCell>
                     <ActiveBodyCell sortField={sortField} row={team.pitching}addedClass={cl.wide}>
@@ -230,7 +230,7 @@ const ContentPitchingTableBody = ({
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.pitching}>
                     SV
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.pitching}>
+                  <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.pitching}addedClass={cl.wide}>
                     IP
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.pitching}addedClass={cl.wide}>
@@ -324,7 +324,7 @@ const ContentPitchingTableBody = ({
                   <ActiveBodyCell sortField={sortField} row={row.game.pitching}>
                     SV
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={row.game.pitching}>
+                  <ActiveBodyCell sortField={sortField} row={row.game.pitching}addedClass={cl.wide}>
                     IP
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row.game.pitching}addedClass={cl.wide}>
@@ -415,7 +415,7 @@ const ContentPitchingTableBody = ({
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}>
                     SV
                   </ActiveBodyCell>
-                  <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}>
+                  <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}addedClass={cl.wide}>
                     IP
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}addedClass={cl.wide}>
@@ -511,7 +511,7 @@ const ContentPitchingTableBody = ({
               <ActiveBodyCell sortField={sortField} row={row}>
                 SV
               </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
+              <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide}>
                 IP
               </ActiveBodyCell>
               <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide}>
@@ -603,7 +603,7 @@ const ContentPitchingTableBody = ({
             </ActiveBodyCell>
             <ActiveBodyCell
               sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
+              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}addedClass={cl.wide}>
               IP
             </ActiveBodyCell>
             <ActiveBodyCell
