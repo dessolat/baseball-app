@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
+import { setCurrentGameId, setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +11,8 @@ const useGameFetch = url => {
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
+
+	const { gameId } = useParams();
 
   useEffect(() => {
     error && setError(null);
@@ -73,6 +76,7 @@ const useGameFetch = url => {
 				// console.log('aaaaaaa');
 				if (firstTime) {
           setIsLoading(false);
+					dispatch(setCurrentGameId(gameId))
         }
 				
         // if (firstTime) {
