@@ -21,7 +21,12 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
 
   const TABLE_OPTIONS = ['Batting', 'Pitching'];
 
-  const handleTableOptionClick = option => dispatch(setTableType(option));
+  const handleTableOptionClick = option => {
+    const teamsArray = calculateTeamsArray(option);
+
+    dispatch(setPlayerCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
+    dispatch(setTableType(option));
+  };
 
   const filteredLeagues =
     playerYears === 'All years'
