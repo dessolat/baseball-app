@@ -17,28 +17,12 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
-  const currentLeague = useSelector(state => state.games.currentLeague);
   const tableType = useSelector(state => state.playerStats.tableType);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const teamsArray =
-      playerYears === 'All years'
-        ? Array.from(
-            statsData.leagues.reduce((sum, league) => {
-              league.teams.forEach(team => sum.add(team.name));
-              return sum;
-            }, new Set())
-          )
-        : Array.from(
-            statsData.leagues
-              .filter(league => league.year === playerYears)
-              .reduce((sum, league) => {
-                league.teams.forEach(team => sum.add(team.name));
-                return sum;
-              }, new Set())
-          );
+    const teamsArray = calculateTeamsArray(tableType);
 
     if (firstMountRef.current === true) {
       firstMountRef.current = false;
@@ -67,36 +51,16 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
     dispatch(setCurrentTeam(team));
   };
 
-  const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
+  const teamsArray = calculateTeamsArray(tableType)
+  teamsArray.length > 1 && teamsArray.unshift('All teams');
 
-  const teamsArray =
-    playerYears === 'All years'
-      ? Array.from(
-          statsData.leagues.reduce((sum, league) => {
-            league.teams.forEach(team => sum.add(team.name));
-            return sum;
-          }, new Set())
-        )
-      : currentLeague.id === -1
-      ? Array.from(
-          statsData.leagues
-            .filter(league => league.year === playerYears)
-            .reduce((sum, league) => {
-              league.teams.forEach(team => sum.add(team.name));
-              return sum;
-            }, new Set())
-        )
-      : selectedLeague?.teams
-      ? selectedLeague.teams.length > 1
-        ? selectedLeague.teams.reduce((sum, team) => {
-            sum.push(team.name);
-            return sum;
-          }, [])
-        : [selectedLeague.teams[0].name]
-      : [];
-  teamsArray.unshift('All teams');
+  const handleTableOptionClick = option => {
+    const teamsArray = calculateTeamsArray(option);
 
-  const handleTableOptionClick = option => dispatch(setTableType(option));
+    dispatch(setCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
+    dispatch(setTableType(option));
+  };
+
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>
@@ -118,7 +82,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
           />
         </div>
         <div className={cl.teamsSelector}>
-          {teamsArray.length > 2 ? (
+          {teamsArray.length > 1 ? (
             <Dropdown
               title={getShortName(currentTeam || '', isMobile ? 10 : 13)}
               options={teamsArray}
