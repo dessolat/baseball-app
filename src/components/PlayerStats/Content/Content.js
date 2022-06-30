@@ -11,7 +11,7 @@ import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-const Content = ({ playerYears }) => {
+const Content = ({ playerYears, calculateTeamsArray }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentLeague = useSelector(state => state.games.currentLeague);
   const isMobile = useSelector(state => state.shared.isMobile);
@@ -21,17 +21,28 @@ const Content = ({ playerYears }) => {
 
   const TABLE_OPTIONS = ['Batting', 'Pitching'];
 
-  const handleTableOptionClick = option => dispatch(setTableType(option));
+  const handleTableOptionClick = option => {
+    const teamsArray = calculateTeamsArray(option);
+
+    dispatch(setPlayerCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
+    dispatch(setTableType(option));
+  };
 
   const filteredLeagues =
     playerYears === 'All years'
       ? currentTeam === 'All teams'
-        ? statsData.leagues
-        : statsData.leagues.filter(league => league.teams.find(team => team.name === currentTeam))
+        ? statsData.leagues.filter(league => league.teams.find(team => team[tableType.toLowerCase()]))
+        : statsData.leagues.filter(league =>
+            league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
+          )
       : currentTeam === 'All teams'
-      ? statsData.leagues.filter(league => league.year === playerYears)
+      ? statsData.leagues.filter(
+          league => league.year === playerYears && league.teams.find(team => team[tableType.toLowerCase()])
+        )
       : statsData.leagues.filter(
-          league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
+          league =>
+            league.year === playerYears &&
+            league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
         );
 
   const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
@@ -41,7 +52,7 @@ const Content = ({ playerYears }) => {
       ? null
       : currentTeam === 'All teams'
       ? selectedLeague.teams
-      : selectedLeague.teams.find(team => team.name === currentTeam) || [];
+      : selectedLeague.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()]) || [];
 
   const handleLeagueClick = league => () => {
     if (playerYears === 'All years') return;

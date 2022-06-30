@@ -7,28 +7,35 @@ import { setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 
 const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
-	const statsData = useSelector(state => state.playerStats.playerStatsData);
+  const statsData = useSelector(state => state.playerStats.playerStatsData);
+  const tableType = useSelector(state => state.playerStats.tableType);
+
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => {
     if (playerYears === 'All years') return;
     dispatch(setCurrentLeague(league));
 
-		if (league.id === -1) {
-			const teamsArr = Array.from(
-				statsData.leagues
-					.filter(league => league.year === playerYears)
-					.reduce((sum, league) => {
-						league.teams.forEach(team => sum.add(team.name));
-						return sum;
-					}, new Set())
-			);
+    if (league.id === -1) {
+      const teamsArr = Array.from(
+        statsData.leagues
+          .filter(
+            league => league.year === playerYears && league.teams.find(team => team[tableType.toLowerCase()])
+          )
+          .reduce((sum, league) => {
+            league.teams.forEach(team => sum.add(team.name));
+            return sum;
+          }, new Set())
+      );
 
-			dispatch(setPlayerCurrentTeam(teamsArr.length > 1 ? 'All teams' : teamsArr[0]))
-			return
-		}
-		
-		dispatch(setPlayerCurrentTeam(league.teams.length > 1 ? 'All teams' : league.teams[0].name))
+      dispatch(setPlayerCurrentTeam(teamsArr.length > 1 ? 'All teams' : teamsArr[0]));
+      return;
+    }
+
+    const teamArr = league.teams.filter(team => team[tableType.toLowerCase()]);
+    dispatch(
+      setPlayerCurrentTeam(teamArr.length > 1 ? 'All teams' : teamArr.length === 1 ? teamArr[0].name : '')
+    );
   };
 
   const classes = [cl.leagues];

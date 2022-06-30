@@ -7,7 +7,7 @@ import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
 
-const HeaderLeagues = ({ playerYears }) => {
+const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
   const [isLeftScroll, setIsLeftScroll] = useState(false);
   const [isRightScroll, setIsRightScroll] = useState(true);
 
@@ -97,7 +97,7 @@ const HeaderLeagues = ({ playerYears }) => {
         style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
         fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
-      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} playerYears={playerYears} />
+      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
