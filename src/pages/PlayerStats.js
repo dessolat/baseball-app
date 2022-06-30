@@ -41,12 +41,12 @@ const PlayerStats = () => {
   useEffect(() => {
     if (firstMountRef.current === true) return;
 
-		dispatch(setTableMode(playerTableMode));
-		// eslint-disable-next-line
+    dispatch(setTableMode(playerTableMode));
+    // eslint-disable-next-line
   }, [playerTableMode]);
 
   useEffect(() => {
-    const isLeague = data => data.leagues.find(league => league.id === currentLeague.id);
+    const isLeague = leagues => leagues.find(league => league.id === currentLeague.id);
 
     const fetchStats = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
@@ -59,7 +59,7 @@ const PlayerStats = () => {
         });
         setError('');
 
-        !isLeague(response.data) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
+        !isLeague(response.data.leagues) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
 
         dispatch(setPlayerStatsData(response.data));
       } catch (err) {
