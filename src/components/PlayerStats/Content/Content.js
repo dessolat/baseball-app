@@ -31,12 +31,18 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
   const filteredLeagues =
     playerYears === 'All years'
       ? currentTeam === 'All teams'
-        ? statsData.leagues
-        : statsData.leagues.filter(league => league.teams.find(team => team.name === currentTeam))
+        ? statsData.leagues.filter(league => league.teams.find(team => team[tableType.toLowerCase()]))
+        : statsData.leagues.filter(league =>
+            league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
+          )
       : currentTeam === 'All teams'
-      ? statsData.leagues.filter(league => league.year === playerYears)
+      ? statsData.leagues.filter(
+          league => league.year === playerYears && league.teams.find(team => team[tableType.toLowerCase()])
+        )
       : statsData.leagues.filter(
-          league => league.year === playerYears && league.teams.find(team => team.name === currentTeam)
+          league =>
+            league.year === playerYears &&
+            league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
         );
 
   const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
@@ -46,7 +52,7 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
       ? null
       : currentTeam === 'All teams'
       ? selectedLeague.teams
-      : selectedLeague.teams.find(team => team.name === currentTeam) || [];
+      : selectedLeague.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()]) || [];
 
   const handleLeagueClick = league => () => {
     if (playerYears === 'All years') return;
