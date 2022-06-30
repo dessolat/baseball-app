@@ -11,7 +11,7 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 const YEARS = ['All years', 2022, 2021, 2020];
 const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
 
-const HeaderSelections = ({ playerYears, setPlayerYears }) => {
+const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) => {
   const firstMountRef = useRef(true);
 
   const statsData = useSelector(state => state.playerStats.playerStatsData);

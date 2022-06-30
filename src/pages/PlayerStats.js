@@ -122,6 +122,40 @@ const PlayerStats = () => {
   // 	// eslint-disable-next-line
   // }, [currentYear]);
 
+  function calculateTeamsArray(tableMode) {
+    const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
+
+    return playerYears === 'All years'
+      ? Array.from(
+          playerStatsData.leagues
+            .filter(league => league.teams.find(team => team[tableMode.toLowerCase()]))
+            .reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+        )
+      : currentLeague.id === -1
+      ? Array.from(
+          playerStatsData.leagues
+            .filter(
+              league =>
+                league.year === playerYears && league.teams.find(team => team[tableMode.toLowerCase()])
+            )
+            .reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+        )
+      : selectedLeague?.teams
+      ? selectedLeague.teams.length > 1
+        ? selectedLeague.teams.reduce((sum, team) => {
+            sum.push(team.name);
+            return sum;
+          }, [])
+        : [selectedLeague.teams[0].name]
+      : [];
+  }
+
   return (
     <>
       {error !== '' ? (
@@ -132,8 +166,12 @@ const PlayerStats = () => {
         <></>
       ) : (
         <>
-          <Header playerYears={playerYears} setPlayerYears={setPlayerYears} />
-          <Content playerYears={playerYears} />
+          <Header
+            playerYears={playerYears}
+            setPlayerYears={setPlayerYears}
+            calculateTeamsArray={calculateTeamsArray}
+          />
+          <Content playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
         </>
       )}
     </>

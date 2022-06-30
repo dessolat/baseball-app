@@ -11,7 +11,7 @@ import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-const Content = ({ playerYears }) => {
+const Content = ({ playerYears, calculateTeamsArray }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
   const currentLeague = useSelector(state => state.games.currentLeague);
   const isMobile = useSelector(state => state.shared.isMobile);
