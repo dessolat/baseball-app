@@ -172,9 +172,13 @@ const ContentTable = ({ games }) => {
                   </div>
                   <div className={cl.links}>
                     <div>
-                      <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-                      <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-                      {game.hasVideos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+                      {game.has_moments && (
+                        <>
+                          <Link to={`/game/${game.id}?tab=box`}>Box</Link>
+                          <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
+                        </>
+                      )}
+                      {game.has_videos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
                     </div>
                   </div>
                   <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
