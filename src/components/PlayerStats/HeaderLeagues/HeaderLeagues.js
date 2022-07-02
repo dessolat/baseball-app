@@ -31,6 +31,11 @@ const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
     leaguesRef.current.style.scrollBehavior = 'unset';
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
+
+		const filteredLeagues = playerStatsData.leagues.filter(league => league.year === playerYears);
+    filteredLeagues.length !== 1
+      ? dispatch(setCurrentLeague({ id: -1, name: 'All' }))
+      : dispatch(setCurrentLeague(filteredLeagues[0]));
     // eslint-disable-next-line
   }, []);
 
