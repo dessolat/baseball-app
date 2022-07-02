@@ -34,7 +34,7 @@ const ContentPitchingTableHeader = ({
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
         SV
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide2}>
         IP
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
