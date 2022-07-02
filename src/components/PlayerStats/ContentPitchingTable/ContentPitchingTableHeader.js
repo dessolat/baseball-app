@@ -86,7 +86,7 @@ const ContentPitchingTableHeader = ({
         sortField={sortField}
         sortDirection={sortDirection}
         handleClick={handleFieldClick}
-        addedClass={cl.wider}>
+        addedClass={cl.wide3}>
         ERA
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>

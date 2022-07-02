@@ -188,7 +188,7 @@ const ContentPitchingTableBody = ({
                     <ActiveBodyCell sortField={sortField} row={team.pitching}>
                       BK
                     </ActiveBodyCell>
-                    <ActiveBodyCell sortField={sortField} row={team.pitching} fixed={3} addedClass={cl.wider}>
+                    <ActiveBodyCell sortField={sortField} row={team.pitching} fixed={3} addedClass={cl.wide3}>
                       ERA
                     </ActiveBodyCell>
                     <ActiveBodyCell sortField={sortField} row={team.pitching}addedClass={cl.wide}>
@@ -282,7 +282,7 @@ const ContentPitchingTableBody = ({
                     sortField={sortField}
                     row={yearsAllLeagueTeamTotals.pitching}
                     fixed={3}
-                    addedClass={cl.wider}>
+                    addedClass={cl.wide3}>
                     ERA
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueTeamTotals.pitching}addedClass={cl.wide}>
@@ -376,7 +376,7 @@ const ContentPitchingTableBody = ({
                     sortField={sortField}
                     row={row.game.pitching}
                     fixed={3}
-                    addedClass={cl.wider}>
+                    addedClass={cl.wide3}>
                     ERA
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={row.game.pitching}addedClass={cl.wide}>
@@ -467,7 +467,7 @@ const ContentPitchingTableBody = ({
                     sortField={sortField}
                     row={yearsAllLeagueAllTeamTotals.pitching}
                     fixed={3}
-                    addedClass={cl.wider}>
+                    addedClass={cl.wide3}>
                     ERA
                   </ActiveBodyCell>
                   <ActiveBodyCell sortField={sortField} row={yearsAllLeagueAllTeamTotals.pitching}addedClass={cl.wide}>
@@ -559,7 +559,7 @@ const ContentPitchingTableBody = ({
               <ActiveBodyCell sortField={sortField} row={row}>
                 BK
               </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+              <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wide3}>
                 ERA
               </ActiveBodyCell>
               <ActiveBodyCell sortField={sortField} row={row}addedClass={cl.wide}>
@@ -685,7 +685,7 @@ const ContentPitchingTableBody = ({
               sortField={sortField}
               row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
               fixed={3}
-              addedClass={cl.wider}>
+              addedClass={cl.wide3}>
               ERA
             </ActiveBodyCell>
             <ActiveBodyCell
