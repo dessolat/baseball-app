@@ -3,7 +3,7 @@ import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
-import { setPlayerCurrentTeam } from 'redux/playerStatsReducer';
+import { setPlayerCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 
 const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -15,6 +15,8 @@ const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const handleLeagueClick = league => () => {
     if (playerYears === 'All years') return;
     dispatch(setCurrentLeague(league));
+
+    const anotherTableType = tableType === 'Batting' ? 'Pitching' : 'Batting';
 
     if (league.id === -1) {
       const teamsArr = Array.from(
@@ -32,7 +34,14 @@ const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
       return;
     }
 
-    const teamArr = league.teams.filter(team => team[tableType.toLowerCase()]);
+    let tempTableType = tableType;
+    //Table type switching
+    if (!league.teams.find(team => team[tableType.toLowerCase()])) {
+      dispatch(setTableType(anotherTableType));
+			tempTableType = anotherTableType
+    }
+
+    const teamArr = league.teams.filter(team => team[tempTableType.toLowerCase()]);
     dispatch(
       setPlayerCurrentTeam(teamArr.length > 1 ? 'All teams' : teamArr.length === 1 ? teamArr[0].name : '')
     );
