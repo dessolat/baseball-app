@@ -19,8 +19,6 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
   const dispatch = useDispatch();
 
-  const TABLE_OPTIONS = ['Batting', 'Pitching'];
-
   const handleTableOptionClick = option => {
     const teamsArray = calculateTeamsArray(option);
 
@@ -75,6 +73,56 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
     dispatch(setPlayerCurrentTeam(league.teams.length > 1 ? 'All teams' : league.teams[0].name));
   };
 
+  //Table options calculating
+  function getSortedTableOptions() {
+    const options = [];
+    const anotherTableType = tableType === 'Batting' ? 'Pitching' : 'Batting';
+
+    //All leagues
+    if (currentLeague.id === -1) {
+      if (filteredLeagues.length > 0) options.push(tableType);
+
+      const anotherTableTypeFilteredLeagues =
+        playerYears === 'All years'
+          ? currentTeam === 'All teams'
+            ? statsData.leagues.filter(league =>
+                league.teams.find(team => team[anotherTableType.toLowerCase()])
+              )
+            : statsData.leagues.filter(league =>
+                league.teams.find(team => team.name === currentTeam && team[anotherTableType.toLowerCase()])
+              )
+          : currentTeam === 'All teams'
+          ? statsData.leagues.filter(
+              league =>
+                league.year === playerYears && league.teams.find(team => team[anotherTableType.toLowerCase()])
+            )
+          : statsData.leagues.filter(
+              league =>
+                league.year === playerYears &&
+                league.teams.find(team => team.name === currentTeam && team[anotherTableType.toLowerCase()])
+            );
+
+      if (anotherTableTypeFilteredLeagues.length > 0) options.push(anotherTableType);
+
+      //Sort options
+      options.sort((a, b) => (a > b ? 1 : -1));
+      return options;
+    }
+
+    //Selected league
+    const filteredLeague = selectedLeague.teams.find(team => team.name === currentTeam);
+
+		if (filteredLeague) {
+			filteredLeague.batting && options.push('Batting')
+			filteredLeague.pitching && options.push('Pitching')
+		} else {
+			selectedLeague.teams.find(team => team.batting) && options.push('Batting')
+			selectedLeague.teams.find(team => team.pitching) && options.push('Pitching')
+		}
+
+    return options;
+  }
+
   return (
     <section>
       <div className='container'>
@@ -91,7 +139,7 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
               <div className={cl.dropWrapper}>
                 <Dropdown
                   title={tableType}
-                  options={TABLE_OPTIONS}
+                  options={getSortedTableOptions()}
                   currentOption={tableType}
                   handleClick={handleTableOptionClick}
                 />
