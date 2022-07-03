@@ -2,14 +2,14 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
 import {
   setSituations,
   setInningNumber,
   setCurrentCard,
   setFilteredCards,
   setPlaybackMode,
-  setImagesData,
+  // setImagesData,
   setCurrentMoment
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
@@ -25,7 +25,7 @@ const Content = ({ currentTab }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
-  const playersInfo = useSelector(state => state.game.playersInfo);
+  // const playersInfo = useSelector(state => state.game.playersInfo);
   const errorMsg = useSelector(state => state.game.errorMsg);
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
@@ -33,7 +33,7 @@ const Content = ({ currentTab }) => {
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
   const scrollToRef = useRef(false);
-  const queriesRef = useRef([]);
+  // const queriesRef = useRef([]);
   const beforeAfterRef = useRef({});
 
   useEffect(() => {
@@ -79,26 +79,26 @@ const Content = ({ currentTab }) => {
       });
     }
 
-    const fetchImage = async id => {
-      const token = axios.CancelToken.source();
-      tokens[id] = token;
-      try {
-        const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${playersInfo[id]}`, {
-          responseType: 'arraybuffer',
-          timeout: 2500,
-          cancelToken: token.token
-        });
-        dispatch(
-          setImagesData({
-            [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-            // [who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-          })
-        );
-      } catch (err) {
-        setTimeout(() => fetchImage(id), 2000);
-        console.log(err.message);
-      }
-    };
+    // const fetchImage = async id => {
+    //   const token = axios.CancelToken.source();
+    //   tokens[id] = token;
+    //   try {
+    //     const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${playersInfo[id]}`, {
+    //       responseType: 'arraybuffer',
+    //       timeout: 2500,
+    //       cancelToken: token.token
+    //     });
+    //     dispatch(
+    //       setImagesData({
+    //         [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+    //         // [who]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
+    //       })
+    //     );
+    //   } catch (err) {
+    //     setTimeout(() => fetchImage(id), 2000);
+    //     console.log(err.message);
+    //   }
+    // };
 
     const newSituations = ['All'];
     const newCards = [];
