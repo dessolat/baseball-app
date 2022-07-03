@@ -9,7 +9,6 @@ import { getShortName } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 
 const YEARS = ['All years', 2022, 2021, 2020];
-const TABLE_OPTIONS = ['Batting', 'Fielding', 'Running', 'Pitching'];
 
 const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) => {
   const firstMountRef = useRef(true);
@@ -18,6 +17,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const isMobile = useSelector(state => state.shared.isMobile);
   const tableType = useSelector(state => state.playerStats.tableType);
+  const currentLeague = useSelector(state => state.games.currentLeague);
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
     dispatch(setCurrentTeam(team));
   };
 
-  const teamsArray = calculateTeamsArray(tableType)
+  const teamsArray = calculateTeamsArray(tableType);
   teamsArray.length > 1 && teamsArray.unshift('All teams');
 
   const handleTableOptionClick = option => {
@@ -60,6 +60,103 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
     dispatch(setCurrentTeam(teamsArray.length > 1 ? 'All teams' : teamsArray[0]));
     dispatch(setTableType(option));
   };
+
+  //Table options calculating
+  function getSortedTableOptions() {
+    const filteredLeagues =
+      playerYears === 'All years'
+        ? currentTeam === 'All teams'
+          ? statsData.leagues.filter(league => league.teams.find(team => team[tableType.toLowerCase()]))
+          : statsData.leagues.filter(league =>
+              league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
+            )
+        : currentTeam === 'All teams'
+        ? statsData.leagues.filter(
+            league => league.year === playerYears && league.teams.find(team => team[tableType.toLowerCase()])
+          )
+        : statsData.leagues.filter(
+            league =>
+              league.year === playerYears &&
+              league.teams.find(team => team.name === currentTeam && team[tableType.toLowerCase()])
+          );
+
+    const selectedLeague = statsData.leagues.find(league => league.id === currentLeague.id);
+
+    const options = [];
+    const anotherTableType =
+      tableType === 'Batting' || tableType === 'Fielding' || tableType === 'Running' ? 'Pitching' : 'Batting';
+
+    //All leagues
+    if (currentLeague.id === -1) {
+      const anotherTableTypeFilteredLeagues =
+        playerYears === 'All years'
+          ? currentTeam === 'All teams'
+            ? statsData.leagues.filter(league =>
+                league.teams.find(team => team[anotherTableType.toLowerCase()])
+              )
+            : statsData.leagues.filter(league =>
+                league.teams.find(team => team.name === currentTeam && team[anotherTableType.toLowerCase()])
+              )
+          : currentTeam === 'All teams'
+          ? statsData.leagues.filter(
+              league =>
+                league.year === playerYears && league.teams.find(team => team[anotherTableType.toLowerCase()])
+            )
+          : statsData.leagues.filter(
+              league =>
+                league.year === playerYears &&
+                league.teams.find(team => team.name === currentTeam && team[anotherTableType.toLowerCase()])
+            );
+
+      if (filteredLeagues.length > 0) {
+        if (tableType === 'Pitching') {
+          options.push('Pitching');
+        } else {
+          options.push('Batting');
+          options.push('Fielding');
+          options.push('Running');
+        }
+      }
+      if (anotherTableTypeFilteredLeagues.length > 0) {
+        if (anotherTableType === 'Pitching') {
+          options.push('Pitching');
+        } else {
+          if (options.length > 0) {
+            options.unshift('Running');
+            options.unshift('Fielding');
+            options.unshift('Batting');
+          } else {
+            options.push('Batting');
+            options.push('Fielding');
+            options.push('Running');
+          }
+        }
+      }
+
+      return options;
+    }
+
+    //Selected league
+    const filteredLeague = selectedLeague.teams.find(team => team.name === currentTeam);
+
+    if (filteredLeague) {
+      if (filteredLeague.batting) {
+        options.push('Batting');
+        options.push('Fielding');
+        options.push('Running');
+      }
+      filteredLeague.pitching && options.push('Pitching');
+    } else {
+      if (selectedLeague.teams.find(team => team.batting)) {
+        options.push('Batting');
+        options.push('Fielding');
+        options.push('Running');
+      }
+      selectedLeague.teams.find(team => team.pitching) && options.push('Pitching');
+    }
+
+    return options;
+  }
 
   return (
     <div className={cl.selections}>
@@ -100,7 +197,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
           <div className={cl.dropWrapper}>
             <Dropdown
               title={tableType}
-              options={TABLE_OPTIONS}
+              options={getSortedTableOptions()}
               currentOption={tableType}
               handleClick={handleTableOptionClick}
             />
