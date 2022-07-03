@@ -39,6 +39,15 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
     tableMode === 'Batting' ? (
       <>
+        {currentLeague.id === -1 && (
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            arrowStyles={arrowStyles}>
+            G
+          </SortField>
+        )}
         <SortField
           sortField={sortField}
           sortDirection={sortDirection}
@@ -449,6 +458,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const getTableRows = (row, cl, sortField) =>
     tableMode === 'Batting' ? (
       <>
+        {currentLeague.id === -1 && (
+          <ActiveBodyCell sortField={sortField} row={row}>
+            G
+          </ActiveBodyCell>
+        )}
         <ActiveBodyCell sortField={sortField} row={row}>
           AB
         </ActiveBodyCell>
@@ -636,7 +650,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             ...game,
             ...filteredLeague.fielding.games_fielding[i],
             ...filteredLeague.running.games_running[i],
-            ...filteredLeague.pitching.games_pitching[i],
+            ...filteredLeague.pitching?.games_pitching[i] ?? {},
             team_name: filteredLeague.name
           };
           sum.push(sumGame);
@@ -670,38 +684,89 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   let sortedLeagues = [];
   let allTeamGames = [];
   if (currentTeam !== 'All teams') {
-    sortedLeagues = filteredLeagues
-      .slice()
-      .sort((a, b) =>
-        a.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField] >
-        b.teams.find(team => team.name === currentTeam)[tableMode.toLowerCase()][sortField]
-          ? sortDirection === 'asc'
-            ? 1
-            : -1
-          : sortDirection === 'asc'
-          ? -1
-          : 1
-      );
-  }
+    sortedLeagues = filteredLeagues.slice().sort((a, b) => {
+      const teamA = a.teams.find(team => team.name === currentTeam);
+      const teamB = b.teams.find(team => team.name === currentTeam);
 
-  if (currentTeam === 'All teams') {
-    allTeamGames = filteredLeagues.reduce((totalGames, league) => {
-      league.teams.forEach(team =>
-        totalGames.push({ title: league.title, year: league.year, game: team, team_name: team.name, id: league.id, teams: league.teams })
-      );
+      let tableTypeA = 'pitching';
+      let tableTypeB = 'pitching';
 
-      return totalGames;
-    }, []);
+      if (tableMode !== 'Pitching') {
+        tableTypeA =
+          sortField !== 'G'
+            ? tableMode.toLowerCase()
+            : teamA.batting.G > 0
+            ? 'batting'
+            : teamA.fielding.G > 0
+            ? 'fielding'
+            : 'running';
+        tableTypeB =
+          sortField !== 'G'
+            ? tableMode.toLowerCase()
+            : teamB.batting.G > 0
+            ? 'batting'
+            : teamB.fielding.G > 0
+            ? 'fielding'
+            : 'running';
+      }
 
-    allTeamGames.sort((a, b) =>
-      a.game[tableMode.toLowerCase()][sortField] > b.game[tableMode.toLowerCase()][sortField]
+      return teamA[tableTypeA][sortField] > teamB[tableTypeB][sortField]
         ? sortDirection === 'asc'
           ? 1
           : -1
         : sortDirection === 'asc'
         ? -1
-        : 1
-    );
+        : 1;
+    });
+  }
+
+  if (currentTeam === 'All teams') {
+    allTeamGames = filteredLeagues.reduce((totalGames, league) => {
+      league.teams.forEach(team =>
+        totalGames.push({
+          title: league.title,
+          year: league.year,
+          game: team,
+          team_name: team.name,
+          id: league.id,
+          teams: league.teams
+        })
+      );
+
+      return totalGames;
+    }, []);
+
+    allTeamGames.sort((a, b) => {
+      let tableTypeA = 'pitching';
+      let tableTypeB = 'pitching';
+
+      if (tableMode !== 'Pitching') {
+        tableTypeA =
+          sortField !== 'G'
+            ? tableMode.toLowerCase()
+            : a.game.batting.G > 0
+            ? 'batting'
+            : a.game.fielding.G > 0
+            ? 'fielding'
+            : 'running';
+        tableTypeB =
+          sortField !== 'G'
+            ? tableMode.toLowerCase()
+            : b.game.batting.G > 0
+            ? 'batting'
+            : b.game.fielding.G > 0
+            ? 'fielding'
+            : 'running';
+      }
+
+      return a.game[tableTypeA][sortField] > b.game[tableTypeB][sortField]
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1;
+    });
   }
 
   let leftHeaderStyles = {
@@ -750,7 +815,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   {sortedLeagues.map((row, index) => (
                     <div key={index} className={cl.tableRow}>
                       {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                      <div className={cl.league} onClick={handleLeagueClick(row)}>{row.title}</div>
+                      <div className={cl.league} onClick={handleLeagueClick(row)}>
+                        {row.title}
+                      </div>
                     </div>
                   ))}
                   {sortedLeagues.length > 0 && (
@@ -765,7 +832,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   {allTeamGames.map((row, index) => (
                     <div key={index} className={cl.tableRow}>
                       {playerYears === 'All years' && <div className={cl.years}>{row.year}</div>}
-                      <div className={cl.league} onClick={handleLeagueClick(row)}>{row.title}</div>
+                      <div className={cl.league} onClick={handleLeagueClick(row)}>
+                        {row.title}
+                      </div>
                     </div>
                   ))}
                   {allTeamGames.length > 0 && (
@@ -813,6 +882,21 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                 <>
                   {sortedLeagues.map((row, index) => {
                     const team = row.teams.find(team => team.name === currentTeam);
+
+                    const gameRow =
+                      tableMode === 'Pitching'
+                        ? team.pitching
+                        : tableMode !== 'Batting'
+                        ? team[tableMode.toLowerCase()]
+                        : {
+                            ...team.batting,
+                            G:
+                              team.batting.G > 0
+                                ? team.batting.G
+                                : team.fielding.G > 0
+                                ? team.fielding.G
+                                : team.running.G
+                          };
                     return (
                       <div
                         key={index}
@@ -820,7 +904,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                         style={{
                           width: !isScrollable ? '100%' : 'fit-content'
                         }}>
-                        {getTableRows(team[tableMode.toLowerCase()], cl, sortField)}
+                        {getTableRows(gameRow, cl, sortField)}
                       </div>
                     );
                   })}
@@ -836,16 +920,33 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                 </>
               ) : (
                 <>
-                  {allTeamGames.map((row, index) => (
-                    <div
-                      key={index}
-                      className={cl.tableRow}
-                      style={{
-                        width: !isScrollable ? '100%' : 'fit-content'
-                      }}>
-                      {getTableRows(row.game[tableMode.toLowerCase()], cl, sortField)}
-                    </div>
-                  ))}
+                  {allTeamGames.map((row, index) => {
+                    const gameRow =
+                      tableMode === 'Pitching'
+                        ? row.game.pitching
+                        : tableMode !== 'Batting'
+                        ? row.game[tableMode.toLowerCase()]
+                        : {
+                            ...row.game.batting,
+                            G:
+                              row.game.batting.G > 0
+                                ? row.game.batting.G
+                                : row.game.fielding.G > 0
+                                ? row.game.fielding.G
+                                : row.game.running.G
+                          };
+
+                    return (
+                      <div
+                        key={index}
+                        className={cl.tableRow}
+                        style={{
+                          width: !isScrollable ? '100%' : 'fit-content'
+                        }}>
+                        {getTableRows(gameRow, cl, sortField)}
+                      </div>
+                    );
+                  })}
                   {allTeamGames.length > 0 && (
                     <div
                       className={cl.tableRow + ' ' + cl.tableFooter}
