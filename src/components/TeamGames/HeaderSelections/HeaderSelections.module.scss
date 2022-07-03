@@ -11,6 +11,12 @@
 		border-bottom: 0.5px solid #cdcccc;
 		position: relative;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		flex-direction: row-reverse;
+		font-size: 1rem;
+		border-bottom: 0.5px solid #cdcccc;
+		position: relative;
+	}
 }
 
 .teamInfo {
@@ -19,6 +25,11 @@
 
 	@media screen and (max-width: 800px) {
 		flex-direction: row-reverse;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		flex-direction: row-reverse;
+		width: 100%;
+		justify-content: space-between;
 	}
 }
 
@@ -31,10 +42,21 @@
 		font-size: 1rem;
 		margin-left: 0;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		line-height: 2rem;
+		font-size: 1rem;
+		margin-left: 0;
+		margin-right: 7rem;
+	}
 }
 
 .teamImg {
 	@media screen and (max-width: 800px) {
+		position: absolute;
+		right: 1rem;
+		height: 25.2px;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		position: absolute;
 		right: 1rem;
 		height: 25.2px;
@@ -55,5 +77,22 @@
 		top: 50%;
 		transform: translateY(-50%);
 		z-index: 777;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		position: absolute;
+		margin-left: 0;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 777;
+	}
+}
+
+.linksWrapper {
+	display: none;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+		padding-left: 7rem;
 	}
 }

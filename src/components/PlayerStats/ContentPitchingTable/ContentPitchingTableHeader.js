@@ -15,10 +15,29 @@ const ContentPitchingTableHeader = ({
       {currentLeague.id === -1 && <div className={cl.league}>League</div>}
       {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
 			<div className={cl.teamName}>Team</div>
+			{currentLeague.id === -1 && 
+			<SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        G
+      </SortField>}
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
-        IP
+        GS
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        W
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        L
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        CG
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+        SV
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide2}>
+        IP
+      </SortField>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         PA
       </SortField>
       <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
@@ -67,16 +86,16 @@ const ContentPitchingTableHeader = ({
         sortField={sortField}
         sortDirection={sortDirection}
         handleClick={handleFieldClick}
-        addedClass={cl.wider}>
+        addedClass={cl.wide3}>
         ERA
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NP
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NS
       </SortField>
-      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+      <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}addedClass={cl.wide}>
         NB
       </SortField>
     </div>

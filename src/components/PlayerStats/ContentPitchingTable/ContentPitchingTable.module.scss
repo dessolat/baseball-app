@@ -2,7 +2,7 @@
 
 .wrapper {
   flex: 1;
-	margin-top: 1.6rem;
+  margin-top: 1.6rem;
 }
 
 .tableHeader {
@@ -22,12 +22,18 @@
   }
 
   &:nth-child(2n) {
-    background-color:  rgba($color: #eaeaea, $alpha: .4);
+    background-color: rgba($color: #eaeaea, $alpha: 0.4);
   }
 
-	&.tableFooter > div {
-		font-weight: 700;
-	}
+  &.tableFooter {
+		> .league {
+			cursor: unset;
+		}
+
+    > div {
+      font-weight: 700;
+    }
+  }
 }
 
 .tableHeader,
@@ -46,6 +52,11 @@
     text-align: left;
     width: 14rem;
     padding-left: 0.5rem;
+		cursor: pointer;
+
+		&.noCursor {
+			cursor: unset;
+		}
   }
 
   > .game {
@@ -53,17 +64,26 @@
     width: 18rem;
     padding-left: 0.5rem;
 
-		> .teams {
-			font-weight: 700;
-		}
+    > .teams {
+      font-weight: 700;
+    }
   }
 
-	> .teamName {
+  > .teamName {
     text-align: left;
     width: 6rem;
     padding-left: 0.5rem;
   }
 
+	.wide {
+    width: 1.8rem;
+  }
+	.wide2 {
+		width: 2rem;
+	}
+	.wide3 {
+		width: 3rem;
+	}
   .wider {
     width: 2.8rem;
   }

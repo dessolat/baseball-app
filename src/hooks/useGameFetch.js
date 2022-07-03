@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
+import { setCurrentGameId, setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +11,8 @@ const useGameFetch = url => {
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
+
+	const { gameId } = useParams();
 
   useEffect(() => {
     error && setError(null);
@@ -37,6 +40,11 @@ const useGameFetch = url => {
 				dispatch(setErrorMsg(null))
         error && setError(null);
         const dataLength = JSON.stringify(resp.data).length;
+
+				intervalRef.current = setTimeout(() => {
+					dispatch(getFullData(false, innerUrl));
+				}, 5000);
+
         if (dataRef.current === dataLength) return;
         // dataRef.current = resp.data;
         dataRef.current = dataLength;
@@ -54,16 +62,30 @@ const useGameFetch = url => {
         }
 
         dispatch(setFullData(resp.data));
+
       } catch (err) {
-        setError(err.message);
+				setError(err.message);
 				dispatch(setErrorMsg(err.message))
+				console.log(err.__CANCEL__);
+				if (!err.__CANCEL__) {
+					intervalRef.current = setTimeout(() => {
+						dispatch(getFullData(false, innerUrl));
+					}, 5000);
+				}
       } finally {
-        if (firstTime) {
+				// console.log('aaaaaaa');
+				if (firstTime) {
           setIsLoading(false);
-          intervalRef.current = setInterval(() => {
-            dispatch(getFullData(false, innerUrl));
-          }, 3000);
+					dispatch(setCurrentGameId(gameId))
         }
+				
+        // if (firstTime) {
+        //   setIsLoading(false);
+        //   intervalRef.current = setInterval(() => {
+				// 		console.log('request');
+        //     dispatch(getFullData(false, innerUrl));
+        //   }, 3000);
+        // }
       }
     };
 

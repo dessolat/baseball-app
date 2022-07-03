@@ -2,20 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
-import { setPlayerStatsData } from 'redux/playerStatsReducer';
+import { setPlayerStatsData, setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Header from 'components/PlayerStats/Header/Header';
 import Content from 'components/PlayerStats/Content/Content';
 import Loader from 'components/UI/loaders/Loader/Loader';
+import { setTableMode } from 'redux/statsReducer';
 
 const PlayerStats = () => {
   // eslint-disable-next-line
   const [isStatsLoading, setIsStatsLoading] = useState(false);
   const [error, setError] = useState('');
   const currentYear = useSelector(state => state.shared.currentYear);
-  const currentLeague = useSelector(state => state.games.currentLeague);
   const [playerYears, setPlayerYears] = useState(currentYear);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+  const playerTableMode = useSelector(state => state.playerStats.tableType);
 
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
@@ -29,14 +31,22 @@ const PlayerStats = () => {
   useEffect(
     () => () => {
       dispatch(setPlayerStatsData({}));
+      dispatch(setCurrentTeam(null));
       cancelTokenRef.current.cancel(null);
     },
-		// eslint-disable-next-line
+    // eslint-disable-next-line
     []
   );
 
   useEffect(() => {
-    const isLeague = data => data.leagues.find(league => league.id === currentLeague.id);
+    if (firstMountRef.current === true) return;
+
+    dispatch(setTableMode(playerTableMode));
+    // eslint-disable-next-line
+  }, [playerTableMode]);
+
+  useEffect(() => {
+    const isLeague = leagues => leagues.find(league => league.id === currentLeague.id);
 
     const fetchStats = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
@@ -47,10 +57,9 @@ const PlayerStats = () => {
           cancelToken: cancelTokenRef.current.token,
           timeout: 10000
         });
-
         setError('');
 
-        !isLeague(response.data) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
+        !isLeague(response.data.leagues) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
 
         dispatch(setPlayerStatsData(response.data));
       } catch (err) {
@@ -113,6 +122,40 @@ const PlayerStats = () => {
   // 	// eslint-disable-next-line
   // }, [currentYear]);
 
+  function calculateTeamsArray(tableMode) {
+    const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
+
+    return playerYears === 'All years'
+      ? Array.from(
+          playerStatsData.leagues
+            .filter(league => league.teams.find(team => team[tableMode.toLowerCase()]))
+            .reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+        )
+      : currentLeague.id === -1
+      ? Array.from(
+          playerStatsData.leagues
+            .filter(
+              league =>
+                league.year === playerYears && league.teams.find(team => team[tableMode.toLowerCase()])
+            )
+            .reduce((sum, league) => {
+              league.teams.forEach(team => sum.add(team.name));
+              return sum;
+            }, new Set())
+        )
+      : selectedLeague?.teams
+      ? selectedLeague.teams.length > 1
+        ? selectedLeague.teams.reduce((sum, team) => {
+            sum.push(team.name);
+            return sum;
+          }, [])
+        : [selectedLeague.teams[0].name]
+      : [];
+  }
+
   return (
     <>
       {error !== '' ? (
@@ -123,8 +166,12 @@ const PlayerStats = () => {
         <></>
       ) : (
         <>
-          <Header playerYears={playerYears} setPlayerYears={setPlayerYears} />
-          <Content playerYears={playerYears} />
+          <Header
+            playerYears={playerYears}
+            setPlayerYears={setPlayerYears}
+            calculateTeamsArray={calculateTeamsArray}
+          />
+          <Content playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
         </>
       )}
     </>

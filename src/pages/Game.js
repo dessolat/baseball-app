@@ -29,18 +29,23 @@ const Game = () => {
   );
 
   useEffect(() => {
-    axios
-      .get(`http://baseball-gametrack.ru/api/game_${gameId}`, {
-        timeout: 7000
-      })
-      .then(() => {
-        dispatch(getFullData(true));
-        dispatch(setCurrentGameId(gameId));
-      })
-      .catch(() => {
-        dispatch(setCurrentGameId(gameId));
-        navigate('/games');
-      });
+    // axios
+    //   .get(`http://baseball-gametrack.ru/api/game_${gameId}`, {
+    //     timeout: 10000
+    //   })
+    //   .then(() => {
+    //     dispatch(getFullData(true));
+    //     dispatch(setCurrentGameId(gameId));
+    //   })
+    //   .catch(() => {
+    //     dispatch(setCurrentGameId(gameId));
+    //     navigate('/games');
+    //   });
+
+
+			dispatch(getFullData(true));
+
+
 
     const resizeHandle = () => {
       dispatch(setMobileWidth(window.innerWidth));
@@ -53,7 +58,7 @@ const Game = () => {
       // eslint-disable-next-line
       typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
       // eslint-disable-next-line
-      clearInterval(intervalRef.current);
+      clearTimeout(intervalRef.current);
       dispatch(resetData());
       window.removeEventListener('resize', resizeHandle);
     };

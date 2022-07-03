@@ -41,7 +41,7 @@
       &::after {
         content: 'Fielding';
         position: absolute;
-        left: .2rem;
+        left: 0.2rem;
         top: -3.2rem;
         font: 400 0.875rem var(--font-nunito);
         color: black;
@@ -72,12 +72,18 @@
   }
 
   &:nth-child(2n) {
-    background-color:  rgba($color: #eaeaea, $alpha: .4);
+    background-color: rgba($color: #eaeaea, $alpha: 0.4);
   }
 
-	&.tableFooter > div {
-		font-weight: 700;
-	}
+  &.tableFooter {
+		> .league {
+			cursor: unset;
+		}
+
+    > div {
+      font-weight: 700;
+    }
+  }
 }
 
 .tableHeader,
@@ -96,6 +102,11 @@
     text-align: left;
     width: 12rem;
     padding-left: 0.5rem;
+    cursor: pointer;
+
+    &.noCursor {
+      cursor: unset;
+    }
   }
 
   > .game {
@@ -117,7 +128,19 @@
   .wide {
     width: 1.8rem;
   }
-
+	
+	.tall {
+		width: 1.4rem;
+	}
+	.wide2 {
+		width: 2rem;
+	}
+	.wide2_5 {
+		width: 2.5rem;
+	}
+	.wide3 {
+		width: 3rem;
+	}
   .wider {
     width: 2.8rem;
   }

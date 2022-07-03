@@ -1,7 +1,8 @@
 import React from 'react';
 import cl from './ContentPlayersTable.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { setPlayerCurrentTeam as setCurrentTeam} from 'redux/playerStatsReducer';
 
 const ContentPlayersTable = () => {
 	const { teamName } = useParams();
@@ -9,6 +10,12 @@ const ContentPlayersTable = () => {
   const teamData = useSelector(state => state.teamGames.teamData);
   const currentYear = useSelector(state => state.shared.currentYear);
   const currentLeague = useSelector(state => state.games.currentLeague);
+
+	const dispatch = useDispatch()
+
+	const handlePlayerClick = () => {
+		dispatch(setCurrentTeam(teamName));
+	}
 
   const PLAYERS_DATA =
     currentLeague.id !== -1
@@ -42,7 +49,7 @@ const ContentPlayersTable = () => {
             <li key={index} className={cl.tableRow}>
               <div>{index + 1}</div>
               <div className={cl.underlineHover}>
-                <Link to={`/stats/player/${player.id}`}>
+                <Link to={`/stats/player/${player.id}`} onClick={handlePlayerClick}>
                   {player.name + ' ' + player.surname}
                 </Link>
               </div>

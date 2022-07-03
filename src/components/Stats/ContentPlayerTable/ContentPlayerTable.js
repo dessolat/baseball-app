@@ -2,14 +2,13 @@ import React, { useState, useMemo, useRef } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getObjectsSum, getSearchParam, getShortName, setSearchParam } from 'utils';
+import { getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
-  const [playerFilter, setPlayerFilter] = useState('');
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
@@ -21,6 +20,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const sortField = useSelector(state => state.stats.sortField);
   const sortDirection = useSelector(state => state.stats.sortDirection);
   const statsData = useSelector(state => state.stats.statsData);
+  const playerFilter = useSelector(state => state.stats.statsPlayerFilterValue);
   const currentLeague = useSelector(state => state.games.currentLeague);
 
   const dispatch = useDispatch();
@@ -44,26 +44,30 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               (item.title === currentLeague.name || item.title === currentLeague.title) &&
               item.type === currentGameType
           )?.players[tableMode.toLowerCase()] || []
-        : statsData
-            .filter(league => league.type === currentGameType)
-            .reduce((sum, league) => {
-              league.players[tableMode.toLowerCase()].forEach(player => {
-                const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
+        : // : statsData
+          //     .filter(league => league.type === currentGameType)
+          //     .reduce((sum, league) => {
+          //       league.players[tableMode.toLowerCase()].forEach(player => {
+          //         const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
 
-                if (playerIndex !== -1) {
-                  sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
-                    'name',
-                    'surname',
-                    'teams',
-                    'id'
-                  ]);
-                } else {
-                  sum.push(player);
-                }
-              });
+          //         if (playerIndex !== -1) {
+          //           sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
+          //             'name',
+          //             'surname',
+          //             'teams',
+          //             'id'
+          //           ]);
+          //         } else {
+          //           sum.push(player);
+          //         }
+          //       });
 
-              return sum;
-            }, []) || [],
+          //       return sum;
+          //     }, [])
+          statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.players[
+            tableMode.toLowerCase()
+          ] || [],
+
     [currentLeague, statsData, tableMode, currentGameType]
   );
 
@@ -71,24 +75,21 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     () =>
       Array.from(
         new Set(
-          filteredStatsData.reduce(
-            (sum, cur) => {
-              cur.teams.forEach(team => sum.push(team.name));
-              return sum;
-            },
-            []
-          )
+          filteredStatsData.reduce((sum, cur) => {
+            cur.teams.forEach(team => sum.push(team.name));
+            return sum;
+          }, [])
         )
       ),
     [filteredStatsData]
   );
 
-const sortedTeamOptions = useMemo(() => {
-	const sortedTeamsArr = teamOptions.sort((a,b) => a > b ? 1 : -1)
-	sortedTeamsArr.unshift('All')
+  const sortedTeamOptions = useMemo(() => {
+    const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
+    sortedTeamsArr.unshift('All');
 
-	return sortedTeamsArr
-}, [teamOptions])
+    return sortedTeamsArr;
+  }, [teamOptions]);
 
   //Filtering by team
   filteredStatsData = useMemo(
@@ -117,6 +118,13 @@ const sortedTeamOptions = useMemo(() => {
         })
       : filteredStatsData;
 
+  const rightRowStyles = [cl.tableRow];
+  const rightHeaderStyles = [cl.rightHeader];
+  if (tableMode === 'Fielding / Running') {
+    rightRowStyles.push(cl.widthAuto);
+    rightHeaderStyles.push(cl.widthAuto);
+  }
+
   return (
     <>
       {isMobile ? (
@@ -129,7 +137,7 @@ const sortedTeamOptions = useMemo(() => {
                   {/* <div>POS</div> */}
                   {/* <div></div> */}
                 </div>
-                <div className={cl.rightHeader} ref={headerScroll}>
+                <div className={rightHeaderStyles.join(' ')} ref={headerScroll}>
                   <div>
                     <Dropdown
                       title={'Team'}
@@ -146,7 +154,7 @@ const sortedTeamOptions = useMemo(() => {
                       }}
                       itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
                       shortNames={13}
-											searchField={true}
+                      searchField={true}
                     />
                   </div>
                   {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
@@ -188,9 +196,8 @@ const sortedTeamOptions = useMemo(() => {
                   ref={rowsScroll}>
                   {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                     (row, index) => {
-                      console.log(row);
                       return (
-                        <div key={index} className={cl.tableRow}>
+                        <div key={index} className={rightRowStyles.join(' ')}>
                           <div>
                             {row.teams
                               .reduce((sum, team) => {
@@ -210,7 +217,9 @@ const sortedTeamOptions = useMemo(() => {
           ) : (
             <p className={cl.noPlayersFound}>No players found.</p>
           )}
-          <ContentPlayerFilterField setPlayerFilter={setPlayerFilter} mobile={true} />
+          <div className={cl.contentPlayerFilterFieldWrapper}>
+            <ContentPlayerFilterField mobile={true} />
+          </div>
         </div>
       ) : (
         <div className={cl.wrapper}>
@@ -226,7 +235,7 @@ const sortedTeamOptions = useMemo(() => {
                     currentOption={currentTeam}
                     handleClick={handleTeamClick}
                     listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-										searchField={true}
+                    searchField={true}
                   />
                 </div>
                 {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
@@ -283,7 +292,7 @@ const sortedTeamOptions = useMemo(() => {
           ) : (
             <p className={cl.noPlayersFound}>No players found.</p>
           )}
-          <ContentPlayerFilterField setPlayerFilter={setPlayerFilter} />
+          <ContentPlayerFilterField />
         </div>
       )}
     </>
