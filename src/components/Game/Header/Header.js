@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import cl from './Header.module.scss';
-import axios from 'axios';
+// import axios from 'axios';
 import HeaderTabs from '../HeaderTabs/HeaderTabs';
 import HeaderScoresList from '../HeaderScoresList/HeaderScoresList';
 import HeaderInfo from '../HeaderInfo/HeaderInfo';
@@ -9,8 +9,8 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import VerticalScrollDivider from 'components/UI/dividers/VerticalScrollDivider/VerticalScrollDivider';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import useFullDate from 'hooks/useFullDate';
-import { useDispatch, useSelector } from 'react-redux';
-import { setImagesData } from 'redux/gameReducer';
+import { useSelector } from 'react-redux';
+// import { setImagesData } from 'redux/gameReducer';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 
@@ -23,7 +23,7 @@ const Header = ({ currentTab, handleTabClick }) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const isVideo = useSelector(state => state.game.isVideo);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const fetchImage = async (teamName, url) => {
