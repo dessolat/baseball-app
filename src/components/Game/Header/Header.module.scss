@@ -7,9 +7,12 @@
   z-index: 2;
   user-select: none;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     box-shadow: none;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		box-shadow: none;
+	}
 }
 
 .headerContent {
@@ -21,7 +24,13 @@
   @media screen and (max-width: 800px) {
     display: block;
     font-size: 14px;
-		background: #F4F5F7;
+    background: #f4f5f7;
+    justify-content: center;
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+		font-size: 14px;
+		background: #f4f5f7;
 		justify-content: center;
   }
 }
@@ -35,6 +44,14 @@
     border-bottom: 0.5px solid #cdcccc;
     font-size: 1rem;
   }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 29px;
+    font-size: 1rem;
+    border-bottom: none;
+  }
 }
 
 .date {
@@ -46,6 +63,9 @@
   @media screen and (max-width: 800px) {
     margin-top: 0;
     display: none;
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
   }
 }
 
@@ -59,6 +79,9 @@
     margin-top: 0;
     display: none;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
+  }
 }
 
 .mainModeSelector {
@@ -69,16 +92,57 @@
     width: 5rem;
     text-align: center;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+		width: 5rem;
+		text-align: center;
+  }
+}
+
+.teamTotalScoresWrapper {
+  display: none;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+		align-items: baseline;
+		margin-left: 2rem;
+		margin-right: auto;
+
+		> * + * {
+			margin-left: 1.5rem;
+		}
+
+		> .scores {
+			font: 700 14px var(--font-nunito);
+		}
+  }
+}
+
+.guests,
+.owners {
+  border-bottom: 3px solid transparent;
+	font: 400 14px / 1 var(--font-nunito);
+	color: black;
+}
+
+.active {
+  border-bottom: 3px solid var(--side-color);
 }
 
 .dateLocation {
   display: none;
 
   @media screen and (max-width: 800px) {
-    display: block;
+    display: inline-block;
     padding-right: 1.5rem;
     color: #838383;
     font-size: 12px;
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: inline-block;
+		padding-right: 1.5rem;
+		color: #838383;
+		font-size: 12px;
   }
 }
 
@@ -94,17 +158,23 @@
   @media screen and (max-width: 800px) {
     display: none;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
+  }
 }
 
 .scoresWrapper {
-	display: flex;
+  display: flex;
   align-items: flex-end;
   align-self: stretch;
 
-	@media screen and (max-width: 800px) {
-		height: 83.5px;
-		justify-content: center;
-	}
+  @media screen and (max-width: 800px) {
+    height: 83.5px;
+    justify-content: center;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }
 
 .scoresListWrapper {
@@ -137,7 +207,12 @@
   align-items: center;
   justify-content: center;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
+    > button {
+      display: none;
+    }
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		> button {
 			display: none;
 		}
