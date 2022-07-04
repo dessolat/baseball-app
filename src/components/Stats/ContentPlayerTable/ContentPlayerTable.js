@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import ContentPlayerFilterField from './ContentPlayerFilterField';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
+  const [isScrollable, setIsScrollable] = useState(true);
 
   const headerScroll = useRef(null);
   const rowsScroll = useRef(null);
@@ -24,6 +25,19 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const currentLeague = useSelector(state => state.games.currentLeague);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (rowsScroll.current === null || !isMobile) return;
+
+    setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
+  }, [tableMode, currentLeague.id, isMobile]);
 
   const handleTeamClick = team => {
     setCurrentTeam(team);
@@ -118,12 +132,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
-  const rightRowStyles = [cl.tableRow];
-  const rightHeaderStyles = [cl.rightHeader];
-  if (tableMode === 'Fielding / Running') {
-    rightRowStyles.push(cl.widthAuto);
-    rightHeaderStyles.push(cl.widthAuto);
-  }
+  const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
+  // const rightRowStyles = [cl.tableRow];
+  // const rightHeaderStyles = [cl.rightHeader];
+  // if (tableMode === 'Fielding / Running') {
+  //   rightRowStyles.push(cl.widthAuto);
+  //   rightHeaderStyles.push(cl.widthAuto);
+  // }
 
   return (
     <>
@@ -132,12 +147,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           {filteredStatsData.length !== 0 || playerFilter === '' ? (
             <>
               <div className={cl.fullHeader}>
-                <div className={cl.leftHeader}>
+                <div className={cl.leftHeader} style={leftHeaderStyles}>
                   <div>Players</div>
                   {/* <div>POS</div> */}
                   {/* <div></div> */}
                 </div>
-                <div className={rightHeaderStyles.join(' ')} ref={headerScroll}>
+                <div className={cl.rightHeader} ref={headerScroll}>
+                {/* <div className={rightHeaderStyles.join(' ')} ref={headerScroll}> */}
                   <div>
                     <Dropdown
                       title={'Team'}
@@ -164,7 +180,9 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 </div>
               </div>
               <div className={cl.sides}>
-                <div className={cl.leftRows}>
+                <div
+                  className={cl.leftRows}
+                  style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
                   {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                     (row, index) => {
                       // const posValue = row.teams
@@ -197,7 +215,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                     (row, index) => {
                       return (
-                        <div key={index} className={rightRowStyles.join(' ')}>
+                        <div
+                          key={index}
+                          // className={rightRowStyles.join(' ')}
+                          className={cl.tableRow}
+                          style={{
+                            width: !isScrollable ? '100%' : 'fit-content'
+                          }}>
                           <div>
                             {row.teams
                               .reduce((sum, team) => {

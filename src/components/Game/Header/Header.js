@@ -9,10 +9,12 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import VerticalScrollDivider from 'components/UI/dividers/VerticalScrollDivider/VerticalScrollDivider';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import useFullDate from 'hooks/useFullDate';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { setImagesData } from 'redux/gameReducer';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+import { getShortName } from 'utils';
+import { setBoxActiveButton } from 'redux/gameReducer';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -23,6 +25,11 @@ const Header = ({ currentTab, handleTabClick }) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const isVideo = useSelector(state => state.game.isVideo);
+  const boxActiveButton = useSelector(state => state.game.boxActiveButton);
+  const currentCard = useSelector(state => state.game.currentCard);
+
+  const dispatch = useDispatch();
+
   // const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -99,6 +106,18 @@ const Header = ({ currentTab, handleTabClick }) => {
     animateScroll(e.currentTarget.name);
   };
 
+  const guestsClasses = [cl.guests];
+  const ownersClasses = [cl.owners];
+  currentTab === 'box'
+    ? boxActiveButton === 'guests'
+      ? guestsClasses.push(cl.active)
+      : ownersClasses.push(cl.active)
+    : currentCard.side === 'top'
+    ? guestsClasses.push(cl.active)
+    : ownersClasses.push(cl.active);
+
+  const handleTeamClick = name => () => dispatch(setBoxActiveButton(name));
+
   const leftArrowGroup = isLeftScroll ? (
     <>
       <Arrow onClick={scrollHorizontally} />
@@ -125,7 +144,6 @@ const Header = ({ currentTab, handleTabClick }) => {
 
   const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
   const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
-
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -141,6 +159,19 @@ const Header = ({ currentTab, handleTabClick }) => {
                 currentOption={currentTab[0].toUpperCase() + currentTab.slice(1)}
                 handleClick={handleTabClick}
               />
+            </div>
+            <div className={cl.teamTotalScoresWrapper}>
+              <button className={guestsClasses.join(' ')} onClick={handleTeamClick('guests')}>
+                {getShortName(preview.guests.name, 14)}
+              </button>
+              <div className={cl.scores}>
+                {preview.guests.score}
+                 - 
+                {preview.owners.score}
+              </div>
+              <button className={ownersClasses.join(' ')} onClick={handleTeamClick('owners')}>
+                {getShortName(preview.owners.name, 14)}
+              </button>
             </div>
             <div className={cl.dateLocation}>
               {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}

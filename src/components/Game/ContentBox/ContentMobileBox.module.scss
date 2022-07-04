@@ -4,6 +4,9 @@
   @media screen and (max-width: 800px) {
     display: block;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: block;
+  }
 }
 
 .boxHeader {
@@ -24,6 +27,14 @@
       border-bottom: 2px solid var(--side-color);
     }
   }
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		justify-content: center;
+
+		> button + button {
+			margin-left: 1.5rem;
+		}
+  }
 }
 
 .mobileWrapper {
@@ -31,6 +42,10 @@
   width: 100%;
   padding: 0;
 	height: calc(100vh - 30.63px - 112.5px - 26px);
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
+  }
 }
 
 .fullHeader {
@@ -89,6 +104,7 @@
 .sides {
   width: 100%;
   max-height: calc(100vh - 30.63px - 112.5px - 27px - 38.5px);
+	background-color: white;
 
   overflow-y: scroll;
   display: flex;
@@ -96,11 +112,16 @@
   &::-webkit-scrollbar {
     width: 0;
   }
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		max-height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
+  }
 }
 
 .footerSides {
   width: 100%;
   display: flex;
+	// background-color: #fff;
 
   &::-webkit-scrollbar {
     width: 0;
