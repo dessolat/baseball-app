@@ -105,7 +105,11 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 
   currentMode === 'Pitching' &&
     tableData.pitchers_order.forEach((orderId, i) => {
-      orderedPlayersStats.find(player => player.id === orderId).order = i + 1;
+			const player = orderedPlayersStats.find(player => player.id === orderId)
+
+			if (player !== undefined) {
+				player.order = i + 1;
+			}
     });
   return (
     <div className={cl.mobileWrapper}>
