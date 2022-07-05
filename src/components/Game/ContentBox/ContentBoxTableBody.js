@@ -8,7 +8,11 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
 
   tableName === 'pitching' &&
     tableData.pitchers_order.forEach((orderId, i) => {
-      orderedPlayersStats.find(player => player.id === orderId).order = i + 1;
+			const player =  orderedPlayersStats.find(player => player.id === orderId)
+      
+			if (player !== undefined) {
+				player.order = i + 1;
+			}
     });
 
   return (
