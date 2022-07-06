@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import cl from './ContentMobileTable.module.scss';
 import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
@@ -10,6 +10,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
+  const [mobileOrientation, setMobileOrientation] = useState(null);
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const tableMode = useSelector(state => state.playerStats.tableType);
@@ -26,11 +27,31 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
       500
     );
+
+    const orientationChangeHandler = () => {
+      setMobileOrientation(window.screen.orientation.angle);
+    };
+
+    window.addEventListener('orientationchange', orientationChangeHandler);
+
+    return () => {
+      window.removeEventListener('orientationchange', orientationChangeHandler);
+    };
   }, []);
 
   useEffect(() => {
     setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
+    console.log(isScrollable);
+    console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
   }, [tableMode, currentLeague.id]);
+
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
+    }, 50);
+    console.log(isScrollable);
+    console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
+  }, [mobileOrientation]);
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -650,7 +671,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             ...game,
             ...filteredLeague.fielding.games_fielding[i],
             ...filteredLeague.running.games_running[i],
-            ...filteredLeague.pitching?.games_pitching[i] ?? {},
+            ...(filteredLeague.pitching?.games_pitching[i] ?? {}),
             team_name: filteredLeague.name
           };
           sum.push(sumGame);
@@ -940,9 +961,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       <div
                         key={index}
                         className={cl.tableRow}
-                        style={{
-                          width: !isScrollable ? '100%' : 'fit-content'
-                        }}>
+                        style={
+                          {
+                            width: !isScrollable ? '100%' : 'fit-content'
+                          }
+                        }>
                         {getTableRows(gameRow, cl, sortField)}
                       </div>
                     );
