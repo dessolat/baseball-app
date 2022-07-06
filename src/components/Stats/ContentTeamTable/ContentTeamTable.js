@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { setSortDirection, setSortField } from 'redux/statsReducer';
 
 const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [isScrollable, setIsScrollable] = useState(true);
+  const [mobileOrientation, setMobileOrientation] = useState(null);
 
   const tableMode = useSelector(state => state.stats.tableMode);
   const sortField = useSelector(state => state.stats.sortField);
@@ -24,6 +25,16 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     if (rowsScroll.current === null || !isMobile) return;
 
     setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
+
+		const orientationChangeHandler = () => {
+      setMobileOrientation(window.screen.orientation.angle);
+    };
+
+    window.addEventListener('orientationchange', orientationChangeHandler);
+
+    return () => {
+      window.removeEventListener('orientationchange', orientationChangeHandler);
+    };
 		// eslint-disable-next-line
   }, []);
 
@@ -32,6 +43,14 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
     setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
   }, [tableMode, currentLeague.id, isMobile]);
+
+	useLayoutEffect(() => {
+		if (!isMobile) return;
+
+    setTimeout(() => {
+      setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
+    }, 50);
+  }, [isMobile, mobileOrientation]);
 
   const handleFieldClick = field => () => {
     sortField[tableMode] !== field

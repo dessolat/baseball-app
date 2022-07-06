@@ -41,16 +41,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
   useEffect(() => {
     setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
-    console.log(isScrollable);
-    console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
   }, [tableMode, currentLeague.id]);
 
   useLayoutEffect(() => {
     setTimeout(() => {
       setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
     }, 50);
-    console.log(isScrollable);
-    console.log(rowScrollRef.current.clientWidth, rowScrollRef.current.scrollWidth);
   }, [mobileOrientation]);
 
   const handleFieldClick = field => () => {
