@@ -112,13 +112,13 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
     //Selected league
     const filteredLeague = selectedLeague.teams.find(team => team.name === currentTeam);
 
-		if (filteredLeague) {
-			filteredLeague.batting && options.push('Batting')
-			filteredLeague.pitching && options.push('Pitching')
-		} else {
-			selectedLeague.teams.find(team => team.batting) && options.push('Batting')
-			selectedLeague.teams.find(team => team.pitching) && options.push('Pitching')
-		}
+    if (filteredLeague) {
+      filteredLeague.batting && options.push('Batting');
+      filteredLeague.pitching && options.push('Pitching');
+    } else {
+      selectedLeague.teams.find(team => team.batting) && options.push('Batting');
+      selectedLeague.teams.find(team => team.pitching) && options.push('Pitching');
+    }
 
     return options;
   }
@@ -137,14 +137,22 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                 {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
               </p>
               <div className={cl.dropWrapper}>
-                <Dropdown
-                  title={tableType}
-                  options={getSortedTableOptions()}
-                  currentOption={tableType}
-                  handleClick={handleTableOptionClick}
-                />
+                {getSortedTableOptions().length > 1 ? (
+                  <Dropdown
+                    title={tableType}
+                    options={getSortedTableOptions()}
+                    currentOption={tableType}
+                    handleClick={handleTableOptionClick}
+                  />
+                ) : getSortedTableOptions().length === 1 ? (
+                  tableType
+                ) : (
+                  ''
+                )}
               </div>
-              {isMobile ? (
+              {getSortedTableOptions().length === 0 ? (
+                <p className={cl.noDataFound}>No data found for current options.</p>
+              ) : isMobile ? (
                 <ContentMobileTable
                   filteredLeagues={filteredLeagues}
                   filteredLeague={filteredLeague}
