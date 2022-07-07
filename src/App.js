@@ -9,7 +9,7 @@ import TeamGames from 'pages/TeamGames';
 import Stats from 'pages/Stats';
 import PlayerStats from 'pages/PlayerStats';
 import { useDispatch } from 'react-redux';
-import { setIsMobile } from 'redux/sharedReducer';
+import { setIsMobile, setMobileOrientation } from 'redux/sharedReducer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,40 +35,18 @@ const App = () => {
 
     dispatch(setIsMobile(IsMobileCard()));
 
-    // function setVh  ()  {
-    //   // получаем текущее значение высоты
-    //   let newHeight = window.innerHeight * 0.01;
-    //   // let vh = window.innerHeight * 0.01;
-    //   document.documentElement.style.setProperty('--vh', `${newHeight}px`);
-    // };
+		if (!IsMobileCard()) return
 
-    // window.addEventListener('resize', setVh);
-    // setInterval(() => setVh(), 600);
+		const orientationChangeHandler = () => {
+			const mql = window.matchMedia("(orientation: portrait)");
+      dispatch(setMobileOrientation(mql.matches ? 90 : 0));
+    };
 
-    // return () => {
-    //   window.removeEventListener('resize', setVh);
-    // };
+    window.addEventListener('orientationchange', orientationChangeHandler);
 
-    // const fetchGamesData = async () => {
-    //   try {
-    //     let response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2020`, {
-    //       timeout: 10000
-    //     });
-    //     dispatch(setAllYearsLeagues({ year: 2020, data: response.data.leagues }));
-    //     response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2021`, {
-    //       timeout: 10000
-    //     });
-    //     dispatch(setAllYearsLeagues({ year: 2021, data: response.data.leagues }));
-    //     response = await axios.get(`http://baseball-gametrack.ru/api/main/year-2022`, {
-    //       timeout: 10000
-    //     });
-    //     dispatch(setAllYearsLeagues({ year: 2022, data: response.data.leagues }));
-    //   } catch (err) {
-    //     if (err.message === null) return;
-    //     console.log(err.message);
-    //   }
-    // };
-    // fetchGamesData();
+    return () => {
+      window.removeEventListener('orientationchange', orientationChangeHandler);
+    };
 		// eslint-disable-next-line
   }, []);
 
