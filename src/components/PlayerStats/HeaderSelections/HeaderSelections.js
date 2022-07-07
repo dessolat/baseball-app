@@ -195,12 +195,18 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
         </div>
         {isMobile && (
           <div className={cl.dropWrapper}>
-            <Dropdown
-              title={tableType}
-              options={getSortedTableOptions()}
-              currentOption={tableType}
-              handleClick={handleTableOptionClick}
-            />
+            {getSortedTableOptions().length > 1 ? (
+              <Dropdown
+                title={tableType}
+                options={getSortedTableOptions()}
+                currentOption={tableType}
+                handleClick={handleTableOptionClick}
+              />
+            ) : getSortedTableOptions().length === 1 ? (
+              tableType
+            ) : (
+              ''
+            )}
           </div>
         )}
       </div>
