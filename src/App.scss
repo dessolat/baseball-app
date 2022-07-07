@@ -36,6 +36,10 @@ body {
 		// height: var(--vh);
 		// overflow: hidden;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		background-color: white;
+		height: 100vh;
+  }
 
   &::-webkit-scrollbar {
     width: 6px;
