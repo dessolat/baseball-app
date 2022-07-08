@@ -779,7 +779,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   }
 
   let leftHeaderStyles = {
-    flex: `0 0 ${currentLeague.id !== -1 ? 260 : playerYears === 'All years' ? 210 : 150}px`
+    flex: `0 0 ${currentLeague.id !== -1 ? 190 : playerYears === 'All years' ? 185.5 : 140.5}px`
   };
   !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
 
@@ -865,7 +865,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       {row.date.slice(8, 10)} {MONTHS[+row.date.slice(5, 7) - 1]},
                     </div>
                     <Link className={cl.teamNames} to={`/game/${row.game_id}?tab=box`}>
-                      {getShortName(row.home_team.name, 26)} - {getShortName(row.visit_team.name, 26)}
+                      {getShortName(row.home_team.name, 14)} - {getShortName(row.visit_team.name, 14)}
                     </Link>
                   </div>
                 </div>
