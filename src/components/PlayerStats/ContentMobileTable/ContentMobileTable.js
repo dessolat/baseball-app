@@ -10,12 +10,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
-  const [mobileOrientation, setMobileOrientation] = useState(null);
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const tableMode = useSelector(state => state.playerStats.tableType);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
+  const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
 
   const headerScroll = useRef(null);
   const rowScrollRef = useRef();
@@ -27,23 +27,15 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       () => setIsScrollable(rowScrollRef.current?.clientWidth < rowScrollRef.current?.scrollWidth),
       500
     );
-
-    const orientationChangeHandler = () => {
-      setMobileOrientation(window.screen.orientation.angle);
-    };
-
-    window.addEventListener('orientationchange', orientationChangeHandler);
-
-    return () => {
-      window.removeEventListener('orientationchange', orientationChangeHandler);
-    };
   }, []);
 
   useEffect(() => {
     setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
   }, [tableMode, currentLeague.id]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+		if (rowScrollRef.current === null) return
+
     setTimeout(() => {
       setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
     }, 50);
@@ -957,11 +949,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       <div
                         key={index}
                         className={cl.tableRow}
-                        style={
-                          {
-                            width: !isScrollable ? '100%' : 'fit-content'
-                          }
-                        }>
+                        style={{
+                          width: !isScrollable ? '100%' : 'fit-content'
+                        }}>
                         {getTableRows(gameRow, cl, sortField)}
                       </div>
                     );

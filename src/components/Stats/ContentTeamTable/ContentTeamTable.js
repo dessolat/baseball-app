@@ -6,7 +6,6 @@ import { setSortDirection, setSortField } from 'redux/statsReducer';
 
 const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [isScrollable, setIsScrollable] = useState(true);
-  const [mobileOrientation, setMobileOrientation] = useState(null);
 
   const tableMode = useSelector(state => state.stats.tableMode);
   const sortField = useSelector(state => state.stats.sortField);
@@ -15,6 +14,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
+  const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
 
   const dispatch = useDispatch();
 
@@ -25,16 +25,6 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     if (rowsScroll.current === null || !isMobile) return;
 
     setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
-
-		const orientationChangeHandler = () => {
-      setMobileOrientation(window.screen.orientation.angle);
-    };
-
-    window.addEventListener('orientationchange', orientationChangeHandler);
-
-    return () => {
-      window.removeEventListener('orientationchange', orientationChangeHandler);
-    };
 		// eslint-disable-next-line
   }, []);
 
@@ -44,8 +34,8 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
   }, [tableMode, currentLeague.id, isMobile]);
 
-	useLayoutEffect(() => {
-		if (!isMobile) return;
+	useEffect(() => {
+		if (!isMobile || rowsScroll.current === null) return;
 
     setTimeout(() => {
       setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
