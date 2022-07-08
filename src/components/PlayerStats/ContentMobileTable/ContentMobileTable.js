@@ -38,7 +38,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
     setTimeout(() => {
       setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
-    }, 50);
+    }, 150);
   }, [mobileOrientation]);
 
   const handleFieldClick = field => () => {

@@ -39,7 +39,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
     setTimeout(() => {
       setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
-    }, 50);
+    }, 150);
   }, [isMobile, mobileOrientation]);
 
   const handleFieldClick = field => () => {
