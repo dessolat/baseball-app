@@ -11,7 +11,8 @@ const defaultState = {
   currentLeaguesScroll: 0,
   mobileWidth: 0,
   isMobile: false,
-  currentGameType: 'Baseball'
+  currentGameType: 'Baseball',
+	mobileOrientation: 0
 	// allYearsLeagues: {}
 };
 
@@ -22,6 +23,7 @@ const SET_CURRENT_LEAGUES_SCROLL = 'SET_CURRENT_LEAGUES_SCROLL';
 const SET_MOBILE_WIDTH = 'SET_MOBILE_WIDTH';
 const SET_IS_MOBILE = 'SET_IS_MOBILE';
 const SET_CURRENT_GAME_TYPE = 'SET_CURRENT_GAME_TYPE';
+const SET_MOBILE_ORIENTATION = 'SET_MOBILE_ORIENTATION';
 // const SET_ALL_YEARS_LEAGUES = 'SET_ALL_YEARS_LEAGUES';
 
 export const sharedReducer = (state = defaultState, action) => {
@@ -40,6 +42,8 @@ export const sharedReducer = (state = defaultState, action) => {
       return { ...state, isMobile: action.payload };
     case SET_CURRENT_GAME_TYPE:
       return { ...state, currentGameType: action.payload };
+    case SET_MOBILE_ORIENTATION:
+      return { ...state, mobileOrientation: action.payload };
     // case SET_ALL_YEARS_LEAGUES:
     //   return { ...state, allYearsLeagues: {...state.allYearsLeagues, [action.payload.year]: action.payload.data} };
     default:
@@ -54,4 +58,5 @@ export const setCurrentLeaguesScroll = payload => ({ type: SET_CURRENT_LEAGUES_S
 export const setMobileWidth = payload => ({ type: SET_MOBILE_WIDTH, payload });
 export const setIsMobile = payload => ({ type: SET_IS_MOBILE, payload });
 export const setCurrentGameType = payload => ({ type: SET_CURRENT_GAME_TYPE, payload });
+export const setMobileOrientation = payload => ({ type: SET_MOBILE_ORIENTATION, payload });
 // export const setAllYearsLeagues = payload => ({ type: SET_ALL_YEARS_LEAGUES, payload });
