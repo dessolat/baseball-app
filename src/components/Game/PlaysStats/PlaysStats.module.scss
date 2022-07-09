@@ -17,6 +17,13 @@
 		padding: 0;
 		border-top: 0.5px solid #CDCCCC;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		border-left: none;
+		aspect-ratio: 16/9;
+		position: relative;
+		padding: 0;
+		border-top: 0.5px solid #CDCCCC;
+	}
 }
 
 .field {
@@ -24,6 +31,11 @@
 	background: no-repeat url('../../../images/field_right.png') center / 100% 100%;
 
 	@media screen and (max-width: 800px) {
+		aspect-ratio: 321 / 237.5;
+		height: 95%;
+		margin-left: 25px;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		aspect-ratio: 321 / 237.5;
 		height: 95%;
 		margin-left: 25px;
@@ -44,6 +56,20 @@
 		display: flex;
 		align-items: flex-end;
 
+		> div:first-child {
+			width: 80px;
+		}
+		> div:last-child {
+			width: 150px;
+		}
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		display: flex;
+		align-items: flex-end;
+	
 		> div:first-child {
 			width: 80px;
 		}
@@ -77,6 +103,16 @@
 			}
 		}
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		> * {
+			&:first-child {
+				flex: 1 1 60%;
+			}
+			&:last-child {
+				flex: 1 1 40%;
+			}
+		}
+	}
 }
 
 .title {
@@ -84,6 +120,9 @@
   color: var(--side-color);
 
 	@media screen and (max-width: 800px) {
+		font-size: 12px;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		font-size: 12px;
 	}
 }
@@ -106,6 +145,10 @@
 		font-size: 12px;
 		line-height: 1;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		font-size: 12px;
+		line-height: 1;
+	}
 }
 
 .arrowWrapper {
@@ -119,4 +162,12 @@
     left: 20px;
     opacity: 0.5;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: inline;
+		position: absolute;
+		top: 50%;
+		transform: scale(2.4) translateY(-35%);
+		left: 20px;
+		opacity: 0.5;
+	}
 }

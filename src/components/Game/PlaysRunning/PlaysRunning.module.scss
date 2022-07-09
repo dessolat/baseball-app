@@ -10,6 +10,11 @@
     text-align: center;
     position: relative;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		aspect-ratio: 16/9;
+		text-align: center;
+		position: relative;
+	}
 }
 
 .field {
@@ -21,6 +26,10 @@
     height: 100%;
     width: auto;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		height: 100%;
+		width: auto;
+	}
 }
 
 .info {
@@ -45,6 +54,22 @@
 			justify-content: space-between;
 		}
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		aspect-ratio: 16/9;
+		overflow: hidden;
+		border-left: none;
+		padding: .2rem;
+		position: relative;
+	
+		> .list {
+			margin-left: 15%;
+			width: 50%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
 }
 
 .subHeader {
@@ -52,6 +77,9 @@
   color: var(--side-color);
 
 	@media screen and (max-width: 800px) {
+		display: none;
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		display: none;
 	}
 }
@@ -81,6 +109,16 @@
 			background-color: #E8E8E8;
 		}
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		padding: .2rem 0;
+	
+		& + &:before {
+			top: -2px;
+			left: 50%;
+			width: 50%;
+			background-color: #E8E8E8;
+		}
+	}
 }
 
 .infoTitle {
@@ -89,6 +127,9 @@
 	@media screen and (max-width: 800px) {
     font-size: 12px;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		font-size: 12px;
+	}
 }
 
 .infoValue {
@@ -97,6 +138,9 @@
 	@media screen and (max-width: 800px) {
     font-size: 12px;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		font-size: 12px;
+	}
 }
 
 .rightArrowWrapper,
@@ -110,6 +154,13 @@
     transform: scale(2.4) translateY(-35%);
     opacity: 0.5;
   }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: inline;
+		position: absolute;
+		top: 50%;
+		transform: scale(2.4) translateY(-35%);
+		opacity: 0.5;
+	}
 }
 
 .rightArrowWrapper {

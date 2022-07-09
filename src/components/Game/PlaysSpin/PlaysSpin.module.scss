@@ -35,6 +35,21 @@
 			}
 		}
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		margin-left: 0;
+		padding: 0 10px;
+		justify-content: space-between;
+		aspect-ratio: 16 / 4;
+	
+		> * {
+			flex: unset;
+	
+			&:first-child {
+				height: auto;
+				width: calc(100vw / 16 * 3);
+			}
+		}
+	}
 }
 
 .subHeader {
@@ -55,6 +70,9 @@
 	@media screen and (max-width: 800px) {
 		display: none;
 	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
+	}
 }
 
 .spinInfo {
@@ -68,6 +86,20 @@
 			font-size: 12px;
 		}
 
+		> * + * {
+			margin-left: 5px;
+		}
+	}
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		flex-direction: row !important;
+		align-items: center;
+		flex: 1;
+		margin-left: 10px;
+	
+		* {
+			font-size: 12px;
+		}
+	
 		> * + * {
 			margin-left: 5px;
 		}
