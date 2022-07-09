@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { setImagesData } from 'redux/gameReducer';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import { getShortName } from 'utils';
+import { getSearchParam, getShortName } from 'utils';
 import { setBoxActiveButton } from 'redux/gameReducer';
 
 const Header = ({ currentTab, handleTabClick }) => {
@@ -143,6 +143,8 @@ const Header = ({ currentTab, handleTabClick }) => {
   );
 
   const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
+	const scoresWrapperClasses = [cl.scoresWrapper]
+	getSearchParam('tab') === 'box' && scoresWrapperClasses.push(cl.landscapeDisplayNone)
   const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
   return (
     <header className={cl.header}>
@@ -179,7 +181,7 @@ const Header = ({ currentTab, handleTabClick }) => {
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
-          <div className={cl.scoresWrapper}>
+          <div className={scoresWrapperClasses.join(' ')}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>
               <div className={cl.arrowGroup}>{leftArrowGroup}</div>
