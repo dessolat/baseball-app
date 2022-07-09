@@ -65,21 +65,21 @@ const Game = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (currentGameId === null) return;
+  // useEffect(() => {
+  //   if (currentGameId === null) return;
 
-    typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
-    dispatch(setCurrentCard({}));
-    dispatch(setCurrentGameId(gameId));
-    dispatch(setSituationFilter('All'));
-    clearInterval(intervalRef.current);
-    dispatch(getFullData(true, 'http://baseball-gametrack.ru/api/game_' + gameId));
-    // eslint-disable-next-line
-  }, [gameId]);
+  //   typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+  //   dispatch(setCurrentCard({}));
+  //   dispatch(setCurrentGameId(gameId));
+  //   dispatch(setSituationFilter('All'));
+  //   clearInterval(intervalRef.current);
+  //   dispatch(getFullData(true, 'http://baseball-gametrack.ru/api/game_' + gameId));
+  //   // eslint-disable-next-line
+  // }, [gameId]);
 
-	useEffect(() => {
-		console.log(error);
-	}, [error])
+	// useEffect(() => {
+	// 	console.log(error);
+	// }, [error])
 	
 
   const handleTabClick = e => {
