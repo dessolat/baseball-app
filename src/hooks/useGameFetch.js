@@ -65,7 +65,7 @@ const useGameFetch = url => {
 
       } catch (err) {
 				setError(err.message);
-				dispatch(setErrorMsg(err.message))
+				!err.__CANCEL__ && dispatch(setErrorMsg(err.message))
 				console.log(err.__CANCEL__);
 				if (!err.__CANCEL__) {
 					intervalRef.current = setTimeout(() => {
