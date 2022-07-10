@@ -44,7 +44,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 		if (!isMobile || rowsScroll.current === null) return;
 
     setTimeout(() => {
-      setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
+      rowsScroll.current !== null && setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
     }, 150);
   }, [isMobile, mobileOrientation]);
 
