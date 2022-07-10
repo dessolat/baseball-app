@@ -7,7 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 // import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
-import { setCurrentCard, setSituationFilter, setCurrentGameId, resetData } from 'redux/gameReducer';
+import { resetData } from 'redux/gameReducer';
 import { useParams } from 'react-router-dom';
 // import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
@@ -21,7 +21,6 @@ const Game = () => {
   const { gameId } = useParams();
   // const navigate = useNavigate();
   const innings = useSelector(state => state.game.innings);
-  const currentGameId = useSelector(state => state.game.currentGameId);
   const errorMsg = useSelector(state => state.game.errorMsg);
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
