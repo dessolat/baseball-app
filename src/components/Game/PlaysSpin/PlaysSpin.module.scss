@@ -39,14 +39,18 @@
 		margin-left: 0;
 		padding: 0 10px;
 		justify-content: space-between;
-		aspect-ratio: 16 / 4;
+		height: calc((100vh - 26px - 70px - 28px - var(--landscape-nav-height)) / 9 * 4);
+		// aspect-ratio: unset;
+		aspect-ratio: unset;
+		// aspect-ratio: 16 / 4;
+
 	
 		> * {
 			flex: unset;
 	
 			&:first-child {
-				height: auto;
-				width: calc(100vw / 16 * 3);
+				height: 70%;
+				width:auto;
 			}
 		}
 	}

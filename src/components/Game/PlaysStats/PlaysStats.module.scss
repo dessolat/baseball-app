@@ -23,6 +23,7 @@
 		position: relative;
 		padding: 0;
 		border-top: 0.5px solid #CDCCCC;
+		height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
 	}
 }
 
