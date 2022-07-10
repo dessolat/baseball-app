@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

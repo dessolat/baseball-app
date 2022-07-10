@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

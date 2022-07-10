@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import cl from './ContentMobileTable.module.scss';
 import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
