@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import cl from './Plays.module.scss';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam, setSearchParam } from 'utils';
-import { setPitchState } from 'redux/gameReducer';
+import { setCurrentTab, setPitchState } from 'redux/gameReducer';
 // import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
 const Plays = ({ isVideo }) => {
-  const ptab = getSearchParam('ptab');
-  const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
-  const [currentTab, setCurrentTab] = useState(defaultPtab);
+  // const ptab = getSearchParam('ptab');
+  // const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
+  // const [currentTab, setCurrentTab] = useState(defaultPtab);
   const [moments, setMoments] = useState([]);
   const currentCard = useSelector(state => state.game.currentCard);
-	const dispatch = useDispatch()
+  const currentTab = useSelector(state => state.game.currentTab);
+  const dispatch = useDispatch();
+
+	useLayoutEffect(() => {
+		const ptab = getSearchParam('ptab');
+		const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
+		dispatch(setCurrentTab(defaultPtab))
+}, [])
+
 
   useEffect(() => {
     const newMoments = [];
@@ -38,20 +46,24 @@ const Plays = ({ isVideo }) => {
 
   const handleTabClick = e => {
     setSearchParam('ptab', e.target.name);
-    setCurrentTab(e.target.name);
-		dispatch(setPitchState('Field'))
+    dispatch(setCurrentTab(e.target.name));
+    dispatch(setPitchState('Field'));
   };
 
   return (
     <div className={classes.join(' ')}>
       {isVideo && (
-				<>
-          <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
+        <>
+          {/* <div className={cl.landscapeDisplayNone}>
+            <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
+          </div> */}
+            <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
           <PlaysContent moments={moments} currentTab={currentTab} />
         </>
       )}
-			<PlaysEvents moments={moments} />
-			{/* <MobilePitcherFilters /> */}
+      {/* <div className={cl.landscapeDisplayNone}>
+      </div> */}
+        <PlaysEvents moments={moments} />
     </div>
   );
 };
