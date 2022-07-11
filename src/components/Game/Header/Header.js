@@ -15,6 +15,8 @@ import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { getSearchParam, getShortName } from 'utils';
 import { setBoxActiveButton } from 'redux/gameReducer';
+import MobileHeaderEvents from './MobileHeaderEvents';
+import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -143,8 +145,10 @@ const Header = ({ currentTab, handleTabClick }) => {
   );
 
   const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
-	const scoresWrapperClasses = [cl.scoresWrapper]
-	getSearchParam('tab') === 'box' && scoresWrapperClasses.push(cl.landscapeDisplayNone)
+  const scoresWrapperClasses = [cl.scoresWrapper];
+  const teamTotalScoresWrapperClasses = [cl.teamTotalScoresWrapper];
+  (getSearchParam('tab') === 'box' || isVideo) && scoresWrapperClasses.push(cl.landscapeDisplayNone);
+  getSearchParam('tab') !== 'box' && teamTotalScoresWrapperClasses.push(cl.landscapeDisplayNone);
   const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
   return (
     <header className={cl.header}>
@@ -162,7 +166,7 @@ const Header = ({ currentTab, handleTabClick }) => {
                 handleClick={handleTabClick}
               />
             </div>
-            <div className={cl.teamTotalScoresWrapper}>
+            <div className={teamTotalScoresWrapperClasses.join(' ')}>
               <button className={guestsClasses.join(' ')} onClick={handleTeamClick('guests')}>
                 {getShortName(preview.guests.name, 14)}
               </button>
@@ -178,6 +182,7 @@ const Header = ({ currentTab, handleTabClick }) => {
             <div className={cl.dateLocation}>
               {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}
             </div>
+            <div className={cl.geoPitcherWrapper}>{getSearchParam('tab') !== 'box' && <MobilePitcherFilters />}</div>
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
@@ -189,6 +194,7 @@ const Header = ({ currentTab, handleTabClick }) => {
               <div className={cl.arrowGroup}>{rightArrowGroup}</div>
             </div>
             <HeaderInfo innings={innings} />
+            {!isVideo && <MobileHeaderEvents cl={cl} />}
           </div>
           <h2 className={defenceScoreClasses.join(' ')}>{preview.owners.score}</h2>
           <HeaderLogo teamName={preview.owners.name} side='right' images={imagesData} />
