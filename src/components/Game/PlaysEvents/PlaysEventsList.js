@@ -7,6 +7,7 @@ import { setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 const PlaysEventsList = ({ moments }) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
   const currentMoment = useSelector(state => state.game.currentMoment);
+	const isVideo = useSelector(state => state.game.isVideo)
   const dispatch = useDispatch();
   const [classes, setClasses] = useState([cl.list]);
   const [animationClass, setAnimationClass] = useState('');
@@ -15,6 +16,8 @@ const PlaysEventsList = ({ moments }) => {
   const animationRef = useRef(false);
 
   useEffect(() => {
+		isVideo && setClasses(prev => [...prev, cl.isVideosList])
+		
     setTimeout(() => {
       if (eventsChildRef.current) {
         eventsChildRef.current.parentNode.scrollTop =
@@ -28,6 +31,7 @@ const PlaysEventsList = ({ moments }) => {
     if (ref.current === null) return;
 
     const classes = [cl.list];
+		isVideo && classes.push(cl.isVideosList)
     ref.current.scrollHeight > ref.current.clientHeight
       ? classes.push(...[cl.listBottomShadow, cl.beforeBlue])
       : classes.push([cl.beforeBlue]);
