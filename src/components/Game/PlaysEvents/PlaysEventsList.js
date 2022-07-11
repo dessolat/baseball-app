@@ -21,6 +21,7 @@ const PlaysEventsList = ({ moments }) => {
           eventsChildRef.current.offsetTop + eventsChildRef.current.clientHeight / 2 - 320;
       }
     }, 0);
+		// eslint-disable-next-line
   }, []);
 
   useEffect(() => {

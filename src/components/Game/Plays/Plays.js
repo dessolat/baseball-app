@@ -21,6 +21,7 @@ const Plays = ({ isVideo }) => {
 		const ptab = getSearchParam('ptab');
 		const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
 		dispatch(setCurrentTab(defaultPtab))
+		// eslint-disable-next-line
 }, [])
 
 
