@@ -116,9 +116,9 @@ const Content = ({ currentTab }) => {
     // console.log(testArr.includes(166));
 
     const tokens = {};
-    
-		//Fetch players images
-		// Object.entries(playersInfo)
+
+    //Fetch players images
+    // Object.entries(playersInfo)
     // .forEach(entry => {
     //   if (queriesRef.current.includes(entry[0])) return;
     //   queriesRef.current.push(entry[0]);
@@ -277,8 +277,10 @@ const Content = ({ currentTab }) => {
       {currentTab !== 'box' ? (
         <section className='container' style={{ position: 'relative' }}>
           <div className={contentClass}>
-            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
-            <MobilePitcherFilters />
+              <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+            <div className={cl.landscapeDisplayNone}>
+              <MobilePitcherFilters />
+            </div>
             <ContentSituationsList
               ref={situationsChildRef}
               filteredCards={filteredCards}
