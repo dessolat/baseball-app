@@ -2,6 +2,7 @@ import React from 'react';
 import cl from './ContentGraphics.module.scss';
 import Videos from '../Videos/Videos';
 import Plays from '../Plays/Plays';
+import LandscapeScores from './LandscapeScores';
 
 const ContentGraphics = ({ currentTab, isVideo }) => {
   const renderTab = () => {
@@ -13,7 +14,16 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
     }
   };
 
-  return <div className={cl.graphics}>{renderTab()}</div>;
+  return (
+    <div className={cl.graphics}>
+      {isVideo && (
+        <div className={cl.portraitDisplayNone}>
+          <LandscapeScores cl={cl} currentTab={currentTab} />
+        </div>
+      )}
+      {renderTab()}
+    </div>
+  );
 };
 
 export default ContentGraphics;
