@@ -34,7 +34,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   }, [tableMode, currentLeague.id]);
 
   useEffect(() => {
-		if (rowScrollRef.current === null) return
+    if (rowScrollRef.current === null) return;
 
     setTimeout(() => {
       setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
@@ -982,7 +982,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                 </div>
               ))}
               {sortedLeagueGames.length > 0 && (
-                <div className={cl.tableRow + ' ' + cl.tableFooter}>
+                <div
+                  className={cl.tableRow + ' ' + cl.tableFooter}
+                  style={{
+                    width: !isScrollable ? '100%' : 'fit-content'
+                  }}>
                   {getTableRows(
                     currentTeam === 'All teams'
                       ? selectedLeague.total[tableMode.toLowerCase()]
