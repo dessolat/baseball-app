@@ -8,6 +8,13 @@ import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
 import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
+import FrequencySpeedGraph from '../FrequencySpeedGraph/FrequencySpeedGraph';
+import BreakGraph from '../BreakGraph/BreakGraph';
+import TypesGraph from '../TypesGraph/TypesGraph';
+import ArsenalGraph from '../ArsenalGraph/ArsenalGraph';
+import DotsGraph from '../DotsGraph/DotsGraph';
+import PlayerImgLeft from '../../../images/player_left.png'
+import PlayerImgRight from '../../../images/player_right.png'
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -176,6 +183,26 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                   MONTHS={MONTHS}
                   handleLeagueClick={handleLeagueClick}
                 />
+              )}
+              {getSortedTableOptions().length !== 0 && !isMobile && (
+                <div className={cl.graphsWrapper}>
+                  <div className={cl.graphRow}>
+                    <FrequencySpeedGraph />
+                    <BreakGraph />
+                    <TypesGraph />
+                  </div>
+                  <div className={cl.graphRow} style={{marginTop: '30px'}}>
+                    <ArsenalGraph />
+                  </div>
+                  <div className={cl.graphRow} style={{marginTop: '80px', padding: '0 35px 50px'}}>
+                    <img src={Math.random() > 0.5 ? PlayerImgRight : PlayerImgLeft} alt='player' />
+                    <DotsGraph color='red' />
+                    <DotsGraph color='green' />
+                    <DotsGraph color='blue' />
+                    <DotsGraph color='yellow' />
+                    <DotsGraph color='olive' />
+                  </div>
+                </div>
               )}
             </>
           )}
