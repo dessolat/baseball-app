@@ -195,7 +195,15 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                     <ArsenalGraph />
                   </div>
                   <div className={cl.graphRow} style={{marginTop: '80px', padding: '0 35px 50px'}}>
-                    <img src={Math.random() > 0.5 ? PlayerImgRight : PlayerImgLeft} alt='player' />
+                    <img src={PlayerImgRight} alt='player' />
+                    <DotsGraph color='red' />
+                    <DotsGraph color='green' />
+                    <DotsGraph color='blue' />
+                    <DotsGraph color='yellow' />
+                    <DotsGraph color='olive' />
+                  </div>
+                  <div className={cl.graphRow} style={{marginTop: '50px', padding: '0 35px 50px'}}>
+                    <img src={PlayerImgLeft} alt='player' />
                     <DotsGraph color='red' />
                     <DotsGraph color='green' />
                     <DotsGraph color='blue' />
