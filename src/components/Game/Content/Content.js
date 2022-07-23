@@ -207,6 +207,14 @@ const Content = ({ currentTab }) => {
       scrollToRef.current = false;
     }
 
+
+		//Set current card on pause playbackMode
+		if (playbackMode === 'pause') {
+			const newCurrentCard = filteredCards.filter(card => card.inning_number === currentCard.inning_number && card.who_id === currentCard.who_id && card.moments[0].inner.id === currentCard.moments[0].inner.id)[0];
+
+			dispatch(setCurrentCard(newCurrentCard));
+		}
+
     playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
       dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
