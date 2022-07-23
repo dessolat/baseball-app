@@ -23,7 +23,8 @@ const SORT_PRIORITY = {
   Pickoff: 20,
   Sacrifice: 21,
   Bunt: 22,
-  Replace: 23
+  Interference: 23,
+  Replace: 24
 };
 
 export const useFilterSituations = newSituations =>
