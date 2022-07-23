@@ -155,6 +155,7 @@ const Header = ({ currentTab, handleTabClick }) => {
       <div className='container'>
         <div className={cl.headerContent}>
           <div className={cl.geo}>
+            <p className={cl.leagueName}>{preview.league_name}</p>
             <p className={cl.date}>{useFullDate(preview.game_date)}</p>
             <p className={cl.location}>at Moscow ({preview.stadium_name})</p>
             <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
