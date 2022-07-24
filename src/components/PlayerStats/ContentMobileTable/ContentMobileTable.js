@@ -5,9 +5,11 @@ import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import SortField from 'components/UI/sortField/SortField';
 import { getShortName } from 'utils';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSortField } from 'redux/playerStatsReducer';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
-  const [sortField, setSortField] = useState('AB');
+  // const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
 
@@ -15,7 +17,10 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const tableMode = useSelector(state => state.playerStats.tableType);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
+  const sortField = useSelector(state => state.playerStats.sortField);
   const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
+
+  const dispatch = useDispatch();
 
   const headerScroll = useRef(null);
   const rowScrollRef = useRef();
@@ -31,6 +36,12 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
   useEffect(() => {
     setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
+
+    if (currentLeague.id !== -1 && sortField[tableMode] === 'G') {
+      const defaultSortFields = { Batting: 'AB', Fielding: 'CH', Running: 'SB', Pitching: 'GS' };
+      dispatch(setSortField(defaultSortFields[tableMode]));
+    }
+
   }, [tableMode, currentLeague.id]);
 
   useEffect(() => {
@@ -42,7 +53,9 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   }, [mobileOrientation]);
 
   const handleFieldClick = field => () => {
-    sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    sortField[tableMode] !== field
+      ? dispatch(setSortField(field))
+      : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
   };
 
   const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
@@ -651,35 +664,46 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       </>
     );
 
+  console.log(filteredLeague);
+  console.log(tableMode);
   const filteredLeagueGamesSummary =
     filteredLeague &&
     (!Array.isArray(filteredLeague)
-      ? filteredLeague.batting.games_batting.reduce((sum, game, i) => {
-          const sumGame = {
-            ...game,
-            ...filteredLeague.fielding.games_fielding[i],
-            ...filteredLeague.running.games_running[i],
-            ...(filteredLeague.pitching?.games_pitching[i] ?? {}),
-            team_name: filteredLeague.name
-          };
-          sum.push(sumGame);
-          return sum;
-        }, [])
-      : filteredLeague.reduce((totalSum, team) => {
-          const teamGamesArr = team.batting.games_batting.reduce((sum, game, i) => {
-            const sumGame = {
-              ...game,
-              ...team.fielding.games_fielding[i],
-              ...team.running.games_running[i],
-              ...team.pitching.games_pitching[i],
-              team_name: team.name
-            };
-            sum.push(sumGame);
-            return sum;
-          }, []);
+      ? filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].filter(
+          game => game.game_id
+        )
+      : // ? filteredLeague.batting.games_batting
+        // .reduce((sum, game, i) => {
+        //     const sumGame = {
+        //       ...game,
+        //       ...filteredLeague.fielding.games_fielding[i],
+        //       ...filteredLeague.running.games_running[i],
+        //       ...(filteredLeague.pitching?.games_pitching[i] ?? {}),
+        //       team_name: filteredLeague.name
+        //     };
+        //     sum.push(sumGame);
+        //     return sum;
+        //   }, [])
+        filteredLeague.filter(row => row[tableMode.toLowerCase()]).reduce((totalSum, team) => {
 
-          return totalSum.concat(teamGamesArr);
+					team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].forEach(game => totalSum.push(game))
+					return totalSum
+          // const teamGamesArr = team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].reduce((sum, game, i) => {
+          //   const sumGame = {
+          //     ...game,
+          //     ...team.fielding.games_fielding[i],
+          //     ...team.running.games_running[i],
+          //     ...team.pitching.games_pitching[i],
+          //     team_name: team.name
+          //   };
+          //   sum.push(sumGame);
+          //   return sum;
+          // }, []);
+
+          // return totalSum.concat(teamGamesArr);
         }, []));
+
+  console.log(filteredLeagueGamesSummary);
 
   const sortedLeagueGames =
     filteredLeague &&
@@ -687,11 +711,19 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       // filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`]
       .slice()
       .sort((a, b) =>
-        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+        a[sortField[tableMode]] > b[sortField[tableMode]]
+          ? sortDirection === 'asc'
+            ? 1
+            : -1
+          : sortDirection === 'asc'
+          ? -1
+          : 1
       );
 
   let sortedLeagues = [];
   let allTeamGames = [];
+
+  console.log(filteredLeagues);
   if (currentTeam !== 'All teams') {
     sortedLeagues = filteredLeagues.slice().sort((a, b) => {
       const teamA = a.teams.find(team => team.name === currentTeam);
@@ -702,7 +734,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
       if (tableMode !== 'Pitching') {
         tableTypeA =
-          sortField !== 'G'
+          sortField[tableMode] !== 'G'
             ? tableMode.toLowerCase()
             : teamA.batting.G > 0
             ? 'batting'
@@ -710,7 +742,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             ? 'fielding'
             : 'running';
         tableTypeB =
-          sortField !== 'G'
+          sortField[tableMode] !== 'G'
             ? tableMode.toLowerCase()
             : teamB.batting.G > 0
             ? 'batting'
@@ -719,7 +751,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             : 'running';
       }
 
-      return teamA[tableTypeA][sortField] > teamB[tableTypeB][sortField]
+      return Number(teamA[tableTypeA][sortField[tableMode]]) > Number(teamB[tableTypeB][sortField[tableMode]])
         ? sortDirection === 'asc'
           ? 1
           : -1
@@ -731,7 +763,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
   if (currentTeam === 'All teams') {
     allTeamGames = filteredLeagues.reduce((totalGames, league) => {
-      league.teams.forEach(team =>
+      league.teams.filter(team => team[tableMode.toLowerCase()]).forEach(team =>
         totalGames.push({
           title: league.title,
           year: league.year,
@@ -751,7 +783,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
       if (tableMode !== 'Pitching') {
         tableTypeA =
-          sortField !== 'G'
+          sortField[tableMode] !== 'G'
             ? tableMode.toLowerCase()
             : a.game.batting.G > 0
             ? 'batting'
@@ -759,7 +791,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             ? 'fielding'
             : 'running';
         tableTypeB =
-          sortField !== 'G'
+          sortField[tableMode] !== 'G'
             ? tableMode.toLowerCase()
             : b.game.batting.G > 0
             ? 'batting'
@@ -768,7 +800,8 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             : 'running';
       }
 
-      return a.game[tableTypeA][sortField] > b.game[tableTypeB][sortField]
+      return Number(a.game[tableTypeA][sortField[tableMode]]) >
+        Number(b.game[tableTypeB][sortField[tableMode]])
         ? sortDirection === 'asc'
           ? 1
           : -1
@@ -807,7 +840,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
         </div>
         <div className={cl.rightHeader} ref={headerScroll}>
-          {getTableHeaders(sortField, sortDirection, handleFieldClick, cl, {
+          {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
             top: '.1rem',
             transform: 'translateX(-50%) scale(0.7)'
           })}
@@ -913,7 +946,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                         style={{
                           width: !isScrollable ? '100%' : 'fit-content'
                         }}>
-                        {getTableRows(gameRow, cl, sortField)}
+                        {getTableRows(gameRow, cl, sortField[tableMode])}
                       </div>
                     );
                   })}
@@ -923,7 +956,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       style={{
                         width: !isScrollable ? '100%' : 'fit-content'
                       }}>
-                      {getTableRows(yearsAllLeagueTeamTotals[tableMode.toLowerCase()], cl, sortField)}
+                      {getTableRows(
+                        yearsAllLeagueTeamTotals[tableMode.toLowerCase()],
+                        cl,
+                        sortField[tableMode]
+                      )}
                     </div>
                   )}
                 </>
@@ -952,7 +989,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                         style={{
                           width: !isScrollable ? '100%' : 'fit-content'
                         }}>
-                        {getTableRows(gameRow, cl, sortField)}
+                        {getTableRows(gameRow, cl, sortField[tableMode])}
                       </div>
                     );
                   })}
@@ -962,7 +999,11 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       style={{
                         width: !isScrollable ? '100%' : 'fit-content'
                       }}>
-                      {getTableRows(yearsAllLeagueAllTeamTotals[tableMode.toLowerCase()], cl, sortField)}
+                      {getTableRows(
+                        yearsAllLeagueAllTeamTotals[tableMode.toLowerCase()],
+                        cl,
+                        sortField[tableMode]
+                      )}
                     </div>
                   )}
                 </>
@@ -978,7 +1019,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   style={{
                     width: !isScrollable ? '100%' : 'fit-content'
                   }}>
-                  {getTableRows(row, cl, sortField)}
+                  {getTableRows(row, cl, sortField[tableMode])}
                 </div>
               ))}
               {sortedLeagueGames.length > 0 && (
@@ -992,7 +1033,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       ? selectedLeague.total[tableMode.toLowerCase()]
                       : filteredLeague[tableMode.toLowerCase()],
                     cl,
-                    sortField
+                    sortField[tableMode]
                   )}
                 </div>
               )}
