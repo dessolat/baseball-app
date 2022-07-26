@@ -41,7 +41,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       const defaultSortFields = { Batting: 'AB', Fielding: 'CH', Running: 'SB', Pitching: 'GS' };
       dispatch(setSortField(defaultSortFields[tableMode]));
     }
-
+    // eslint-disable-next-line
   }, [tableMode, currentLeague.id]);
 
   useEffect(() => {
@@ -684,24 +684,27 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         //     sum.push(sumGame);
         //     return sum;
         //   }, [])
-        filteredLeague.filter(row => row[tableMode.toLowerCase()]).reduce((totalSum, team) => {
+        filteredLeague
+          .filter(row => row[tableMode.toLowerCase()])
+          .reduce((totalSum, team) => {
+            team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].forEach(game =>
+              totalSum.push(game)
+            );
+            return totalSum;
+            // const teamGamesArr = team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].reduce((sum, game, i) => {
+            //   const sumGame = {
+            //     ...game,
+            //     ...team.fielding.games_fielding[i],
+            //     ...team.running.games_running[i],
+            //     ...team.pitching.games_pitching[i],
+            //     team_name: team.name
+            //   };
+            //   sum.push(sumGame);
+            //   return sum;
+            // }, []);
 
-					team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].forEach(game => totalSum.push(game))
-					return totalSum
-          // const teamGamesArr = team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].reduce((sum, game, i) => {
-          //   const sumGame = {
-          //     ...game,
-          //     ...team.fielding.games_fielding[i],
-          //     ...team.running.games_running[i],
-          //     ...team.pitching.games_pitching[i],
-          //     team_name: team.name
-          //   };
-          //   sum.push(sumGame);
-          //   return sum;
-          // }, []);
-
-          // return totalSum.concat(teamGamesArr);
-        }, []));
+            // return totalSum.concat(teamGamesArr);
+          }, []));
 
   console.log(filteredLeagueGamesSummary);
 
@@ -763,16 +766,18 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
   if (currentTeam === 'All teams') {
     allTeamGames = filteredLeagues.reduce((totalGames, league) => {
-      league.teams.filter(team => team[tableMode.toLowerCase()]).forEach(team =>
-        totalGames.push({
-          title: league.title,
-          year: league.year,
-          game: team,
-          team_name: team.name,
-          id: league.id,
-          teams: league.teams
-        })
-      );
+      league.teams
+        .filter(team => team[tableMode.toLowerCase()])
+        .forEach(team =>
+          totalGames.push({
+            title: league.title,
+            year: league.year,
+            game: team,
+            team_name: team.name,
+            id: league.id,
+            teams: league.teams
+          })
+        );
 
       return totalGames;
     }, []);
