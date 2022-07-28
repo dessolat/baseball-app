@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
 import { getShortName } from 'utils';
 import { Link } from 'react-router-dom';
+import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 
 const FIELDS_OBJ = {
   G: 'batting',
@@ -44,11 +45,14 @@ const ContentBattingTable = ({
   filteredLeague,
   playerYears,
   MONTHS,
-  handleLeagueClick
+  handleLeagueClick,
+  getSortedTableOptions,
+  handleTableOptionClick
 }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
+  const tableType = useSelector(state => state.playerStats.tableType);
 
   const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -195,7 +199,23 @@ const ContentBattingTable = ({
           {playerYears === 'All years' && <div className={cl.year}>Years</div>}
           {currentLeague.id === -1 && <div className={cl.league}>League</div>}
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
-          <div className={cl.teamName}>Team</div>
+          <div className={cl.teamName}>
+            Team
+            <div className={cl.dropWrapper}>
+              {getSortedTableOptions().length > 1 ? (
+                <Dropdown
+                  title={tableType}
+                  options={getSortedTableOptions()}
+                  currentOption={tableType}
+                  handleClick={handleTableOptionClick}
+                />
+              ) : getSortedTableOptions().length === 1 ? (
+                tableType
+              ) : (
+                ''
+              )}
+            </div>
+          </div>
           {currentLeague.id === -1 && (
             <SortField
               sortField={sortField}

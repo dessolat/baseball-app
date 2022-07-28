@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './Content.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
-import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+// import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
@@ -143,20 +143,9 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                 {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} | {statsData.height}{' '}
                 {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
               </p>
-              <div className={cl.dropWrapper}>
-                {getSortedTableOptions().length > 1 ? (
-                  <Dropdown
-                    title={tableType}
-                    options={getSortedTableOptions()}
-                    currentOption={tableType}
-                    handleClick={handleTableOptionClick}
-                  />
-                ) : getSortedTableOptions().length === 1 ? (
-                  tableType
-                ) : (
-                  ''
-                )}
-              </div>
+              
+
+
               {getSortedTableOptions().length === 0 ? (
                 <p className={cl.noDataFound}>No data found for current options.</p>
               ) : isMobile ? (
@@ -174,6 +163,8 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                   playerYears={playerYears}
                   MONTHS={MONTHS}
                   handleLeagueClick={handleLeagueClick}
+									getSortedTableOptions={getSortedTableOptions}
+									handleTableOptionClick={handleTableOptionClick}
                 />
               ) : (
                 <ContentPitchingTable
@@ -182,6 +173,8 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                   playerYears={playerYears}
                   MONTHS={MONTHS}
                   handleLeagueClick={handleLeagueClick}
+									getSortedTableOptions={getSortedTableOptions}
+									handleTableOptionClick={handleTableOptionClick}
                 />
               )}
               {getSortedTableOptions().length !== 0 && !isMobile && (
