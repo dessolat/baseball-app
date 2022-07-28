@@ -2,7 +2,8 @@
 
 .wrapper {
   flex: 1;
-  margin-top: 1.6rem;
+  margin-top: 3rem;
+  // margin-top: 1.6rem;
 }
 
 .tableHeader {
@@ -56,6 +57,25 @@
       }
     }
   }
+
+  .dropWrapper {
+    width: 5.5rem;
+    text-align: center;
+    // margin-left: -1.1rem;
+    // margin-top: 0.5rem;
+    font-size: 0.875rem;
+    position: absolute;
+    right: calc(-5.5rem + 18px);
+    top: -3.6875rem;
+		font-weight: 400;
+
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      display: none;
+    }
+  }
 }
 
 .tableRow {
@@ -76,9 +96,9 @@
   }
 
   &.tableFooter {
-		> .league {
-			cursor: unset;
-		}
+    > .league {
+      cursor: unset;
+    }
 
     > div {
       font-weight: 700;
@@ -123,24 +143,25 @@
     text-align: left;
     width: 6rem;
     padding-left: 0.5rem;
+    position: relative;
   }
 
   .wide {
     width: 1.8rem;
   }
-	
-	.tall {
-		width: 1.4rem;
-	}
-	.wide2 {
-		width: 2rem;
-	}
-	.wide2_5 {
-		width: 2.5rem;
-	}
-	.wide3 {
-		width: 3rem;
-	}
+
+  .tall {
+    width: 1.4rem;
+  }
+  .wide2 {
+    width: 2rem;
+  }
+  .wide2_5 {
+    width: 2.5rem;
+  }
+  .wide3 {
+    width: 3rem;
+  }
   .wider {
     width: 2.8rem;
   }
