@@ -41,6 +41,7 @@
 
 .mobilePitcherFilters {
   display: none;
+	background-color: #f4f5f7;
 
   @media screen and (max-width: 800px) {
     display: flex;
