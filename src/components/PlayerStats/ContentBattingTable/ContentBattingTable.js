@@ -70,20 +70,22 @@ const ContentBattingTable = ({
           sum.push(sumGame);
           return sum;
         }, [])
-      : filteredLeague.reduce((totalSum, team) => {
-          const teamGamesArr = team.batting.games_batting.reduce((sum, game, i) => {
-            const sumGame = {
-              ...game,
-              ...team.fielding.games_fielding[i],
-              ...team.running.games_running[i],
-              team_name: team.name
-            };
-            sum.push(sumGame);
-            return sum;
-          }, []);
+      : filteredLeague
+          .filter(team => team.batting || team.running || team.fielding)
+          .reduce((totalSum, team) => {
+            const teamGamesArr = team.batting.games_batting.reduce((sum, game, i) => {
+              const sumGame = {
+                ...game,
+                ...team.fielding.games_fielding[i],
+                ...team.running.games_running[i],
+                team_name: team.name
+              };
+              sum.push(sumGame);
+              return sum;
+            }, []);
 
-          return totalSum.concat(teamGamesArr);
-        }, []));
+            return totalSum.concat(teamGamesArr);
+          }, []));
 
   const sortedLeagueGames =
     filteredLeague &&
@@ -143,32 +145,34 @@ const ContentBattingTable = ({
       return totalGames;
     }, []);
 
-    allTeamGames.sort((a, b) => {
-      const fieldTypeA =
-        sortField !== 'G'
-          ? FIELDS_OBJ[sortField]
-          : a.game.batting.G > 0
-          ? 'batting'
-          : a.game.fielding.G > 0
-          ? 'fielding'
-          : 'running';
-      const fieldTypeB =
-        sortField !== 'G'
-          ? FIELDS_OBJ[sortField]
-          : b.game.batting.G > 0
-          ? 'batting'
-          : b.game.fielding.G > 0
-          ? 'fielding'
-          : 'running';
+    allTeamGames
+      .filter(row => row.game.batting || row.game.fielding || row.game.running || row.game.pitching)
+      .sort((a, b) => {
+        const fieldTypeA =
+          sortField !== 'G'
+            ? FIELDS_OBJ[sortField]
+            : a.game.batting.G > 0
+            ? 'batting'
+            : a.game.fielding.G > 0
+            ? 'fielding'
+            : 'running';
+        const fieldTypeB =
+          sortField !== 'G'
+            ? FIELDS_OBJ[sortField]
+            : b.game.batting.G > 0
+            ? 'batting'
+            : b.game.fielding.G > 0
+            ? 'fielding'
+            : 'running';
 
-      return a.game[fieldTypeA][sortField] > b.game[fieldTypeB][sortField]
-        ? sortDirection === 'asc'
-          ? 1
-          : -1
-        : sortDirection === 'asc'
-        ? -1
-        : 1;
-    });
+        return a.game[fieldTypeA][sortField] > b.game[fieldTypeB][sortField]
+          ? sortDirection === 'asc'
+            ? 1
+            : -1
+          : sortDirection === 'asc'
+          ? -1
+          : 1;
+      });
   }
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -715,133 +719,137 @@ const ContentBattingTable = ({
                 </>
               ) : (
                 <>
-                  {allTeamGames.map((row, i) => {
-                    const gRow =
-                      row.game.batting.G > 0
-                        ? row.game.batting
-                        : row.game.fielding?.G > 0
-                        ? row.game.fielding
-                        : row.game.running;
-                    return (
-                      <li key={i} className={cl.tableRow}>
-                        {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
-                        <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>
-                          {row.title}
-                        </div>
-                        <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
-                        <ActiveBodyCell sortField={sortField} row={gRow} addedClass={cl.tall}>
-                          G
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
-                          AB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          R
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          H
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          2B
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          3B
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          HR
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting}>
-                          RBI
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
-                          GDP
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting}>
-                          BB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting}>
-                          IBB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          HP
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          SH
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          SF
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
-                          SO
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
-                          TB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell
-                          sortField={sortField}
-                          row={row.game.batting}
-                          fixed={3}
-                          addedClass={cl.wider}>
-                          AVG
-                        </ActiveBodyCell>
-                        <ActiveBodyCell
-                          sortField={sortField}
-                          row={row.game.batting}
-                          fixed={3}
-                          addedClass={cl.wider}>
-                          SLG
-                        </ActiveBodyCell>
-                        <ActiveBodyCell
-                          sortField={sortField}
-                          row={row.game.batting}
-                          fixed={3}
-                          addedClass={cl.wider}>
-                          OBP
-                        </ActiveBodyCell>
-                        <ActiveBodyCell
-                          sortField={sortField}
-                          row={row.game.batting}
-                          fixed={3}
-                          addedClass={cl.wider}>
-                          OPS
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.tall}>
-                          SB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.tall}>
-                          CS
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.wider}>
-                          SB_pr
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.running}>
-                          LOB
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.wide}>
-                          CH
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
-                          PO
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
-                          A
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.tall}>
-                          E
-                        </ActiveBodyCell>
-                        <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.tall}>
-                          DP
-                        </ActiveBodyCell>
-                        <ActiveBodyCell
-                          sortField={sortField}
-                          row={row.game.fielding}
-                          fixed={3}
-                          addedClass={cl.wider}>
-                          FLD
-                        </ActiveBodyCell>
-                      </li>
-                    );
-                  })}
+                  {allTeamGames
+                    .filter(
+                      row => row.game.batting || row.game.fielding || row.game.running || row.game.pitching
+                    )
+                    .map((row, i) => {
+                      const gRow =
+                        row.game.batting.G > 0
+                          ? row.game.batting
+                          : row.game.fielding?.G > 0
+                          ? row.game.fielding
+                          : row.game.running;
+                      return (
+                        <li key={i} className={cl.tableRow}>
+                          {playerYears === 'All years' && <div className={cl.year}>{row.year}</div>}
+                          <div className={leagueStyles.join(' ')} onClick={handleLeagueClick(row)}>
+                            {row.title}
+                          </div>
+                          <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
+                          <ActiveBodyCell sortField={sortField} row={gRow} addedClass={cl.tall}>
+                            G
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
+                            AB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            R
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            H
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            2B
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            3B
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            HR
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                            RBI
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
+                            GDP
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                            BB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting}>
+                            IBB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            HP
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            SH
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            SF
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.tall}>
+                            SO
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.batting} addedClass={cl.wide}>
+                            TB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell
+                            sortField={sortField}
+                            row={row.game.batting}
+                            fixed={3}
+                            addedClass={cl.wider}>
+                            AVG
+                          </ActiveBodyCell>
+                          <ActiveBodyCell
+                            sortField={sortField}
+                            row={row.game.batting}
+                            fixed={3}
+                            addedClass={cl.wider}>
+                            SLG
+                          </ActiveBodyCell>
+                          <ActiveBodyCell
+                            sortField={sortField}
+                            row={row.game.batting}
+                            fixed={3}
+                            addedClass={cl.wider}>
+                            OBP
+                          </ActiveBodyCell>
+                          <ActiveBodyCell
+                            sortField={sortField}
+                            row={row.game.batting}
+                            fixed={3}
+                            addedClass={cl.wider}>
+                            OPS
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.tall}>
+                            SB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.tall}>
+                            CS
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.running} addedClass={cl.wider}>
+                            SB_pr
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.running}>
+                            LOB
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.wide}>
+                            CH
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                            PO
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.fielding}>
+                            A
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.tall}>
+                            E
+                          </ActiveBodyCell>
+                          <ActiveBodyCell sortField={sortField} row={row.game.fielding} addedClass={cl.tall}>
+                            DP
+                          </ActiveBodyCell>
+                          <ActiveBodyCell
+                            sortField={sortField}
+                            row={row.game.fielding}
+                            fixed={3}
+                            addedClass={cl.wider}>
+                            FLD
+                          </ActiveBodyCell>
+                        </li>
+                      );
+                    })}
                   {yearsAllLeagueAllTeamTotals && (
                     <li className={cl.tableRow + ' ' + cl.tableFooter}>
                       {playerYears === 'All years' && <div className={cl.year}></div>}
