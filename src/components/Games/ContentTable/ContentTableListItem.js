@@ -53,7 +53,6 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
   currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
   return (
     <li
-      key={game.id}
       ref={isActive && isDate ? scrollItemRef : null}
       className={classes.join(' ')}
       data-before={dataBefore}>

@@ -5,7 +5,7 @@ import ContentTableListItem from './ContentTableListItem';
 const ContentTableList = ({ cl, filteredData }, ref) => (
   <ul className={cl.rows}>
     {filteredData.map((game, index, arr) => (
-      <ContentTableListItem game={game} index={index} arr={arr} cl={cl} ref={ref} />
+      <ContentTableListItem key={index} game={game} index={index} arr={arr} cl={cl} ref={ref} />
     ))}
   </ul>
 );
