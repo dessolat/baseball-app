@@ -29,6 +29,7 @@ const Content = ({ currentTab }) => {
   const errorMsg = useSelector(state => state.game.errorMsg);
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
+  const playerCardFilter = useSelector(state => state.game.playerCardFilter);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
@@ -187,7 +188,7 @@ const Content = ({ currentTab }) => {
       dispatch(setCurrentCard(lastCard));
     }
     // eslint-disable-next-line
-  }, [situationFilter]);
+  }, [situationFilter, playerCardFilter]);
 
   useEffect(() => {
     if (filteredCards.length === 0) {
@@ -207,13 +208,17 @@ const Content = ({ currentTab }) => {
       scrollToRef.current = false;
     }
 
+    //Set current card on pause playbackMode
+    if (playbackMode === 'pause') {
+      const newCurrentCard = filteredCards.filter(
+        card =>
+          card.inning_number === currentCard.inning_number &&
+          card.who_id === currentCard.who_id &&
+          card.moments[0].inner.id === currentCard.moments[0].inner.id
+      )[0];
 
-		//Set current card on pause playbackMode
-		if (playbackMode === 'pause') {
-			const newCurrentCard = filteredCards.filter(card => card.inning_number === currentCard.inning_number && card.who_id === currentCard.who_id && card.moments[0].inner.id === currentCard.moments[0].inner.id)[0];
-
-			dispatch(setCurrentCard(newCurrentCard));
-		}
+      dispatch(setCurrentCard(newCurrentCard || filteredCards.slice(-1)[0]));
+    }
 
     playbackMode === 'playOnline' &&
       // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
@@ -270,14 +275,32 @@ const Content = ({ currentTab }) => {
     // eslint-disable-next-line
   }, [playbackMode]);
 
-  const getFilteredCards = cards =>
-    situationFilter !== 'All'
-      ? cards.filter(card =>
-          card.moments.length > 0
-            ? card.moments.some(moment => moment.filter?.includes(situationFilter))
-            : false
-        )
-      : cards;
+  const getFilteredCards = cards => {
+    let filteredCards =
+      situationFilter !== 'All'
+        ? cards.filter(card =>
+            card.moments.length > 0
+              ? card.moments.some(moment => moment.filter?.includes(situationFilter))
+              : false
+          )
+        : cards;
+
+    const filterArr = playerCardFilter.split(' ');
+
+    filteredCards =
+      playerCardFilter !== ''
+        ? filteredCards.filter(card => {
+            return filterArr.reduce((sum, word) => {
+              if (!(card.who.slice(0, word.length).toLowerCase() === word.toLowerCase())) {
+                sum = false;
+              }
+              return sum;
+            }, true);
+          })
+        : filteredCards;
+
+    return filteredCards;
+  };
 
   const contentClass = isVideo ? cl.content : cl.contentNoVideo;
   return (
@@ -285,7 +308,7 @@ const Content = ({ currentTab }) => {
       {currentTab !== 'box' ? (
         <section className='container' style={{ position: 'relative' }}>
           <div className={contentClass}>
-              <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
+            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
             <div className={cl.landscapeDisplayNone}>
               <MobilePitcherFilters />
             </div>
