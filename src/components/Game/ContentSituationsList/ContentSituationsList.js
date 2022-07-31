@@ -6,6 +6,7 @@ import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
+import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
@@ -57,6 +58,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
           <ContentControls noPlayPause />
         </div>
       )}
+			<PlayerFilterField />
     </div>
   );
 };
