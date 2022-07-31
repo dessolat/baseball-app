@@ -17,7 +17,8 @@ const defaultState = {
   boxActiveButton: 'guests',
   isVideo: false,
   pitchState: 'Field',
-  errorMsg: null
+  errorMsg: null,
+	playerCardFilter: ''
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -39,6 +40,7 @@ const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const RESET_DATA = 'RESET_DATA';
 const SET_ERROR_MSG = 'SET_ERROR_MSG';
+const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -80,6 +82,8 @@ export const gameReducer = (state = defaultState, action) => {
       return defaultState;
     case SET_ERROR_MSG:
       return { ...state, errorMsg: action.payload };
+    case SET_PLAYER_CARD_FILTER:
+      return { ...state, playerCardFilter: action.payload };
     default:
       return state;
   }
@@ -104,3 +108,4 @@ export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const resetData = () => ({ type: RESET_DATA });
 export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
+export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
