@@ -287,18 +287,23 @@ const Content = ({ currentTab }) => {
 
     const filterArr = playerCardFilter.split(' ');
 
-    filteredCards =
-      playerCardFilter !== ''
-        ? filteredCards.filter(card => {
-            return filterArr.reduce((sum, word) => {
-              if (!(card.who.slice(0, word.length).toLowerCase() === word.toLowerCase())) {
-                sum = false;
-              }
-              return sum;
-            }, true);
-          })
-        : filteredCards;
+    if (playerCardFilter !== '') {
+      const tempFilteredCards = filteredCards.filter(card => {
+        const whoWordsArr = card.who.split(' ');
 
+        return filterArr.reduce((sum, filterWord) => {
+          if (
+            !whoWordsArr.find(
+              whoWord => whoWord.slice(0, filterWord.length).toLowerCase() === filterWord.toLowerCase()
+            )
+          )
+            sum = false;
+          return sum;
+        }, true);
+      });
+
+      if (tempFilteredCards.length > 0) filteredCards = tempFilteredCards;
+    }
     return filteredCards;
   };
 
