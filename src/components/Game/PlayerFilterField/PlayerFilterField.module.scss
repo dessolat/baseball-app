@@ -4,4 +4,9 @@
 	left: 0;
 	border: .5px solid #b9b9b9;
 	outline: none;
+	padding-left: 4px;
+	padding-right: 18px;
+	background: no-repeat white url('/images/player_filter_icon.png') right 2px bottom 50% / contain;
+	font: 400 .75rem var(--font-nunito);
+	border-radius: 2px;
 }
