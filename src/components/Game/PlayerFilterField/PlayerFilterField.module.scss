@@ -9,4 +9,11 @@
 	background: no-repeat white url('/images/player_filter_icon.png') right 2px bottom 50% / contain;
 	font: 400 .75rem var(--font-nunito);
 	border-radius: 2px;
+
+	@media screen and (max-width: 800px) {
+    display: none;
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none;
+	}
 }
