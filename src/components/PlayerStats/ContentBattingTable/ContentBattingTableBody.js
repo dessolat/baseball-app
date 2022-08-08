@@ -211,6 +211,21 @@ if (currentTeam === 'All teams') {
     { name: 'DP', type: 'fielding', fixed: null, addedClass: cl.tall },
     { name: 'FLD', type: 'fielding', fixed: 3, addedClass: cl.wider }
   ];
+  const getBodyCells = row => {
+    return (
+      <>
+        {fieldsInfo.map((field, i) => (
+          <ActiveBodyCell
+            sortField={sortField}
+            row={row[field.type]}
+            fixed={field.fixed}
+            addedClass={field.addedClass}>
+            {field.name}
+          </ActiveBodyCell>
+        ))}
+      </>
+    );
+  };
 	return (
 		<ul className={cl.rows}>
 		{currentLeague.id === -1 ? (
