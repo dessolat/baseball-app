@@ -122,7 +122,7 @@ const ContentPitchingTableBody = ({
 
   const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
 
-	const fieldsInfo = [
+  const fieldsInfo = [
     { name: 'GS', type: 'pitching', fixed: null, addedClass: null },
     { name: 'W', type: 'pitching', fixed: null, addedClass: null },
     { name: 'L', type: 'pitching', fixed: null, addedClass: null },
@@ -150,12 +150,12 @@ const ContentPitchingTableBody = ({
     { name: 'NB', type: 'pitching', fixed: null, addedClass: cl.wide }
   ];
 
-	const getAllLeaguesBodyCells = row => {
+  const getAllLeaguesBodyCells = row => {
     return (
       <>
         {fieldsInfo.map((field, i) => (
           <ActiveBodyCell
-						key={i}
+            key={i}
             sortField={sortField}
             row={row[field.type]}
             fixed={field.fixed}
@@ -166,6 +166,7 @@ const ContentPitchingTableBody = ({
       </>
     );
   };
+
   const getSelectedLeagueBodyCells = row => {
     return (
       <>
@@ -203,7 +204,7 @@ const ContentPitchingTableBody = ({
                         G
                       </ActiveBodyCell>
                     )}
-										{getAllLeaguesBodyCells(team)}
+                    {getAllLeaguesBodyCells(team)}
                   </li>
                 ) : (
                   <></>
@@ -219,7 +220,7 @@ const ContentPitchingTableBody = ({
                       G
                     </ActiveBodyCell>
                   )}
-									{getAllLeaguesBodyCells(yearsAllLeagueTeamTotals)}
+                  {getAllLeaguesBodyCells(yearsAllLeagueTeamTotals)}
                 </li>
               )}
             </>
@@ -238,7 +239,7 @@ const ContentPitchingTableBody = ({
                         G
                       </ActiveBodyCell>
                     )}
-										{getAllLeaguesBodyCells(row.game)}
+                    {getAllLeaguesBodyCells(row.game)}
                   </li>
                 ) : (
                   <></>
@@ -254,7 +255,7 @@ const ContentPitchingTableBody = ({
                       G
                     </ActiveBodyCell>
                   )}
-									{getAllLeaguesBodyCells(yearsAllLeagueAllTeamTotals)}
+                  {getAllLeaguesBodyCells(yearsAllLeagueAllTeamTotals)}
                 </li>
               )}
             </>
@@ -272,218 +273,13 @@ const ContentPitchingTableBody = ({
                 </Link>
               </div>
               <div className={cl.teamName}>{getShortName(row.team_name, 20)}</div>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                GS
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                W
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                L
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                CG
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                SV
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide2}>
-                IP
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide}>
-                PA
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                R
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                ER
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                H
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                2B
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                3B
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                HR
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                BB
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                IBB
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                HP
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                SH
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                SF
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                SO
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                WP
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row}>
-                BK
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wide3}>
-                ERA
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide}>
-                NP
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide}>
-                NS
-              </ActiveBodyCell>
-              <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.wide}>
-                NB
-              </ActiveBodyCell>
+              {getSelectedLeagueBodyCells(row)}
             </li>
           ))}
           <li className={cl.tableRow + ' ' + cl.tableFooter}>
             <div className={cl.game}>TOTALS</div>
             <div className={cl.teamName}></div>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              GS
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              W
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              L
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              CG
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              SV
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              addedClass={cl.wide2}>
-              IP
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              addedClass={cl.wide}>
-              PA
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              R
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              ER
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              H
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              2B
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              3B
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              HR
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              BB
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              IBB
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              HP
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              SH
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              SF
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              SO
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              WP
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}>
-              BK
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              fixed={3}
-              addedClass={cl.wide3}>
-              ERA
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              addedClass={cl.wide}>
-              NP
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              addedClass={cl.wide}>
-              NS
-            </ActiveBodyCell>
-            <ActiveBodyCell
-              sortField={sortField}
-              row={currentTeam === 'All teams' ? selectedLeague.total.pitching : filteredLeague.pitching}
-              addedClass={cl.wide}>
-              NB
-            </ActiveBodyCell>
+            {getAllLeaguesBodyCells(currentTeam === 'All teams' ? selectedLeague.total : filteredLeague)}
           </li>
         </>
       )}
