@@ -166,6 +166,22 @@ const ContentPitchingTableBody = ({
       </>
     );
   };
+  const getSelectedLeagueBodyCells = row => {
+    return (
+      <>
+        {fieldsInfo.map((field, i) => (
+          <ActiveBodyCell
+            key={i}
+            sortField={sortField}
+            row={row}
+            fixed={field.fixed}
+            addedClass={field.addedClass}>
+            {field.name}
+          </ActiveBodyCell>
+        ))}
+      </>
+    );
+  };
   return (
     <ul className={cl.rows}>
       {currentLeague.id === -1 ? (
