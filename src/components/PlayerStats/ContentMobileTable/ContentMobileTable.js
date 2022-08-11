@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { setSortField } from 'redux/playerStatsReducer';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
-  // const [sortField, setSortField] = useState('AB');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isScrollable, setIsScrollable] = useState(true);
 
