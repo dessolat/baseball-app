@@ -2,7 +2,6 @@ import React from 'react';
 import cl from './Content.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
-// import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
