@@ -54,7 +54,6 @@ const ContentBattingTableHeader = ({
         addedClass={cl.wide}>
         AB
       </SortField>
-      {/* <div className={cl.sortFieldWrapper}> */}
       <SortField
         sortField={sortField}
         sortDirection={sortDirection}
@@ -62,7 +61,6 @@ const ContentBattingTableHeader = ({
         addedClass={cl.tall}>
         R
       </SortField>
-      {/* </div> */}
       <SortField
         sortField={sortField}
         sortDirection={sortDirection}
@@ -182,7 +180,6 @@ const ContentBattingTableHeader = ({
         addedClass={cl.tall}>
         CS
       </SortField>
-
       <SortField
         sortField={sortField}
         sortDirection={sortDirection}
