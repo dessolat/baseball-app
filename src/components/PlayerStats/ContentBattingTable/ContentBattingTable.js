@@ -45,7 +45,7 @@ const ContentBattingTable = ({
   getSortedTableOptions,
   handleTableOptionClick
 }) => {
-  const [sortField, setSortField] = useState('AB');
+  const [sortField, setSortField] = useState('G');
   const [sortDirection, setSortDirection] = useState('asc');
 
   const currentLeague = useSelector(state => state.games.currentLeague);
