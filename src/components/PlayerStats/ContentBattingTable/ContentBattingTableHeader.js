@@ -11,7 +11,8 @@ const ContentBattingTableHeader = ({
   handleTableOptionClick,
 	sortField,
 	sortDirection,
-	handleFieldClick
+	handleFieldClick,
+	fieldsInfo
 }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
 

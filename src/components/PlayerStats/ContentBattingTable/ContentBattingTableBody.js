@@ -46,7 +46,8 @@ const ContentBattingTableBody = ({
   sortField,
   sortDirection,
   handleLeagueClick,
-  MONTHS
+  MONTHS,
+	fieldsInfo
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
@@ -189,38 +190,6 @@ const ContentBattingTableBody = ({
       : playerStatsData.total_annual[playerYears];
 
   const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
-
-  const fieldsInfo = [
-    { name: 'AB', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'R', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'H', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: '2B', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: '3B', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'HR', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'RBI', type: 'batting', fixed: null, addedClass: null },
-    { name: 'GDP', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'BB', type: 'batting', fixed: null, addedClass: null },
-    { name: 'IBB', type: 'batting', fixed: null, addedClass: null },
-    { name: 'HP', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SH', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SF', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SO', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'TB', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'AVG', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'SLG', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'OBP', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'OPS', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'SB', type: 'running', fixed: null, addedClass: cl.tall },
-    { name: 'CS', type: 'running', fixed: null, addedClass: cl.tall },
-    { name: 'SB_pr', type: 'running', fixed: null, addedClass: cl.wider },
-    { name: 'LOB', type: 'running', fixed: null, addedClass: null },
-    { name: 'CH', type: 'fielding', fixed: null, addedClass: cl.wide },
-    { name: 'PO', type: 'fielding', fixed: null, addedClass: null },
-    { name: 'A', type: 'fielding', fixed: null, addedClass: null },
-    { name: 'E', type: 'fielding', fixed: null, addedClass: cl.tall },
-    { name: 'DP', type: 'fielding', fixed: null, addedClass: cl.tall },
-    { name: 'FLD', type: 'fielding', fixed: 3, addedClass: cl.wider }
-  ];
 
   const getAllLeaguesBodyCells = row => {
     return (
