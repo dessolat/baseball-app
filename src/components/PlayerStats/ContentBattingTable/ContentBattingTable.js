@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cl from './ContentBattingTable.module.scss';
 import { useSelector } from 'react-redux';
 import ContentBattingTableHeader from './ContentBattingTableHeader';
@@ -49,6 +49,12 @@ const ContentBattingTable = ({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const currentLeague = useSelector(state => state.games.currentLeague);
+
+  useEffect(() => {
+    currentLeague.id !== -1 && sortField === 'G' && setSortField('AB');
+
+    // eslint-disable-next-line
+  }, [currentLeague.id]);
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
