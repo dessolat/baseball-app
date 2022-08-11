@@ -16,6 +16,27 @@ const ContentBattingTableHeader = ({
 }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
 
+  const getHeaderCells = () => {
+    return (
+      <>
+        {fieldsInfo.map((field, i) => (
+          <Fragment key={i}>
+            {field.headerWrapped ? (
+              <div className={cl.sortFieldWrapper + ' ' + field.addedClass || null}>
+                <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+                  {field.childField || field.name}
+                </SortField>
+              </div>
+            ) : (
+              <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={field.addedClass}>
+                {field.childField || field.name}
+              </SortField>
+            )}
+          </Fragment>
+        ))}
+      </>
+    );
+  };
   return (
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
