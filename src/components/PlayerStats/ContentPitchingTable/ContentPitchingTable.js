@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './ContentPitchingTable.module.scss';
 import ContentPitchingTableBody from './ContentPitchingTableBody';
@@ -17,6 +17,12 @@ const ContentPitchingTable = ({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const currentLeague = useSelector(state => state.games.currentLeague);
+
+	useEffect(() => {
+    currentLeague.id !== -1 && sortField === 'G' && setSortField('GS');
+
+    // eslint-disable-next-line
+  }, [currentLeague.id]);
 
   const handleFieldClick = field => () => {
     sortField !== field ? setSortField(field) : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
