@@ -15,7 +15,22 @@ const ContentPitchingTableHeader = ({
 	fieldsInfo
 }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
-	
+
+  const getHeaderCells = () => {
+    return (
+      <>
+        {fieldsInfo.map((field, i) => (
+          <SortField
+            sortField={sortField}
+            sortDirection={sortDirection}
+            handleClick={handleFieldClick}
+            addedClass={field.addedClass}>
+            {field.name}
+          </SortField>
+        ))}
+      </>
+    );
+  };
   return (
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
