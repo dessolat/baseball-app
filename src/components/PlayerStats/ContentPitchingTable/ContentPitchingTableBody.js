@@ -13,7 +13,8 @@ const ContentPitchingTableBody = ({
   sortField,
   sortDirection,
   MONTHS,
-  handleLeagueClick
+  handleLeagueClick,
+	fieldsInfo
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
@@ -121,34 +122,6 @@ const ContentPitchingTableBody = ({
       : playerStatsData.total_annual[playerYears];
 
   const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
-
-  const fieldsInfo = [
-    { name: 'GS', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'W', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'L', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'CG', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SV', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'IP', type: 'pitching', fixed: null, addedClass: cl.wide2 },
-    { name: 'PA', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'R', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'ER', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'H', type: 'pitching', fixed: null, addedClass: null },
-    { name: '2B', type: 'pitching', fixed: null, addedClass: null },
-    { name: '3B', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'HR', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'BB', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'IBB', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'HP', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SH', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SF', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SO', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'WP', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'BK', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'ERA', type: 'pitching', fixed: 3, addedClass: cl.wide3 },
-    { name: 'NP', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'NS', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'NB', type: 'pitching', fixed: null, addedClass: cl.wide }
-  ];
 
   const getAllLeaguesBodyCells = row => {
     return (
