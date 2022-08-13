@@ -58,480 +58,507 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   };
 
   const fieldsInfo = [
-    { name: 'AB', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'R', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'H', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: '2B', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: '3B', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'HR', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'RBI', type: 'batting', fixed: null, addedClass: null },
-    { name: 'GDP', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'BB', type: 'batting', fixed: null, addedClass: null },
-    { name: 'IBB', type: 'batting', fixed: null, addedClass: null },
-    { name: 'HP', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SH', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SF', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'SO', type: 'batting', fixed: null, addedClass: cl.tall },
-    { name: 'TB', type: 'batting', fixed: null, addedClass: cl.wide },
-    { name: 'AVG', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'SLG', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'OBP', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'OPS', type: 'batting', fixed: 3, addedClass: cl.wider },
-    { name: 'SB', type: 'running', fixed: null, addedClass: cl.tall, headerWrapped: true },
-    { name: 'CS', type: 'running', fixed: null, addedClass: cl.tall },
-    { name: 'SB_pr', type: 'running', fixed: null, addedClass: cl.wider, childField: '%SB' },
-    { name: 'LOB', type: 'running', fixed: null, addedClass: null },
-    { name: 'CH', type: 'fielding', fixed: null, addedClass: cl.wide, headerWrapped: true },
-    { name: 'PO', type: 'fielding', fixed: null, addedClass: null, headerWrapped: true },
-    { name: 'A', type: 'fielding', fixed: null, addedClass: null },
-    { name: 'E', type: 'fielding', fixed: null, addedClass: cl.tall },
-    { name: 'DP', type: 'fielding', fixed: null, addedClass: cl.tall },
-    { name: 'FLD', type: 'fielding', fixed: 3, addedClass: cl.wider, childField: 'FLD%' },
-    { name: 'GS', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'W', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'L', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'CG', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SV', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'IP', type: 'pitching', fixed: null, addedClass: cl.wide2 },
-    { name: 'PA', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'R', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'ER', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'H', type: 'pitching', fixed: null, addedClass: null },
-    { name: '2B', type: 'pitching', fixed: null, addedClass: null },
-    { name: '3B', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'HR', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'BB', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'IBB', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'HP', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SH', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SF', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'SO', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'WP', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'BK', type: 'pitching', fixed: null, addedClass: null },
-    { name: 'ERA', type: 'pitching', fixed: 3, addedClass: cl.wide3 },
-    { name: 'NP', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'NS', type: 'pitching', fixed: null, addedClass: cl.wide },
-    { name: 'NB', type: 'pitching', fixed: null, addedClass: cl.wide }
+    { name: 'AB', type: 'batting' },
+    { name: 'R', type: 'batting' },
+    { name: 'H', type: 'batting' },
+    { name: '2B', type: 'batting' },
+    { name: '3B', type: 'batting' },
+    { name: 'HR', type: 'batting' },
+    { name: 'RBI', type: 'batting' },
+    { name: 'GDP', type: 'batting' },
+    { name: 'BB', type: 'batting' },
+    { name: 'IBB', type: 'batting' },
+    { name: 'HP', type: 'batting' },
+    { name: 'SH', type: 'batting' },
+    { name: 'SF', type: 'batting' },
+    { name: 'SO', type: 'batting' },
+    { name: 'TB', type: 'batting' },
+    { name: 'AVG', type: 'batting', addedClass: cl.wider },
+    { name: 'SLG', type: 'batting', addedClass: cl.wider },
+    { name: 'OBP', type: 'batting', addedClass: cl.wider },
+    { name: 'OPS', type: 'batting', addedClass: cl.wider },
+    { name: 'SB', type: 'running' },
+    { name: 'CS', type: 'running' },
+    { name: 'SB_pr', type: 'running', childField: '%SB' },
+    { name: 'LOB', type: 'running' },
+    { name: 'CH', type: 'fielding' },
+    { name: 'PO', type: 'fielding' },
+    { name: 'A', type: 'fielding' },
+    { name: 'E', type: 'fielding' },
+    { name: 'DP', type: 'fielding' },
+    { name: 'FLD', type: 'fielding', addedClass: cl.wider },
+    { name: 'GS', type: 'pitching' },
+    { name: 'W', type: 'pitching' },
+    { name: 'L', type: 'pitching' },
+    { name: 'CG', type: 'pitching' },
+    { name: 'SV', type: 'pitching' },
+    { name: 'IP', type: 'pitching' },
+    { name: 'PA', type: 'pitching' },
+    { name: 'R', type: 'pitching' },
+    { name: 'ER', type: 'pitching' },
+    { name: 'H', type: 'pitching' },
+    { name: '2B', type: 'pitching' },
+    { name: '3B', type: 'pitching' },
+    { name: 'HR', type: 'pitching' },
+    { name: 'BB', type: 'pitching' },
+    { name: 'IBB', type: 'pitching' },
+    { name: 'HP', type: 'pitching' },
+    { name: 'SH', type: 'pitching' },
+    { name: 'SF', type: 'pitching' },
+    { name: 'SO', type: 'pitching' },
+    { name: 'WP', type: 'pitching' },
+    { name: 'BK', type: 'pitching' },
+    { name: 'ERA', type: 'pitching', addedClass: cl.wider },
+    { name: 'NP', type: 'pitching' },
+    { name: 'NS', type: 'pitching' },
+    { name: 'NB', type: 'pitching' }
   ];
 
-  const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
-    tableMode === 'Batting' ? (
-      <>
-        {currentLeague.id === -1 && (
+  const getTableHeaders = (sortField, sortDirection, handleFieldClick, arrowStyles = null) => (
+    <>
+      {currentLeague.id === -1 && (tableMode === 'Batting' || tableMode === 'Pitching') && (
+        <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          arrowStyles={arrowStyles}>
+          G
+        </SortField>
+      )}
+      {fieldsInfo
+        .filter(field => field.type === tableMode.toLowerCase())
+        .map((field, i) => (
           <SortField
+            key={i}
             sortField={sortField}
             sortDirection={sortDirection}
             handleClick={handleFieldClick}
-            arrowStyles={arrowStyles}>
-            G
+            arrowStyles={arrowStyles}
+            addedClass={field.addedClass}>
+            {field.childField || field.name}
           </SortField>
-        )}
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          AB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          R
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          H
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          2B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          3B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HR
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          RBI
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          GDP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          BB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          IBB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SH
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SF
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SO
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          TB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          AVG
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          SLG
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          OBP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          OPS
-        </SortField>
-      </>
-    ) : tableMode === 'Pitching' ? (
-      <>
-        {currentLeague.id === -1 && (
-          <SortField
-            sortField={sortField}
-            sortDirection={sortDirection}
-            handleClick={handleFieldClick}
-            arrowStyles={arrowStyles}>
-            G
-          </SortField>
-        )}
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          GS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          W
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          L
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CG
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SV
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          IP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          PA
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          R
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          ER
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          H
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          2B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          3B
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HR
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          BB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          IBB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          HP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SH
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SF
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SO
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          WP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          BK
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          ERA
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          NB
-        </SortField>
-      </>
-    ) : tableMode === 'Running' ? (
-      <>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          SB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CS
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}
-          renamedField='SB_pr'>
-          %SB
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          LOB
-        </SortField>
-      </>
-    ) : (
-      <>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          CH
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          PO
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          A
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          E
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          DP
-        </SortField>
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}
-          addedClass={cl.wider}>
-          FLD
-        </SortField>
-      </>
-    );
+        ))}
+    </>
+  );
+
+	// Old table header forming
+  // tableMode === 'Batting' ? (
+  //   <>
+  //     {currentLeague.id === -1 && (
+  //       <SortField
+  //         sortField={sortField}
+  //         sortDirection={sortDirection}
+  //         handleClick={handleFieldClick}
+  //         arrowStyles={arrowStyles}>
+  //         G
+  //       </SortField>
+  //     )}
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       AB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       R
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       H
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       2B
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       3B
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       HR
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       RBI
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       GDP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       BB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       IBB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       HP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SH
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SF
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SO
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       TB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       AVG
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       SLG
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       OBP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       OPS
+  //     </SortField>
+  //   </>
+  // ) : tableMode === 'Pitching' ? (
+  //   <>
+  //     {currentLeague.id === -1 && (
+  //       <SortField
+  //         sortField={sortField}
+  //         sortDirection={sortDirection}
+  //         handleClick={handleFieldClick}
+  //         arrowStyles={arrowStyles}>
+  //         G
+  //       </SortField>
+  //     )}
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       GS
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       W
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       L
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       CG
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SV
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       IP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       PA
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       R
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       ER
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       H
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       2B
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       3B
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       HR
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       BB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       IBB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       HP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SH
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SF
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SO
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       WP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       BK
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       ERA
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       NP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       NS
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       NB
+  //     </SortField>
+  //   </>
+  // ) : tableMode === 'Running' ? (
+  //   <>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       SB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       CS
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}
+  //       renamedField='SB_pr'>
+  //       %SB
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       LOB
+  //     </SortField>
+  //   </>
+  // ) : (
+  //   <>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       CH
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       PO
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       A
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       E
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}>
+  //       DP
+  //     </SortField>
+  //     <SortField
+  //       sortField={sortField}
+  //       sortDirection={sortDirection}
+  //       handleClick={handleFieldClick}
+  //       arrowStyles={arrowStyles}
+  //       addedClass={cl.wider}>
+  //       FLD
+  //     </SortField>
+  //   </>
+  // )
 
   const getTableRows = (row, cl, sortField) =>
     tableMode === 'Batting' ? (
@@ -901,7 +928,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
           {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
         </div>
         <div className={cl.rightHeader} ref={headerScroll}>
-          {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
+          {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, {
             top: '.1rem',
             transform: 'translateX(-50%) scale(0.7)'
           })}
