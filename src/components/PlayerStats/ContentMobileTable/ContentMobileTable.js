@@ -141,192 +141,213 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
     </>
   );
 
-  const getTableRows = (row, cl, sortField) =>
-    tableMode === 'Batting' ? (
-      <>
-        {currentLeague.id === -1 && (
-          <ActiveBodyCell sortField={sortField} row={row}>
-            G
+  const getTableRows = (row, sortField) => (
+    <>
+      {currentLeague.id === -1 && (tableMode === 'Batting' || tableMode === 'Pitching') && (
+        <ActiveBodyCell sortField={sortField} row={row}>
+          G
+        </ActiveBodyCell>
+      )}
+      {fieldsInfo
+        .filter(field => field.type === tableMode.toLowerCase())
+        .map((field, i) => (
+          <ActiveBodyCell
+            key={i}
+            sortField={sortField}
+            row={row}
+            fixed={field.fixed}
+            addedClass={field.addedClass}>
+            {field.name}
           </ActiveBodyCell>
-        )}
-        <ActiveBodyCell sortField={sortField} row={row}>
-          AB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          R
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          H
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          2B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          3B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HR
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          RBI
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          GDP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          BB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          IBB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SH
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SF
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SO
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          TB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          AVG
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          SLG
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          OBP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          OPS
-        </ActiveBodyCell>
-      </>
-    ) : tableMode === 'Pitching' ? (
-      <>
-        {currentLeague.id === -1 && (
-          <ActiveBodyCell sortField={sortField} row={row}>
-            G
-          </ActiveBodyCell>
-        )}
-        <ActiveBodyCell sortField={sortField} row={row}>
-          GS
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          W
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          L
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          CG
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SV
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
-          IP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          PA
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          R
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          ER
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          H
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          2B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          3B
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HR
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          BB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          IBB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          HP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SH
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SF
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SO
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          WP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          BK
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>
-          ERA
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NS
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          NB
-        </ActiveBodyCell>
-      </>
-    ) : tableMode === 'Running' ? (
-      <>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          SB
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          CS
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          SB_pr
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          LOB
-        </ActiveBodyCell>
-      </>
-    ) : (
-      <>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          CH
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          PO
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          A
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          E
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row}>
-          DP
-        </ActiveBodyCell>
-        <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-          FLD
-        </ActiveBodyCell>
-      </>
-    );
+        ))}
+    </>
+  );
+
+  // tableMode === 'Batting' ? (
+  //   <>
+  //     {currentLeague.id === -1 && (
+  //       <ActiveBodyCell sortField={sortField} row={row}>
+  //         G
+  //       </ActiveBodyCell>
+  //     )}
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       AB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       R
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       H
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       2B
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       3B
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       HR
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       RBI
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       GDP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       BB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       IBB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       HP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SH
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SF
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SO
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       TB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       AVG
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       SLG
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       OBP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       OPS
+  //     </ActiveBodyCell>
+  //   </>
+  // ) : tableMode === 'Pitching' ? (
+  //   <>
+  //     {currentLeague.id === -1 && (
+  //       <ActiveBodyCell sortField={sortField} row={row}>
+  //         G
+  //       </ActiveBodyCell>
+  //     )}
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       GS
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       W
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       L
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       CG
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SV
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
+  //       IP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       PA
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       R
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       ER
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       H
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       2B
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       3B
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       HR
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       BB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       IBB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       HP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SH
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SF
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SO
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       WP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       BK
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>
+  //       ERA
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       NP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       NS
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       NB
+  //     </ActiveBodyCell>
+  //   </>
+  // ) : tableMode === 'Running' ? (
+  //   <>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       SB
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       CS
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       SB_pr
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       LOB
+  //     </ActiveBodyCell>
+  //   </>
+  // ) : (
+  //   <>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       CH
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       PO
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       A
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       E
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row}>
+  //       DP
+  //     </ActiveBodyCell>
+  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
+  //       FLD
+  //     </ActiveBodyCell>
+  //   </>
+  // );
 
   console.log(filteredLeague);
   console.log(tableMode);
@@ -615,7 +636,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                         style={{
                           width: !isScrollable ? '100%' : 'fit-content'
                         }}>
-                        {getTableRows(gameRow, cl, sortField[tableMode])}
+                        {getTableRows(gameRow, sortField[tableMode])}
                       </div>
                     );
                   })}
@@ -627,7 +648,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       }}>
                       {getTableRows(
                         yearsAllLeagueTeamTotals[tableMode.toLowerCase()],
-                        cl,
+
                         sortField[tableMode]
                       )}
                     </div>
@@ -658,7 +679,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                         style={{
                           width: !isScrollable ? '100%' : 'fit-content'
                         }}>
-                        {getTableRows(gameRow, cl, sortField[tableMode])}
+                        {getTableRows(gameRow, sortField[tableMode])}
                       </div>
                     );
                   })}
@@ -670,7 +691,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                       }}>
                       {getTableRows(
                         yearsAllLeagueAllTeamTotals[tableMode.toLowerCase()],
-                        cl,
+
                         sortField[tableMode]
                       )}
                     </div>
@@ -688,7 +709,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                   style={{
                     width: !isScrollable ? '100%' : 'fit-content'
                   }}>
-                  {getTableRows(row, cl, sortField[tableMode])}
+                  {getTableRows(row, sortField[tableMode])}
                 </div>
               ))}
               {sortedLeagueGames.length > 0 && (
@@ -701,7 +722,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
                     currentTeam === 'All teams'
                       ? selectedLeague.total[tableMode.toLowerCase()]
                       : filteredLeague[tableMode.toLowerCase()],
-                    cl,
+
                     sortField[tableMode]
                   )}
                 </div>
