@@ -7,13 +7,7 @@ import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
 import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
-import FrequencySpeedGraph from '../FrequencySpeedGraph/FrequencySpeedGraph';
-import BreakGraph from '../BreakGraph/BreakGraph';
-import TypesGraph from '../TypesGraph/TypesGraph';
-import ArsenalGraph from '../ArsenalGraph/ArsenalGraph';
-import DotsGraph from '../DotsGraph/DotsGraph';
-import PlayerImgLeft from '../../../images/player_left.png'
-import PlayerImgRight from '../../../images/player_right.png'
+import ContentGraphs from '../ContentGraphs/ContentGraphs';
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -142,9 +136,6 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                 {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} | {statsData.height}{' '}
                 {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
               </p>
-              
-
-
               {getSortedTableOptions().length === 0 ? (
                 <p className={cl.noDataFound}>No data found for current options.</p>
               ) : isMobile ? (
@@ -177,32 +168,7 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                 />
               )}
               {getSortedTableOptions().length !== 0 && !isMobile && (
-                <div className={cl.graphsWrapper}>
-                  <div className={cl.graphRow}>
-                    <FrequencySpeedGraph />
-                    <BreakGraph />
-                    <TypesGraph />
-                  </div>
-                  <div className={cl.graphRow} style={{marginTop: '30px'}}>
-                    <ArsenalGraph />
-                  </div>
-                  <div className={cl.graphRow} style={{marginTop: '80px', padding: '0 35px 50px'}}>
-                    <img src={PlayerImgRight} alt='player' />
-                    <DotsGraph color='red' />
-                    <DotsGraph color='green' />
-                    <DotsGraph color='blue' />
-                    <DotsGraph color='yellow' />
-                    <DotsGraph color='olive' />
-                  </div>
-                  <div className={cl.graphRow} style={{marginTop: '50px', padding: '0 35px 50px'}}>
-                    <img src={PlayerImgLeft} alt='player' />
-                    <DotsGraph color='red' />
-                    <DotsGraph color='green' />
-                    <DotsGraph color='blue' />
-                    <DotsGraph color='yellow' />
-                    <DotsGraph color='olive' />
-                  </div>
-                </div>
+                <ContentGraphs />
               )}
             </>
           )}
