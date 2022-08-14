@@ -163,232 +163,21 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
     </>
   );
 
-  // tableMode === 'Batting' ? (
-  //   <>
-  //     {currentLeague.id === -1 && (
-  //       <ActiveBodyCell sortField={sortField} row={row}>
-  //         G
-  //       </ActiveBodyCell>
-  //     )}
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       AB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       R
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       H
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       2B
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       3B
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       HR
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       RBI
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       GDP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       BB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       IBB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       HP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SH
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SF
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SO
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       TB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       AVG
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       SLG
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       OBP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       OPS
-  //     </ActiveBodyCell>
-  //   </>
-  // ) : tableMode === 'Pitching' ? (
-  //   <>
-  //     {currentLeague.id === -1 && (
-  //       <ActiveBodyCell sortField={sortField} row={row}>
-  //         G
-  //       </ActiveBodyCell>
-  //     )}
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       GS
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       W
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       L
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       CG
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SV
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={1}>
-  //       IP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       PA
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       R
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       ER
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       H
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       2B
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       3B
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       HR
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       BB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       IBB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       HP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SH
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SF
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SO
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       WP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       BK
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={2} addedClass={cl.wider}>
-  //       ERA
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       NP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       NS
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       NB
-  //     </ActiveBodyCell>
-  //   </>
-  // ) : tableMode === 'Running' ? (
-  //   <>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       SB
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       CS
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       SB_pr
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       LOB
-  //     </ActiveBodyCell>
-  //   </>
-  // ) : (
-  //   <>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       CH
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       PO
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       A
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       E
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row}>
-  //       DP
-  //     </ActiveBodyCell>
-  //     <ActiveBodyCell sortField={sortField} row={row} fixed={3} addedClass={cl.wider}>
-  //       FLD
-  //     </ActiveBodyCell>
-  //   </>
-  // );
-
-  console.log(filteredLeague);
-  console.log(tableMode);
   const filteredLeagueGamesSummary =
     filteredLeague &&
     (!Array.isArray(filteredLeague)
       ? filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].filter(
           game => game.game_id
         )
-      : // ? filteredLeague.batting.games_batting
-        // .reduce((sum, game, i) => {
-        //     const sumGame = {
-        //       ...game,
-        //       ...filteredLeague.fielding.games_fielding[i],
-        //       ...filteredLeague.running.games_running[i],
-        //       ...(filteredLeague.pitching?.games_pitching[i] ?? {}),
-        //       team_name: filteredLeague.name
-        //     };
-        //     sum.push(sumGame);
-        //     return sum;
-        //   }, [])
+      : 
         filteredLeague
           .filter(row => row[tableMode.toLowerCase()])
           .reduce((totalSum, team) => {
             team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].forEach(game =>
               totalSum.push(game)
             );
-            return totalSum;
-            // const teamGamesArr = team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].reduce((sum, game, i) => {
-            //   const sumGame = {
-            //     ...game,
-            //     ...team.fielding.games_fielding[i],
-            //     ...team.running.games_running[i],
-            //     ...team.pitching.games_pitching[i],
-            //     team_name: team.name
-            //   };
-            //   sum.push(sumGame);
-            //   return sum;
-            // }, []);
 
-            // return totalSum.concat(teamGamesArr);
+            return totalSum;
           }, []));
 
   console.log(filteredLeagueGamesSummary);
@@ -396,7 +185,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const sortedLeagueGames =
     filteredLeague &&
     filteredLeagueGamesSummary
-      // filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`]
       .slice()
       .sort((a, b) =>
         a[sortField[tableMode]] > b[sortField[tableMode]]
