@@ -1,15 +1,11 @@
 import React from 'react';
 import cl from './Content.module.scss';
-import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
-import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
-import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
 import ContentGraphs from '../ContentGraphs/ContentGraphs';
-
-const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+import ContentTables from '../ContentTables/ContentTables';
 
 const Content = ({ playerYears, calculateTeamsArray }) => {
   const statsData = useSelector(state => state.playerStats.playerStatsData);
@@ -136,40 +132,15 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
                 {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} | {statsData.height}{' '}
                 {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
               </p>
-              {getSortedTableOptions().length === 0 ? (
-                <p className={cl.noDataFound}>No data found for current options.</p>
-              ) : isMobile ? (
-                <ContentMobileTable
-                  filteredLeagues={filteredLeagues}
-                  filteredLeague={filteredLeague}
-                  playerYears={playerYears}
-                  MONTHS={MONTHS}
-                  handleLeagueClick={handleLeagueClick}
-                />
-              ) : tableType === 'Batting' ? (
-                <ContentBattingTable
-                  filteredLeagues={filteredLeagues}
-                  filteredLeague={filteredLeague}
-                  playerYears={playerYears}
-                  MONTHS={MONTHS}
-                  handleLeagueClick={handleLeagueClick}
-									getSortedTableOptions={getSortedTableOptions}
-									handleTableOptionClick={handleTableOptionClick}
-                />
-              ) : (
-                <ContentPitchingTable
-                  filteredLeagues={filteredLeagues}
-                  filteredLeague={filteredLeague}
-                  playerYears={playerYears}
-                  MONTHS={MONTHS}
-                  handleLeagueClick={handleLeagueClick}
-									getSortedTableOptions={getSortedTableOptions}
-									handleTableOptionClick={handleTableOptionClick}
-                />
-              )}
-              {getSortedTableOptions().length !== 0 && !isMobile && (
-                <ContentGraphs />
-              )}
+              <ContentTables
+                getSortedTableOptions={getSortedTableOptions}
+                filteredLeagues={filteredLeagues}
+                filteredLeague={filteredLeague}
+                handleTableOptionClick={handleTableOptionClick}
+								playerYears={playerYears}
+								handleLeagueClick={handleLeagueClick}
+              />
+              {getSortedTableOptions().length !== 0 && !isMobile && <ContentGraphs />}
             </>
           )}
         </div>
