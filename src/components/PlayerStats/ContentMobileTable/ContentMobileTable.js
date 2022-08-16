@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import cl from './ContentMobileTable.module.scss';
 import { useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
-import SortField from 'components/UI/sortField/SortField';
 import { getShortName } from 'utils';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setSortField } from 'redux/playerStatsReducer';
+import ContentMobileTableHeader from './ContentMobileTableHeader';
 
 const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONTHS, handleLeagueClick }) => {
   const [sortDirection, setSortDirection] = useState('asc');
@@ -50,12 +50,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       setIsScrollable(rowScrollRef.current.clientWidth < rowScrollRef.current.scrollWidth);
     }, 150);
   }, [mobileOrientation]);
-
-  const handleFieldClick = field => () => {
-    sortField[tableMode] !== field
-      ? dispatch(setSortField(field))
-      : setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  };
 
   const fieldsInfo = [
     { name: 'AB', type: 'batting' },
@@ -114,33 +108,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
     { name: 'NB', type: 'pitching' }
   ];
 
-  const getTableHeaders = (sortField, sortDirection, handleFieldClick, arrowStyles = null) => (
-    <>
-      {currentLeague.id === -1 && (tableMode === 'Batting' || tableMode === 'Pitching') && (
-        <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          arrowStyles={arrowStyles}>
-          G
-        </SortField>
-      )}
-      {fieldsInfo
-        .filter(field => field.type === tableMode.toLowerCase())
-        .map((field, i) => (
-          <SortField
-            key={i}
-            sortField={sortField}
-            sortDirection={sortDirection}
-            handleClick={handleFieldClick}
-            arrowStyles={arrowStyles}
-            addedClass={field.addedClass}>
-            {field.childField || field.name}
-          </SortField>
-        ))}
-    </>
-  );
-
   const getTableRows = (row, sortField) => (
     <>
       {currentLeague.id === -1 && (tableMode === 'Batting' || tableMode === 'Pitching') && (
@@ -169,8 +136,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
       ? filteredLeague[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].filter(
           game => game.game_id
         )
-      : 
-        filteredLeague
+      : filteredLeague
           .filter(row => row[tableMode.toLowerCase()])
           .reduce((totalSum, team) => {
             team[tableMode.toLowerCase()][`games_${tableMode.toLowerCase()}`].forEach(game =>
@@ -286,11 +252,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
     });
   }
 
-  let leftHeaderStyles = {
-    flex: `0 0 ${currentLeague.id !== -1 ? 190 : playerYears === 'All years' ? 185.5 : 140.5}px`
-  };
-  !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
-
   const yearsAllLeagueTeamTotals =
     currentLeague.id === -1 &&
     currentTeam !== 'All teams' &&
@@ -308,19 +269,17 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   const selectedLeague = playerStatsData.leagues.find(league => league.id === currentLeague.id);
   return (
     <div className={cl.mobileWrapper}>
-      <div className={cl.fullHeader}>
-        <div className={cl.leftHeader} style={leftHeaderStyles}>
-          {playerYears === 'All years' && <div className={cl.years}>Years</div>}
-          {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-          {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
-        </div>
-        <div className={cl.rightHeader} ref={headerScroll}>
-          {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, {
-            top: '.1rem',
-            transform: 'translateX(-50%) scale(0.7)'
-          })}
-        </div>
-      </div>
+      <ContentMobileTableHeader
+        cl={cl}
+        playerYears={playerYears}
+        currentLeague={currentLeague}
+        isScrollable={isScrollable}
+				sortField={sortField}
+        sortDirection={sortDirection}
+				setSortDirection={setSortDirection}
+				fieldsInfo={fieldsInfo}
+        ref={headerScroll}
+      />
       <div className={cl.sides}>
         <div
           className={cl.leftRows}
