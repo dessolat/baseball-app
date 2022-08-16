@@ -12,7 +12,7 @@ const ContentPitchingTableHeader = ({
   handleFieldClick,
   getSortedTableOptions,
   handleTableOptionClick,
-	fieldsInfo
+  fieldsInfo
 }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
 
@@ -24,7 +24,8 @@ const ContentPitchingTableHeader = ({
             sortField={sortField}
             sortDirection={sortDirection}
             handleClick={handleFieldClick}
-            addedClass={field.addedClass}>
+            addedClass={field.addedClass}
+            renamedField={field.name}>
             {field.name}
           </SortField>
         ))}
@@ -58,7 +59,7 @@ const ContentPitchingTableHeader = ({
           G
         </SortField>
       )}
-			{getHeaderCells()}
+      {getHeaderCells()}
     </div>
   );
 };

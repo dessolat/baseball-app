@@ -23,12 +23,12 @@ const ContentBattingTableHeader = ({
           <Fragment key={i}>
             {field.headerWrapped ? (
               <div className={cl.sortFieldWrapper + ' ' + field.addedClass || null}>
-                <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick}>
+                <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} renamedField={field.name}>
                   {field.childField || field.name}
                 </SortField>
               </div>
             ) : (
-              <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={field.addedClass}>
+              <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={field.addedClass} renamedField={field.name}>
                 {field.childField || field.name}
               </SortField>
             )}
