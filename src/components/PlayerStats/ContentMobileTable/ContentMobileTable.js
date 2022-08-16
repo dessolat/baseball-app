@@ -180,8 +180,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             return totalSum;
           }, []));
 
-  console.log(filteredLeagueGamesSummary);
-
   const sortedLeagueGames =
     filteredLeague &&
     filteredLeagueGamesSummary
@@ -199,7 +197,6 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
   let sortedLeagues = [];
   let allTeamGames = [];
 
-  console.log(filteredLeagues);
   if (currentTeam !== 'All teams') {
     sortedLeagues = filteredLeagues.slice().sort((a, b) => {
       const teamA = a.teams.find(team => team.name === currentTeam);
