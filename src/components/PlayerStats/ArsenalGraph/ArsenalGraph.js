@@ -92,12 +92,6 @@ const ArsenalGraph = () => {
   const minVerticalValue = 0;
   const maxVerticalValue = 50;
 
-  // const bottomNumbers = [];
-  // for (let i = 1; i <= PARAMS.VERTICAL_GRID_LINES_NUMBER / 2; i++) {
-  //   bottomNumbers.push(
-  //     ((maxHorizontalBreakValue - minHorizontalBreakValue) / (PARAMS.VERTICAL_GRID_LINES_NUMBER / 2)) * i
-  //   );
-  // }
   const leftNumbers = [];
   for (let i = 1; i <= PARAMS.HORIZONTAL_GRID_LINES_NUMBER; i++) {
     leftNumbers.push(
