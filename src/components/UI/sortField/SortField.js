@@ -8,7 +8,8 @@ const SortField = ({
   handleClick,
   addedClass = null,
   renamedField = null,
-	arrowStyles = null,
+  arrowStyles = null,
+  noAction = false,
   children
 }) => {
   const isActive = sortField === (renamedField || children);
