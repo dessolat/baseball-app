@@ -1,7 +1,19 @@
 .activeCell {
-  background-color: #E0F0FF;
+  // background-color: #E0F0FF;
   align-self: stretch;
   display: grid;
   place-items: center;
-	transition: all var(--transition-speed);
+	// transition: all var(--transition-speed);
+	position: relative;
+	animation: bgShow var(--transition-speed) linear forwards;
+}
+
+@keyframes bgShow {
+	from {
+		background-color: transparent;
+	}
+
+	to {
+		background-color: #E0F0FF;
+	}
 }
