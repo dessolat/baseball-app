@@ -30,7 +30,8 @@ const ContentMobileTableHeader = (
             sortDirection={sortDirection}
             handleClick={handleFieldClick}
             arrowStyles={arrowStyles}
-            addedClass={field.addedClass}>
+            addedClass={field.addedClass}
+						noAction={currentLeague.id !== -1}>
             {field.childField || field.name}
           </SortField>
         ))}
