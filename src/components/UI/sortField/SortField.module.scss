@@ -2,47 +2,56 @@
   display: flex;
   justify-content: center;
   align-content: center;
-	user-select: none;
-	position: relative;
-	align-self: center;
+  user-select: none;
+  position: relative;
+  align-self: center;
 
-	&:hover {
-		cursor: pointer;
-	}
+  &:hover {
+    cursor: pointer;
+  }
 
-	&::before {
-		content: '';
-		background-color: transparent;
-		transition: all var(--transition-speed);
-	}
+  &::before {
+    content: '';
+    background-color: transparent;
+  }
 }
 
 .active {
-	background-color: #E0F0FF;
+  background-color: #e0f0ff;
   align-self: stretch;
   display: grid;
   place-items: center;
-	transition: all var(--transition-speed);
-	position: relative;
-	
-	&::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: -2rem;
-		width: 100%;
-		height: 2rem;
-		background-color: #E0F0FF;
-	}
+  position: relative;
+  animation: bgShow var(--transition-speed) linear forwards;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2rem;
+    width: 100%;
+    height: 2rem;
+    animation: bgShow var(--transition-speed) linear forwards;
+  }
 }
 
 .arrows {
-	position: absolute;
-	left: 50%;
-	top: -.9rem;
-	transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+  top: -0.9rem;
+  transform: translateX(-50%);
 }
 
 .defaultCursor:hover {
-	cursor: unset;
+  cursor: unset;
+}
+
+@keyframes bgShow {
+  from {
+    background-color: transparent;
+  }
+
+  to {
+    background-color: #e0f0ff;
+  }
 }
