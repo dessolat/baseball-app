@@ -25,7 +25,8 @@ const ContentPitchingTableHeader = ({
             sortDirection={sortDirection}
             handleClick={handleFieldClick}
             addedClass={field.addedClass}
-            renamedField={field.name}>
+            renamedField={field.name}
+						noAction={currentLeague.id !== -1}>
             {field.name}
           </SortField>
         ))}
