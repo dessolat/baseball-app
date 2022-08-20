@@ -123,7 +123,8 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             sortField={sortField}
             row={row}
             fixed={field.fixed}
-            addedClass={field.addedClass}>
+            addedClass={field.addedClass}
+						noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}
