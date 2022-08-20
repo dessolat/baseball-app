@@ -200,7 +200,8 @@ const ContentBattingTableBody = ({
             sortField={sortField}
             row={row[field.type]}
             fixed={field.fixed}
-            addedClass={field.addedClass}>
+            addedClass={field.addedClass}
+						noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}
@@ -217,7 +218,8 @@ const ContentBattingTableBody = ({
             sortField={sortField}
             row={row}
             fixed={field.fixed}
-            addedClass={field.addedClass}>
+            addedClass={field.addedClass}
+						noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './ActiveBodyCell.module.scss';
 
-const ActiveBodyCell = ({ sortField, addedClass = null, row, fixed = null, children }) => {
+const ActiveBodyCell = ({ sortField, addedClass = null, row, fixed = null, noAction = false, children }) => {
   const isRow = row !== undefined;
 	
   return (
