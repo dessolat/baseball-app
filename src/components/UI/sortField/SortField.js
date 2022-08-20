@@ -14,13 +14,16 @@ const SortField = ({
 }) => {
   const isActive = sortField === (renamedField || children);
   const classes = [cl.cell, addedClass];
-  isActive && classes.push(cl.active);
+  const isArrows = isActive && !noAction;
+  isActive && !noAction && classes.push(cl.active);
+  noAction && classes.push(cl.defaultCursor);
+
   return (
-    <div onClick={handleClick(renamedField || children)} className={classes.join(' ')}>
+    <div onClick={noAction ? null : handleClick(renamedField || children)} className={classes.join(' ')}>
       {children}
-      {isActive && (
+      {isArrows && (
         <div className={cl.arrows} style={arrowStyles}>
-          <SortArrows direction={sortDirection}/>
+          <SortArrows direction={sortDirection} />
         </div>
       )}
     </div>
