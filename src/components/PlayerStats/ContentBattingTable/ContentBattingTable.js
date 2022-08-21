@@ -73,6 +73,7 @@ const ContentBattingTable = ({
           sortDirection={sortDirection}
           handleFieldClick={handleFieldClick}
           fieldsInfo={fieldsInfo}
+					setSortDirection={setSortDirection}
         />
         <ContentBattingTableBody
           cl={cl}
