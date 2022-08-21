@@ -34,6 +34,10 @@ const ContentPitchingTableHeader = ({
       </>
     );
   };
+
+	const handleGameHeaderClick = () => {
+		setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')
+	}
   return (
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
