@@ -131,6 +131,8 @@
     text-align: left;
     width: 14rem;
     padding-left: 0.5rem;
+		cursor: pointer;
+		user-select: none;
 
     > .teams {
       font-weight: 700;
@@ -176,4 +178,11 @@
 .sortFieldWrapper {
   align-self: stretch;
   display: grid;
+}
+
+.arrows {
+  position: absolute;
+  left: 10%;
+  top: -1.1rem;
+  transform: translateX(-50%);
 }
