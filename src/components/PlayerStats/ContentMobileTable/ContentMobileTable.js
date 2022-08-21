@@ -149,17 +149,16 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
 
   const sortedLeagueGames =
     filteredLeague &&
-    filteredLeagueGamesSummary
-      .slice()
-      .sort((a, b) =>
-        a[sortField[tableMode]] > b[sortField[tableMode]]
-          ? sortDirection === 'asc'
-            ? 1
-            : -1
-          : sortDirection === 'asc'
-          ? -1
-          : 1
-      );
+    filteredLeagueGamesSummary.slice().sort((a, b) =>
+      a.date > b.date
+        ? // a[sortField[tableMode]] > b[sortField[tableMode]]
+          sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
+    );
 
   let sortedLeagues = [];
   let allTeamGames = [];

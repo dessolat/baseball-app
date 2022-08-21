@@ -14,7 +14,7 @@ const ContentPitchingTableBody = ({
   sortDirection,
   MONTHS,
   handleLeagueClick,
-	fieldsInfo
+  fieldsInfo
 }) => {
   const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
   const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
@@ -45,17 +45,16 @@ const ContentPitchingTableBody = ({
 
   const sortedLeagueGames =
     filteredLeague &&
-    filteredLeagueGamesSummary
-      .slice()
-      .sort((a, b) =>
-        Number(a[sortField]) > Number(b[sortField])
-          ? sortDirection === 'asc'
-            ? 1
-            : -1
-          : sortDirection === 'asc'
-          ? -1
-          : 1
-      );
+    filteredLeagueGamesSummary.slice().sort((a, b) =>
+      a.date > b.date
+        ? // Number(a[sortField]) > Number(b[sortField])
+          sortDirection === 'asc'
+          ? 1
+          : -1
+        : sortDirection === 'asc'
+        ? -1
+        : 1
+    );
 
   let sortedLeagues = [];
   let allTeamGames = [];
@@ -133,7 +132,7 @@ const ContentPitchingTableBody = ({
             row={row[field.type]}
             fixed={field.fixed}
             addedClass={field.addedClass}
-						noAction={currentLeague.id !== -1}>
+            noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}
@@ -151,7 +150,7 @@ const ContentPitchingTableBody = ({
             row={row}
             fixed={field.fixed}
             addedClass={field.addedClass}
-						noAction={currentLeague.id !== -1}>
+            noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}

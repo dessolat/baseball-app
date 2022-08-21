@@ -87,7 +87,8 @@ const ContentBattingTableBody = ({
     filteredLeagueGamesSummary
       .slice()
       .sort((a, b) =>
-        a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+        a.date > b.date ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
+        // a[sortField] > b[sortField] ? (sortDirection === 'asc' ? 1 : -1) : sortDirection === 'asc' ? -1 : 1
       );
 
   let sortedLeagues = [];
