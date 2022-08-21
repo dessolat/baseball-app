@@ -1,4 +1,5 @@
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+import SortArrows from 'components/UI/icons/SortArrows/SortArrows';
 import SortField from 'components/UI/sortField/SortField';
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,12 +25,23 @@ const ContentBattingTableHeader = ({
           <Fragment key={i}>
             {field.headerWrapped ? (
               <div className={cl.sortFieldWrapper + ' ' + field.addedClass || null}>
-                <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} renamedField={field.name} noAction={currentLeague.id !== -1}>
+                <SortField
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  handleClick={handleFieldClick}
+                  renamedField={field.name}
+                  noAction={currentLeague.id !== -1}>
                   {field.childField || field.name}
                 </SortField>
               </div>
             ) : (
-              <SortField sortField={sortField} sortDirection={sortDirection} handleClick={handleFieldClick} addedClass={field.addedClass} renamedField={field.name} noAction={currentLeague.id !== -1}>
+              <SortField
+                sortField={sortField}
+                sortDirection={sortDirection}
+                handleClick={handleFieldClick}
+                addedClass={field.addedClass}
+                renamedField={field.name}
+                noAction={currentLeague.id !== -1}>
                 {field.childField || field.name}
               </SortField>
             )}
@@ -38,11 +50,29 @@ const ContentBattingTableHeader = ({
       </>
     );
   };
+
+	const handleGameHeaderClick = () => {
+		setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')
+	}
   return (
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
       {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-      {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
+      {/* {currentLeague.id !== -1 && <SortField
+          sortField={sortField}
+          sortDirection={sortDirection}
+          handleClick={handleFieldClick}
+          addedClass={cl.game}>
+          Game
+        </SortField>} */}
+      {currentLeague.id !== -1 && (
+        <div className={cl.game} onClick={handleGameHeaderClick}>
+          Game
+          <div className={cl.arrows}>
+            <SortArrows direction={sortDirection} />
+          </div>
+        </div>
+      )}
       <div className={cl.teamName}>
         Team
         <div className={cl.dropWrapper}>
@@ -69,7 +99,7 @@ const ContentBattingTableHeader = ({
           G
         </SortField>
       )}
-			{getHeaderCells()}
+      {getHeaderCells()}
     </div>
   );
 };
