@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import SortField from 'components/UI/sortField/SortField';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortField } from 'redux/playerStatsReducer';
+import SortArrows from 'components/UI/icons/SortArrows/SortArrows';
 
 const ContentMobileTableHeader = (
   { cl, playerYears, currentLeague, isScrollable, sortField, sortDirection, fieldsInfo, setSortDirection },
@@ -31,7 +32,7 @@ const ContentMobileTableHeader = (
             handleClick={handleFieldClick}
             arrowStyles={arrowStyles}
             addedClass={field.addedClass}
-						noAction={currentLeague.id !== -1}>
+            noAction={currentLeague.id !== -1}>
             {field.childField || field.name}
           </SortField>
         ))}
@@ -57,7 +58,20 @@ const ContentMobileTableHeader = (
       <div className={cl.leftHeader} style={leftHeaderStyles}>
         {playerYears === 'All years' && <div className={cl.years}>Years</div>}
         {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-        {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
+        {currentLeague.id !== -1 && (
+          <div className={cl.game} onClick={handleGameHeaderClick}>
+            Game
+            <div
+              className={cl.arrows}
+              style={{
+                top: '.1rem',
+                transform: 'translateX(-50%) scale(0.7)',
+								left: 27
+              }}>
+              <SortArrows direction={sortDirection} />
+            </div>
+          </div>
+        )}
       </div>
       <div className={cl.rightHeader} ref={ref}>
         {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, {
