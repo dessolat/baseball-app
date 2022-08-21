@@ -3,6 +3,7 @@ import cl from './ContentPitchingTable.module.scss';
 import SortField from 'components/UI/sortField/SortField';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector } from 'react-redux';
+import SortArrows from 'components/UI/icons/SortArrows/SortArrows';
 
 const ContentPitchingTableHeader = ({
   playerYears,
@@ -27,7 +28,7 @@ const ContentPitchingTableHeader = ({
             handleClick={handleFieldClick}
             addedClass={field.addedClass}
             renamedField={field.name}
-						noAction={currentLeague.id !== -1}>
+            noAction={currentLeague.id !== -1}>
             {field.name}
           </SortField>
         ))}
@@ -42,7 +43,14 @@ const ContentPitchingTableHeader = ({
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
       {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-      {currentLeague.id !== -1 && <div className={cl.game}>Game</div>}
+      {currentLeague.id !== -1 && (
+        <div className={cl.game} onClick={handleGameHeaderClick}>
+          Game
+          <div className={cl.arrows}>
+            <SortArrows direction={sortDirection} />
+          </div>
+        </div>
+      )}
       <div className={cl.teamName}>
         Team
         <div className={cl.dropWrapper}>
