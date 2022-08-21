@@ -124,7 +124,7 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
             row={row}
             fixed={field.fixed}
             addedClass={field.addedClass}
-						noAction={currentLeague.id !== -1}>
+            noAction={currentLeague.id !== -1}>
             {field.name}
           </ActiveBodyCell>
         ))}
@@ -274,10 +274,10 @@ const ContentMobileTable = ({ filteredLeagues, filteredLeague, playerYears, MONT
         playerYears={playerYears}
         currentLeague={currentLeague}
         isScrollable={isScrollable}
-				sortField={sortField}
+        sortField={sortField}
         sortDirection={sortDirection}
-				setSortDirection={setSortDirection}
-				fieldsInfo={fieldsInfo}
+        setSortDirection={setSortDirection}
+        fieldsInfo={fieldsInfo}
         ref={headerScroll}
       />
       <div className={cl.sides}>
