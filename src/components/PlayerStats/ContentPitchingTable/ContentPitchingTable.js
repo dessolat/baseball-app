@@ -67,6 +67,7 @@ const ContentPitchingTable = ({
           getSortedTableOptions={getSortedTableOptions}
           handleTableOptionClick={handleTableOptionClick}
 					fieldsInfo={fieldsInfo}
+					setSortDirection={setSortDirection}
         />
         <ContentPitchingTableBody
           filteredLeagues={filteredLeagues}

@@ -12,7 +12,8 @@ const ContentPitchingTableHeader = ({
   handleFieldClick,
   getSortedTableOptions,
   handleTableOptionClick,
-  fieldsInfo
+  fieldsInfo,
+	setSortDirection
 }) => {
   const tableType = useSelector(state => state.playerStats.tableType);
 
