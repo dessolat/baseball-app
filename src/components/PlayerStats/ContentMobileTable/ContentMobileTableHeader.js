@@ -48,6 +48,10 @@ const ContentMobileTableHeader = (
     flex: `0 0 ${currentLeague.id !== -1 ? 190 : playerYears === 'All years' ? 185.5 : 140.5}px`
   };
   !isScrollable && Object.assign(leftHeaderStyles, { borderRight: 'none', boxShadow: 'none' });
+
+  const handleGameHeaderClick = () => {
+    setSortDirection(prev => (prev === 'asc' ? 'desc' : 'asc'));
+  };
   return (
     <div className={cl.fullHeader}>
       <div className={cl.leftHeader} style={leftHeaderStyles}>
