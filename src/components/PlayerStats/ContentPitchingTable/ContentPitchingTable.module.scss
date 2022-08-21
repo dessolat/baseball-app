@@ -117,3 +117,10 @@
 .rows {
   position: relative;
 }
+
+.arrows {
+  position: absolute;
+  left: 24px;
+  top: -1.1rem;
+  transform: translateX(-50%);
+}
