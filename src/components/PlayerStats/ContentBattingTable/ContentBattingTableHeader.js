@@ -58,13 +58,6 @@ const ContentBattingTableHeader = ({
     <div className={cl.tableHeader}>
       {playerYears === 'All years' && <div className={cl.year}>Years</div>}
       {currentLeague.id === -1 && <div className={cl.league}>League</div>}
-      {/* {currentLeague.id !== -1 && <SortField
-          sortField={sortField}
-          sortDirection={sortDirection}
-          handleClick={handleFieldClick}
-          addedClass={cl.game}>
-          Game
-        </SortField>} */}
       {currentLeague.id !== -1 && (
         <div className={cl.game} onClick={handleGameHeaderClick}>
           Game
