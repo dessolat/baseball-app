@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 const useCurrentEvents = () => {
   const currentCard = useSelector(state => state.game.currentCard);
+	
   return useMemo(() => {
     const newMoments = [];
     currentCard.type !== 'Replacement'
