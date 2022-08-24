@@ -46,7 +46,6 @@ const useGameFetch = url => {
 				}, 5000);
 
         if (dataRef.current === dataLength) return;
-        // dataRef.current = resp.data;
         dataRef.current = dataLength;
 
         if (firstTime) {
@@ -73,19 +72,10 @@ const useGameFetch = url => {
 					}, 5000);
 				}
       } finally {
-				// console.log('aaaaaaa');
 				if (firstTime) {
           setIsLoading(false);
 					dispatch(setCurrentGameId(gameId))
         }
-				
-        // if (firstTime) {
-        //   setIsLoading(false);
-        //   intervalRef.current = setInterval(() => {
-				// 		console.log('request');
-        //     dispatch(getFullData(false, innerUrl));
-        //   }, 3000);
-        // }
       }
     };
 
