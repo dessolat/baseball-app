@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const ContentBoxFooterRow = () => {
-	return (
-		<div>ContentBoxFooterRow</div>
-	)
-}
+const ContentBoxFooterRow = ({ footerArr, columnIndex, rowIndex }) => (
+  <p>{footerArr[columnIndex * 6 + rowIndex]}</p>
+);
 
-export default ContentBoxFooterRow
+export default ContentBoxFooterRow;

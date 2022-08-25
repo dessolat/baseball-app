@@ -1,4 +1,5 @@
 import React from 'react';
+import ContentBoxFooterRow from './ContentBoxFooterRow';
 
 const ContentBoxFooterColumn = ({ columnIndex, footerArr }) => {
   const rowsArr = [];
@@ -9,8 +10,13 @@ const ContentBoxFooterColumn = ({ columnIndex, footerArr }) => {
 
   return (
     <div>
-      {rowsArr.map((_, i) => (
-        <p key={i}>{footerArr[columnIndex * 6 + i]}</p>
+      {rowsArr.map((_, rowIndex) => (
+        <ContentBoxFooterRow
+          key={rowIndex}
+          footerArr={footerArr}
+          columnIndex={columnIndex}
+          rowIndex={rowIndex}
+        />
       ))}
     </div>
   );
