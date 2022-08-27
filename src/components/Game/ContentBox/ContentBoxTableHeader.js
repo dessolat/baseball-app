@@ -6,9 +6,11 @@ const ContentBoxTableHeader = ({ TABLES_INFO, tableName }) => {
       <tr>
         <th></th>
         <th></th>
-        {TABLES_INFO[tableName].headers.map((title, i) => (
-          <th key={i}>{title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title}</th>
-        ))}
+        {TABLES_INFO[tableName].headers.map((title, i) => {
+					const titleText = title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title
+
+          return <th key={i}>{titleText}</th>;
+        })}
       </tr>
     </thead>
   );
