@@ -15,8 +15,9 @@ const ContentBoxTableBodyCell = ({ title, toFixList, player, tableName }) => {
       : player.content.stats[tableName][title];
 
   const cellStyle = toFixList.includes(title) ? { width: '3rem' } : null;
+  const cellValue = Number(value) < 0 ? '—' : value;
 
-  return <td style={cellStyle}>{Number(value) < 0 ? '—' : value}</td>;
+  return <td style={cellStyle}>{cellValue}</td>;
 };
 
 export default ContentBoxTableBodyCell;
