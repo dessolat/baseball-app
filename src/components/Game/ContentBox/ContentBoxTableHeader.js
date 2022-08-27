@@ -1,4 +1,5 @@
 import React from 'react';
+import ContentBoxTableHeaderCell from './ContentBoxTableHeaderCell';
 
 const ContentBoxTableHeader = ({ TABLES_INFO, tableName }) => {
   return (
@@ -6,11 +7,9 @@ const ContentBoxTableHeader = ({ TABLES_INFO, tableName }) => {
       <tr>
         <th></th>
         <th></th>
-        {TABLES_INFO[tableName].headers.map((title, i) => {
-					const titleText = title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title
-
-          return <th key={i}>{titleText}</th>;
-        })}
+        {TABLES_INFO[tableName].headers.map((title, i) => (
+          <ContentBoxTableHeaderCell key={i} title={title} />
+        ))}
       </tr>
     </thead>
   );

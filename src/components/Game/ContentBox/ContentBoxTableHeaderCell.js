@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const ContentBoxTableHeaderCell = () => {
-	return (
-		<div>ContentBoxTableHeaderCell</div>
-	)
-}
+const ContentBoxTableHeaderCell = ({ title }) => {
+  const titleText = title === 'SB_pr' ? '%SB' : title === 'FLD' ? 'FLD%' : title;
 
-export default ContentBoxTableHeaderCell
+  return <th>{titleText}</th>;
+};
+
+export default ContentBoxTableHeaderCell;
