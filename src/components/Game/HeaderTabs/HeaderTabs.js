@@ -6,7 +6,8 @@ import HeaderTabsButton from './HeaderTabsButton';
 const HeaderTabs = ({ currentTab, handleClick }) => {
   const isVideo = useSelector(state => state.game.isVideo);
 
-  const tabsArr = isVideo ? ['box', 'plays', 'videos'] : ['box', 'plays'];
+	const tabsArr = ['box', 'plays']
+	isVideo && tabsArr.push('videos')
 
   const getClass = name =>
     currentTab === name || (currentTab === 'videos' && name === 'plays' && !isVideo) ? cl.active : '';
