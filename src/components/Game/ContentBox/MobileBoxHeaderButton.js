@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const MobileBoxHeaderButton = () => {
-	return (
-		<div>MobileBoxHeaderButton</div>
-	)
-}
+const MobileBoxHeaderButton = ({ value, getClass, handleClick }) => {
+  return (
+    <button className={getClass(value)} onClick={handleClick(value)}>
+      {value}
+    </button>
+  );
+};
 
-export default MobileBoxHeaderButton
+export default MobileBoxHeaderButton;

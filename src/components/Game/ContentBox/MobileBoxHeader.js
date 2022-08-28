@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './ContentMobileBox.module.scss';
+import MobileBoxHeaderButton from './MobileBoxHeaderButton';
 
 const STATE_VALUES = ['Batting', 'Running', 'Fielding', 'Pitching', 'Catching', 'Info'];
 
@@ -10,9 +11,7 @@ const MobileBoxHeader = ({ currentMode, setCurrentMode }) => {
   return (
     <div className={cl.boxHeader}>
       {STATE_VALUES.map((value, i) => (
-        <button key={i} className={getClass(value)} onClick={handleClick(value)}>
-          {value}
-        </button>
+        <MobileBoxHeaderButton key={i} value={value} getClass={getClass} handleClick={handleClick} />
       ))}
     </div>
   );
