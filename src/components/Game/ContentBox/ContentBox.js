@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cl from './ContentBox.module.scss';
 import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
 import ContentMobileBox from './ContentMobileBox';
-import ContentBoxTables from './ContentBoxTables';
+import ContentBoxDesktop from './ContentBoxDesktop';
 
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,10 +54,7 @@ const ContentBox = () => {
         <></>
       ) : (
         <>
-          <div className={cl.box}>
-            <ContentBoxTables tableData={tableData}/>
-            <ContentBoxFooter footer={footer} />
-          </div>
+          <ContentBoxDesktop tableData={tableData} footer={footer} />
           <ContentMobileBox tableData={tableData} footer={footer} />
         </>
       )}
