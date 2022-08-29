@@ -168,7 +168,7 @@
 
       &:first-child {
         flex: none;
-        width: 50px;
+        width: 62px;
         z-index: 50;
 
         ul {
@@ -279,12 +279,13 @@
       font: 300 1rem/38.5px var(--font-nunito);
 
       &:first-child {
-        width: 50px !important;
-        padding-left: 0;
+        width: 62px !important;
+        padding: 0 2px;
         text-align: center;
         display: grid;
         place-items: center;
         flex: none;
+				line-height: 1;
 
         > img {
           width: 40px;
