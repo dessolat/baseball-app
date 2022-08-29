@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setStatsPlayerFilterValue } from 'redux/statsReducer';
 import cl from './ContentPlayerFilterField.module.scss';
 
 const ContentPlayerFilterField = ({ mobile = false, styles = null }) => {
-  const [tempPlayerFilter, setTempPlayerFilter] = useState('');
+	const playerFilter = useSelector(state => state.stats.statsPlayerFilterValue)
+  const [tempPlayerFilter, setTempPlayerFilter] = useState(playerFilter);
 
   const filterTimeoutRef = useRef();
 
