@@ -237,7 +237,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                                 sum.push(team.name.slice(0, 2).toUpperCase());
                                 return sum;
                               }, [])
-                              .join('/')}
+                              .join(' / ')}
                           </div>
                           {getTableRows(row, cl, sortField[tableMode])}
                         </div>
