@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cl from './ContentBox.module.scss';
-import ContentBoxTable from './ContentBoxTable';
 import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
 import ContentMobileBox from './ContentMobileBox';
-import ContentBoxButtons from './ContentBoxButtons';
+import ContentBoxDesktop from './ContentBoxDesktop';
 
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,34 +54,7 @@ const ContentBox = () => {
         <></>
       ) : (
         <>
-          <div className={cl.box}>
-            <div className='container'>
-              <div className={cl.tables}>
-                <ContentBoxTable
-                  tableData={tableData}
-                  tableClass={cl.battingTable}
-                  tableName='batting'
-                  footerOffset={2}
-                  toFixList={['AVG', 'SLG', 'OBP', 'OPS', 'SB_pr', 'FLD']}
-                />
-                <ContentBoxTable
-                  tableData={tableData}
-                  tableClass={cl.pitchingTable}
-                  tableName='pitching'
-                  footerOffset={1}
-                  toFixList={['ERA']}
-                />
-                <ContentBoxTable
-                  tableData={tableData}
-                  tableClass={cl.catchingTable}
-                  tableName='catching'
-                  footerOffset={1}
-                />
-                <ContentBoxButtons />
-              </div>
-            </div>
-            <ContentBoxFooter footer={footer} />
-          </div>
+          <ContentBoxDesktop tableData={tableData} footer={footer} />
           <ContentMobileBox tableData={tableData} footer={footer} />
         </>
       )}

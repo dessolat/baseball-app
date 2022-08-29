@@ -20,16 +20,17 @@
   padding: 1.07rem 7rem;
   margin: 0 auto;
   display: flex;
-
+	
   > * + * {
-    margin-left: 3.1875rem;
+		margin-left: 3.1875rem;
   }
-
+	
   @media screen and (max-width: 800px) {
-    display: block;
+		display: block;
     width: min(90%, 260px);
 		height: calc(100vh - 30.63px - 112.5px - 26px);
 		overflow-y: scroll;
+		padding: 1.5rem 0;
 		
     > * + * {
 			margin-left: 0;

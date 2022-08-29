@@ -77,3 +77,5 @@ export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
 
   return result;
 };
+
+export const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
