@@ -289,7 +289,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           IP
         </SortField>
         <SortField
@@ -432,7 +432,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           NS
         </SortField>
         <SortField
@@ -440,7 +440,7 @@ const Content = () => {
           sortDirection={sortDirection}
           handleClick={handleFieldClick}
           arrowStyles={arrowStyles}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           NB
         </SortField>
       </>
@@ -658,7 +658,7 @@ const Content = () => {
           sortField={sortField}
           row={row}
           fixed={1}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           IP
         </ActiveBodyCell>
         <ActiveBodyCell
@@ -736,13 +736,13 @@ const Content = () => {
         <ActiveBodyCell
           sortField={sortField}
           row={row}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           NS
         </ActiveBodyCell>
         <ActiveBodyCell
           sortField={sortField}
           row={row}
-          addedClass={statsType === 'player' ? cl.wide2 : cl.wide3}>
+          addedClass={statsType === 'player' ? cl.wide2_5 : cl.wide3}>
           NB
         </ActiveBodyCell>
       </>
