@@ -122,55 +122,6 @@
     border-bottom: none;
   }
 
-  // &:nth-last-child(2),
-  // &:last-child {
-  // 	border-right: none;
-  // }
-  // &:nth-child(2n + 1) {
-  // 	border-left: .5px solid #DFDFDF;
-  // }
-
-  // &:first-child {
-  // 	font-size: 1.125rem !important;
-  // 	border-left: none;
-  // }
-
-  // &:nth-child(2) {
-  // 	border-left: none;
-  // }
-
-
-  // &:nth-child(2n + 3) {
-  // 	position: relative;
-
-  //   &:before {
-  //     content: '';
-  //     position: absolute;
-  //     width: 0.5px;
-  //     // height: 160%;
-  //     height: 4.8rem;
-  //     left: -0.25px;
-  //     // top: 20%;
-  //     top: calc(.8rem + 2.5px);
-  //     background-color: #DFDFDF;
-  // 		z-index: 0;
-  //   }
-
-  //   &::after {
-  //     content: '';
-  //     position: absolute;
-  //     width: 4.8rem;
-  //     // width: 70px;
-  //     height: 0.5px;
-  //     left: -2.4rem;
-  //     // left: -35px;
-  //     bottom: -2.5px;
-  //     // bottom: -0.25px;
-  //     background-color: #DFDFDF;
-  // 		z-index: 0;
-  //   }
-  // }
-
   &:hover {
     cursor: pointer;
   }
