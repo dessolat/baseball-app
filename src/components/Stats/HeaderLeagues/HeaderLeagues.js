@@ -42,18 +42,6 @@ const HeaderLeagues = () => {
 		// eslint-disable-next-line
   }, []);
 
-  // useLayoutEffect(() => {
-  //   leaguesRef.current.style.scrollBehavior = 'unset';
-  //   leaguesRef.current.scrollLeft = currentScroll;
-  //   leaguesRef.current.style.scrollBehavior = 'smooth';
-  //   // eslint-disable-next-line
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   setIsLeftScroll(currentScroll <= 0 ? false : true);
-  //   setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  // }, [currentScroll]);
-
   useEffect(() => {
     if (firstMountRef.current === true) {
       return;
