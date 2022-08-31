@@ -105,12 +105,6 @@ const HeaderLeagues = () => {
     return newLeagues;
     // eslint-disable-next-line
   }, [statsData]);
-  // const filteredLeagues = useMemo(() => {
-  //   const newLeagues = leagues.filter(league => games.some(game => game.league_id === league.id));
-  //   newLeagues.unshift({ id: -1, name: 'All' });
-  //   return newLeagues;
-  // 	// eslint-disable-next-line
-  // }, [leagues, games, statsType]);
 
   return (
     <div className={cl.leaguesWrapper}>
