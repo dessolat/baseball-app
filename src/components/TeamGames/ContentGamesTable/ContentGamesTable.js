@@ -3,6 +3,7 @@ import cl from './ContentGamesTable.module.scss';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getShortName } from 'utils';
+import ContentGamesTableHeader from './ContentGamesTableHeader';
 
 const MONTHS = {
   '01': 'january',
@@ -54,14 +55,7 @@ const ContentGamesTable = () => {
   return (
     <div className={cl.wrapper}>
       <div className={cl.table}>
-        <div className={cl.tableHeader}>
-          <div>Data</div>
-          <div>Home</div>
-          <div> </div>
-          <div>Guests</div>
-          <div> </div>
-          <div>Inn</div>
-        </div>
+        <ContentGamesTableHeader cl={cl} />
         <ul className={cl.rows}>
           {sortedGamesArray.map((game, index) => (
             <li key={game.id} className={cl.tableRow}>
