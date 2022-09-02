@@ -79,7 +79,6 @@
       overflow-x: hidden;
       overflow-y: scroll;
       scroll-behavior: smooth;
-      // max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 43px);
       max-height: calc(100vh - 30.63px - 132px - 33px);
 
 			&::-webkit-scrollbar {
@@ -90,7 +89,6 @@
 			overflow-x: hidden;
 			overflow-y: scroll;
 			scroll-behavior: smooth;
-			// max-height: calc(var(--vh, 1vh) * 100 - 30.63px - 132px - 43px);
 			max-height: calc(100vh - var(--landscape-nav-height) - 80.5px - 2rem);
 	
 			&::-webkit-scrollbar {
