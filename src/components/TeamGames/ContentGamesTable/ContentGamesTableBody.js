@@ -25,7 +25,7 @@ const ContentGamesTableBody = ({cl,games}) => {
 
   return (
     <ul className={cl.rows}>
-      {games.map((game, index) => (
+      {games.map((game) => (
         <li key={game.id} className={cl.tableRow}>
           <div>
             {game.date.slice(8, 10) +
