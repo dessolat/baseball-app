@@ -4,7 +4,7 @@ import ContentGamesTableRow from './ContentGamesTableRow';
 const ContentGamesTableBody = ({ cl, games }) => (
   <ul className={cl.rows}>
     {games.map(game => (
-      <ContentGamesTableRow cl={cl} game={game} />
+      <ContentGamesTableRow key={game.id} cl={cl} game={game} />
     ))}
   </ul>
 );

@@ -23,7 +23,7 @@ const ContentGamesTableRow = ({cl, game}) => {
 
   const isMobile = useSelector(state => state.shared.isMobile);
   return (
-    <li key={game.id} className={cl.tableRow}>
+    <li className={cl.tableRow}>
       <div>
         {game.date.slice(8, 10) +
           ' ' +
