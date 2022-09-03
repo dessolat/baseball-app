@@ -1,35 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getShortName } from 'utils';
+import RowDate from './RowDate';
 import RowLinks from './RowLinks';
-
-const MONTHS = {
-  '01': 'january',
-  '02': 'february',
-  '03': 'march',
-  '04': 'april',
-  '05': 'may',
-  '06': 'june',
-  '07': 'july',
-  '08': 'august',
-  '09': 'september',
-  10: 'october',
-  11: 'november',
-  12: 'december'
-};
 
 const ContentGamesTableRow = ({ cl, game }) => {
   const { gameType } = useParams();
 
-  const isMobile = useSelector(state => state.shared.isMobile);
   return (
     <li className={cl.tableRow}>
-      <div>
-        {game.date.slice(8, 10) +
-          ' ' +
-          (!isMobile ? MONTHS[game.date.slice(5, 7)].slice(0, 3) : MONTHS[game.date.slice(5, 7)])}
-      </div>
+      <RowDate date={game.date}/>
       <div className={cl.underlineHover}>
         <Link to={`/games/team/${gameType}/${game.homies.name}`}> {getShortName(game.homies.name, 22)}</Link>
       </div>
