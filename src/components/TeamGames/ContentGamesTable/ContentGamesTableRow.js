@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getShortName } from 'utils';
+import RowLinks from './RowLinks';
 
 const MONTHS = {
   '01': 'january',
@@ -18,8 +19,8 @@ const MONTHS = {
   12: 'december'
 };
 
-const ContentGamesTableRow = ({cl, game}) => {
-	const { gameType } = useParams();
+const ContentGamesTableRow = ({ cl, game }) => {
+  const { gameType } = useParams();
 
   const isMobile = useSelector(state => state.shared.isMobile);
   return (
@@ -41,13 +42,7 @@ const ContentGamesTableRow = ({cl, game}) => {
           {getShortName(game.visitors.name, 22)}
         </Link>
       </div>
-      <div className={cl.links}>
-        <div>
-          <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-          <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-          {game.has_records && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
-        </div>
-      </div>
+      <RowLinks game={game} />
       <div>{game.last_inn !== null ? `${game.last_inn} inn` : '—'} </div>
     </li>
   );
