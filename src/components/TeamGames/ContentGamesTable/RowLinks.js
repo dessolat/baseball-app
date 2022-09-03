@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import RowLink from './RowLink';
 
 const RowLinks = ({ game }) => {
   return (
     <div>
       <div>
-        <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-        <Link to={`/game/${game.id}?tab=plays`}>Plays</Link>
-        {game.has_records && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+        <RowLink to='box' id={game.id} />
+        <RowLink to='plays' id={game.id} />
+        {game.has_records && <RowLink to='videos' id={game.id} />}
       </div>
     </div>
   );
