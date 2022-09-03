@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { capitalizeFirstLetter } from 'utils';
 
 const RowLink = ({ to, id }) => {
-  return <Link to={`/game/${id}?tab=${to}`}>{to[0].toUpperCase() + to.slice(1)}</Link>;
+  return <Link to={`/game/${id}?tab=${to}`}>{capitalizeFirstLetter(to)}</Link>;
 };
 
 export default RowLink;
