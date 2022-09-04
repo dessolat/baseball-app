@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentGamesTableRow from './ContentGamesTableRow';
+import ContentGamesTableRow from './ContentGamesTableRow/ContentGamesTableRow';
 
 const ContentGamesTableBody = ({ cl, games }) => (
   <ul className={cl.rows}>
