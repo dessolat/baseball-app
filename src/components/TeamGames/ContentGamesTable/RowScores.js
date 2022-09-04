@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const RowScores = () => {
-	return (
-		<div>RowScores</div>
-	)
-}
-
-export default RowScores
+const RowScores = ({ game }) => (
+  <div>
+    {game.homies.score} - {game.visitors.score}
+  </div>
+);
+export default RowScores;
