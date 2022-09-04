@@ -2,20 +2,21 @@ import React from 'react';
 import cl from './ContentPlayersTable.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { setPlayerCurrentTeam as setCurrentTeam} from 'redux/playerStatsReducer';
+import { setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
+import ContentPlayersTableHeader from './ContentPlayersTableHeader';
 
 const ContentPlayersTable = () => {
-	const { teamName } = useParams();
+  const { teamName } = useParams();
 
   const teamData = useSelector(state => state.teamGames.teamData);
   const currentYear = useSelector(state => state.shared.currentYear);
   const currentLeague = useSelector(state => state.games.currentLeague);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const handlePlayerClick = () => {
-		dispatch(setCurrentTeam(teamName));
-	}
+  const handlePlayerClick = () => {
+    dispatch(setCurrentTeam(teamName));
+  };
 
   const PLAYERS_DATA =
     currentLeague.id !== -1
@@ -35,15 +36,7 @@ const ContentPlayersTable = () => {
   return (
     <div className={cl.wrapper}>
       <div className={cl.table}>
-        <div className={cl.tableHeader}>
-          <div>#</div>
-          <div>Player</div>
-          <div>POS</div>
-          <div>B/T</div>
-          <div>HT</div>
-          <div>WT</div>
-          <div>YOB</div>
-        </div>
+        <ContentPlayersTableHeader headerStyle={cl.tableHeader} />
         <ul className={cl.rows}>
           {PLAYERS_DATA.map((player, index) => (
             <li key={index} className={cl.tableRow}>
