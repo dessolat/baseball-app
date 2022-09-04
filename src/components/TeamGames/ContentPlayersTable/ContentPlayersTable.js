@@ -11,7 +11,7 @@ const ContentPlayersTable = () => {
     <div className={cl.wrapper}>
       <div className={cl.table}>
         <ContentPlayersTableHeader headerStyle={cl.tableHeader} />
-        <ContentPlayersTableBody cl={cl} teamName={teamName} />
+        <ContentPlayersTableBody cl={cl} />
       </div>
       <div className={cl.linkWrapper}>
         <Link to={`/stats/player?team=${teamName}`}>Go to Player Stat</Link>

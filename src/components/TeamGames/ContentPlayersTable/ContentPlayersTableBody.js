@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
 
-const ContentPlayersTableBody = ({ cl, teamName }) => {
+const ContentPlayersTableBody = ({ cl }) => {
   const teamData = useSelector(state => state.teamGames.teamData);
   const currentYear = useSelector(state => state.shared.currentYear);
   const currentLeague = useSelector(state => state.games.currentLeague);
