@@ -1,8 +1,8 @@
 import React from 'react'
 
-const RowInningsInfo = () => {
+const RowInningsInfo = ({lastInn}) => {
 	return (
-		<div>RowInningsInfo</div>
+		<div>{lastInn !== null ? `${lastInn} inn` : '—'} </div>
 	)
 }
 
