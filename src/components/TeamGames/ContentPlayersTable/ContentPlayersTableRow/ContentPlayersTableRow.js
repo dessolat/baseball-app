@@ -1,4 +1,5 @@
 import React from 'react';
+import RowPlayerHands from './RowPlayerHands';
 import RowPlayerName from './RowPlayerName';
 
 const ContentPlayersTableRow = ({ player, index, cl }) => (
@@ -6,9 +7,7 @@ const ContentPlayersTableRow = ({ player, index, cl }) => (
     <div>{index + 1}</div>
     <RowPlayerName player={player} nameClass={cl.underlineHover} />
     <div>{player.pos ?? '—'}</div>
-    <div>
-      {player.bat_hand}/{player.throw_hand}
-    </div>
+    <RowPlayerHands player={player} />
     <div>{player.height}</div>
     <div>{player.weight}</div>
     <div>{player.yob}</div>

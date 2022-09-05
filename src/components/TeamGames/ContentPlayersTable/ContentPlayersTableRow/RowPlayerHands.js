@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const RowPlayerHands = () => {
-	return (
-		<div>RowPlayerHands</div>
-	)
-}
+const RowPlayerHands = ({ player }) => (
+  <div>
+    {player.bat_hand}/{player.throw_hand}
+  </div>
+);
 
-export default RowPlayerHands
+export default RowPlayerHands;
