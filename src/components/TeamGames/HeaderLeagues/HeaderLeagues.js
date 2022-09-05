@@ -49,28 +49,6 @@ const HeaderLeagues = () => {
     // eslint-disable-next-line
   }, []);
 
-  // useLayoutEffect(() => {
-  //   leaguesRef.current.style.scrollBehavior = 'unset';
-  //   leaguesRef.current.scrollLeft = currentScroll;
-  //   leaguesRef.current.style.scrollBehavior = 'smooth';
-
-  //   setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-  //   setIsRightScroll(
-  //     leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
-  //   );
-  //   dispatch(setCurrentLeaguesScroll(leaguesRef.current.scrollLeft));
-  //   // eslint-disable-next-line
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   if (firstMountRef.current === true) {
-  //     return;
-  //   }
-
-  //   setIsLeftScroll(currentScroll <= 0 ? false : true);
-  //   setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
-  // }, [currentScroll]);
-
   useEffect(() => {
     if (firstMountRef.current === true) {
       return;
@@ -92,8 +70,7 @@ const HeaderLeagues = () => {
     setIsRightScroll(
       leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
     );
-    // setIsLeftScroll(currentScroll <= 0 ? false : true);
-    // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+
     // eslint-disable-next-line
   }, [teamData]);
 
