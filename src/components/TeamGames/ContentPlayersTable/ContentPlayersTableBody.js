@@ -24,7 +24,7 @@ const ContentPlayersTableBody = ({ cl }) => {
   return (
     <ul className={cl.rows}>
       {PLAYERS_DATA.map((player, i) => (
-        <ContentPlayersTableRow player={player} index={i} cl={cl} />
+        <ContentPlayersTableRow key={i} player={player} index={i} cl={cl} />
       ))}
     </ul>
   );

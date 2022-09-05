@@ -3,7 +3,7 @@ import RowPlayerHands from './RowPlayerHands';
 import RowPlayerName from './RowPlayerName';
 
 const ContentPlayersTableRow = ({ player, index, cl }) => (
-  <li key={index} className={cl.tableRow}>
+  <li className={cl.tableRow}>
     <div>{index + 1}</div>
     <RowPlayerName player={player} nameClass={cl.underlineHover} />
     <div>{player.pos ?? '—'}</div>
