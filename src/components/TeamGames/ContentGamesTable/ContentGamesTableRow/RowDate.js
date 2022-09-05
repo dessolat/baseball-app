@@ -20,8 +20,9 @@ const RowDate = ({ date }) => {
   const isMobile = useSelector(state => state.shared.isMobile);
 
   const dateFormat = !isMobile ? MONTHS[date.slice(5, 7)].slice(0, 3) : MONTHS[date.slice(5, 7)];
+	const dateString = date.slice(8, 10) + ' ' + dateFormat
 
-  return <div>{date.slice(8, 10) + ' ' + dateFormat}</div>;
+  return <div>{dateString}</div>;
 };
 
 export default RowDate;
