@@ -4,16 +4,11 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
-import TeamLogo from 'images/team_logo.png';
-import { useParams } from 'react-router-dom';
-import { getShortName } from 'utils';
-import ContentHeaderModeLinks from '../ContentMobileHeader/ContentHeaderModeLinks';
+import HeaderSelectionsTeamInfo from './HeaderSelectionsTeamInfo';
 
 const YEARS = [2022, 2021, 2020];
 
 const HeaderSelections = () => {
-  const { teamName } = useParams();
-
   const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
@@ -27,13 +22,7 @@ const HeaderSelections = () => {
   };
   return (
     <div className={cl.selections}>
-      <div className={cl.teamInfo}>
-        <img src={TeamLogo} alt='' className={cl.teamImg} />
-        <h2 className={cl.teamName}>{getShortName(teamName, 24)}</h2>
-        <div className={cl.linksWrapper}>
-          <ContentHeaderModeLinks />
-        </div>
-      </div>
+      <HeaderSelectionsTeamInfo cl={cl} />
       <div className={cl.years}>
         <Dropdown title={currentYear} options={YEARS} currentOption={currentYear} handleClick={handleClick} />
       </div>
