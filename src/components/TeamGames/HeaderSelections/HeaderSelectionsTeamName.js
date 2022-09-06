@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { getShortName } from 'utils';
+import { useParams } from 'react-router-dom';
 
-const HeaderSelectionsTeamName = () => {
-	return (
-		<div>HeaderSelectionsTeamName</div>
-	)
-}
+const HeaderSelectionsTeamName = ({ teamClass }) => {
+  const { teamName } = useParams();
 
-export default HeaderSelectionsTeamName
+  return <h2 className={teamClass}>{getShortName(teamName, 24)}</h2>;
+};
+
+export default HeaderSelectionsTeamName;
