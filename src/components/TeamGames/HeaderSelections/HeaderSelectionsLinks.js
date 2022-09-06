@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import ContentHeaderModeLinks from '../ContentMobileHeader/ContentHeaderModeLinks';
 
-const HeaderSelectionsLinks = () => {
-	return (
-		<div>HeaderSelectionsLinks</div>
-	)
-}
+const HeaderSelectionsLinks = ({ wrapperClass }) => {
+  return (
+    <div className={wrapperClass}>
+      <ContentHeaderModeLinks />
+    </div>
+  );
+};
 
-export default HeaderSelectionsLinks
+export default HeaderSelectionsLinks;
