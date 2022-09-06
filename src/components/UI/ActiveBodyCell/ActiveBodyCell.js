@@ -8,21 +8,16 @@ const ActiveBodyCell = ({ sortField, addedClass = null, row, fixed = null, noAct
   const classes = classNames(addedClass, {
     [cl.activeCell]: sortField === children && !noAction
   });
-  return (
-    <>
-      {isRow && (
-        <div className={classes}>
-          {row[children] < 0
-            ? '—'
-            : row[children] === 'inf' || row[children] === 'INF'
-            ? 'INF'
-            : fixed
-            ? Number(row[children]).toFixed(fixed)
-            : row[children]}
-        </div>
-      )}
-    </>
-  );
+
+  const cellValue =
+    row[children] < 0
+      ? '—'
+      : row[children] === 'inf' || row[children] === 'INF'
+      ? 'INF'
+      : fixed
+      ? Number(row[children]).toFixed(fixed)
+      : row[children];
+  return <>{isRow && <div className={classes}>{cellValue}</div>}</>;
 };
 
 export default ActiveBodyCell;
