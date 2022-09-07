@@ -132,11 +132,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               <div className={cl.fullHeader}>
                 <div className={cl.leftHeader} style={leftHeaderStyles}>
                   <div>Players</div>
-                  {/* <div>POS</div> */}
-                  {/* <div></div> */}
                 </div>
                 <div className={cl.rightHeader} ref={headerScroll}>
-                  {/* <div className={rightHeaderStyles.join(' ')} ref={headerScroll}> */}
                   <div>
                     <Dropdown
                       title={'Team'}
@@ -167,28 +164,18 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   className={cl.leftRows}
                   style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
                   {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                    (row, index) => {
-                      // const posValue = row.teams
-                      //   .reduce((sum, team) => {
-                      //     sum.push(team.pos);
-                      //     return sum;
-                      //   }, [])
-                      //   .join(' / ');
-                      return (
-                        <div key={index} className={cl.tableRow}>
-                          <div>
-                            <Link to={`/stats/player/${row.id}`}>
-                              {' '}
-                              <span>
-                                {row.name} {row.surname}
-                              </span>
-                            </Link>
-                          </div>
-                          {/* <div>{posValue}</div> */}
-                          {/* <div></div> */}
+                    (row, index) => (
+                      <div key={index} className={cl.tableRow}>
+                        <div>
+                          <Link to={`/stats/player/${row.id}`}>
+                            {' '}
+                            <span>
+                              {row.name} {row.surname}
+                            </span>
+                          </Link>
                         </div>
-                      );
-                    }
+                      </div>
+                    )
                   )}
                 </div>
                 <div
@@ -200,7 +187,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                       return (
                         <div
                           key={index}
-                          // className={rightRowStyles.join(' ')}
                           className={cl.tableRow}
                           style={{
                             width: !isScrollable ? '100%' : 'fit-content'
