@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import cl from './ContentPlayerTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,13 +6,10 @@ import { getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';
+import MobileTable from './MobileTable/MobileTable';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
-  const [isScrollable, setIsScrollable] = useState(true);
-
-  const headerScroll = useRef(null);
-  const rowsScroll = useRef(null);
 
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentGameType = useSelector(state => state.shared.currentGameType);
@@ -23,31 +20,8 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const statsData = useSelector(state => state.stats.statsData);
   const playerFilter = useSelector(state => state.stats.statsPlayerFilterValue);
   const currentLeague = useSelector(state => state.games.currentLeague);
-  const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (rowsScroll.current === null || !isMobile) return;
-
-    setTimeout(() => setIsScrollable(rowsScroll.current?.clientWidth < rowsScroll.current?.scrollWidth), 500);
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile) return;
-
-    setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
-  }, [tableMode, currentLeague.id, isMobile]);
-
-  useEffect(() => {
-    if (!isMobile || rowsScroll.current === null) return;
-
-    setTimeout(() => {
-      rowsScroll.current !== null &&
-        setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
-    }, 150);
-  }, [isMobile, mobileOrientation]);
 
   const handleTeamClick = team => {
     setCurrentTeam(team);
@@ -88,13 +62,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     [filteredStatsData]
   );
 
-  const sortedTeamOptions = useMemo(() => {
-    const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
-    sortedTeamsArr.unshift('All');
-
-    return sortedTeamsArr;
-  }, [teamOptions]);
-
   //Filtering by team
   filteredStatsData = useMemo(
     () =>
@@ -122,98 +89,20 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
-  const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
   return (
     <>
       {isMobile ? (
-        <div className={cl.mobileWrapper}>
-          {filteredStatsData.length !== 0 || playerFilter === '' ? (
-            <>
-              <div className={cl.fullHeader}>
-                <div className={cl.leftHeader} style={leftHeaderStyles}>
-                  <div>Players</div>
-                </div>
-                <div className={cl.rightHeader} ref={headerScroll}>
-                  <div>
-                    <Dropdown
-                      title={'Team'}
-                      options={sortedTeamOptions}
-                      currentOption={currentTeam}
-                      handleClick={handleTeamClick}
-                      wrapperStyles={{ position: 'initial' }}
-                      listStyles={{
-                        maxWidth: 125,
-                        left: '125px',
-                        top: '68px',
-                        maxHeight: '50vh',
-                        overflowY: 'scroll'
-                      }}
-                      itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                      shortNames={13}
-                      searchField={true}
-                    />
-                  </div>
-                  {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
-                    top: '.1rem',
-                    transform: 'translateX(-50%) scale(0.7)'
-                  })}
-                </div>
-              </div>
-              <div className={cl.sides}>
-                <div
-                  className={cl.leftRows}
-                  style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
-                  {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                    (row, index) => (
-                      <div key={index} className={cl.tableRow}>
-                        <div>
-                          <Link to={`/stats/player/${row.id}`}>
-                            {' '}
-                            <span>
-                              {row.name} {row.surname}
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-                <div
-                  className={cl.rightRows}
-                  onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
-                  ref={rowsScroll}>
-                  {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                    (row, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={cl.tableRow}
-                          style={{
-                            width: !isScrollable ? '100%' : 'fit-content'
-                          }}>
-                          <div>
-                            {row.teams
-                              .reduce((sum, team) => {
-                                sum.push(team.name.slice(0, 2).toUpperCase());
-                                return sum;
-                              }, [])
-                              .join(' / ')}
-                          </div>
-                          {getTableRows(row, cl, sortField[tableMode])}
-                        </div>
-                      );
-                    }
-                  )}
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className={cl.noPlayersFound}>No players found.</p>
-          )}
-          <div className={cl.contentPlayerFilterFieldWrapper}>
-            <ContentPlayerFilterField mobile={true} />
-          </div>
-        </div>
+        <MobileTable
+          cl={cl}
+          filteredStatsData={filteredStatsData}
+          teamOptions={teamOptions}
+          currentTeam={currentTeam}
+          handleTeamClick={handleTeamClick}
+					handleFieldClick={handleFieldClick}
+          getTableHeaders={getTableHeaders}
+					getTableRows={getTableRows}
+					getSortedStatsData={getSortedStatsData}
+        />
       ) : (
         <div className={cl.wrapper}>
           {filteredStatsData.length !== 0 || playerFilter === '' ? (
