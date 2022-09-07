@@ -36,15 +36,16 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   useEffect(() => {
     if (!isMobile) return;
-		
+
     setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
   }, [tableMode, currentLeague.id, isMobile]);
-	
-	useEffect(() => {
-		if (!isMobile || rowsScroll.current === null) return;
+
+  useEffect(() => {
+    if (!isMobile || rowsScroll.current === null) return;
 
     setTimeout(() => {
-      rowsScroll.current !== null && setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
+      rowsScroll.current !== null &&
+        setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
     }, 150);
   }, [isMobile, mobileOrientation]);
 
@@ -67,27 +68,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               (item.title === currentLeague.name || item.title === currentLeague.title) &&
               item.type === currentGameType
           )?.players[tableMode.toLowerCase()] || []
-        : // : statsData
-          //     .filter(league => league.type === currentGameType)
-          //     .reduce((sum, league) => {
-          //       league.players[tableMode.toLowerCase()].forEach(player => {
-          //         const playerIndex = sum.findIndex(sumPlayer => sumPlayer.id === player.id);
-
-          //         if (playerIndex !== -1) {
-          //           sum[playerIndex] = getObjectsSum(sum[playerIndex], player, [
-          //             'name',
-          //             'surname',
-          //             'teams',
-          //             'id'
-          //           ]);
-          //         } else {
-          //           sum.push(player);
-          //         }
-          //       });
-
-          //       return sum;
-          //     }, [])
-          statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.players[
+        : statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.players[
             tableMode.toLowerCase()
           ] || [],
 
@@ -142,13 +123,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
       : filteredStatsData;
 
   const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
-  // const rightRowStyles = [cl.tableRow];
-  // const rightHeaderStyles = [cl.rightHeader];
-  // if (tableMode === 'Fielding / Running') {
-  //   rightRowStyles.push(cl.widthAuto);
-  //   rightHeaderStyles.push(cl.widthAuto);
-  // }
-
   return (
     <>
       {isMobile ? (
@@ -162,7 +136,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                   {/* <div></div> */}
                 </div>
                 <div className={cl.rightHeader} ref={headerScroll}>
-                {/* <div className={rightHeaderStyles.join(' ')} ref={headerScroll}> */}
+                  {/* <div className={rightHeaderStyles.join(' ')} ref={headerScroll}> */}
                   <div>
                     <Dropdown
                       title={'Team'}
@@ -260,7 +234,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
             <div>
               <div className={cl.tableHeader}>
                 <div></div>
-                {/* <div className={cl.pos}>POS</div> */}
                 <div>
                   <Dropdown
                     title={'Team'}
@@ -276,13 +249,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
               <ul className={cl.rows}>
                 {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
                   (row, index) => {
-                    // const posValue = row.teams
-                    //   .reduce((sum, team) => {
-                    //     sum.push(team.pos);
-                    //     return sum;
-                    //   }, [])
-                    //   .join(' / ');
-
                     return (
                       <li key={index} className={cl.tableRow}>
                         <div>
@@ -293,7 +259,6 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                             </span>
                           </Link>
                         </div>
-                        {/* <div className={cl.pos}>{posValue}</div> */}
                         <div className={cl.teamNames}>
                           <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
                             {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
