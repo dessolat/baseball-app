@@ -55,21 +55,6 @@ const Filters = () => {
     animateScroll(e.currentTarget.name);
   };
 
-  // const leftScrollArrow = (
-  //   <Arrow
-  //     onClick={isLeftScroll ? scrollHorizontally : null}
-  //     style={isLeftScroll ? null : { visibility: 'hidden' }}
-  //   />
-  // );
-
-  // const rightScrollArrow = (
-  //   <Arrow
-  //     direction='right'
-  //     onClick={isRightScroll ? scrollHorizontally : null}
-  //     style={isRightScroll ? { marginLeft: '.3125rem' } : { visibility: 'hidden' }}
-  //   />
-  // );
-
   const renderScrollArrow = (flag, direction = 'left') => (
     <Arrow
       direction={direction}
@@ -82,11 +67,9 @@ const Filters = () => {
     <section className={'container ' + cl.filtersContainer}>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {/* {leftScrollArrow} */}
 					{renderScrollArrow(isLeftScroll)}
           <FiltersSituationsList ref={scrollRef} situations={situations} />
 					{renderScrollArrow(isRightScroll, 'right')}
-          {/* {rightScrollArrow} */}
         </div>
         {tab === 'videos' && <FiltersViewModes />}
       </div>
