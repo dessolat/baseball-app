@@ -55,30 +55,26 @@ const Filters = () => {
     animateScroll(e.currentTarget.name);
   };
 
-  // const leftScrollArrow = isLeftScroll ? (
-  //   <Arrow onClick={scrollHorizontally} />
-  // ) : (
-  //   <Arrow style={{ visibility: 'hidden' }} />
+  // const leftScrollArrow = (
+  //   <Arrow
+  //     onClick={isLeftScroll ? scrollHorizontally : null}
+  //     style={isLeftScroll ? null : { visibility: 'hidden' }}
+  //   />
   // );
 
-	// const rightScrollArrow = isRightScroll ? (
-	// 	<Arrow direction='right' onClick={scrollHorizontally} style={{ marginLeft: '.3125rem' }} />
-	// ) : (
-	// 	<Arrow style={{ visibility: 'hidden' }} />
-	// );
+  // const rightScrollArrow = (
+  //   <Arrow
+  //     direction='right'
+  //     onClick={isRightScroll ? scrollHorizontally : null}
+  //     style={isRightScroll ? { marginLeft: '.3125rem' } : { visibility: 'hidden' }}
+  //   />
+  // );
 
-  const leftScrollArrow = (
+  const renderScrollArrow = (flag, direction = 'left') => (
     <Arrow
-      onClick={isLeftScroll ? scrollHorizontally : null}
-      style={isLeftScroll ? null : { visibility: 'hidden' }}
-    />
-  );
-
-  const rightScrollArrow = (
-    <Arrow
-      direction='right'
-      onClick={isRightScroll ? scrollHorizontally : null}
-      style={isRightScroll ? { marginLeft: '.3125rem' } : { visibility: 'hidden' }}
+      direction={direction}
+      onClick={flag ? scrollHorizontally : null}
+      style={flag ? (direction === 'right' ? { marginLeft: '.3125rem' } : null) : { visibility: 'hidden' }}
     />
   );
 
@@ -86,9 +82,11 @@ const Filters = () => {
     <section className={'container ' + cl.filtersContainer}>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-          {leftScrollArrow}
+          {/* {leftScrollArrow} */}
+					{renderScrollArrow(isLeftScroll)}
           <FiltersSituationsList ref={scrollRef} situations={situations} />
-          {rightScrollArrow}
+					{renderScrollArrow(isRightScroll, 'right')}
+          {/* {rightScrollArrow} */}
         </div>
         {tab === 'videos' && <FiltersViewModes />}
       </div>
