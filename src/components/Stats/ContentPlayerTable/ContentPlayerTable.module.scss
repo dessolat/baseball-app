@@ -104,7 +104,6 @@
   border-top: 0.5px solid #cdcccc;
   width: 100%;
   padding: 0;
-  // position: relative;
   padding-top: 40px;
 
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
@@ -132,10 +131,6 @@
     > div {
       &:first-child {
         flex: 1 100px;
-
-        // @media screen and (max-width: 800px) {
-        //   width: calc(9.5rem - 8.5px);
-        // }
       }
     }
   }
@@ -149,18 +144,12 @@
     height: 38.5px;
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
-    // width: fit-content;
     width:inherit;
     overflow-x: hidden;
     scroll-behavior: initial;
 
 		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-			// flex: 1;
 			justify-content: space-between;
-
-			// &.widthAuto {
-			// 	width: auto;
-			// }
 		}
 
     > div {
@@ -230,8 +219,6 @@
       &:first-child {
         padding-left: 8.5px;
         width: 135px;
-        // flex: 0 0 135px;
-        // flex: 1 100px;
         line-height: 15px;
       }
 
