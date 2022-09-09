@@ -4,12 +4,10 @@ import FiltersSituationsList from '../FiltersSituationsList/FiltersSituationsLis
 import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
-// import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
 
 const Filters = () => {
-  // const [searchParams] = useSearchParams();
   const tab = getSearchParam('tab');
   const situations = useSelector(state => state.game.situations);
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
