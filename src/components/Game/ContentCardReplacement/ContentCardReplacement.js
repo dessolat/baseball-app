@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getShortName } from 'utils';
 import cl from './ContentCardReplacement.module.scss';
-import ContentCardReplacementItem from './ContentCardReplacementItem';
+import ContentCardReplacementItem from './ContentCardReplacementItem/ContentCardReplacementItem';
 
 const ContentCardReplacement = ({ events }) => {
 	const isVideo = useSelector(state => state.game.isVideo);

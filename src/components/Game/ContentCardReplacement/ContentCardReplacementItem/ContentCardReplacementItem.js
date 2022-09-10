@@ -1,8 +1,8 @@
 import React from 'react';
-import cl from './ContentCardReplacement.module.scss';
+import cl from '../ContentCardReplacement.module.scss';
 import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
-import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
+import ContentCardPortrait from '../../ContentCardPortrait/ContentCardPortrait';
 import SwitchArrow from 'icons/switch_arrow.svg';
 
 const ContentCardReplacementItem = ({ event, header = null }) => {
