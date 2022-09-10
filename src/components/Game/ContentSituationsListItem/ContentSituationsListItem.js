@@ -4,6 +4,7 @@ import ContentCardSimple from '../ContentCardSimple/ContentCardSimple';
 import ContentCardComplex from '../ContentCardComplex/ContentCardComplex';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 
 const ENDINGS = ['ST', 'ND', 'RD', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH', 'TH'];
 
@@ -29,12 +30,11 @@ const ContentSituationsListItem = (
 
   // }, []);
 
-  const classNames = [cl.listItem];
-
-  currentCard.moments &&
-    player.moments[0].inner.id === currentCard.moments[0].inner.id &&
-    classNames.push(cl.active);
-	!isVideo && classNames.push(cl.dataBeforeNoVideo)
+	const itemClasses = classNames(cl.listItem, {
+		[cl.active]: currentCard.moments &&
+    player.moments[0].inner.id === currentCard.moments[0].inner.id,
+		[cl.dataBeforeNoVideo]: !isVideo
+	})
 
   //Filling situationsArr with moments where icons.rect_text exists
   const situationsArr = [];
@@ -62,7 +62,7 @@ const ContentSituationsListItem = (
       ref={activeRef}
       data-before={dataBefore}
       data-after={isDataAfter}
-      className={classNames.join(' ')}
+      className={itemClasses}
       style={styles}
       onClick={situationClick(player)}>
       {player.type === 'Replacement' ? (
