@@ -23,7 +23,6 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
       <div className={cl.textBlock}>
         {header !== null && !isVideo && <p className={cl.textBold}>{header}</p>}
-        {/* <p className={cl.text}>{event.description}</p> */}
         <div className={cl.text}>
           <div className={cl.textRow}>
             <p className={cl.leftSide}>{event.left_row1_text || event.left_row1_index}</p>
