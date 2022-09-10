@@ -16,6 +16,9 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
 
   const replaceClasses = [cl.replace];
   !isVideo && replaceClasses.push(cl.noVideo);
+
+  const firstRowRightStyles = event.right_row1_index ? { fontWeight: 700 } : null;
+  const secondRowLeftStyles = event.left_row2_index ? { fontWeight: 700, textAlign: 'right' } : null;
   return (
     <div
       className={replaceClasses.join(' ')}
@@ -27,21 +30,17 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
           <div className={cl.textRow}>
             <p className={cl.leftSide}>{event.left_row1_text || event.left_row1_index}</p>
             <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
-            <p className={cl.rightSide} style={event.right_row1_index ? { fontWeight: 700 } : null}>
+            <p className={cl.rightSide} style={firstRowRightStyles}>
               {event.right_row1_text || event.right_row1_index}
             </p>
           </div>
-          {(event.left_row2_index || event.left_row2_text) && (
+          {event.rows_numbers === 2 && (
             <div className={cl.textRow}>
-              <p
-                className={cl.leftSide}
-                style={event.left_row2_index ? { fontWeight: 700, textAlign: 'right' } : null}>
+              <p className={cl.leftSide} style={secondRowLeftStyles}>
                 {event.left_row2_text || event.left_row2_index}
               </p>
               <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
-              <p className={cl.rightSide} style={event.right_row2_index ? { fontWeight: 700 } : null}>
-                {event.right_row2_text || event.right_row2_index}
-              </p>
+              <p className={cl.rightSide}>{event.right_row2_text || event.right_row2_index}</p>
             </div>
           )}
         </div>
