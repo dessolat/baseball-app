@@ -14,7 +14,7 @@
 
 	&.noVideo {
 		> *:nth-child(2) {
-			width: 18rem;
+			width: 19.5rem;
 		}
 
 		> p {
@@ -37,7 +37,23 @@
 .text {
 	font: 400 .875rem var(--font-nunito);
   line-height: 1.36rem;
-	flex: 1 0;
+	// flex: 1 0;
+}
+
+.textRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.switchArrow {
+	padding: 0 8px;
+	align-self: center;
+}
+
+.leftSide, .rightSide {
+	flex: 1;
+	line-height: 19.1px;
 }
 
 .textBold {
