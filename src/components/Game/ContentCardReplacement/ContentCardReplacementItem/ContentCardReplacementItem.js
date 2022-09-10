@@ -4,6 +4,7 @@ import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
 import ContentCardPortrait from '../../ContentCardPortrait/ContentCardPortrait';
 import ItemRow from './ItemRow';
+import classNames from 'classnames';
 
 const ContentCardReplacementItem = ({ event, header = null }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -14,12 +15,10 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
   const rightImgClass = !imagesData[event.old_player] ? cl.default : '';
   const rightImgSrc = imagesData[event.old_player] || PortraitImg;
 
-  const replaceClasses = [cl.replace];
-  !isVideo && replaceClasses.push(cl.noVideo);
-
+  const replaceClasses = classNames(cl.replace, { [cl.noVideo]: !isVideo });
   return (
     <div
-      className={replaceClasses.join(' ')}
+      className={replaceClasses}
       style={event.old_player === null && !isVideo ? { justifyContent: 'flex-start' } : null}>
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
       <div className={cl.textBlock}>
