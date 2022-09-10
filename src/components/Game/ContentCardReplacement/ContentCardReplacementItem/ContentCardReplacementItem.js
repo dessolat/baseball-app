@@ -3,7 +3,7 @@ import cl from '../ContentCardReplacement.module.scss';
 import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
 import ContentCardPortrait from '../../ContentCardPortrait/ContentCardPortrait';
-import SwitchArrow from 'icons/switch_arrow.svg';
+import ItemRow from './ItemRow';
 
 const ContentCardReplacementItem = ({ event, header = null }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -17,8 +17,6 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
   const replaceClasses = [cl.replace];
   !isVideo && replaceClasses.push(cl.noVideo);
 
-  const firstRowRightStyles = event.right_row1_index ? { fontWeight: 700 } : null;
-  const secondRowLeftStyles = event.left_row2_index ? { fontWeight: 700, textAlign: 'right' } : null;
   return (
     <div
       className={replaceClasses.join(' ')}
@@ -27,21 +25,23 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
       <div className={cl.textBlock}>
         {header !== null && !isVideo && <p className={cl.textBold}>{header}</p>}
         <div className={cl.text}>
-          <div className={cl.textRow}>
+          <ItemRow event={event} rowNumber={1} cl={cl} />
+          {/* <div className={cl.textRow}>
             <p className={cl.leftSide}>{event.left_row1_text || event.left_row1_index}</p>
             <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
             <p className={cl.rightSide} style={firstRowRightStyles}>
               {event.right_row1_text || event.right_row1_index}
             </p>
-          </div>
+          </div> */}
           {event.rows_numbers === 2 && (
-            <div className={cl.textRow}>
-              <p className={cl.leftSide} style={secondRowLeftStyles}>
-                {event.left_row2_text || event.left_row2_index}
-              </p>
-              <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
-              <p className={cl.rightSide}>{event.right_row2_text || event.right_row2_index}</p>
-            </div>
+            <ItemRow event={event} rowNumber={2} cl={cl} />
+            // <div className={cl.textRow}>
+            //   <p className={cl.leftSide} style={secondRowLeftStyles}>
+            //     {event.left_row2_text || event.left_row2_index}
+            //   </p>
+            //   <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
+            //   <p className={cl.rightSide}>{event.right_row2_text || event.right_row2_index}</p>
+            // </div>
           )}
         </div>
       </div>
