@@ -87,9 +87,6 @@ const Game = () => {
   };
 
   const isFilters = currentTab !== 'box';
-
-	console.log(error);
-	console.log(errorMsg);
   return (
     <>
       {errorMsg !== null && innings.length === 0 ? (
