@@ -30,11 +30,10 @@ const ContentSituationsListItem = (
 
   // }, []);
 
-	const itemClasses = classNames(cl.listItem, {
-		[cl.active]: currentCard.moments &&
-    player.moments[0].inner.id === currentCard.moments[0].inner.id,
-		[cl.dataBeforeNoVideo]: !isVideo
-	})
+  const itemClasses = classNames(cl.listItem, {
+    [cl.active]: currentCard.moments && player.moments[0].inner.id === currentCard.moments[0].inner.id,
+    [cl.dataBeforeNoVideo]: !isVideo
+  });
 
   //Filling situationsArr with moments where icons.rect_text exists
   const situationsArr = [];
@@ -50,13 +49,14 @@ const ContentSituationsListItem = (
     : null;
   const isDataAfter = beforeAfterData[cardIndex]?.after && situationFilter === 'All';
 
-	const styles = {}
-	if (dataBefore && situationFilter !== 'All') styles.marginTop = cardIndex === 0 ? 24 : 26
-	if (!isDataAfter && situationFilter !== 'All') styles.marginBottom = 0
+  const styles = {};
+  if (dataBefore && situationFilter !== 'All') styles.marginTop = cardIndex === 0 ? 24 : 26;
+  if (!isDataAfter && situationFilter !== 'All') styles.marginBottom = 0;
 
+  // const dataAfterClasses = [cl.dataAfter]
+  // !isVideo && dataAfterClasses.push(cl.dataAfterNoVideo)
 
-	const dataAfterClasses = [cl.dataAfter]
-	!isVideo && dataAfterClasses.push(cl.dataAfterNoVideo)
+  const dataAfterClasses = classNames(cl.dataAfter, { [cl.dataAfterNoVideo]: !isVideo });
   return (
     <li
       ref={activeRef}
@@ -73,7 +73,7 @@ const ContentSituationsListItem = (
         <ContentCardSimple player={player} />
       )}
       {isDataAfter && (
-        <div className={dataAfterClasses.join(' ')}>
+        <div className={dataAfterClasses}>
           <span>RUNS: {beforeAfterData[cardIndex].after.runs}</span>
           <span>HITS: {beforeAfterData[cardIndex].after.hits}</span>
           <span>ERRORS: {beforeAfterData[cardIndex].after.err}</span>
