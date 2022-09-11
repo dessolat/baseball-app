@@ -53,9 +53,6 @@ const ContentSituationsListItem = (
   if (dataBefore && situationFilter !== 'All') styles.marginTop = cardIndex === 0 ? 24 : 26;
   if (!isDataAfter && situationFilter !== 'All') styles.marginBottom = 0;
 
-  // const dataAfterClasses = [cl.dataAfter]
-  // !isVideo && dataAfterClasses.push(cl.dataAfterNoVideo)
-
   const dataAfterClasses = classNames(cl.dataAfter, { [cl.dataAfterNoVideo]: !isVideo });
   return (
     <li
