@@ -3,8 +3,8 @@ import cl from '../ContentCardReplacement.module.scss';
 import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
 import ContentCardPortrait from '../../ContentCardPortrait/ContentCardPortrait';
-import ItemRow from './ItemRow';
 import classNames from 'classnames';
+import ItemTextBlock from './ItemTextBlock';
 
 const ContentCardReplacementItem = ({ event, header = null }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -21,13 +21,7 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
       className={replaceClasses}
       style={event.old_player === null && !isVideo ? { justifyContent: 'flex-start' } : null}>
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
-      <div className={cl.textBlock}>
-        {header !== null && !isVideo && <p className={cl.textBold}>{header}</p>}
-        <div className={cl.text}>
-          <ItemRow event={event} rowNumber={1} cl={cl} />
-          {event.rows_numbers === 2 && <ItemRow event={event} rowNumber={2} cl={cl} />}
-        </div>
-      </div>
+      <ItemTextBlock cl={cl} header={header} event={event} isVideo={isVideo} />
       <ContentCardPortrait
         className={rightImgClass}
         src={rightImgSrc}
