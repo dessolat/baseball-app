@@ -11,7 +11,9 @@ const ItemRow = ({ event, rowNumber = 1, cl }) => {
       <p className={cl.leftSide} style={secondRowLeftStyles}>
         {event[`left_row${rowNumber}_text`] || event[`left_row${rowNumber}_index`]}
       </p>
-      <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
+      <div className={cl.arrowWrapper}>
+        <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
+      </div>
       <p className={cl.rightSide} style={firstRowRightStyles}>
         {event[`right_row${rowNumber}_text`] || event[`right_row${rowNumber}_index`]}
       </p>
