@@ -5,6 +5,7 @@ import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
+import PlaysFieldDistanceValues from './PlaysFieldDistanceValues';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -102,17 +103,13 @@ const PlaysField = ({ currentMoment }) => {
     };
   }, [currentMoment]);
 
-  const initSpeed = currentMoment?.metering?.pitch?.start_speed;
-	const plateSpeed = currentMoment?.metering?.pitch?.end_speed;
-	const releaseHeight = currentMoment?.metering?.pitch?.release_height
-	const releaseSide = currentMoment?.metering?.pitch?.release_side
+  const handleArrowClick = () => dispatch(setPitchState('Stats'));
 
-	const handleArrowClick = () => dispatch(setPitchState('Stats'))
+  const initSpeed = currentMoment?.metering?.pitch?.start_speed;
+  const plateSpeed = currentMoment?.metering?.pitch?.end_speed;
 
   const releaseValue = initSpeed?.toFixed(1) ?? '';
-	const platePointValue = plateSpeed?.toFixed(1) ?? '';
-	const releaseHeightValue = releaseHeight?.toFixed(1) ?? '';
-	const releaseSideValue = releaseSide?.toFixed(1) ?? '';
+  const platePointValue = plateSpeed?.toFixed(1) ?? '';
   return (
     <div className={pitchState === 'Field' ? cl.field : cl.dnone} ref={parent}>
       <img className={cl.grid} src={gridImg} alt='grid' />
@@ -130,12 +127,7 @@ const PlaysField = ({ currentMoment }) => {
           </p>
           <span className={cl.regularMobileValue}>{platePointValue} mph</span>
         </div>
-        <div className={cl.releaseData}>
-          <p className={cl.subHeader}>Release height</p>
-          <p className={cl.regularValue}>{releaseHeightValue} m</p>
-          <p className={cl.subHeader}>Release side</p>
-          <p className={cl.regularValue}>{releaseSideValue} m</p>
-        </div>
+        <PlaysFieldDistanceValues currentMoment={currentMoment} cl={cl} />
       </div>
       <Arrow
         direction='right'
