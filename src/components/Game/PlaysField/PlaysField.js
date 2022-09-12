@@ -5,8 +5,8 @@ import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import PlaysFieldDistanceValues from './PlaysFieldDistanceValues';
-import PlaysFieldSpeedValues from './PlaysFieldSpeedValues';
+import PlaysFieldDistanceValues from './PlaysFieldValues/PlaysFieldDistanceValues';
+import PlaysFieldSpeedValues from './PlaysFieldValues/PlaysFieldSpeedValues';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
