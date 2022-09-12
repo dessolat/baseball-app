@@ -102,9 +102,15 @@ const PlaysField = ({ currentMoment }) => {
     };
   }, [currentMoment]);
 
-  const initSpeed = currentMoment?.metering?.pitch?.init_speed_x;
-  const releaseValue = initSpeed ? initSpeed.toFixed(1) : '';
+  const initSpeed = currentMoment?.metering?.pitch?.start_speed;
+	const plateSpeed = currentMoment?.metering?.pitch?.end_speed;
+	const releaseHeight = currentMoment?.metering?.pitch?.release_height
+	const releaseSide = currentMoment?.metering?.pitch?.release_side
 
+  const releaseValue = initSpeed?.toFixed(1) ?? '';
+	const platePointValue = plateSpeed?.toFixed(1) ?? '';
+	const releaseHeightValue = releaseHeight?.toFixed(1) ?? '';
+	const releaseSideValue = releaseSide?.toFixed(1) ?? '';
   return (
     <div className={pitchState === 'Field' ? cl.field : cl.dnone} ref={parent}>
       <img className={cl.grid} src={gridImg} alt='grid' />
@@ -116,20 +122,24 @@ const PlaysField = ({ currentMoment }) => {
             <span className={cl.plateTitle}>/ Plate point speed</span>
           </p>
           <span className={cl.releaseValue}>{releaseValue} mph</span>
-          <span className={cl.regularValue}>/ 73.7 mph</span>
+          <span className={cl.regularValue}>/ {platePointValue} mph</span>
           <p className={cl.plateMobileHeader}>
             <span className={cl.plateTitle}>Plate point speed</span>
           </p>
-          <span className={cl.regularMobileValue}>73.7 mph</span>
+          <span className={cl.regularMobileValue}>{platePointValue} mph</span>
         </div>
         <div className={cl.releaseData}>
           <p className={cl.subHeader}>Release height</p>
-          <p className={cl.regularValue}>1.7 m</p>
+          <p className={cl.regularValue}>{releaseHeightValue} m</p>
           <p className={cl.subHeader}>Release side</p>
-          <p className={cl.regularValue}>0.3 m</p>
+          <p className={cl.regularValue}>{releaseSideValue} m</p>
         </div>
       </div>
-			<Arrow direction='right' onClick={() => dispatch(setPitchState('Stats'))} style={{position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: .5}} />
+      <Arrow
+        direction='right'
+        onClick={() => dispatch(setPitchState('Stats'))}
+        style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
+      />
     </div>
   );
 };
