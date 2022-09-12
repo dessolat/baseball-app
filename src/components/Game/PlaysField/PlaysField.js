@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import PlaysFieldDistanceValues from './PlaysFieldDistanceValues';
+import PlaysFieldSpeedValues from './PlaysFieldSpeedValues';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -104,29 +105,12 @@ const PlaysField = ({ currentMoment }) => {
   }, [currentMoment]);
 
   const handleArrowClick = () => dispatch(setPitchState('Stats'));
-
-  const initSpeed = currentMoment?.metering?.pitch?.start_speed;
-  const plateSpeed = currentMoment?.metering?.pitch?.end_speed;
-
-  const releaseValue = initSpeed?.toFixed(1) ?? '';
-  const platePointValue = plateSpeed?.toFixed(1) ?? '';
   return (
     <div className={pitchState === 'Field' ? cl.field : cl.dnone} ref={parent}>
       <img className={cl.grid} src={gridImg} alt='grid' />
       <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
       <div className={cl.top}>
-        <div className={cl.speedData}>
-          <p className={cl.subHeader}>
-            <span className={cl.releaseSpeed}>Release speed</span>
-            <span className={cl.plateTitle}>/ Plate point speed</span>
-          </p>
-          <span className={cl.releaseValue}>{releaseValue} mph</span>
-          <span className={cl.regularValue}>/ {platePointValue} mph</span>
-          <p className={cl.plateMobileHeader}>
-            <span className={cl.plateTitle}>Plate point speed</span>
-          </p>
-          <span className={cl.regularMobileValue}>{platePointValue} mph</span>
-        </div>
+        <PlaysFieldSpeedValues currentMoment={currentMoment} cl={cl} />
         <PlaysFieldDistanceValues currentMoment={currentMoment} cl={cl} />
       </div>
       <Arrow
