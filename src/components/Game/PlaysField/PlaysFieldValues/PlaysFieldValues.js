@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import PlaysFieldDistanceValues from './PlaysFieldDistanceValues';
+import PlaysFieldSpeedValues from './PlaysFieldSpeedValues';
 
-const PlaysFieldValues = () => {
-	return (
-		<div>PlaysFieldValues</div>
-	)
-}
+const PlaysFieldValues = ({ currentMoment, cl }) => (
+  <div className={cl.top}>
+    <PlaysFieldSpeedValues currentMoment={currentMoment} cl={cl} />
+    <PlaysFieldDistanceValues currentMoment={currentMoment} cl={cl} />
+  </div>
+);
 
-export default PlaysFieldValues
+export default PlaysFieldValues;
