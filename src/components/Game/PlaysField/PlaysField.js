@@ -107,6 +107,8 @@ const PlaysField = ({ currentMoment }) => {
 	const releaseHeight = currentMoment?.metering?.pitch?.release_height
 	const releaseSide = currentMoment?.metering?.pitch?.release_side
 
+	const handleArrowClick = () => dispatch(setPitchState('Stats'))
+
   const releaseValue = initSpeed?.toFixed(1) ?? '';
 	const platePointValue = plateSpeed?.toFixed(1) ?? '';
 	const releaseHeightValue = releaseHeight?.toFixed(1) ?? '';
@@ -137,7 +139,7 @@ const PlaysField = ({ currentMoment }) => {
       </div>
       <Arrow
         direction='right'
-        onClick={() => dispatch(setPitchState('Stats'))}
+        onClick={handleArrowClick}
         style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
       />
     </div>

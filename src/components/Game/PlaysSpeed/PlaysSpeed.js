@@ -110,6 +110,8 @@ const PlaysSpeed = ({ currentMoment }) => {
   //   legend: { position: 'none' }
   // };
 
+  const handleArrowClick = () => dispatch(setPitchState('Field'));
+
   return (
     <div ref={ref} className={pitchState !== 'Field' ? cl.speed : cl.speed + ' ' + cl.dnone}>
       {chartData.length !== 0 && (
@@ -157,7 +159,7 @@ const PlaysSpeed = ({ currentMoment }) => {
         // </>
       )}
       <div className={cl.arrowWrapper}>
-        <Arrow onClick={() => dispatch(setPitchState('Field'))} />
+        <Arrow onClick={handleArrowClick} />
       </div>
     </div>
   );
