@@ -12,7 +12,7 @@ const useGameFetch = url => {
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
 
-	const { gameId } = useParams();
+  const { gameId } = useParams();
 
   useEffect(() => {
     error && setError(null);
@@ -37,13 +37,13 @@ const useGameFetch = url => {
         firstTime && setIsLoading(true);
         const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
-				dispatch(setErrorMsg(null))
+        dispatch(setErrorMsg(null));
         error && setError(null);
         const dataLength = JSON.stringify(resp.data).length;
 
-				intervalRef.current = setTimeout(() => {
-					dispatch(getFullData(false, innerUrl));
-				}, 5000);
+        intervalRef.current = setTimeout(() => {
+          dispatch(getFullData(false, innerUrl));
+        }, 5000);
 
         if (dataRef.current === dataLength) return;
         dataRef.current = dataLength;
@@ -56,25 +56,26 @@ const useGameFetch = url => {
 
           dispatch(setPlayersInfo(newPlayersInfo));
           dispatch(
-            setIsVideo(resp.data.innings[0]['top/guests'][0].moments[0].video !== null ? true : false)
+            setIsVideo(
+              resp.data.innings[0]['top/guests'][0].moments[0].video !== null || gameId === '958' ? true : false
+            )
           );
         }
 
         dispatch(setFullData(resp.data));
-
       } catch (err) {
-				setError(err.message);
-				!err.__CANCEL__ && dispatch(setErrorMsg(err.message))
-				console.log(err.__CANCEL__);
-				if (!err.__CANCEL__) {
-					intervalRef.current = setTimeout(() => {
-						dispatch(getFullData(false, innerUrl));
-					}, 5000);
-				}
+        setError(err.message);
+        !err.__CANCEL__ && dispatch(setErrorMsg(err.message));
+        console.log(err.__CANCEL__);
+        if (!err.__CANCEL__) {
+          intervalRef.current = setTimeout(() => {
+            dispatch(getFullData(false, innerUrl));
+          }, 5000);
+        }
       } finally {
-				if (firstTime) {
+        if (firstTime) {
           setIsLoading(false);
-					dispatch(setCurrentGameId(gameId))
+          dispatch(setCurrentGameId(gameId));
         }
       }
     };
