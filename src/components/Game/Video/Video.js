@@ -97,7 +97,7 @@ const Video = ({ videoId }) => {
         // momentRef.current += 1;
         if (modeRef.current === 'pause') {
           videoHandling();
-					return
+          return;
         }
         const momentIndex = currentCard.moments.findIndex(
           moment => moment.inner.id === currentMoment.inner.id
@@ -105,7 +105,7 @@ const Video = ({ videoId }) => {
         if (momentIndex < currentCard.moments.length - 1) {
           // if (momentRef.current < currentCard.moments.length) {
           videoRef.current.seekTo(currentCard.moments[momentIndex + 1].video.seconds_from);
-					dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]))
+          dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]));
           // videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
           endRef.current = currentCard.moments[momentIndex + 1].video.seconds_to;
           // endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
@@ -117,7 +117,7 @@ const Video = ({ videoId }) => {
           cardIndex++;
 
           if (cardIndex < filteredCards.length) {
-            dispatch(setCurrentCard({...filteredCards[cardIndex], manualMoment: true}));
+            dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: true }));
             return;
           }
 
@@ -131,7 +131,8 @@ const Video = ({ videoId }) => {
     <div className={cl.videoWrapper + ' ' + cl.videoOne}>
       {Object.keys(currentCard).length !== 0 ? (
         <YouTube
-          videoId={'WCjLd7QAJq8'}
+          videoId={videoId}
+          // videoId={'WCjLd7QAJq8'}
           onReady={onReady}
           opts={{
             height: '100%',
