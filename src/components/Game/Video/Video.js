@@ -5,7 +5,7 @@ import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 
-const Video = () => {
+const Video = ({ videoId }) => {
   const videoRef = useRef(null);
   const endRef = useRef(null);
   const intervalRef = useRef(null);

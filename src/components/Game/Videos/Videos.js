@@ -8,7 +8,7 @@ const Videos = () => {
   return (
     <>
       <div className={cl.wrapper}>
-        <Video />
+        <Video videoId={videoId1} />
       </div>
       <div className={cl.eventsWrapper}>
         <PlaysEvents moments={useCurrentEvents()} />
