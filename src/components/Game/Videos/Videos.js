@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 
 const Videos = () => {
   const preview = useSelector(state => state.game.preview);
-  const { pitch_link } = preview.camera_info;
+  const { pitch_link, bat_left_link, bat_right_link, left_add, left_main, right_add, right_main } =
+    preview.camera_info;
 
   const videoId1 = getYouTubeID(pitch_link);
   return (
