@@ -35,7 +35,9 @@ const Videos = () => {
 
   const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
-    [cl.videos2]: viewMode !== 'mode-1'
+    [cl.videos2]: viewMode === 'mode-2',
+    [cl.videos3]: viewMode === 'mode-3',
+    [cl.videos4]: viewMode === 'mode-4'
   });
 
 	const viewModeNumber = +viewMode.slice(-1)
