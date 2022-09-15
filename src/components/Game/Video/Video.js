@@ -4,6 +4,7 @@ import YouTube from 'react-youtube';
 import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import classNames from 'classnames';
 
 const Video = ({ videoId }) => {
   const videoRef = useRef(null);
