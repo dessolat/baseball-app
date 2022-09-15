@@ -22,9 +22,9 @@ const Videos = () => {
 
   const MODE_LINKS = {
     'mode-1': [pitch_link],
-		'mode-2': [bat_left_link, bat_right_link],
-		'mode-3': [left_add, left_main, right_add, right_main],
-		'mode-4': [left_add, left_main, right_add, right_main]
+    'mode-2': [bat_left_link, bat_right_link],
+    'mode-3': [left_add_link, left_main_link, right_add_link, right_main_link],
+    'mode-4': [left_add_link, left_main_link, right_add_link, right_main_link]
   };
 
   const videoId1 = getYouTubeID(pitch_link);
