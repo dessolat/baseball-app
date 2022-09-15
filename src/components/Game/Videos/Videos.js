@@ -33,10 +33,12 @@ const Videos = () => {
   const videoId3 = getYouTubeID(MODE_LINKS[viewMode][2]) || null;
   const videoId4 = getYouTubeID(MODE_LINKS[viewMode][3]) || null;
 
-	const wrapperClasses = classNames(cl.wrapper, {
-		[cl.videos1]: viewMode === 'mode-1',
-		[cl.videos2]: viewMode !== 'mode-1'
-	})
+  const wrapperClasses = classNames(cl.wrapper, {
+    [cl.videos1]: viewMode === 'mode-1',
+    [cl.videos2]: viewMode !== 'mode-1'
+  });
+
+	const viewModeNumber = +viewMode.slice(-1)
   return (
     <>
       <div className={wrapperClasses}>
