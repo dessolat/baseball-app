@@ -1,9 +1,8 @@
 .wrapper {
   height: 100%;
   display: grid;
-  grid-template: 1fr / 1fr;
-  grid-template-areas: 'video-1';
-
+	grid-template: 1fr / 1fr;
+	
 	@media screen and (max-width: 800px) {
 		width: 100vw;
 		height: 100%;
@@ -17,6 +16,16 @@
 		// aspect-ratio: 16 / 9;
 		height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
 	}
+}
+
+.videos1 {
+	grid-template-areas: 'video-1';
+}
+.videos2 {
+	grid-template-areas: 
+	'. .'
+	'video-1 video-2'
+	'. .';
 }
 
 .eventsWrapper {
