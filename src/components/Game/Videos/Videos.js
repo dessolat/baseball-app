@@ -10,8 +10,15 @@ const Videos = () => {
   const preview = useSelector(state => state.game.preview);
   const viewMode = useSelector(state => state.game.viewMode);
 
-  const { pitch_link, bat_left_link, bat_right_link, left_add, left_main, right_add, right_main } =
-    preview.camera_info;
+  const {
+    pitch_link,
+    bat_left_link,
+    bat_right_link,
+    left_add_link,
+    left_main_link,
+    right_add_link,
+    right_main_link
+  } = preview.camera_info;
 
   const MODE_LINKS = {
     'mode-1': [pitch_link],
