@@ -1,7 +1,6 @@
 .wrapper {
   height: 100%;
   display: grid;
-	grid-template: 1fr / 1fr;
 	
 	@media screen and (max-width: 800px) {
 		width: 100vw;
@@ -19,9 +18,11 @@
 }
 
 .videos1 {
+	grid-template: 1fr / 1fr;
 	grid-template-areas: 'video-1';
 }
 .videos2 {
+	grid-template: 1fr 1fr 1fr / 1fr 1fr;
 	grid-template-areas: 
 	'. .'
 	'video-1 video-2'
