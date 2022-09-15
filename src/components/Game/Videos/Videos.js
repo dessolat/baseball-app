@@ -42,6 +42,10 @@ const Videos = () => {
   return (
     <>
       <div className={wrapperClasses}>
+        <Video videoId={videoId1} videoNumber={1} />
+        {viewModeNumber > 1 && <Video videoId={videoId2} videoNumber={2} />}
+        {viewModeNumber > 2 && <Video videoId={videoId3} videoNumber={3} />}
+        {viewModeNumber > 2 && <Video videoId={videoId4} videoNumber={4} />}
       </div>
       <div className={cl.eventsWrapper}>
         <PlaysEvents moments={useCurrentEvents()} />
