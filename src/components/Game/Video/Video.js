@@ -17,6 +17,7 @@ const Video = ({ videoId, videoNumber }) => {
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
+  const viewMode = useSelector(state => state.game.viewMode);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -128,8 +129,16 @@ const Video = ({ videoId, videoNumber }) => {
     }, 500);
   };
 
+	const videoClasses = classNames(cl.videoWrapper, {
+		[cl.videoOne]: videoNumber === 1,
+		[cl.videoTwo]: videoNumber === 2,
+		[cl.videoThree]: videoNumber === 3,
+		[cl.videoFour]: videoNumber === 4,
+		[cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
+	})
+
   return (
-    <div className={cl.videoWrapper + ' ' + cl.videoOne}>
+    <div className={videoClasses}>
       {Object.keys(currentCard).length !== 0 ? (
         <YouTube
           videoId={videoId}
