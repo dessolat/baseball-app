@@ -160,7 +160,7 @@ const Video = ({ videoId, videoNumber }) => {
       ) : (
         <></>
       )}
-      <VideoEventsList />
+      {videoNumber === 1 && <VideoEventsList />}
     </div>
   );
 };
