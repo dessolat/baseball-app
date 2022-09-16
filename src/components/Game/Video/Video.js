@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import classNames from 'classnames';
 
-const Video = ({ videoId }) => {
+const Video = ({ videoId, videoNumber }) => {
   const videoRef = useRef(null);
   const endRef = useRef(null);
   const intervalRef = useRef(null);
