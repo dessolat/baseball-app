@@ -1,5 +1,5 @@
 import useCurrentEvents from 'hooks/useCurrentEvents';
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import Video from '../Video/Video';
 import cl from './Videos.module.scss';
@@ -11,6 +11,10 @@ const Videos = () => {
   const preview = useSelector(state => state.game.preview);
   const viewMode = useSelector(state => state.game.viewMode);
 
+  const video1Ref = useRef(null);
+  const video2Ref = useRef(null);
+  const video3Ref = useRef(null);
+  const video4Ref = useRef(null);
   const {
     pitch_link,
     bat_left_link,
