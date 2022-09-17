@@ -58,6 +58,15 @@ const Videos = () => {
     video2Ref.current && currViewStates.push(video2Ref.current.getPlayerState());
     video3Ref.current && currViewStates.push(video3Ref.current.getPlayerState());
     video4Ref.current && currViewStates.push(video4Ref.current.getPlayerState());
+
+    const isAllReady = !currViewStates.some(
+      (state, i) => (state === 3 || state === -1) && i !== videoNumber - 1
+    );
+
+    const isAllPaused = currViewStates.every(
+      (state, i) => state === 2 || state === 3 || i === videoNumber - 1
+    );
+
   };
 
   return (
