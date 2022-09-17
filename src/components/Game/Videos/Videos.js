@@ -52,7 +52,14 @@ const Videos = () => {
     [cl.videos4]: viewMode === 'mode-4'
   });
 
-	const viewModeNumber = +viewMode.slice(-1)
+  const stateChangeHandler = (e, videoNumber) => {
+    const currViewStates = [];
+    video1Ref.current && currViewStates.push(video1Ref.current.getPlayerState());
+    video2Ref.current && currViewStates.push(video2Ref.current.getPlayerState());
+    video3Ref.current && currViewStates.push(video3Ref.current.getPlayerState());
+    video4Ref.current && currViewStates.push(video4Ref.current.getPlayerState());
+  };
+
   return (
     <>
       <div className={wrapperClasses}>
