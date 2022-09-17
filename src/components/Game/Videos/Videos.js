@@ -52,6 +52,8 @@ const Videos = () => {
     [cl.videos4]: viewMode === 'mode-4'
   });
 
+  const viewModeNumber = +viewMode.slice(-1);
+
   const stateChangeHandler = (e, videoNumber) => {
     const currViewStates = [];
     video1Ref.current && currViewStates.push(video1Ref.current.getPlayerState());
@@ -72,10 +74,81 @@ const Videos = () => {
   return (
     <>
       <div className={wrapperClasses}>
-        <Video videoId={videoId1} videoNumber={1} />
-        {viewModeNumber > 1 && <Video videoId={videoId2} videoNumber={2} />}
-        {viewModeNumber > 2 && <Video videoId={videoId3} videoNumber={3} />}
-        {viewModeNumber > 2 && <Video videoId={videoId4} videoNumber={4} />}
+        {viewModeNumber === 1 && (
+          <Video videoId={videoId1} videoNumber={1} stateChangeHandler={stateChangeHandler} ref={video1Ref} />
+        )}
+        {viewModeNumber === 2 && (
+          <>
+            <Video
+              videoId={videoId1}
+              videoNumber={1}
+              stateChangeHandler={stateChangeHandler}
+              ref={video1Ref}
+            />
+            <Video
+              videoId={videoId2}
+              videoNumber={2}
+              stateChangeHandler={stateChangeHandler}
+              ref={video2Ref}
+            />
+          </>
+        )}
+        {viewModeNumber === 3 && (
+          <>
+            <Video
+              videoId={videoId1}
+              videoNumber={1}
+              stateChangeHandler={stateChangeHandler}
+              ref={video1Ref}
+            />
+            <Video
+              videoId={videoId2}
+              videoNumber={2}
+              stateChangeHandler={stateChangeHandler}
+              ref={video2Ref}
+            />
+            <Video
+              videoId={videoId3}
+              videoNumber={3}
+              stateChangeHandler={stateChangeHandler}
+              ref={video3Ref}
+            />
+            <Video
+              videoId={videoId4}
+              videoNumber={4}
+              stateChangeHandler={stateChangeHandler}
+              ref={video4Ref}
+            />
+          </>
+        )}
+        {viewModeNumber === 4 && (
+          <>
+            <Video
+              videoId={videoId1}
+              videoNumber={1}
+              stateChangeHandler={stateChangeHandler}
+              ref={video1Ref}
+            />
+            <Video
+              videoId={videoId2}
+              videoNumber={2}
+              stateChangeHandler={stateChangeHandler}
+              ref={video2Ref}
+            />
+            <Video
+              videoId={videoId3}
+              videoNumber={3}
+              stateChangeHandler={stateChangeHandler}
+              ref={video3Ref}
+            />
+            <Video
+              videoId={videoId4}
+              videoNumber={4}
+              stateChangeHandler={stateChangeHandler}
+              ref={video4Ref}
+            />
+          </>
+        )}
       </div>
       <div className={cl.eventsWrapper}>
         <PlaysEvents moments={useCurrentEvents()} />
