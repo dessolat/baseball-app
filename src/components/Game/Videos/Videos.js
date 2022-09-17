@@ -15,6 +15,14 @@ const Videos = () => {
   const video2Ref = useRef(null);
   const video3Ref = useRef(null);
   const video4Ref = useRef(null);
+
+  useLayoutEffect(() => {
+    video1Ref.current = null;
+    video2Ref.current = null;
+    video3Ref.current = null;
+    video4Ref.current = null;
+  }, [viewMode]);
+
   const {
     pitch_link,
     bat_left_link,
