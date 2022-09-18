@@ -36,7 +36,12 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   }, [playbackMode]);
 
   useEffect(() => {
-    if (situationFilter !== 'All' || !videoRef.current) return;
+    if (
+      situationFilter !== 'All' ||
+      !videoRef.current ||
+      !currentCard.moments[momentRef.current + 1]?.video?.seconds_from
+    )
+      return;
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
