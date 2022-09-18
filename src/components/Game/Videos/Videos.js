@@ -80,6 +80,13 @@ const Videos = () => {
       }
     }
 
+    if (e.data === 2) {
+      video1Ref.current && video1Ref.current.getPlayerState() === 1 && video1Ref.current.pauseVideo();
+      video2Ref.current && video2Ref.current.getPlayerState() === 1 && video2Ref.current.pauseVideo();
+      video3Ref.current && video3Ref.current.getPlayerState() === 1 && video3Ref.current.pauseVideo();
+      video4Ref.current && video4Ref.current.getPlayerState() === 1 && video4Ref.current.pauseVideo();
+    }
+
   };
 
   return (
