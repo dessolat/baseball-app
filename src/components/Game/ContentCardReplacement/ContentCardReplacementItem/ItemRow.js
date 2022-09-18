@@ -2,9 +2,9 @@ import React from 'react';
 import SwitchArrow from 'icons/switch_arrow.svg';
 
 const ItemRow = ({ event, rowNumber = 1, cl }) => {
-  const firstRowRightStyles = (event.right_row1_index && rowNumber === 1 || event.right_row2_index && rowNumber === 2)? { fontWeight: 700 } : null;
+  const firstRowRightStyles = ((event.right_row1_index && rowNumber === 1) || (event.right_row2_index && rowNumber === 2))? { fontWeight: 700 } : null;
   const secondRowLeftStyles =
-    (event.left_row2_index && rowNumber === 2 || event.left_row1_index && rowNumber === 1)  ? { fontWeight: 700, textAlign: 'right' } : null;
+    ((event.left_row2_index && rowNumber === 2) || (event.left_row1_index && rowNumber === 1))  ? { fontWeight: 700, textAlign: 'right' } : null;
 
   return (
     <div className={cl.textRow}>
