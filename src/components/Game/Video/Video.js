@@ -129,13 +129,13 @@ const Video = ({ videoId, videoNumber }) => {
     }, 500);
   };
 
-	const videoClasses = classNames(cl.videoWrapper, {
-		[cl.videoOne]: videoNumber === 1,
-		[cl.videoTwo]: videoNumber === 2,
-		[cl.videoThree]: videoNumber === 3,
-		[cl.videoFour]: videoNumber === 4,
-		[cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
-	})
+  const videoClasses = classNames(cl.videoWrapper, {
+    [cl.videoOne]: videoNumber === 1,
+    [cl.videoTwo]: videoNumber === 2,
+    [cl.videoThree]: videoNumber === 3,
+    [cl.videoFour]: videoNumber === 4,
+    [cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
+  });
 
   return (
     <div className={videoClasses}>
