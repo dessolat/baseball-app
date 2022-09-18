@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import VideoEventsList from '../VideoEventsList/VideoEventsList';
@@ -7,6 +7,8 @@ import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameRed
 import classNames from 'classnames';
 
 const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
+  const videoRef = ref;
+
   const endRef = useRef(null);
   const intervalRef = useRef(null);
   const momentRef = useRef(0);
@@ -174,4 +176,4 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   );
 };
 
-export default Video;
+export default forwardRef(Video) ;
