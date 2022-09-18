@@ -87,6 +87,12 @@ const Videos = () => {
       video4Ref.current && video4Ref.current.getPlayerState() === 1 && video4Ref.current.pauseVideo();
     }
 
+    if (e.data === 3 && isAllPaused) {
+      video1Ref.current && video1Ref.current.playVideo();
+      video2Ref.current && video2Ref.current.playVideo();
+      video3Ref.current && video3Ref.current.playVideo();
+      video4Ref.current && video4Ref.current.playVideo();
+    }
   };
 
   return (
