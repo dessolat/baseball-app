@@ -69,6 +69,17 @@ const Videos = () => {
       (state, i) => state === 2 || state === 3 || i === videoNumber - 1
     );
 
+    if (e.data === 1) {
+      !isAllReady && e.target.pauseVideo();
+
+      if (isAllReady) {
+        video1Ref.current && video1Ref.current.playVideo();
+        video2Ref.current && video2Ref.current.playVideo();
+        video3Ref.current && video3Ref.current.playVideo();
+        video4Ref.current && video4Ref.current.playVideo();
+      }
+    }
+
   };
 
   return (
