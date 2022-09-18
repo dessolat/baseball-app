@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import classNames from 'classnames';
 
-const Video = ({ videoId, videoNumber }) => {
-  const videoRef = useRef(null);
+const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const endRef = useRef(null);
   const intervalRef = useRef(null);
   const momentRef = useRef(0);
@@ -77,6 +76,10 @@ const Video = ({ videoId, videoNumber }) => {
     videoHandling();
   };
 
+  const onStateChange = e => {
+    stateChangeHandler(e, videoNumber,currentMoment?.video?.seconds_from || null)
+  };
+
   const videoHandling = () => {
     clearInterval(intervalRef.current);
     // momentRef.current = 0;
@@ -144,6 +147,7 @@ const Video = ({ videoId, videoNumber }) => {
           videoId={videoId}
           // videoId={'WCjLd7QAJq8'}
           onReady={onReady}
+          onStateChange={onStateChange}
           opts={{
             height: '100%',
             width: '100%',
