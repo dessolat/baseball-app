@@ -31,7 +31,7 @@ const Videos = () => {
     left_main_link,
     right_add_link,
     right_main_link
-  } = preview.camera_info;
+  } = preview.camera_info || {};
 
   const MODE_LINKS = {
     'mode-1': [pitch_link],
