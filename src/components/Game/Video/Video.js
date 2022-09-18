@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import classNames from 'classnames';
 
-const Video = () => {
-  const videoRef = useRef(null);
+const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
+  const videoRef = ref;
+
   const endRef = useRef(null);
   const intervalRef = useRef(null);
   const momentRef = useRef(0);
@@ -16,6 +18,7 @@ const Video = () => {
   const filteredCards = useSelector(state => state.game.filteredCards);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
+  const viewMode = useSelector(state => state.game.viewMode);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +38,12 @@ const Video = () => {
   }, [playbackMode]);
 
   useEffect(() => {
-    if (situationFilter !== 'All' || !videoRef.current) return;
+    if (
+      situationFilter !== 'All' ||
+      !videoRef.current ||
+      !currentCard.moments[momentRef.current + 1]?.video?.seconds_from
+    )
+      return;
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -75,6 +83,10 @@ const Video = () => {
     videoHandling();
   };
 
+  const onStateChange = e => {
+    stateChangeHandler(e, videoNumber,currentMoment?.video?.seconds_from || null)
+  };
+
   const videoHandling = () => {
     clearInterval(intervalRef.current);
     // momentRef.current = 0;
@@ -97,7 +109,7 @@ const Video = () => {
         // momentRef.current += 1;
         if (modeRef.current === 'pause') {
           videoHandling();
-					return
+          return;
         }
         const momentIndex = currentCard.moments.findIndex(
           moment => moment.inner.id === currentMoment.inner.id
@@ -105,7 +117,7 @@ const Video = () => {
         if (momentIndex < currentCard.moments.length - 1) {
           // if (momentRef.current < currentCard.moments.length) {
           videoRef.current.seekTo(currentCard.moments[momentIndex + 1].video.seconds_from);
-					dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]))
+          dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]));
           // videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
           endRef.current = currentCard.moments[momentIndex + 1].video.seconds_to;
           // endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
@@ -117,7 +129,7 @@ const Video = () => {
           cardIndex++;
 
           if (cardIndex < filteredCards.length) {
-            dispatch(setCurrentCard({...filteredCards[cardIndex], manualMoment: true}));
+            dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: true }));
             return;
           }
 
@@ -127,12 +139,22 @@ const Video = () => {
     }, 500);
   };
 
+  const videoClasses = classNames(cl.videoWrapper, {
+    [cl.videoOne]: videoNumber === 1,
+    [cl.videoTwo]: videoNumber === 2,
+    [cl.videoThree]: videoNumber === 3,
+    [cl.videoFour]: videoNumber === 4,
+    [cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
+  });
+
   return (
-    <div className={cl.videoWrapper + ' ' + cl.videoOne}>
+    <div className={videoClasses}>
       {Object.keys(currentCard).length !== 0 ? (
         <YouTube
-          videoId={'WCjLd7QAJq8'}
+          videoId={videoId}
+          // videoId={'WCjLd7QAJq8'}
           onReady={onReady}
+          onStateChange={onStateChange}
           opts={{
             height: '100%',
             width: '100%',
@@ -149,9 +171,9 @@ const Video = () => {
       ) : (
         <></>
       )}
-      <VideoEventsList />
+      {videoNumber === 1 && <VideoEventsList />}
     </div>
   );
 };
 
-export default Video;
+export default forwardRef(Video) ;
