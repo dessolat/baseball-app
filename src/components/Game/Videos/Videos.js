@@ -40,7 +40,7 @@ const Videos = () => {
     'mode-4': [left_add_link, left_main_link, right_add_link, right_main_link]
   };
 
-  const videoId1 = getYouTubeID(MODE_LINKS[viewMode][0]);
+  const videoId1 = getYouTubeID(MODE_LINKS[viewMode][0]) || 'WCjLd7QAJq8';
   const videoId2 = getYouTubeID(MODE_LINKS[viewMode][1]) || null;
   const videoId3 = getYouTubeID(MODE_LINKS[viewMode][2]) || null;
   const videoId4 = getYouTubeID(MODE_LINKS[viewMode][3]) || null;
