@@ -19,15 +19,15 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
   return (
     <div
       className={replaceClasses}
-      style={event.old_player === null && !isVideo ? { justifyContent: 'flex-start' } : null}>
+      // style={event.old_player === null && !isVideo ? { justifyContent: 'flex-start' } : null}
+			>
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
       <ItemTextBlock cl={cl} header={header} event={event} isVideo={isVideo} />
-      <ContentCardPortrait
+      {event.old_player ? <ContentCardPortrait
         className={rightImgClass}
         src={rightImgSrc}
         cl={cl}
-        style={event.old_player === null ? { display: 'none' } : null}
-      />
+      /> : <div className={cl.portrait}></div>}
     </div>
   );
 };
