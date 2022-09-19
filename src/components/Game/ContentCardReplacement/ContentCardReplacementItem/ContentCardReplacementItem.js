@@ -16,18 +16,19 @@ const ContentCardReplacementItem = ({ event, header = null }) => {
   const rightImgSrc = imagesData[event.old_player] || PortraitImg;
 
   const replaceClasses = classNames(cl.replace, { [cl.noVideo]: !isVideo });
+  const rightSide = event.old_player ? (
+    <ContentCardPortrait className={rightImgClass} src={rightImgSrc} cl={cl} />
+  ) : (
+    <div className={cl.portrait}></div>
+  );
   return (
     <div
       className={replaceClasses}
       // style={event.old_player === null && !isVideo ? { justifyContent: 'flex-start' } : null}
-			>
+    >
       <ContentCardPortrait className={leftImgClass} src={leftImgSrc} cl={cl} />
       <ItemTextBlock cl={cl} header={header} event={event} isVideo={isVideo} />
-      {event.old_player ? <ContentCardPortrait
-        className={rightImgClass}
-        src={rightImgSrc}
-        cl={cl}
-      /> : <div className={cl.portrait}></div>}
+      {rightSide}
     </div>
   );
 };
