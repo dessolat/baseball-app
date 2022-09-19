@@ -37,7 +37,6 @@
 .text {
   font: 400 0.875rem var(--font-nunito);
   line-height: 1.36rem;
-  // flex: 1 0;
 }
 
 .textRow {
@@ -51,12 +50,6 @@
   padding: 0 8px;
   display: flex;
   align-items: center;
-}
-
-.switchArrow {
-  // padding: 0 8px;
-  // align-self: center;
-  // padding-top: 4.5px;
 }
 
 .leftSide {
