@@ -3,13 +3,6 @@ import classNames from 'classnames';
 import SwitchArrow from 'components/UI/dividers/SwitchArrow/SwitchArrow';
 
 const ItemRow = ({ event, rowNumber = 1, cl }) => {
-  // const firstRowRightStyles =
-  //   (event.right_row1_index && rowNumber === 1) || (event.right_row2_index && rowNumber === 2)
-  //     ? { fontWeight: 700 }
-  //     : null;
-  // const secondRowLeftStyles =
-  //   ((event.left_row2_index && rowNumber === 2) || (event.left_row1_index && rowNumber === 1))  ? { fontWeight: 700, textAlign: 'right' } : null;
-
   const leftSideStyles = classNames(cl.leftSide, {
     [cl.textBold]: (event.left_row2_index && rowNumber === 2) || (event.left_row1_index && rowNumber === 1)
   });
@@ -19,17 +12,11 @@ const ItemRow = ({ event, rowNumber = 1, cl }) => {
   });
   return (
     <div className={cl.textRow}>
-      <p
-        className={leftSideStyles}
-        // style={secondRowLeftStyles}
-      >
+      <p className={leftSideStyles}>
         {event[`left_row${rowNumber}_text`] || event[`left_row${rowNumber}_index`]}
       </p>
       <SwitchArrow />
-      <p
-        className={rightSideStyles}
-        // style={firstRowRightStyles}
-      >
+      <p className={rightSideStyles}>
         {event[`right_row${rowNumber}_text`] || event[`right_row${rowNumber}_index`]}
       </p>
     </div>
