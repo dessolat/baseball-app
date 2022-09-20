@@ -1,6 +1,6 @@
 import React from 'react';
-import SwitchArrow from 'icons/switch_arrow.svg';
 import classNames from 'classnames';
+import SwitchArrow from 'components/UI/dividers/SwitchArrow/SwitchArrow';
 
 const ItemRow = ({ event, rowNumber = 1, cl }) => {
   // const firstRowRightStyles =
@@ -25,9 +25,7 @@ const ItemRow = ({ event, rowNumber = 1, cl }) => {
       >
         {event[`left_row${rowNumber}_text`] || event[`left_row${rowNumber}_index`]}
       </p>
-      <div className={cl.arrowWrapper}>
-        <img className={cl.switchArrow} src={SwitchArrow} alt='switch-arrow' />
-      </div>
+      <SwitchArrow />
       <p
         className={rightSideStyles}
         // style={firstRowRightStyles}
