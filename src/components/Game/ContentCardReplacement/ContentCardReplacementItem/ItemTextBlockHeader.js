@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const ItemTextBlockHeader = () => {
-	return (
-		<div>ItemTextBlockHeader</div>
-	)
-}
+const ItemTextBlockHeader = ({ cl, header }) => {
+  return (
+    <p className={cl.textBold} style={{ textAlign: 'center' }}>
+      {header}
+    </p>
+  );
+};
 
-export default ItemTextBlockHeader
+export default ItemTextBlockHeader;
