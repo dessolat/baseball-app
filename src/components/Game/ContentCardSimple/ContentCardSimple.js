@@ -6,6 +6,7 @@ import PortraitImg from 'images/portrait.png';
 import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
 import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
+import classNames from 'classnames';
 
 const ContentCardSimple = ({ player }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -19,8 +20,9 @@ const ContentCardSimple = ({ player }) => {
   const imgClassName = !imagesData[player.who_id] ? cl.default : '';
   const imgSrc = imagesData[player.who_id] || PortraitImg;
 
-	const wrapperClasses = [cl.rectanglesEllipsesWrapper]
-	!isVideo && wrapperClasses.push(cl.noVideo)
+  const wrapperClasses = classNames(cl.rectanglesEllipsesWrapper, {
+    [cl.noVideo]: !isVideo
+  });
   return (
     <div className={cl.classic}>
       <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
