@@ -6,13 +6,6 @@ import ContentCardReplacementItem from './ContentCardReplacementItem/ContentCard
 
 const ContentCardReplacement = ({ events }) => {
   const isVideo = useSelector(state => state.game.isVideo);
-  // const ref = useRef(null);
-
-  // useLayoutEffect(() => {
-  // 	if (ref.current === null) return
-
-  //   ref.current.innerHTML = text + '.';
-  // }, [text]);
 
   let teamName;
   return (
