@@ -11,7 +11,9 @@ const ContentCardReplacement = ({ events }) => {
   return (
     <div>
       {events.map((event, i) => {
-        if (event.team !== teamName) {
+				const isTeamsNotEqual = event.team !== teamName
+				
+        if (isTeamsNotEqual) {
           teamName = event.team;
           const headerTitle = `${getShortName(event.team, 18)} replacements`;
 
