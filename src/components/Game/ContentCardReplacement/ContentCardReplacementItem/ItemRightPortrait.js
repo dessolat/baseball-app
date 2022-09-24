@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import PortraitImg from 'images/portrait.png';
+import ContentCardPortrait from 'components/Game/ContentCardPortrait/ContentCardPortrait';
 
-const ItemRightPortrait = () => {
-	return (
-		<div>ItemRightPortrait</div>
-	)
-}
+const ItemRightPortrait = ({ cl, event, imagesData }) => {
+  const rightImgClass = !imagesData[event.old_player] ? cl.default : '';
+  const rightImgSrc = imagesData[event.old_player] || PortraitImg;
 
-export default ItemRightPortrait
+  const rightSide = event.old_player ? (
+    <ContentCardPortrait className={rightImgClass} src={rightImgSrc} cl={cl} />
+  ) : (
+    <div className={cl.portrait}></div>
+  );
+
+  return <>{rightSide}</>;
+};
+
+export default ItemRightPortrait;
