@@ -38,9 +38,9 @@ const ContentCardComplexHeader = ({ player, sit }) => {
   const isRectText = sit.icons.rect_text !== 'Replacement';
   const isRectScore = sit.icons.score_own !== undefined;
 
-  const imgClassName = !imagesData[player.who_id] ? cl.default : '';
   const imgSrc = imagesData[player.who_id] || PortraitImg;
 
+	const imgClasses = classNames({[cl.default]: !imagesData[player.who_id]})
   const bottomClasses = classNames(cl.bottom, {
     [cl.noVideo]: !isVideo
   });
@@ -49,7 +49,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       <div className={cl.top}>
         <ContentCardTitle player={player} />
         <div className={cl.portraitTextWrapper}>
-          <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
+          <ContentCardPortrait className={imgClasses} src={imgSrc} cl={cl} />
           <p className={cl.text} ref={ref}>
             {cardText}
           </p>
