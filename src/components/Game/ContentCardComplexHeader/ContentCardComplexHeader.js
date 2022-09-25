@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
 import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 import ContentCardTitle from '../ContentCardTitle/ContentCardTitle';
+import classNames from 'classnames';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
@@ -40,8 +41,9 @@ const ContentCardComplexHeader = ({ player, sit }) => {
   const imgClassName = !imagesData[player.who_id] ? cl.default : '';
   const imgSrc = imagesData[player.who_id] || PortraitImg;
 
-  const bottomClasses = [cl.bottom];
-  !isVideo && bottomClasses.push(cl.noVideo);
+  const bottomClasses = classNames(cl.bottom, {
+    [cl.noVideo]: !isVideo
+  });
   return (
     <div className={cl.header}>
       <div className={cl.top}>
@@ -55,7 +57,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       </div>
 
       <div
-        className={bottomClasses.join(' ')}
+        className={bottomClasses}
         style={
           eventsSummary.length === 0 && !isVideo ? { position: 'absolute', top: '1.6rem', right: 0 } : null
         }>
