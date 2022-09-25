@@ -40,10 +40,13 @@ const ContentCardComplexHeader = ({ player, sit }) => {
 
   const imgSrc = imagesData[player.who_id] || PortraitImg;
 
-	const imgClasses = classNames({[cl.default]: !imagesData[player.who_id]})
+  const imgClasses = classNames({ [cl.default]: !imagesData[player.who_id] });
   const bottomClasses = classNames(cl.bottom, {
     [cl.noVideo]: !isVideo
   });
+
+  const bottomStyles =
+    eventsSummary.length === 0 && !isVideo ? { position: 'absolute', top: '1.6rem', right: 0 } : null;
   return (
     <div className={cl.header}>
       <div className={cl.top}>
@@ -56,11 +59,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
         </div>
       </div>
 
-      <div
-        className={bottomClasses}
-        style={
-          eventsSummary.length === 0 && !isVideo ? { position: 'absolute', top: '1.6rem', right: 0 } : null
-        }>
+      <div className={bottomClasses} style={bottomStyles}>
         {isRectText && <RectText icons={sit.icons} />}
         {isRectScore && <RectScore icons={sit.icons} />}
         <div className={cl.ellipses}>
