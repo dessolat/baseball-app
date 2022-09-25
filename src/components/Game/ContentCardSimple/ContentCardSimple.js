@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
 import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 import classNames from 'classnames';
+import ContentCardTitle from '../ContentCardTitle/ContentCardTitle';
 
 const ContentCardSimple = ({ player }) => {
   const imagesData = useSelector(state => state.game.imagesData);
@@ -25,7 +26,7 @@ const ContentCardSimple = ({ player }) => {
   });
   return (
     <div className={cl.classic}>
-      <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
+      <ContentCardTitle player={player} />
       <div className={cl.portraitTextWrapper}>
         <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
         <div className={cl.text}>

@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import cl from './ContentCardTitle.module.scss';
 
-const ContentCardTitle = () => {
-	return (
-		<div>ContentCardTitle</div>
-	)
-}
+const ContentCardTitle = ({ player }) => (
+  <p className={cl.playerName}>{`${player.hit_order}. ${player.who}`}</p>
+);
 
-export default ContentCardTitle
+export default ContentCardTitle;
