@@ -10,6 +10,7 @@ import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
 import Outs from 'components/UI/icons/Outs/Outs';
 import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
+import ContentCardTitle from '../ContentCardTitle/ContentCardTitle';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
@@ -31,7 +32,6 @@ const ContentCardComplexHeader = ({ player, sit }) => {
     ref.current.innerHTML = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
   }, [eventsSummary, sit.icons.rect_text]);
 
-  const titleText = `${player.hit_order}. ${player.who}`;
   const cardText = eventsSummary.length > 0 ? eventsSummary.join('.') + '.' : '';
 
   const isRectText = sit.icons.rect_text !== 'Replacement';
@@ -45,7 +45,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
   return (
     <div className={cl.header}>
       <div className={cl.top}>
-        <p className={cl.playerName}>{titleText}</p>
+        <ContentCardTitle player={player} />
         <div className={cl.portraitTextWrapper}>
           <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
           <p className={cl.text} ref={ref}>
