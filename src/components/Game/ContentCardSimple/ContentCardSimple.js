@@ -30,7 +30,7 @@ const ContentCardSimple = ({ player }) => {
         <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
         <div className={cl.text}>
           {cardText}
-          <div className={wrapperClasses.join(' ')}>
+          <div className={wrapperClasses}>
             <div className={cl.ellipses}>
               <Outs outs={outs} />
               <BallsStrikes balls={balls} strikes={strikes} />
