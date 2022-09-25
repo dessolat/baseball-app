@@ -2,23 +2,19 @@ import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexHeader.module.scss';
 import 'scss/colorWords.scss';
 import PortraitImg from 'images/portrait.png';
-import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
-import Bases from 'components/UI/icons/Bases/Bases';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
-import Outs from 'components/UI/icons/Outs/Outs';
 import ContentCardPortrait from '../ContentCardPortrait/ContentCardPortrait';
 import ContentCardTitle from '../ContentCardTitle/ContentCardTitle';
 import classNames from 'classnames';
+import ContentCardSigns from '../ContentCardSigns/ContentCardSigns';
 
 const ContentCardComplexHeader = ({ player, sit }) => {
   const ref = useRef(null);
   const imagesData = useSelector(state => state.game.imagesData);
   const isVideo = useSelector(state => state.game.isVideo);
-
-  const { r1, r2, r3, outs, balls, strikes } = sit.table;
 
   const eventsSummary = useMemo(
     () =>
@@ -62,11 +58,7 @@ const ContentCardComplexHeader = ({ player, sit }) => {
       <div className={bottomClasses} style={bottomStyles}>
         {isRectText && <RectText icons={sit.icons} />}
         {isRectScore && <RectScore icons={sit.icons} />}
-        <div className={cl.ellipses}>
-          <Outs outs={outs} />
-          <BallsStrikes balls={balls} strikes={strikes} />
-        </div>
-        <Bases r1={r1} r2={r2} r3={r3} />
+        <ContentCardSigns table={sit.table}/>
       </div>
 
       {!isRectText && <ContentCardReplacement events={sit.events} />}
