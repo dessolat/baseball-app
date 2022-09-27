@@ -14,8 +14,6 @@ const ContentCardComplexBody = ({ sit }) => {
 
   const isRectScore = sit.icons.score_own !== undefined;
 
-  // const bottomClasses = [cl.bottom];
-  // !isVideo && bottomClasses.push(cl.noVideo);
 	const bottomClasses = classNames(cl.bottom, {
 		[cl.noVideo]: !isVideo
 	})
