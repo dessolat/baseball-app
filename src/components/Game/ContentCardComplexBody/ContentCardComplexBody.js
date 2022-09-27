@@ -1,16 +1,17 @@
 import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import cl from './ContentCardComplexBody.module.scss';
 import 'scss/colorWords.scss';
-import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
-import Bases from 'components/UI/icons/Bases/Bases';
+// import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
+// import Bases from 'components/UI/icons/Bases/Bases';
 import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplacement';
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
-import Outs from 'components/UI/icons/Outs/Outs';
+// import Outs from 'components/UI/icons/Outs/Outs';
 import { useSelector } from 'react-redux';
+import ContentCardSigns from '../ContentCardSigns/ContentCardSigns';
 
 const ContentCardComplexBody = ({ sit }) => {
-  const { r1, r2, r3, outs, balls, strikes } = sit.table;
+  // const { r1, r2, r3, outs, balls, strikes } = sit.table;
   const ref = useRef(null);
 
 	const isVideo = useSelector(state => state.game.isVideo)
@@ -40,11 +41,12 @@ const ContentCardComplexBody = ({ sit }) => {
           <div className={bottomClasses.join(' ')}>
             <RectText icons={sit.icons} />
             {isRectScore && <RectScore icons={sit.icons} />}
-            <div className={cl.ellipses}>
+						<ContentCardSigns table={sit.table}/>
+            {/* <div className={cl.ellipses}>
               <Outs outs={outs} />
               <BallsStrikes balls={balls} strikes={strikes} />
             </div>
-            <Bases r1={r1} r2={r2} r3={r3} />
+            <Bases r1={r1} r2={r2} r3={r3} /> */}
           </div>
         </div>
       ) : (
