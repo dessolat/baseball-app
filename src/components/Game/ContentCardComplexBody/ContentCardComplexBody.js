@@ -24,7 +24,7 @@ const ContentCardComplexBody = ({ sit }) => {
       {sit.icons.rect_text !== 'Replacement' ? (
         <div className={cl.body}>
           <BodyTop cl={cl} sit={sit} />
-          <div className={bottomClasses.join(' ')}>
+          <div className={bottomClasses}>
             <RectText icons={sit.icons} />
             {isRectScore && <RectScore icons={sit.icons} />}
             <ContentCardSigns table={sit.table} />
