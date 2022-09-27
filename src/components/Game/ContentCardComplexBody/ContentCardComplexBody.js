@@ -7,14 +7,18 @@ import RectScore from 'components/UI/icons/Rects/RectScore';
 import { useSelector } from 'react-redux';
 import ContentCardSigns from '../ContentCardSigns/ContentCardSigns';
 import BodyTop from './BodyTop';
+import classNames from 'classnames';
 
 const ContentCardComplexBody = ({ sit }) => {
   const isVideo = useSelector(state => state.game.isVideo);
 
   const isRectScore = sit.icons.score_own !== undefined;
 
-  const bottomClasses = [cl.bottom];
-  !isVideo && bottomClasses.push(cl.noVideo);
+  // const bottomClasses = [cl.bottom];
+  // !isVideo && bottomClasses.push(cl.noVideo);
+	const bottomClasses = classNames(cl.bottom, {
+		[cl.noVideo]: !isVideo
+	})
   return (
     <>
       {sit.icons.rect_text !== 'Replacement' ? (
