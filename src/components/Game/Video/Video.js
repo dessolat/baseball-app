@@ -171,7 +171,6 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
       ) : (
         <></>
       )}
-      {/* {videoNumber === 1 && <VideoEventsList />} */}
     </div>
   );
 };
