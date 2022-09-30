@@ -2,6 +2,7 @@
   height: 100%;
   display: grid;
 	gap: 2px;
+	position: relative;
 	
 	@media screen and (max-width: 800px) {
 		width: 100vw;
