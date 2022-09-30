@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
-import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import classNames from 'classnames';
