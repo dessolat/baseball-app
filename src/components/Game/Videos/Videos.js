@@ -6,6 +6,7 @@ import cl from './Videos.module.scss';
 import getYouTubeID from 'get-youtube-id';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import VideoEventsList from '../VideoEventsList/VideoEventsList';
 
 const Videos = () => {
   const preview = useSelector(state => state.game.preview);
@@ -173,6 +174,8 @@ const Videos = () => {
             />
           </>
         )}
+			<VideoEventsList />
+
       </div>
       <div className={cl.eventsWrapper}>
         <PlaysEvents moments={useCurrentEvents()} />
