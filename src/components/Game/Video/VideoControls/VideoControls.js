@@ -3,7 +3,7 @@ import cl from './VideoControls.module.scss';
 
 const VideoControls = () => {
 	return (
-		<div>VideoControls</div>
+		<div className={cl.wrapper}>VideoControls</div>
 	)
 }
 
