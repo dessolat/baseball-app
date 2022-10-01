@@ -4,6 +4,7 @@ import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import classNames from 'classnames';
+import VideoControls from './VideoControls/VideoControls';
 
 const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const videoRef = ref;
@@ -83,7 +84,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   };
 
   const onStateChange = e => {
-    stateChangeHandler(e, videoNumber,currentMoment?.video?.seconds_from || null)
+    stateChangeHandler(e, videoNumber, currentMoment?.video?.seconds_from || null);
   };
 
   const videoHandling = () => {
@@ -149,24 +150,27 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   return (
     <div className={videoClasses}>
       {Object.keys(currentCard).length !== 0 ? (
-        <YouTube
-          videoId={videoId}
-          // videoId={'WCjLd7QAJq8'}
-          onReady={onReady}
-          onStateChange={onStateChange}
-          opts={{
-            height: '100%',
-            width: '100%',
-            playerVars: {
-              autoplay: 1,
-              controls: 0,
-              modestbranding: 1,
-              disablekb: 1
-              // loop: 1,
-              // playlist: '-GR52czEd-0'
-            }
-          }}
-        />
+        <>
+          <YouTube
+            videoId={videoId}
+            // videoId={'WCjLd7QAJq8'}
+            onReady={onReady}
+            onStateChange={onStateChange}
+            opts={{
+              height: '100%',
+              width: '100%',
+              playerVars: {
+                autoplay: 1,
+                controls: 0,
+                modestbranding: 1,
+                disablekb: 1
+                // loop: 1,
+                // playlist: '-GR52czEd-0'
+              }
+            }}
+          />
+          <VideoControls />
+        </>
       ) : (
         <></>
       )}
@@ -174,4 +178,4 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   );
 };
 
-export default forwardRef(Video) ;
+export default forwardRef(Video);
