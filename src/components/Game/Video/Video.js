@@ -169,7 +169,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
               }
             }}
           />
-          <VideoControls />
+          <VideoControls controlsWrapper={cl.controlsWrapper}/>
         </>
       ) : (
         <></>
