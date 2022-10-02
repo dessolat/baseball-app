@@ -162,7 +162,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
               width: '100%',
               playerVars: {
                 autoplay: 1,
-                controls: 0,
+                controls: 1,
                 modestbranding: 1,
                 disablekb: 1
                 // loop: 1,
