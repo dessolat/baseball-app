@@ -1,10 +1,12 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVideoPlaybackRate } from 'redux/gameReducer';
 
 const VideoList = ({ viewMode }) => {
   const preview = useSelector(state => state.game.preview);
+  const dispatch = useDispatch();
 
   const video1Ref = useRef(null);
   const video2Ref = useRef(null);
@@ -82,31 +84,105 @@ const VideoList = ({ viewMode }) => {
       video4Ref.current && video4Ref.current.playVideo();
     }
   };
+
+  const rateChangeHandler = e => {
+    dispatch(setVideoPlaybackRate(e.data));
+    video1Ref.current && video1Ref.current.setPlaybackRate(e.data);
+    video2Ref.current && video2Ref.current.setPlaybackRate(e.data);
+    video3Ref.current && video3Ref.current.setPlaybackRate(e.data);
+    video4Ref.current && video4Ref.current.setPlaybackRate(e.data);
+  };
   return (
     <>
       {viewModeNumber === 1 && (
-        <Video videoId={videoId1} videoNumber={1} stateChangeHandler={stateChangeHandler} ref={video1Ref} />
+        <Video
+          videoId={videoId1}
+          videoNumber={1}
+          stateChangeHandler={stateChangeHandler}
+          rateChangeHandler={rateChangeHandler}
+          ref={video1Ref}
+        />
       )}
       {viewModeNumber === 2 && (
         <>
-          <Video videoId={videoId1} videoNumber={1} stateChangeHandler={stateChangeHandler} ref={video1Ref} />
-          <Video videoId={videoId2} videoNumber={2} stateChangeHandler={stateChangeHandler} ref={video2Ref} />
+          <Video
+            videoId={videoId1}
+            videoNumber={1}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video1Ref}
+          />
+          <Video
+            videoId={videoId2}
+            videoNumber={2}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video2Ref}
+          />
         </>
       )}
       {viewModeNumber === 3 && (
         <>
-          <Video videoId={videoId1} videoNumber={1} stateChangeHandler={stateChangeHandler} ref={video1Ref} />
-          <Video videoId={videoId2} videoNumber={2} stateChangeHandler={stateChangeHandler} ref={video2Ref} />
-          <Video videoId={videoId3} videoNumber={3} stateChangeHandler={stateChangeHandler} ref={video3Ref} />
-          <Video videoId={videoId4} videoNumber={4} stateChangeHandler={stateChangeHandler} ref={video4Ref} />
+          <Video
+            videoId={videoId1}
+            videoNumber={1}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video1Ref}
+          />
+          <Video
+            videoId={videoId2}
+            videoNumber={2}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video2Ref}
+          />
+          <Video
+            videoId={videoId3}
+            videoNumber={3}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video3Ref}
+          />
+          <Video
+            videoId={videoId4}
+            videoNumber={4}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video4Ref}
+          />
         </>
       )}
       {viewModeNumber === 4 && (
         <>
-          <Video videoId={videoId1} videoNumber={1} stateChangeHandler={stateChangeHandler} ref={video1Ref} />
-          <Video videoId={videoId2} videoNumber={2} stateChangeHandler={stateChangeHandler} ref={video2Ref} />
-          <Video videoId={videoId3} videoNumber={3} stateChangeHandler={stateChangeHandler} ref={video3Ref} />
-          <Video videoId={videoId4} videoNumber={4} stateChangeHandler={stateChangeHandler} ref={video4Ref} />
+          <Video
+            videoId={videoId1}
+            videoNumber={1}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video1Ref}
+          />
+          <Video
+            videoId={videoId2}
+            videoNumber={2}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video2Ref}
+          />
+          <Video
+            videoId={videoId3}
+            videoNumber={3}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video3Ref}
+          />
+          <Video
+            videoId={videoId4}
+            videoNumber={4}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            ref={video4Ref}
+          />
         </>
       )}
     </>
