@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate } from 'redux/gameReducer';
 import classNames from 'classnames';
 import VideoControls from './VideoControls/VideoControls';
 
@@ -81,6 +81,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const onReady = e => {
     videoRef.current = e.target;
     videoHandling();
+    videoNumber === 1 && dispatch(setVideoPlaybackRate(e.target.getPlaybackRate()));
   };
 
   const onStateChange = e => {
