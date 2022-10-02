@@ -6,7 +6,7 @@ import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate
 import classNames from 'classnames';
 import VideoControls from './VideoControls/VideoControls';
 
-const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
+const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
   const videoRef = ref;
 
   const endRef = useRef(null);
@@ -88,6 +88,10 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     stateChangeHandler(e, videoNumber, currentMoment?.video?.seconds_from || null);
   };
 
+  const onPlaybackRateChange = e => {
+    rateChangeHandler(e);
+  };
+
   const videoHandling = () => {
     clearInterval(intervalRef.current);
     // momentRef.current = 0;
@@ -157,6 +161,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
             // videoId={'WCjLd7QAJq8'}
             onReady={onReady}
             onStateChange={onStateChange}
+            onPlaybackRateChange={onPlaybackRateChange}
             opts={{
               height: '100%',
               width: '100%',
@@ -170,7 +175,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
               }
             }}
           />
-          <VideoControls controlsWrapper={cl.controlsWrapper}/>
+          <VideoControls controlsWrapper={cl.controlsWrapper} />
         </>
       ) : (
         <></>
