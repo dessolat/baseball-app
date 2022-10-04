@@ -1,16 +1,22 @@
+.wrapper {
+	position: relative;
+}
+
 .speedBtn {
-	width: 65px;
+	width: 75px;
 	height: 46px;
 	display: flex;
 	align-items: center;
 	margin-left: 10px;
+	padding-right: 10px;
+	font: 400 14px var(--font-nunito);
 	
 	@media screen and (max-width: 800px) {
-		width: 55px;
+		width: 65px;
 		height: 36px;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		width: 55px;
+		width: 65px;
 		height: 36px;
   }
 	
