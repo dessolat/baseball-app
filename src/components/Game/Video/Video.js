@@ -167,7 +167,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
               width: '100%',
               playerVars: {
                 autoplay: 1,
-                controls: 1,
+                controls: 0,
                 modestbranding: 1,
                 disablekb: 1
                 // loop: 1,
@@ -175,7 +175,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
               }
             }}
           />
-          <VideoControls controlsWrapper={cl.controlsWrapper} />
+          {/* <VideoControls controlsWrapper={cl.controlsWrapper} /> */}
         </>
       ) : (
         <></>
