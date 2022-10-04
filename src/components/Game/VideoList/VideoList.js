@@ -36,10 +36,10 @@ const VideoList = ({ viewMode }) => {
     cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
 
   const MODE_LINKS = {
-    'mode-1': [pitch_link],
-    'mode-2': [bat_left_link, bat_right_link],
-    'mode-3': [left_add_link, left_main_link, right_add_link, right_main_link],
-    'mode-4': [left_add_link, left_main_link, right_add_link, right_main_link]
+    'mode-1': [getCamLink(1, 0)],
+    'mode-2': [getCamLink(2, 0), getCamLink(2, 1)],
+    'mode-3': [getCamLink(3, 0), getCamLink(3, 1), getCamLink(3, 2)],
+    'mode-4': [getCamLink(4, 0), getCamLink(4, 1), getCamLink(4, 2), getCamLink(4, 3)]
   };
   // const MODE_LINKS = {
   //   'mode-1': [pitch_link],
