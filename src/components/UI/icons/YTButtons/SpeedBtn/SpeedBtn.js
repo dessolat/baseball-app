@@ -16,6 +16,13 @@ const SpeedBtn = () => {
         </svg>
         <span className={cl.speedMultiplier}> ×{playbackRate}</span>
       </button>
+      {isActive && (
+        <ul className={cl.speedList}>
+          {speedArr.map((speed, i) => (
+            <li key={i} className={cl.listItem} onClick={handleListItemClick(speed)}>{speed}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
