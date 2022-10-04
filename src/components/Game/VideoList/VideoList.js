@@ -20,16 +20,6 @@ const VideoList = ({ viewMode }) => {
     video4Ref.current = null;
   }, [viewMode]);
 
-  // const {
-  //   pitch_link,
-  //   bat_left_link,
-  //   bat_right_link,
-  //   left_add_link,
-  //   left_main_link,
-  //   right_add_link,
-  //   right_main_link
-  // } = preview.camera_info || {};
-
   const { camera_info: cameraInfo, camera_views: cameraViews } = preview;
 
   const getCamLink = (modeNumber, index) =>
@@ -41,12 +31,6 @@ const VideoList = ({ viewMode }) => {
     'mode-3': [getCamLink(3, 0), getCamLink(3, 1), getCamLink(3, 2)],
     'mode-4': [getCamLink(4, 0), getCamLink(4, 1), getCamLink(4, 2), getCamLink(4, 3)]
   };
-  // const MODE_LINKS = {
-  //   'mode-1': [pitch_link],
-  //   'mode-2': [bat_left_link, bat_right_link],
-  //   'mode-3': [left_add_link, left_main_link, right_add_link, right_main_link],
-  //   'mode-4': [left_add_link, left_main_link, right_add_link, right_main_link]
-  // };
 
   const videoId1 = getYouTubeID(MODE_LINKS[viewMode][0]) || 'WCjLd7QAJq8';
   const videoId2 = getYouTubeID(MODE_LINKS[viewMode][1]) || null;
@@ -157,38 +141,6 @@ const VideoList = ({ viewMode }) => {
           />
         </>
       )}
-      {/* {viewModeNumber === 3 && (
-        <>
-          <Video
-            videoId={videoId1}
-            videoNumber={1}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            ref={video1Ref}
-          />
-          <Video
-            videoId={videoId2}
-            videoNumber={2}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            ref={video2Ref}
-          />
-          <Video
-            videoId={videoId3}
-            videoNumber={3}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            ref={video3Ref}
-          />
-          <Video
-            videoId={videoId4}
-            videoNumber={4}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            ref={video4Ref}
-          />
-        </>
-      )} */}
       {viewModeNumber === 4 && (
         <>
           <Video
