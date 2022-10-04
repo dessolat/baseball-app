@@ -13,11 +13,20 @@ const FiltersViewModes = () => {
   return (
     <div className={cl.viewModes}>
       <button className={getClassName('mode-1')} name='mode-1' onClick={handleModeClick}>
-        <div></div>
+        <div className={cl.camera}></div>
       </button>
       <button className={getClassName('mode-2')} name='mode-2' onClick={handleModeClick}>
-        <div></div>
-        <div></div>
+        <div className={cl.camera}></div>
+        <div className={cl.camera}></div>
+      </button>
+      <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
+        <div>
+          <div className={cl.camera}></div>
+        </div>
+        <div>
+          <div className={cl.camera}></div>
+          <div className={cl.camera}></div>
+        </div>
       </button>
       {/* <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
         <div></div>
@@ -26,10 +35,10 @@ const FiltersViewModes = () => {
         <div></div>
       </button> */}
       <button className={getClassName('mode-4')} name='mode-4' onClick={handleModeClick}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div className={cl.camera}></div>
+        <div className={cl.camera}></div>
+        <div className={cl.camera}></div>
+        <div className={cl.camera}></div>
       </button>
     </div>
   );
