@@ -5,6 +5,9 @@ import cl from './SpeedBtn.module.scss';
 
 const SpeedBtn = () => {
   const [isActive, setIsActive] = useState(false);
+  const handleSpeedBtnClick = () => {
+    setIsActive(prev => !prev);
+  };
 
   return (
     <div className={cl.wrapper}>
