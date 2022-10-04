@@ -1,9 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './SpeedBtn.module.scss';
 
 const SpeedBtn = () => {
-	const playbackRate = useSelector(state => state.game.videoPlaybackRate)
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <button className={cl.speedBtn}>
