@@ -30,6 +30,11 @@ const VideoList = ({ viewMode }) => {
   //   right_main_link
   // } = preview.camera_info || {};
 
+  const { camera_info: cameraInfo, camera_views: cameraViews } = preview;
+
+  const getCamLink = (modeNumber, index) =>
+    cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
+
   const MODE_LINKS = {
     'mode-1': [pitch_link],
     'mode-2': [bat_left_link, bat_right_link],
