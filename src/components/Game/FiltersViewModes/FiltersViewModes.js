@@ -19,12 +19,12 @@ const FiltersViewModes = () => {
         <div></div>
         <div></div>
       </button>
-      <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
+      {/* <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </button>
+      </button> */}
       <button className={getClassName('mode-4')} name='mode-4' onClick={handleModeClick}>
         <div></div>
         <div></div>
