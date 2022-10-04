@@ -5,10 +5,15 @@ import cl from './SpeedBtn.module.scss';
 
 const SpeedBtn = () => {
   const [isActive, setIsActive] = useState(false);
+  const playbackRate = useSelector(state => state.game.videoPlaybackRate);
+
+  const speedArr = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+
   const handleSpeedBtnClick = () => {
     setIsActive(prev => !prev);
   };
 
+	const handleListItemClick = speed => () => {console.log(speed)}
   return (
     <div className={cl.wrapper}>
       <button className={cl.speedBtn} onClick={handleSpeedBtnClick}>
