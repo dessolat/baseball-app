@@ -28,19 +28,39 @@ const PlaysSpeed = ({ currentMoment }) => {
     innings.forEach(inning => {
       inning['top/guests'].forEach(card =>
         card.moments.forEach(moment => {
+          const pitchType = moment.metering.pitch?.pitch_type;
           if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
-          moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-					moment.metering.pitch && testData.push(moment.metering.pitch.start_speed);
+          if (
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+            moment.metering.pitch
+          ) {
+            testData[pitchType] = !testData[pitchType]
+              ? [moment.metering.pitch.start_speed]
+              : [...testData[pitchType], moment.metering.pitch.start_speed];
+          }
+          // testData.push(moment.metering.pitch.start_speed);
         })
       );
       inning['bottom/owners']?.forEach(card =>
         card.moments.forEach(moment => {
+          const pitchType = moment.metering.pitch?.pitch_type;
           if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
-          moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-					moment.metering.pitch && testData.push(moment.metering.pitch.start_speed);
+					if (
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+            moment.metering.pitch
+          ) {
+            testData[pitchType] = !testData[pitchType]
+              ? [moment.metering.pitch.start_speed]
+              : [...testData[pitchType], moment.metering.pitch.start_speed];
+          }
+          // moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+          //   moment.metering.pitch &&
+          //   testData.push(moment.metering.pitch.start_speed);
         })
       );
     });
+
+		console.log(testData);
 
     setChartData(testData);
     setCurrentDotIndex(dotIndex);
