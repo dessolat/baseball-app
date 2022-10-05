@@ -20,7 +20,9 @@ const PlaysSpeed = ({ currentMoment }) => {
       return;
     }
 
-    const testData = [];
+    // const testData = [];
+    const testData = {};
+
     let dotIndex = 0;
 
     innings.forEach(inning => {
