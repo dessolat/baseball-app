@@ -15,7 +15,7 @@ const PlaysSpeed = ({ currentMoment }) => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.init_speed_x) {
+    if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.start_speed) {
       setChartData([]);
       return;
     }
@@ -28,14 +28,14 @@ const PlaysSpeed = ({ currentMoment }) => {
         card.moments.forEach(moment => {
           if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
           moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            testData.push(moment.metering.pitch.init_speed_x);
+					moment.metering.pitch && testData.push(moment.metering.pitch.start_speed);
         })
       );
       inning['bottom/owners']?.forEach(card =>
         card.moments.forEach(moment => {
           if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
           moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            testData.push(moment.metering.pitch.init_speed_x);
+					moment.metering.pitch && testData.push(moment.metering.pitch.start_speed);
         })
       );
     });
