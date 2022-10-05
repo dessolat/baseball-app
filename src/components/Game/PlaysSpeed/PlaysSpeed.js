@@ -48,7 +48,7 @@ const PlaysSpeed = ({ currentMoment }) => {
 
   return (
     <div ref={ref} className={pitchState !== 'Field' ? cl.speed : cl.speed + ' ' + cl.dnone}>
-      {chartData.length !== 0 && (
+      {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
           <PlaysSpeedChart dataArr={chartData} currentDot={currentDotIndex} />
