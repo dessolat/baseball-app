@@ -51,7 +51,7 @@ const PlaysSpeed = ({ currentMoment }) => {
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
-          <PlaysSpeedChart dataArr={chartData} currentDot={currentDotIndex} />
+          <PlaysSpeedChart chartData={chartData} currentDot={currentDotIndex} />
         </>
       )}
       <div className={cl.arrowWrapper}>
