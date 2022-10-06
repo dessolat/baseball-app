@@ -11,6 +11,13 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
 
+  const COLORS = {
+    0: '#1A4C96',
+    1: 'red',
+    2: 'green',
+    3: 'olive'
+  };
+
   function getMaxMinYAxisValue(max, min) {
     max = Math.ceil(max);
     min = Math.floor(min);
