@@ -97,20 +97,34 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   //     });
   //   });
   // }
-  let linePath = '';
-  dotsCoords.forEach((dot, i) => {
-    if (i === 0) {
-      linePath += `M${dot[0]} ${dot[1]}`;
-      return;
-    }
 
-    linePath += `L${dot[0]} ${dot[1]}`;
+  const linePaths = [];
+
+  Object.entries(dotsCoords).forEach(pair => {
+    let linePath = '';
+    pair[1].forEach((dot, i) => {
+      if (i === 0) {
+        linePath += `M${dot[0]} ${dot[1]}`;
+        return;
+      }
+
+      linePath += `L${dot[0]} ${dot[1]}`;
+    });
+
+    linePaths.push({ [pair[0]]: linePath });
   });
 
-  const isPath = dataArr.length > 1;
-  const renderedGraph = isPath ? (
-    <path d={linePath} stroke={GRAPH_COLOR} strokeWidth={GRAPH_WIDTH} fill='none' />
-  ) : (
+  // let linePath = '';
+  // dotsCoords.forEach((dot, i) => {
+  //   if (i === 0) {
+  //     linePath += `M${dot[0]} ${dot[1]}`;
+  //     return;
+  //   }
+
+  //   linePath += `L${dot[0]} ${dot[1]}`;
+  // });
+
+  // const linePath = '';
     <circle cx={dotsCoords[0][0]} cy={dotsCoords[0][1]} r={DOT_RADIUS} fill={DOT_COLOR} />
   );
 
