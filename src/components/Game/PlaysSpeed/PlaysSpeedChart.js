@@ -62,14 +62,41 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 
   const xInterval = chartValuesArr.length > 1 ? innerWidth / (chartValuesArr.length - 1) : 0;
 
-  const dotsCoords = [];
+  let dotsCoords;
+  // const dotsCoords = {};
 
-  dataArr.length > 1
-    ? dataArr.forEach((dot, i) =>
-        dotsCoords.push([minXCoord + xInterval * i, maxYCoord - (dot - minYAxisValue) / yValuePerHeight])
-      )
-    : dotsCoords.push([innerWidth / 2 + minXCoord, innerHeight / 2 + minYCoord]);
+  // chartValuesArr.length > 1
+  //   ? chartValuesArr.forEach((dot, i) =>
+  //       dotsCoords.push([minXCoord + xInterval * i, maxYCoord - (dot - minYAxisValue) / yValuePerHeight])
+  //     )
+  //   : dotsCoords.push([innerWidth / 2 + minXCoord, innerHeight / 2 + minYCoord]);
 
+  // let xIntervalIndex = 0;
+
+  if (chartValuesArr.length > 1) {
+    dotsCoords = chartData.reduce((sum, pair, index) => {
+      const newValue = [
+        minXCoord + xInterval * index,
+        maxYCoord - (pair[1] - minYAxisValue) / yValuePerHeight
+      ];
+
+      sum[pair[0]] = !sum[pair[0]] ? [newValue] : [...sum[pair[0]], newValue];
+      return sum;
+    }, {});
+  }
+
+  // if (chartValuesArr.length > 1) {
+  //   chartData.forEach((pair, i) => {
+  //     pair[1].forEach((value, j) => {
+  //       const newValue = [
+  //         minXCoord + xInterval * xIntervalIndex,
+  //         maxYCoord - (value - minYAxisValue) / yValuePerHeight
+  //       ];
+  //       dotsCoords[pair[0]] = !dotsCoords[pair[0]] ? [newValue] : [...dotsCoords[pair[0]], [newValue]];
+  //       xIntervalIndex++;
+  //     });
+  //   });
+  // }
   let linePath = '';
   dotsCoords.forEach((dot, i) => {
     if (i === 0) {
