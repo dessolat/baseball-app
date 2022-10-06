@@ -20,23 +20,33 @@ const PlaysSpeed = ({ currentMoment }) => {
       return;
     }
 
-    // const testData = [];
-    const testData = {};
+    const testData = [];
 
-    let dotIndex = 0;
+    let currentDotParams = {};
 
     innings.forEach(inning => {
       inning['top/guests'].forEach(card =>
         card.moments.forEach(moment => {
           const pitchType = moment.metering.pitch?.pitch_type;
-          if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
+          if (
+            moment.inner.id === currentMoment?.inner?.id &&
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+            moment.metering.pitch
+          ) {
+            // dotIndex = testData.length;
+            currentDotParams.type = pitchType;
+            currentDotParams.speed = moment.metering.pitch.start_speed;
+            currentDotParams.index = testData.length;
+          }
           if (
             moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
             moment.metering.pitch
           ) {
-            testData[pitchType] = !testData[pitchType]
-              ? [moment.metering.pitch.start_speed]
-              : [...testData[pitchType], moment.metering.pitch.start_speed];
+            testData.push([pitchType, moment.metering.pitch.start_speed]);
+
+            // = !testData[pitchType]
+            //   ? [moment.metering.pitch.start_speed]
+            //   : [...testData[pitchType], moment.metering.pitch.start_speed];
           }
           // testData.push(moment.metering.pitch.start_speed);
         })
@@ -44,14 +54,25 @@ const PlaysSpeed = ({ currentMoment }) => {
       inning['bottom/owners']?.forEach(card =>
         card.moments.forEach(moment => {
           const pitchType = moment.metering.pitch?.pitch_type;
-          if (moment.inner.id === currentMoment?.inner?.id) dotIndex = testData.length;
-					if (
+          if (
+            moment.inner.id === currentMoment?.inner?.id &&
             moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
             moment.metering.pitch
           ) {
-            testData[pitchType] = !testData[pitchType]
-              ? [moment.metering.pitch.start_speed]
-              : [...testData[pitchType], moment.metering.pitch.start_speed];
+            // dotIndex = testData.length;
+            currentDotParams.type = pitchType;
+            currentDotParams.speed = moment.metering.pitch.start_speed;
+            currentDotParams.index = testData.length;
+          }
+          if (
+            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+            moment.metering.pitch
+          ) {
+            testData.push([pitchType, moment.metering.pitch.start_speed]);
+
+            // testData[pitchType] = !testData[pitchType]
+            //   ? [moment.metering.pitch.start_speed]
+            //   : [...testData[pitchType], moment.metering.pitch.start_speed];
           }
           // moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
           //   moment.metering.pitch &&
@@ -59,8 +80,6 @@ const PlaysSpeed = ({ currentMoment }) => {
         })
       );
     });
-
-		console.log(testData);
 
     setChartData(testData);
     setCurrentDot(currentDotParams);
