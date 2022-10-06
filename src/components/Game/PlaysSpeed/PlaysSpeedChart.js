@@ -157,6 +157,12 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 		pair[1].forEach(coords => sum.push({type: +pair[0], coords: [coords[0], coords[1]]}))
 		return sum
 	},[])
+
+	const dots = !isDots ? null : dotsArr.map((dot, i) => <circle key={i} cx={dot.coords[0]} cy={dot.coords[1]} r={DOT_RADIUS} fill={COLORS[dot.type - 1]} />)
+  //! const dots = isDots
+  //!   ? dotsCoords.map((dot, i) => <circle key={i} cx={dot[0]} cy={dot[1]} r={DOT_RADIUS} fill={DOT_COLOR} />)
+  //!   : null;
+
   return (
     <svg viewBox='0 0 440 110' className={cl.chart}>
     {/* <svg width='95%' height='85%' viewBox='0 0 440 110' className={cl.chart}> */}
