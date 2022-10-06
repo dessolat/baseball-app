@@ -60,7 +60,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 
   const innerWidth = maxXCoord - minXCoord;
 
-  const xInterval = dataArr.length > 1 ? innerWidth / (dataArr.length - 1) : 0;
+  const xInterval = chartValuesArr.length > 1 ? innerWidth / (chartValuesArr.length - 1) : 0;
 
   const dotsCoords = [];
 
