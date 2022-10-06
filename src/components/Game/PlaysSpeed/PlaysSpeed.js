@@ -7,7 +7,7 @@ import PlaysSpeedChart from './PlaysSpeedChart';
 
 const PlaysSpeed = ({ currentMoment }) => {
   const [chartData, setChartData] = useState([]);
-  const [currentDotIndex, setCurrentDotIndex] = useState(0);
+  const [currentDot, setCurrentDot] = useState({ type: null, speed: null });
   const ref = useRef(null);
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
@@ -63,7 +63,7 @@ const PlaysSpeed = ({ currentMoment }) => {
 		console.log(testData);
 
     setChartData(testData);
-    setCurrentDotIndex(dotIndex);
+    setCurrentDot(currentDotParams);
   }, [currentCard, innings, currentMoment]);
 
   const handleArrowClick = () => dispatch(setPitchState('Field'));
@@ -73,7 +73,7 @@ const PlaysSpeed = ({ currentMoment }) => {
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
-          <PlaysSpeedChart chartData={chartData} currentDot={currentDotIndex} />
+          <PlaysSpeedChart chartData={chartData} currentDot={currentDot} />
         </>
       )}
       <div className={cl.arrowWrapper}>
