@@ -30,8 +30,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     return [max, min];
   }
 
-  const chartValuesArr = Object.values(chartData).reduce((sum, curArr) => {
-    curArr.forEach(value => sum.push(value));
+  const chartValuesArr = chartData.reduce((sum, pair) => {
+    sum.push(pair[1]);
     return sum;
   }, []);
 
