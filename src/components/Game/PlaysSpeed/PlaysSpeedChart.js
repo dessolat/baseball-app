@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './PlaysSpeed.module.scss';
 
-const PlaysSpeedChart = ({ chartData, currentDot = 0 }) => {
+const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const GRAPH_WIDTH = 1;
   const GRAPH_COLOR = '#1A4C96';
   const DOT_RADIUS = 1;
