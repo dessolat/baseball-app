@@ -125,13 +125,32 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   // });
 
   // const linePath = '';
-    <circle cx={dotsCoords[0][0]} cy={dotsCoords[0][1]} r={DOT_RADIUS} fill={DOT_COLOR} />
+
+  const renderedGraphs = (
+    <>
+      {linePaths.map((pair, index) => {
+        const isPath = dotsCoords[Object.keys(pair)[0]].length > 1;
+
+        return isPath ? (
+          <path d={Object.values(pair)[0]} stroke={COLORS[index]} strokeWidth={GRAPH_WIDTH} fill='none' />
+        ) : (
+          <circle
+            cx={dotsCoords[Object.keys(pair)[0]][0][0]}
+            cy={dotsCoords[Object.keys(pair)[0]][0][1]}
+            r={DOT_RADIUS}
+            fill={DOT_COLOR}
+          />
+        );
+      })}
+    </>
   );
 
-  const isDots = dataArr.length > 1;
-  const dots = isDots
-    ? dotsCoords.map((dot, i) => <circle key={i} cx={dot[0]} cy={dot[1]} r={DOT_RADIUS} fill={DOT_COLOR} />)
-    : null;
+  // const isPath = chartValuesArr.length > 1;
+  // const renderedGraph = isPath ? (
+  //   <path d={linePath} stroke={GRAPH_COLOR} strokeWidth={GRAPH_WIDTH} fill='none' />
+  // ) : (
+  //   <circle cx={dotsCoords[0][0]} cy={dotsCoords[0][1]} r={DOT_RADIUS} fill={DOT_COLOR} />
+  // );
 
   return (
     <svg viewBox='0 0 440 110' className={cl.chart}>
