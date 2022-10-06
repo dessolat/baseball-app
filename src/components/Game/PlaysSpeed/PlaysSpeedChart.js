@@ -152,6 +152,11 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   //   <circle cx={dotsCoords[0][0]} cy={dotsCoords[0][1]} r={DOT_RADIUS} fill={DOT_COLOR} />
   // );
 
+  const isDots = chartValuesArr.length > 1;
+	const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
+		pair[1].forEach(coords => sum.push({type: +pair[0], coords: [coords[0], coords[1]]}))
+		return sum
+	},[])
   return (
     <svg viewBox='0 0 440 110' className={cl.chart}>
     {/* <svg width='95%' height='85%' viewBox='0 0 440 110' className={cl.chart}> */}
