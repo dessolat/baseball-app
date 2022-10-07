@@ -35,8 +35,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     return sum;
   }, []);
 
-  let maxYValue = Math.max(...chartValuesArr) + 2;
-  let minYValue = Math.min(...chartValuesArr) - 2;
+  let maxYValue = Math.max(...chartValuesArr) + 0;
+  let minYValue = Math.min(...chartValuesArr) - 0;
 
   const [maxYAxisValue, minYAxisValue] = getMaxMinYAxisValue(maxYValue, minYValue);
 
