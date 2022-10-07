@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import cl from './PlaysSpeed.module.scss';
 
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
+  const [currentDotRadius, setCurrentDotRadius] = useState(0);
+
+  useLayoutEffect(() => {
+    if (Object.keys(currentDot).length === 0) return;
+
+    setCurrentDotRadius(1);
+
+  }, [currentDot]);
+
+	useLayoutEffect(() => {
+		if (Object.keys(currentDot).length === 0) return;
+
+    currentDotRadius < 5 && setTimeout(() => {
+      setCurrentDotRadius(prev => prev + 0.3);
+			console.log(currentDotRadius);
+    }, 10);
+	}, [currentDotRadius])
+
   const GRAPH_WIDTH = 1;
   const GRAPH_COLOR = '#1A4C96';
   const DOT_RADIUS = 1;
   const DOT_COLOR = '#1A4C96';
-  const CURRENT_DOT_RADIUS = 6;
+  // const CURRENT_DOT_RADIUS = 6;
   const CURRENT_DOT_COLOR = '#2B9D6A';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
@@ -35,8 +53,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     return sum;
   }, []);
 
-  let maxYValue = Math.max(...chartValuesArr) + (-2);
-  let minYValue = Math.min(...chartValuesArr) - (-2);
+  let maxYValue = Math.max(...chartValuesArr) + -2;
+  let minYValue = Math.min(...chartValuesArr) - -2;
 
   const [maxYAxisValue, minYAxisValue] = getMaxMinYAxisValue(maxYValue, minYValue);
 
@@ -157,7 +175,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
         <circle
           cx={minXCoord + xInterval * currentDot.index}
           cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
-          r={CURRENT_DOT_RADIUS}
+          r={currentDotRadius}
           fill={COLORS[currentDot.type - 1]}
         />
       )}
