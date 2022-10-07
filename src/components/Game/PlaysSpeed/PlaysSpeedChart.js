@@ -205,6 +205,17 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           // fill={CURRENT_DOT_COLOR}
         />
       )}
+
+      {currentDot.index !== undefined && (
+        <text
+          x={minXCoord + xInterval * currentDot.index - 31}
+          y='108'
+          className={cl.boldText}
+          style={{ width: 75 }}>
+          {currentDot.speed.toFixed(1)} mph
+          {/* {chartValuesArr[currentDot].toFixed(1)} mph */}
+        </text>
+      )}
     </svg>
   );
 };
