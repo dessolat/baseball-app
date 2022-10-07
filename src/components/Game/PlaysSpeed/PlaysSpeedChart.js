@@ -63,15 +63,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const xInterval = chartValuesArr.length > 1 ? innerWidth / (chartValuesArr.length - 1) : 0;
 
   let dotsCoords;
-  // const dotsCoords = {};
-
-  // chartValuesArr.length > 1
-  //   ? chartValuesArr.forEach((dot, i) =>
-  //       dotsCoords.push([minXCoord + xInterval * i, maxYCoord - (dot - minYAxisValue) / yValuePerHeight])
-  //     )
-  //   : dotsCoords.push([innerWidth / 2 + minXCoord, innerHeight / 2 + minYCoord]);
-
-  // let xIntervalIndex = 0;
 
   if (chartValuesArr.length > 1) {
     dotsCoords = chartData.reduce((sum, pair, index) => {
@@ -84,19 +75,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       return sum;
     }, {});
   }
-
-  // if (chartValuesArr.length > 1) {
-  //   chartData.forEach((pair, i) => {
-  //     pair[1].forEach((value, j) => {
-  //       const newValue = [
-  //         minXCoord + xInterval * xIntervalIndex,
-  //         maxYCoord - (value - minYAxisValue) / yValuePerHeight
-  //       ];
-  //       dotsCoords[pair[0]] = !dotsCoords[pair[0]] ? [newValue] : [...dotsCoords[pair[0]], [newValue]];
-  //       xIntervalIndex++;
-  //     });
-  //   });
-  // }
 
   const linePaths = [];
 
@@ -113,18 +91,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 
     linePaths.push({ [pair[0]]: linePath });
   });
-
-  // let linePath = '';
-  // dotsCoords.forEach((dot, i) => {
-  //   if (i === 0) {
-  //     linePath += `M${dot[0]} ${dot[1]}`;
-  //     return;
-  //   }
-
-  //   linePath += `L${dot[0]} ${dot[1]}`;
-  // });
-
-  // const linePath = '';
 
   const renderedGraphs = (
     <>
@@ -145,13 +111,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     </>
   );
 
-  // const isPath = chartValuesArr.length > 1;
-  // const renderedGraph = isPath ? (
-  //   <path d={linePath} stroke={GRAPH_COLOR} strokeWidth={GRAPH_WIDTH} fill='none' />
-  // ) : (
-  //   <circle cx={dotsCoords[0][0]} cy={dotsCoords[0][1]} r={DOT_RADIUS} fill={DOT_COLOR} />
-  // );
-
   const isDots = chartValuesArr.length > 1;
   const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
     pair[1].forEach(coords => sum.push({ type: +pair[0], coords: [coords[0], coords[1]] }));
@@ -163,13 +122,9 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     : dotsArr.map((dot, i) => (
         <circle key={i} cx={dot.coords[0]} cy={dot.coords[1]} r={DOT_RADIUS} fill={COLORS[dot.type - 1]} />
       ));
-  //! const dots = isDots
-  //!   ? dotsCoords.map((dot, i) => <circle key={i} cx={dot[0]} cy={dot[1]} r={DOT_RADIUS} fill={DOT_COLOR} />)
-  //!   : null;
 
   return (
     <svg viewBox='0 0 440 110' className={cl.chart}>
-      {/* <svg width='95%' height='85%' viewBox='0 0 440 110' className={cl.chart}> */}
       <text x='10' y='20' className={cl.plainText}>
         {yAxisValues[0]}
       </text>
@@ -201,12 +156,9 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       {currentDot.index !== undefined && (
         <circle
           cx={minXCoord + xInterval * currentDot.index}
-          // cx={dotsCoords[currentDot][0]}
           cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
-          // cy={dotsCoords[currentDot][1]}
           r={CURRENT_DOT_RADIUS}
           fill={COLORS[currentDot.type - 1]}
-          // fill={CURRENT_DOT_COLOR}
         />
       )}
 
@@ -217,7 +169,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           className={cl.boldText}
           style={{ width: 75 }}>
           {currentDot.speed.toFixed(1)} mph
-          {/* {chartValuesArr[currentDot].toFixed(1)} mph */}
         </text>
       )}
     </svg>
