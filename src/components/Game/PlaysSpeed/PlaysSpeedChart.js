@@ -182,7 +182,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       <line x1='38' y1='41' x2='435' y2='41' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       <line x1='38' y1='62' x2='435' y2='62' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       <line x1='38' y1='83' x2='435' y2='83' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      {renderedGraph}
+      {renderedGraphs}
       {dots}
       <line
         x1={dotsCoords[currentDot][0]}
