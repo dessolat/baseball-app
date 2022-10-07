@@ -8,17 +8,16 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     if (Object.keys(currentDot).length === 0) return;
 
     setCurrentDotRadius(1);
-
   }, [currentDot]);
 
-	useLayoutEffect(() => {
-		if (Object.keys(currentDot).length === 0) return;
+  useLayoutEffect(() => {
+    if (Object.keys(currentDot).length === 0) return;
 
-    currentDotRadius < 5 && setTimeout(() => {
-      setCurrentDotRadius(prev => prev + 0.3);
-			console.log(currentDotRadius);
-    }, 10);
-	}, [currentDotRadius])
+    currentDotRadius < 5 &&
+      setTimeout(() => {
+        setCurrentDotRadius(prev => prev + 0.3);
+      }, 10);
+  }, [currentDotRadius]);
 
   const GRAPH_WIDTH = 1;
   const GRAPH_COLOR = '#1A4C96';
