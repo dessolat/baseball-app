@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import cl from './PlaysSpeed.module.scss';
 
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
@@ -20,11 +20,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   }, [currentDotRadius]);
 
   const GRAPH_WIDTH = 1;
-  const GRAPH_COLOR = '#1A4C96';
   const DOT_RADIUS = 1;
   const DOT_COLOR = '#1A4C96';
-  // const CURRENT_DOT_RADIUS = 6;
-  const CURRENT_DOT_COLOR = '#2B9D6A';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
 
