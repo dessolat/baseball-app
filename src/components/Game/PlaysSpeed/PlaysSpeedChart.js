@@ -4,14 +4,18 @@ import cl from './PlaysSpeed.module.scss';
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
 
+	console.log(currentDot.index);
+	console.log(currentDotRadius);
   useLayoutEffect(() => {
-    if (Object.keys(currentDot).length === 0) return;
+    if (currentDot.index === undefined) return;
+    // if (Object.keys(currentDot).length === 0) return;
 
-    setCurrentDotRadius(1);
+    setCurrentDotRadius(prev => prev === 1 ? 0.99999 : 1);
   }, [currentDot]);
 
   useLayoutEffect(() => {
-    if (Object.keys(currentDot).length === 0) return;
+    if (currentDot.index === undefined) return;
+    // if (Object.keys(currentDot).length === 0) return;
 
     currentDotRadius < 5 &&
       setTimeout(() => {
