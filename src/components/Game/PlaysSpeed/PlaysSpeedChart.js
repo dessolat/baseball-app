@@ -184,14 +184,16 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       <line x1='38' y1='83' x2='435' y2='83' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       {renderedGraphs}
       {dots}
-      <line
-        x1={dotsCoords[currentDot][0]}
-        y1={dotsCoords[currentDot][1]}
-        x2={dotsCoords[currentDot][0]}
-        y2='92'
-        stroke={LINE_DOWN_COLOR}
-        strokeWidth={LINE_DOWN_WIDTH}
-      />
+      {currentDot.index !== undefined && (
+        <line
+          x1={minXCoord + xInterval * currentDot.index}
+          y1={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
+          x2={minXCoord + xInterval * currentDot.index}
+          y2='92'
+          stroke={LINE_DOWN_COLOR}
+          strokeWidth={LINE_DOWN_WIDTH}
+        />
+      )}
       <circle
         cx={dotsCoords[currentDot][0]}
         cy={dotsCoords[currentDot][1]}
