@@ -194,15 +194,17 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           strokeWidth={LINE_DOWN_WIDTH}
         />
       )}
-      <circle
-        cx={dotsCoords[currentDot][0]}
-        cy={dotsCoords[currentDot][1]}
-        r={CURRENT_DOT_RADIUS}
-        fill={CURRENT_DOT_COLOR}
-      />
-      <text x={dotsCoords[currentDot][0] - 31} y='108' className={cl.boldText} style={{ width: 75 }}>
-        {dataArr[currentDot].toFixed(1)} mph
-      </text>
+      {currentDot.index !== undefined && (
+        <circle
+          cx={minXCoord + xInterval * currentDot.index}
+          // cx={dotsCoords[currentDot][0]}
+          cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
+          // cy={dotsCoords[currentDot][1]}
+          r={CURRENT_DOT_RADIUS}
+          fill={COLORS[currentDot.type - 1]}
+          // fill={CURRENT_DOT_COLOR}
+        />
+      )}
     </svg>
   );
 };
