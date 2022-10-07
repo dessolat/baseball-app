@@ -17,6 +17,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       setTimeout(() => {
         setCurrentDotRadius(prev => prev + 0.3);
       }, 10);
+
+    // eslint-disable-next-line
   }, [currentDotRadius]);
 
   const GRAPH_WIDTH = 1;
