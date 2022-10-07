@@ -8,14 +8,12 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 	console.log(currentDotRadius);
   useLayoutEffect(() => {
     if (currentDot.index === undefined) return;
-    // if (Object.keys(currentDot).length === 0) return;
 
     setCurrentDotRadius(prev => prev === 1 ? 0.99999 : 1);
   }, [currentDot]);
 
   useLayoutEffect(() => {
     if (currentDot.index === undefined) return;
-    // if (Object.keys(currentDot).length === 0) return;
 
     currentDotRadius < 5 &&
       setTimeout(() => {
