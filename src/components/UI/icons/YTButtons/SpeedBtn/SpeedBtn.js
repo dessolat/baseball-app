@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -14,7 +15,7 @@ const SpeedBtn = ({ rateChangeHandler }) => {
   };
 
   const handleListItemClick = speed => () => {
-    rateChangeHandler(speed)
+    rateChangeHandler(speed);
   };
   return (
     <div className={cl.wrapper}>
@@ -28,11 +29,16 @@ const SpeedBtn = ({ rateChangeHandler }) => {
       </button>
       {isActive && (
         <ul className={cl.speedList}>
-          {speedArr.map((speed, i) => (
-            <li key={i} className={cl.listItem} onClick={handleListItemClick(speed)}>
-              {speed}
-            </li>
-          ))}
+          {speedArr.map((speed, i) => {
+            const itemClasses = classNames(cl.listItem, {
+              [cl.active]: speed === playbackRate
+            });
+            return (
+              <li key={i} className={itemClasses} onClick={handleListItemClick(speed)}>
+                {speed}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
