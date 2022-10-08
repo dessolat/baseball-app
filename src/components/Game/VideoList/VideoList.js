@@ -81,11 +81,13 @@ const VideoList = ({ viewMode }) => {
   };
 
   const rateChangeHandler = e => {
-    dispatch(setVideoPlaybackRate(e.data));
-    video1Ref.current && video1Ref.current.setPlaybackRate(e.data);
-    video2Ref.current && video2Ref.current.setPlaybackRate(e.data);
-    video3Ref.current && video3Ref.current.setPlaybackRate(e.data);
-    video4Ref.current && video4Ref.current.setPlaybackRate(e.data);
+    const value = typeof e === 'number' ? e : e.data
+
+		dispatch(setVideoPlaybackRate(value));
+    video1Ref.current && video1Ref.current.setPlaybackRate(value);
+    video2Ref.current && video2Ref.current.setPlaybackRate(value);
+    video3Ref.current && video3Ref.current.setPlaybackRate(value);
+    video4Ref.current && video4Ref.current.setPlaybackRate(value);
   };
   return (
     <>
