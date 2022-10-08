@@ -51,8 +51,18 @@
 .listItem {
 	padding: 0 10px 0 25px;
 	background-color: rgba($color: #000000, $alpha: 0.8);
+	position: relative;
 
 	&:hover {
 		background-color: rgba($color: #000000, $alpha: 0.6);
 	}
+}
+
+.active::before {
+	content: '•';
+	position: absolute;
+	left: 10px;
+	top: 46%;
+	transform: translateY(-50%);
+	line-height: 1;
 }
