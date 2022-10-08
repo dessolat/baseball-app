@@ -16,6 +16,7 @@ const SpeedBtn = ({ rateChangeHandler }) => {
 
   const handleListItemClick = speed => () => {
     rateChangeHandler(speed);
+		setIsActive(false)
   };
   return (
     <div className={cl.wrapper}>
