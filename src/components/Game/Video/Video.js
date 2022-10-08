@@ -175,7 +175,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
               }
             }}
           />
-          {/* <VideoControls controlsWrapper={cl.controlsWrapper} /> */}
+          <VideoControls controlsWrapper={cl.controlsWrapper} rateChangeHandler={rateChangeHandler} />
         </>
       ) : (
         <></>

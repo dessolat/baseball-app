@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './SpeedBtn.module.scss';
 
-const SpeedBtn = () => {
+const SpeedBtn = ({ rateChangeHandler }) => {
   const [isActive, setIsActive] = useState(false);
   const playbackRate = useSelector(state => state.game.videoPlaybackRate);
 
@@ -13,7 +13,9 @@ const SpeedBtn = () => {
     setIsActive(prev => !prev);
   };
 
-	const handleListItemClick = speed => () => {console.log(speed)}
+  const handleListItemClick = speed => () => {
+    rateChangeHandler(speed)
+  };
   return (
     <div className={cl.wrapper}>
       <button className={cl.speedBtn} onClick={handleSpeedBtnClick}>
@@ -27,7 +29,9 @@ const SpeedBtn = () => {
       {isActive && (
         <ul className={cl.speedList}>
           {speedArr.map((speed, i) => (
-            <li key={i} className={cl.listItem} onClick={handleListItemClick(speed)}>{speed}</li>
+            <li key={i} className={cl.listItem} onClick={handleListItemClick(speed)}>
+              {speed}
+            </li>
           ))}
         </ul>
       )}
