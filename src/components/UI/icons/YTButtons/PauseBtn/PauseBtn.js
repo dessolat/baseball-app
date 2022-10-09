@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './PauseBtn.module.scss';
 
-const PauseBtn = () => {
+const PauseBtn = ({ setPlayPause }) => {
   return (
     <button className={cl.pauseBtn}>
       <svg height='100%' version='1.1' viewBox='0 0 36 36' width='100%'>

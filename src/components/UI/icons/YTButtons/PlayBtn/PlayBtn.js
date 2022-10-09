@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './PlayBtn.module.scss';
 
-const PlayBtn = () => {
+const PlayBtn = ({ setPlayPause }) => {
   return (
     <button className={cl.playBtn}>
       <svg height='100%' version='1.1' viewBox='0 0 36 36' width='100%'>

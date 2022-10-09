@@ -6,7 +6,7 @@ import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate
 import classNames from 'classnames';
 import VideoControls from './VideoControls/VideoControls';
 
-const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
+const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler, setPlayPause }, ref) => {
   const videoRef = ref;
 
   const endRef = useRef(null);
@@ -175,7 +175,11 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
               }
             }}
           />
-          <VideoControls controlsWrapper={cl.controlsWrapper} rateChangeHandler={rateChangeHandler} />
+          <VideoControls
+            controlsWrapper={cl.controlsWrapper}
+            rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
+          />
         </>
       ) : (
         <></>
