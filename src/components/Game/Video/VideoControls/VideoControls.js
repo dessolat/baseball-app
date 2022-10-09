@@ -17,7 +17,7 @@ const VideoControls = ({ controlsWrapper, rateChangeHandler, setPlayPause }) => 
     );
   return (
     <div className={controlsWrapper}>
-      <div className={cl.timeLine}>Timeline</div>
+      <TimeLine cl={cl} />
       <div className={cl.buttons}>
         {playPauseBtn}
         <SpeedBtn rateChangeHandler={rateChangeHandler} />
