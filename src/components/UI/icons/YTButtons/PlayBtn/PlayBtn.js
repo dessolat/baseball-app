@@ -2,8 +2,12 @@ import React from 'react';
 import cl from './PlayBtn.module.scss';
 
 const PlayBtn = ({ setPlayPause }) => {
+  const handleClickBtn = () => {
+    setPlayPause('play');
+  };
+
   return (
-    <button className={cl.playBtn}>
+    <button className={cl.playBtn} onClick={handleClickBtn}>
       <svg height='100%' version='1.1' viewBox='0 0 36 36' width='100%'>
         <use className='ytp-svg-shadow'></use>
         <path
