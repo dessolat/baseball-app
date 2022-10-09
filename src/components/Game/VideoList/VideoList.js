@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
 import { useDispatch, useSelector } from 'react-redux';
-import { setVideoPlaybackRate } from 'redux/gameReducer';
+import { setVideoPlaybackRate, setVideoState } from 'redux/gameReducer';
 
 const VideoList = ({ viewMode }) => {
   const preview = useSelector(state => state.game.preview);
@@ -40,6 +40,8 @@ const VideoList = ({ viewMode }) => {
   const viewModeNumber = +viewMode.slice(-1);
 
   const stateChangeHandler = (e, videoNumber) => {
+		videoNumber === 1 && dispatch(setVideoState(e.data))
+
     const currViewStates = [];
     video1Ref.current && currViewStates.push(video1Ref.current.getPlayerState());
     video2Ref.current && currViewStates.push(video2Ref.current.getPlayerState());
