@@ -39,8 +39,24 @@ const VideoList = ({ viewMode }) => {
 
   const viewModeNumber = +viewMode.slice(-1);
 
+  const setPlayPause = state => {
+    if (state === 'play') {
+      video1Ref.current && video1Ref.current.playVideo();
+      video2Ref.current && video2Ref.current.playVideo();
+      video3Ref.current && video3Ref.current.playVideo();
+      video4Ref.current && video4Ref.current.playVideo();
+
+      return;
+    }
+
+    video1Ref.current && video1Ref.current.pauseVideo();
+    video2Ref.current && video2Ref.current.pauseVideo();
+    video3Ref.current && video3Ref.current.pauseVideo();
+    video4Ref.current && video4Ref.current.pauseVideo();
+  };
+
   const stateChangeHandler = (e, videoNumber) => {
-		videoNumber === 1 && dispatch(setVideoState(e.data))
+    videoNumber === 1 && dispatch(setVideoState(e.data));
 
     const currViewStates = [];
     video1Ref.current && currViewStates.push(video1Ref.current.getPlayerState());
@@ -83,9 +99,9 @@ const VideoList = ({ viewMode }) => {
   };
 
   const rateChangeHandler = e => {
-    const value = typeof e === 'number' ? e : e.data
+    const value = typeof e === 'number' ? e : e.data;
 
-		dispatch(setVideoPlaybackRate(value));
+    dispatch(setVideoPlaybackRate(value));
     video1Ref.current && video1Ref.current.setPlaybackRate(value);
     video2Ref.current && video2Ref.current.setPlaybackRate(value);
     video3Ref.current && video3Ref.current.setPlaybackRate(value);
@@ -99,6 +115,7 @@ const VideoList = ({ viewMode }) => {
           videoNumber={1}
           stateChangeHandler={stateChangeHandler}
           rateChangeHandler={rateChangeHandler}
+          setPlayPause={setPlayPause}
           ref={video1Ref}
         />
       )}
@@ -109,6 +126,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={1}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video1Ref}
           />
           <Video
@@ -116,6 +134,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={2}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video2Ref}
           />
         </>
@@ -127,6 +146,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={1}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video1Ref}
           />
           <Video
@@ -134,6 +154,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={2}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video2Ref}
           />
           <Video
@@ -141,6 +162,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={3}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video3Ref}
           />
         </>
@@ -152,6 +174,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={1}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video1Ref}
           />
           <Video
@@ -159,6 +182,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={2}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video2Ref}
           />
           <Video
@@ -166,6 +190,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={3}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video3Ref}
           />
           <Video
@@ -173,6 +198,7 @@ const VideoList = ({ viewMode }) => {
             videoNumber={4}
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
             ref={video4Ref}
           />
         </>
