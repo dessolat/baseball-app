@@ -19,7 +19,8 @@ const defaultState = {
   pitchState: 'Field',
   errorMsg: null,
 	playerCardFilter: '',
-	videoPlaybackRate: 1
+	videoPlaybackRate: 1,
+	videoState: null
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -43,6 +44,7 @@ const RESET_DATA = 'RESET_DATA';
 const SET_ERROR_MSG = 'SET_ERROR_MSG';
 const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
 const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
+const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -88,6 +90,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, playerCardFilter: action.payload };
     case SET_VIDEO_PLAYBACK_RATE:
       return { ...state, videoPlaybackRate: action.payload };
+    case SET_VIDEO_STATE:
+      return { ...state, videoState: action.payload };
     default:
       return state;
   }
@@ -114,3 +118,4 @@ export const resetData = () => ({ type: RESET_DATA });
 export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
 export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
 export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE, payload });
+export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
