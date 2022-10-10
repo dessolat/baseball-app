@@ -107,6 +107,13 @@ const VideoList = ({ viewMode }) => {
     video3Ref.current && video3Ref.current.setPlaybackRate(value);
     video4Ref.current && video4Ref.current.setPlaybackRate(value);
   };
+
+	const seekVideos = seconds => {
+		video1Ref.current && video1Ref.current.seekTo(seconds);
+    video2Ref.current && video2Ref.current.seekTo(seconds);
+    video3Ref.current && video3Ref.current.seekTo(seconds);
+    video4Ref.current && video4Ref.current.seekTo(seconds);
+	}
   return (
     <>
       {viewModeNumber === 1 && (
