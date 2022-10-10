@@ -19,11 +19,12 @@
 }
 
 .controlsWrapper {
+	width: 100%;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	height: auto !important;
-	padding: 0 35px 7px;
+	padding: 0 50px 7px;
 	opacity: 0;
 	transition: opacity .25s;
 }
