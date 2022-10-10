@@ -39,16 +39,17 @@
     right: 0;
     transform: translate(50%, -50%);
     font: 700 14px var(--font-nunito);
-    color: white;
-		animation: timeShow .3s linear forwards;
+		animation: timeShow .2s linear forwards;
   }
 }
 
 @keyframes timeShow {
-  from {
-    opacity: 0;
+	from {
+		color: transparent;
+		opacity: 0;
   }
   to {
+		color: white;
     opacity: 1;
   }
 }
