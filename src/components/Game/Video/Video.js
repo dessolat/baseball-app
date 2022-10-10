@@ -179,6 +179,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler, se
             controlsWrapper={cl.controlsWrapper}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						currentMoment={currentMoment}
+						ref={videoRef}
           />
         </>
       ) : (
