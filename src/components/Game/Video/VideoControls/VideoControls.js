@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import PauseBtn from 'components/UI/icons/YTButtons/PauseBtn/PauseBtn';
 import TimeLine from './TimeLine';
 
-const VideoControls = ({ controlsWrapper, rateChangeHandler, setPlayPause, currentMoment }, ref) => {
+const VideoControls = ({ controlsWrapper, rateChangeHandler, setPlayPause, currentMoment, seekVideos }, ref) => {
   const videoState = useSelector(state => state.game.videoState);
 
 
@@ -21,7 +21,7 @@ const VideoControls = ({ controlsWrapper, rateChangeHandler, setPlayPause, curre
   // {`${totalMinutes}:${remainSeconds}`}
   return (
     <div className={controlsWrapper}>
-      <TimeLine cl={cl} currentMoment={currentMoment} ref={ref} />
+      <TimeLine cl={cl} currentMoment={currentMoment} seekVideos={seekVideos} ref={ref} />
       <div className={cl.buttons}>
         {playPauseBtn}
         <SpeedBtn rateChangeHandler={rateChangeHandler} />

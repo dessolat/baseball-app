@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useState } from 'react';
 import { useEffect } from 'react';
 
-const TimeLine = ({ cl, currentMoment }, ref) => {
+const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [isProgressToBar, setIsProgressToBar] = useState(false);
   const [isCurrentTimeDot, setIsCurrentTimeDot] = useState(false);

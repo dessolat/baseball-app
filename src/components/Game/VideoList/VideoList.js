@@ -123,6 +123,7 @@ const VideoList = ({ viewMode }) => {
           stateChangeHandler={stateChangeHandler}
           rateChangeHandler={rateChangeHandler}
           setPlayPause={setPlayPause}
+					seekVideos={seekVideos}
           ref={video1Ref}
         />
       )}
@@ -134,6 +135,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -142,6 +144,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video2Ref}
           />
         </>
@@ -154,6 +157,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -162,6 +166,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -170,6 +175,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video3Ref}
           />
         </>
@@ -182,6 +188,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -190,6 +197,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -198,6 +206,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video3Ref}
           />
           <Video
@@ -206,6 +215,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
+						seekVideos={seekVideos}
             ref={video4Ref}
           />
         </>
