@@ -1,13 +1,89 @@
+// .timeLine::before {
+// 	content: '0:00';
+// 	position: absolute;
+// 	left: 0;
+// 	top: -50px;
+// }
+.timeLine {
+  position: relative;
+  height: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.progressBar {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  // border: .5px solid rgba($color: white, $alpha: 0.2);
+  transition: height 0.05s;
+
+  &:hover {
+    height: 5px;
+  }
+}
+
+.progressToBar {
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  // background-color: rgba($color: white, $alpha: 0.7);
+  pointer-events: none;
+  position: relative;
+
+  &::before {
+    content: attr(data-before);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    font: 700 14px var(--font-nunito);
+    color: white;
+		animation: timeShow .3s linear forwards;
+  }
+}
+
+@keyframes timeShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.progressPlayed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: red;
+  pointer-events: none;
+}
+
+.currentTimeDot {
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  border-radius: 6px;
+}
+
 .buttons {
-	display: flex;
-	align-items: center;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
 
-	> button {
-		opacity: .9;
-		transition: opacity .3s;
+  > button {
+    opacity: 0.9;
+    transition: opacity 0.3s;
 
-		&:hover {
-			opacity: 1;
-		}
-	}
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
