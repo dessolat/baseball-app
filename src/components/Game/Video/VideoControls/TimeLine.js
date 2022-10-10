@@ -25,12 +25,16 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
     setIsCurrentTimeDot(true);
     setIsProgressToBar(true);
     setHoverXCoord({ offsetX: e.nativeEvent.offsetX, clientWidth: e.target.clientWidth });
-    console.log(e);
   };
-  const handleMouseOut = e => {
+  const handleMouseOut = () => {
     setIsCurrentTimeDot(false);
     setIsProgressToBar(false);
   };
+
+  function handleClick() {
+		const seekToSeconds = secondsFrom + totalSecondsHover
+    seekVideos(seekToSeconds);
+  }
 
   const totalSeconds = secondsTo - secondsFrom;
   // const totalMinutes = Math.floor(totalSeconds / 60);
@@ -46,21 +50,24 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   // const beforeTime = `${playedMinutes}:${playedSecondsFormatted}`
 
   const totalSecondsHover = totalSeconds * (hoverXCoord.offsetX / hoverXCoord.clientWidth);
-	const minutesHover = Math.floor(totalSecondsHover / 60);
-	const secondsHover = Math.floor(totalSecondsHover - minutesHover * 60);
-	const secondsHoverFormatted = String(secondsHover).length === 1 ? `0${secondsHover}` : secondsHover
+  const minutesHover = Math.floor(totalSecondsHover / 60);
+  const secondsHover = Math.floor(totalSecondsHover - minutesHover * 60);
+  const secondsHoverFormatted = String(secondsHover).length === 1 ? `0${secondsHover}` : secondsHover;
 
-	const beforeTime = `${minutesHover}:${secondsHoverFormatted}`
+  const beforeTime = `${minutesHover}:${secondsHoverFormatted}`;
 
   return (
     <div className={cl.timeLine}>
-      <div className={cl.progressBar} onMouseMove={handleMouseMove} onMouseOut={handleMouseOut}>
+      <div
+        className={cl.progressBar}
+        onMouseMove={handleMouseMove}
+        onMouseOut={handleMouseOut}
+        onClick={handleClick}>
         {isProgressToBar && (
           <div
             className={cl.progressToBar}
             style={{ width: hoverXCoord.offsetX }}
-            data-before={beforeTime}
-						></div>
+            data-before={beforeTime}></div>
         )}
         <div className={cl.progressPlayed} style={{ width: displayPercentPlayed + '%' }}></div>
         {isProgressToBar && (
