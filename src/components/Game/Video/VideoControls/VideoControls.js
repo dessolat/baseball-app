@@ -21,14 +21,14 @@ const VideoControls = (
     const timeDelta = Date.now() - previousTimeRef.current;
     previousTimeRef.current = Date.now();
 
-    if (timeDelta > 500) return;
+    if (timeDelta > 300) return;
 
     clearTimeout(timeoutRef.current);
     setIsSynchronization(true);
 
     timeoutRef.current = setTimeout(() => {
       setIsSynchronization(false);
-    }, 500);
+    }, 300);
 
     return () => {
       clearTimeout(timeoutRef.current);
