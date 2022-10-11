@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [isProgressToBar, setIsProgressToBar] = useState(false);
-  const [isCurrentTimeDot, setIsCurrentTimeDot] = useState(false);
   const [hoverXCoord, setHoverXCoord] = useState({ offsetX: 0, clientWidth: 0 });
 
   const intervalRef = useRef(null);
@@ -14,7 +13,7 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       ref.current && setCurrentSeconds(ref.current.getCurrentTime() - secondsFrom);
-    }, 80);
+    }, 140);
 
     return () => {
       clearInterval(intervalRef.current);
@@ -22,12 +21,10 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   }, [secondsFrom]);
 
   const handleMouseMove = e => {
-    setIsCurrentTimeDot(true);
     setIsProgressToBar(true);
     setHoverXCoord({ offsetX: e.nativeEvent.offsetX, clientWidth: e.target.clientWidth });
   };
   const handleMouseOut = () => {
-    setIsCurrentTimeDot(false);
     setIsProgressToBar(false);
   };
 
