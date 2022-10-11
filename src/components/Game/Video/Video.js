@@ -6,7 +6,10 @@ import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate
 import classNames from 'classnames';
 import VideoControls from './VideoControls/VideoControls';
 
-const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler, setPlayPause, seekVideos }, ref) => {
+const Video = (
+  { videoId, videoNumber, stateChangeHandler, rateChangeHandler, setPlayPause, seekVideos },
+  ref
+) => {
   const videoRef = ref;
 
   const endRef = useRef(null);
@@ -152,6 +155,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler, se
     [cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
   });
 
+  const isCustomVideoControls = currentMoment.video?.seconds_from || currentMoment.video?.seconds_to;
   return (
     <div className={videoClasses}>
       {Object.keys(currentCard).length !== 0 ? (
@@ -175,14 +179,16 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler, se
               }
             }}
           />
-          <VideoControls
-            controlsWrapper={cl.controlsWrapper}
-            rateChangeHandler={rateChangeHandler}
-            setPlayPause={setPlayPause}
-						currentMoment={currentMoment}
-						seekVideos={seekVideos}
-						ref={videoRef}
-          />
+          {isCustomVideoControls && (
+            <VideoControls
+              controlsWrapper={cl.controlsWrapper}
+              rateChangeHandler={rateChangeHandler}
+              setPlayPause={setPlayPause}
+              currentMoment={currentMoment}
+              seekVideos={seekVideos}
+              ref={videoRef}
+            />
+          )}
         </>
       ) : (
         <></>
