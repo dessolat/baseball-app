@@ -18,6 +18,8 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
     return () => {
       clearInterval(intervalRef.current);
     };
+
+		// eslint-disable-next-line
   }, [secondsFrom]);
 
   const handleMouseMove = e => {

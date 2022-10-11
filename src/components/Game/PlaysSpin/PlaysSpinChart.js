@@ -1,22 +1,23 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 const PlaysSpinChart = ({ pitch }) => {
   const { offset_x, offset_y } = pitch || 0;
 
-	const [currentDotRadius, setCurrentDotRadius] = useState(0);
+  const [currentDotRadius, setCurrentDotRadius] = useState(0);
 
   useLayoutEffect(() => {
     if (pitch === null) return;
 
-    setCurrentDotRadius(prev => prev === 1 ? 0.99999 : 1);
+    setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
+    // eslint-disable-next-line
   }, [offset_x, offset_y]);
 
   useLayoutEffect(() => {
-		if (pitch === null) return;
+    if (pitch === null) return;
 
     currentDotRadius < 7.5 &&
       setTimeout(() => {
-        setCurrentDotRadius(prev => (prev + 0.45 > 7.5) ? 7.5 : prev + 0.45);
+        setCurrentDotRadius(prev => (prev + 0.45 > 7.5 ? 7.5 : prev + 0.45));
       }, 10);
 
     // eslint-disable-next-line
