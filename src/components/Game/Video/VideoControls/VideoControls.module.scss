@@ -31,17 +31,17 @@
     right: 0;
     transform: translate(50%, -50%);
     font: 700 14px var(--font-nunito);
-		animation: timeShow .2s linear forwards;
+    animation: timeShow 0.2s linear forwards;
   }
 }
 
 @keyframes timeShow {
-	from {
-		color: transparent;
-		opacity: 0;
+  from {
+    color: transparent;
+    opacity: 0;
   }
   to {
-		color: white;
+    color: white;
     opacity: 1;
   }
 }
@@ -56,14 +56,25 @@
 }
 
 .currentTimeDot {
-  width: 12px;
-  height: 12px;
   background-color: red;
   position: absolute;
-  top: 50%;
+  top: calc(50% - 1px);
   transform: translateY(-50%);
   pointer-events: none;
-  border-radius: 6px;
+  animation: timeDotGrow 0.2s linear forwards;
+  transform-origin: center;
+  width: 2px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+@keyframes timeDotGrow {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(6);
+  }
 }
 
 .buttons {
