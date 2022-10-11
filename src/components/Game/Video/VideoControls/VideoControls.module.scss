@@ -1,9 +1,3 @@
-// .timeLine::before {
-// 	content: '0:00';
-// 	position: absolute;
-// 	left: 0;
-// 	top: -50px;
-// }
 .timeLine {
   position: relative;
   height: 5px;
@@ -17,7 +11,6 @@
   width: 100%;
   height: 3px;
   background-color: rgba(255, 255, 255, 0.2);
-  // border: .5px solid rgba($color: white, $alpha: 0.2);
   transition: height 0.05s;
 
   &:hover {
@@ -28,7 +21,6 @@
 .progressToBar {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.8);
-  // background-color: rgba($color: white, $alpha: 0.7);
   pointer-events: none;
   position: relative;
 
