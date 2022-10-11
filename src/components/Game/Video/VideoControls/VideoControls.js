@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import cl from './VideoControls.module.scss';
 import PlayBtn from 'components/UI/icons/YTButtons/PlayBtn/PlayBtn';
 import SpeedBtn from 'components/UI/icons/YTButtons/SpeedBtn/SpeedBtn';
@@ -10,10 +10,33 @@ const VideoControls = (
   { controlsWrapper, rateChangeHandler, setPlayPause, currentMoment, seekVideos },
   ref
 ) => {
+  const [isSynchronization, setIsSynchronization] = useState(false);
+
   const videoState = useSelector(state => state.game.videoState);
 
+  const timeoutRef = useRef(null);
+  const previousTimeRef = useRef(0);
+
+  useEffect(() => {
+    const timeDelta = Date.now() - previousTimeRef.current;
+    previousTimeRef.current = Date.now();
+
+    if (timeDelta > 500) return;
+
+    clearTimeout(timeoutRef.current);
+    setIsSynchronization(true);
+
+    timeoutRef.current = setTimeout(() => {
+      setIsSynchronization(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [videoState]);
+
   const playPauseBtn =
-    videoState === 1 || videoState === 3 ? (
+    videoState === 1 || videoState === 3 || isSynchronization ? (
       <PauseBtn setPlayPause={setPlayPause} />
     ) : (
       <PlayBtn setPlayPause={setPlayPause} />
