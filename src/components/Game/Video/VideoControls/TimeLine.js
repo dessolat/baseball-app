@@ -29,22 +29,14 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
   };
 
   function handleClick() {
-		const seekToSeconds = secondsFrom + totalSecondsHover
+    const seekToSeconds = secondsFrom + totalSecondsHover;
     seekVideos(seekToSeconds);
   }
 
   const totalSeconds = secondsTo - secondsFrom;
-  // const totalMinutes = Math.floor(totalSeconds / 60);
-  // const remainSeconds = Math.floor(totalSeconds - totalMinutes * 60);
 
   const percentPlayed = (100 * currentSeconds) / totalSeconds;
   const displayPercentPlayed = percentPlayed < 100 ? percentPlayed : 100;
-
-  // const playedMinutes = Math.floor(currentSeconds / 60);
-  // const playedSeconds = Math.floor(currentSeconds - playedMinutes * 60);
-  // const playedSecondsFormatted = String(playedSeconds).length === 1 ? `0${playedSeconds}` : playedSeconds
-
-  // const beforeTime = `${playedMinutes}:${playedSecondsFormatted}`
 
   const totalSecondsHover = totalSeconds * (hoverXCoord.offsetX / hoverXCoord.clientWidth);
   const minutesHover = Math.floor(totalSecondsHover / 60);
