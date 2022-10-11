@@ -62,7 +62,7 @@ const TimeLine = ({ cl, currentMoment, seekVideos }, ref) => {
         )}
         <div className={cl.progressPlayed} style={{ width: displayPercentPlayed + '%' }}></div>
         {isProgressToBar && (
-          <div className={cl.currentTimeDot} style={{ left: `calc((${displayPercentPlayed}% - 6px)` }}></div>
+          <div className={cl.currentTimeDot} style={{ left: `calc((${displayPercentPlayed}% - 1px)` }}></div>
         )}
       </div>
     </div>
