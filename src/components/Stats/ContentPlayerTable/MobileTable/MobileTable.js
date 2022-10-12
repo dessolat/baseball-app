@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { Link } from 'react-router-dom';
@@ -49,13 +49,6 @@ const MobileTable = ({
         setIsScrollable(rowsScroll.current.clientWidth < rowsScroll.current.scrollWidth);
     }, 150);
   }, [isMobile, mobileOrientation]);
-
-  // const sortedTeamOptions = useMemo(() => {
-  //   const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
-  //   sortedTeamsArr.unshift('All');
-
-  //   return sortedTeamsArr;
-  // }, [teamOptions]);
 
   const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
 
