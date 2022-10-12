@@ -7,7 +7,7 @@ import ContentPlayerFilterField from '../ContentPlayerFilterField';
 const MobileTable = ({
   cl,
   filteredStatsData,
-  teamOptions,
+  sortedTeamOptions,
   currentTeam,
 	handleFieldClick,
   handleTeamClick,
@@ -50,12 +50,12 @@ const MobileTable = ({
     }, 150);
   }, [isMobile, mobileOrientation]);
 
-  const sortedTeamOptions = useMemo(() => {
-    const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
-    sortedTeamsArr.unshift('All');
+  // const sortedTeamOptions = useMemo(() => {
+  //   const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
+  //   sortedTeamsArr.unshift('All');
 
-    return sortedTeamsArr;
-  }, [teamOptions]);
+  //   return sortedTeamsArr;
+  // }, [teamOptions]);
 
   const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
 

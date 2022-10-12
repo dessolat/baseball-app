@@ -62,6 +62,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     [filteredStatsData]
   );
 
+	const sortedTeamOptions = useMemo(() => {
+    const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
+    sortedTeamsArr.unshift('All');
+
+    return sortedTeamsArr;
+  }, [teamOptions]);
+
   //Filtering by team
   filteredStatsData = useMemo(
     () =>
@@ -95,7 +102,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         <MobileTable
           cl={cl}
           filteredStatsData={filteredStatsData}
-          teamOptions={teamOptions}
+          sortedTeamOptions={sortedTeamOptions}
           currentTeam={currentTeam}
           handleTeamClick={handleTeamClick}
 					handleFieldClick={handleFieldClick}
@@ -112,7 +119,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                 <div>
                   <Dropdown
                     title={'Team'}
-                    options={teamOptions}
+                    options={sortedTeamOptions}
                     currentOption={currentTeam}
                     handleClick={handleTeamClick}
                     listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
