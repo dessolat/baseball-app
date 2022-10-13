@@ -2,7 +2,9 @@ import React from 'react';
 
 const ContentBoxTableBodyCell = ({ title, toFixList, player, tableName }) => {
   const value =
-    title === 'POS'
+    player.id === -1
+      ? ' '
+      : title === 'POS'
       ? player.content.positions.join('/')
       : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title)
       ? player.content.stats[tableName === 'batting' ? 'running' : 'catching'][title]
