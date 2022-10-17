@@ -3,10 +3,8 @@ import ContentBoxTableFooterCell from './ContentBoxTableFooterCell';
 
 const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, orderedPlayersStats, toFixList }) => {
   const footerStyles =
-    orderedPlayersStats.filter(
-      player =>
-        tableName === 'pitching' ? player.takenBy : tableName === 'catching' ? player.is_catcher : true
-      // tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
+    orderedPlayersStats.filter(player =>
+      tableName === 'pitching' ? player.takenBy : tableName === 'catching' ? player.is_catcher : true
     ).length % 2
       ? { backgroundColor: '#eaeaea' }
       : {};

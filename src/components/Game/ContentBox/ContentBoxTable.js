@@ -73,8 +73,6 @@ const TABLES_INFO = {
 
 const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
 	const orderedPlayersStats = JSON.parse(JSON.stringify(tableData.players_stats));
-  // let orderedPlayersStats = tableData.players_stats.slice();
-  // const players = []
 
   if (tableName === 'pitching') {
     orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
@@ -86,12 +84,10 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
 
       if (player !== undefined) {
         player.takenBy = i + 1;
-        // players.push(player)
       }
     });
   }
-
-  // console.log(players);
+	
   console.log(orderedPlayersStats);
   return (
     <table className={cl.table + ' ' + tableClass}>
