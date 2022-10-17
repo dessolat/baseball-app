@@ -101,16 +101,22 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 
   let rowDelta = 0;
 
-  const orderedPlayersStats = tableData.players_stats.slice();
+  const orderedPlayersStats = JSON.parse(JSON.stringify(tableData.players_stats.slice()));
 
-  currentMode === 'Pitching' &&
+  if (currentMode === 'Pitching') {
+    orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
+
     tableData.pitchers_order.forEach((orderId, i) => {
-      const player = orderedPlayersStats.find(player => player.id === orderId);
+      const player = orderedPlayersStats.find(
+        curPlayer => curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined
+      );
 
       if (player !== undefined) {
-        player.order = i + 1;
+        player.takenBy = i + 1;
       }
     });
+  }
+
   return (
     <div className={cl.mobileWrapper}>
       <div className={cl.fullHeader}>
@@ -127,12 +133,12 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
           {orderedPlayersStats
             .filter(player =>
               currentMode === 'Pitching'
-                ? player.is_pitcher
+                ? player.takenBy
                 : currentMode === 'Catching'
                 ? player.is_catcher
                 : true
             )
-            .sort((a, b) => (currentMode === 'Pitching' ? (a.order > b.order ? 1 : -1) : 0))
+            .sort((a, b) => (currentMode === 'Pitching' ? (a.takenBy > b.takenBy ? 1 : -1) : 0))
             .map((player, i) => {
               if (player.is_substituted && BATTING_TITLES.includes(currentMode)) rowDelta++;
 
@@ -169,12 +175,12 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
           {orderedPlayersStats
             .filter(player =>
               currentMode === 'Pitching'
-                ? player.is_pitcher
+                ? player.takenBy
                 : currentMode === 'Catching'
                 ? player.is_catcher
                 : true
             )
-            .sort((a, b) => (currentMode === 'Pitching' ? (a.order > b.order ? 1 : -1) : 0))
+            .sort((a, b) => (currentMode === 'Pitching' ? (a.takenBy > b.takenBy ? 1 : -1) : 0))
             .map((player, i) => {
               return (
                 <div
