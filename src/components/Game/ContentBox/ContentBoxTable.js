@@ -87,8 +87,7 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
       }
     });
   }
-	
-  console.log(orderedPlayersStats);
+
   return (
     <table className={cl.table + ' ' + tableClass}>
       <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />

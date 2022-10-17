@@ -63,7 +63,6 @@ const PlaysEventsList = ({ moments }) => {
   }, [activeCardList]);
 
   useEffect(() => {
-		console.log(eventsChildRef.current);
     if (!eventsChildRef.current) return;
 
     eventsChildRef.current.parentNode.scrollTop =
