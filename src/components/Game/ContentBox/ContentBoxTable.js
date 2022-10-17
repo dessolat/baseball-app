@@ -71,22 +71,47 @@ const TABLES_INFO = {
   }
 };
 
-const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => (
-  <table className={cl.table + ' ' + tableClass}>
-    <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
-    <ContentBoxTableBody
-      TABLES_INFO={TABLES_INFO}
-      tableName={tableName}
-      tableData={tableData}
-      toFixList={toFixList}
-    />
-    <ContentBoxTableFooter
-      TABLES_INFO={TABLES_INFO}
-      tableName={tableName}
-      tableData={tableData}
-      toFixList={toFixList}
-    />
-  </table>
-);
+const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
+	const orderedPlayersStats = JSON.parse(JSON.stringify(tableData.players_stats));
+  // let orderedPlayersStats = tableData.players_stats.slice();
+  // const players = []
+
+  if (tableName === 'pitching') {
+    orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
+
+    tableData.pitchers_order.forEach((orderId, i) => {
+      const player = orderedPlayersStats.find(
+        curPlayer => curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined
+      );
+
+      if (player !== undefined) {
+        player.takenBy = i + 1;
+        // players.push(player)
+      }
+    });
+  }
+
+  // console.log(players);
+  console.log(orderedPlayersStats);
+  return (
+    <table className={cl.table + ' ' + tableClass}>
+      <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
+      <ContentBoxTableBody
+        TABLES_INFO={TABLES_INFO}
+        tableName={tableName}
+        toFixList={toFixList}
+				orderedPlayersStats={orderedPlayersStats}
+      />
+      <ContentBoxTableFooter
+        TABLES_INFO={TABLES_INFO}
+        tableName={tableName}
+        tableData={tableData}
+				orderedPlayersStats={orderedPlayersStats}
+
+        toFixList={toFixList}
+      />
+    </table>
+  );
+};
 
 export default ContentBoxTable;

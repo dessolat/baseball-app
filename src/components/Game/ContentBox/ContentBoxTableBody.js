@@ -1,24 +1,10 @@
 import React from 'react';
 import ContentBoxTableBodyRow from './ContentBoxTableBodyRow';
 
-const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) => {
+const ContentBoxTableBody = ({ TABLES_INFO, tableName, orderedPlayersStats, toFixList }) => {
   let rowDelta = 0;
 
-  const orderedPlayersStats = tableData.players_stats.slice();
-
-  if (tableName === 'pitching') {
-    orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
-
-    tableData.pitchers_order.forEach((orderId, i) => {
-      const player = orderedPlayersStats.find(
-        curPlayer => curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined
-      );
-
-      if (player !== undefined) {
-        player.takenBy = i + 1;
-      }
-    });
-  }
+  
 
   // tableName === 'pitching' &&
   //   tableData.pitchers_order.forEach((orderId, i) => {
@@ -34,9 +20,13 @@ const ContentBoxTableBody = ({ TABLES_INFO, tableName, tableData, toFixList }) =
   return (
     <tbody>
       {orderedPlayersStats
-        .filter(player =>
-          tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
+        // {(tableName !== 'pitching' ? orderedPlayersStats : players)
+        .filter(
+          player =>
+            tableName === 'pitching' ? player.takenBy : tableName === 'catching' ? player.is_catcher : true
+          // tableName === 'pitching' ? player.is_pitcher : tableName === 'catching' ? player.is_catcher : true
         )
+        .slice()
         .sort((a, b) => (tableName === 'pitching' ? (a.takenBy > b.takenBy ? 1 : -1) : 0))
         .map((player, i) => {
           if (player.is_substituted && tableName === 'batting') rowDelta++;
