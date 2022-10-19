@@ -10,6 +10,7 @@ import Stats from 'pages/Stats';
 import PlayerStats from 'pages/PlayerStats';
 import { useDispatch } from 'react-redux';
 import { setIsMobile, setMobileOrientation } from 'redux/sharedReducer';
+import ThreePage from 'pages/ThreePage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const App = () => {
           <Route path='/game/:gameId' element={<Game />} />
           <Route path='/stats/:statsType' element={<Stats />} />
           <Route path='/stats/player/:playerId' element={<PlayerStats />} />
+          <Route path='/three' element={<ThreePage />} />
           <Route path='*' element={<Navigate to='/games' replace={true} />} />
         </Routes>
       </QueryParamProvider>
