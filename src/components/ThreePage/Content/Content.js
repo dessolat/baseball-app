@@ -9,7 +9,8 @@ const Content = () => {
         width='560'
         height='315'
         className={cl.youtubeFrame}
-        src='https://www.youtube.com/embed/kxXaIHi1j4w?controls=0'
+        src='https://www.youtube.com/embed/WCjLd7QAJq8?controls=0'
+        // src='https://www.youtube.com/embed/kxXaIHi1j4w?controls=0'
         title='YouTube video player'
         frameborder='0'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
