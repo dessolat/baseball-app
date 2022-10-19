@@ -1,4 +1,14 @@
 import React, { useRef } from 'react';
+import Planet from './Planet';
+import SunMap from 'images/sun_texture.jpg';
+import MercuryMap from 'images/mercury_texture.jpg';
+import VenusMap from 'images/venus_texture.jpg';
+import EarthMap from 'images/earth_texture.jpg';
+import MarsMap from 'images/mars_texture.jpg';
+import JupiterMap from 'images/jupiter_texture.jpg';
+import SaturnMap from 'images/saturn_texture.jpg';
+import UranusMap from 'images/uranus_texture.jpg';
+
 const PLANETS = [
   {
     radius: 0.4,
