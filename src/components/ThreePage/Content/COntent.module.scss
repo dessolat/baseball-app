@@ -12,3 +12,28 @@
 	height: auto;
 }
 
+.buttons {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	display: inline-block;
+	padding: 10px;
+	background-color: rgba($color: lightgray, $alpha: .4);
+	border-radius: 5px;
+
+	> button {
+		background-color: lightgray;
+		cursor: pointer;
+		font: 400 14px var(--font-nunito);
+		padding: 5px;
+		border-radius: 2.5px;
+
+		& + button {
+			margin-left: 5px;
+		}
+	}
+}
+
+.eventsBtn {
+	width: 154px;
+}
