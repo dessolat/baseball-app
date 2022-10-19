@@ -5,6 +5,7 @@ import { playerStatsReducer } from './playerStatsReducer';
 import { sharedReducer } from './sharedReducer';
 import { statsReducer } from './statsReducer';
 import { teamGamesReducer } from './teamGamesReducer';
+import { threeReducer } from './threeReducer';
 
 const rootReducer = combineReducers({
   game: gameReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   teamGames: teamGamesReducer,
 	stats: statsReducer,
 	playerStats: playerStatsReducer,
-  shared: sharedReducer
+  shared: sharedReducer,
+	three: threeReducer
 });
 
 export default rootReducer;
