@@ -1,4 +1,7 @@
 import React, { useRef } from 'react';
+import * as THREE from 'three';
+import { OrbitControls, Stars } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import Planet from './Planet';
 import SunMap from 'images/sun_texture.jpg';
 import MercuryMap from 'images/mercury_texture.jpg';
@@ -68,9 +71,38 @@ const PLANETS = [
     texture: UranusMap
   }
 ];
+
 const Galaxy = ({ count, isStars, isEvents }) => {
+  const ref = useRef();
+  const orbitRef = useRef();
+
+  useFrame(() => {
+    ref.current.rotation.y += 0.01;
+  });
+
+  // const handleClick = e => {
+  //   setCount(prev => prev + 1);
+  //   orbitRef.current.target.set(e.point.x, e.point.y, e.point.z);
+  // };
   return (
     <>
+      <group ref={ref}>
+        <mesh>
+          <sphereGeometry args={[2, 40, 40]} />
+          <meshStandardMaterial map={new THREE.TextureLoader().load(SunMap)} />
+        </mesh>
+      </group>
+      {PLANETS.slice(0, count).map((planet, i) => (
+        <Planet key={i} planet={planet} />
+      ))}
+      <ambientLight position={[0, 1.5, 0]} intensity={0.8} />
+      <OrbitControls enableZoom={true} ref={orbitRef} />
+      {isStars && (
+        <>
+          <color attach='background' args={['black']} />
+          <Stars />
+        </>
+      )}
     </>
   );
 };
