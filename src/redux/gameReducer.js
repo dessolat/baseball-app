@@ -20,7 +20,8 @@ const defaultState = {
   errorMsg: null,
 	playerCardFilter: '',
 	videoPlaybackRate: 1,
-	videoState: null
+	videoState: null,
+	isFilteredPlayer: true
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -45,6 +46,7 @@ const SET_ERROR_MSG = 'SET_ERROR_MSG';
 const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
 const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
 const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
+const SET_IS_FILTERED_PLAYER = 'SET_IS_FILTERED_PLAYER';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -92,6 +94,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, videoPlaybackRate: action.payload };
     case SET_VIDEO_STATE:
       return { ...state, videoState: action.payload };
+    case SET_IS_FILTERED_PLAYER:
+      return { ...state, isFilteredPlayer: action.payload };
     default:
       return state;
   }
@@ -119,3 +123,4 @@ export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
 export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
 export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE, payload });
 export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
+export const setIsFilteredPlayer = payload => ({ type: SET_IS_FILTERED_PLAYER, payload });
