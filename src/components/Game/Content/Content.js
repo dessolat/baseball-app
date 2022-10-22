@@ -10,7 +10,8 @@ import {
   setFilteredCards,
   setPlaybackMode,
   // setImagesData,
-  setCurrentMoment
+  setCurrentMoment,
+  setIsFilteredPlayer
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
@@ -287,6 +288,8 @@ const Content = ({ currentTab }) => {
 
     const filterArr = playerCardFilter.split(' ');
 
+    playerCardFilter === '' && dispatch(setIsFilteredPlayer(true));
+
     if (playerCardFilter !== '') {
       const tempFilteredCards = filteredCards.filter(card => {
         const whoWordsArr = card.who.split(' ');
@@ -302,7 +305,12 @@ const Content = ({ currentTab }) => {
         }, true);
       });
 
-      if (tempFilteredCards.length > 0) filteredCards = tempFilteredCards;
+      if (tempFilteredCards.length > 0) {
+				dispatch(setIsFilteredPlayer(true))
+        filteredCards = tempFilteredCards;
+      }
+
+			tempFilteredCards.length === 0 && dispatch(setIsFilteredPlayer(false))
     }
     return filteredCards;
   };
