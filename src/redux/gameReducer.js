@@ -21,7 +21,8 @@ const defaultState = {
 	playerCardFilter: '',
 	videoPlaybackRate: 1,
 	videoState: null,
-	isFilteredPlayer: true
+	isFilteredPlayer: true,
+	isCameraSelector: true
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -47,6 +48,7 @@ const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
 const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
 const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
 const SET_IS_FILTERED_PLAYER = 'SET_IS_FILTERED_PLAYER';
+const SET_IS_CAMERA_SELECTOR = 'SET_IS_CAMERA_SELECTOR';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -96,6 +98,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, videoState: action.payload };
     case SET_IS_FILTERED_PLAYER:
       return { ...state, isFilteredPlayer: action.payload };
+    case SET_IS_CAMERA_SELECTOR:
+      return { ...state, isCameraSelector: action.payload };
     default:
       return state;
   }
@@ -124,3 +128,4 @@ export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, p
 export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE, payload });
 export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
 export const setIsFilteredPlayer = payload => ({ type: SET_IS_FILTERED_PLAYER, payload });
+export const setIsCameraSelector = payload => ({ type: SET_IS_CAMERA_SELECTOR, payload });
