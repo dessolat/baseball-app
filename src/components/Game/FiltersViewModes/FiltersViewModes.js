@@ -1,13 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewMode } from 'redux/gameReducer';
+import { setIsCameraSelector, setViewMode } from 'redux/gameReducer';
 import cl from './FiltersViewModes.module.scss';
 
 const FiltersViewModes = () => {
   const viewMode = useSelector(state => state.game.viewMode);
   const dispatch = useDispatch();
 
-  const handleModeClick = e => dispatch(setViewMode(e.currentTarget.name));
+  const handleModeClick = e => {
+    e.currentTarget.name === viewMode && dispatch(setIsCameraSelector(true));
+    dispatch(setViewMode(e.currentTarget.name));
+  };
   const getClassName = mode => (viewMode === mode ? cl.active : '');
 
   return (
