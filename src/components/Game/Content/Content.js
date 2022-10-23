@@ -18,6 +18,7 @@ import ContentGraphics from '../ContentGraphics/ContentGraphics';
 import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
 import ContentBox from '../ContentBox/ContentBox';
 import MobilePitcherFilters from './MobilePitcherFilters';
+import ModalCameraSelector from '../ModalCameraSelector/ModalCameraSelector';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -31,6 +32,7 @@ const Content = ({ currentTab }) => {
   const gameId = useSelector(state => state.game.gameId);
   const isVideo = useSelector(state => state.game.isVideo);
   const playerCardFilter = useSelector(state => state.game.playerCardFilter);
+  const isCameraSelector = useSelector(state => state.game.isCameraSelector);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
@@ -334,6 +336,7 @@ const Content = ({ currentTab }) => {
               currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
+						{isCameraSelector && <ModalCameraSelector />}
           </div>
           {errorMsg !== null && (
             <p
