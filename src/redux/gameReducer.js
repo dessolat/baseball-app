@@ -22,7 +22,7 @@ const defaultState = {
 	videoPlaybackRate: 1,
 	videoState: null,
 	isFilteredPlayer: true,
-	isCameraSelector: true
+	isCameraSelector: false
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
