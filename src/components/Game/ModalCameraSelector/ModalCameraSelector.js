@@ -3,6 +3,7 @@ import cl from './ModalCameraSelector.module.scss';
 import ModalCross from 'images/modal_cross.png';
 import { setIsCameraSelector } from 'redux/gameReducer';
 import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 const ModalCameraSelector = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,20 @@ const ModalCameraSelector = () => {
     { number: 7, isActive: true, title: 'Pitch' },
     { number: 8, isActive: true, title: 'IP' }
   ];
+
   return (
     <div className={cl.modalCameraSelectorWrapper}>
       <div className={cl.camerasContainer}>
-        {CAMERAS.map((camera, i) => (
-          <button key={i} className={cl.camera} data-before={camera.number}>{camera.title}</button>
-        ))}
+        {CAMERAS.map((camera, i) => {
+          const cameraClasses = classNames([cl.camera], {
+            [cl.active]: camera.isActive
+          });
+          return (
+            <button key={i} className={cameraClasses} data-before={camera.number}>
+              {camera.title}
+            </button>
+          );
+        })}
       </div>
       <button
         className={cl.modalCrossBtn}
