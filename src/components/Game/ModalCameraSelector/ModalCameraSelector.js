@@ -10,14 +10,16 @@ const ModalCameraSelector = () => {
 
   return (
     <div className={cl.modalCameraSelectorWrapper}>
-      <CameraList />
-      <button
-        className={cl.modalCrossBtn}
-        onClick={() => {
-          dispatch(setIsCameraSelector(false));
-        }}>
-        <img src={ModalCross} alt='modal-cross' />
-      </button>
+      <div className={cl.modalCameraSelectorInnerWrapper}>
+        <CameraList />
+        <button
+          className={cl.modalCrossBtn}
+          onClick={() => {
+            dispatch(setIsCameraSelector(false));
+          }}>
+          <img src={ModalCross} alt='modal-cross' />
+        </button>
+      </div>
     </div>
   );
 };
