@@ -19,7 +19,11 @@ const ModalCameraSelector = () => {
   ];
   return (
     <div className={cl.modalCameraSelectorWrapper}>
-      <div className={cl.camerasContainer}></div>
+      <div className={cl.camerasContainer}>
+        {CAMERAS.map((camera, i) => (
+          <button key={i} className={cl.camera} data-before={camera.number}>{camera.title}</button>
+        ))}
+      </div>
       <button
         className={cl.modalCrossBtn}
         onClick={() => {
