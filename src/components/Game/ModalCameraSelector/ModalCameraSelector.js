@@ -8,15 +8,12 @@ import CameraList from './CameraList';
 const ModalCameraSelector = () => {
   const dispatch = useDispatch();
 
+  const handleCloseBtnClick = () => dispatch(setIsCameraSelector(false));
   return (
-    <div className={cl.modalCameraSelectorWrapper}>
-      <div className={cl.modalCameraSelectorInnerWrapper}>
+    <div className={cl.modalCameraSelectorWrapper} onClick={handleCloseBtnClick}>
+      <div className={cl.modalCameraSelectorInnerWrapper} onClick={e => e.stopPropagation()}>
         <CameraList />
-        <button
-          className={cl.modalCrossBtn}
-          onClick={() => {
-            dispatch(setIsCameraSelector(false));
-          }}>
+        <button className={cl.modalCrossBtn} onClick={handleCloseBtnClick}>
           <img src={ModalCross} alt='modal-cross' />
         </button>
       </div>
