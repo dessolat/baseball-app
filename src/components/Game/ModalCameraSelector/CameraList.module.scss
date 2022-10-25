@@ -5,6 +5,10 @@
   grid-template: 10.125rem 10.125rem / repeat(4, 16.625rem);
   justify-content: space-between;
   row-gap: 2.75rem;
+	
+	@media screen and (max-width: 1100px) {
+		grid-template: 9rem 9rem / repeat(4, 16rem);
+  }
 }
 
 .camera {
