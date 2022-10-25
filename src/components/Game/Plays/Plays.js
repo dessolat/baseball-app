@@ -61,7 +61,7 @@ const Plays = ({ isVideo }) => {
           {/* <div className={cl.landscapeDisplayNone}>
             <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
           </div> */}
-            <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} />
+            {/* <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} /> */}
           <PlaysContent moments={moments} currentTab={currentTab} />
         </>
       )}
