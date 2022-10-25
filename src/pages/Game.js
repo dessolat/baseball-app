@@ -7,7 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 // import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
-import { resetData } from 'redux/gameReducer';
+import { resetData, setCurrentTab as setCurrentSubTab } from 'redux/gameReducer';
 import { useParams } from 'react-router-dom';
 // import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
@@ -42,10 +42,7 @@ const Game = () => {
     //     navigate('/games');
     //   });
 
-
-			dispatch(getFullData(true));
-
-
+    dispatch(getFullData(true));
 
     const resizeHandle = () => {
       dispatch(setMobileWidth(window.innerWidth));
@@ -77,14 +74,18 @@ const Game = () => {
   //   // eslint-disable-next-line
   // }, [gameId]);
 
-	// useEffect(() => {
-	// 	console.log(error);
-	// }, [error])
-	
+  // useEffect(() => {
+  // 	console.log(error);
+  // }, [error])
 
   const handleTabClick = e => {
-    setSearchParam('tab', e.target ? e.target.name : e.toLowerCase());
-    setCurrentTab(e.target ? e.target.name : e.toLowerCase());
+    const tabText = e.target ? e.target.name : e.toLowerCase();
+		const resultTabText = tabText === 'hit' ? 'hitting' : tabText === 'run' ? 'running' : tabText
+
+    setSearchParam('tab', resultTabText);
+    setCurrentTab(resultTabText);
+
+    dispatch(setCurrentSubTab(resultTabText));
   };
 
   const isFilters = currentTab !== 'box';
