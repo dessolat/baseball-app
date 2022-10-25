@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import cl from './Cross.module.scss';
 
-const Cross = () => {
-	return (
-		<div>Cross</div>
-	)
-}
+const Cross = ({ imgSrc, handleClick, alt = 'close' }) => {
+  return (
+    <button className={cl.crossBtn} onClick={handleClick}>
+      <img src={imgSrc} alt={alt} />
+    </button>
+  );
+};
 
-export default Cross
+export default Cross;
