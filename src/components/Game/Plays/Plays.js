@@ -18,9 +18,12 @@ const Plays = ({ isVideo }) => {
   const dispatch = useDispatch();
 
 	useLayoutEffect(() => {
-		const ptab = getSearchParam('ptab');
-		const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
+		const tab = getSearchParam('tab');
+		const defaultPtab = ['pitch', 'hitting', 'running'].includes(tab) ? tab : 'pitch';
 		dispatch(setCurrentTab(defaultPtab))
+		// const ptab = getSearchParam('ptab');
+		// const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
+		// dispatch(setCurrentTab(defaultPtab))
 		// eslint-disable-next-line
 }, [])
 
