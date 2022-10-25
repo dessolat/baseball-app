@@ -1,7 +1,6 @@
 .filterPlayerField {
   position: absolute;
   top: -45px;
-  // top: -19px;
   left: 0;
   border: none;
   border-radius: 14px;
@@ -18,27 +17,17 @@
     left: 50%;
     transform: translateX(-50%);
     line-height: 15px;
-    // background: no-repeat white url('/images/player_filter_icon.png') right 6px bottom 50% / 13px;
-		background-size: 13px;
+    background-size: 13px;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		top: 1px;
+    top: 1px;
     left: 50%;
     transform: translateX(-50%);
     line-height: 15px;
-    // background: no-repeat white url('/images/player_filter_icon.png') right 6px bottom 50% / 13px;
-		background-size: 13px;
+    background-size: 13px;
   }
 }
 
 .noPlayerFiltered {
-  // background: no-repeat #ffd1d1 url('/images/player_filter_icon.png') right 6px bottom 50% / 15px;
-
-  // @media screen and (max-width: 800px) {
-  //   background: no-repeat #ffd1d1 url('/images/player_filter_icon.png') right 6px bottom 50% / 13px;
-  // }
-  // @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-  //   background: no-repeat #ffd1d1 url('/images/player_filter_icon.png') right 6px bottom 50% / 13px;
-  // }
-	background-color: #ffd1d1;
+  background-color: #ffd1d1;
 }
