@@ -2,9 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import cl from './CameraList.module.scss';
 
-const CameraListItem = ({ camera }) => {
+const CameraListItem = ({ camera, index }) => {
   const cameraClasses = classNames([cl.camera], {
-    [cl.active]: camera.isActive
+    [cl.active]: camera.isActive,
+		[cl.selected]: index === 6
   });
 
   return (
