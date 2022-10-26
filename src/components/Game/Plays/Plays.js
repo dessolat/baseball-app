@@ -1,11 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import cl from './Plays.module.scss';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
-import PlaysFooter from '../PlaysFooter/PlaysFooter';
+// import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSearchParam, setSearchParam } from 'utils';
-import { setCurrentTab, setPitchState } from 'redux/gameReducer';
+import { getSearchParam,  } from 'utils';
+// import { setSearchParam } from 'utils';
+import { setCurrentTab  } from 'redux/gameReducer';
+// import { setPitchState } from 'redux/gameReducer';
 // import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
 const Plays = ({ isVideo }) => {
@@ -48,11 +50,11 @@ const Plays = ({ isVideo }) => {
       : cl.pitch
   );
 
-  const handleTabClick = e => {
-    setSearchParam('ptab', e.target.name);
-    dispatch(setCurrentTab(e.target.name));
-    dispatch(setPitchState('Field'));
-  };
+  // const handleTabClick = e => {
+  //   setSearchParam('ptab', e.target.name);
+  //   dispatch(setCurrentTab(e.target.name));
+  //   dispatch(setPitchState('Field'));
+  // };
 
   return (
     <div className={classes.join(' ')}>
