@@ -32,7 +32,7 @@ const Filters = () => {
 
   const scrollHorizontally = e => {
     const start = scrollRef.current.scrollLeft,
-      change = 120,
+      change = 580,
       increment = 10;
     let currentTime = 0;
 
@@ -67,9 +67,9 @@ const Filters = () => {
     <section className={'container ' + cl.filtersContainer}>
       <div className={cl.filters}>
         <div className={cl.situationsWrapper}>
-					{renderScrollArrow(isLeftScroll)}
+          {renderScrollArrow(isLeftScroll)}
           <FiltersSituationsList ref={scrollRef} situations={situations} />
-					{renderScrollArrow(isRightScroll, 'right')}
+          {renderScrollArrow(isRightScroll, 'right')}
         </div>
         {tab === 'videos' && <FiltersViewModes />}
       </div>
