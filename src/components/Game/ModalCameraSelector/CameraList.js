@@ -10,35 +10,54 @@ const CameraList = ({ activeNumber }) => {
   ];
 
   const CAMERAS = [
-    { number: 1, isActive: false, title: 'Base left main' },
+    { number: 1, isActive: true, title: 'Base left main' },
     { number: 2, isActive: false, title: 'Base right main' },
-    { number: 3, isActive: false, title: 'Base left add' },
+    { number: 3, isActive: true, title: 'Base left add' },
     { number: 4, isActive: false, title: 'Base right add' },
-    { number: 5, isActive: false, title: 'Bat left' },
+    { number: 5, isActive: true, title: 'Bat left' },
     { number: 6, isActive: false, title: 'Bat right' },
-    { number: 7, isActive: false, title: 'Pitch' },
+    { number: 7, isActive: true, title: 'Pitch' },
     { number: 8, isActive: false, title: 'IP' }
   ];
 
-  const setIsActive = () => {
-		const max = CAMERAS.length
-		const cameraIndex = Math.floor(Math.random() * max)
+  // const setIsActive = () => {
+  //   const max = CAMERAS.length;
+  //   const cameraIndex = Math.floor(Math.random() * max);
 
-		if (!CAMERAS[cameraIndex].isActive) {
-			CAMERAS[cameraIndex].isActive = true
-			return
-		}
+  //   if (!CAMERAS[cameraIndex].isActive) {
+  //     CAMERAS[cameraIndex].isActive = true;
+  //     return;
+  //   }
 
-		setIsActive()
-	};
+  //   setIsActive();
+  // };
 
-  for (let i = 0; i < activeNumber; i++) setIsActive();
+  // for (let i = 0; i < activeNumber; i++) setIsActive();
 
   return (
     <div className={cl.camerasContainer}>
-      {CAMERAS.map((camera, i) => ( 
-        <CameraListItem key={i} camera={camera} />
+      {CAMERAS.map((camera, i) => (
+        <CameraListItem key={i} camera={camera} index={i}/>
       ))}
+			<div className={cl.modesList}>
+				<div>
+					<button style={{width: '100%', height: '100%', backgroundColor: 'var(--side-color)'}}>
+
+					</button>
+				</div>
+				<div className={cl.activeMode + ' ' + cl.fourCameras}>
+					<button>1</button>
+					<button>3</button>
+					<button>5</button>
+					<button className={cl.activeCameraBtn}>7</button>
+				</div>
+				<div className={cl.fourCameras}>
+					<button>2</button>
+					<button>6</button>
+					<button>4</button>
+					<button>8</button>
+				</div>
+			</div>
     </div>
   );
 };
