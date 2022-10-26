@@ -13,7 +13,7 @@ const ModalCameraSelector = ({ activeNumber }) => {
   return (
     <div className={cl.modalCameraSelectorWrapper} onClick={handleCloseBtnClick}>
       <div className={cl.modalCameraSelectorInnerWrapper} onClick={e => e.stopPropagation()}>
-        <CameraList activeNumber={activeNumber} />
+        <CameraList />
         <Cross imgSrc={ModalCross} handleClick={handleCloseBtnClick} alt='close-btn' />
       </div>
     </div>
