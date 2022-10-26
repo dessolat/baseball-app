@@ -149,7 +149,15 @@ const Header = ({ currentTab, handleTabClick }) => {
   const teamTotalScoresWrapperClasses = [cl.teamTotalScoresWrapper];
   (getSearchParam('tab') === 'box' || isVideo) && scoresWrapperClasses.push(cl.landscapeDisplayNone);
   getSearchParam('tab') !== 'box' && teamTotalScoresWrapperClasses.push(cl.landscapeDisplayNone);
-  const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
+  const tabsArr = isVideo ? ['Box', 'Videos', 'Pitch', 'Hit', 'Run'] : ['Box', 'Plays'];
+  // const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
+
+  const tabsCurrentOption =
+    currentTab === 'hitting'
+      ? 'Hit'
+      : currentTab === 'running'
+      ? 'Run'
+      : currentTab[0].toUpperCase() + currentTab.slice(1);
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -161,9 +169,9 @@ const Header = ({ currentTab, handleTabClick }) => {
             <HeaderTabs currentTab={currentTab} handleClick={handleTabClick} />
             <div className={cl.mainModeSelector}>
               <Dropdown
-                title={currentTab[0].toUpperCase() + currentTab.slice(1)}
+                title={tabsCurrentOption}
                 options={tabsArr}
-                currentOption={currentTab[0].toUpperCase() + currentTab.slice(1)}
+                currentOption={tabsCurrentOption}
                 handleClick={handleTabClick}
               />
             </div>
@@ -183,7 +191,9 @@ const Header = ({ currentTab, handleTabClick }) => {
             <div className={cl.dateLocation}>
               {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}
             </div>
-            <div className={cl.geoPitcherWrapper}>{getSearchParam('tab') !== 'box' && <MobilePitcherFilters />}</div>
+            <div className={cl.geoPitcherWrapper}>
+              {getSearchParam('tab') !== 'box' && <MobilePitcherFilters />}
+            </div>
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
