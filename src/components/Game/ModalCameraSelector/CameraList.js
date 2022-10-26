@@ -3,6 +3,12 @@ import cl from './CameraList.module.scss';
 import CameraListItem from './CameraListItem';
 
 const CameraList = ({ activeNumber }) => {
+  const MODES_DATA = [
+    { cams_number: 1, cams_values: [2], active_cam: null },
+    { cams_number: 4, cams_values: [1, 3, 5, 7], active_cam: null },
+    { cams_number: 4, cams_values: [2, 6, 4, 8], active_cam: null }
+  ];
+
   const CAMERAS = [
     { number: 1, isActive: false, title: 'Base left main' },
     { number: 2, isActive: false, title: 'Base right main' },
