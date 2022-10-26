@@ -16,7 +16,7 @@ import { setMobileWidth } from 'redux/sharedReducer';
 
 const Game = () => {
   const tab = getSearchParam('tab');
-  const defaultTab = ['box', 'videos', 'pitch', 'hitting', 'running'].includes(tab) ? tab : 'pitch';
+  const defaultTab = ['box', 'videos', 'pitch', 'hitting', 'running', 'plays'].includes(tab) ? tab : 'pitch';
   // const defaultTab = ['box', 'plays', 'videos'].includes(tab) ? tab : 'plays';
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const { gameId } = useParams();
