@@ -7,8 +7,7 @@ const HeaderTabs = ({ currentTab, handleClick }) => {
   const isVideo = useSelector(state => state.game.isVideo);
 
   const tabsArr = ['box'];
-  isVideo && tabsArr.push('videos');
-	tabsArr.push('pitch', 'hit', 'run');
+	isVideo ? tabsArr.push('videos', 'pitch', 'hit', 'run') : tabsArr.push('plays');
 
   const getClass = name =>
     currentTab === name || (currentTab === 'videos' && name === 'plays' && !isVideo) ? cl.active : '';
