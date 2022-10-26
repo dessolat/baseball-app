@@ -8,7 +8,7 @@ const useScrollHorizontally = () => {
   const scrollHorizontally = e => {
     e = window.event || e;
     var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
-    scrollRef.current.scrollLeft += delta * 32;
+    scrollRef.current.scrollLeft -= delta * 32;
     setIsLeftScroll(scrollRef.current.scrollLeft !== 0);
     setIsRightScroll(
       scrollRef.current.scrollLeft + scrollRef.current.clientWidth < scrollRef.current.scrollWidth
