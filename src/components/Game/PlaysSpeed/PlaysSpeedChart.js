@@ -7,7 +7,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   useLayoutEffect(() => {
     if (currentDot.index === undefined) return;
 
-    setCurrentDotRadius(prev => prev === 1 ? 0.99999 : 1);
+    setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
   }, [currentDot]);
 
   useLayoutEffect(() => {
@@ -21,9 +21,9 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     // eslint-disable-next-line
   }, [currentDotRadius]);
 
-  const GRAPH_WIDTH = 1;
-  const DOT_RADIUS = 1;
-  const DOT_COLOR = '#1A4C96';
+  // const GRAPH_WIDTH = 1;
+  const DOT_RADIUS = 4;
+  // const DOT_COLOR = '#1A4C96';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
 
@@ -108,24 +108,24 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     linePaths.push({ [pair[0]]: linePath });
   });
 
-  const renderedGraphs = (
-    <>
-      {linePaths.map((pair, index) => {
-        const isPath = dotsCoords[Object.keys(pair)[0]].length > 1;
+  // const renderedGraphs = (
+  //   <>
+  //     {linePaths.map((pair, index) => {
+  //       const isPath = dotsCoords[Object.keys(pair)[0]].length > 1;
 
-        return isPath ? (
-          <path d={Object.values(pair)[0]} stroke={COLORS[index]} strokeWidth={GRAPH_WIDTH} fill='none' />
-        ) : (
-          <circle
-            cx={dotsCoords[Object.keys(pair)[0]][0][0]}
-            cy={dotsCoords[Object.keys(pair)[0]][0][1]}
-            r={DOT_RADIUS}
-            fill={DOT_COLOR}
-          />
-        );
-      })}
-    </>
-  );
+  //       return isPath ? (
+  //         <path d={Object.values(pair)[0]} stroke={COLORS[index]} strokeWidth={GRAPH_WIDTH} fill='none' />
+  //       ) : (
+  //         <circle
+  //           cx={dotsCoords[Object.keys(pair)[0]][0][0]}
+  //           cy={dotsCoords[Object.keys(pair)[0]][0][1]}
+  //           r={DOT_RADIUS}
+  //           fill={DOT_COLOR}
+  //         />
+  //       );
+  //     })}
+  //   </>
+  // );
 
   const isDots = chartValuesArr.length > 1;
   const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
@@ -136,7 +136,15 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const dots = !isDots
     ? null
     : dotsArr.map((dot, i) => (
-        <circle key={i} cx={dot.coords[0]} cy={dot.coords[1]} r={DOT_RADIUS} fill={COLORS[dot.type - 1]} />
+        <circle
+          key={i}
+          cx={dot.coords[0]}
+          cy={dot.coords[1]}
+          r={DOT_RADIUS}
+          fill={COLORS[dot.type - 1]}
+          stroke='#000'
+          strokeWidth='0.5'
+        />
       ));
 
   return (
@@ -153,11 +161,11 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       <text x='10' y='83' className={cl.plainText}>
         {yAxisValues[3]}
       </text>
-      <line x1='38' y1='20' x2='435' y2='20' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
+      <line x1='38' y1='9' x2='435' y2='9' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       <line x1='38' y1='41' x2='435' y2='41' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       <line x1='38' y1='62' x2='435' y2='62' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
       <line x1='38' y1='83' x2='435' y2='83' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      {renderedGraphs}
+      {/* {renderedGraphs} */}
       {dots}
       {currentDot.index !== undefined && (
         <line
@@ -175,6 +183,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
           r={currentDotRadius}
           fill={COLORS[currentDot.type - 1]}
+          stroke='#000'
+          strokeWidth='0.5'
         />
       )}
 
