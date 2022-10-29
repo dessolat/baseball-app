@@ -18,10 +18,10 @@
     background: #f4f5f7;
     border-top: unset;
     border-bottom: unset;
-		height: unset;
-		// height: 209px;
-		aspect-ratio: 16/9;
-		width: 100%;
+    height: unset;
+    // height: 209px;
+    aspect-ratio: 16/9;
+    width: 100%;
 
     > div + div {
       border-top: unset;
@@ -31,30 +31,37 @@
 
 .pitch {
   // grid-template: minmax(116px, 146px) minmax(300px, 330px) 36px / minmax(157.53px, 187px) minmax(345px, 500px) minmax(210.87px, 280px);
-  grid-template: 9.5rem 20.625rem 2.875rem / minmax(157.53px, 187px) minmax(345px, 500px) minmax(
-      210.87px,
-      280px
-    );
+  grid-template: 9.5rem 20.625rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
+  // grid-template: 9.5rem 20.625rem 2.875rem / minmax(157.53px, 187px) minmax(345px, 500px) minmax(
+  //     210.87px,
+  //     280px
+  //   );
   grid-template-areas:
-    'events spd spin'
-    'events field field'
-    'footer footer footer';
+    'spd spin'
+    'field field';
+  // grid-template-areas:
+  //   'events spd spin'
+  //   'events field field'
+  //   'footer footer footer';
 }
 
 .hitting {
   // grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
-  grid-template: 30.125rem 2.875rem / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
-  grid-template-areas:
-    'events bat stats'
-    'footer footer footer';
+  grid-template: 30.125rem / minmax(415px, 577px) minmax(262.5px, 390px);
+  grid-template-areas: 'bat stats';
+  // grid-template-areas:
+  //   'events bat stats'
+  //   'footer footer footer';
 }
 
 .running {
   // grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
-  grid-template: 30.125rem 2.875rem / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
-  grid-template-areas:
-    'events field info'
-    'footer footer footer';
+  grid-template: 30.125rem / minmax(464.97px, 593px) minmax(212.53px, 356px);
+  // grid-template: 30.125rem 2.875rem / minmax(157.53px, 187px) minmax(400px, 493px) minmax(155px, 269px);
+  grid-template-areas: 'field info';
+  // grid-template-areas:
+  //   'events field info'
+  //   'footer footer footer';
 }
 
 .playsNoVideo {
@@ -70,7 +77,7 @@
     border-right: none;
   }
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
   }
 }
@@ -78,5 +85,13 @@
 .landscapeDisplayNone {
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
+  }
+}
+
+.onlyMobileLandscape {
+  display: none;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: block;
   }
 }
