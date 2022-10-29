@@ -10,6 +10,27 @@ import VideoList from '../VideoList/VideoList';
 const Videos = () => {
   const viewMode = useSelector(state => state.game.viewMode);
 
+//   const ref = useRef();
+
+//   useEffect(() => {
+//     function openFullscreen() {
+// console.log(ref.current.requestFullscreen);
+
+
+//       if (ref.current.webkitRequestFullscreen) {
+//         ref.current.webkitRequestFullscreen();
+//       } else if (ref.current.webkitRequestFullscreen) {
+//         /* Safari */
+//         ref.current.webkitRequestFullscreen();
+//       } else if (ref.current.msRequestFullscreen) {
+//         /* IE11 */
+//         ref.current.msRequestFullscreen();
+//       }
+//     }
+
+// 		openFullscreen()
+//   }, [viewMode]);
+
   const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
     [cl.videos2]: viewMode === 'mode-2',
@@ -20,6 +41,7 @@ const Videos = () => {
   return (
     <>
       <div className={wrapperClasses}>
+      {/* <div className={wrapperClasses} ref={ref}> */}
         <VideoList viewMode={viewMode} />
         <VideoEventsList />
       </div>
