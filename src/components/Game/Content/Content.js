@@ -11,13 +11,15 @@ import {
   setPlaybackMode,
   // setImagesData,
   setCurrentMoment,
-  setIsFilteredPlayer
+  setIsFilteredPlayer,
+  setMoments
 } from 'redux/gameReducer';
 import ContentFooter from '../ContentFooter/ContentFooter';
 import ContentGraphics from '../ContentGraphics/ContentGraphics';
 import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
 import ContentBox from '../ContentBox/ContentBox';
 import MobilePitcherFilters from './MobilePitcherFilters';
+import PlaysEvents from '../PlaysEvents/PlaysEvents';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -251,6 +253,7 @@ const Content = ({ currentTab }) => {
     dispatch(setInningNumber(currentCard.inning_number || 1));
     currentCard.manualClick && dispatch(setPlaybackMode('pause'));
 
+    //Set moments
     const newMoments = [];
     currentCard.type !== 'Replacement'
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
@@ -258,6 +261,7 @@ const Content = ({ currentTab }) => {
     currentCard.manualMoment
       ? dispatch(setCurrentMoment(newMoments[0] || {}))
       : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
+    dispatch(setMoments(newMoments));
 
     if (currentCard.manualClick || !situationsChildRef.current) return;
     situationsChildRef.current.parentNode.scrollTop =
@@ -306,11 +310,11 @@ const Content = ({ currentTab }) => {
       });
 
       if (tempFilteredCards.length > 0) {
-				dispatch(setIsFilteredPlayer(true))
+        dispatch(setIsFilteredPlayer(true));
         filteredCards = tempFilteredCards;
       }
 
-			tempFilteredCards.length === 0 && dispatch(setIsFilteredPlayer(false))
+      tempFilteredCards.length === 0 && dispatch(setIsFilteredPlayer(false));
     }
     return filteredCards;
   };
@@ -323,6 +327,9 @@ const Content = ({ currentTab }) => {
           <div className={contentClass}>
             <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
             <div className={cl.landscapeDisplayNone}>
+              <PlaysEvents />
+            </div>
+            <div className={cl.landscapeDisplayNone}>
               <MobilePitcherFilters />
             </div>
             <ContentSituationsList
@@ -334,7 +341,7 @@ const Content = ({ currentTab }) => {
               currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
-						{/* {isCameraSelector && <ModalCameraSelector />} */}
+            {/* {isCameraSelector && <ModalCameraSelector />} */}
           </div>
           {errorMsg !== null && (
             <p
