@@ -24,7 +24,8 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>cu {topEventText}</p>({table.balls} - {table.strikes})
+            <p>cu {topEventText}</p>
+						{/* ({table.balls} - {table.strikes}) */}
           </div>
         </li>
       )}
@@ -33,17 +34,18 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
           <div className={playClasses.join(' ')} data-before={playDataBefore}>
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
-          <div className={cl.text}>
-            {icons.circ_color_pitch && icons.circ_color_play ? (
+          {!(icons.circ_color_pitch && icons.circ_color_play) && <div className={cl.text}>
+            {/* {icons.circ_color_pitch && icons.circ_color_play? (
               <>
                 <p> </p> 
               </>
             ) : (
-              <>
-                <p>cu {topEventText}</p>({table.balls} - {table.strikes})
-              </>
-            )}
-          </div>
+              <> */}
+                <p>cu {topEventText}</p>
+								{/* ({table.balls} - {table.strikes}) */}
+              {/* </>
+            )} */}
+          </div>}
         </li>
       )}
     </>
