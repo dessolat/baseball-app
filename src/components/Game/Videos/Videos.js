@@ -43,11 +43,11 @@ const Videos = () => {
       <div className={wrapperClasses}>
       {/* <div className={wrapperClasses} ref={ref}> */}
         <VideoList viewMode={viewMode} />
-        <VideoEventsList />
+        {/* <VideoEventsList /> */}
       </div>
-      <div className={cl.eventsWrapper}>
-        <PlaysEvents moments={useCurrentEvents()} />
-      </div>
+      {/* <div className={cl.eventsWrapper}>
+        <PlaysEvents />
+      </div> */}
     </>
   );
 };
