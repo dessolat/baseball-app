@@ -3,10 +3,16 @@
 
 .content {
   display: grid;
-  grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 64rem);
+  grid-template: 22.4375rem 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(22.625rem, 60.625rem);
+  // grid-template: 30.125rem 2.875rem / minmax(10rem, 19.3125rem) minmax(26rem, 64rem);
   grid-template-areas:
-    'list graphics'
-    'controls graphics';
+    'list events graphics'
+		'list . graphics'
+    'controls . .';
+
+  // grid-template-areas:
+  //   'list graphics'
+  //   'controls graphics';
 
   @media screen and (max-width: 800px) {
     display: flex;
@@ -65,4 +71,10 @@
   width: 4.5rem;
   margin-left: auto;
   margin-right: 2rem;
+}
+
+.landscapeDisplayNone {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }
