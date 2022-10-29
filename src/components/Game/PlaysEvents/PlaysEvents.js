@@ -6,7 +6,7 @@ import PlaysEventsTotal from './PlaysEventsTotal';
 const PlaysEvents = ({ moments }) => (
   <div className={cl.events}>
     <PlaysEventsList moments={moments} />
-    <PlaysEventsTotal moments={moments} />
+    {/* <PlaysEventsTotal moments={moments} /> */}
   </div>
 );
 
