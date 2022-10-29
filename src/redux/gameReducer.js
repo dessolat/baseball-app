@@ -22,7 +22,8 @@ const defaultState = {
 	videoPlaybackRate: 1,
 	videoState: null,
 	isFilteredPlayer: true,
-	isCameraSelector: false
+	isCameraSelector: false,
+	moments: []
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -49,6 +50,7 @@ const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
 const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
 const SET_IS_FILTERED_PLAYER = 'SET_IS_FILTERED_PLAYER';
 const SET_IS_CAMERA_SELECTOR = 'SET_IS_CAMERA_SELECTOR';
+const SET_MOMENTS = 'SET_MOMENTS';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -100,6 +102,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, isFilteredPlayer: action.payload };
     case SET_IS_CAMERA_SELECTOR:
       return { ...state, isCameraSelector: action.payload };
+    case SET_MOMENTS:
+      return { ...state, moments: action.payload };
     default:
       return state;
   }
@@ -129,3 +133,4 @@ export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE,
 export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
 export const setIsFilteredPlayer = payload => ({ type: SET_IS_FILTERED_PLAYER, payload });
 export const setIsCameraSelector = payload => ({ type: SET_IS_CAMERA_SELECTOR, payload });
+export const setMoments = payload => ({ type: SET_MOMENTS, payload });
