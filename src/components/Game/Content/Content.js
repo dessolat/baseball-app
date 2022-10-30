@@ -21,6 +21,7 @@ import ContentBox from '../ContentBox/ContentBox';
 import MobilePitcherFilters from './MobilePitcherFilters';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import Timeline from '../Timeline/Timeline';
+import VideoOptions from '../VideoOptions/VideoOptions';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -330,6 +331,7 @@ const Content = ({ currentTab }) => {
             <div className={cl.landscapeDisplayNone}>
               <PlaysEvents />
             </div>
+						<VideoOptions />
 						<Timeline />
             <div className={cl.landscapeDisplayNone}>
               <MobilePitcherFilters />
