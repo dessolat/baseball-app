@@ -20,6 +20,7 @@ import { getBeforeAfterFlags, getSearchParam, setSearchParam } from 'utils';
 import ContentBox from '../ContentBox/ContentBox';
 import MobilePitcherFilters from './MobilePitcherFilters';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
+import Timeline from '../Timeline/Timeline';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -329,6 +330,7 @@ const Content = ({ currentTab }) => {
             <div className={cl.landscapeDisplayNone}>
               <PlaysEvents />
             </div>
+						<Timeline />
             <div className={cl.landscapeDisplayNone}>
               <MobilePitcherFilters />
             </div>
