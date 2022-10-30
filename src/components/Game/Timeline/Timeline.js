@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
 const Timeline = () => {
@@ -35,6 +36,9 @@ const Timeline = () => {
             </text>
           </Fragment>
         ))}
+				
+				{/* Draggable area */}
+				<DraggableArea />
       </svg>
     </div>
   );
