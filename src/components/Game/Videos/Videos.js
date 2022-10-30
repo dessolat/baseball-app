@@ -1,10 +1,10 @@
-import useCurrentEvents from 'hooks/useCurrentEvents';
+// import useCurrentEvents from 'hooks/useCurrentEvents';
 import React from 'react';
-import PlaysEvents from '../PlaysEvents/PlaysEvents';
+// import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import cl from './Videos.module.scss';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
-import VideoEventsList from '../VideoEventsList/VideoEventsList';
+// import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import VideoList from '../VideoList/VideoList';
 
 const Videos = () => {

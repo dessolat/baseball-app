@@ -3,7 +3,8 @@ import React, { forwardRef } from 'react';
 import cl from './PlaysEvents.module.scss';
 
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
-  const { icons, table, inner } = moment;
+  const { icons, inner } = moment;
+  // const { icons, table, inner } = moment;
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 	const refValue = inner.id === currentMoment.inner?.id ? ref : null
 

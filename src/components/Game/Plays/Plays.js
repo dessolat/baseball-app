@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 import cl from './Plays.module.scss';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 // import PlaysFooter from '../PlaysFooter/PlaysFooter';
@@ -15,7 +15,7 @@ const Plays = ({ isVideo }) => {
   // const defaultPtab = ['pitch', 'hitting', 'running'].includes(ptab) ? ptab : 'pitch';
   // const [currentTab, setCurrentTab] = useState(defaultPtab);
   // const [moments, setMoments] = useState([]);
-  const currentCard = useSelector(state => state.game.currentCard);
+  // const currentCard = useSelector(state => state.game.currentCard);
   const currentTab = useSelector(state => state.game.currentTab);
   const dispatch = useDispatch();
 
