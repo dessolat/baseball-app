@@ -4,6 +4,7 @@
 .events {
   grid-area: events;
   position: relative;
+	height: 100%;
 
   @media screen and (max-width: 800px) {
     height: 26px !important;
