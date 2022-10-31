@@ -1,20 +1,47 @@
 import React from 'react';
 import cl from './Timeline.module.scss';
 
-const DraggableArea = () => {
+const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }) => {
+  const x1relative = (viewBoxWidth / 100) * x1;
+  const x2relative = (viewBoxWidth / 100) * x2;
   return (
     <>
       <rect
-        x='210'
+        x={x1relative}
         y='0'
-        width='384'
+        width={x2relative - x1relative}
         height='52'
         fill='#E0F0FF'
         fillOpacity='0.4'
         className={cl.draggableRect}
+        onMouseDown={handleMouseDown}
+				onDragStart={e => e.preventDefault()}
+        name='drag-area'
       />
-      <line x1='209' y1='0' x2='209' y2='52' stroke='#1A4C96' strokeWidth='2' className={cl.draggableLine} />
-      <line x1='593' y1='0' x2='593' y2='52' stroke='#1A4C96' strokeWidth='2' className={cl.draggableLine} />
+      <line
+        x1={x1relative + 1}
+        y1='0'
+        x2={x1relative + 1}
+        y2='52'
+        stroke='#1A4C96'
+        strokeWidth='2'
+        className={cl.draggableLine}
+        onMouseDown={handleMouseDown}
+				onDragStart={e => e.preventDefault()}
+        name='left-line'
+      />
+      <line
+        x1={x2relative - 1}
+        y1='0'
+        x2={x2relative - 1}
+        y2='52'
+        stroke='#1A4C96'
+        strokeWidth='2'
+        className={cl.draggableLine}
+        onMouseDown={handleMouseDown}
+				onDragStart={e => e.preventDefault()}
+        name='right-line'
+      />
     </>
   );
 };
