@@ -20,6 +20,7 @@ const Timeline = () => {
   const sliderNameRef = useRef();
   const mouseDownXCoordRef = useRef();
   const mouseDownStateRef = useRef();
+	const rectRef = useRef()
 
   useEffect(() => {
     return () => {
@@ -89,7 +90,10 @@ const Timeline = () => {
           return { x1: tempX1, x2: tempX2 };
         }
 
-        return { x1: mouseDownStateRef.current.x1 + percentsDelta, x2: mouseDownStateRef.current.x2 + percentsDelta };
+        return {
+          x1: mouseDownStateRef.current.x1 + percentsDelta,
+          x2: mouseDownStateRef.current.x2 + percentsDelta
+        };
         // return { x1: prev.x1 + percentsDelta, x2: prev.x2 + percentsDelta };
       });
 
@@ -104,6 +108,9 @@ const Timeline = () => {
   }
 
   const handleMouseUp = () => {
+    sliderRef.current.parentElement.style.cursor = 'default';
+		if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab'
+
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
   };
@@ -113,6 +120,10 @@ const Timeline = () => {
     sliderNameRef.current = e.target.attributes.name.value;
     mouseDownXCoordRef.current = e.clientX;
     mouseDownStateRef.current = JSON.parse(JSON.stringify(sliderCoords));
+
+
+    sliderRef.current.parentElement.style.cursor = 'e-resize';
+		if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize'
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -151,6 +162,7 @@ const Timeline = () => {
           x2={sliderCoords.x2}
           handleMouseDown={handleMouseDown}
           viewBoxWidth={VIEW_BOX_WIDTH}
+					ref={rectRef}
         />
       </svg>
     </div>

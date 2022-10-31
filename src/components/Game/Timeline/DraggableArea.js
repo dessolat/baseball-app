@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import cl from './Timeline.module.scss';
 
-const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }) => {
+const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }, ref) => {
   const x1relative = (viewBoxWidth / 100) * x1;
   const x2relative = (viewBoxWidth / 100) * x2;
   return (
@@ -15,8 +15,9 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }) => {
         fillOpacity='0.4'
         className={cl.draggableRect}
         onMouseDown={handleMouseDown}
-				onDragStart={e => e.preventDefault()}
+        onDragStart={e => e.preventDefault()}
         name='drag-area'
+        ref={ref}
       />
       <line
         x1={x1relative + 1}
@@ -27,7 +28,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }) => {
         strokeWidth='2'
         className={cl.draggableLine}
         onMouseDown={handleMouseDown}
-				onDragStart={e => e.preventDefault()}
+        onDragStart={e => e.preventDefault()}
         name='left-line'
       />
       <line
@@ -39,11 +40,11 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }) => {
         strokeWidth='2'
         className={cl.draggableLine}
         onMouseDown={handleMouseDown}
-				onDragStart={e => e.preventDefault()}
+        onDragStart={e => e.preventDefault()}
         name='right-line'
       />
     </>
   );
 };
 
-export default DraggableArea;
+export default forwardRef(DraggableArea);
