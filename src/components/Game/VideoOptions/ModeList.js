@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import ModeListItem from './ModeListItem';
 import cl from './VideoOptions.module.scss';
 
 const ModeList = () => {
-  const [mode, setMode] = useState('Full');
-	
+  const [currentMode, setCurrentMode] = useState('Full');
+
   const MODES = ['Full', 'Short', 'Super Short'];
+
   return (
     <ul className={cl.modeList}>
-      <li>Full</li>
-      <li>Short</li>
-      <li>Super Short</li>
+      {MODES.map((mode, i) => (
+        <ModeListItem key={i} mode={mode} currentMode={currentMode} />
+      ))}
     </ul>
   );
 };
