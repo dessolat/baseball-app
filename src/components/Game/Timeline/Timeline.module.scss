@@ -22,25 +22,28 @@
 .horizontalLineText {
   font: 600 0.625rem / 1.5 'Nunito', sans-serif;
   fill: black;
-	user-select: none;
-}
-
-.draggableRect,
-.draggableLine {
-  cursor: grab;
+  user-select: none;
 }
 
 .draggableRect {
-	transition: fill 0.5s, fill-opacity 0.5s;
-
-	&:hover {
-		fill: rgb(30, 167, 247);
-		fill-opacity: 0.2;
-	}
+  cursor: grab;
 }
 
 .draggableLine {
-	transition: stroke-width 0.5s;
+  cursor: e-resize;
+}
+
+.draggableRect {
+  transition: fill 0.5s, fill-opacity 0.5s;
+
+  &:hover {
+    fill: rgb(30, 167, 247);
+    fill-opacity: 0.2;
+  }
+}
+
+.draggableLine {
+  transition: stroke-width 0.5s;
 
   &:hover {
     stroke-width: 4px;
