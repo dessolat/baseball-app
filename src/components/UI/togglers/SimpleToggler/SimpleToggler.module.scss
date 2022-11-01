@@ -1,0 +1,34 @@
+input[type='checkbox'] {
+  visibility: hidden;
+}
+
+label {
+  width: 1.875rem;
+  height: 1.0625rem;
+  background-color: #d9d9d9;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  border-radius: 0.5625rem;
+  position: relative;
+	display: inline-block;
+
+  &::before {
+		content: '';
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 0.9375rem;
+    height: 0.9375rem;
+		background-color: white;
+		border-radius: 0.46875rem;
+		transition: transform 0.2s;
+  }
+
+  &:has(input:checked) {
+    background-color: var(--side-color);
+
+		&::before {
+			transform: translateX(calc(100% - 2px));
+		}
+  }
+}
