@@ -1,9 +1,14 @@
-import React from 'react'
+import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
+import React from 'react';
+import cl from './VideoOptions.module.scss';
 
 const Effects = () => {
-	return (
-		<div>Effects</div>
-	)
-}
+  return (
+    <div className={cl.effectsWrapper}>
+      Effects
+      <SimpleToggler />
+    </div>
+  );
+};
 
-export default Effects
+export default Effects;
