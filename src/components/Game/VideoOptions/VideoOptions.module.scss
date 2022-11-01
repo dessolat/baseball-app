@@ -23,6 +23,8 @@
 		text-align: center;
 		cursor: pointer;
 		user-select: none;
+		transition: background-color .2s;
+		height: 50 / 16 rem;
 
 		&.active {
 			color: white;
