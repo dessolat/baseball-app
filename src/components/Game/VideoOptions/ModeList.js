@@ -7,10 +7,11 @@ const ModeList = () => {
 
   const MODES = ['Full', 'Short', 'Super Short'];
 
+  const handleModeClick = name => () => setCurrentMode(name);
   return (
     <ul className={cl.modeList}>
       {MODES.map((mode, i) => (
-        <ModeListItem key={i} mode={mode} currentMode={currentMode} />
+        <ModeListItem key={i} mode={mode} currentMode={currentMode} handleModeClick={handleModeClick} />
       ))}
     </ul>
   );
