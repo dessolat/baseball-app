@@ -49,7 +49,8 @@
 		}
 
 		&.mobilePlaysListHeight {
-			height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 55px - 20px - 19px);
+			height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 30px - 20px - 19px);
+			// height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 55px - 20px - 19px);
 		}
 		&.mobilePlaysListHeightVideo {
 			height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 50px - 19px);
