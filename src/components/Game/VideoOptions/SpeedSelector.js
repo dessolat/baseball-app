@@ -7,7 +7,7 @@ const SpeedSelector = () => {
     <div className={cl.speedSelectorWrapper}>
       <p>Speed</p>
       <div>
-        x2 <img src={TriangleIcon} />
+        x2 <img src={TriangleIcon} alt='triangle-icon' />
       </div>
     </div>
   );
