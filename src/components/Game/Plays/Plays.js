@@ -68,9 +68,9 @@ const Plays = ({ isVideo }) => {
       )}
       {/* <div className={cl.landscapeDisplayNone}>
       </div> */}
-      <div className={cl.onlyMobileLandscape}>
+      {/* <div className={cl.onlyMobileLandscape}>
         <PlaysEvents />
-      </div>
+      </div> */}
     </div>
   );
 };
