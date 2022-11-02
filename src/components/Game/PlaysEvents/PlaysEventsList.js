@@ -32,6 +32,7 @@ const PlaysEventsList = ({ moments }) => {
 
     const classes = [cl.list];
 		isVideo && classes.push(cl.isVideosList)
+		!isVideo && classes.push(cl.noVideo)
     ref.current.scrollHeight > ref.current.clientHeight
       ? classes.push(...[cl.listBottomShadow, cl.beforeBlue])
       : classes.push([cl.beforeBlue]);
