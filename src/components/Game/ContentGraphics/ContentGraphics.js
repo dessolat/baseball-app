@@ -3,6 +3,7 @@ import cl from './ContentGraphics.module.scss';
 import Videos from '../Videos/Videos';
 import Plays from '../Plays/Plays';
 import LandscapeScores from './LandscapeScores';
+import PlaysEvents from '../PlaysEvents/PlaysEvents';
 
 const ContentGraphics = ({ currentTab, isVideo }) => {
   const renderTab = () => {
@@ -22,6 +23,9 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
         </div>
       )}
       {renderTab()}
+			<div className={cl.onlyMobileLandscape}>
+        <PlaysEvents />
+      </div>
     </div>
   );
 };
