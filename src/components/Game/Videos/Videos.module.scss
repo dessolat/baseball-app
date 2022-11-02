@@ -17,6 +17,24 @@
     // aspect-ratio: 16 / 9;
     height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
+
+	.closeFullscreen {
+		display: none;
+		user-select: none;
+	}
+
+	.openFullscreen {
+		user-select: none;
+	}
+
+  &:fullscreen {
+    .openFullscreen {
+      display: none;
+    }
+		.closeFullscreen {
+			display: inline-block;
+		}
+  }
 }
 
 .videos1 {
@@ -61,4 +79,24 @@
     display: block;
     border-bottom: 0.5px solid #cdcccc;
   }
+}
+
+.controlsWrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  // pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: grid;
+  place-items: center;
+}
+
+.controls {
+  width: 250px;
+  height: 100px;
+  text-align: center;
 }
