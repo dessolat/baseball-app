@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import cl from './Plays.module.scss';
-import PlaysEvents from '../PlaysEvents/PlaysEvents';
+// import PlaysEvents from '../PlaysEvents/PlaysEvents';
 // import PlaysFooter from '../PlaysFooter/PlaysFooter';
 import PlaysContent from '../PlaysContent/PlaysContent';
 import { useDispatch, useSelector } from 'react-redux';
