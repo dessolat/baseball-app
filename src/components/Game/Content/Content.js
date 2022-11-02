@@ -22,6 +22,7 @@ import MobilePitcherFilters from './MobilePitcherFilters';
 import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import Timeline from '../Timeline/Timeline';
 import VideoOptions from '../VideoOptions/VideoOptions';
+import classNames from 'classnames';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
@@ -322,17 +323,18 @@ const Content = ({ currentTab }) => {
   };
 
   const contentClass = isVideo ? cl.content : cl.contentNoVideo;
+  const eventsClasses = classNames([cl.landscapeDisplayNone], { [cl.eventsArea]: !isVideo });
   return (
     <>
       {currentTab !== 'box' ? (
         <section className='container' style={{ position: 'relative' }}>
           <div className={contentClass}>
-            <ContentGraphics currentTab={currentTab} isVideo={isVideo} />
-            <div className={cl.landscapeDisplayNone}>
+            {isVideo && <ContentGraphics currentTab={currentTab} isVideo={isVideo} />}
+            <div className={eventsClasses}>
               <PlaysEvents />
             </div>
-						<VideoOptions />
-						<Timeline />
+            {isVideo && <VideoOptions />}
+            {isVideo && <Timeline />}
             <div className={cl.landscapeDisplayNone}>
               <MobilePitcherFilters />
             </div>
