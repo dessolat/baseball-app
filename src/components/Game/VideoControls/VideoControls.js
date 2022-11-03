@@ -47,17 +47,6 @@ const VideoControls = ({ setPlayPause }, ref) => {
   };
   const closeFullscreen = () => document.exitFullscreen();
 
-  // const playPauseBtn =
-  //   videoState === 1 || videoState === 3 || isSynchronization ? (
-  //     <button onClick={() => setPlayPause('pause')}>
-  //       <img src={PauseIcon} alt='pause-icon' />
-  //     </button>
-  //   ) : (
-  //     <button onClick={() => setPlayPause('play')}>
-  //       <img src={PlayIcon} alt='play-icon' />
-  //     </button>
-  //   );
-
   const getPlayPauseBtn = () => {
     const btnName = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
     const src = btnName === 'play' ? PlayIcon : PauseIcon;
