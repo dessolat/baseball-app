@@ -6,13 +6,11 @@ import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 // import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import VideoList from '../VideoList/VideoList';
-import FullscreenIcon from 'icons/fullscreen_icon.png';
-import CloseFullscreenIcon from 'icons/close_fullscreen_icon.png';
 
 const Videos = () => {
   const wrapperRef = useRef();
-  const controlsWrapperRef = useRef();
   const timerRef = useRef();
+  const controlsWrapperRef = useRef();
 
   const viewMode = useSelector(state => state.game.viewMode);
 
@@ -38,21 +36,7 @@ const Videos = () => {
     [cl.videos4]: viewMode === 'mode-4'
   });
 
-  const openFullscreen = ref => () => {
-    if (ref.current.webkitRequestFullscreen) {
-      ref.current.webkitRequestFullscreen();
-    } else if (ref.current.webkitRequestFullscreen) {
-      /* Safari */
-      ref.current.webkitRequestFullscreen();
-    } else if (ref.current.msRequestFullscreen) {
-      /* IE11 */
-      ref.current.msRequestFullscreen();
-    }
-  };
-  const closeFullscreen = () => document.exitFullscreen();
-
   const handleMouseMove = () => {
-    console.log(123);
     clearTimeout(timerRef.current);
 
     controlsWrapperRef.current.style.opacity = 1;
@@ -65,18 +49,9 @@ const Videos = () => {
     <>
       <div className={wrapperClasses} onMouseMove={handleMouseMove} ref={wrapperRef}>
         {/* <div className={wrapperClasses} ref={ref}> */}
-        <VideoList viewMode={viewMode} />
+        <VideoList viewMode={viewMode} ref={controlsWrapperRef}/>
         {/* <VideoEventsList /> */}
-        <div className={cl.controlsWrapper} ref={controlsWrapperRef}>
-          <div className={cl.controls}>
-            <button onClick={openFullscreen(wrapperRef)} className={cl.openFullscreen}>
-              <img src={FullscreenIcon} alt='fullscreen-icon' />
-            </button>
-            <button onClick={closeFullscreen} className={cl.closeFullscreen}>
-              <img src={CloseFullscreenIcon} alt='fullscreen-icon' />
-            </button>
-          </div>
-        </div>
+        {/* <VideoControls ref={controlsWrapperRef} /> */}
       </div>
       {/* <div className={cl.eventsWrapper}>
         <PlaysEvents />
