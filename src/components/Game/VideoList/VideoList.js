@@ -1,10 +1,11 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, Fragment, forwardRef } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVideoPlaybackRate, setVideoState } from 'redux/gameReducer';
+import VideoControls from '../VideoControls/VideoControls';
 
-const VideoList = ({ viewMode }) => {
+const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
   const dispatch = useDispatch();
 
@@ -108,12 +109,12 @@ const VideoList = ({ viewMode }) => {
     video4Ref.current && video4Ref.current.setPlaybackRate(value);
   };
 
-	const seekVideos = seconds => {
-		video1Ref.current && video1Ref.current.seekTo(seconds);
+  const seekVideos = seconds => {
+    video1Ref.current && video1Ref.current.seekTo(seconds);
     video2Ref.current && video2Ref.current.seekTo(seconds);
     video3Ref.current && video3Ref.current.seekTo(seconds);
     video4Ref.current && video4Ref.current.seekTo(seconds);
-	}
+  };
   return (
     <>
       {viewModeNumber === 1 && (
@@ -123,7 +124,7 @@ const VideoList = ({ viewMode }) => {
           stateChangeHandler={stateChangeHandler}
           rateChangeHandler={rateChangeHandler}
           setPlayPause={setPlayPause}
-					seekVideos={seekVideos}
+          seekVideos={seekVideos}
           ref={video1Ref}
         />
       )}
@@ -135,7 +136,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -144,7 +145,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video2Ref}
           />
         </>
@@ -157,7 +158,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -166,7 +167,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -175,7 +176,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video3Ref}
           />
         </>
@@ -188,7 +189,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -197,7 +198,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -206,7 +207,7 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video3Ref}
           />
           <Video
@@ -215,13 +216,14 @@ const VideoList = ({ viewMode }) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-						seekVideos={seekVideos}
+            seekVideos={seekVideos}
             ref={video4Ref}
           />
         </>
       )}
+      <VideoControls setPlayPause={setPlayPause} ref={ref} />
     </>
   );
 };
 
-export default VideoList;
+export default forwardRef(VideoList);
