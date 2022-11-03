@@ -47,21 +47,32 @@ const VideoControls = ({ setPlayPause }, ref) => {
   };
   const closeFullscreen = () => document.exitFullscreen();
 
-  const playPauseBtn =
-    videoState === 1 || videoState === 3 || isSynchronization ? (
-      <button onClick={() => setPlayPause('pause')}>
-        <img src={PauseIcon} alt='pause-icon' />
-      </button>
-    ) : (
-      <button onClick={() => setPlayPause('play')}>
-        <img src={PlayIcon} alt='play-icon' />
+  // const playPauseBtn =
+  //   videoState === 1 || videoState === 3 || isSynchronization ? (
+  //     <button onClick={() => setPlayPause('pause')}>
+  //       <img src={PauseIcon} alt='pause-icon' />
+  //     </button>
+  //   ) : (
+  //     <button onClick={() => setPlayPause('play')}>
+  //       <img src={PlayIcon} alt='play-icon' />
+  //     </button>
+  //   );
+
+  const getPlayPauseBtn = () => {
+    const btnName = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
+    const src = btnName === 'play' ? PlayIcon : PauseIcon;
+
+    return (
+      <button onClick={() => setPlayPause(btnName)}>
+        <img src={src} alt={`${btnName}-icon`} />
       </button>
     );
+  };
 
   return (
     <div className={cl.controlsWrapper} ref={ref}>
       <div className={cl.controls}>
-        {playPauseBtn}
+        {getPlayPauseBtn()}
         <button onClick={openFullscreen} className={cl.openFullscreen}>
           <img src={FullscreenIcon} alt='fullscreen-icon' />
         </button>
