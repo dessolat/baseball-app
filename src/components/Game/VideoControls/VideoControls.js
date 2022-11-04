@@ -5,6 +5,7 @@ import CloseFullscreenIcon from 'icons/close_fullscreen_icon.png';
 import PauseIcon from 'icons/pause_video_icon.png';
 import PlayIcon from 'icons/play_video_icon.png';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 
 const VideoControls = ({ setPlayPause }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
@@ -58,8 +59,11 @@ const VideoControls = ({ setPlayPause }, ref) => {
     );
   };
 
+  const wrapperClasses = classNames(cl.controlsWrapper, {
+    [cl.fullOpacity]: videoState === 2
+  });
   return (
-    <div className={cl.controlsWrapper} ref={ref}>
+    <div className={wrapperClasses} ref={ref}>
       <div className={cl.controls}>
         {getPlayPauseBtn()}
         <button onClick={openFullscreen} className={cl.openFullscreen}>
