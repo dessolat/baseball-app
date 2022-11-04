@@ -22,7 +22,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   }, [currentDotRadius]);
 
   // const GRAPH_WIDTH = 1;
-  const DOT_RADIUS = 4;
+  const DOT_RADIUS = 3;
   // const DOT_COLOR = '#1A4C96';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
