@@ -13,21 +13,15 @@ const Videos = () => {
   const controlsWrapperRef = useRef();
 
   const viewMode = useSelector(state => state.game.viewMode);
+  // const videoState = useSelector(state => state.game.videoState);
 
-  //   useEffect(() => {
-  // function openFullscreen() {
-  //   if (ref.current.webkitRequestFullscreen) {
-  //     ref.current.webkitRequestFullscreen();
-  //   } else if (ref.current.webkitRequestFullscreen) {
-  //     /* Safari */
-  //     ref.current.webkitRequestFullscreen();
-  //   } else if (ref.current.msRequestFullscreen) {
-  //     /* IE11 */
-  //     ref.current.msRequestFullscreen();
-  //   }
-  // }
-  // 		openFullscreen()
-  //   }, [viewMode]);
+  // useEffect(() => {
+  //   if (videoState !== 2) return;
+
+  //   clearTimeout(timerRef.current);
+  //   controlsWrapperRef.current.style.opacity = 1;
+  //   // eslint-disable-next-line
+  // }, [videoState]);
 
   const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
@@ -36,7 +30,7 @@ const Videos = () => {
     [cl.videos4]: viewMode === 'mode-4'
   });
 
-  const handleMouseMove = () => {
+  function handleMouseMove() {
     clearTimeout(timerRef.current);
 
     controlsWrapperRef.current.style.opacity = 1;
@@ -44,12 +38,13 @@ const Videos = () => {
     timerRef.current = setTimeout(() => {
       controlsWrapperRef.current.style.opacity = 0;
     }, 1000);
-  };
+  }
+  
   return (
     <>
       <div className={wrapperClasses} onMouseMove={handleMouseMove} ref={wrapperRef}>
         {/* <div className={wrapperClasses} ref={ref}> */}
-        <VideoList viewMode={viewMode} ref={controlsWrapperRef}/>
+        <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
         {/* <VideoEventsList /> */}
         {/* <VideoControls ref={controlsWrapperRef} /> */}
       </div>
