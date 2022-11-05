@@ -24,12 +24,34 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }, ref) => {
         y1='0'
         x2={x1relative + 1}
         y2='52'
-        stroke='#1A4C96'
-        strokeWidth='2'
+        stroke='transparent'
+        strokeWidth='10'
         className={cl.draggableLine}
         onMouseDown={handleMouseDown}
         onDragStart={e => e.preventDefault()}
         name='left-line'
+      />
+      <line
+        x1={x1relative + 1}
+        y1='0'
+        x2={x1relative + 1}
+        y2='52'
+        stroke='#1A4C96'
+        strokeWidth='2'
+        className={cl.siblingLine}
+        onDragStart={e => e.preventDefault()}
+      />
+      <line
+        x1={x2relative - 1}
+        y1='0'
+        x2={x2relative - 1}
+        y2='52'
+        stroke='transparent'
+        strokeWidth='10'
+        className={cl.draggableLine}
+        onMouseDown={handleMouseDown}
+        onDragStart={e => e.preventDefault()}
+        name='right-line'
       />
       <line
         x1={x2relative - 1}
@@ -38,10 +60,8 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }, ref) => {
         y2='52'
         stroke='#1A4C96'
         strokeWidth='2'
-        className={cl.draggableLine}
-        onMouseDown={handleMouseDown}
+        className={cl.siblingLine}
         onDragStart={e => e.preventDefault()}
-        name='right-line'
       />
     </>
   );
