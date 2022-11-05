@@ -42,10 +42,11 @@
   }
 }
 
-.draggableLine {
+.siblingLine {
   transition: stroke-width 0.5s;
+	pointer-events: none;
+}
 
-  &:hover {
-    stroke-width: 4px;
-  }
+.draggableLine:hover ~ .siblingLine {
+  stroke-width: 4px;
 }
