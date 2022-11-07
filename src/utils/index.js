@@ -2,11 +2,11 @@ export const getSearchParam = param => new URL(window.location).searchParams.get
 
 export const setSearchParam = (param, value) => {
   const url = new URL(window.location);
-	if (typeof param === 'string') {
-		url.searchParams.set(param, value);
-	} else {
-		param.forEach(curParam => url.searchParams.set(curParam.param, curParam.value))
-	}
+  if (typeof param === 'string') {
+    url.searchParams.set(param, value);
+  } else {
+    param.forEach(curParam => url.searchParams.set(curParam.param, curParam.value));
+  }
   window.history.replaceState({}, '', url);
 };
 
@@ -81,15 +81,15 @@ export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
 export const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const openFullscreen = element => {
-	if (element.webkitRequestFullscreen) {
-		element.webkitRequestFullscreen();
-	} else if (element.webkitRequestFullscreen) {
-		/* Safari */
-		element.webkitRequestFullscreen();
-	} else if (element.msRequestFullscreen) {
-		/* IE11 */
-		element.msRequestFullscreen();
-	}
+  if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    /* Safari */
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    /* IE11 */
+    element.msRequestFullscreen();
+  }
 };
 
 export const closeFullscreen = () => document.exitFullscreen();
