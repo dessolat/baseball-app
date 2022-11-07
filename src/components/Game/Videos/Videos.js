@@ -27,7 +27,7 @@ const Videos = () => {
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key !== 'f' && e.key !== ' ') return;
+      if (e.key !== 'f') return;
       e.preventDefault();
 
       e.key === 'f' && (isFullscreen ? closeFullscreen() : openFullscreen(wrapperRef.current));
