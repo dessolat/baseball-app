@@ -13,14 +13,14 @@ const LINES = [
 
 const VIEW_BOX_WIDTH = 885;
 
-const Timeline = () => {
+const Timeline = ({ addedClass = null}) => {
   const [sliderCoords, setSliderCoords] = useState({ x1: 30, x2: 65 });
 
   const sliderRef = useRef();
   const sliderNameRef = useRef();
   const mouseDownXCoordRef = useRef();
   const mouseDownStateRef = useRef();
-	const rectRef = useRef()
+  const rectRef = useRef();
 
   useEffect(() => {
     return () => {
@@ -109,7 +109,7 @@ const Timeline = () => {
 
   const handleMouseUp = () => {
     sliderRef.current.parentElement.style.cursor = 'default';
-		if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab'
+    if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab';
 
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
@@ -121,9 +121,8 @@ const Timeline = () => {
     mouseDownXCoordRef.current = e.clientX;
     mouseDownStateRef.current = JSON.parse(JSON.stringify(sliderCoords));
 
-
     sliderRef.current.parentElement.style.cursor = 'e-resize';
-		if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize'
+    if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize';
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -131,8 +130,10 @@ const Timeline = () => {
 
   // const ppu =
   return (
-    <div className={cl.wrapper}>
-      <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} 52`} className={cl.chart} preserveAspectRatio='none'>
+    <div className={cl.wrapper + ' ' + addedClass}>
+      <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} 52`} className={cl.chart} 
+			// preserveAspectRatio='none'
+			>
         {/* Horizontal lines */}
         {LINES.map(({ color }, i) => (
           <line key={i} x1='0' y1={(i + 1) * 9} x2='885' y2={(i + 1) * 9} stroke={color} strokeWidth='1' />
@@ -162,7 +163,7 @@ const Timeline = () => {
           x2={sliderCoords.x2}
           handleMouseDown={handleMouseDown}
           viewBoxWidth={VIEW_BOX_WIDTH}
-					ref={rectRef}
+          ref={rectRef}
         />
       </svg>
     </div>
