@@ -94,16 +94,24 @@
 	justify-content: center;
 	user-select: none;
 
-	> button,
-	> button > img {
-		height: 100%;
-	}
+  > button > svg > path {
+    transition: fill 0.3s;
+  }
 
-	> button:first-child {
-		height: 80%;
-		width: 5.25rem;
-	}
-	> button:last-child {
-		width: 7.5rem;
-	}
+  > button:hover > svg > path {
+    fill: var(--side-color);
+  }
+
+  > button,
+  > button > img {
+    height: 100%;
+  }
+
+  > button:first-child {
+    height: 80%;
+    width: 5.25rem;
+  }
+  > button:last-child {
+    width: 7.5rem;
+  }
 }
