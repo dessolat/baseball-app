@@ -1,16 +1,21 @@
 import React, { forwardRef, useEffect, useState, useRef } from 'react';
 import cl from '../Videos/Videos.module.scss';
-import FullscreenIcon from 'icons/fullscreen_icon.png';
-import CloseFullscreenIcon from 'icons/close_fullscreen_icon.png';
-import PauseIcon from 'icons/pause_video_icon.png';
-import PlayIcon from 'icons/play_video_icon.png';
+// import FullscreenIcon from 'icons/fullscreen_icon.png';
+// import CloseFullscreenIcon from 'icons/close_fullscreen_icon.png';
+// import PauseIcon from 'icons/pause_video_icon.png';
+// import PlayIcon from 'UI/icons/VideoControlsBtns/PlayBtn/PlayBtn.js';
+// import PlayIcon from 'icons/play_video_icon.png';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import PlayBtn from 'components/UI/icons/VideoControlsBtns/PlayBtn/PlayBtn';
+import PauseBtn from 'components/UI/icons/VideoControlsBtns/PauseBtn/PauseBtn';
+import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 
 const VideoControls = ({ setPlayPause }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
   const videoState = useSelector(state => state.game.videoState);
+  const isFullscreen = useSelector(state => state.game.isFullscreen);
 
   const timeoutRef = useRef(null);
   const previousTimeRef = useRef(0);
@@ -48,15 +53,13 @@ const VideoControls = ({ setPlayPause }, ref) => {
   };
   const closeFullscreen = () => document.exitFullscreen();
 
+  const handleFullscreenClick = () => (isFullscreen ? closeFullscreen() : openFullscreen());
+
   const getPlayPauseBtn = () => {
     const btnName = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
-    const src = btnName === 'play' ? PlayIcon : PauseIcon;
+    const comp = btnName === 'play' ? <PlayBtn /> : <PauseBtn />;
 
-    return (
-      <button onClick={() => setPlayPause(btnName)}>
-        <img src={src} alt={`${btnName}-icon`} />
-      </button>
-    );
+    return <button onClick={() => setPlayPause(btnName)}>{comp}</button>;
   };
 
   const wrapperClasses = classNames(cl.controlsWrapper, {
@@ -66,11 +69,14 @@ const VideoControls = ({ setPlayPause }, ref) => {
     <div className={wrapperClasses} ref={ref}>
       <div className={cl.controls}>
         {getPlayPauseBtn()}
-        <button onClick={openFullscreen} className={cl.openFullscreen}>
+        {/* <button onClick={openFullscreen} className={cl.openFullscreen}>
           <img src={FullscreenIcon} alt='fullscreen-icon' />
         </button>
         <button onClick={closeFullscreen} className={cl.closeFullscreen}>
           <img src={CloseFullscreenIcon} alt='fullscreen-icon' />
+        </button> */}
+        <button onClick={handleFullscreenClick}>
+          <FullscreenBtn isOff={!isFullscreen} />
         </button>
       </div>
     </div>
