@@ -79,3 +79,17 @@ export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
 };
 
 export const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
+
+export const openFullscreen = element => {
+	if (element.webkitRequestFullscreen) {
+		element.webkitRequestFullscreen();
+	} else if (element.webkitRequestFullscreen) {
+		/* Safari */
+		element.webkitRequestFullscreen();
+	} else if (element.msRequestFullscreen) {
+		/* IE11 */
+		element.msRequestFullscreen();
+	}
+};
+
+export const closeFullscreen = () => document.exitFullscreen();
