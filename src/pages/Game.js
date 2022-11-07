@@ -7,7 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 // import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
-import { resetData, setCurrentTab as setCurrentSubTab } from 'redux/gameReducer';
+import { resetData, setCurrentTab as setCurrentSubTab, setIsFullscreen } from 'redux/gameReducer';
 import { useParams } from 'react-router-dom';
 // import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
@@ -48,8 +48,12 @@ const Game = () => {
       dispatch(setMobileWidth(window.innerWidth));
     };
 
+    const toggleFullscreen = ({ matches }) => dispatch(setIsFullscreen(matches ? true : false));
+
     resizeHandle();
     window.addEventListener('resize', resizeHandle);
+
+    window.matchMedia('(display-mode: fullscreen)').addEventListener('change', toggleFullscreen);
 
     return () => {
       // eslint-disable-next-line
@@ -58,6 +62,7 @@ const Game = () => {
       clearTimeout(intervalRef.current);
       dispatch(resetData());
       window.removeEventListener('resize', resizeHandle);
+      window.matchMedia('(display-mode: fullscreen)').removeEventListener('change', toggleFullscreen);
     };
     // eslint-disable-next-line
   }, []);
@@ -80,7 +85,7 @@ const Game = () => {
 
   const handleTabClick = e => {
     const tabText = e.target ? e.target.name : e.toLowerCase();
-		const resultTabText = tabText === 'hit' ? 'hitting' : tabText === 'run' ? 'running' : tabText
+    const resultTabText = tabText === 'hit' ? 'hitting' : tabText === 'run' ? 'running' : tabText;
 
     setSearchParam('tab', resultTabText);
     setCurrentTab(resultTabText);
