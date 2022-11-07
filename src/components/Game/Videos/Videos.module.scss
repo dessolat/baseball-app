@@ -95,11 +95,12 @@
 	user-select: none;
 
   > button > svg > path {
-    transition: fill 0.3s;
+    transition: fill 0.3s, opacity 0.3s;
   }
 
   > button:hover > svg > path {
     fill: var(--side-color);
+		opacity: 1;
   }
 
   > button,
