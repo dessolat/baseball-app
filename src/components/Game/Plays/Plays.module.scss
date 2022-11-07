@@ -30,20 +30,10 @@
 }
 
 .pitch {
-  // grid-template: minmax(116px, 146px) minmax(300px, 330px) 36px / minmax(157.53px, 187px) minmax(345px, 500px) minmax(210.87px, 280px);
   grid-template: 9.5rem 21.61328125rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
-  // grid-template: 9.5rem 20.625rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
-  // grid-template: 9.5rem 20.625rem 2.875rem / minmax(157.53px, 187px) minmax(345px, 500px) minmax(
-  //     210.87px,
-  //     280px
-  //   );
   grid-template-areas:
     'spd spin'
     'field field';
-  // grid-template-areas:
-  //   'events spd spin'
-  //   'events field field'
-  //   'footer footer footer';
 }
 
 .hitting {
