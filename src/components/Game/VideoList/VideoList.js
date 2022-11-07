@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, Fragment, forwardRef } from 'react';
+import React, { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,12 +7,29 @@ import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
+  const isFullscreen = useSelector(state => state.game.isFullscreen);
   const dispatch = useDispatch();
 
   const video1Ref = useRef(null);
   const video2Ref = useRef(null);
   const video3Ref = useRef(null);
   const video4Ref = useRef(null);
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key !== ' ') return;
+      e.preventDefault();
+
+      const currentState = video1Ref.current.getPlayerState();
+      e.key === ' ' && setPlayPause(currentState === 1 ? 'pause' : 'play');
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFullscreen]);
 
   useLayoutEffect(() => {
     video1Ref.current = null;
@@ -40,7 +57,7 @@ const VideoList = ({ viewMode }, ref) => {
 
   const viewModeNumber = +viewMode.slice(-1);
 
-  const setPlayPause = state => {
+  function setPlayPause(state) {
     if (state === 'play') {
       video1Ref.current && video1Ref.current.playVideo();
       video2Ref.current && video2Ref.current.playVideo();
@@ -54,7 +71,7 @@ const VideoList = ({ viewMode }, ref) => {
     video2Ref.current && video2Ref.current.pauseVideo();
     video3Ref.current && video3Ref.current.pauseVideo();
     video4Ref.current && video4Ref.current.pauseVideo();
-  };
+  }
 
   const stateChangeHandler = (e, videoNumber) => {
     videoNumber === 1 && dispatch(setVideoState(e.data));
