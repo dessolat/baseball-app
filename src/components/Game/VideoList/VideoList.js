@@ -17,11 +17,11 @@ const VideoList = ({ viewMode }, ref) => {
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key !== ' ') return;
+      if (e.code !== 'Space' || video1Ref.current === null) return;
       e.preventDefault();
 
       const currentState = video1Ref.current.getPlayerState();
-      e.key === ' ' && setPlayPause(currentState === 1 ? 'pause' : 'play');
+      e.code === 'Space' && setPlayPause(currentState === 1 ? 'pause' : 'play');
     }
 
     document.addEventListener('keydown', handleKeyDown);

@@ -27,10 +27,10 @@ const Videos = () => {
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key !== 'f') return;
+      if (e.code !== 'KeyF') return;
       e.preventDefault();
 
-      e.key === 'f' && (isFullscreen ? closeFullscreen() : openFullscreen(wrapperRef.current));
+      e.code === 'KeyF' && (isFullscreen ? closeFullscreen() : openFullscreen(wrapperRef.current));
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -53,7 +53,7 @@ const Videos = () => {
     controlsWrapperRef.current.style.opacity = 1;
 
     timerRef.current = setTimeout(() => {
-			if (!controlsWrapperRef.current) return
+      if (!controlsWrapperRef.current) return;
       controlsWrapperRef.current.style.opacity = 0;
     }, 1000);
   }
