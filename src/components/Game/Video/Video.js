@@ -1,15 +1,14 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate } from 'redux/gameReducer';
 import classNames from 'classnames';
-import VideoControls from './VideoControls/VideoControls';
+// import VideoControls from './VideoControls/VideoControls';
 
-const Video = (
-  { videoId, videoNumber, stateChangeHandler, rateChangeHandler, setPlayPause, seekVideos },
-  ref
-) => {
+const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
+	const [videoCurrentTime, setVideoCurrentTime] = useState(0)
+
   const videoRef = ref;
 
   const endRef = useRef(null);
@@ -80,6 +79,18 @@ const Video = (
     }, 500);
     // eslint-disable-next-line
   }, [filteredCards]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			const time = videoRef.current?.getCurrentTime()
+			setVideoCurrentTime(time)
+		}, 100);
+	
+		return () => {
+			clearInterval(interval)
+		}
+	}, [currentMoment,videoRef])
+	
 
   const onReady = e => {
     videoRef.current = e.target;
@@ -155,7 +166,7 @@ const Video = (
     [cl.aspectRatio16]: (videoNumber === 1 || videoNumber === 2) && viewMode === 'mode-2'
   });
 
-  const isCustomVideoControls = currentMoment.video?.seconds_from || currentMoment.video?.seconds_to;
+  // const isCustomVideoControls = currentMoment.video?.seconds_from || currentMoment.video?.seconds_to;
   return (
     <div className={videoClasses}>
       {Object.keys(currentCard).length !== 0 ? (
@@ -179,7 +190,11 @@ const Video = (
               }
             }}
           />
-          {isCustomVideoControls && (
+					<span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span>
+					<span style={{position: 'absolute', left: '50%', top: 30, transform: 'translateX(-50%)', color: 'white', fontWeight: 600}}>{videoCurrentTime?.toFixed(2)}</span>
+					<span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span>
+					{!currentMoment.video && <div style={{position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, display: 'grid', placeItems: 'center', background: 'black', color: 'white', fontWeight: 600}}>No video</div>}
+          {/* {isCustomVideoControls && (
             <VideoControls
               controlsWrapper={cl.controlsWrapper}
               rateChangeHandler={rateChangeHandler}
@@ -188,7 +203,7 @@ const Video = (
               seekVideos={seekVideos}
               ref={videoRef}
             />
-          )}
+          )} */}
         </>
       ) : (
         <></>
