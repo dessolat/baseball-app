@@ -8,6 +8,7 @@ import VideoControls from '../VideoControls/VideoControls';
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const currentMoment = useSelector(state => state.game.currentMoment);
   const dispatch = useDispatch();
 
   const video1Ref = useRef(null);
@@ -17,7 +18,7 @@ const VideoList = ({ viewMode }, ref) => {
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.code !== 'Space' || video1Ref.current === null) return;
+      if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
       e.preventDefault();
 
       const currentState = video1Ref.current.getPlayerState();
@@ -238,7 +239,7 @@ const VideoList = ({ viewMode }, ref) => {
           />
         </>
       )}
-      <VideoControls setPlayPause={setPlayPause} ref={ref} />
+      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} ref={ref} />}
     </>
   );
 };
