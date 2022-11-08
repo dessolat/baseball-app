@@ -1,59 +1,64 @@
-@import 'scss/vars.scss';
-
 .spin {
-	grid-area: spin;
-	display: flex;
-	align-items: center;
-	column-gap: 5px;
-	background-color: white;
-	padding: 5px 0;
-	margin-left: 6px;
-	
-	> * {
-		flex: 1 1 50%;
-		
-		&:last-child {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			height: 100%;
-		}
-	}
+  grid-area: spin;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  background-color: white;
+  padding: 2.3125rem 1.25rem 1.25rem;
+  position: relative;
+  // margin-left: 6px;
 
-	@media screen and (max-width: 800px) {
-		margin-left: 0;
-		padding: 0 10px;
-		justify-content: space-between;
-		aspect-ratio: 16 / 4;
+  &::before {
+    position: absolute;
+    left: .8rem;
+    top: .5rem;
+		content: 'Break, sm';
+		font: 400 .875rem var(--font-nunito);
+		color: var(--side-color);
+  }
 
-		> * {
-			flex: unset;
+  > * {
+    flex: 1 1 50%;
 
-			&:first-child {
-				height: auto;
-				width: calc(100vw / 16 * 3);
-			}
-		}
-	}
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		margin-left: 0;
-		padding: 0 10px;
-		justify-content: space-between;
-		height: calc((100vh - 26px - 70px - 28px - var(--landscape-nav-height)) / 9 * 4);
-		// aspect-ratio: unset;
-		aspect-ratio: unset;
-		// aspect-ratio: 16 / 4;
+    &:last-child {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+  }
 
-	
-		> * {
-			flex: unset;
-	
-			&:first-child {
-				height: 70%;
-				width:auto;
-			}
-		}
-	}
+  @media screen and (max-width: 800px) {
+    margin-left: 0;
+    padding: 0 10px;
+    justify-content: space-between;
+    aspect-ratio: 16 / 4;
+
+    > * {
+      flex: unset;
+
+      &:first-child {
+        height: auto;
+        width: calc(100vw / 16 * 3);
+      }
+    }
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    margin-left: 0;
+    padding: 0 10px;
+    justify-content: space-between;
+    height: calc((100vh - 26px - 70px - 28px - var(--landscape-nav-height)) / 9 * 4);
+    aspect-ratio: unset;
+
+    > * {
+      flex: unset;
+
+      &:first-child {
+        height: 70%;
+        width: auto;
+      }
+    }
+  }
 }
 
 .subHeader {
@@ -62,50 +67,50 @@
 }
 
 .regularValue {
-	font: 700 .875rem var(--font-athiti);
+  font: 700 0.875rem var(--font-athiti);
 }
 
 .breakValue {
-	color: var(--red-color);
-	font: 700 .875rem var(--font-athiti);
+  color: var(--red-color);
+  font: 700 0.875rem var(--font-athiti);
 }
 
 .dnone {
-	@media screen and (max-width: 800px) {
-		display: none;
-	}
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: none;
-	}
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }
 
 .spinInfo {
-	@media screen and (max-width: 800px) {
-		flex-direction: row !important;
-		align-items: center;
-		flex: 1;
-		margin-left: 10px;
+  @media screen and (max-width: 800px) {
+    flex-direction: row !important;
+    align-items: center;
+    flex: 1;
+    margin-left: 10px;
 
-		* {
-			font-size: 12px;
-		}
+    * {
+      font-size: 12px;
+    }
 
-		> * + * {
-			margin-left: 5px;
-		}
-	}
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		flex-direction: row !important;
-		align-items: center;
-		flex: 1;
-		margin-left: 10px;
-	
-		* {
-			font-size: 12px;
-		}
-	
-		> * + * {
-			margin-left: 5px;
-		}
-	}
+    > * + * {
+      margin-left: 5px;
+    }
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    flex-direction: row !important;
+    align-items: center;
+    flex: 1;
+    margin-left: 10px;
+
+    * {
+      font-size: 12px;
+    }
+
+    > * + * {
+      margin-left: 5px;
+    }
+  }
 }
