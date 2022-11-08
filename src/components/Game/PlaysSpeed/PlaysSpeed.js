@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -87,8 +88,11 @@ const PlaysSpeed = ({ currentMoment }) => {
 
   const handleArrowClick = () => dispatch(setPitchState('Field'));
 
+  const wrapperClasses = classNames(cl.speed, {
+    [cl.dnone]: pitchState === 'Field'
+  });
   return (
-    <div ref={ref} className={pitchState !== 'Field' ? cl.speed : cl.speed + ' ' + cl.dnone}>
+    <div ref={ref} className={wrapperClasses}>
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
