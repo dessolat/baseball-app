@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
 // import { setSearchParam } from 'utils';
 import { setCurrentTab } from 'redux/gameReducer';
+import classNames from 'classnames';
 // import { setPitchState } from 'redux/gameReducer';
 // import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
@@ -38,25 +39,20 @@ const Plays = ({ isVideo }) => {
   //   // eslint-disable-next-line
   // }, [currentCard]);
 
-  const classes = [cl.plays];
-  classes.push(
-    !isVideo
-      ? cl.playsNoVideo
-      : currentTab === 'hitting'
-      ? cl.hitting
-      : currentTab === 'running'
-      ? cl.running
-      : cl.pitch
-  );
-
   // const handleTabClick = e => {
-  //   setSearchParam('ptab', e.target.name);
-  //   dispatch(setCurrentTab(e.target.name));
-  //   dispatch(setPitchState('Field'));
-  // };
-
+		//   setSearchParam('ptab', e.target.name);
+		//   dispatch(setCurrentTab(e.target.name));
+		//   dispatch(setPitchState('Field'))
+		// };
+		
+		const playsClasses = classNames(cl.plays, {
+			[cl.playsNoVideo]: !isVideo,
+			[cl.hitting]: isVideo && currentTab === 'hitting',
+			[cl.running]: isVideo && currentTab === 'running',
+			[cl.pitch]: isVideo && currentTab !== 'hitting' && currentTab !== 'running'
+		});
   return (
-    <div className={classes.join(' ')}>
+    <div className={playsClasses}>
       {isVideo && (
         <>
           {/* <div className={cl.landscapeDisplayNone}>
