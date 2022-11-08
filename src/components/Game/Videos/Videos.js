@@ -15,6 +15,7 @@ const Videos = () => {
 
   const viewMode = useSelector(state => state.game.viewMode);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const currentMoment = useSelector(state => state.game.currentMoment);
   // const videoState = useSelector(state => state.game.videoState);
 
   // useEffect(() => {
@@ -48,6 +49,8 @@ const Videos = () => {
   });
 
   function handleMouseMove() {
+		if (!currentMoment.video) return
+
     clearTimeout(timerRef.current);
 
     controlsWrapperRef.current.style.opacity = 1;
@@ -55,7 +58,7 @@ const Videos = () => {
     timerRef.current = setTimeout(() => {
       if (!controlsWrapperRef.current) return;
       controlsWrapperRef.current.style.opacity = 0;
-    }, 1000);
+    }, 500);
   }
 
   return (
