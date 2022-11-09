@@ -34,7 +34,8 @@ const VideoControls = ({ setPlayPause }, ref) => {
     };
   }, [videoState]);
 
-  const handleFullscreenClick = () => (isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement));
+  const handleFullscreenClick = () =>
+    isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement);
 
   const getPlayPauseBtn = () => {
     const btnName = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
@@ -48,11 +49,13 @@ const VideoControls = ({ setPlayPause }, ref) => {
   });
   return (
     <div className={wrapperClasses} ref={ref}>
-      <div className={cl.controls}>
-        {getPlayPauseBtn()}
-        <button onClick={handleFullscreenClick}>
-          <FullscreenBtn isOff={!isFullscreen} />
-        </button>
+      <div className={cl.innerWrapper}>
+        <div className={cl.controls}>
+          {getPlayPauseBtn()}
+          <button onClick={handleFullscreenClick}>
+            <FullscreenBtn isOff={!isFullscreen} />
+          </button>
+        </div>
       </div>
     </div>
   );
