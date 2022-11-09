@@ -6,25 +6,25 @@
 
   @media screen and (max-width: 800px) {
     padding: 3.5px 0;
-		aspect-ratio: 16 / 5;
+    aspect-ratio: 16 / 5;
 
-		> svg {
-			width: 93%;
-			height: 75%;
-		}
+    > svg {
+      width: 93%;
+      height: 75%;
+    }
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		padding: 3.5px 0;
-		align-self: unset;
-		aspect-ratio: unset;
-		height: calc((100vh - 26px - 70px - 28px - var(--landscape-nav-height)) / 9 * 5);
-		border-bottom: 0.5px solid #cdcccc;
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 3.5px 0;
+    align-self: unset;
+    aspect-ratio: unset;
+    height: calc((100vh - 26px - 70px - 28px - var(--landscape-nav-height)) / 9 * 5);
+    border-bottom: 0.5px solid #cdcccc;
 
-		> svg {
-			width: 95%;
-			height: 84%;
-		}
-	}
+    > svg {
+      width: 95%;
+      height: 84%;
+    }
+  }
 }
 
 .subHeader {
@@ -42,9 +42,9 @@
   @media screen and (max-width: 800px) {
     height: 75%;
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		height: 75%;
-	}
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    height: 75%;
+  }
 }
 
 .plainText {
@@ -59,28 +59,24 @@
   @media screen and (max-width: 800px) {
     display: none;
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: none;
-	}
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }
 
 .arrowWrapper {
   display: none;
+  position: absolute;
+  transform: scale(2.4);
+  bottom: -10px;
+  left: 20px;
+  opacity: 0.5;
+	z-index: 1;
 
   @media screen and (max-width: 800px) {
-		display: inline;
-    position: absolute;
-    transform: scale(2.4);
-    bottom: -10px;
-    left: 20px;
-    opacity: 0.5;
+    display: inline;
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: inline;
-		position: absolute;
-		transform: scale(2.4);
-		bottom: -10px;
-		left: 20px;
-		opacity: 0.5;
-	}
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: inline;
+  }
 }
