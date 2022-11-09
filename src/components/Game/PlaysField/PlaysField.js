@@ -5,7 +5,8 @@ import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
+// import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
+import classNames from 'classnames';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -104,16 +105,23 @@ const PlaysField = ({ currentMoment }) => {
   }, [currentMoment]);
 
   const handleArrowClick = () => dispatch(setPitchState('Stats'));
+
+  const wrapperClasses = classNames({
+    [cl.outerWrapper]: pitchState === 'Field',
+    [cl.dnone]: pitchState !== 'Field'
+  });
   return (
-    <div className={pitchState === 'Field' ? cl.field : cl.dnone} ref={parent}>
-      <img className={cl.grid} src={gridImg} alt='grid' />
-      <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
-      <PlaysFieldValues currentMoment={currentMoment} cl={cl} />
-      <Arrow
-        direction='right'
-        onClick={handleArrowClick}
-        style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
-      />
+    <div className={wrapperClasses}>
+      <div className={cl.field} ref={parent}>
+        <img className={cl.grid} src={gridImg} alt='grid' />
+        <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
+        {/* <PlaysFieldValues currentMoment={currentMoment} cl={cl} /> */}
+        <Arrow
+          direction='right'
+          onClick={handleArrowClick}
+          style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
+        />
+      </div>
     </div>
   );
 };
