@@ -30,10 +30,14 @@
 }
 
 .pitch {
-  grid-template: 9.5rem 21.61328125rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
+	gap: 5.5px;
+  // grid-template: 9.3125rem  2.75rem  1fr /  8.5625rem    1fr      10.875rem 10.875rem;
+  grid-template: 9.3125rem  2.75rem  18.4rem /  8.5625rem    1fr      10.875rem 10.875rem;
+  // grid-template: 9.5rem 21.61328125rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
   grid-template-areas:
-    'spd spin'
-    'field field';
+    'spin spd top-left-video top-right-video'
+    'values field top-left-video top-right-video'
+    'values field bottom-video bottom-video';
 }
 
 .hitting {
