@@ -30,6 +30,7 @@ const VideoList = ({ viewMode }, ref) => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
+		// eslint-disable-next-line
   }, [isFullscreen]);
 
   useLayoutEffect(() => {
