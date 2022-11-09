@@ -16,7 +16,8 @@ const PlaysSpeed = ({ currentMoment }) => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.start_speed) {
+    if (Object.keys(currentCard).length === 0) {
+    // if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.start_speed) {
       setChartData([]);
       return;
     }
@@ -34,7 +35,6 @@ const PlaysSpeed = ({ currentMoment }) => {
             moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
             moment.metering.pitch
           ) {
-            // dotIndex = testData.length;
             currentDotParams.type = pitchType;
             currentDotParams.speed = moment.metering.pitch.start_speed;
             currentDotParams.index = testData.length;
@@ -44,12 +44,7 @@ const PlaysSpeed = ({ currentMoment }) => {
             moment.metering.pitch
           ) {
             testData.push([pitchType, moment.metering.pitch.start_speed]);
-
-            // = !testData[pitchType]
-            //   ? [moment.metering.pitch.start_speed]
-            //   : [...testData[pitchType], moment.metering.pitch.start_speed];
           }
-          // testData.push(moment.metering.pitch.start_speed);
         })
       );
       inning['bottom/owners']?.forEach(card =>
@@ -60,7 +55,6 @@ const PlaysSpeed = ({ currentMoment }) => {
             moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
             moment.metering.pitch
           ) {
-            // dotIndex = testData.length;
             currentDotParams.type = pitchType;
             currentDotParams.speed = moment.metering.pitch.start_speed;
             currentDotParams.index = testData.length;
@@ -70,14 +64,7 @@ const PlaysSpeed = ({ currentMoment }) => {
             moment.metering.pitch
           ) {
             testData.push([pitchType, moment.metering.pitch.start_speed]);
-
-            // testData[pitchType] = !testData[pitchType]
-            //   ? [moment.metering.pitch.start_speed]
-            //   : [...testData[pitchType], moment.metering.pitch.start_speed];
           }
-          // moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-          //   moment.metering.pitch &&
-          //   testData.push(moment.metering.pitch.start_speed);
         })
       );
     });
