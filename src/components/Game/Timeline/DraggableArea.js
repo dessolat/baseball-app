@@ -1,9 +1,20 @@
 import React, { forwardRef } from 'react';
+import { useSelector } from 'react-redux';
 import cl from './Timeline.module.scss';
 
-const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }, ref) => {
+const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, ref) => {
+  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+  const currentMoment = useSelector(state => state.game.currentMoment);
+
   const x1relative = (viewBoxWidth / 100) * x1;
   const x2relative = (viewBoxWidth / 100) * x2;
+  // const x1relative = paddings + ((viewBoxWidth - paddings) / 100) * x1;
+  // const x2relative = ((viewBoxWidth - paddings) / 100) * x2;
+
+  const leftLineTotalSecs = (totalSeconds / 100) * x1;
+  const leftLineMins = Math.floor(leftLineTotalSecs / 60);
+  const leftLineSecs = (leftLineTotalSecs - leftLineMins * 60).toFixed(0);
+  const leftLineTime = `${leftLineMins}:${leftLineSecs.length === 1 ? 0 : ''}${leftLineSecs}`;
   return (
     <>
       <rect
@@ -41,6 +52,9 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth }, ref) => {
         className={cl.siblingLine}
         onDragStart={e => e.preventDefault()}
       />
+      <text x={x1relative + 5} y='49' className={cl.verticalLineText}>
+        {leftLineTime}
+      </text>
       <line
         x1={x2relative - 1}
         y1='0'
