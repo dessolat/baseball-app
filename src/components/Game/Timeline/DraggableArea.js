@@ -15,6 +15,11 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
   const leftLineMins = Math.floor(leftLineTotalSecs / 60);
   const leftLineSecs = (leftLineTotalSecs - leftLineMins * 60).toFixed(0);
   const leftLineTime = `${leftLineMins}:${leftLineSecs.length === 1 ? 0 : ''}${leftLineSecs}`;
+
+  const rightLineTotalSecs = (totalSeconds / 100) * x2;
+  const rightLineMins = Math.floor(rightLineTotalSecs / 60);
+  const rightLineSecs = (rightLineTotalSecs - rightLineMins * 60).toFixed(0);
+  const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
   return (
     <>
       <rect
@@ -77,6 +82,9 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
         className={cl.siblingLine}
         onDragStart={e => e.preventDefault()}
       />
+      <text x={x2 < 96 ? x2relative + 5 : x2relative - 25} y='49' className={cl.verticalLineText}>
+        {rightLineTime}
+      </text>
     </>
   );
 };
