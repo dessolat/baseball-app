@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -83,8 +84,9 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-  const headerStyles = [cl.tableHeader];
-  currentLeague.id !== -1 && headerStyles.push(cl.paddingRightOne);
+	const headerClasses = classNames(cl.tableHeader, {
+		[cl.paddingRightOne]: currentLeague.id !== -1
+	})
 
   return (
     <div className={cl.wrapper}>
@@ -92,7 +94,7 @@ const ContentTable = ({ games }) => {
 
       {(!isMobile || mobileTableMode === 'Calendar') && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
-          <div className={headerStyles.join(' ')}>
+          <div className={headerClasses}>
             <div>Time</div>
             <div>
               <Dropdown
