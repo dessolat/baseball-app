@@ -24,7 +24,8 @@ const defaultState = {
 	isFilteredPlayer: true,
 	isCameraSelector: false,
 	moments: [],
-	isFullscreen: false
+	isFullscreen: false,
+	videoCurrentTime: 0
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -53,6 +54,7 @@ const SET_IS_FILTERED_PLAYER = 'SET_IS_FILTERED_PLAYER';
 const SET_IS_CAMERA_SELECTOR = 'SET_IS_CAMERA_SELECTOR';
 const SET_MOMENTS = 'SET_MOMENTS';
 const SET_IS_FULLSCREEN = 'SET_IS_FULLSCREEN';
+const SET_VIDEO_CURRENT_TIME = 'SET_VIDEO_CURRENT_TIME';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -108,6 +110,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, moments: action.payload };
     case SET_IS_FULLSCREEN:
       return { ...state, isFullscreen: action.payload };
+    case SET_VIDEO_CURRENT_TIME:
+      return { ...state, videoCurrentTime: action.payload };
     default:
       return state;
   }
@@ -139,3 +143,4 @@ export const setIsFilteredPlayer = payload => ({ type: SET_IS_FILTERED_PLAYER, p
 export const setIsCameraSelector = payload => ({ type: SET_IS_CAMERA_SELECTOR, payload });
 export const setMoments = payload => ({ type: SET_MOMENTS, payload });
 export const setIsFullscreen = payload => ({ type: SET_IS_FULLSCREEN, payload });
+export const setVideoCurrentTime = payload => ({ type: SET_VIDEO_CURRENT_TIME, payload });
