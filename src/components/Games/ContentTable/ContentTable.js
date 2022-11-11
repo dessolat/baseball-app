@@ -23,7 +23,9 @@ const ContentTable = ({ games }) => {
   useEffect(() => {
     if (scrollItemRef.current === null) return;
 
-    scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
+    setTimeout(() => {
+      scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
+    }, 100);
   }, [currentDate, currentLeague]);
 
   const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
@@ -84,9 +86,9 @@ const ContentTable = ({ games }) => {
     [filteredHeadings]
   );
 
-	const headerClasses = classNames(cl.tableHeader, {
-		[cl.paddingRightOne]: currentLeague.id !== -1
-	})
+  const headerClasses = classNames(cl.tableHeader, {
+    [cl.paddingRightOne]: currentLeague.id !== -1
+  });
 
   return (
     <div className={cl.wrapper}>
