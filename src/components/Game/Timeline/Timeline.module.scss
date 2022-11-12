@@ -3,6 +3,7 @@
   width: 100%;
   height: 100%;
   grid-area: timeline;
+  display: flex;
 
   @media screen and (max-width: 800px) {
     display: none;
@@ -19,11 +20,40 @@
   background-color: #fff;
 }
 
+.sideChart {
+  fill: #fff;
+  background-color: #fff;
+}
+
+.leftTitle,
+.rightTitle {
+  font: 300 0.625rem var(--font-nunito);
+  stroke: black;
+  user-select: none;
+	stroke-width: 0.5;
+}
+
+.verticalLineText {
+  stroke: var(--side-color);
+}
+
+.redLineText {
+  stroke: #E2001C;
+}
+
+.verticalLineText,.redLineText {
+	font: 400 0.55rem var(--font-nunito);
+	stroke-width: .7;
+	user-select: none;
+	letter-spacing: .5px;
+}
+
 .horizontalLineText {
   font: 600 0.625rem / 1.5 'Nunito', sans-serif;
   fill: black;
   user-select: none;
 }
+
 
 .draggableRect {
   cursor: grab;
@@ -44,7 +74,7 @@
 
 .siblingLine {
   transition: stroke-width 0.5s;
-	pointer-events: none;
+  pointer-events: none;
 }
 
 .draggableLine:hover ~ .siblingLine {
