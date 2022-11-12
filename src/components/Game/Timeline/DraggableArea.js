@@ -20,6 +20,16 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
   const rightLineMins = Math.floor(rightLineTotalSecs / 60);
   const rightLineSecs = (rightLineTotalSecs - rightLineMins * 60).toFixed(0);
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
+	
+  const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
+	
+  const redLineMins = Math.floor(redLineTotalSecs / 60);
+  const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
+  const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
+
+
+	const redLinePercent = redLineTotalSecs * 100 / totalSeconds
+	const redLineRelative = (viewBoxWidth / 100) * redLinePercent
   return (
     <>
       <rect
@@ -84,6 +94,19 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
       />
       <text x={x2 < 96 ? x2relative + 5 : x2relative - 25} y='49' className={cl.verticalLineText}>
         {rightLineTime}
+      </text>
+      <line
+        x1={redLineRelative - 1}
+        y1='0'
+        x2={redLineRelative - 1}
+        y2='52'
+        stroke='#E2001C'
+        strokeWidth='2'
+        className={cl.redLine}
+        onDragStart={e => e.preventDefault()}
+      />
+      <text x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25} y='49' className={cl.redLineText}>
+        {redLineTime}
       </text>
     </>
   );
