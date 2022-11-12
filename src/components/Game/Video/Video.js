@@ -81,10 +81,12 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
   }, [filteredCards]);
 
 	useEffect(() => {
+		if (videoNumber !== 1) return
+		
 		const interval = setInterval(() => {
 			const time = videoRef.current?.getCurrentTime()
-			setVideoCurrentTime(time)
-		}, 100);
+			dispatch(setVideoCurrentTime(time))
+		}, 40);
 	
 		return () => {
 			clearInterval(interval)
