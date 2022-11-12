@@ -91,6 +91,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
 		return () => {
 			clearInterval(interval)
 		}
+		// eslint-disable-next-line
 	}, [currentMoment,videoRef])
 	
 
