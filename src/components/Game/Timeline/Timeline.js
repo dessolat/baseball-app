@@ -1,20 +1,26 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
 const LINES = [
-  { color: '#1A4C96' },
-  { color: '#FFAB00' },
-  { color: '#BF8610' },
-  { color: '#8D6004' },
-  { color: '#5C4006' }
+  { color: '#1A4C96', leftTitle: 'Ball' },
+  { color: '#FFAB00', leftTitle: 'Hitter' },
+  { color: '#BF8610', leftTitle: 'Run1' },
+  { color: '#8D6004', leftTitle: 'Run2' },
+  { color: '#5C4006', leftTitle: 'Run3' }
 ];
 
-const VIEW_BOX_WIDTH = 885;
+const VIEW_BOX_WIDTH = 825;
+// const VIEW_BOX_WIDTH = 885;
+// const SIDE_PADDINGS = 30;
 
-const Timeline = ({ addedClass = null}) => {
+const Timeline = ({ addedClass = null }) => {
   const [sliderCoords, setSliderCoords] = useState({ x1: 30, x2: 65 });
+
+  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+  const currentMoment = useSelector(state => state.game.currentMoment);
 
   const sliderRef = useRef();
   const sliderNameRef = useRef();
@@ -38,12 +44,6 @@ const Timeline = ({ addedClass = null}) => {
         : e.clientX > parent.getBoundingClientRect().right
         ? parent.getBoundingClientRect().width
         : e.clientX - parent.getBoundingClientRect().left;
-    // let currentCoord =   e.clientX - parent.getBoundingClientRect().left - 3.5;
-
-    // if (e.clientX < parent.getBoundingClientRect().left) currentCoord = 0;
-    // if (e.clientX - parent.getBoundingClientRect().left < 0) currentCoord = -3.5;
-    // if (e.clientX > parent.getBoundingClientRect().right) currentCoord = parent.offsetWidth;
-    // if (e.clientX > parent.getBoundingClientRect().right) currentCoord = parent.offsetWidth - 3.5;
 
     const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
@@ -77,8 +77,6 @@ const Timeline = ({ addedClass = null}) => {
         if (mouseDownStateRef.current.x1 + percentsDelta < 0) {
           tempX1 = 0;
           tempX2 = mouseDownStateRef.current.x2 - mouseDownStateRef.current.x1;
-          // tempX1 = 0;
-          // tempX2 = prev.x2 - prev.x1;
 
           return { x1: tempX1, x2: tempX2 };
         }
@@ -94,17 +92,10 @@ const Timeline = ({ addedClass = null}) => {
           x1: mouseDownStateRef.current.x1 + percentsDelta,
           x2: mouseDownStateRef.current.x2 + percentsDelta
         };
-        // return { x1: prev.x1 + percentsDelta, x2: prev.x2 + percentsDelta };
       });
 
-      // mouseDownXCoordRef.current += pixelsDelta;
       return;
     }
-    // console.log(e.clientX);
-    // console.log(slider);
-    // console.log(parent);
-    // console.log(parent.getBoundingClientRect().width);
-    // slider.style.left = currentCoord + 'px';
   }
 
   const handleMouseUp = () => {
@@ -128,15 +119,34 @@ const Timeline = ({ addedClass = null}) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  // const ppu =
+  const totalSeconds = currentMoment.video
+    ? currentMoment.video.seconds_to - currentMoment.video.seconds_from
+    : 0;
+  const minutesSide = Math.floor(totalSeconds / 60);
+	const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0)
+  const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`
   return (
     <div className={cl.wrapper + ' ' + addedClass}>
-      <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} 52`} className={cl.chart} 
-			// preserveAspectRatio='none'
-			>
+      <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
+        {/* Left titles */}
+        {LINES.map(({ leftTitle }, i) => (
+          <text x='2' y={(i + 1) * 9 + 3} className={cl.leftTitle}>
+            {leftTitle}
+          </text>
+        ))}
+      </svg>
+      <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} 52`} className={cl.chart} preserveAspectRatio='none'>
         {/* Horizontal lines */}
         {LINES.map(({ color }, i) => (
-          <line key={i} x1='0' y1={(i + 1) * 9} x2='885' y2={(i + 1) * 9} stroke={color} strokeWidth='1' />
+          <line
+            key={i}
+            x1='0'
+            y1={(i + 1) * 9}
+            x2={VIEW_BOX_WIDTH}
+            y2={(i + 1) * 9}
+            stroke={color}
+            strokeWidth='1'
+          />
         ))}
 
         {/* Lines text */}
@@ -163,8 +173,16 @@ const Timeline = ({ addedClass = null}) => {
           x2={sliderCoords.x2}
           handleMouseDown={handleMouseDown}
           viewBoxWidth={VIEW_BOX_WIDTH}
+					totalSeconds={totalSeconds}
           ref={rectRef}
         />
+      </svg>
+      {/* // currentMoment.video?.seconds_from */}
+
+      <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
+        <text x='4' y='30' className={cl.rightTitle}>
+          {rightTitle}
+        </text>
       </svg>
     </div>
   );
