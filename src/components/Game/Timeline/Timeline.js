@@ -19,7 +19,7 @@ const VIEW_BOX_WIDTH = 825;
 const Timeline = ({ addedClass = null }) => {
   const [sliderCoords, setSliderCoords] = useState({ x1: 30, x2: 65 });
 
-  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+  // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
 
   const sliderRef = useRef();

@@ -1,13 +1,13 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoPlaybackRate } from 'redux/gameReducer';
+import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoCurrentTime, setVideoPlaybackRate } from 'redux/gameReducer';
 import classNames from 'classnames';
 // import VideoControls from './VideoControls/VideoControls';
 
 const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
-	const [videoCurrentTime, setVideoCurrentTime] = useState(0)
+	// const [videoCurrentTime, setVideoCurrentTime] = useState(0)
 
   const videoRef = ref;
 
@@ -21,6 +21,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const viewMode = useSelector(state => state.game.viewMode);
+  // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const dispatch = useDispatch();
 
   useEffect(() => {
