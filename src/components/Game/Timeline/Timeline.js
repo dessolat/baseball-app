@@ -123,14 +123,14 @@ const Timeline = ({ addedClass = null }) => {
     ? currentMoment.video.seconds_to - currentMoment.video.seconds_from
     : 0;
   const minutesSide = Math.floor(totalSeconds / 60);
-	const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0)
-  const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`
+  const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0);
+  const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`;
   return (
     <div className={cl.wrapper + ' ' + addedClass}>
       <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
         {/* Left titles */}
         {LINES.map(({ leftTitle }, i) => (
-          <text x='2' y={(i + 1) * 9 + 3} className={cl.leftTitle}>
+          <text key={i} x='2' y={(i + 1) * 9 + 3} className={cl.leftTitle}>
             {leftTitle}
           </text>
         ))}
