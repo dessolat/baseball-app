@@ -10,9 +10,10 @@ import {
   setVideoPlaybackRate
 } from 'redux/gameReducer';
 import classNames from 'classnames';
+import NoVideoScreen from './NoVideoScreen';
 // import VideoControls from './VideoControls/VideoControls';
 
-const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
+const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   // const [videoCurrentTime, setVideoCurrentTime] = useState(0)
 
   const videoRef = ref;
@@ -209,23 +210,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
           {/* <span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span>
 					<span style={{position: 'absolute', left: '50%', top: 30, transform: 'translateX(-50%)', color: 'white', fontWeight: 600}}>{videoCurrentTime?.toFixed(2)}</span>
 					<span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span> */}
-          {!currentMoment.video && (
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                display: 'grid',
-                placeItems: 'center',
-                background: 'black',
-                color: 'white',
-                fontWeight: 600
-              }}>
-              No video
-            </div>
-          )}
+          {!currentMoment.video && <NoVideoScreen />}
           {/* {isCustomVideoControls && (
             <VideoControls
               controlsWrapper={cl.controlsWrapper}
