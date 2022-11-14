@@ -53,11 +53,4 @@
 .speedSelectorWrapper > div {
 	position: relative;
 	cursor: pointer;
-
-	> img {
-		position: absolute;
-		right: 2px;
-		top: 50%;
-		transform: translateY(-50%);
-	}
 }
