@@ -106,9 +106,9 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
     stateChangeHandler(e, videoNumber, currentMoment?.video?.seconds_from || null);
   };
 
-  const onPlaybackRateChange = e => {
-    rateChangeHandler(e);
-  };
+  // const onPlaybackRateChange = e => {
+  //   rateChangeHandler(e);
+  // };
 
   const videoHandling = () => {
     clearInterval(intervalRef.current);
@@ -126,6 +126,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
     // endRef.current = currentCard.moments[0].video.seconds_to;
 
     intervalRef.current = setInterval(() => {
+			if (!videoRef.current) return
+
       const currentTime = videoRef.current.getCurrentTime();
 
       if (currentTime >= endRef.current) {
@@ -180,7 +182,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
             // videoId={'WCjLd7QAJq8'}
             onReady={onReady}
             onStateChange={onStateChange}
-            onPlaybackRateChange={onPlaybackRateChange}
+            // onPlaybackRateChange={onPlaybackRateChange}
             opts={{
               height: '100%',
               width: '100%',
