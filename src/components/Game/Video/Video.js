@@ -87,7 +87,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
 		const interval = setInterval(() => {
 			const time = videoRef.current?.getCurrentTime()
 			dispatch(setVideoCurrentTime(time))
-		}, 40);
+		}, 30);
 	
 		return () => {
 			clearInterval(interval)
@@ -129,7 +129,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
       const currentTime = videoRef.current.getCurrentTime();
 
       if (currentTime >= endRef.current) {
-        // momentRef.current += 1;
+				// momentRef.current += 1;
         if (modeRef.current === 'pause') {
           videoHandling();
           return;
@@ -159,7 +159,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
           dispatch(setPlaybackMode('pause'));
         }
       }
-    }, 500);
+    }, 50);
   };
 
   const videoClasses = classNames(cl.videoWrapper, {
