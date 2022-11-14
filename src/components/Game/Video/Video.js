@@ -2,17 +2,24 @@ import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentCard, setCurrentMoment, setPlaybackMode, setVideoCurrentTime, setVideoPlaybackRate } from 'redux/gameReducer';
+import {
+  setCurrentCard,
+  setCurrentMoment,
+  setPlaybackMode,
+  setVideoCurrentTime,
+  setVideoPlaybackRate
+} from 'redux/gameReducer';
 import classNames from 'classnames';
 // import VideoControls from './VideoControls/VideoControls';
 
 const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, ref) => {
-	// const [videoCurrentTime, setVideoCurrentTime] = useState(0)
+  // const [videoCurrentTime, setVideoCurrentTime] = useState(0)
 
   const videoRef = ref;
 
   const endRef = useRef(null);
   const intervalRef = useRef(null);
+  const timeIntervalRef = useRef(null);
   const momentRef = useRef(0);
   const modeRef = useRef('play');
   const currentCard = useSelector(state => state.game.currentCard);
@@ -21,6 +28,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const viewMode = useSelector(state => state.game.viewMode);
+  const videoState = useSelector(state => state.game.videoState);
   // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const dispatch = useDispatch();
 
@@ -81,20 +89,22 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
     // eslint-disable-next-line
   }, [filteredCards]);
 
-	useEffect(() => {
-		if (videoNumber !== 1) return
-		
-		const interval = setInterval(() => {
-			const time = videoRef.current?.getCurrentTime()
-			dispatch(setVideoCurrentTime(time))
-		}, 30);
-	
-		return () => {
-			clearInterval(interval)
-		}
-		// eslint-disable-next-line
-	}, [currentMoment,videoRef])
-	
+  useEffect(() => {
+    if (videoNumber !== 1) return;
+
+    clearInterval(timeIntervalRef.current);
+
+    timeIntervalRef.current = setInterval(() => {
+      const time = videoRef.current?.getCurrentTime();
+
+      videoState === 1 && dispatch(setVideoCurrentTime(time));
+    }, 30);
+
+    return () => {
+      clearInterval(timeIntervalRef.current);
+    };
+    // eslint-disable-next-line
+  }, [currentMoment, videoRef, videoState]);
 
   const onReady = e => {
     videoRef.current = e.target;
@@ -126,12 +136,12 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
     // endRef.current = currentCard.moments[0].video.seconds_to;
 
     intervalRef.current = setInterval(() => {
-			if (!videoRef.current) return
+      if (!videoRef.current) return;
 
       const currentTime = videoRef.current.getCurrentTime();
 
       if (currentTime >= endRef.current) {
-				// momentRef.current += 1;
+        // momentRef.current += 1;
         if (modeRef.current === 'pause') {
           videoHandling();
           return;
@@ -196,10 +206,26 @@ const Video = ({ videoId, videoNumber, stateChangeHandler, rateChangeHandler }, 
               }
             }}
           />
-					{/* <span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span>
+          {/* <span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span>
 					<span style={{position: 'absolute', left: '50%', top: 30, transform: 'translateX(-50%)', color: 'white', fontWeight: 600}}>{videoCurrentTime?.toFixed(2)}</span>
 					<span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span> */}
-					{!currentMoment.video && <div style={{position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, display: 'grid', placeItems: 'center', background: 'black', color: 'white', fontWeight: 600}}>No video</div>}
+          {!currentMoment.video && (
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'black',
+                color: 'white',
+                fontWeight: 600
+              }}>
+              No video
+            </div>
+          )}
           {/* {isCustomVideoControls && (
             <VideoControls
               controlsWrapper={cl.controlsWrapper}
