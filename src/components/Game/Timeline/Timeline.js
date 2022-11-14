@@ -168,14 +168,16 @@ const Timeline = ({ addedClass = null }) => {
         ))}
 
         {/* Draggable area */}
-        <DraggableArea
-          x1={sliderCoords.x1}
-          x2={sliderCoords.x2}
-          handleMouseDown={handleMouseDown}
-          viewBoxWidth={VIEW_BOX_WIDTH}
-					totalSeconds={totalSeconds}
-          ref={rectRef}
-        />
+        {totalSeconds > 0 && (
+          <DraggableArea
+            x1={sliderCoords.x1}
+            x2={sliderCoords.x2}
+            handleMouseDown={handleMouseDown}
+            viewBoxWidth={VIEW_BOX_WIDTH}
+            totalSeconds={totalSeconds}
+            ref={rectRef}
+          />
+        )}
       </svg>
       {/* // currentMoment.video?.seconds_from */}
 
