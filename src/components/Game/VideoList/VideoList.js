@@ -2,13 +2,15 @@ import React, { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
 import { useDispatch, useSelector } from 'react-redux';
-import { setVideoPlaybackRate, setVideoState } from 'redux/gameReducer';
+import { setVideoState } from 'redux/gameReducer';
 import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const currentMoment = useSelector(state => state.game.currentMoment);
+  const videoPlaybackRate = useSelector(state => state.game.videoPlaybackRate);
+
   const dispatch = useDispatch();
 
   const video1Ref = useRef(null);
@@ -30,8 +32,12 @@ const VideoList = ({ viewMode }, ref) => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [isFullscreen]);
+
+  useEffect(() => {
+    rateChangeHandler(videoPlaybackRate)
+  }, [videoPlaybackRate]);
 
   useLayoutEffect(() => {
     video1Ref.current = null;
@@ -118,15 +124,15 @@ const VideoList = ({ viewMode }, ref) => {
     }
   };
 
-  const rateChangeHandler = e => {
+  function rateChangeHandler(e) {
     const value = typeof e === 'number' ? e : e.data;
 
-    dispatch(setVideoPlaybackRate(value));
+    // dispatch(setVideoPlaybackRate(value));
     video1Ref.current && video1Ref.current.setPlaybackRate(value);
     video2Ref.current && video2Ref.current.setPlaybackRate(value);
     video3Ref.current && video3Ref.current.setPlaybackRate(value);
     video4Ref.current && video4Ref.current.setPlaybackRate(value);
-  };
+  }
 
   const seekVideos = seconds => {
     video1Ref.current && video1Ref.current.seekTo(seconds);
