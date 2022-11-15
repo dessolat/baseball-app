@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector, useDispatch } from 'react-redux';
@@ -34,7 +34,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const situationFilter = useSelector(state => state.game.situationFilter);
   const viewMode = useSelector(state => state.game.viewMode);
   const videoState = useSelector(state => state.game.videoState);
-  const isFullscreen = useSelector(state => state.game.isFullscreen);
+  // const isFullscreen = useSelector(state => state.game.isFullscreen);
   // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const dispatch = useDispatch();
 
