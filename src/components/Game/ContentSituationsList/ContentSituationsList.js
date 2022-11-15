@@ -53,11 +53,11 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
         ))}
       </ul>
       <div className={classes.join(' ')}></div>
-      {!isVideo && (
+      {/* {!isVideo && ( */}
         <div className={cl.controlsWrapper}>
           <ContentControls noPlayPause />
         </div>
-      )}
+      {/* )} */}
 			<PlayerFilterField />
     </div>
   );
