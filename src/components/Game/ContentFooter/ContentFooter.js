@@ -6,7 +6,7 @@ import ContentControls from '../ContentControls/ContentControls';
 const ContentFooter = () => (
   <div className={cl.controlsWrapper}>
     <ContentPitcher />
-    <ContentControls />
+    <ContentControls isPlayOnline={false}/>
   </div>
 );
 

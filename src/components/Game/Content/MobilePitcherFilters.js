@@ -37,7 +37,7 @@ const MobilePitcherFilters = () => {
           itemStyles={{ padding: '0 1rem' }}
         />
       </div>
-      <ContentControls noPlayPause={!isVideo} />
+      <ContentControls noPlayPause={!isVideo} isPlayOnline={false} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import PlayOnline from 'components/UI/buttons/PlayOnline/PlayOnline';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode } from 'redux/gameReducer';
 
-const ContentControls = ({ noPlayPause = false, ...props }) => {
+const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props }) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const ContentControls = ({ noPlayPause = false, ...props }) => {
           playbackMode={playbackMode}
         />
       )}
-      <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />
+      {isPlayOnline && <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />}
     </div>
   );
 };
