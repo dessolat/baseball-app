@@ -1,6 +1,7 @@
 .videoWrapper {
   position: relative;
   height: 100%;
+  user-select: none;
 
   @media screen and (max-width: 800px) {
     height: 100%;
@@ -16,17 +17,31 @@
   &:hover > .controlsWrapper {
     opacity: 1;
   }
+
+  &:fullscreen > .btnWrapper {
+    > .toFullScreen {
+      display: none;
+    }
+
+    > .fromFullScreen {
+      display: inline-block;
+    }
+  }
+}
+
+.fromFullScreen {
+  display: none;
 }
 
 .controlsWrapper {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	height: auto !important;
-	padding: 0 50px 7px;
-	opacity: 0;
-	transition: opacity .25s;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: auto !important;
+  padding: 0 50px 7px;
+  opacity: 0;
+  transition: opacity 0.25s;
 }
 
 .videoOne {
@@ -47,4 +62,39 @@
 
 .aspectRatio16 {
   aspect-ratio: 16/9;
+}
+
+.btnWrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  > button {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.topLeftBtn > button {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+  &.topRightBtn > button {
+    right: 0.4rem;
+    top: 0.5rem;
+  }
+  &.bottomLeftBtn > button {
+    left: 0.5rem;
+    bottom: 0.5rem;
+  }
+  &.bottomRightBtn > button {
+    right: 0.4rem;
+    bottom: 0.5rem;
+  }
+}
+
+.dnone {
+  display: none;
 }
