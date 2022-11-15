@@ -8,7 +8,7 @@ const PlayBtn = () => {
         d='M0.25 88.6986V0.529427L83.4658 42.1186L0.25 88.6986Z'
         fill='#D9D9D9'
         stroke='black'
-        stroke-width='0.5'
+        strokeWidth='0.5'
       />
     </svg>
   );
