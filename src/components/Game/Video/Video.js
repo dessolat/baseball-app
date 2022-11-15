@@ -71,6 +71,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
   useEffect(() => {
     modeRef.current = playbackMode;
+    !currentMoment.video && playbackMode === 'play' && toNextMomentOrCard();
   }, [playbackMode]);
 
   useEffect(() => {
@@ -88,9 +89,11 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
       if (currentTime >= endRef.current) {
         momentRef.current += 1;
 
+        //If it's not last moment in the card
         if (momentRef.current < currentCard.moments.length) {
           videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
           endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
+          //If last moment
         } else {
           if (modeRef.current === 'pause') {
             videoHandling();
@@ -110,7 +113,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
           }
         }
       }
-    }, 500);
+    }, 50);
     // eslint-disable-next-line
   }, [filteredCards]);
 
@@ -145,11 +148,42 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   //   rateChangeHandler(e);
   // };
 
+  function toNextMomentOrCard() {
+    const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner.id);
+
+    if (momentIndex < currentCard.moments.length - 1) {
+      const nextMoment = currentCard.moments[momentIndex + 1];
+
+      videoRef.current.seekTo(nextMoment.video.seconds_from);
+      dispatch(setCurrentMoment(nextMoment));
+
+      endRef.current = nextMoment.video.seconds_to;
+    } else {
+      let cardIndex = filteredCards.findIndex(
+        card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+      );
+
+      cardIndex++;
+
+      if (cardIndex < filteredCards.length) {
+        dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: true }));
+        return;
+      }
+
+      dispatch(setPlaybackMode('pause'));
+    }
+  }
+
   const videoHandling = () => {
     clearInterval(intervalRef.current);
     // momentRef.current = 0;
 
-    if (currentCard.moments.length === 0 || !currentCard.moments[0].video || !currentMoment.video) {
+    if (!currentMoment.video) {
+      modeRef.current !== 'pause' && setTimeout(toNextMomentOrCard, 3000);
+      return;
+    }
+
+    if (currentCard.moments.length === 0 || !currentCard.moments[0].video) {
       videoRef.current.pauseVideo();
       return;
     }
@@ -157,6 +191,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     videoRef.current.getPlayerState() !== 1 && videoRef.current.playVideo();
     videoRef.current.seekTo(currentMoment.video.seconds_from);
     // videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
+
     endRef.current = currentMoment.video.seconds_to;
     // endRef.current = currentCard.moments[0].video.seconds_to;
 
@@ -171,30 +206,9 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
           videoHandling();
           return;
         }
-        const momentIndex = currentCard.moments.findIndex(
-          moment => moment.inner.id === currentMoment.inner.id
-        );
-        if (momentIndex < currentCard.moments.length - 1) {
-          // if (momentRef.current < currentCard.moments.length) {
-          videoRef.current.seekTo(currentCard.moments[momentIndex + 1].video.seconds_from);
-          dispatch(setCurrentMoment(currentCard.moments[momentIndex + 1]));
-          // videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
-          endRef.current = currentCard.moments[momentIndex + 1].video.seconds_to;
-          // endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
-        } else {
-          let cardIndex = filteredCards.findIndex(
-            card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-          );
 
-          cardIndex++;
-
-          if (cardIndex < filteredCards.length) {
-            dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: true }));
-            return;
-          }
-
-          dispatch(setPlaybackMode('pause'));
-        }
+        //To next moment or card
+        toNextMomentOrCard();
       }
     }, 50);
   };
@@ -250,10 +264,10 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 					<span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span> */}
           <div className={fullscreenBtnClasses}>
             <button onClick={openFullScreen} className={cl.toFullScreen}>
-              <FullscreenBtn isOff={true} width={'100%'} height={'100%'}  />
+              <FullscreenBtn isOff={true} width={'100%'} height={'100%'} />
             </button>
             <button onClick={closeFullScreen} className={cl.fromFullScreen}>
-              <FullscreenBtn isOff={false} width={'100%'} height={'100%'}  />
+              <FullscreenBtn isOff={false} width={'100%'} height={'100%'} />
             </button>
           </div>
           {!currentMoment.video && <NoVideoScreen />}
