@@ -12,9 +12,11 @@ const VideoControls = ({ setPlayPause }, ref) => {
 
   const videoState = useSelector(state => state.game.videoState);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const viewMode = useSelector(state => state.game.viewMode);
 
   const timeoutRef = useRef(null);
   const previousTimeRef = useRef(0);
+  const clickTimerRef = useRef();
 
   useEffect(() => {
     const timeDelta = Date.now() - previousTimeRef.current;
@@ -34,25 +36,44 @@ const VideoControls = ({ setPlayPause }, ref) => {
     };
   }, [videoState]);
 
-  const handleFullscreenClick = () =>
+  const handleFullscreenBtnClick = () =>
     isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement);
 
-  const getPlayPauseBtn = () => {
-    const btnName = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
-    const comp = btnName === 'play' ? <PlayBtn /> : <PauseBtn />;
+  const playMode = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
 
-    return <button onClick={() => setPlayPause(btnName)}>{comp}</button>;
+  const handleWrapperClick = e => {
+    if (e.detail === 1) {
+      clickTimerRef.current = setTimeout(() => {
+        setPlayPause(playMode)
+      }, 200);
+    }
+    if (e.detail === 2) {
+      clearTimeout(clickTimerRef.current);
+      handleFullscreenBtnClick();
+    }
+  };
+
+  const getPlayPauseBtn = () => {
+    const comp = playMode === 'play' ? <PlayBtn /> : <PauseBtn />;
+
+    return <button onClick={() => setPlayPause(playMode)}>{comp}</button>;
   };
 
   const wrapperClasses = classNames(cl.controlsWrapper, {
-    [cl.fullOpacity]: videoState === 2
+    [cl.fullOpacity]: videoState === 2,
+    [cl.leftZero]: viewMode.slice(-1) === '1'
   });
+
   return (
-    <div className={wrapperClasses} ref={ref}>
+    <div
+      className={wrapperClasses}
+      ref={ref}
+      onClick={e => handleWrapperClick(e)}
+    >
       <div className={cl.innerWrapper}>
         <div className={cl.controls}>
           {getPlayPauseBtn()}
-          <button onClick={handleFullscreenClick}>
+          <button onClick={handleFullscreenBtnClick}>
             <FullscreenBtn isOff={!isFullscreen} />
           </button>
         </div>
