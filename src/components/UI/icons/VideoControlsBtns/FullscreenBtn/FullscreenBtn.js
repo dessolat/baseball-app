@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FullscreenBtn = ({ isOff = true, width = 100, height = 100 }) => {
+const FullscreenBtn = ({ isOff = true, width = '100%', height = '100%' }) => {
   return (
     <svg width={width} height={height} viewBox='0 0 89 89' fill='none' xmlns='http://www.w3.org/2000/svg'>
       {isOff ? (
