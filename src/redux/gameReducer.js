@@ -25,7 +25,8 @@ const defaultState = {
 	isCameraSelector: false,
 	moments: [],
 	isFullscreen: false,
-	videoCurrentTime: 0
+	videoCurrentTime: 0,
+	videoLengthMode: 'Full'
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -55,6 +56,7 @@ const SET_IS_CAMERA_SELECTOR = 'SET_IS_CAMERA_SELECTOR';
 const SET_MOMENTS = 'SET_MOMENTS';
 const SET_IS_FULLSCREEN = 'SET_IS_FULLSCREEN';
 const SET_VIDEO_CURRENT_TIME = 'SET_VIDEO_CURRENT_TIME';
+const SET_VIDEO_LENGTH_MODE = 'SET_VIDEO_LENGTH_MODE';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -112,6 +114,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, isFullscreen: action.payload };
     case SET_VIDEO_CURRENT_TIME:
       return { ...state, videoCurrentTime: action.payload };
+    case SET_VIDEO_LENGTH_MODE:
+      return { ...state, videoLengthMode: action.payload };
     default:
       return state;
   }
@@ -144,3 +148,4 @@ export const setIsCameraSelector = payload => ({ type: SET_IS_CAMERA_SELECTOR, p
 export const setMoments = payload => ({ type: SET_MOMENTS, payload });
 export const setIsFullscreen = payload => ({ type: SET_IS_FULLSCREEN, payload });
 export const setVideoCurrentTime = payload => ({ type: SET_VIDEO_CURRENT_TIME, payload });
+export const setVideoLengthMode = payload => ({ type: SET_VIDEO_LENGTH_MODE, payload });
