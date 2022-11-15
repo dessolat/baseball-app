@@ -24,15 +24,21 @@
 
 .controlsWrapper {
 	position: absolute; 
-	right: 15px; 
+	right: 9px; 
 	bottom: 10px;
+	opacity: 0.25;
+	transition: opacity var(--transition-speed);
 
-	@media screen and (max-width: 800px) {
-		display: none;
+	&:hover {
+		opacity: 1;
 	}
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: none;
-	}
+
+	// @media screen and (max-width: 800px) {
+	// 	display: none;
+	// }
+	// @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+	// 	display: none;
+	// }
 }
 
 .list {
