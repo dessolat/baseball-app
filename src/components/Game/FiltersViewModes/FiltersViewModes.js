@@ -27,7 +27,7 @@ const FiltersViewModes = () => {
           <div className={cl.camera}>Auto</div>
           <img src={GearIcon} alt='gear-icon' />
         </button>
-        <button className={getClassName('mode-2')} name='mode-2' onClick={handleModeClick}>
+        {/* <button className={getClassName('mode-2')} name='mode-2' onClick={handleModeClick}>
           <div className={cl.camera}>1</div>
           <div className={cl.camera}>2</div>
           <img src={GearIcon} alt='gear-icon' />
@@ -41,7 +41,7 @@ const FiltersViewModes = () => {
             <div className={cl.camera}>3</div>
           </div>
           <img src={GearIcon} alt='gear-icon' />
-        </button>
+        </button> */}
         {/* <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
         <div></div>
         <div></div>
