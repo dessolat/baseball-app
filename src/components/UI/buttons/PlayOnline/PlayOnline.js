@@ -3,19 +3,8 @@ import cl from './PlayOnline.module.scss';
 
 const PlayOnline = ({ className, ...props }) => (
   <button {...props} className={cl.btn + ' ' + className}>
-    <svg
-      width='15'
-      height='17'
-      viewBox='0 0 15 17'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      className={cl.playOnlineBtn}>
-      <path
-        d='M7.40515 16.6719L0.673439 10.875H3.70153H3.95153V10.625V0.25H10.8546V3.77778V10.625V10.875H11.1046H14.3132L7.40515 16.6719Z'
-        fill='#1A4C96'
-        stroke='black'
-        strokeWidth='0.5'
-      />
+    <svg viewBox='0 0 35 21' fill='none' xmlns='http://www.w3.org/2000/svg' className={cl.playOnlineBtn}>
+      <path d='M4.1125 0L0 3.99595L17.5 21L35 3.99595L30.8875 0L17.5 12.9798L4.1125 0Z' fill='#1A4C96' />
     </svg>
   </button>
 );
