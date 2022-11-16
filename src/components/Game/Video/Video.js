@@ -80,6 +80,7 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   useEffect(() => {
     modeRef.current = playbackMode;
     !currentMoment.video && playbackMode === 'play' && toNextMomentOrCard();
+		// eslint-disable-next-line
   }, [playbackMode]);
 
   useEffect(() => {

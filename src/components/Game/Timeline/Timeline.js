@@ -36,6 +36,7 @@ const Timeline = ({ addedClass = null }) => {
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
+		// eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
