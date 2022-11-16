@@ -27,6 +27,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const momentRef = useRef(0);
   const modeRef = useRef('play');
   const wrapperRef = useRef();
+  const nextMomentTimeoutRef = useRef();
+
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const filteredCards = useSelector(state => state.game.filteredCards);
@@ -34,6 +36,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const situationFilter = useSelector(state => state.game.situationFilter);
   const viewMode = useSelector(state => state.game.viewMode);
   const videoState = useSelector(state => state.game.videoState);
+  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
+
   // const isFullscreen = useSelector(state => state.game.isFullscreen);
   // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const dispatch = useDispatch();
@@ -67,7 +71,11 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     if (videoRef.current === null) return;
     videoHandling();
     // eslint-disable-next-line
-  }, [currentMoment]);
+  }, [currentMoment, sliderCoords]);
+
+	useEffect(() => {
+		clearTimeout(nextMomentTimeoutRef.current)
+	}, [currentMoment, currentCard])
 
   useEffect(() => {
     modeRef.current = playbackMode;
@@ -124,7 +132,6 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
     timeIntervalRef.current = setInterval(() => {
       const time = videoRef.current?.getCurrentTime();
-
       videoState === 1 && dispatch(setVideoCurrentTime(time));
     }, 30);
 
@@ -154,10 +161,18 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     if (momentIndex < currentCard.moments.length - 1) {
       const nextMoment = currentCard.moments[momentIndex + 1];
 
-      videoRef.current.seekTo(nextMoment.video.seconds_from);
       dispatch(setCurrentMoment(nextMoment));
 
-      endRef.current = nextMoment.video.seconds_to;
+      if (!nextMoment.video) return;
+
+      const secondsTotal = nextMoment.video.seconds_to - nextMoment.video.seconds_from;
+      const secondsFromRated = nextMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x1;
+      videoRef.current.seekTo(secondsFromRated);
+      // videoRef.current.seekTo(nextMoment.video.seconds_from);
+
+      const secondsToRated = nextMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x2;
+      endRef.current = secondsToRated;
+      // endRef.current = nextMoment.video.seconds_to;
     } else {
       let cardIndex = filteredCards.findIndex(
         card => card.moments[0].inner.id === currentCard.moments[0].inner.id
@@ -179,7 +194,9 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     // momentRef.current = 0;
 
     if (!currentMoment.video) {
-      modeRef.current !== 'pause' && setTimeout(toNextMomentOrCard, 3000);
+      if (modeRef.current !== 'pause') {
+        nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
+      }
       return;
     }
 
@@ -189,10 +206,19 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     }
 
     videoRef.current.getPlayerState() !== 1 && videoRef.current.playVideo();
-    videoRef.current.seekTo(currentMoment.video.seconds_from);
+
+    const secondsTotal = currentMoment.video.seconds_to - currentMoment.video.seconds_from;
+    const secondsFromRated = currentMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x1;
+    console.log(secondsFromRated);
+    videoRef.current.seekTo(secondsFromRated);
+    // videoRef.current.seekTo(currentMoment.video.seconds_from);
     // videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
 
-    endRef.current = currentMoment.video.seconds_to;
+    const secondsToRated = currentMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x2;
+
+    endRef.current = secondsToRated;
+    // endRef.current = currentMoment.video.seconds_to;
+
     // endRef.current = currentCard.moments[0].video.seconds_to;
 
     intervalRef.current = setInterval(() => {
