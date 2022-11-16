@@ -5,6 +5,7 @@ import cl from './Timeline.module.scss';
 const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, ref) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
+  // const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
 
   const x1relative = (viewBoxWidth / 100) * x1;
   const x2relative = (viewBoxWidth / 100) * x2;
@@ -21,12 +22,11 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
   const rightLineSecs = (rightLineTotalSecs - rightLineMins * 60).toFixed(0);
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
 	
+  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video.seconds_from + leftLineTotalSecs);
   const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
-	
   const redLineMins = Math.floor(redLineTotalSecs / 60);
   const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
   const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
-
 
 	const redLinePercent = redLineTotalSecs * 100 / totalSeconds
 	const redLineRelative = (viewBoxWidth / 100) * redLinePercent
