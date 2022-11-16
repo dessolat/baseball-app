@@ -76,8 +76,6 @@
 	bottom: 0;
   // width: 100%;
   // height: 100%;
-  opacity: 0;
-  transition: opacity 0.3s;
   display: grid;
   place-items: center;
 }
@@ -86,8 +84,10 @@
 	background-color: rgba($color: #000000, $alpha: 0.3);
 	display: grid;
 	place-items: center;
+	opacity: 0;
 	width: 16rem;
 	height: 8rem;
+	transition: opacity 0.3s;
 }
 
 .fullOpacity {
