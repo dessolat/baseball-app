@@ -26,7 +26,8 @@ const defaultState = {
 	moments: [],
 	isFullscreen: false,
 	videoCurrentTime: 0,
-	videoLengthMode: 'Full'
+	videoLengthMode: 'Full',
+	timelineSliderCoords: { x1: 0, x2: 100 }
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -57,6 +58,7 @@ const SET_MOMENTS = 'SET_MOMENTS';
 const SET_IS_FULLSCREEN = 'SET_IS_FULLSCREEN';
 const SET_VIDEO_CURRENT_TIME = 'SET_VIDEO_CURRENT_TIME';
 const SET_VIDEO_LENGTH_MODE = 'SET_VIDEO_LENGTH_MODE';
+const SET_TIMELINE_SLIDER_COORDS = 'SET_TIMELINE_SLIDER_COORDS';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -116,6 +118,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, videoCurrentTime: action.payload };
     case SET_VIDEO_LENGTH_MODE:
       return { ...state, videoLengthMode: action.payload };
+    case SET_TIMELINE_SLIDER_COORDS:
+      return { ...state, timelineSliderCoords: action.payload };
     default:
       return state;
   }
@@ -149,3 +153,4 @@ export const setMoments = payload => ({ type: SET_MOMENTS, payload });
 export const setIsFullscreen = payload => ({ type: SET_IS_FULLSCREEN, payload });
 export const setVideoCurrentTime = payload => ({ type: SET_VIDEO_CURRENT_TIME, payload });
 export const setVideoLengthMode = payload => ({ type: SET_VIDEO_LENGTH_MODE, payload });
+export const setTimelineSliderCoords = payload => ({ type: SET_TIMELINE_SLIDER_COORDS, payload });
