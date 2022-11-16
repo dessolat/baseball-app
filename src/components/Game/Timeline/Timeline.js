@@ -1,6 +1,7 @@
-import React, { Fragment, useRef, useEffect } from 'react';
-import { useState } from 'react';
+import React, { Fragment, useRef, useEffect, useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { setTimelineSliderCoords as setSliderCoords } from 'redux/gameReducer';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
@@ -17,10 +18,13 @@ const VIEW_BOX_WIDTH = 825;
 // const SIDE_PADDINGS = 30;
 
 const Timeline = ({ addedClass = null }) => {
-  const [sliderCoords, setSliderCoords] = useState({ x1: 30, x2: 65 });
-
-  // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
+  // const defaultState = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
+  // const [sliderCoords, setSliderCoords] = useState(defaultState);
+  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
   const currentMoment = useSelector(state => state.game.currentMoment);
+
+  const dispatch = useDispatch();
 
   const sliderRef = useRef();
   const sliderNameRef = useRef();
@@ -33,6 +37,11 @@ const Timeline = ({ addedClass = null }) => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+
+  useLayoutEffect(() => {
+    const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
+    dispatch(setSliderCoords(newCoords));
+  }, [currentMoment]);
 
   function handleMouseMove(e) {
     const slider = sliderRef.current;
@@ -48,17 +57,22 @@ const Timeline = ({ addedClass = null }) => {
     const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
     if (sliderNameRef.current === 'left-line') {
-      setSliderCoords(prev => ({
-        ...prev,
-        x1: prev.x2 - 5 > currentCoordPercents ? currentCoordPercents : prev.x2 - 5
-      }));
+      dispatch(
+        setSliderCoords({
+          ...sliderCoords,
+          x1: sliderCoords.x2 - 5 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 5
+        })
+      );
+
       return;
     }
     if (sliderNameRef.current === 'right-line') {
-      setSliderCoords(prev => ({
-        ...prev,
-        x2: prev.x1 + 5 < currentCoordPercents ? currentCoordPercents : prev.x1 + 5
-      }));
+      dispatch(
+        setSliderCoords({
+          ...sliderCoords,
+          x2: sliderCoords.x1 + 5 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 5
+        })
+      );
       return;
     }
 
@@ -70,9 +84,9 @@ const Timeline = ({ addedClass = null }) => {
       const pixelsDelta = e.clientX - mouseDownXCoordRef.current;
       const percentsDelta = +(pixelsDelta / percentRatio).toFixed(4);
 
-      setSliderCoords(prev => {
-        let tempX1 = prev.x1;
-        let tempX2 = prev.x2;
+      const getCoords = () => {
+        let tempX1 = sliderCoords.x1;
+        let tempX2 = sliderCoords.x2;
 
         if (mouseDownStateRef.current.x1 + percentsDelta < 0) {
           tempX1 = 0;
@@ -92,8 +106,9 @@ const Timeline = ({ addedClass = null }) => {
           x1: mouseDownStateRef.current.x1 + percentsDelta,
           x2: mouseDownStateRef.current.x2 + percentsDelta
         };
-      });
+      };
 
+      dispatch(setSliderCoords(getCoords()));
       return;
     }
   }
