@@ -53,17 +53,21 @@ const Videos = () => {
 
     clearTimeout(timerRef.current);
 
-    controlsWrapperRef.current.style.opacity = 1;
+    controlsWrapperRef.current.firstChild.style.opacity = 1;
+		controlsWrapperRef.current.firstChild.style.visibility = 'visible';
 
     timerRef.current = setTimeout(() => {
       if (!controlsWrapperRef.current) return;
-      controlsWrapperRef.current.style.opacity = 0;
+      controlsWrapperRef.current.firstChild.style.opacity = 0;
+			setTimeout(() => {
+				controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+			}, 300);
     }, 500);
   }
 
   return (
     <>
-      <div className={wrapperClasses} onMouseMove={handleMouseMove} ref={wrapperRef}>
+      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} ref={wrapperRef}>
         {/* <div className={wrapperClasses} ref={ref}> */}
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
         {/* <VideoEventsList /> */}
