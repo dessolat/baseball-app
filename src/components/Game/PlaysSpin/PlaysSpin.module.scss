@@ -4,7 +4,8 @@
   align-items: center;
   column-gap: 5px;
   background-color: white;
-  padding: 2.3125rem 1.25rem 1.25rem;
+  padding: 1.5125rem .2rem .2rem;
+  // padding: 2.3125rem 1.25rem calc(1.25rem - 17px) calc(1.25rem - 17px);
   position: relative;
   // margin-left: 6px;
 
@@ -73,6 +74,12 @@
 .breakValue {
   color: var(--red-color);
   font: 700 0.875rem var(--font-athiti);
+}
+
+.graphTitle {
+	stroke: black;
+	stroke-width: .5px;
+	font-family: var(--font-athiti);
 }
 
 .dnone {
