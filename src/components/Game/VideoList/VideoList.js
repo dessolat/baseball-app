@@ -53,9 +53,8 @@ const VideoList = ({ viewMode }, ref) => {
 
   const MODE_LINKS = {
     'mode-1': [getCamLink(1, 0)],
-    'mode-2': [getCamLink(2, 0), getCamLink(2, 1)],
-    'mode-3': [getCamLink(3, 0), getCamLink(3, 1), getCamLink(3, 2)],
-    'mode-4': [getCamLink(4, 0), getCamLink(4, 1), getCamLink(4, 2), getCamLink(4, 3)]
+    'mode-2': [getCamLink(2, 0), getCamLink(2, 1), getCamLink(2, 2), getCamLink(2, 3)],
+    'mode-3': [getCamLink(3, 0), getCamLink(3, 1), getCamLink(3, 2), getCamLink(3, 3)]
   };
 
   const videoId1 = getYouTubeID(MODE_LINKS[viewMode][0]) || 'WCjLd7QAJq8';
@@ -127,7 +126,6 @@ const VideoList = ({ viewMode }, ref) => {
   function rateChangeHandler(e) {
     const value = typeof e === 'number' ? e : e.data;
 
-    // dispatch(setVideoPlaybackRate(value));
     video1Ref.current && video1Ref.current.setPlaybackRate(value);
     video2Ref.current && video2Ref.current.setPlaybackRate(value);
     video3Ref.current && video3Ref.current.setPlaybackRate(value);
@@ -173,28 +171,6 @@ const VideoList = ({ viewMode }, ref) => {
             seekVideos={seekVideos}
             ref={video2Ref}
           />
-        </>
-      )}
-      {viewModeNumber === 3 && (
-        <>
-          <Video
-            videoId={videoId1}
-            videoNumber={1}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
-            ref={video1Ref}
-          />
-          <Video
-            videoId={videoId2}
-            videoNumber={2}
-            stateChangeHandler={stateChangeHandler}
-            rateChangeHandler={rateChangeHandler}
-            setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
-            ref={video2Ref}
-          />
           <Video
             videoId={videoId3}
             videoNumber={3}
@@ -204,9 +180,18 @@ const VideoList = ({ viewMode }, ref) => {
             seekVideos={seekVideos}
             ref={video3Ref}
           />
+          <Video
+            videoId={videoId4}
+            videoNumber={4}
+            stateChangeHandler={stateChangeHandler}
+            rateChangeHandler={rateChangeHandler}
+            setPlayPause={setPlayPause}
+            seekVideos={seekVideos}
+            ref={video4Ref}
+          />
         </>
       )}
-      {viewModeNumber === 4 && (
+      {viewModeNumber === 3 && (
         <>
           <Video
             videoId={videoId1}

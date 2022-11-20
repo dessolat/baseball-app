@@ -6,7 +6,7 @@ import GearIcon from 'icons/gear_icon.png';
 import ModalCameraSelector from '../ModalCameraSelector/ModalCameraSelector';
 
 const FiltersViewModes = () => {
-	const activeNumberRef = useRef(1)
+  const activeNumberRef = useRef(1);
 
   const viewMode = useSelector(state => state.game.viewMode);
   const isCameraSelector = useSelector(state => state.game.isCameraSelector);
@@ -16,7 +16,7 @@ const FiltersViewModes = () => {
   const handleModeClick = e => {
     e.currentTarget.name === viewMode && dispatch(setIsCameraSelector(true));
     dispatch(setViewMode(e.currentTarget.name));
-		activeNumberRef.current = +e.currentTarget.name.slice(-1)
+    activeNumberRef.current = +e.currentTarget.name.slice(-1);
   };
   const getClassName = mode => (viewMode === mode ? cl.active : '');
 
@@ -27,32 +27,18 @@ const FiltersViewModes = () => {
           <div className={cl.camera}>Auto</div>
           <img src={GearIcon} alt='gear-icon' />
         </button>
-        {/* <button className={getClassName('mode-2')} name='mode-2' onClick={handleModeClick}>
+        <button className={getClassName('mode-2')} name='mode-2' onClick={handleModeClick}>
           <div className={cl.camera}>1</div>
-          <div className={cl.camera}>2</div>
+          <div className={cl.camera}>3</div>
+          <div className={cl.camera}>5</div>
+          <div className={cl.camera}>7</div>
           <img src={GearIcon} alt='gear-icon' />
         </button>
         <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
-          <div>
-            <div className={cl.camera}>1</div>
-          </div>
-          <div>
-            <div className={cl.camera}>2</div>
-            <div className={cl.camera}>3</div>
-          </div>
-          <img src={GearIcon} alt='gear-icon' />
-        </button> */}
-        {/* <button className={getClassName('mode-3')} name='mode-3' onClick={handleModeClick}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </button> */}
-        <button className={getClassName('mode-4')} name='mode-4' onClick={handleModeClick}>
-          <div className={cl.camera}>1</div>
           <div className={cl.camera}>2</div>
-          <div className={cl.camera}>3</div>
+          <div className={cl.camera}>6</div>
           <div className={cl.camera}>4</div>
+          <div className={cl.camera}>8</div>
           <img src={GearIcon} alt='gear-icon' />
         </button>
       </div>
