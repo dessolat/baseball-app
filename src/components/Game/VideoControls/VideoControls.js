@@ -70,7 +70,7 @@ const VideoControls = ({ setPlayPause }, ref) => {
       ref={ref}
       onClick={e => handleWrapperClick(e)}
     >
-      <div className={cl.innerWrapper}>
+      <div className={cl.innerWrapper} onClick={e => e.stopPropagation()}>
         <div className={cl.controls}>
           {getPlayPauseBtn()}
           <button onClick={handleFullscreenBtnClick}>
