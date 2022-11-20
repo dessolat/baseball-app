@@ -1,0 +1,58 @@
+.btn {
+  padding: 0.3125rem;
+  display: flex;
+  flex-direction: column;
+  height: 3.25rem;
+  width: unset;
+  border-radius: unset;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+
+	@media screen and (max-width: 800px) {
+		flex-direction: row;
+		height: 20.4px;
+		padding: 0;
+		background: transparent;
+
+		> svg + svg {
+			margin-left: 2px;
+		}
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		flex-direction: row;
+		height: 20.4px;
+		padding: 0;
+		background: transparent;
+
+		> svg + svg {
+			margin-left: 2px;
+		}
+	}
+
+  > svg:first-child {
+    margin-left: 1px;
+  }
+
+  > svg > path {
+    transition: fill var(--transition-speed);
+  }
+}
+
+.unfilled {
+  fill: #d9d9d9;
+	fill-opacity: 0.8;
+	stroke-opacity: 0.2;
+
+	& + path {
+		stroke-opacity: 0.2;
+	}
+}
+
+.filled {
+	fill: var(--side-color);
+
+	& + path {
+		stroke-opacity: 1;
+	}
+}
