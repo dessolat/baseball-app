@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import cl from './PlaysEvents.module.scss';
 
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
-  const { icons, inner } = moment;
+  const { icons, inner, metering } = moment;
   // const { icons, table, inner } = moment;
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 	const refValue = inner.id === currentMoment.inner?.id ? ref : null
@@ -14,8 +14,8 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
 
-  const topEventText = moment.metering?.pitch?.init_speed_x
-    ? `${moment.metering?.pitch?.init_speed_x.toFixed(1)} mph`
+  const topEventText = moment.metering?.pitch?.start_speed
+    ? moment.metering?.pitch?.start_speed.toFixed(0)
     : '';
   return (
     <>
@@ -25,7 +25,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>cu {topEventText}</p>
+            <p>CU {topEventText}</p>
 						{/* ({table.balls} - {table.strikes}) */}
           </div>
         </li>
