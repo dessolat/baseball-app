@@ -1,9 +1,9 @@
 import React from 'react';
 import cl from './ContentControls.module.scss';
-import PlayPause from 'components/UI/buttons/PlayPause/PlayPause';
 import PlayOnline from 'components/UI/buttons/PlayOnline/PlayOnline';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode } from 'redux/gameReducer';
+import ForwardRepeat from 'components/UI/buttons/ForwardRepeat/ForwardRepeat';
 
 const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props }) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
@@ -27,14 +27,16 @@ const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props })
   return (
     <div className={cl.controls} {...props}>
       {!noPlayPause && (
-        <PlayPause
+        <ForwardRepeat
           name='play-pause'
           onClick={playbackModeClick}
           className={getClassName('play-pause')}
           playbackMode={playbackMode}
         />
       )}
-      {isPlayOnline && <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />}
+      {isPlayOnline && (
+        <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />
+      )}
     </div>
   );
 };
