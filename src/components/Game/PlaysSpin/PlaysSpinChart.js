@@ -49,7 +49,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
       });
     };
 
-		const elem = ref.current
+    const elem = ref.current;
 
     if (elem.addEventListener) {
       elem.addEventListener('mousewheel', wheelHandler, false);
@@ -70,9 +70,14 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
     };
   }, []);
 
-  const isCurrentDot = currentDot.offsetX !== undefined;
   const currentCoordX = 50 + 50 * currentDot.offsetX * graphRatio;
   const currentCoordY = 50 - 50 * currentDot.offsetY * graphRatio;
+  const isCurrentDot =
+    currentDot.offsetX !== undefined &&
+    currentCoordX + 12 > GRAPH_START_X &&
+    currentCoordY + 8 > GRAPH_START_Y &&
+    currentCoordX + GRAPH_START_X < 112 &&
+    currentCoordY + GRAPH_START_Y < 108;
 
   return (
     <svg
@@ -231,16 +236,25 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         const coordX = 50 + 50 * dot.offsetX * graphRatio;
         const coordY = 50 - 50 * dot.offsetY * graphRatio;
 
+        const isCircle =
+          coordX + 12 > GRAPH_START_X &&
+          coordY + 8 > GRAPH_START_Y &&
+          coordX + GRAPH_START_X < 112 &&
+          coordY + GRAPH_START_Y < 108;
         return (
-          <circle
-            key={i}
-            cx={coordX + GRAPH_START_X}
-            cy={coordY + GRAPH_START_Y}
-            r={DOT_RADIUS}
-            fill={COLORS[dot.pitchType - 1]}
-            stroke='black'
-            strokeWidth='0.5'
-          />
+          <>
+            {isCircle && (
+              <circle
+                key={i}
+                cx={coordX + GRAPH_START_X}
+                cy={coordY + GRAPH_START_Y}
+                r={DOT_RADIUS}
+                fill={COLORS[dot.pitchType - 1]}
+                stroke='black'
+                strokeWidth='0.5'
+              />
+            )}
+          </>
         );
       })}
 
