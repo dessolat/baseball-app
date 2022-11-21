@@ -1,0 +1,37 @@
+.btn {
+  height: 3.25rem;
+  width: 1.75rem;
+  border-radius: unset;
+  background-color: white;
+
+	> svg > circle {
+		transition: fill var(--transition-speed), stroke var(--transition-speed);
+	}
+
+	@media screen and (max-width: 800px) {
+		// height: 20.4px;
+		// width: 37.88px;
+		// rotate: 90deg;
+		// background: transparent;
+
+		> svg {
+
+		}
+  }
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		// width: 37.88px;
+		rotate: 90deg;
+		height: 37.88px;
+		width: 20.4px;
+		background: transparent;
+		margin-left: 10px;
+
+		> svg {
+			
+			
+		}
+		// height: 37.88px;
+		// width: 20.4px;
+		// rotate: 90deg;
+	}
+}
