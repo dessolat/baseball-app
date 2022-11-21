@@ -74,7 +74,7 @@ const PlaysEventsList = ({ moments }) => {
 
   const handleMomentClick = moment => () => {
     dispatch(setPlaybackMode('pause'));
-    dispatch(setCurrentMoment(moment));
+    dispatch(setCurrentMoment({...moment, manualClick: true}));
   };
 
 	const scrollHandle = e => {
