@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsCameraSelector, setViewMode } from 'redux/gameReducer';
+import { setIsCameraSelector, setSeekValue, setViewMode } from 'redux/gameReducer';
 import cl from './FiltersViewModes.module.scss';
 import GearIcon from 'icons/gear_icon.png';
 import ModalCameraSelector from '../ModalCameraSelector/ModalCameraSelector';
@@ -14,8 +14,12 @@ const FiltersViewModes = () => {
   const dispatch = useDispatch();
 
   const handleModeClick = e => {
-    e.currentTarget.name === viewMode && dispatch(setIsCameraSelector(true));
+    if (e.currentTarget.name === viewMode) {
+      dispatch(setIsCameraSelector(true));
+			return
+    }
     dispatch(setViewMode(e.currentTarget.name));
+    dispatch(setSeekValue(null));
     activeNumberRef.current = +e.currentTarget.name.slice(-1);
   };
   const getClassName = mode => (viewMode === mode ? cl.active : '');
