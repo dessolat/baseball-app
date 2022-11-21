@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect, useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setTimelineSliderCoords as setSliderCoords } from 'redux/gameReducer';
+import { setSeekValue, setTimelineSliderCoords as setSliderCoords, setVideoCurrentTime } from 'redux/gameReducer';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
@@ -31,18 +31,37 @@ const Timeline = ({ addedClass = null }) => {
   const mouseDownXCoordRef = useRef();
   const mouseDownStateRef = useRef();
   const rectRef = useRef();
+  const mouseClickTimeRef = useRef(null);
 
   useEffect(() => {
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
-    const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
-    dispatch(setSliderCoords(newCoords));
-  }, [currentMoment]);
+    if (!currentMoment.video) return;
+
+    if (videoLengthMode !== 'Super Short') {
+      dispatch(setSliderCoords({ x1: 0, x2: 100 }));
+      return;
+    }
+
+    const { video } = currentMoment;
+
+    const totalSeconds = video.short_seconds_to - video.short_seconds_from;
+
+    const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
+    const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
+
+    const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
+    const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
+
+    dispatch(setSliderCoords({ x1: startSecondsPercent, x2: endSecondsPercent }));
+
+    // const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
+  }, [currentMoment, videoLengthMode]);
 
   function handleMouseMove(e) {
     const slider = sliderRef.current;
@@ -114,15 +133,42 @@ const Timeline = ({ addedClass = null }) => {
     }
   }
 
-  const handleMouseUp = () => {
+  const handleMouseUp = e => {
     sliderRef.current.parentElement.style.cursor = 'default';
     if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab';
 
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
+
+    const mouseClickDelta = Date.now() - mouseClickTimeRef.current;
+    if (mouseClickDelta < 140) {
+      const slider = sliderRef.current;
+      const parent = slider.parentElement;
+
+      let currentCoord =
+        e.clientX <= parent.getBoundingClientRect().left
+          ? 0
+          : e.clientX > parent.getBoundingClientRect().right
+          ? parent.getBoundingClientRect().width
+          : e.clientX - parent.getBoundingClientRect().left;
+
+					const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+					console.log(currentCoordPercents);
+
+      const { video } = currentMoment;
+      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+
+      const secondsTotal =
+        video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+				const seekToValue = video[`${videoLengthPrefix}_seconds_from`] + secondsTotal * currentCoordPercents / 100
+				dispatch(setSeekValue(seekToValue))
+				dispatch(setVideoCurrentTime(seekToValue))
+    }
   };
 
   const handleMouseDown = e => {
+    mouseClickTimeRef.current = Date.now();
+
     sliderRef.current = e.target;
     sliderNameRef.current = e.target.attributes.name.value;
     mouseDownXCoordRef.current = e.clientX;
@@ -135,9 +181,15 @@ const Timeline = ({ addedClass = null }) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
+  const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+  // const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
   const totalSeconds = currentMoment.video
-    ? currentMoment.video.seconds_to - currentMoment.video.seconds_from
+    ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
+      currentMoment.video[`${videoLengthPrefix}_seconds_from`]
     : 0;
+  // const totalSeconds = currentMoment.video
+  //   ? currentMoment.video.seconds_to - currentMoment.video.seconds_from
+  //   : 0;
   const minutesSide = Math.floor(totalSeconds / 60);
   const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0);
   const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`;
@@ -191,6 +243,7 @@ const Timeline = ({ addedClass = null }) => {
             handleMouseDown={handleMouseDown}
             viewBoxWidth={VIEW_BOX_WIDTH}
             totalSeconds={totalSeconds}
+            videoLengthPrefix={videoLengthPrefix}
             ref={rectRef}
           />
         )}
