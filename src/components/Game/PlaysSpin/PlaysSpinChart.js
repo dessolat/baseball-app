@@ -44,7 +44,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
 
       const newGraphRatio = delta > 0 ? 0.1 : -0.1;
       setGraphRatio(prev => {
-        if (newGraphRatio < 0 && prev <= 0.1) return 0;
+        if (newGraphRatio < 0 && prev < 0.2) return 0.1;
         return prev + newGraphRatio;
       });
     };
