@@ -14,7 +14,7 @@ const SpeedSelector = () => {
   };
   return (
     <VideoSpeedDropdown
-      title='Speed x2 '
+      title={`Speed x${videoPlaybackRate} `}
       options={speedOptions}
       currentOption={videoPlaybackRate}
       handleClick={handleItemClick}
