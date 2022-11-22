@@ -110,7 +110,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 100}
         y2={GRAPH_START_Y + 0}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X}
@@ -118,7 +118,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 100}
         y2={GRAPH_START_Y + 25}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X}
@@ -126,7 +126,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 100}
         y2={GRAPH_START_Y + 75}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X}
@@ -134,7 +134,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 100}
         y2={GRAPH_START_Y + 100}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
 
       {/* Render horizontal lines text */}
@@ -161,7 +161,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 0}
         y2={GRAPH_START_Y + 100}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X + 25}
@@ -169,7 +169,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 25}
         y2={GRAPH_START_Y + 100}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X + 75}
@@ -177,7 +177,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 75}
         y2={GRAPH_START_Y + 100}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
       <line
         x1={GRAPH_START_X + 100}
@@ -185,7 +185,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         x2={GRAPH_START_X + 100}
         y2={GRAPH_START_Y + 100}
         stroke='#E3E1E1'
-        stroke-dasharray='4 2'
+        strokeDasharray='4 2'
       />
 
       {/* Render vertical lines text */}
