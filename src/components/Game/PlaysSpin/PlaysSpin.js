@@ -29,9 +29,6 @@ const PlaysSpin = ({ pitch }) => {
       offsetX: metering?.pitch?.offset_x,
       offsetY: metering?.pitch?.offset_y
     };
-		
-		console.log(currentDotParams);
-
     innings.forEach(inning => {
       inning['top/guests'].forEach(card =>
         card.moments.forEach(moment => {
