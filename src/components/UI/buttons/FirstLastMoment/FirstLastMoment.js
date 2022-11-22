@@ -12,7 +12,7 @@ const FirstLastMoment = ({ isLastMomentMode, ...props }) => {
           r='4.75'
           fill={isLastMomentMode ? '#E1E1E1' : '#2B9D6A'}
           stroke={isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'}
-          stroke-width='0.5'
+          strokeWidth='0.5'
         />
         <circle
           cx='7.75'
@@ -20,7 +20,7 @@ const FirstLastMoment = ({ isLastMomentMode, ...props }) => {
           r='4.75'
           fill={isLastMomentMode ? '#E1E1E1' : '#E2001C'}
           stroke={isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'}
-          stroke-width='0.5'
+          strokeWidth='0.5'
         />
         <circle
           cx='7.75'
@@ -28,12 +28,12 @@ const FirstLastMoment = ({ isLastMomentMode, ...props }) => {
           r='4.75'
           fill={isLastMomentMode ? '#E1E1E1' : '#4AA0F0'}
           stroke={isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'}
-          stroke-width='0.5'
+          strokeWidth='0.5'
         />
         {/* Right side */}
-        <circle cx='20.25' cy='13.75' r='4.75' fill='white' stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} stroke-width='0.5' />
-        <circle cx='20.25' cy='26.25' r='4.75' fill='white' stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} stroke-width='0.5' />
-        <circle cx='20.25' cy='38.5' r='4.75' fill={!isLastMomentMode ? '#E1E1E1' : '#4AA0F0'} stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} stroke-width='0.5' />
+        <circle cx='20.25' cy='13.75' r='4.75' fill='white' stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} strokeWidth='0.5' />
+        <circle cx='20.25' cy='26.25' r='4.75' fill='white' stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} strokeWidth='0.5' />
+        <circle cx='20.25' cy='38.5' r='4.75' fill={!isLastMomentMode ? '#E1E1E1' : '#4AA0F0'} stroke={!isLastMomentMode ?'rgba(0, 0, 0, 0.2)': 'black'} strokeWidth='0.5' />
       </svg>
     </button>
   );
