@@ -27,6 +27,18 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
   }, [currentDot]);
 
   useLayoutEffect(() => {
+		//Calculating MAX absolute value 
+    const maxValue = chartData.reduce(
+      (max, cur) => Math.max(Math.abs(cur.offsetX), Math.abs(cur.offsetY), max),
+      0
+    );
+
+		const newGraphRatio = 100 / (maxValue * 100)
+
+		setGraphRatio(newGraphRatio-0.3)
+  }, [chartData]);
+
+  useLayoutEffect(() => {
     // if (pitch === null) return;
 
     currentDotRadius < 5 &&
@@ -232,7 +244,6 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
 
       {/* Render dots */}
       {chartData.map((dot, i) => {
-        console.log(dot.offsetX);
         const coordX = 50 + 50 * dot.offsetX * graphRatio;
         const coordY = 50 - 50 * dot.offsetY * graphRatio;
 
