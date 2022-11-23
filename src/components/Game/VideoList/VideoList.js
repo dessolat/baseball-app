@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import Video from '../Video/Video';
 import getYouTubeID from 'get-youtube-id';
 import { useDispatch, useSelector } from 'react-redux';
-import { setVideoState } from 'redux/gameReducer';
+import { setSeekValue, setVideoState } from 'redux/gameReducer';
 import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
@@ -10,6 +10,7 @@ const VideoList = ({ viewMode }, ref) => {
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const videoPlaybackRate = useSelector(state => state.game.videoPlaybackRate);
+  const seekValue = useSelector(state => state.game.seekValue);
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,14 @@ const VideoList = ({ viewMode }, ref) => {
   }, [isFullscreen]);
 
   useEffect(() => {
-    rateChangeHandler(videoPlaybackRate)
+    if (seekValue === null) return;
+
+    seekVideos(seekValue);
+    dispatch(setSeekValue(null));
+  }, [seekValue]);
+
+  useEffect(() => {
+    rateChangeHandler(videoPlaybackRate);
   }, [videoPlaybackRate]);
 
   useLayoutEffect(() => {
@@ -147,7 +155,6 @@ const VideoList = ({ viewMode }, ref) => {
           stateChangeHandler={stateChangeHandler}
           rateChangeHandler={rateChangeHandler}
           setPlayPause={setPlayPause}
-          seekVideos={seekVideos}
           ref={video1Ref}
         />
       )}
@@ -159,7 +166,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -168,7 +174,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -177,7 +182,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video3Ref}
           />
           <Video
@@ -186,7 +190,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video4Ref}
           />
         </>
@@ -199,7 +202,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video1Ref}
           />
           <Video
@@ -208,7 +210,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video2Ref}
           />
           <Video
@@ -217,7 +218,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video3Ref}
           />
           <Video
@@ -226,7 +226,6 @@ const VideoList = ({ viewMode }, ref) => {
             stateChangeHandler={stateChangeHandler}
             rateChangeHandler={rateChangeHandler}
             setPlayPause={setPlayPause}
-            seekVideos={seekVideos}
             ref={video4Ref}
           />
         </>
