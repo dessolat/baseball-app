@@ -1,7 +1,12 @@
+import TimelineEventChanger from 'components/UI/buttons/TimelineEventChanger/TimelineEventChanger';
 import React, { Fragment, useRef, useEffect, useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setSeekValue, setTimelineSliderCoords as setSliderCoords, setVideoCurrentTime } from 'redux/gameReducer';
+import {
+  setSeekValue,
+  setTimelineSliderCoords as setSliderCoords,
+  setVideoCurrentTime
+} from 'redux/gameReducer';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
@@ -9,8 +14,8 @@ const LINES = [
   { color: '#1A4C96', leftTitle: 'Ball' },
   { color: '#FFAB00', leftTitle: 'Hitter' },
   { color: '#BF8610', leftTitle: 'Run1' },
-  { color: '#8D6004', leftTitle: 'Run2' },
-  { color: '#5C4006', leftTitle: 'Run3' }
+  // { color: '#8D6004', leftTitle: 'Run2' },
+  // { color: '#5C4006', leftTitle: 'Run3' }
 ];
 
 const VIEW_BOX_WIDTH = 825;
@@ -152,17 +157,17 @@ const Timeline = ({ addedClass = null }) => {
           ? parent.getBoundingClientRect().width
           : e.clientX - parent.getBoundingClientRect().left;
 
-					const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
-					console.log(currentCoordPercents);
+      const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
       const { video } = currentMoment;
       const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-				const seekToValue = video[`${videoLengthPrefix}_seconds_from`] + secondsTotal * currentCoordPercents / 100
-				dispatch(setSeekValue(seekToValue))
-				dispatch(setVideoCurrentTime(seekToValue))
+      const seekToValue =
+        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
+      dispatch(setSeekValue(seekToValue));
+      dispatch(setVideoCurrentTime(seekToValue));
     }
   };
 
@@ -195,10 +200,14 @@ const Timeline = ({ addedClass = null }) => {
   const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`;
   return (
     <div className={cl.wrapper + ' ' + addedClass}>
+      <div className={cl.eventsBtnsWrapper}>
+        <TimelineEventChanger />
+        <TimelineEventChanger direction='right' />
+      </div>
       <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
         {/* Left titles */}
         {LINES.map(({ leftTitle }, i) => (
-          <text key={i} x='2' y={(i + 1) * 9 + 3} className={cl.leftTitle}>
+          <text key={i} x='2' y={(i + 2) * 9 + 3} className={cl.leftTitle}>
             {leftTitle}
           </text>
         ))}
@@ -209,16 +218,16 @@ const Timeline = ({ addedClass = null }) => {
           <line
             key={i}
             x1='0'
-            y1={(i + 1) * 9}
+            y1={(i + 2) * 9}
             x2={VIEW_BOX_WIDTH}
-            y2={(i + 1) * 9}
+            y2={(i + 2) * 9}
             stroke={color}
             strokeWidth='1'
           />
         ))}
 
         {/* Lines text */}
-        {LINES.map((_, i) => (
+        {/* {LINES.map((_, i) => (
           <Fragment key={i}>
             <rect x={55 + i * 31} y={(i + 1) * 9 - 6} width='24' height='10' fill='#fff' />
             <text x={57.87 + i * 31} y={(i + 1) * 9 + 2.9} className={cl.horizontalLineText}>
@@ -233,7 +242,39 @@ const Timeline = ({ addedClass = null }) => {
               P-H
             </text>
           </Fragment>
-        ))}
+        ))} */}
+
+				{/* Ball line rect & text */}
+        <rect x={86} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='24' height='8' />
+        <text x={98} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
+          P-H
+        </text>
+        <rect x={115} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='700' height='8' />
+        <text x={465} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
+          H-RF
+        </text>
+				{/* Hitter line rect & text */}
+        <rect x={135} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='76' height='8' />
+        <text x={173} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
+          H-B1
+        </text>
+        <rect x={214} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='80' height='8' />
+        <text x={254} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
+          B1-B2
+        </text>
+				{/* Run1 line rect & text */}
+        <rect x={135} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='56' height='8' />
+        <text x={163} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B1-B2
+        </text>
+        <rect x={194} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' />
+        <text x={224} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B2-B3
+        </text>
+        <rect x={257} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' />
+        <text x={287} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B3-HOME
+        </text>
 
         {/* Draggable area */}
         {totalSeconds > 0 && (
@@ -248,8 +289,6 @@ const Timeline = ({ addedClass = null }) => {
           />
         )}
       </svg>
-      {/* // currentMoment.video?.seconds_from */}
-
       <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
         <text x='4' y='30' className={cl.rightTitle}>
           {rightTitle}
