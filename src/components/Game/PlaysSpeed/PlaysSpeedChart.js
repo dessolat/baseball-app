@@ -28,11 +28,15 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const LINE_DOWN_COLOR = '#ACACAC';
 
   const COLORS = {
-    0: '#1A4C96',
-    1: 'red',
-    2: 'green',
-    3: 'olive'
-  };
+		'-1': 'lightgray',
+		0: '#1A4C96',
+		1: 'red',
+		2: 'green',
+		3: 'olive',
+		4: 'yellow',
+		5: 'purple',
+		6: 'lightgreen'
+	};
 
   function getMaxMinYAxisValue(max, min) {
     max = Math.ceil(max);
@@ -141,7 +145,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           cx={dot.coords[0]}
           cy={dot.coords[1]}
           r={DOT_RADIUS}
-          fill={COLORS[dot.type - 1]}
+          fill={COLORS[dot.type]}
           stroke='#000'
           strokeWidth='0.5'
         />
@@ -182,7 +186,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           cx={minXCoord + xInterval * currentDot.index}
           cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
           r={currentDotRadius}
-          fill={COLORS[currentDot.type - 1]}
+          fill={COLORS[currentDot.type]}
           stroke='#000'
           strokeWidth='0.5'
         />

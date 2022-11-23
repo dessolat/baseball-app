@@ -5,10 +5,14 @@ const DOT_RADIUS = 3;
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
 const COLORS = {
+	'-1': 'lightgray',
   0: '#1A4C96',
   1: 'red',
   2: 'green',
-  3: 'olive'
+  3: 'olive',
+	4: 'yellow',
+	5: 'purple',
+	6: 'lightgreen'
 };
 
 const PlaysSpinChart = ({ chartData, currentDot }) => {
@@ -260,7 +264,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
                 cx={coordX + GRAPH_START_X}
                 cy={coordY + GRAPH_START_Y}
                 r={DOT_RADIUS}
-                fill={COLORS[dot.pitchType - 1]}
+                fill={COLORS[dot.pitchType]}
                 stroke='black'
                 strokeWidth='0.5'
               />
@@ -275,7 +279,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
           cx={currentCoordX + GRAPH_START_X}
           cy={currentCoordY + GRAPH_START_Y}
           r={currentDotRadius}
-          fill={COLORS[currentDot.type - 1]}
+          fill={COLORS[currentDot.type]}
           stroke='black'
           strokeWidth='0.5'
         />
