@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './Timeline.module.scss';
 
-const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, ref) => {
+const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, videoLengthPrefix }, ref) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
   // const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
@@ -21,15 +21,15 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
   const rightLineMins = Math.floor(rightLineTotalSecs / 60);
   const rightLineSecs = (rightLineTotalSecs - rightLineMins * 60).toFixed(0);
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
-	
-  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video.seconds_from + leftLineTotalSecs);
-  const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
+
+  const redLineTotalSecs = videoCurrentTime - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
+  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
   const redLineMins = Math.floor(redLineTotalSecs / 60);
   const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
   const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
 
-	const redLinePercent = redLineTotalSecs * 100 / totalSeconds
-	const redLineRelative = (viewBoxWidth / 100) * redLinePercent
+  const redLinePercent = (redLineTotalSecs * 100) / totalSeconds;
+  const redLineRelative = (viewBoxWidth / 100) * redLinePercent;
   return (
     <>
       <rect
@@ -105,7 +105,10 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds }, 
         className={cl.redLine}
         onDragStart={e => e.preventDefault()}
       />
-      <text x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25} y='49' className={cl.redLineText}>
+      <text
+        x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25}
+        y='49'
+        className={cl.redLineText}>
         {redLineTime}
       </text>
     </>
