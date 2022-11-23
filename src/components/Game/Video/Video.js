@@ -35,8 +35,10 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const situationFilter = useSelector(state => state.game.situationFilter);
   const viewMode = useSelector(state => state.game.viewMode);
+  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
   const videoState = useSelector(state => state.game.videoState);
   const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
+  const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
 
   // const isFullscreen = useSelector(state => state.game.isFullscreen);
   // const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
@@ -73,14 +75,20 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     // eslint-disable-next-line
   }, [currentMoment, sliderCoords]);
 
-	useEffect(() => {
-		clearTimeout(nextMomentTimeoutRef.current)
-	}, [currentMoment, currentCard])
+  useEffect(() => {
+    if (videoRef.current === null) return;
+    videoHandling(false);
+    // eslint-disable-next-line
+  }, [isLastMomentMode]);
+
+  useEffect(() => {
+    (currentMoment.manualClick || currentCard.manualClick) && clearTimeout(nextMomentTimeoutRef.current);
+  }, [currentMoment, currentCard]);
 
   useEffect(() => {
     modeRef.current = playbackMode;
     !currentMoment.video && playbackMode === 'play' && toNextMomentOrCard();
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [playbackMode]);
 
   useEffect(() => {
@@ -152,12 +160,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     stateChangeHandler(e, videoNumber, currentMoment?.video?.seconds_from || null);
   };
 
-  // const onPlaybackRateChange = e => {
-  //   rateChangeHandler(e);
-  // };
-
   function toNextMomentOrCard() {
-    const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner.id);
+    const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner?.id);
 
     if (momentIndex < currentCard.moments.length - 1) {
       const nextMoment = currentCard.moments[momentIndex + 1];
@@ -166,12 +170,19 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
       if (!nextMoment.video) return;
 
-      const secondsTotal = nextMoment.video.seconds_to - nextMoment.video.seconds_from;
-      const secondsFromRated = nextMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x1;
+      const { video: nextVideo } = nextMoment;
+      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+
+      const secondsTotal =
+        nextVideo[`${videoLengthPrefix}_seconds_to`] - nextVideo[`${videoLengthPrefix}_seconds_from`];
+      // const secondsTotal = nextMoment.video.seconds_to - nextMoment.video.seconds_from;
+      const secondsFromRated =
+        nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
       videoRef.current.seekTo(secondsFromRated);
       // videoRef.current.seekTo(nextMoment.video.seconds_from);
 
-      const secondsToRated = nextMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x2;
+      const secondsToRated =
+        nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
       endRef.current = secondsToRated;
       // endRef.current = nextMoment.video.seconds_to;
     } else {
@@ -182,7 +193,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
       cardIndex++;
 
       if (cardIndex < filteredCards.length) {
-        dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: true }));
+        console.log(isLastMomentMode);
+        dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
 
@@ -190,12 +202,13 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     }
   }
 
-  const videoHandling = () => {
+  const videoHandling = (doSeek = true) => {
     clearInterval(intervalRef.current);
     // momentRef.current = 0;
 
     if (!currentMoment.video) {
       if (modeRef.current !== 'pause') {
+        console.log('not paused');
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
       }
       return;
@@ -208,14 +221,22 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
     videoRef.current.getPlayerState() !== 1 && videoRef.current.playVideo();
 
-    const secondsTotal = currentMoment.video.seconds_to - currentMoment.video.seconds_from;
-    const secondsFromRated = currentMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x1;
-    console.log(secondsFromRated);
-    videoRef.current.seekTo(secondsFromRated);
+    const { video } = currentMoment;
+    const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+
+    const secondsTotal =
+      video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+    // const secondsTotal = video.seconds_to - video.seconds_from;
+    const secondsFromRated =
+      video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
+    // const secondsFromRated = video.seconds_from + (secondsTotal / 100) * sliderCoords.x1;
+    doSeek && videoRef.current.seekTo(secondsFromRated);
     // videoRef.current.seekTo(currentMoment.video.seconds_from);
     // videoRef.current.seekTo(currentCard.moments[0].video.seconds_from);
 
-    const secondsToRated = currentMoment.video.seconds_from + (secondsTotal / 100) * sliderCoords.x2;
+    const secondsToRated =
+      video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
+    // const secondsToRated = video.seconds_from + (secondsTotal / 100) * sliderCoords.x2;
 
     endRef.current = secondsToRated;
     // endRef.current = currentMoment.video.seconds_to;
