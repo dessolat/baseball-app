@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 // import TopLeftVideoThumb from 'images/top_left_video_thumb.jpg';
 // import TopRightVideoThumb from 'images/top_right_video_thumb.jpg';
 // import BottomVideoThumb from 'images/bottom_video_thumb.jpg';
@@ -20,6 +20,9 @@ const POS_OPTIONS = {
 };
 
 const PitchVideo = ({ videoId, position }) => {
+  const [currentQuality, setCurrentQuality] = useState(null);
+
+	// eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
 
   const videoWrapperRef = useRef(null);
@@ -32,6 +35,9 @@ const PitchVideo = ({ videoId, position }) => {
 
   const xCoef = videoWrapperRef?.current?.clientWidth / ((1920 / 100) * (POS_OPTIONS[position].delta * 100));
 
+	const playbackQualityHandle = e => {
+		setCurrentQuality(e.data)
+	}
   return (
     <div className={videoClasses} ref={videoWrapperRef}>
       <div
@@ -48,6 +54,7 @@ const PitchVideo = ({ videoId, position }) => {
           // onReady={onReady}
           // onStateChange={onStateChange}
           // onPlaybackRateChange={onPlaybackRateChange}
+					onPlaybackQualityChange={playbackQualityHandle}
           containerClassName={cl.YTContainer}
           opts={{
             width: '100%',
@@ -63,6 +70,9 @@ const PitchVideo = ({ videoId, position }) => {
           }}
         />
       </div>
+			<div style={{position: 'absolute', left: 20, top: 20, padding: '3px 8px', background: 'black', color: 'white', fontWeight: 700}}>
+					{currentQuality}
+			</div>
     </div>
   );
   // return <img className={videoClasses} src={PICTURES[position]} alt='video-1' />;
