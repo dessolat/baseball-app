@@ -1,0 +1,22 @@
+.legendWrapper {
+  position: absolute;
+  top: 0.5rem;
+  padding: 0 0.6875rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  font: 300 0.875rem var(--font-nunito);
+
+  > svg {
+    margin-right: 0.5625rem;
+  }
+
+  + .legendItem {
+    margin-left: 1rem;
+  }
+}
