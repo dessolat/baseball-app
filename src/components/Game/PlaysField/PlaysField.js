@@ -3,7 +3,8 @@ import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from 'redux/gameReducer';
+import { setPitchState  } from 'redux/gameReducer';
+// import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
 import classNames from 'classnames';
@@ -13,9 +14,9 @@ const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
   const [count, setCount] = useState(1);
   const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
-  const currentCard = useSelector(state => state.game.currentCard);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const filteredCards = useSelector(state => state.game.filteredCards);
+  // const currentCard = useSelector(state => state.game.currentCard);
+  // const playbackMode = useSelector(state => state.game.playbackMode);
+  // const filteredCards = useSelector(state => state.game.filteredCards);
   const pitchState = useSelector(state => state.game.pitchState);
   const dispatch = useDispatch();
 
