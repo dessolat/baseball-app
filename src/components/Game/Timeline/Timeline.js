@@ -244,38 +244,6 @@ const Timeline = ({ addedClass = null }) => {
           </Fragment>
         ))} */}
 
-				{/* Ball line rect & text */}
-        <rect x={86} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='24' height='8' />
-        <text x={98} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
-          P-H
-        </text>
-        <rect x={115} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='700' height='8' />
-        <text x={465} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
-          H-RF
-        </text>
-				{/* Hitter line rect & text */}
-        <rect x={135} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='76' height='8' />
-        <text x={173} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
-          H-B1
-        </text>
-        <rect x={214} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='80' height='8' />
-        <text x={254} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
-          B1-B2
-        </text>
-				{/* Run1 line rect & text */}
-        <rect x={135} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='56' height='8' />
-        <text x={163} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-          B1-B2
-        </text>
-        <rect x={194} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' />
-        <text x={224} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-          B2-B3
-        </text>
-        <rect x={257} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' />
-        <text x={287} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-          B3-HOME
-        </text>
-
         {/* Draggable area */}
         {totalSeconds > 0 && (
           <DraggableArea
@@ -288,6 +256,41 @@ const Timeline = ({ addedClass = null }) => {
             ref={rectRef}
           />
         )}
+
+				{/* Ball line rect & text */}
+        <rect x={86} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='24' height='8' className={cl.eventRect}/>
+        <text x={98} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
+          P-H
+        </text>
+        <rect x={115} y={(1 + 1) * 9 - 4} fill={LINES[0].color} width='700' height='8' className={cl.eventRect}/>
+        <text x={465} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
+          H-RF
+        </text>
+				{/* Hitter line rect & text */}
+        <rect x={135} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='76' height='8' className={cl.eventRect}/>
+        <text x={173} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
+          H-B1
+        </text>
+        <rect x={214} y={(1 + 2) * 9 - 4} fill={LINES[1].color} width='80' height='8' className={cl.eventRect}/>
+        <text x={254} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
+          B1-B2
+        </text>
+				{/* Run1 line rect & text */}
+        <rect x={135} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='56' height='8' className={cl.eventRect}/>
+        <text x={163} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B1-B2
+        </text>
+        <rect x={194} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' className={cl.eventRect}/>
+        <text x={224} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B2-B3
+        </text>
+        <rect x={257} y={(1 + 3) * 9 - 4} fill={LINES[2].color} width='60' height='8' className={cl.eventRect}/>
+        <text x={287} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
+          B3-HOME
+        </text>
+				<use href="#left-border-line"/>
+				<use href="#red-border-line"/>
+				<use href="#right-border-line"/>
       </svg>
       <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
         <text x='4' y='30' className={cl.rightTitle}>
