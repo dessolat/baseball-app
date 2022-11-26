@@ -7,6 +7,7 @@ import { setCurrentCard, setCurrentMoment, setPitchState, setPlaybackMode } from
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
 import classNames from 'classnames';
+import Legend from './Legend/Legend';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -59,40 +60,42 @@ const PlaysField = ({ currentMoment }) => {
       return;
     }
 
-    const newMoments = [];
-    currentCard.type !== 'Replacement'
-      ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
-      : newMoments.push(currentCard.moments[0]);
+    // const newMoments = [];
+    // currentCard.type !== 'Replacement'
+    //   ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+    //   : newMoments.push(currentCard.moments[0]);
 
-    const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
-    const cardIndex = filteredCards.findIndex(
-      card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-    );
+    // const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+    // const cardIndex = filteredCards.findIndex(
+    //   card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+    // );
 
-    let playTimeout;
-    if (playbackMode !== 'pause') {
-      playTimeout = setTimeout(() => {
-        if (
-          (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
-          momentIndex === -1
-        ) {
-          dispatch(setPlaybackMode('pause'));
-          return;
-        }
-        if (momentIndex >= currentCard.moments.length - 1) {
-          dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], manualMoment: true }));
-          return;
-        }
-        dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
-      }, 2000);
-    }
+    // let playTimeout;
+    // if (playbackMode !== 'pause') {
+    //   playTimeout = setTimeout(() => {
+    //     if (
+    //       (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
+    //       momentIndex === -1
+    //     ) {
+    //       dispatch(setPlaybackMode('pause'));
+    //       return;
+    //     }
+    //     if (momentIndex >= currentCard.moments.length - 1) {
+    //       dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], manualMoment: true }));
+    //       return;
+    //     }
+    //     dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
+    //   }, 2000);
+    // }
 
     return () => {
+			// console.log('cleared');
       clearTimeout(graphTimeout);
-      clearTimeout(playTimeout);
+      // clearTimeout(playTimeout);
     };
     // eslint-disable-next-line
-  }, [count, playbackMode]);
+  }, [count])
+		// playbackMode]);
 
   useEffect(() => {
     setCount(1);
@@ -110,6 +113,18 @@ const PlaysField = ({ currentMoment }) => {
     [cl.outerWrapper]: pitchState === 'Field',
     [cl.dnone]: pitchState !== 'Field'
   });
+
+  const strikeBallHitValue =
+    currentMoment.events?.length > 0 && currentMoment?.events[0]?.type2 !== 'none'
+      ? currentMoment.events[0].type2.toUpperCase()
+      : '';
+
+  const legendArr = [
+    { title: 'Fastball', fill: '#1A4C96' },
+    { title: 'Slider', fill: '#1A4C96' },
+    { title: 'Curveball', fill: '#1A4C96' },
+    { title: 'Changeup', fill: '#1A4C96' }
+  ];
   return (
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
@@ -122,6 +137,8 @@ const PlaysField = ({ currentMoment }) => {
           style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
         />
       </div>
+      <Legend legendData={legendArr} />
+      <div className={cl.strikeBallHitWrapper}>{strikeBallHitValue}</div>
     </div>
   );
 };
