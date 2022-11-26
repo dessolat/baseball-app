@@ -1,22 +1,13 @@
 import React, { useRef, useState } from 'react';
-// import TopLeftVideoThumb from 'images/top_left_video_thumb.jpg';
-// import TopRightVideoThumb from 'images/top_right_video_thumb.jpg';
-// import BottomVideoThumb from 'images/bottom_video_thumb.jpg';
 import cl from './PitchVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
 
-// const PICTURES = {
-//   'top-left': TopLeftVideoThumb,
-//   'top-right': TopRightVideoThumb,
-//   bottom: BottomVideoThumb
-// };
-
 const POS_OPTIONS = {
-  'top-left': { x: -0.37, y: -0.25, delta: 0.09 },
-  'top-right': { x: -0.52, y: -0.26, delta: 0.09 },
-  bottom: { x: -0.31, y: -0.08, delta: 0.42 }
+  'top-left': { x: -0.34, y: -0.20, delta: 0.14 },
+  'top-right': { x: -0.505, y: -0.205, delta: 0.14 },
+  bottom: { x: -0.31, y: -0.053, delta: 0.42 }
 };
 
 const PitchVideo = ({ videoId, position }) => {
