@@ -41,6 +41,7 @@ const VideoList = ({ viewMode }, ref) => {
 
     seekVideos(seekValue);
     dispatch(setSeekValue(null));
+		// eslint-disable-next-line
   }, [seekValue]);
 
   useEffect(() => {

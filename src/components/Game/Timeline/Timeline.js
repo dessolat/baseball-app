@@ -1,5 +1,5 @@
 import TimelineEventChanger from 'components/UI/buttons/TimelineEventChanger/TimelineEventChanger';
-import React, { Fragment, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useRef, useEffect, useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
@@ -66,6 +66,7 @@ const Timeline = ({ addedClass = null }) => {
     dispatch(setSliderCoords({ x1: startSecondsPercent, x2: endSecondsPercent }));
 
     // const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
+		// eslint-disable-next-line
   }, [currentMoment, videoLengthMode]);
 
   function handleMouseMove(e) {
