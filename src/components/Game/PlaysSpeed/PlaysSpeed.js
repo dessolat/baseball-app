@@ -3,6 +3,7 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPitchState } from 'redux/gameReducer';
+import Legend from './Legend/Legend';
 import cl from './PlaysSpeed.module.scss';
 import PlaysSpeedChart from './PlaysSpeedChart';
 
@@ -78,12 +79,20 @@ const PlaysSpeed = ({ currentMoment }) => {
   const wrapperClasses = classNames(cl.speed, {
     [cl.dnone]: pitchState === 'Field'
   });
+
+	const legendArr = [
+    { title: 'Fastball (Fa)', fill: '#1A4C96' },
+    { title: 'Slider (Sl)', fill: '#FEAB01' },
+    { title: 'Curveball (Cu)', fill: '#BFE2C1' },
+    { title: 'Changeup (Ch)', fill: '#E2001C' }
+  ];
   return (
     <div ref={ref} className={wrapperClasses}>
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
           <PlaysSpeedChart chartData={chartData} currentDot={currentDot} />
+					<Legend legendData={legendArr} />
         </>
       )}
       <div className={cl.arrowWrapper}>
