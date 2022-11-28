@@ -3,6 +3,7 @@ import cl from './PitchVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
+import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 
 const POS_OPTIONS = {
   'top-left': { x: -0.34, y: -0.20, delta: 0.14 },
@@ -10,11 +11,13 @@ const POS_OPTIONS = {
   bottom: { x: -0.31, y: -0.053, delta: 0.42 }
 };
 
-const PitchVideo = ({ videoId, position }) => {
+const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler }) => {
   const [currentQuality, setCurrentQuality] = useState(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
 	// eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
+  const currentMoment = useSelector(state => state.game.currentMoment);
 
   const videoWrapperRef = useRef(null);
 
@@ -29,6 +32,18 @@ const PitchVideo = ({ videoId, position }) => {
 	const playbackQualityHandle = e => {
 		setCurrentQuality(e.data)
 	}
+
+	const onReady = e => {
+		handleOnReady(position, e.target)
+
+		setInterval(() => {
+			setCurrentTime(e.target.getCurrentTime().toFixed(2))
+		}, 20);
+	}
+
+	const onStateChange = e => {
+    stateChangeHandler(position, e.target, e.data);
+  };
   return (
     <div className={videoClasses} ref={videoWrapperRef}>
       <div
@@ -42,8 +57,8 @@ const PitchVideo = ({ videoId, position }) => {
         <YouTube
           videoId={videoId}
           // videoId={'WCjLd7QAJq8'}
-          // onReady={onReady}
-          // onStateChange={onStateChange}
+          onReady={onReady}
+          onStateChange={onStateChange}
           // onPlaybackRateChange={onPlaybackRateChange}
 					onPlaybackQualityChange={playbackQualityHandle}
           containerClassName={cl.YTContainer}
@@ -61,12 +76,16 @@ const PitchVideo = ({ videoId, position }) => {
           }}
         />
       </div>
-			<div style={{position: 'absolute', left: 20, top: 20, padding: '3px 8px', background: 'black', color: 'white', fontWeight: 700}}>
+			<div style={{position: 'absolute', left: 15, top: 15, padding: '3px 8px', background: 'black', color: 'white', fontWeight: 700, fontSize: '.8rem'}}>
 					{currentQuality}
 			</div>
+			<div style={{position: 'absolute', right: 15, top: 15, padding: '3px 8px', background: 'black', color: 'white', fontWeight: 700, fontSize: '.8rem'}}>
+					{currentTime}
+			</div>
+			{!currentMoment.video && <NoVideoScreen />}
     </div>
   );
   // return <img className={videoClasses} src={PICTURES[position]} alt='video-1' />;
 };
 
-export default PitchVideo;
+export default PitchVideo ;
