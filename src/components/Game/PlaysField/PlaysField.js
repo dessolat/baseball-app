@@ -8,7 +8,6 @@ import { setPitchState  } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
 import classNames from 'classnames';
-import Legend from './Legend/Legend';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
@@ -120,12 +119,7 @@ const PlaysField = ({ currentMoment }) => {
       ? currentMoment.events[0].type2.toUpperCase()
       : '';
 
-  const legendArr = [
-    { title: 'Fastball', fill: '#1A4C96' },
-    { title: 'Slider', fill: '#1A4C96' },
-    { title: 'Curveball', fill: '#1A4C96' },
-    { title: 'Changeup', fill: '#1A4C96' }
-  ];
+  
   return (
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
@@ -138,7 +132,6 @@ const PlaysField = ({ currentMoment }) => {
           style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
         />
       </div>
-      <Legend legendData={legendArr} />
       <div className={cl.strikeBallHitWrapper}>{strikeBallHitValue}</div>
     </div>
   );

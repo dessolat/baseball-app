@@ -1,7 +1,8 @@
 .legendWrapper {
   position: absolute;
-  top: 0.5rem;
-  padding: 0 0.6875rem;
+  bottom: 0.1rem;
+	left: 0;
+  padding: 0 0.5rem;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -10,13 +11,13 @@
 .legendItem {
   display: flex;
   align-items: center;
-  font: 300 0.875rem var(--font-nunito);
+  font: 300 0.625rem var(--font-nunito);
 
   > svg {
-    margin-right: 0.5625rem;
+    margin-right: 0.3rem;
   }
 
   + .legendItem {
-    margin-left: 1rem;
+    margin-left: .61rem;
   }
 }
