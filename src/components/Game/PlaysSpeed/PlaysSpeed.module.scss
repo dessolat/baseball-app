@@ -1,7 +1,7 @@
 .speed {
   grid-area: spd;
   background: white;
-  padding: 1.05rem 0.2rem 5px;
+  padding: 0.25rem 0.2rem 5px 0.5rem;
   position: relative;
 
   @media screen and (max-width: 800px) {
@@ -30,14 +30,17 @@
 .subHeader {
   font: 400 0.875rem var(--font-nunito);
   color: var(--side-color);
-  margin-left: 0.8rem;
+  position: absolute;
+  top: 0.25rem;
+  left: 0.5rem;
+  // margin-left: 0.8rem;
 }
 
 .chart {
   background-color: white;
-  margin-left: 0.2rem;
-  width: 95%;
-  height: 85%;
+  // margin-left: 0.2rem;
+  width: 99%;
+  height: 96%;
 
   @media screen and (max-width: 800px) {
     height: 75%;
@@ -48,11 +51,15 @@
 }
 
 .plainText {
-  font: 400 0.875rem var(--font-athiti);
+  font: 400 1.07rem var(--font-nunito);
 }
 
-.boldText {
-  font: 700 0.875rem var(--font-athiti);
+.ballType {
+  font: 300 1.15rem var(--font-nunito);
+}
+
+.mphValue {
+  font: 700 1rem var(--font-athiti);
 }
 
 .dnone {
@@ -71,7 +78,7 @@
   bottom: -10px;
   left: 20px;
   opacity: 0.5;
-	z-index: 1;
+  z-index: 1;
 
   @media screen and (max-width: 800px) {
     display: inline;
