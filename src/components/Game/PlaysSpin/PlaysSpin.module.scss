@@ -11,8 +11,8 @@
 
   &::before {
     position: absolute;
-    left: .8rem;
-    top: .5rem;
+    left: .5rem;
+    top: .25rem;
 		content: 'Break, sm';
 		font: 400 .875rem var(--font-nunito);
 		color: var(--side-color);
@@ -77,9 +77,9 @@
 }
 
 .graphTitle {
-	stroke: black;
-	stroke-width: .5px;
-	font-family: var(--font-athiti);
+	fill: black;
+	stroke-width: .1px;
+	font-family: var(--font-nunito);
 }
 
 .dnone {
