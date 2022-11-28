@@ -153,7 +153,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
 
   const lineBtwAvg = (maxYCoord - minYCoord) / 3;
 	const tempDotTextCoord = minXCoord + xInterval * currentDot.index - 14
-	const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 360 ? 360 : tempDotTextCoord
+	const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 357 ? 357 : tempDotTextCoord
   return (
     <svg viewBox='0 0 440 160' className={cl.chart}>
       {/* Horizontal lines text */}
@@ -207,14 +207,14 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
         <>
           <text
             x={curDotTextCoord}
-            y='148'
+            y='146'
             className={cl.ballType}
             textAnchor='end'>
             Curveball
           </text>
           <text
             x={curDotTextCoord + 6}
-            y='148'
+            y='146'
             className={cl.mphValue}
             textAnchor='start'>
             {currentDot.speed.toFixed(1)} mph
