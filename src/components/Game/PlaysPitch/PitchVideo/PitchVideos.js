@@ -63,19 +63,18 @@ const PitchVideos = () => {
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
 
       const secondsFromRated =
-        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
+        video[`${videoLengthPrefix}_seconds_from`] +
+        (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
       Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(secondsFromRated));
     }
 
-			
-      setTimeout(() => {
-				
-				videoHandling(false);
-			}, videoLengthMode === 'Super Short' ? 1500 : 30);
-
-
-  
+    setTimeout(
+      () => {
+        videoHandling(false);
+      },
+      videoLengthMode === 'Super Short' ? 1500 : 30
+    );
 
     // setTimeout(() => {
     //   videoHandling(false);

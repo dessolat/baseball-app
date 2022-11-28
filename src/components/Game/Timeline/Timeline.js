@@ -96,7 +96,8 @@ const Timeline = ({ addedClass = null }) => {
       dispatch(
         setSliderCoords({
           ...sliderCoords,
-          x2: sliderCoords.x1 + 5 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 5
+          x2: sliderCoords.x1 + 5 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 5,
+					changedCoord: 'x2'
         })
       );
       return;
@@ -188,14 +189,12 @@ const Timeline = ({ addedClass = null }) => {
   };
 
   const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
-  // const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
   const totalSeconds = currentMoment.video
     ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
       currentMoment.video[`${videoLengthPrefix}_seconds_from`]
     : 0;
-  // const totalSeconds = currentMoment.video
-  //   ? currentMoment.video.seconds_to - currentMoment.video.seconds_from
-  //   : 0;
+
   const minutesSide = Math.floor(totalSeconds / 60);
   const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0);
   const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`;
