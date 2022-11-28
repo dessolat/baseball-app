@@ -28,15 +28,15 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const LINE_DOWN_COLOR = '#ACACAC';
 
   const COLORS = {
-		'-1': 'lightgray',
-		0: '#1A4C96',
-		1: 'red',
-		2: 'green',
-		3: 'olive',
-		4: 'yellow',
-		5: 'purple',
-		6: 'lightgreen'
-	};
+    '-1': 'lightgray',
+    0: '#1A4C96',
+    1: 'red',
+    2: 'green',
+    3: 'olive',
+    4: 'yellow',
+    5: 'purple',
+    6: 'lightgreen'
+  };
 
   function getMaxMinYAxisValue(max, min) {
     max = Math.ceil(max);
@@ -68,8 +68,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     minYAxisValue
   ];
 
-  const minYCoord = 20;
-  const maxYCoord = 83;
+  const minYCoord = 36;
+  const maxYCoord = 115;
 
   const innerHeight = maxYCoord - minYCoord;
 
@@ -151,36 +151,47 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
         />
       ));
 
+  const lineBtwAvg = (maxYCoord - minYCoord) / 3;
+	const tempDotTextCoord = minXCoord + xInterval * currentDot.index - 14
+	const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 360 ? 360 : tempDotTextCoord
   return (
-    <svg viewBox='0 0 440 110' className={cl.chart}>
-      <text x='10' y='20' className={cl.plainText}>
-        {yAxisValues[0]}
-      </text>
-      <text x='10' y='41' className={cl.plainText}>
-        {yAxisValues[1]}
-      </text>
-      <text x='10' y='62' className={cl.plainText}>
-        {yAxisValues[2]}
-      </text>
-      <text x='10' y='83' className={cl.plainText}>
-        {yAxisValues[3]}
-      </text>
-      <line x1='38' y1='9' x2='435' y2='9' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      <line x1='38' y1='41' x2='435' y2='41' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      <line x1='38' y1='62' x2='435' y2='62' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      <line x1='38' y1='83' x2='435' y2='83' stroke='#E3E1E1' strokeWidth='1' strokeDasharray='4 2' />
-      {/* {renderedGraphs} */}
+    <svg viewBox='0 0 440 160' className={cl.chart}>
+      {/* Horizontal lines text */}
+      {[1, 1, 1, 1].map((_, i) => (
+        <text key={i} x='0' y={minYCoord + lineBtwAvg * i + 5} className={cl.plainText}>
+          {yAxisValues[i]}
+        </text>
+      ))}
+
+      {/* Horizontal lines */}
+      {[1, 1, 1, 1].map((_, i) => (
+        <line
+          key={i}
+          x1='30'
+          y1={minYCoord + lineBtwAvg * i}
+          x2='435'
+          y2={minYCoord + lineBtwAvg * i}
+          stroke='#E3E1E1'
+          strokeWidth='1'
+          strokeDasharray='4 2'
+        />
+      ))}
+
+      {/* Dots */}
       {dots}
+
+      {/* Current dot line */}
       {currentDot.index !== undefined && (
         <line
           x1={minXCoord + xInterval * currentDot.index}
           y1={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
           x2={minXCoord + xInterval * currentDot.index}
-          y2='92'
+          y2='130'
           stroke={LINE_DOWN_COLOR}
           strokeWidth={LINE_DOWN_WIDTH}
         />
       )}
+      {/* Current dot */}
       {currentDot.index !== undefined && (
         <circle
           cx={minXCoord + xInterval * currentDot.index}
@@ -191,15 +202,24 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           strokeWidth='0.5'
         />
       )}
-
+      {/* Current dot text */}
       {currentDot.index !== undefined && (
-        <text
-          x={minXCoord + xInterval * currentDot.index - 31}
-          y='108'
-          className={cl.boldText}
-          style={{ width: 75 }}>
-          {currentDot.speed.toFixed(1)} mph
-        </text>
+        <>
+          <text
+            x={curDotTextCoord}
+            y='148'
+            className={cl.ballType}
+            textAnchor='end'>
+            Curveball
+          </text>
+          <text
+            x={curDotTextCoord + 6}
+            y='148'
+            className={cl.mphValue}
+            textAnchor='start'>
+            {currentDot.speed.toFixed(1)} mph
+          </text>
+        </>
       )}
     </svg>
   );
