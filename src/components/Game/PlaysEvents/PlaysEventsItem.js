@@ -4,7 +4,7 @@ import cl from './PlaysEvents.module.scss';
 
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
   const { icons, inner, metering } = moment;
-  // const { icons, table, inner } = moment;
+
   const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
 	const refValue = inner.id === currentMoment.inner?.id ? ref : null
 
@@ -14,8 +14,8 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
 
-  const topEventText = moment.metering?.pitch?.start_speed
-    ? moment.metering?.pitch?.start_speed.toFixed(0)
+  const topEventText = metering?.pitch?.start_speed
+    ? metering?.pitch?.start_speed.toFixed(0)
     : '';
   return (
     <>
