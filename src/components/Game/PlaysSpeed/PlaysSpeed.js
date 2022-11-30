@@ -80,19 +80,18 @@ const PlaysSpeed = ({ currentMoment }) => {
     [cl.dnone]: pitchState === 'Field'
   });
 
-	const legendArr = [
-    { title: 'Fastball (Fa)', fill: '#1A4C96' },
-    { title: 'Slider (Sl)', fill: '#FEAB01' },
-    { title: 'Curveball (Cu)', fill: '#BFE2C1' },
-    { title: 'Changeup (Ch)', fill: '#E2001C' }
-  ];
+	// Pitch types array for Legend comp
+	const pitchTypesSet = new Set()
+	chartData.forEach(pair => pitchTypesSet.add(pair[0]))
+	const pitchTypesArr = Array.from(pitchTypesSet).sort((a,b) => a > b ? 1 : -1)
+	
   return (
     <div ref={ref} className={wrapperClasses}>
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
           <PlaysSpeedChart chartData={chartData} currentDot={currentDot} />
-					<Legend legendData={legendArr} />
+					<Legend legendData={pitchTypesArr} />
         </>
       )}
       <div className={cl.arrowWrapper}>
