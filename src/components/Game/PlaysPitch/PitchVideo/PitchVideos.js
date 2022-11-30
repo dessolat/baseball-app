@@ -105,6 +105,8 @@ const PitchVideos = () => {
 
     if (!isAllReady) return;
 
+    playbackMode === 'play' && clearTimeout(nextMomentTimeoutRef.current);
+
     videoHandling(false);
     // eslint-disable-next-line
   }, [isLastMomentMode]);
@@ -115,7 +117,15 @@ const PitchVideos = () => {
 
   useEffect(() => {
     modeRef.current = playbackMode;
-    !currentMoment.video && playbackMode === 'play' && toNextMomentOrCard();
+
+    if (currentMoment.video) return;
+
+    if (playbackMode === 'pause') {
+      clearTimeout(nextMomentTimeoutRef.current);
+      return;
+    }
+
+    playbackMode === 'play' && toNextMomentOrCard();
     // eslint-disable-next-line
   }, [playbackMode]);
 
@@ -221,7 +231,8 @@ const PitchVideos = () => {
 
       if (cardIndex < filteredCards.length) {
         console.log(isLastMomentMode);
-        dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
+        dispatch(setCurrentCard({ ...filteredCards[cardIndex], toFirstMoment: !isLastMomentMode, manualClick: false }));
+        // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
 
@@ -233,6 +244,8 @@ const PitchVideos = () => {
     clearInterval(intervalRef.current);
 
     if (!currentMoment.video) {
+      Object.values(VIDEO_REFS).forEach(value => value.current?.pauseVideo());
+
       if (modeRef.current !== 'pause') {
         console.log('not paused');
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
@@ -271,7 +284,6 @@ const PitchVideos = () => {
 
       const currentTime = VIDEO_REFS['top-left'].current.getCurrentTime();
 
-      console.log(currentTime, endRef.current);
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {
           videoHandling();
@@ -453,7 +465,7 @@ const PitchVideos = () => {
 
   return (
     <>
-      <PitchVideo
+      {/* <PitchVideo
         videoId={videoId1}
         position='top-left'
         handleOnReady={handleOnReady}
@@ -470,8 +482,9 @@ const PitchVideos = () => {
         position='bottom'
         handleOnReady={handleOnReady}
         stateChangeHandler={stateChangeHandler}
-      />
-      <button
+				setPlayPause={setPlayPause}
+      /> */}
+      {/* <button
         style={{
           position: 'fixed',
           left: '70%',
@@ -486,7 +499,7 @@ const PitchVideos = () => {
         style={{ position: 'fixed', left: '73%', bottom: '15%', background: 'lightpink', padding: '3px 7px' }}
         onClick={() => setPlayPause('pause')}>
         Pause
-      </button>
+      </button> */}
     </>
   );
 };

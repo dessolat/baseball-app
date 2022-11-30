@@ -26,6 +26,8 @@ const Videos = () => {
   //   // eslint-disable-next-line
   // }, [videoState]);
 
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.code !== 'KeyF') return;
@@ -47,25 +49,29 @@ const Videos = () => {
   });
 
   function handleMouseMove() {
-		if (!currentMoment.video) return
+    if (!currentMoment.video) return;
 
     clearTimeout(timerRef.current);
 
     controlsWrapperRef.current.firstChild.style.opacity = 1;
-		controlsWrapperRef.current.firstChild.style.visibility = 'visible';
+    controlsWrapperRef.current.firstChild.style.visibility = 'visible';
 
     timerRef.current = setTimeout(() => {
       if (!controlsWrapperRef.current) return;
       controlsWrapperRef.current.firstChild.style.opacity = 0;
-			setTimeout(() => {
-				controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
-			}, 300);
+      timerRef.current = setTimeout(() => {
+        controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+      }, 300);
     }, 500);
   }
 
   return (
     <>
-      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} ref={wrapperRef}>
+      <div
+        className={wrapperClasses}
+        onMouseMove={handleMouseMove}
+        onClick={handleMouseMove}
+        ref={wrapperRef}>
         {/* <div className={wrapperClasses} ref={ref}> */}
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
         {/* <VideoEventsList /> */}

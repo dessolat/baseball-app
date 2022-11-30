@@ -71,12 +71,39 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
   useEffect(() => {
     if (videoRef.current === null) return;
-    videoHandling();
+
+		videoRef.current.pauseVideo();
+
+		const { video } = currentMoment;
+
+    if (video) {
+      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+
+      const secondsTotal =
+        video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+
+      const secondsFromRated =
+        video[`${videoLengthPrefix}_seconds_from`] +
+        (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
+
+				videoRef.current?.seekTo(secondsFromRated);
+    }
+
+		setTimeout(
+      () => {
+        videoHandling();
+      },
+      videoLengthMode === 'Super Short' ? 1500 : 30
+    );
+    // videoHandling();
     // eslint-disable-next-line
   }, [currentMoment, sliderCoords]);
 
   useEffect(() => {
     if (videoRef.current === null) return;
+
+		playbackMode === 'play' && clearTimeout(nextMomentTimeoutRef.current);
+
     videoHandling(false);
     // eslint-disable-next-line
   }, [isLastMomentMode]);
@@ -87,7 +114,15 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
   useEffect(() => {
     modeRef.current = playbackMode;
-    !currentMoment.video && playbackMode === 'play' && toNextMomentOrCard();
+
+    if (currentMoment.video) return;
+
+		if (playbackMode === 'pause') {
+      clearTimeout(nextMomentTimeoutRef.current);
+      return;
+    }
+
+    playbackMode === 'play' && toNextMomentOrCard();
     // eslint-disable-next-line
   }, [playbackMode]);
 
@@ -194,7 +229,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
 
       if (cardIndex < filteredCards.length) {
         console.log(isLastMomentMode);
-        dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
+        dispatch(setCurrentCard({ ...filteredCards[cardIndex], toFirstMoment: !isLastMomentMode }));
+        // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
 
@@ -207,10 +243,14 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     // momentRef.current = 0;
 
     if (!currentMoment.video) {
+      videoRef.current.pauseVideo();
+
       if (modeRef.current !== 'pause') {
         console.log('not paused');
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
+				
       }
+
       return;
     }
 
