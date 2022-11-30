@@ -5,7 +5,7 @@ import LegendItem from './LegendItem';
 const Legend = ({ legendData = [] }) => (
   <ul className={cl.legendWrapper}>
     {legendData.map((item, i) => (
-      <LegendItem key={i} dotFill={item.fill} title={item.title} />
+      <LegendItem key={i} title={item} />
     ))}
   </ul>
 );
