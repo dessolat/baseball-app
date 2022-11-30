@@ -108,7 +108,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
       {isVideoControls && (
         <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
       )}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           left: 15,
@@ -120,8 +120,8 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
           fontSize: '.8rem'
         }}>
         {currentQuality}
-      </div>
-      <div
+      </div> */}
+      {/* <div
         style={{
           position: 'absolute',
           right: 15,
@@ -133,7 +133,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
           fontSize: '.8rem'
         }}>
         {currentTime}
-      </div>
+      </div> */}
       {isInvisWrapper && <div style={{ position: 'absolute', inset: 0 }}></div>}
       {!currentMoment.video && <NoVideoScreen />}
     </div>
