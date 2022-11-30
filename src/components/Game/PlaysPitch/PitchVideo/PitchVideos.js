@@ -465,7 +465,7 @@ const PitchVideos = () => {
 
   return (
     <>
-      {/* <PitchVideo
+      <PitchVideo
         videoId={videoId1}
         position='top-left'
         handleOnReady={handleOnReady}
@@ -483,7 +483,7 @@ const PitchVideos = () => {
         handleOnReady={handleOnReady}
         stateChangeHandler={stateChangeHandler}
 				setPlayPause={setPlayPause}
-      /> */}
+      />
       {/* <button
         style={{
           position: 'fixed',
