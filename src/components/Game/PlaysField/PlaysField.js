@@ -3,7 +3,7 @@ import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 import PlaysFieldBalls from './PlaysFieldBalls';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPitchState  } from 'redux/gameReducer';
+import { setPitchState } from 'redux/gameReducer';
 // import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import PlaysFieldValues from './PlaysFieldValues/PlaysFieldValues';
@@ -89,13 +89,13 @@ const PlaysField = ({ currentMoment }) => {
     // }
 
     return () => {
-			// console.log('cleared');
+      // console.log('cleared');
       clearTimeout(graphTimeout);
       // clearTimeout(playTimeout);
     };
     // eslint-disable-next-line
-  }, [count])
-		// playbackMode]);
+  }, [count]);
+  // playbackMode]);
 
   useEffect(() => {
     setCount(1);
@@ -114,12 +114,16 @@ const PlaysField = ({ currentMoment }) => {
     [cl.dnone]: pitchState !== 'Field'
   });
 
-  const strikeBallHitValue =
-    currentMoment.events?.length > 0 && currentMoment?.events[0]?.type2 !== 'none'
-      ? currentMoment.events[0].type2.toUpperCase()
-      : '';
-
-  
+  const strikeBallValue = currentMoment.metering?.pitch
+    ? currentMoment.metering.pitch.is_strike
+      ? 'STRIKE'
+      : 'BALL'
+    : '';
+	
+	const STRIKE_BALL_COLORS = {
+		STRIKE: '#E2001C',
+		BALL: '#2B9D6A'
+	}
   return (
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
@@ -132,7 +136,7 @@ const PlaysField = ({ currentMoment }) => {
           style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
         />
       </div>
-      <div className={cl.strikeBallHitWrapper}>{strikeBallHitValue}</div>
+      <div className={cl.strikeBallWrapper} style={{color: STRIKE_BALL_COLORS[strikeBallValue]}}>{strikeBallValue}</div>
     </div>
   );
 };
