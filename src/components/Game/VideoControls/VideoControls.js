@@ -7,7 +7,7 @@ import PauseBtn from 'components/UI/icons/VideoControlsBtns/PauseBtn/PauseBtn';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 import { closeFullscreen, openFullscreen } from 'utils';
 
-const VideoControls = ({ setPlayPause }, ref) => {
+const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
   const videoState = useSelector(state => state.game.videoState);
@@ -44,9 +44,12 @@ const VideoControls = ({ setPlayPause }, ref) => {
   const handleWrapperClick = e => {
     if (e.detail === 1) {
       clickTimerRef.current = setTimeout(() => {
-        setPlayPause(playMode)
+        setPlayPause(playMode);
       }, 200);
     }
+
+    if (!fullscreenAvailable) return;
+
     if (e.detail === 2) {
       clearTimeout(clickTimerRef.current);
       handleFullscreenBtnClick();
@@ -65,17 +68,18 @@ const VideoControls = ({ setPlayPause }, ref) => {
   });
 
   return (
-    <div
-      className={wrapperClasses}
-      ref={ref}
-      onClick={e => handleWrapperClick(e)}
-    >
-      <div className={cl.innerWrapper} onClick={e => e.stopPropagation()}>
-        <div className={cl.controls}>
+    <div className={wrapperClasses} ref={ref} onClick={e => handleWrapperClick(e)}>
+      <div
+        className={cl.innerWrapper}
+        style={fullscreenAvailable ? null : { width: '10rem' }}
+        onClick={e => e.stopPropagation()}>
+        <div className={cl.controls} style={fullscreenAvailable ? null : { width: '10rem' }}>
           {getPlayPauseBtn()}
-          <button onClick={handleFullscreenBtnClick}>
-            <FullscreenBtn isOff={!isFullscreen} />
-          </button>
+          {fullscreenAvailable && (
+            <button onClick={handleFullscreenBtnClick}>
+              <FullscreenBtn isOff={!isFullscreen} />
+            </button>
+          )}
         </div>
       </div>
     </div>
