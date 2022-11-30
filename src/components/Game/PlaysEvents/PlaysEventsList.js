@@ -73,7 +73,7 @@ const PlaysEventsList = ({ moments }) => {
   }, [currentMoment]);
 
   const handleMomentClick = moment => () => {
-    dispatch(setPlaybackMode('pause'));
+    // dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentMoment({...moment, manualClick: true}));
   };
 

@@ -22,7 +22,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   }, [currentCard, filteredCards, handleKeyDown]);
 
   const situationClick = player => () => {
-    playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
+    // playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentCard({ ...player, manualClick: true }));
   };
 

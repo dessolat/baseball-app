@@ -27,7 +27,7 @@ const VideoEventsList = () => {
   }, [activeCardList]);
 
   const handleMomentClick = moment => () => {
-    dispatch(setPlaybackMode('pause'));
+    // dispatch(setPlaybackMode('pause'));
     dispatch(setCurrentMoment(moment));
   };
 

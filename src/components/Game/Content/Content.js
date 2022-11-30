@@ -254,16 +254,19 @@ const Content = ({ currentTab }) => {
     setSearchParam('card', cardId);
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
-    currentCard.manualClick && dispatch(setPlaybackMode('pause'));
+    // currentCard.manualClick && dispatch(setPlaybackMode('pause'));
 
     //Set moments
     const newMoments = [];
     currentCard.type !== 'Replacement'
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
-    currentCard.manualMoment
+    currentCard.toFirstMoment
       ? dispatch(setCurrentMoment(newMoments[0] || {}))
       : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
+    // currentCard.manualMoment
+    //   ? dispatch(setCurrentMoment(newMoments[0] || {}))
+    //   : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
     dispatch(setMoments(newMoments));
 
     if (currentCard.manualClick || !situationsChildRef.current) return;

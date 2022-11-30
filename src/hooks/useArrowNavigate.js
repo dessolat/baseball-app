@@ -14,7 +14,7 @@ const useArrowNavigate = (cards, currentCard) => {
     e.preventDefault();
 
 		// Set playback mode to pause
-		playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
+		// playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
 
     const cardIndex = cards.findIndex(card => card.moments[0].inner.id === currentCard.moments[0].inner.id);
     const newMoments = [];
@@ -61,7 +61,8 @@ const useArrowNavigate = (cards, currentCard) => {
           )
             break;
           if (momentIndex >= currentCard.moments.length - 1) {
-            dispatch(setCurrentCard({ ...cards[cardIndex + 1], manualMoment: true }));
+            dispatch(setCurrentCard({ ...cards[cardIndex + 1], toFirstMoment: true }));
+            // dispatch(setCurrentCard({ ...cards[cardIndex + 1], manualMoment: true }));
             break;
           }
 
