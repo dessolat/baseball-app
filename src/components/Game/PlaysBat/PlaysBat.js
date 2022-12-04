@@ -184,7 +184,6 @@ const PlaysBat = ({ currentMoment, setHittingMode }) => {
         (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
         momentIndex === -1
       ) {
-        console.log('here');
         dispatch(setPlaybackMode('pause'));
         return;
       }
