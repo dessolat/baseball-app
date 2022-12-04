@@ -63,7 +63,9 @@ const PitchVideos = () => {
     const { video } = currentMoment;
 
     if (video) {
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+			// Old method
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -169,7 +171,7 @@ const PitchVideos = () => {
     timeIntervalRef.current = setInterval(() => {
       const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
       (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, 30);
+    }, 20);
 
     return () => {
       clearInterval(timeIntervalRef.current);
@@ -197,7 +199,9 @@ const PitchVideos = () => {
       if (!nextMoment.video) return;
 
       const { video: nextVideo } = nextMoment;
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+			const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+			// Old method
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       //
       const getSliderCoords = video => {
@@ -271,7 +275,9 @@ const PitchVideos = () => {
     }
 
     const { video } = currentMoment;
-    const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+		const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+		// Old method
+    // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];

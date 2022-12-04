@@ -39,22 +39,25 @@ const Timeline = ({ addedClass = null }) => {
   useLayoutEffect(() => {
     if (!currentMoment.video) return;
 
-    if (videoLengthMode !== 'Super Short') {
-      dispatch(setSliderCoords({ x1: 0, x2: 100 }));
-      return;
-    }
+    dispatch(setSliderCoords({ x1: 0, x2: 100 }));
 
-    const { video } = currentMoment;
+    // Old super short method
+    // if (videoLengthMode !== 'Super Short') {
+    //   dispatch(setSliderCoords({ x1: 0, x2: 100 }));
+    //   return;
+    // }
 
-    const totalSeconds = video.short_seconds_to - video.short_seconds_from;
+    // const { video } = currentMoment;
 
-    const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
-    const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
+    // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
 
-    const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
-    const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
+    // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
+    // const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
 
-    dispatch(setSliderCoords({ x1: startSecondsPercent, x2: endSecondsPercent }));
+    // const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
+    // const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
+
+    // dispatch(setSliderCoords({ x1: startSecondsPercent, x2: endSecondsPercent }));
 
     // const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
     // eslint-disable-next-line
@@ -153,7 +156,10 @@ const Timeline = ({ addedClass = null }) => {
       const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
       const { video } = currentMoment;
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
+			// Old videoLengthPrefix method
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -179,7 +185,10 @@ const Timeline = ({ addedClass = null }) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+  const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
+  // Old method
+	// const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
   const totalSeconds = currentMoment.video
     ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
@@ -358,7 +367,7 @@ const Timeline = ({ addedClass = null }) => {
                   stroke={color}
                   strokeWidth='0.5'
                 />
-								{/* Rects and texts */}
+                {/* Rects and texts */}
                 {events.map(({ timeStart, timeEnd, textFrom, textTo }, j) => (
                   <Fragment key={j}>
                     <rect

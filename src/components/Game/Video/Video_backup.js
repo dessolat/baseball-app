@@ -90,7 +90,8 @@ const Video = ({ videoId, videoNumber, stateChangeHandler }, ref) => {
     console.log('video:', video);
 
     if (video) {
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+			const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -235,7 +236,8 @@ console.log('%cTo next momentOrCard', 'color: red');
       if (!nextMoment.video) return;
 
       const { video: nextVideo } = nextMoment;
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+			const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         nextVideo[`${videoLengthPrefix}_seconds_to`] - nextVideo[`${videoLengthPrefix}_seconds_from`];
@@ -271,7 +273,8 @@ console.log('%cTo next momentOrCard', 'color: red');
         if (!nextMoment.video) return;
 
         const { video: nextVideo } = nextMoment;
-        const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+				const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+        // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
         const secondsTotal =
           nextVideo[`${videoLengthPrefix}_seconds_to`] - nextVideo[`${videoLengthPrefix}_seconds_from`];
@@ -315,7 +318,8 @@ console.log('%cTo next momentOrCard', 'color: red');
     // videoRef.current?.getPlayerState() !== 1 && videoRef.current?.playVideo();
 
     const { video } = currentMoment;
-    const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+		const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+    // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];

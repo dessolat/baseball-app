@@ -83,7 +83,8 @@ const VideoList = ({ viewMode }, ref) => {
     const { video } = currentMoment;
 
     if (video) {
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -153,7 +154,7 @@ const VideoList = ({ viewMode }, ref) => {
     timeIntervalRef.current = setInterval(() => {
       const time = video1Ref.current?.getCurrentTime();
       (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, 30);
+    }, 20);
 
     return () => {
       clearInterval(timeIntervalRef.current);
@@ -190,7 +191,8 @@ const VideoList = ({ viewMode }, ref) => {
       if (!nextMoment.video) return;
 
       const { video: nextVideo } = nextMoment;
-      const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       //
       const getSliderCoords = video => {
@@ -270,7 +272,8 @@ const VideoList = ({ viewMode }, ref) => {
     }
 
     const { video } = currentMoment;
-    const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+    const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+    // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -430,7 +433,7 @@ const VideoList = ({ viewMode }, ref) => {
         <Video
           videoId={videoId1}
           videoNumber={1}
-					handleOnReady={handleOnReady}
+          handleOnReady={handleOnReady}
           stateChangeHandler={stateChangeHandler}
         />
       )}
@@ -439,25 +442,25 @@ const VideoList = ({ viewMode }, ref) => {
           <Video
             videoId={videoId1}
             videoNumber={1}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
         </>
@@ -467,25 +470,25 @@ const VideoList = ({ viewMode }, ref) => {
           <Video
             videoId={videoId1}
             videoNumber={1}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
-						handleOnReady={handleOnReady}
+            handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
           />
         </>
