@@ -77,7 +77,7 @@ const Timeline = ({ addedClass = null }) => {
       dispatch(
         setSliderCoords({
           ...sliderCoords,
-          x1: sliderCoords.x2 - 5 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 5
+          x1: sliderCoords.x2 - 1 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 1
         })
       );
 
@@ -87,7 +87,7 @@ const Timeline = ({ addedClass = null }) => {
       dispatch(
         setSliderCoords({
           ...sliderCoords,
-          x2: sliderCoords.x1 + 5 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 5,
+          x2: sliderCoords.x1 + 1 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 1,
           changedCoord: 'x2'
         })
       );
