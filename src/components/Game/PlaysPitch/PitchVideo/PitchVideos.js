@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import getYouTubeID from 'get-youtube-id';
 import PitchVideo from './PitchVideo';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setCurrentCard,
   setCurrentMoment,
@@ -11,11 +11,11 @@ import {
   setVideoPlaybackRate,
   setVideoState
 } from 'redux/gameReducer';
-import { useDispatch } from 'react-redux';
 
 const PitchVideos = () => {
   const { camera_info: cameraInfo } = useSelector(state => state.game.preview);
   const videoState = useSelector(state => state.game.videoState);
+  const preferredVideoState = useSelector(state => state.game.preferredVideoState);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const currentCard = useSelector(state => state.game.currentCard);
@@ -38,6 +38,7 @@ const PitchVideos = () => {
   const modeRef = useRef('play');
   const endRef = useRef(null);
   const nextMomentTimeoutRef = useRef();
+  const videoHandlingTimeoutRef = useRef();
 
   const VIDEO_REFS = {
     'top-left': video1Ref,
@@ -49,6 +50,11 @@ const PitchVideos = () => {
     const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
 
     if (!isAllReady) return;
+
+    clearTimeout(videoHandlingTimeoutRef.current);
+    clearInterval(intervalRef.current);
+
+    const isForcePlay = preferredVideoState === 1;
 
     video1Ref.current.pauseVideo();
     video2Ref.current.pauseVideo();
@@ -69,9 +75,9 @@ const PitchVideos = () => {
       Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(secondsFromRated));
     }
 
-    setTimeout(
+    videoHandlingTimeoutRef.current = setTimeout(
       () => {
-        videoHandling(false);
+        videoHandling(false, isForcePlay);
       },
       videoLengthMode === 'Super Short' ? 1500 : 30
     );
@@ -162,7 +168,7 @@ const PitchVideos = () => {
 
     timeIntervalRef.current = setInterval(() => {
       const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
-      (videoState === 1 || videoState === null) && dispatch(setVideoCurrentTime(time));
+      (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
     }, 30);
 
     return () => {
@@ -173,12 +179,12 @@ const PitchVideos = () => {
 
   const { left_main_link: topLeftLink, right_main_link: topRightLink, pitch_link: bottomLink } = cameraInfo;
 
-  const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  const videoId2 = getYouTubeID(topRightLink) || null;
-  const videoId3 = getYouTubeID(bottomLink) || null;
-  // const videoId1 = 'ZTsgKIKW8GE' || getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  // const videoId2 = 'ZTsgKIKW8GE' || getYouTubeID(topRightLink) || null;
-  // const videoId3 = 'ZTsgKIKW8GE' || getYouTubeID(bottomLink) || null;
+  // const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
+  // const videoId2 = getYouTubeID(topRightLink) || null;
+  // const videoId3 = getYouTubeID(bottomLink) || null;
+  const videoId1 = 'ZTsgKIKW8GE' || getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
+  const videoId2 = 'ZTsgKIKW8GE' || getYouTubeID(topRightLink) || null;
+  const videoId3 = 'ZTsgKIKW8GE' || getYouTubeID(bottomLink) || null;
 
   function toNextMomentOrCard() {
     const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner?.id);
@@ -231,23 +237,28 @@ const PitchVideos = () => {
 
       if (cardIndex < filteredCards.length) {
         console.log(isLastMomentMode);
-        dispatch(setCurrentCard({ ...filteredCards[cardIndex], toFirstMoment: !isLastMomentMode, manualClick: false }));
+        dispatch(
+          setCurrentCard({
+            ...filteredCards[cardIndex],
+            toFirstMoment: !isLastMomentMode,
+            manualClick: false
+          })
+        );
         // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
-
+      console.log('%cSet', 'color: red');
       dispatch(setPlaybackMode('pause'));
     }
   }
 
-  const videoHandling = (doSeek = true) => {
+  const videoHandling = (doSeek = true, isForcePlay = true, seekToCurrentTime = false) => {
     clearInterval(intervalRef.current);
 
     if (!currentMoment.video) {
       Object.values(VIDEO_REFS).forEach(value => value.current?.pauseVideo());
 
       if (modeRef.current !== 'pause') {
-        console.log('not paused');
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
       }
       return;
@@ -259,10 +270,6 @@ const PitchVideos = () => {
       return;
     }
 
-    Object.values(VIDEO_REFS).forEach(
-      value => value.current?.getPlayerState() !== 1 && value.current?.playVideo()
-    );
-
     const { video } = currentMoment;
     const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
@@ -272,7 +279,14 @@ const PitchVideos = () => {
     const secondsFromRated =
       video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
 
-    doSeek && Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(secondsFromRated));
+    const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
+
+    doSeek && Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(seekToTime));
+
+    isForcePlay &&
+      Object.values(VIDEO_REFS).forEach(
+        value => value.current?.getPlayerState() !== 1 && value.current?.playVideo()
+      );
 
     const secondsToRated =
       video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
@@ -286,7 +300,7 @@ const PitchVideos = () => {
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {
-          videoHandling();
+          videoHandling(true, isForcePlay);
           return;
         }
 
@@ -327,7 +341,10 @@ const PitchVideos = () => {
   const handleOnReady = (position, target) => {
     VIDEO_REFS[position].current = target;
 
-    videoHandling();
+    const isForcePlay = preferredVideoState === 1;
+    const seekToCurrentTime = videoCurrentTime > 0;
+
+    videoHandling(true, isForcePlay, seekToCurrentTime);
     // position === 'top-left' && videoHandling();
     position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
 
@@ -365,7 +382,7 @@ const PitchVideos = () => {
   };
 
   const stateChangeHandler = (position, target, stateValue) => {
-    console.log('position:', position, 'stateValue:', stateValue);
+    // console.log('position:', position, 'stateValue:', stateValue);
 
     position === 'top-left' && dispatch(setVideoState(stateValue));
 
@@ -387,9 +404,16 @@ const PitchVideos = () => {
       !isAllReady && target.pauseVideo();
 
       if (isAllReady) {
-        video1 && video1.playVideo();
-        video2 && video2.playVideo();
-        video3 && video3.playVideo();
+        if (preferredVideoState === 2) {
+          video1.pauseVideo();
+          video2.pauseVideo();
+          video3.pauseVideo();
+          return;
+        }
+
+        video1 && preferredVideoState === 1 && video1.playVideo();
+        video2 && preferredVideoState === 1 && video2.playVideo();
+        video3 && preferredVideoState === 1 && video3.playVideo();
       }
     }
 
@@ -400,9 +424,9 @@ const PitchVideos = () => {
     }
 
     if (stateValue === 3 && isAllPaused) {
-      video1 && video1.playVideo();
-      video2 && video2.playVideo();
-      video3 && video3.playVideo();
+      video1 && preferredVideoState === 1 && video1.playVideo();
+      video2 && preferredVideoState === 1 && video2.playVideo();
+      video3 && preferredVideoState === 1 && video3.playVideo();
     }
 
     // if (value === 1 && videoState === null) {
@@ -482,7 +506,7 @@ const PitchVideos = () => {
         position='bottom'
         handleOnReady={handleOnReady}
         stateChangeHandler={stateChangeHandler}
-				setPlayPause={setPlayPause}
+        setPlayPause={setPlayPause}
       />
       {/* <button
         style={{

@@ -21,6 +21,7 @@ const defaultState = {
 	playerCardFilter: '',
 	videoPlaybackRate: 1,
 	videoState: null,
+	preferredVideoState: 1,
 	isFilteredPlayer: true,
 	isCameraSelector: false,
 	moments: [],
@@ -54,6 +55,7 @@ const SET_ERROR_MSG = 'SET_ERROR_MSG';
 const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
 const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
 const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
+const SET_PREFERRED_VIDEO_STATE = 'SET_PREFERRED_VIDEO_STATE';
 const SET_IS_FILTERED_PLAYER = 'SET_IS_FILTERED_PLAYER';
 const SET_IS_CAMERA_SELECTOR = 'SET_IS_CAMERA_SELECTOR';
 const SET_MOMENTS = 'SET_MOMENTS';
@@ -110,6 +112,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, videoPlaybackRate: action.payload };
     case SET_VIDEO_STATE:
       return { ...state, videoState: action.payload };
+    case SET_PREFERRED_VIDEO_STATE:
+      return { ...state, preferredVideoState: action.payload };
     case SET_IS_FILTERED_PLAYER:
       return { ...state, isFilteredPlayer: action.payload };
     case SET_IS_CAMERA_SELECTOR:
@@ -155,6 +159,7 @@ export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
 export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
 export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE, payload });
 export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
+export const setPreferredVideoState = payload => ({ type: SET_PREFERRED_VIDEO_STATE, payload });
 export const setIsFilteredPlayer = payload => ({ type: SET_IS_FILTERED_PLAYER, payload });
 export const setIsCameraSelector = payload => ({ type: SET_IS_CAMERA_SELECTOR, payload });
 export const setMoments = payload => ({ type: SET_MOMENTS, payload });

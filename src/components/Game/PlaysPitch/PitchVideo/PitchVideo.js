@@ -13,7 +13,7 @@ const POS_OPTIONS = {
 };
 
 const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
-  const [currentQuality, setCurrentQuality] = useState(null);
+  // const [currentQuality, setCurrentQuality] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
 
   // eslint-disable-next-line
@@ -34,9 +34,9 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
 
   const xCoef = videoWrapperRef?.current?.clientWidth / ((1920 / 100) * (POS_OPTIONS[position].delta * 100));
 
-  const playbackQualityHandle = e => {
-    setCurrentQuality(e.data);
-  };
+  // const playbackQualityHandle = e => {
+  //   setCurrentQuality(e.data);
+  // };
 
   const onReady = e => {
     handleOnReady(position, e.target);
@@ -89,13 +89,13 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
           onReady={onReady}
           onStateChange={onStateChange}
           // onPlaybackRateChange={onPlaybackRateChange}
-          onPlaybackQualityChange={playbackQualityHandle}
+          // onPlaybackQualityChange={playbackQualityHandle}
           containerClassName={cl.YTContainer}
           opts={{
             width: '100%',
             height: '100%',
             playerVars: {
-              autoplay: 1,
+              autoplay: 0,
               controls: 0,
               modestbranding: 1,
               disablekb: 1
@@ -121,7 +121,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         }}>
         {currentQuality}
       </div> */}
-      {/* <div
+      <div
         style={{
           position: 'absolute',
           right: 15,
@@ -133,7 +133,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
           fontSize: '.8rem'
         }}>
         {currentTime}
-      </div> */}
+      </div>
       {isInvisWrapper && <div style={{ position: 'absolute', inset: 0 }}></div>}
       {!currentMoment.video && <NoVideoScreen />}
     </div>

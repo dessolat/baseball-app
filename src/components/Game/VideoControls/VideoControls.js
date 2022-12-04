@@ -6,6 +6,8 @@ import PlayBtn from 'components/UI/icons/VideoControlsBtns/PlayBtn/PlayBtn';
 import PauseBtn from 'components/UI/icons/VideoControlsBtns/PauseBtn/PauseBtn';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 import { closeFullscreen, openFullscreen } from 'utils';
+import { useDispatch } from 'react-redux';
+import { setPreferredVideoState } from 'redux/gameReducer';
 
 const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
@@ -13,6 +15,8 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const videoState = useSelector(state => state.game.videoState);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const viewMode = useSelector(state => state.game.viewMode);
+
+	const dispatch = useDispatch()
 
   const timeoutRef = useRef(null);
   const previousTimeRef = useRef(0);
@@ -40,11 +44,13 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement);
 
   const playMode = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
+	const prefVideoStateValue = playMode === 'play' ? 1 : 2
 
   const handleWrapperClick = e => {
     if (e.detail === 1) {
       clickTimerRef.current = setTimeout(() => {
         setPlayPause(playMode);
+				dispatch(setPreferredVideoState(prefVideoStateValue))
       }, 200);
     }
 
@@ -56,10 +62,17 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     }
   };
 
-  const getPlayPauseBtn = () => {
-    const comp = playMode === 'play' ? <PlayBtn /> : <PauseBtn />;
+	const handlePlayPauseBtnClick = () => {
+		// const prefVideoStateValue = playMode === 'play' ? 1 : 2
 
-    return <button onClick={() => setPlayPause(playMode)}>{comp}</button>;
+		setPlayPause(playMode)
+		dispatch(setPreferredVideoState(prefVideoStateValue))
+	}
+
+  const getPlayPauseBtn = () => {
+		const comp = playMode === 'play' ? <PlayBtn /> : <PauseBtn />;
+		
+    return <button onClick={handlePlayPauseBtnClick}>{comp}</button>;
   };
 
   const wrapperClasses = classNames(cl.controlsWrapper, {
