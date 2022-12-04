@@ -5,8 +5,9 @@ import cl from './PlaysEvents.module.scss';
 const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
   const { icons, inner, metering } = moment;
 
-  const classes = inner.id === currentMoment.inner?.id ? cl.active : '';
-	const refValue = inner.id === currentMoment.inner?.id ? ref : null
+  const isActive = inner.id === currentMoment.inner?.id;
+  const classes = isActive ? cl.active : '';
+  const refValue = isActive ? ref : null;
 
   const playClasses = [];
   icons.circ_text_play !== 'R' && playClasses.push(cl[icons.circ_color_play]);
@@ -14,9 +15,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
 
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
 
-  const topEventText = metering?.pitch?.start_speed
-    ? metering?.pitch?.start_speed.toFixed(0)
-    : '';
+  const topEventText = metering?.pitch?.start_speed ? metering?.pitch?.start_speed.toFixed(0) : '';
   return (
     <>
       {icons.circ_color_pitch && (
@@ -26,7 +25,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
           </div>
           <div className={cl.text}>
             <p>CU {topEventText}</p>
-						{/* ({table.balls} - {table.strikes}) */}
+            {/* ({table.balls} - {table.strikes}) */}
           </div>
         </li>
       )}
@@ -35,18 +34,20 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
           <div className={playClasses.join(' ')} data-before={playDataBefore}>
             {icons.circ_text_play !== 'R' ? icons.circ_text_play : <ReplaceEvent />}
           </div>
-          {!(icons.circ_color_pitch && icons.circ_color_play) && <div className={cl.text}>
-            {/* {icons.circ_color_pitch && icons.circ_color_play? (
+          {!(icons.circ_color_pitch && icons.circ_color_play) && (
+            <div className={cl.text}>
+              {/* {icons.circ_color_pitch && icons.circ_color_play? (
               <>
                 <p> </p> 
               </>
             ) : (
               <> */}
-                <p>cu {topEventText}</p>
-								{/* ({table.balls} - {table.strikes}) */}
+              <p>cu {topEventText}</p>
+              {/* ({table.balls} - {table.strikes}) */}
               {/* </>
             )} */}
-          </div>}
+            </div>
+          )}
         </li>
       )}
     </>

@@ -193,7 +193,8 @@ const Timeline = ({ addedClass = null }) => {
   const rightTitle = `${minutesSide}:${secondsSide.length === 1 ? 0 : ''}${secondsSide}`;
 
   // Lines positioning
-  let LINES_NUMBER = 0;
+  let LINES_NUMBER = 1;
+  // let LINES_NUMBER = 0;
   let Y_SHIFT;
   const LINES_DATA = [];
   const LINES_TEXT_ABBR = ['H', 'B1', 'B2', 'B3'];
@@ -211,60 +212,108 @@ const Timeline = ({ addedClass = null }) => {
 
     // Lines number calculating
     if (pitch) LINES_NUMBER++;
-    if (hit) LINES_NUMBER++;
+    // if (hit) LINES_NUMBER++;
     LINES_NUMBER = Object.values(bases).reduce((sum, base) => (base ? sum + 1 : sum), LINES_NUMBER);
 
     // Y shift calc
     Y_SHIFT = 4.5 * (LINES_NUMBER - 1);
 
     // Lines data compute
-    pitch &&
-      LINES_DATA.push({
+    // Pitch line calc
+    if (pitch) {
+      const tempLineData = {
         title: 'Ball',
         color: '#1A4C96',
-        timeStart1: pitch.time_start,
-        timeEnd1: pitch.time_end,
-        timeStart2: play.time_start,
-        timeEnd2: play.time_end
-      });
-    hit &&
-      LINES_DATA.push({
-        title: 'Hitter',
-        color: '#FFAB00',
-        timeStart1: hit.time_start,
-        timeEnd1: hit.time_end,
-        timeStart2: field.who === 0 ? field.time_start : null,
-        timeEnd2: field.who === 0 ? field.time_end : null,
-        textFrom2: field.who === 0 ? LINES_TEXT_ABBR[field.run_from] : null,
-        textTo2: field.who === 0 ? LINES_TEXT_ABBR[field.run_to] : null
-      });
-    bases.r1 &&
-      LINES_DATA.push({
+        events: []
+      };
+
+      pitch?.time_start && tempLineData.events.push({ timeStart: pitch.time_start, timeEnd: pitch.time_end });
+      play.forEach(value =>
+        tempLineData.events.push({ timeStart: value.time_start, timeEnd: value.time_end })
+      );
+      LINES_DATA.push(tempLineData);
+    }
+
+    //Hitter line calc
+    const tempLineData = {
+      title: 'Hitter',
+      color: '#FFAB00',
+      events: []
+    };
+
+    hit?.time_start && tempLineData.events.push({ timeStart: hit.time_start, timeEnd: hit.time_end });
+    field
+      ?.filter(value => value.who === 0)
+      .forEach(value =>
+        tempLineData.events.push({
+          timeStart: value.time_start,
+          timeEnd: value.time_end,
+          textFrom: LINES_TEXT_ABBR[value.run_from],
+          textTo: LINES_TEXT_ABBR[value.run_to]
+        })
+      );
+    LINES_DATA.push(tempLineData);
+
+    // Run lines calc
+
+    if (bases.r1) {
+      const tempLineData = {
         title: 'Run1',
         color: '#BF8610',
-        timeStart1: field.who === 1 ? field.time_start : null,
-        timeEnd1: field.who === 1 ? field.time_end : null,
-        textFrom1: field.who === 1 ? LINES_TEXT_ABBR[field.run_from] : null,
-        textTo1: field.who === 1 ? LINES_TEXT_ABBR[field.run_to] : null
-      });
-    bases.r2 &&
-      LINES_DATA.push({
+        events: []
+      };
+
+      field
+        ?.filter(value => value.who === 1)
+        .forEach(value =>
+          tempLineData.events.push({
+            timeStart: value.time_start,
+            timeEnd: value.time_end,
+            textFrom: LINES_TEXT_ABBR[value.run_from],
+            textTo: LINES_TEXT_ABBR[value.run_to]
+          })
+        );
+      LINES_DATA.push(tempLineData);
+    }
+    if (bases.r2) {
+      const tempLineData = {
         title: 'Run2',
         color: '#8D6004',
-        timeStart1: field.who === 2 ? field.time_start : null,
-        timeEnd1: field.who === 2 ? field.time_end : null,
-        textFrom1: field.who === 2 ? LINES_TEXT_ABBR[field.run_from] : null,
-        textTo1: field.who === 2 ? LINES_TEXT_ABBR[field.run_to] : null
-      });
-    bases.r3 &&
-      LINES_DATA.push({
+        events: []
+      };
+
+      field
+        ?.filter(value => value.who === 2)
+        .forEach(value =>
+          tempLineData.events.push({
+            timeStart: value.time_start,
+            timeEnd: value.time_end,
+            textFrom: LINES_TEXT_ABBR[value.run_from],
+            textTo: LINES_TEXT_ABBR[value.run_to]
+          })
+        );
+      LINES_DATA.push(tempLineData);
+    }
+    if (bases.r3) {
+      const tempLineData = {
         title: 'Run3',
         color: '#5C4006',
-        timeStart1: field.who === 3 ? field.time_start : null,
-        timeEnd1: field.who === 3 ? field.time_end : null,
-        textFrom1: field.who === 3 ? LINES_TEXT_ABBR[field.run_from] : null,
-        textTo1: field.who === 3 ? LINES_TEXT_ABBR[field.run_to] : null
-      });
+        events: []
+      };
+
+      field
+        ?.filter(value => value.who === 3)
+        .forEach(value =>
+          tempLineData.events.push({
+            timeStart: value.time_start,
+            timeEnd: value.time_end,
+            textFrom: LINES_TEXT_ABBR[value.run_from],
+            textTo: LINES_TEXT_ABBR[value.run_to]
+          })
+        );
+      LINES_DATA.push(tempLineData);
+    }
+    console.log(LINES_DATA);
   }
 
   return (
@@ -299,143 +348,76 @@ const Timeline = ({ addedClass = null }) => {
             )}
 
             {/* Horizontal lines */}
-            {LINES_DATA.map(
-              (
-                { color, timeStart1, timeEnd1, timeStart2, timeEnd2, textFrom1, textTo1, textFrom2, textTo2 },
-                i
-              ) => (
-                // Horizontal line
-                <Fragment key={i}>
-                  <line
-                    key={i}
-                    x1='0'
-                    y1={(i + 3) * 9 - Y_SHIFT}
-                    x2={VIEW_BOX_WIDTH}
-                    y2={(i + 3) * 9 - Y_SHIFT}
-                    stroke={color}
-                    strokeWidth='0.5'
-                  />
-                  {timeStart1 && (
-                    <>
-                      <rect
-                        x={getRelativeX(timeStart1)}
-                        y={(i + 3) * 9 - 4 - Y_SHIFT}
-                        fill={color}
-                        width={getRelativeX(timeEnd1) - getRelativeX(timeStart1)}
-                        height='8'
-                        className={cl.eventRect}
-                      />
-                      <text
-                        x={getRelativeX(timeStart1) + (getRelativeX(timeEnd1) - getRelativeX(timeStart1)) / 2}
-                        y={(i + 3) * 9 + 2.9 - Y_SHIFT}
-                        className={cl.horizontalLineText}>
-                        {textFrom1}-{textTo1}
-                      </text>
-                    </>
-                  )}
-                  {timeStart2 && (
-                    <>
-                      <rect
-                        x={getRelativeX(timeStart2)}
-                        y={(i + 3) * 9 - 4 - Y_SHIFT}
-                        fill={color}
-                        width={getRelativeX(timeEnd2) - getRelativeX(timeStart2)}
-                        height='8'
-                        className={cl.eventRect}
-                      />
-                      <text
-                        x={getRelativeX(timeStart2) + (getRelativeX(timeEnd2) - getRelativeX(timeStart2)) / 2}
-                        y={(i + 3) * 9 + 2.9 - Y_SHIFT}
-                        className={cl.horizontalLineText}>
-                        {textFrom2}-{textTo2}
-                      </text>
-                    </>
-                  )}
-                </Fragment>
-                // Rect
-              )
-            )}
+            {LINES_DATA.map(({ color, events }, i) => (
+              // Horizontal line
+              <Fragment key={i}>
+                <line
+                  key={i}
+                  x1='0'
+                  y1={(i + 3) * 9 - Y_SHIFT}
+                  x2={VIEW_BOX_WIDTH}
+                  y2={(i + 3) * 9 - Y_SHIFT}
+                  stroke={color}
+                  strokeWidth='0.5'
+                />
+                {events.map(({ timeStart, timeEnd, textFrom, textTo }, j) => (
+                  <Fragment key={j}>
+                    <rect
+                      x={getRelativeX(timeStart)}
+                      y={(i + 3) * 9 - 4 - Y_SHIFT}
+                      fill={color}
+                      width={getRelativeX(timeEnd) - getRelativeX(timeStart)}
+                      height='8'
+                      className={cl.eventRect}
+                    />
+                    <text
+                      x={getRelativeX(timeStart) + (getRelativeX(timeEnd) - getRelativeX(timeStart)) / 2}
+                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
+                      className={cl.horizontalLineText}>
+                      {textFrom}-{textTo}
+                    </text>
+                  </Fragment>
+                ))}
 
-            {/* Ball line rect & text */}
-            {/* <rect
-              x={86}
-              y={(1 + 1) * 9 - 4}
-              fill={LINES_DATA[0].color}
-              width='24'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={98} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
-              P-H
-            </text>
-            <rect
-              x={115}
-              y={(1 + 1) * 9 - 4}
-              fill={LINES_DATA[0].color}
-              width='700'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={465} y={(1 + 1) * 9 + 2.9} className={cl.horizontalLineText}>
-              H-RF
-            </text> */}
-            {/* Hitter line rect & text */}
-            {/* <rect
-              x={135}
-              y={(1 + 2) * 9 - 4}
-              fill={LINES_DATA[1].color}
-              width='76'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={173} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
-              H-B1
-            </text>
-            <rect
-              x={214}
-              y={(1 + 2) * 9 - 4}
-              fill={LINES_DATA[1].color}
-              width='80'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={254} y={(1 + 2) * 9 + 2.9} className={cl.horizontalLineText}>
-              B1-B2
-            </text> */}
-            {/* Run1 line rect & text */}
-            {/* <rect
-              x={135}
-              y={(1 + 3) * 9 - 4}
-              fill={LINES_DATA[2].color}
-              width='56'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={163} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-              B1-B2
-            </text>
-            <rect
-              x={194}
-              y={(1 + 3) * 9 - 4}
-              fill={LINES_DATA[2].color}
-              width='60'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={224} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-              B2-B3
-            </text>
-            <rect
-              x={257}
-              y={(1 + 3) * 9 - 4}
-              fill={LINES_DATA[2].color}
-              width='60'
-              height='8'
-              className={cl.eventRect}
-            />
-            <text x={287} y={(1 + 3) * 9 + 2.9} className={cl.horizontalLineText}>
-              B3-HOME
-            </text> */}
+                {/* {timeStart1 && (
+                  <>
+                    <rect
+                      x={getRelativeX(timeStart1)}
+                      y={(i + 3) * 9 - 4 - Y_SHIFT}
+                      fill={color}
+                      width={getRelativeX(timeEnd1) - getRelativeX(timeStart1)}
+                      height='8'
+                      className={cl.eventRect}
+                    />
+                    <text
+                      x={getRelativeX(timeStart1) + (getRelativeX(timeEnd1) - getRelativeX(timeStart1)) / 2}
+                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
+                      className={cl.horizontalLineText}>
+                      {textFrom1}-{textTo1}
+                    </text>
+                  </>
+                )} */}
+                {/* {timeStart2 && (
+                  <>
+                    <rect
+                      x={getRelativeX(timeStart2)}
+                      y={(i + 3) * 9 - 4 - Y_SHIFT}
+                      fill={color}
+                      width={getRelativeX(timeEnd2) - getRelativeX(timeStart2)}
+                      height='8'
+                      className={cl.eventRect}
+                    />
+                    <text
+                      x={getRelativeX(timeStart2) + (getRelativeX(timeEnd2) - getRelativeX(timeStart2)) / 2}
+                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
+                      className={cl.horizontalLineText}>
+                      {textFrom2}-{textTo2}
+                    </text>
+                  </>
+                )} */}
+              </Fragment>
+              // Rect
+            ))}
             <use href='#left-border-line' />
             <use href='#red-border-line' />
             <use href='#right-border-line' />
