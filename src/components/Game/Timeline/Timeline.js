@@ -16,8 +16,6 @@ const VIEW_BOX_WIDTH = 825;
 
 const Timeline = ({ addedClass = null }) => {
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  // const defaultState = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
-  // const [sliderCoords, setSliderCoords] = useState(defaultState);
   const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
@@ -360,6 +358,7 @@ const Timeline = ({ addedClass = null }) => {
                   stroke={color}
                   strokeWidth='0.5'
                 />
+								{/* Rects and texts */}
                 {events.map(({ timeStart, timeEnd, textFrom, textTo }, j) => (
                   <Fragment key={j}>
                     <rect
@@ -378,45 +377,7 @@ const Timeline = ({ addedClass = null }) => {
                     </text>
                   </Fragment>
                 ))}
-
-                {/* {timeStart1 && (
-                  <>
-                    <rect
-                      x={getRelativeX(timeStart1)}
-                      y={(i + 3) * 9 - 4 - Y_SHIFT}
-                      fill={color}
-                      width={getRelativeX(timeEnd1) - getRelativeX(timeStart1)}
-                      height='8'
-                      className={cl.eventRect}
-                    />
-                    <text
-                      x={getRelativeX(timeStart1) + (getRelativeX(timeEnd1) - getRelativeX(timeStart1)) / 2}
-                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
-                      className={cl.horizontalLineText}>
-                      {textFrom1}-{textTo1}
-                    </text>
-                  </>
-                )} */}
-                {/* {timeStart2 && (
-                  <>
-                    <rect
-                      x={getRelativeX(timeStart2)}
-                      y={(i + 3) * 9 - 4 - Y_SHIFT}
-                      fill={color}
-                      width={getRelativeX(timeEnd2) - getRelativeX(timeStart2)}
-                      height='8'
-                      className={cl.eventRect}
-                    />
-                    <text
-                      x={getRelativeX(timeStart2) + (getRelativeX(timeEnd2) - getRelativeX(timeStart2)) / 2}
-                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
-                      className={cl.horizontalLineText}>
-                      {textFrom2}-{textTo2}
-                    </text>
-                  </>
-                )} */}
               </Fragment>
-              // Rect
             ))}
             <use href='#left-border-line' />
             <use href='#red-border-line' />
