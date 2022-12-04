@@ -29,7 +29,9 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
   const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
 
   const redLinePercent = (redLineTotalSecs * 100) / totalSeconds;
-  const redLineRelative = (viewBoxWidth / 100) * redLinePercent;
+
+  const isRedLineMoreX2 = (viewBoxWidth / 100) * redLinePercent > x2relative;
+  const redLineRelative = isRedLineMoreX2 ? x2relative : (viewBoxWidth / 100) * redLinePercent;
   return (
     <>
       <rect
@@ -62,7 +64,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={x1relative + 1}
         y2='52'
-				id='left-border-line'
+        id='left-border-line'
         stroke='#1A4C96'
         strokeWidth='2'
         className={cl.siblingLine}
@@ -88,7 +90,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={x2relative - 1}
         y2='52'
-				id='right-border-line'
+        id='right-border-line'
         stroke='#1A4C96'
         strokeWidth='2'
         className={cl.siblingLine}
@@ -102,7 +104,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={redLineRelative - 1}
         y2='52'
-				id='red-border-line'
+        id='red-border-line'
         stroke='#E2001C'
         strokeWidth='2'
         className={cl.redLine}
