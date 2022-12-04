@@ -158,7 +158,7 @@ const Timeline = ({ addedClass = null }) => {
       const { video } = currentMoment;
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
-			// Old videoLengthPrefix method
+      // Old videoLengthPrefix method
       // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
@@ -188,7 +188,7 @@ const Timeline = ({ addedClass = null }) => {
   const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
   // Old method
-	// const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
+  // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
   const totalSeconds = currentMoment.video
     ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
@@ -320,14 +320,36 @@ const Timeline = ({ addedClass = null }) => {
         );
       LINES_DATA.push(tempLineData);
     }
-    console.log(LINES_DATA);
   }
+
+  const handleTimelineEvtChanger = direction => () => {
+    // Calc array for start times of events
+    const { field, hit, pitch, play } = currentMoment.metering;
+    const timesArr = [];
+    field?.forEach(evt => timesArr.push(evt.time_start));
+    play?.forEach(evt => timesArr.push(evt.time_start));
+    pitch?.time_start && timesArr.push(pitch.time_start);
+    hit?.time_start && timesArr.push(hit.time_start);
+		
+    const sortValue = direction === 'right' ? 1 : -1;
+    const sortValue2 = sortValue * -1;
+    timesArr.sort((a, b) => (a > b ? sortValue : sortValue2));
+
+    if (direction === 'right') {
+      const closestValue = timesArr.find(value => videoCurrentTime < value);
+      closestValue > 0 && dispatch(setSeekValue(closestValue));
+      return;
+    }
+
+    const closestValue = timesArr.find(value => videoCurrentTime > value);
+    closestValue > 0 && dispatch(setSeekValue(closestValue));
+  };
 
   return (
     <div className={cl.wrapper + ' ' + addedClass}>
       <div className={cl.eventsBtnsWrapper}>
-        <TimelineEventChanger />
-        <TimelineEventChanger direction='right' />
+        <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
+        <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />
       </div>
       <svg viewBox={`0 0 30 52`} className={cl.sideChart} preserveAspectRatio='none'>
         {/* Left titles */}
