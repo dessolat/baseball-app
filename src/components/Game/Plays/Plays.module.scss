@@ -41,10 +41,17 @@
 }
 
 .hitting {
-  // grid-template: minmax(422px, 482px) 36px / minmax(157.53px, 187px) minmax(262.5px, 390px) minmax(262.5px, 390px);
-  grid-template: 31.11328125rem / minmax(415px, 577px) minmax(262.5px, 390px);
+  grid-template: 15.5rem 5rem 9.84rem  /  1fr     32.375rem;
+	gap: 6px;
+  // grid-template: 31.11328125rem / minmax(415px, 577px) minmax(262.5px, 390px);
   // grid-template: 30.125rem / minmax(415px, 577px) minmax(262.5px, 390px);
-  grid-template-areas: 'bat stats';
+  grid-template-areas: 
+	'field videos'
+	'stats videos'
+	'graph videos'
+	;
+	overflow: hidden;
+  // grid-template-areas: 'bat stats';
   // grid-template-areas:
   //   'events bat stats'
   //   'footer footer footer';
