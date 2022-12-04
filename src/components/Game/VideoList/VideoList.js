@@ -153,8 +153,10 @@ const VideoList = ({ viewMode }, ref) => {
 
     timeIntervalRef.current = setInterval(() => {
       const time = video1Ref.current?.getCurrentTime();
-      (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, 15);
+		
+      time && dispatch(setVideoCurrentTime(time));
+      // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
+    }, videoState === 1 ? 15 : 200);
 
     return () => {
       clearInterval(timeIntervalRef.current);
