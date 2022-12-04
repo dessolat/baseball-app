@@ -171,7 +171,7 @@ const PitchVideos = () => {
     timeIntervalRef.current = setInterval(() => {
       const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
       (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, 20);
+    }, 15);
 
     return () => {
       clearInterval(timeIntervalRef.current);

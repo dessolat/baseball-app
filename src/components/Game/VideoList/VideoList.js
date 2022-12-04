@@ -154,7 +154,7 @@ const VideoList = ({ viewMode }, ref) => {
     timeIntervalRef.current = setInterval(() => {
       const time = video1Ref.current?.getCurrentTime();
       (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, 20);
+    }, 15);
 
     return () => {
       clearInterval(timeIntervalRef.current);
