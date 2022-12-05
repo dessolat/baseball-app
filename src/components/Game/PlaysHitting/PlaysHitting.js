@@ -17,7 +17,7 @@ const PlaysHitting = () => {
     <>
       {(mobileWidth > 1000 || hittingMode === 'Field') && <HittingField hit={currentMoment.metering?.hit} />}
       {(mobileWidth > 1000 || hittingMode === 'Stats') && <HittingStats hit={currentMoment.metering?.hit}/>}
-      {(mobileWidth > 1000 || hittingMode === 'Graph') && <HittingGraph />}
+      {(mobileWidth > 1000 || hittingMode === 'Graph') && <HittingGraph bat={currentMoment.metering?.bat}/>}
       {(mobileWidth > 1000 || hittingMode === 'Videos') && <HittingVideos />}
       {/* {(mobileWidth > 1000 || hittingMode === 'Bat') && (
         <PlaysBat currentMoment={currentMoment} setHittingMode={setHittingMode} />
