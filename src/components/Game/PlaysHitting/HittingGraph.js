@@ -1,5 +1,7 @@
 import React from 'react';
 import cl from './PlaysHitting.module.scss';
+import GraphImage from 'images/hit_graph_thumb.png';
+
 const Header = ({ maxSpeed }) => {
   const maxSpeedValue = maxSpeed ? `${maxSpeed} mph` : ' ';
   const angleValue = maxSpeed ? `12.4 degrees` : ' ';
@@ -18,8 +20,24 @@ const Header = ({ maxSpeed }) => {
   );
 };
 
-const HittingGraph = () => {
-  return <div className={cl.graph}>HittingGraph</div>;
+const Graph = () => {
+  return (
+    <div className={cl.graphWrapper}>
+      <p className={cl.title}>Bat speed (mph)</p>
+      <img src={GraphImage} alt='graph-image' width='100%' />
+    </div>
+  );
+};
+
+const HittingGraph = ({ bat }) => {
+  const { max_speed: maxSpeed } = bat || {};
+
+  return (
+    <div className={cl.graph}>
+      <Header maxSpeed={maxSpeed} />
+      <Graph />
+    </div>
+  );
 };
 
 export default HittingGraph;
