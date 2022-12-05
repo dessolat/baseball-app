@@ -15,18 +15,10 @@ const PlaysHitting = () => {
 
   return (
     <>
-      {(mobileWidth > 1000 || hittingMode === 'Field') && (
-				<HittingField />
-      )}
-      {(mobileWidth > 1000 || hittingMode === 'Stats') && (
-				<HittingStats />
-      )}
-      {(mobileWidth > 1000 || hittingMode === 'Graph') && (
-				<HittingGraph />
-      )}
-      {(mobileWidth > 1000 || hittingMode === 'Videos') && (
-				<HittingVideos />
-      )}
+      {(mobileWidth > 1000 || hittingMode === 'Field') && <HittingField hit={currentMoment.metering?.hit} />}
+      {(mobileWidth > 1000 || hittingMode === 'Stats') && <HittingStats />}
+      {(mobileWidth > 1000 || hittingMode === 'Graph') && <HittingGraph />}
+      {(mobileWidth > 1000 || hittingMode === 'Videos') && <HittingVideos />}
       {/* {(mobileWidth > 1000 || hittingMode === 'Bat') && (
         <PlaysBat currentMoment={currentMoment} setHittingMode={setHittingMode} />
       )}
