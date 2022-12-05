@@ -15,17 +15,19 @@ const HittingField = ({ hit }) => {
 
   return (
     <div className={cl.field}>
-      <svg width='100%' height='100%' viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'>
-        <path
-          d={ballPath}
-          stroke='#4AA0F0'
-          strokeWidth='20'
-          strokeLinejoin='round'
-          strokeLinecap='round'></path>
-        {intermediatePoints}
-      </svg>
+      <div className={cl.fieldBg}>
+        <svg width='100%' height='100%' viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'>
+          <path
+            d={ballPath}
+            stroke='#4AA0F0'
+            strokeWidth='20'
+            strokeLinejoin='round'
+            strokeLinecap='round'></path>
+          {intermediatePoints}
+        </svg>
+      </div>
     </div>
   );
 };
 
-export default HittingField
+export default HittingField;
