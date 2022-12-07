@@ -233,7 +233,6 @@ const PitchVideos = () => {
       const secondsFromRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
-      console.log(secondsFromRated);
       Object.values(VIDEO_REFS).forEach(value => value.current.seekTo(secondsFromRated));
 
       const secondsToRated =
