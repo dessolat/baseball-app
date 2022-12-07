@@ -4,8 +4,8 @@ const defaultState = {
   inningNumber: 1,
   situations: ['All'],
   situationFilter: 'All',
-  currentCard: {}, 
-  currentTab: 'pitch', 
+  currentCard: {},
+  currentTab: 'pitch',
   currentMoment: {},
   playersInfo: {},
   imagesData: {},
@@ -18,19 +18,20 @@ const defaultState = {
   isVideo: false,
   pitchState: 'Field',
   errorMsg: null,
-	playerCardFilter: '',
-	videoPlaybackRate: 1,
-	videoState: null,
-	preferredVideoState: 1,
-	isFilteredPlayer: true,
-	isCameraSelector: false,
-	moments: [],
-	isFullscreen: false,
-	videoCurrentTime: 0,
-	videoLengthMode: 'Full',
-	timelineSliderCoords: { x1: 0, x2: 100 },
-	seekValue: null,
-	isLastMomentMode: false
+  playerCardFilter: '',
+  videoPlaybackRate: 1,
+  videoState: null,
+  preferredVideoState: 1,
+  isFilteredPlayer: true,
+  isCameraSelector: false,
+  moments: [],
+  isFullscreen: false,
+  videoCurrentTime: 0,
+  videoLengthMode: 'Full',
+  timelineSliderCoords: { x1: 0, x2: 100 },
+  seekValue: null,
+  isLastMomentMode: false,
+  isRedLineDragging: false
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -65,6 +66,7 @@ const SET_VIDEO_LENGTH_MODE = 'SET_VIDEO_LENGTH_MODE';
 const SET_TIMELINE_SLIDER_COORDS = 'SET_TIMELINE_SLIDER_COORDS';
 const SET_SEEK_VALUE = 'SET_SEEK_VALUE';
 const SET_IS_LAST_MOMENT_MODE = 'SET_IS_LAST_MOMENT_MODE';
+const SET_IS_RED_LINE_DRAGGING = 'SET_IS_RED_LINE_DRAGGING';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -132,6 +134,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, seekValue: action.payload };
     case SET_IS_LAST_MOMENT_MODE:
       return { ...state, isLastMomentMode: !state.isLastMomentMode };
+    case SET_IS_RED_LINE_DRAGGING:
+      return { ...state, isRedLineDragging: action.payload };
     default:
       return state;
   }
@@ -169,3 +173,4 @@ export const setVideoLengthMode = payload => ({ type: SET_VIDEO_LENGTH_MODE, pay
 export const setTimelineSliderCoords = payload => ({ type: SET_TIMELINE_SLIDER_COORDS, payload });
 export const setSeekValue = payload => ({ type: SET_SEEK_VALUE, payload });
 export const setIsLastMomentMode = () => ({ type: SET_IS_LAST_MOMENT_MODE });
+export const setIsRedLineDragging = () => ({ type: SET_IS_RED_LINE_DRAGGING });
