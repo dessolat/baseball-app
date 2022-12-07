@@ -64,7 +64,7 @@ const PitchVideos = () => {
 
     if (video) {
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-			// Old method
+      // Old method
       // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
@@ -168,11 +168,14 @@ const PitchVideos = () => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
-    timeIntervalRef.current = setInterval(() => {
-      const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
-      time && dispatch(setVideoCurrentTime(time));
-      // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, videoState === 1 ? 15 : 200);
+    timeIntervalRef.current = setInterval(
+      () => {
+        const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
+        time && dispatch(setVideoCurrentTime(time));
+        // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
+      },
+      videoState === 1 ? 15 : 200
+    );
 
     return () => {
       clearInterval(timeIntervalRef.current);
@@ -182,16 +185,16 @@ const PitchVideos = () => {
 
   const { left_main_link: topLeftLink, right_main_link: topRightLink, pitch_link: bottomLink } = cameraInfo;
 
-  // const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  // const videoId2 = getYouTubeID(topRightLink) || null;
-  // const videoId3 = getYouTubeID(bottomLink) || null;
-  const videoId1 = 'ZTsgKIKW8GE' || getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  const videoId2 = 'ZTsgKIKW8GE' || getYouTubeID(topRightLink) || null;
-  const videoId3 = 'ZTsgKIKW8GE' || getYouTubeID(bottomLink) || null;
+  const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
+  const videoId2 = getYouTubeID(topRightLink) || null;
+  const videoId3 = getYouTubeID(bottomLink) || null;
+  // const videoId1 = 'ZTsgKIKW8GE' || getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
+  // const videoId2 = 'ZTsgKIKW8GE' || getYouTubeID(topRightLink) || null;
+  // const videoId3 = 'ZTsgKIKW8GE' || getYouTubeID(bottomLink) || null;
 
   function toNextMomentOrCard() {
     const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner?.id);
-    console.log(momentIndex);
+
     if (momentIndex < currentCard.moments.length - 1) {
       const nextMoment = currentCard.moments[momentIndex + 1];
 
@@ -200,23 +203,26 @@ const PitchVideos = () => {
       if (!nextMoment.video) return;
 
       const { video: nextVideo } = nextMoment;
-			const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-			// Old method
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      // Old method
       // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       //
       const getSliderCoords = video => {
-        const totalSeconds = video.short_seconds_to - video.short_seconds_from;
+				// Old super short calc method
+        // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
 
-        const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
-        const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
+        // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
+        // const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
 
-        const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
-        const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
+        // const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
+        // const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
 
         return {
-          x1: videoLengthMode === 'Super Short' ? startSecondsPercent : 0,
-          x2: videoLengthMode === 'Super Short' ? endSecondsPercent : 0
+          x1: 0,
+          x2: 0
+          // x1: videoLengthMode === 'Super Short' ? startSecondsPercent : 0,
+          // x2: videoLengthMode === 'Super Short' ? endSecondsPercent : 0
         };
       };
       //
@@ -276,8 +282,8 @@ const PitchVideos = () => {
     }
 
     const { video } = currentMoment;
-		const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-		// Old method
+    const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+    // Old method
     // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal =
@@ -291,9 +297,11 @@ const PitchVideos = () => {
     doSeek && Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(seekToTime));
 
     isForcePlay &&
-      Object.values(VIDEO_REFS).forEach(
-        value => value.current?.getPlayerState() !== 1 && value.current?.playVideo()
-      );
+      Object.values(VIDEO_REFS).forEach(value => {
+        // console.log(value.current?.getPlayerState());
+        // value.current?.getPlayerState() !== 1 &&
+        value.current?.playVideo();
+      });
 
     const secondsToRated =
       video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;

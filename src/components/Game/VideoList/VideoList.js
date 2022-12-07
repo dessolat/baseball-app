@@ -198,17 +198,20 @@ const VideoList = ({ viewMode }, ref) => {
 
       //
       const getSliderCoords = video => {
-        const totalSeconds = video.short_seconds_to - video.short_seconds_from;
+				// Old super short calc method
+        // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
 
-        const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
-        const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
+        // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
+        // const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
 
-        const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
-        const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
+        // const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
+        // const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
 
         return {
-          x1: videoLengthMode === 'Super Short' ? startSecondsPercent : 0,
-          x2: videoLengthMode === 'Super Short' ? endSecondsPercent : 0
+          x1: 0,
+          x2: 0
+          // x1: videoLengthMode === 'Super Short' ? startSecondsPercent : 0,
+          // x2: videoLengthMode === 'Super Short' ? endSecondsPercent : 0
         };
       };
       //
@@ -293,10 +296,10 @@ const VideoList = ({ viewMode }, ref) => {
     }
 
     if (isForcePlay) {
-      video1Ref.current?.getPlayerState() !== 1 && video1Ref.current?.playVideo();
-      video2Ref.current?.getPlayerState() !== 1 && video2Ref.current?.playVideo();
-      video3Ref.current?.getPlayerState() !== 1 && video3Ref.current?.playVideo();
-      video4Ref.current?.getPlayerState() !== 1 && video4Ref.current?.playVideo();
+      video1Ref.current?.playVideo();
+      video2Ref.current?.playVideo();
+      video3Ref.current?.playVideo();
+      video4Ref.current?.playVideo();
     }
 
     const secondsToRated =

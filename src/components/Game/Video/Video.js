@@ -115,8 +115,8 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
       {Object.keys(currentCard).length !== 0 ? (
         <>
           <YouTube
-            videoId={'ZTsgKIKW8GE'}
-            // videoId={videoId}
+            // videoId={'ZTsgKIKW8GE'}
+            videoId={videoId}
             // videoId={'WCjLd7QAJq8'}
             onReady={onReady}
             onStateChange={onStateChange}
