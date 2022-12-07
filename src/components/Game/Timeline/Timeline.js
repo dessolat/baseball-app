@@ -96,6 +96,25 @@ const Timeline = ({ addedClass = null }) => {
       );
       return;
     }
+    if (sliderNameRef.current === 'red-line') {
+      const { video } = currentMoment;
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
+      const secondsTotal =
+        video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+      const seekToValue =
+        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
+
+      const leftSliderTime =
+        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * sliderCoords.x1) / 100;
+
+      const seekToTime = seekToValue <= leftSliderTime ? leftSliderTime : seekToValue;
+
+      dispatch(setSeekValue(seekToTime));
+      dispatch(setVideoCurrentTime(seekToTime));
+
+      return;
+    }
 
     if (sliderNameRef.current === 'drag-area') {
       const slider = sliderRef.current;
@@ -330,7 +349,7 @@ const Timeline = ({ addedClass = null }) => {
     play?.forEach(evt => timesArr.push(evt.time_start));
     pitch?.time_start && timesArr.push(pitch.time_start);
     hit?.time_start && timesArr.push(hit.time_start);
-		
+
     const sortValue = direction === 'right' ? 1 : -1;
     const sortValue2 = sortValue * -1;
     timesArr.sort((a, b) => (a > b ? sortValue : sortValue2));

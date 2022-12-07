@@ -151,12 +151,15 @@ const VideoList = ({ viewMode }, ref) => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
-    timeIntervalRef.current = setInterval(() => {
-      const time = video1Ref.current?.getCurrentTime();
-		
-      time && dispatch(setVideoCurrentTime(time));
-      // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
-    }, videoState === 1 ? 15 : 200);
+    timeIntervalRef.current = setInterval(
+      () => {
+        const time = video1Ref.current?.getCurrentTime();
+
+        time && dispatch(setVideoCurrentTime(time));
+        // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
+      },
+      videoState === 1 ? 15 : 200
+    );
 
     return () => {
       clearInterval(timeIntervalRef.current);
@@ -198,7 +201,7 @@ const VideoList = ({ viewMode }, ref) => {
 
       //
       const getSliderCoords = video => {
-				// Old super short calc method
+        // Old super short calc method
         // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
 
         // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
