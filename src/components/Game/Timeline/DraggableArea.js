@@ -34,6 +34,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
   const redLineRelative = isRedLineMoreX2 ? x2relative : (viewBoxWidth / 100) * redLinePercent;
   return (
     <>
+      {/* Draggable field */}
       <rect
         x={x1relative}
         y='0'
@@ -104,10 +105,22 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={redLineRelative - 1}
         y2='52'
+        stroke='transparent'
+        strokeWidth='20'
+        className={cl.draggableLine}
+        onMouseDown={handleMouseDown}
+        onDragStart={e => e.preventDefault()}
+        name='red-line'
+      />
+      <line
+        x1={redLineRelative - 1}
+        y1='0'
+        x2={redLineRelative - 1}
+        y2='52'
         id='red-border-line'
         stroke='#E2001C'
         strokeWidth='2'
-        className={cl.redLine}
+        className={cl.redLine + ' ' + cl.siblingLine}
         onDragStart={e => e.preventDefault()}
       />
       <text
