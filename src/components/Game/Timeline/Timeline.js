@@ -254,6 +254,7 @@ const Timeline = ({ addedClass = null }) => {
       };
 
       pitch?.time_start && tempLineData.events.push({ timeStart: pitch.time_start, timeEnd: pitch.time_end });
+			hit?.time_start && tempLineData.events.push({ timeStart: hit.time_start, timeEnd: hit.time_end });
       play.forEach(value =>
         tempLineData.events.push({ timeStart: value.time_start, timeEnd: value.time_end })
       );
@@ -267,7 +268,6 @@ const Timeline = ({ addedClass = null }) => {
       events: []
     };
 
-    hit?.time_start && tempLineData.events.push({ timeStart: hit.time_start, timeEnd: hit.time_end });
     field
       ?.filter(value => value.who === 0)
       .forEach(value =>
