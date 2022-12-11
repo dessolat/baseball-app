@@ -150,6 +150,7 @@ const PitchVideos = () => {
     if (!isAllReady) return;
 
     rateChangeHandler(videoPlaybackRate);
+		// eslint-disable-next-line
   }, [videoPlaybackRate]);
 
   // useEffect(() => {
