@@ -1,18 +1,18 @@
-import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useRef, useEffect, Fragment } from 'react';
 import cl from './PlaysSpin.module.scss';
 
 const DOT_RADIUS = 3;
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
 const COLORS = {
-	'-1': 'lightgray',
+  '-1': 'lightgray',
   0: '#1A4C96',
   1: 'red',
   2: 'green',
   3: 'olive',
-	4: 'yellow',
-	5: 'purple',
-	6: 'lightgreen'
+  4: 'yellow',
+  5: 'purple',
+  6: 'lightgreen'
 };
 
 const PlaysSpinChart = ({ chartData, currentDot }) => {
@@ -31,15 +31,15 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
   }, [currentDot]);
 
   useLayoutEffect(() => {
-		//Calculating MAX absolute value 
+    //Calculating MAX absolute value
     const maxValue = chartData.reduce(
       (max, cur) => Math.max(Math.abs(cur.offsetX), Math.abs(cur.offsetY), max),
       0
     );
 
-		const newGraphRatio = 100 / (maxValue * 100)
+    const newGraphRatio = 100 / (maxValue * 100);
 
-		setGraphRatio(newGraphRatio-0.3)
+    setGraphRatio(newGraphRatio - 0.3);
   }, [chartData]);
 
   useLayoutEffect(() => {
@@ -257,10 +257,9 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
           coordX + GRAPH_START_X < 112 &&
           coordY + GRAPH_START_Y < 108;
         return (
-          <>
+          <Fragment key={i}>
             {isCircle && (
               <circle
-                key={i}
                 cx={coordX + GRAPH_START_X}
                 cy={coordY + GRAPH_START_Y}
                 r={DOT_RADIUS}
@@ -269,7 +268,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
                 strokeWidth='0.5'
               />
             )}
-          </>
+          </Fragment>
         );
       })}
 
