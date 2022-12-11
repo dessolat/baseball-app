@@ -2,19 +2,23 @@ import React from 'react';
 import cl from './PlaysHitting.module.scss';
 import GraphImage from 'images/hit_graph_thumb.png';
 
-const Header = ({ maxSpeed }) => {
-  const maxSpeedValue = maxSpeed ? `${maxSpeed} mph` : ' ';
-  const angleValue = maxSpeed ? `12.4 degrees` : ' ';
+const Header = ({ maxSpeed, angle }) => {
+  const maxSpeedValue = maxSpeed !== undefined ? `${maxSpeed} mph` : '—';
+  const angleValue = angle !== undefined ? `${angle} degrees` : '—';
 
   return (
-    <div className={cl.row}>
-      <div>
-        <span className={cl.title}>Attack Angle</span>
-        <span className={cl.value}>{angleValue}</span>
+    <div className={cl.headerWrapper}>
+      <div className={cl.leftSide}>
+        <div className={cl.row}>
+          <span className={cl.title}>Attack Angle</span>
+          <span className={cl.value}>{angleValue}</span>
+        </div>
       </div>
-      <div>
-        <span className={cl.title}>Max speed</span>
-        <span className={cl.value}>{maxSpeedValue}</span>
+      <div className={cl.rightSide}>
+        <div className={cl.row}>
+          <span className={cl.title}>Max speed</span>
+          <span className={cl.value}>{maxSpeedValue}</span>
+        </div>
       </div>
     </div>
   );
@@ -30,11 +34,11 @@ const Graph = () => {
 };
 
 const HittingGraph = ({ bat }) => {
-  const { max_speed: maxSpeed } = bat || {};
+  const { max_speed: maxSpeed, angle } = bat || {};
 
   return (
     <div className={cl.graph}>
-      <Header maxSpeed={maxSpeed} />
+      <Header maxSpeed={maxSpeed} angle={angle} />
       <Graph />
     </div>
   );
