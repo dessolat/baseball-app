@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveCardList, setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import { setActiveCardList, setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
 
 const KEYS = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
 
 const useArrowNavigate = (cards, currentCard) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
   const currentMoment = useSelector(state => state.game.currentMoment);
-  const playbackMode = useSelector(state => state.game.playbackMode);
+  // const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
   const handleKeyDown = e => {

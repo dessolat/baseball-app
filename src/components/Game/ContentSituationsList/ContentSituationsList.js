@@ -2,14 +2,14 @@ import React, { forwardRef, useEffect } from 'react';
 import cl from './ContentSituationsList.module.scss';
 import ContentSituationsListItem from '../ContentSituationsListItem/ContentSituationsListItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPlaybackMode, setCurrentCard } from 'redux/gameReducer';
+import { setCurrentCard } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
-  const playbackMode = useSelector(state => state.game.playbackMode);
+  // const playbackMode = useSelector(state => state.game.playbackMode);
   const activeCardList = useSelector(state => state.game.activeCardList);
   const dispatch = useDispatch();
   const handleKeyDown = useArrowNavigate(filteredCards, currentCard);

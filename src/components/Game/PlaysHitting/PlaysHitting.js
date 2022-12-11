@@ -8,7 +8,7 @@ import HittingStats from './HittingStats';
 import HittingVideos from './HittingVideos/HittingVideos';
 
 const PlaysHitting = () => {
-  const [hittingMode, setHittingMode] = useState('Field');
+  const [hittingMode] = useState('Field');
 
   const currentMoment = useSelector(state => state.game.currentMoment);
   const mobileWidth = useSelector(state => state.shared.mobileWidth);

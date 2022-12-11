@@ -28,7 +28,7 @@ const Graph = () => {
   return (
     <div className={cl.graphWrapper}>
       <p className={cl.title}>Bat speed (mph)</p>
-      <img src={GraphImage} alt='graph-image' width='100%' />
+      <img src={GraphImage} alt='graph' width='100%' />
     </div>
   );
 };

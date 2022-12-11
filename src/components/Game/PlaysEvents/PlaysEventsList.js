@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import cl from './PlaysEvents.module.scss';
 import PlaysEventsItem from './PlaysEventsItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import { setCurrentMoment } from 'redux/gameReducer';
 
 const PlaysEventsList = ({ moments }) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
