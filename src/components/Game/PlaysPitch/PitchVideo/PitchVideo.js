@@ -32,7 +32,8 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
     [cl.bottomVideo]: position === 'bottom'
   });
 
-  const xCoef = videoWrapperRef?.current?.clientWidth / ((1920 / 100) * (POS_OPTIONS[position].delta * 100));
+  const xCoef =
+    (videoWrapperRef?.current?.clientWidth ?? 0) / ((1920 / 100) * (POS_OPTIONS[position].delta * 100));
 
   // const playbackQualityHandle = e => {
   //   setCurrentQuality(e.data);
