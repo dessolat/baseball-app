@@ -171,22 +171,71 @@
     height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
 
-  > .row {
+	.headerWrapper {
+		display: flex;
+	}
+
+  .leftSide,
+  .rightSide {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    > *:first-child {
-      flex: 1 60%;
+    @media screen and (max-width: 1242px) {
+      justify-content: space-around;
+    }
+  }
 
-      @media screen and (max-width: 1242px) {
-        flex: 1 50%;
-      }
+  .leftSide {
+    flex: 1 60%;
+
+    @media screen and (max-width: 1242px) {
+      flex: 1 50%;
     }
 
-    > *:last-child {
-      flex: 1 40%;
+    > .row {
+      display: flex;
 
-      @media screen and (max-width: 1242px) {
+      > .title {
         flex: 1 50%;
+
+        @media screen and (max-width: 1242px) {
+          flex: 1 63%;
+        }
+        @media screen and (max-width: 1080px) {
+          flex: 1 75%;
+        }
+      }
+
+      > .value {
+        flex: 1 50%;
+
+        @media screen and (max-width: 1242px) {
+          flex: 1 37%;
+        }
+        @media screen and (max-width: 1080px) {
+          flex: 1 25%;
+        }
+      }
+    }
+  }
+
+  .rightSide {
+    flex: 1 40%;
+
+    @media screen and (max-width: 1242px) {
+      flex: 1 50%;
+    }
+
+    > .row {
+      display: flex;
+
+      .title {
+        flex: 1 60%;
+      }
+
+      .value {
+        flex: 1 40%;
       }
     }
   }
