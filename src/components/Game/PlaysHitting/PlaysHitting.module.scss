@@ -171,9 +171,9 @@
     height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
 
-	.headerWrapper {
-		display: flex;
-	}
+  .headerWrapper {
+    display: flex;
+  }
 
   .leftSide,
   .rightSide {
@@ -244,6 +244,9 @@
 .graphWrapper {
   margin-top: 0.5rem;
 
+  .sideTitle {
+    font: 400 0.875rem var(--font-athiti);
+  }
 }
 
 .videos {
@@ -255,10 +258,9 @@
   overflow: hidden;
   display: grid;
   grid-template: 15.3575rem 15.3575rem / 15.3575rem 15.3575rem;
-	grid-template-areas: 
-	'top-left-video top-right-video'
-	'bottom-left-video bottom-right-video'
-	;
+  grid-template-areas:
+    'top-left-video top-right-video'
+    'bottom-left-video bottom-right-video';
   // grid-template: 15.5rem 15.5rem / 16rem 16rem;
   gap: 6px;
 
