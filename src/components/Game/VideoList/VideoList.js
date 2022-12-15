@@ -43,6 +43,95 @@ const VideoList = ({ viewMode }, ref) => {
   const nextMomentTimeoutRef = useRef();
   const videoHandlingTimeoutRef = useRef();
 
+  // New synchronization method
+  const allTimesIntervalRef = useRef();
+  const syncTimeoutRef = useRef(false);
+
+  const VIDEO_NUMBERS =
+    viewMode.slice(-1) === '1'
+      ? { 1: video1Ref }
+      : {
+          1: video1Ref,
+          2: video2Ref,
+          3: video3Ref,
+          4: video4Ref
+        };
+
+  useEffect(() => {
+    clearInterval(allTimesIntervalRef.current);
+
+    if (viewMode === 'mode-1') return;
+
+    allTimesIntervalRef.current = setInterval(() => {
+      const video1Time = video1Ref.current?.getCurrentTime();
+      const video2Time = video2Ref.current?.getCurrentTime();
+      const video3Time = video3Ref.current?.getCurrentTime();
+      const video4Time = video4Ref.current?.getCurrentTime();
+
+      // const loadedVideoCheck =
+      //   viewMode.slice(-1) === '1' ? video1Time : video1Time && video2Time && video3Time && video4Time;
+
+      // if (!loadedVideoCheck) return;
+      if (!video1Time || !video2Time || !video3Time || !video4Time) return;
+
+      const delta1 = 0;
+      const delta2 = Math.abs(video1Time - video2Time);
+      const delta3 = Math.abs(video1Time - video3Time);
+      const delta4 = Math.abs(video1Time - video4Time);
+
+      const deltaArr = [delta1, delta2, delta3, delta4];
+
+      const deltaCap = 0.05;
+      const isBigDelta = deltaArr.some(delta => delta > deltaCap);
+
+      if (isBigDelta) {
+        delta2 > deltaCap && video2Ref.current?.seekTo(video1Time);
+        delta3 > deltaCap && video3Ref.current?.seekTo(video1Time);
+        delta4 > deltaCap && video4Ref.current?.seekTo(video1Time);
+        video1Ref.current.pauseVideo();
+        video2Ref.current?.pauseVideo();
+        video3Ref.current?.pauseVideo();
+        video4Ref.current?.pauseVideo();
+      }
+
+      const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
+        const entryState = entry[1].current?.getPlayerState();
+        return entryState === 2;
+      });
+
+      const isAllReady = Object.entries(VIDEO_NUMBERS).every(entry => {
+        const entryState = entry[1].current?.getPlayerState();
+        return entryState === -1 || entryState === 2;
+      });
+
+      console.log(
+        video1Ref.current?.getPlayerState(),
+        video2Ref.current?.getPlayerState(),
+        video3Ref.current?.getPlayerState(),
+        video4Ref.current?.getPlayerState()
+      );
+      console.log(isAllPaused, !isBigDelta, preferredVideoState === 1, !syncTimeoutRef.current);
+      if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
+        syncTimeoutRef.current = true;
+
+        setTimeout(() => {
+          video1Ref.current.playVideo();
+          video2Ref.current?.playVideo();
+          video3Ref.current?.playVideo();
+          video4Ref.current?.playVideo();
+
+          syncTimeoutRef.current = false;
+        }, 2000);
+      }
+    }, 20);
+
+    return () => {
+      clearInterval(allTimesIntervalRef.current);
+    };
+  }, [preferredVideoState, viewMode]);
+
+  //
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
@@ -73,6 +162,7 @@ const VideoList = ({ viewMode }, ref) => {
     clearTimeout(videoHandlingTimeoutRef.current);
     clearInterval(intervalRef.current);
 
+    // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
 
     video1Ref.current?.pauseVideo();
@@ -338,6 +428,14 @@ const VideoList = ({ viewMode }, ref) => {
   }
 
   const seekVideos = sec => {
+    // New synchronization method
+    if (viewMode !== 'mode-1') {
+      video1Ref.current?.pauseVideo();
+      video2Ref.current?.pauseVideo();
+      video3Ref.current?.pauseVideo();
+      video4Ref.current?.pauseVideo();
+    }
+    //
     video1Ref.current?.seekTo(sec);
     video2Ref.current?.seekTo(sec);
     video3Ref.current?.seekTo(sec);
@@ -362,19 +460,20 @@ const VideoList = ({ viewMode }, ref) => {
 
   //Handle on funcs
 
-  const VIDEO_NUMBERS =
-    viewMode.slice(-1) === '1'
-      ? { 1: video1Ref }
-      : {
-          1: video1Ref,
-          2: video2Ref,
-          3: video3Ref,
-          4: video4Ref
-        };
+  // const VIDEO_NUMBERS =
+  //   viewMode.slice(-1) === '1'
+  //     ? { 1: video1Ref }
+  //     : {
+  //         1: video1Ref,
+  //         2: video2Ref,
+  //         3: video3Ref,
+  //         4: video4Ref
+  //       };
 
   const handleOnReady = (videoNumber, target) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
+    // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
     const seekToCurrentTime = videoCurrentTime > 0;
 
@@ -384,7 +483,21 @@ const VideoList = ({ viewMode }, ref) => {
   };
 
   const stateChangeHandler = (videoNumber, target, stateValue) => {
+    console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
     videoNumber === 1 && dispatch(setVideoState(stateValue));
+
+    const video1 = video1Ref.current;
+    const video2 = video2Ref.current;
+    const video3 = video3Ref.current;
+    const video4 = video4Ref.current;
+
+    // console.log(
+    //   'states:',
+    //   video1.getPlayerState(),
+    //   video2?.getPlayerState(),
+    //   video3?.getPlayerState(),
+    //   video4?.getPlayerState()
+    // );
 
     const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
       const entryState = entry[1].current?.getPlayerState();
@@ -393,46 +506,54 @@ const VideoList = ({ viewMode }, ref) => {
 
     const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
       const entryState = entry[1].current?.getPlayerState();
-      return entryState === 2 || entryState === 3 || videoNumber !== entry[0];
+      return entryState === 2 && videoNumber !== entry[0];
     });
 
-    const video1 = video1Ref.current;
-    const video2 = video2Ref.current;
-    const video3 = video3Ref.current;
-    const video4 = video4Ref.current;
+    console.log('isAllReady:', isAllReady);
+    console.log('isAllPaused:', isAllPaused);
 
-    if (stateValue === 1) {
-      !isAllReady && target.pauseVideo();
+    // const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return (entryState === 3 || entryState === -1) && videoNumber !== entry[0];
+    // });
 
-      if (isAllReady) {
-        if (preferredVideoState === 2) {
-          video1.pauseVideo();
-          video2?.pauseVideo();
-          video3?.pauseVideo();
-          video4?.pauseVideo();
-          return;
-        }
+    // const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return entryState === 2 || entryState === 3 || videoNumber !== entry[0];
+    // });
 
-        video1 && preferredVideoState === 1 && video1.playVideo();
-        video2 && preferredVideoState === 1 && video2.playVideo();
-        video3 && preferredVideoState === 1 && video3.playVideo();
-        video4 && preferredVideoState === 1 && video4.playVideo();
-      }
-    }
+    // if (stateValue === 1) {
+    //   !isAllReady && target.pauseVideo();
 
-    if (stateValue === 2) {
-      video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
-      video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
-      video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
-      video4 && video4.getPlayerState() === 1 && video4.pauseVideo();
-    }
+    //   if (isAllReady) {
+    //     if (preferredVideoState === 2) {
+    //       video1.pauseVideo();
+    //       video2?.pauseVideo();
+    //       video3?.pauseVideo();
+    //       video4?.pauseVideo();
+    //       return;
+    //     }
 
-    if (stateValue === 3 && isAllPaused) {
-      video1 && preferredVideoState === 1 && video1.playVideo();
-      video2 && preferredVideoState === 1 && video2.playVideo();
-      video3 && preferredVideoState === 1 && video3.playVideo();
-      video4 && preferredVideoState === 1 && video4.playVideo();
-    }
+    //     video1 && preferredVideoState === 1 && video1.playVideo();
+    //     video2 && preferredVideoState === 1 && video2.playVideo();
+    //     video3 && preferredVideoState === 1 && video3.playVideo();
+    //     video4 && preferredVideoState === 1 && video4.playVideo();
+    //   }
+    // }
+
+    // if (stateValue === 2) {
+    //   video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
+    //   video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
+    //   video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
+    //   video4 && video4.getPlayerState() === 1 && video4.pauseVideo();
+    // }
+
+    // if (stateValue === 3 && isAllPaused) {
+    //   video1 && preferredVideoState === 1 && video1.playVideo();
+    //   video2 && preferredVideoState === 1 && video2.playVideo();
+    //   video3 && preferredVideoState === 1 && video3.playVideo();
+    //   video4 && preferredVideoState === 1 && video4.playVideo();
+    // }
   };
 
   return (
