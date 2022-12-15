@@ -126,7 +126,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
               width: '100%',
               playerVars: {
                 autoplay: 0,
-                controls: 0,
+                controls: 1,
                 modestbranding: 1,
                 disablekb: 1
                 // loop: 1,
