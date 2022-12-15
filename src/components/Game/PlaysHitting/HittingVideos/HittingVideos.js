@@ -160,10 +160,14 @@ const HittingVideos = () => {
   }, [currentMoment, videoState]);
 
   const {
-    left_main_link: topLeftLink,
-    right_main_link: topRightLink,
-    left_main_link: bottomLeftLink,
-    right_main_link: bottomRightLink
+    left_add_link: topLeftLink,
+    right_add_link: topRightLink,
+    bat_right_link: bottomLeftLink,
+    bat_left_link: bottomRightLink
+    // left_main_link: topLeftLink,
+    // right_main_link: topRightLink,
+    // left_main_link: bottomLeftLink,
+    // right_main_link: bottomRightLink
   } = cameraInfo;
 
   const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';

@@ -6,10 +6,13 @@ import { useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 
 const POS_OPTIONS = {
-  'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
-  'top-right': { x: -0.505, y: -0.205, delta: 0.14 },
-  'bottom-left': { x: -0.34, y: -0.2, delta: 0.14 },
-	'bottom-right': { x: -0.505, y: -0.205, delta: 0.14 }
+  'top-left': { x: -0.09, y: -0.535, delta: 0.24 },
+  // 'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
+  'top-right': { x: -0.5833, y: -0.535, delta: 0.24 },
+  'bottom-left': { x: -0.26, y: -0.07, delta: 0.48 },
+	'bottom-right': { x: -0.125, y: -0.07, delta: 0.48 }
+  // 'bottom-left': { x: -0.34, y: -0.2, delta: 0.14 },
+	// 'bottom-right': { x: -0.505, y: -0.205, delta: 0.14 }
 };
 
 const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
