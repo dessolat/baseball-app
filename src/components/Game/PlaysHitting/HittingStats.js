@@ -2,11 +2,12 @@ import React from 'react';
 import cl from './PlaysHitting.module.scss';
 
 const HittingStats = ({ hit }) => {
-  const { init_speed_x, distance, angle } = hit || 0;
+  const { start_speed: startSpeed, distance, angle } = hit || 0;
 
-  const exitVelocityValue = init_speed_x !== undefined ? init_speed_x.toFixed(1) + ' mph' : '—';
+  const exitVelocityValue = startSpeed !== undefined ? startSpeed.toFixed(1) + ' mph' : '—';
   const distanceValue = distance !== undefined ? distance.toFixed(1) + ' m' : '—';
   const angleValue = angle !== undefined ? angle.toFixed(0) + '°' : '—';
+
   return (
     <div className={cl.stats}>
       <div className={cl.leftSide}>
