@@ -42,6 +42,8 @@ const VideoList = ({ viewMode }, ref) => {
   const endRef = useRef(null);
   const nextMomentTimeoutRef = useRef();
   const videoHandlingTimeoutRef = useRef();
+  const playTimeoutRef = useRef();
+	const alreadySeekingRef = useRef(false)
 
   // New synchronization method
   const allTimesIntervalRef = useRef();
@@ -60,6 +62,12 @@ const VideoList = ({ viewMode }, ref) => {
   useEffect(() => {
     clearInterval(allTimesIntervalRef.current);
 
+    if (preferredVideoState === 2) {
+      clearTimeout(playTimeoutRef.current);
+      syncTimeoutRef.current = false;
+			alreadySeekingRef.current = false
+    }
+
     if (viewMode === 'mode-1') return;
 
     allTimesIntervalRef.current = setInterval(() => {
@@ -67,11 +75,7 @@ const VideoList = ({ viewMode }, ref) => {
       const video2Time = video2Ref.current?.getCurrentTime();
       const video3Time = video3Ref.current?.getCurrentTime();
       const video4Time = video4Ref.current?.getCurrentTime();
-
-      // const loadedVideoCheck =
-      //   viewMode.slice(-1) === '1' ? video1Time : video1Time && video2Time && video3Time && video4Time;
-
-      // if (!loadedVideoCheck) return;
+     
       if (!video1Time || !video2Time || !video3Time || !video4Time) return;
 
       const delta1 = 0;
@@ -80,18 +84,21 @@ const VideoList = ({ viewMode }, ref) => {
       const delta4 = Math.abs(video1Time - video4Time);
 
       const deltaArr = [delta1, delta2, delta3, delta4];
-
-      const deltaCap = 0.05;
+      console.log(deltaArr);
+      const deltaCap = 0.08;
       const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
-      if (isBigDelta) {
-        delta2 > deltaCap && video2Ref.current?.seekTo(video1Time);
-        delta3 > deltaCap && video3Ref.current?.seekTo(video1Time);
-        delta4 > deltaCap && video4Ref.current?.seekTo(video1Time);
+      if (isBigDelta && !alreadySeekingRef.current) {
         video1Ref.current.pauseVideo();
         video2Ref.current?.pauseVideo();
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
+        delta2 > deltaCap && video2Ref.current?.seekTo(video1Time, true);
+        delta3 > deltaCap && video3Ref.current?.seekTo(video1Time, true);
+        delta4 > deltaCap && video4Ref.current?.seekTo(video1Time, true);
+
+				// alreadySeekingRef.current = true
+
       }
 
       const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
@@ -110,23 +117,25 @@ const VideoList = ({ viewMode }, ref) => {
         video3Ref.current?.getPlayerState(),
         video4Ref.current?.getPlayerState()
       );
-      console.log(isAllPaused, !isBigDelta, preferredVideoState === 1, !syncTimeoutRef.current);
+			
       if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
         syncTimeoutRef.current = true;
 
-        setTimeout(() => {
-          video1Ref.current.playVideo();
-          video2Ref.current?.playVideo();
-          video3Ref.current?.playVideo();
-          video4Ref.current?.playVideo();
+        // playTimeoutRef.current = setTimeout(() => {
+        video1Ref.current.playVideo();
+        video2Ref.current?.playVideo();
+        video3Ref.current?.playVideo();
+        video4Ref.current?.playVideo();
 
-          syncTimeoutRef.current = false;
-        }, 2000);
+        syncTimeoutRef.current = false;
+				alreadySeekingRef.current = false
+        // }, 20);
       }
-    }, 20);
+    }, 90);
 
     return () => {
       clearInterval(allTimesIntervalRef.current);
+      clearTimeout(playTimeoutRef.current);
     };
   }, [preferredVideoState, viewMode]);
 
@@ -183,10 +192,10 @@ const VideoList = ({ viewMode }, ref) => {
         video[`${videoLengthPrefix}_seconds_from`] +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-      video1Ref.current?.seekTo(secondsFromRated);
-      video2Ref.current?.seekTo(secondsFromRated);
-      video3Ref.current?.seekTo(secondsFromRated);
-      video4Ref.current?.seekTo(secondsFromRated);
+      video1Ref.current?.seekTo(secondsFromRated, true);
+      video2Ref.current?.seekTo(secondsFromRated, true);
+      video3Ref.current?.seekTo(secondsFromRated, true);
+      video4Ref.current?.seekTo(secondsFromRated, true);
     }
 
     videoHandlingTimeoutRef.current = setTimeout(
@@ -315,10 +324,10 @@ const VideoList = ({ viewMode }, ref) => {
       const secondsFromRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
-      video1Ref.current?.seekTo(secondsFromRated);
-      video2Ref.current?.seekTo(secondsFromRated);
-      video3Ref.current?.seekTo(secondsFromRated);
-      video4Ref.current?.seekTo(secondsFromRated);
+      video1Ref.current?.seekTo(secondsFromRated, true);
+      video2Ref.current?.seekTo(secondsFromRated, true);
+      video3Ref.current?.seekTo(secondsFromRated, true);
+      video4Ref.current?.seekTo(secondsFromRated, true);
 
       const secondsToRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
@@ -382,10 +391,10 @@ const VideoList = ({ viewMode }, ref) => {
     const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
 
     if (doSeek) {
-      video1Ref.current?.seekTo(seekToTime);
-      video2Ref.current?.seekTo(seekToTime);
-      video3Ref.current?.seekTo(seekToTime);
-      video4Ref.current?.seekTo(seekToTime);
+      video1Ref.current?.seekTo(seekToTime, true);
+      video2Ref.current?.seekTo(seekToTime, true);
+      video3Ref.current?.seekTo(seekToTime, true);
+      video4Ref.current?.seekTo(seekToTime, true);
     }
 
     if (isForcePlay) {
@@ -429,17 +438,18 @@ const VideoList = ({ viewMode }, ref) => {
 
   const seekVideos = sec => {
     // New synchronization method
-    if (viewMode !== 'mode-1') {
-      video1Ref.current?.pauseVideo();
-      video2Ref.current?.pauseVideo();
-      video3Ref.current?.pauseVideo();
-      video4Ref.current?.pauseVideo();
-    }
+    // if (viewMode !== 'mode-1') {
+    //   video1Ref.current?.pauseVideo();
+    //   video2Ref.current?.pauseVideo();
+    //   video3Ref.current?.pauseVideo();
+    //   video4Ref.current?.pauseVideo();
+    // }
     //
-    video1Ref.current?.seekTo(sec);
-    video2Ref.current?.seekTo(sec);
-    video3Ref.current?.seekTo(sec);
-    video4Ref.current?.seekTo(sec);
+		alreadySeekingRef.current = false
+    video1Ref.current?.seekTo(sec, true);
+    video2Ref.current?.seekTo(sec, true);
+    video3Ref.current?.seekTo(sec, true);
+    video4Ref.current?.seekTo(sec, true);
   };
 
   function setPlayPause(state) {
@@ -473,6 +483,8 @@ const VideoList = ({ viewMode }, ref) => {
   const handleOnReady = (videoNumber, target) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
+		
+
     // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
     const seekToCurrentTime = videoCurrentTime > 0;
@@ -485,6 +497,8 @@ const VideoList = ({ viewMode }, ref) => {
   const stateChangeHandler = (videoNumber, target, stateValue) => {
     console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
     videoNumber === 1 && dispatch(setVideoState(stateValue));
+
+		stateValue === 1 && preferredVideoState === 2 && target.pauseVideo()
 
     const video1 = video1Ref.current;
     const video2 = video2Ref.current;
@@ -622,7 +636,14 @@ const VideoList = ({ viewMode }, ref) => {
           />
         </>
       )}
-      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} ref={ref} />}
+      {currentMoment.video && (
+        <VideoControls
+          setPlayPause={setPlayPause}
+          playTimeout={playTimeoutRef.current}
+          syncTimeout={syncTimeoutRef.current}
+          ref={ref}
+        />
+      )}
     </>
   );
 };
