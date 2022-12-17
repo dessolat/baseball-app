@@ -15,8 +15,9 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const videoState = useSelector(state => state.game.videoState);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const viewMode = useSelector(state => state.game.viewMode);
+  const preferredVideoState = useSelector(state => state.game.preferredVideoState);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const timeoutRef = useRef(null);
   const previousTimeRef = useRef(0);
@@ -44,13 +45,13 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement);
 
   const playMode = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
-	const prefVideoStateValue = playMode === 'play' ? 1 : 2
+  const prefVideoStateValue = playMode === 'play' ? 1 : 2;
 
   const handleWrapperClick = e => {
     if (e.detail === 1) {
       clickTimerRef.current = setTimeout(() => {
         setPlayPause(playMode);
-				dispatch(setPreferredVideoState(prefVideoStateValue))
+        dispatch(setPreferredVideoState(prefVideoStateValue));
       }, 200);
     }
 
@@ -62,16 +63,20 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     }
   };
 
-	const handlePlayPauseBtnClick = () => {
-		// const prefVideoStateValue = playMode === 'play' ? 1 : 2
+  const handlePlayPauseBtnClick = () => {
+    // const prefVideoStateValue = playMode === 'play' ? 1 : 2
+    const prefVideoStateValue = preferredVideoState === 1 ? 2 : 1;
+    const playMode = preferredVideoState === 1 ? 'pause' : 'play';
 
-		setPlayPause(playMode)
-		dispatch(setPreferredVideoState(prefVideoStateValue))
-	}
+    // playMode === 'pause' && clearTimeout(playTimeout);
+    setPlayPause(playMode);
+    dispatch(setPreferredVideoState(prefVideoStateValue));
+  };
 
   const getPlayPauseBtn = () => {
-		const comp = playMode === 'play' ? <PlayBtn /> : <PauseBtn />;
-		
+    const comp = preferredVideoState !== 1 ? <PlayBtn /> : <PauseBtn />;
+    // const comp = playMode === 'play' ? <PlayBtn /> : <PauseBtn />;
+
     return <button onClick={handlePlayPauseBtnClick}>{comp}</button>;
   };
 
