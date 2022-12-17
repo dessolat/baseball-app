@@ -21,7 +21,7 @@ const defaultState = {
   playerCardFilter: '',
   videoPlaybackRate: 1,
   videoState: null,
-  preferredVideoState: 1,
+  preferredVideoState: 2,
   isFilteredPlayer: true,
   isCameraSelector: false,
   moments: [],
