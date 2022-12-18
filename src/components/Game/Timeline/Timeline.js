@@ -250,12 +250,12 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Ball',
         color: '#1A4C96',
-				secondaryColor: '#4D80CB',
+        secondaryColor: '#4D80CB',
         events: []
       };
 
       pitch?.time_start && tempLineData.events.push({ timeStart: pitch.time_start, timeEnd: pitch.time_end });
-			hit?.time_start && tempLineData.events.push({ timeStart: hit.time_start, timeEnd: hit.time_end });
+      hit?.time_start && tempLineData.events.push({ timeStart: hit.time_start, timeEnd: hit.time_end });
       play.forEach(value =>
         tempLineData.events.push({ timeStart: value.time_start, timeEnd: value.time_end })
       );
@@ -266,7 +266,7 @@ const Timeline = ({ addedClass = null }) => {
     const tempLineData = {
       title: 'Hitter',
       color: '#FFAB00',
-			secondaryColor: '#FFD173',
+      secondaryColor: '#FFD173',
       events: []
     };
 
@@ -288,7 +288,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run1',
         color: '#BF8610',
-				secondaryColor: '#DFBA6F',
+        secondaryColor: '#DFBA6F',
         events: []
       };
 
@@ -308,7 +308,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run2',
         color: '#8D6004',
-				secondaryColor: '#C69736',
+        secondaryColor: '#C69736',
         events: []
       };
 
@@ -328,7 +328,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run3',
         color: '#5C4006',
-				secondaryColor: '#AE9054',
+        secondaryColor: '#AE9054',
         events: []
       };
 
@@ -414,24 +414,41 @@ const Timeline = ({ addedClass = null }) => {
                   strokeWidth='0.5'
                 />
                 {/* Rects and texts */}
-                {events.map(({ timeStart, timeEnd, textFrom, textTo }, j) => (
-                  <Fragment key={j}>
-                    <rect
+                {events.map(({ timeStart, timeEnd, textFrom, textTo }, j) => {
+                  const xStart = getRelativeX(timeStart);
+                  const yStart = (i + 3) * 9 - 4 - Y_SHIFT;
+                  const xEnd = xStart + getRelativeX(timeEnd) - getRelativeX(timeStart);
+                  const yEnd = yStart + 8;
+                  const halfHeight = 8 / 2;
+                  const cornerValue = 3;
+
+                  const path = `M${xStart} ${yStart + halfHeight}L${xStart + cornerValue} ${yStart}L${
+                    xEnd - cornerValue
+                  } ${yStart}L${xEnd} ${yStart + halfHeight}L${xEnd - cornerValue} ${yEnd}L${
+                    xStart + cornerValue
+                  } ${yEnd}Z`;
+
+                  return (
+                    <Fragment key={j}>
+                      <path d={path} fill={!(j % 2) ? color : secondaryColor} />
+
+                      {/* <rect
                       x={getRelativeX(timeStart)}
                       y={(i + 3) * 9 - 4 - Y_SHIFT}
                       fill={(j % 2) ? color : secondaryColor}
                       width={getRelativeX(timeEnd) - getRelativeX(timeStart)}
                       height='8'
                       className={cl.eventRect}
-                    />
-                    <text
-                      x={getRelativeX(timeStart) + (getRelativeX(timeEnd) - getRelativeX(timeStart)) / 2}
-                      y={(i + 3) * 9 + 2.9 - Y_SHIFT}
-                      className={cl.horizontalLineText}>
-                      {textFrom}-{textTo}
-                    </text>
-                  </Fragment>
-                ))}
+                    /> */}
+                      <text
+                        x={getRelativeX(timeStart) + (getRelativeX(timeEnd) - getRelativeX(timeStart)) / 2}
+                        y={(i + 3) * 9 + 2.9 - Y_SHIFT + 0.5}
+                        className={cl.horizontalLineText}>
+                        {textFrom}-{textTo}
+                      </text>
+                    </Fragment>
+                  );
+                })}
               </Fragment>
             ))}
             <use href='#red-border-line' />
