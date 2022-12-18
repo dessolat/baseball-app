@@ -250,6 +250,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Ball',
         color: '#1A4C96',
+				secondaryColor: '#4D80CB',
         events: []
       };
 
@@ -265,6 +266,7 @@ const Timeline = ({ addedClass = null }) => {
     const tempLineData = {
       title: 'Hitter',
       color: '#FFAB00',
+			secondaryColor: '#FFD173',
       events: []
     };
 
@@ -286,6 +288,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run1',
         color: '#BF8610',
+				secondaryColor: '#DFBA6F',
         events: []
       };
 
@@ -305,6 +308,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run2',
         color: '#8D6004',
+				secondaryColor: '#C69736',
         events: []
       };
 
@@ -324,6 +328,7 @@ const Timeline = ({ addedClass = null }) => {
       const tempLineData = {
         title: 'Run3',
         color: '#5C4006',
+				secondaryColor: '#AE9054',
         events: []
       };
 
@@ -396,7 +401,7 @@ const Timeline = ({ addedClass = null }) => {
             )}
 
             {/* Horizontal lines */}
-            {LINES_DATA.map(({ color, events }, i) => (
+            {LINES_DATA.map(({ color, secondaryColor, events }, i) => (
               // Horizontal line
               <Fragment key={i}>
                 <line
@@ -414,7 +419,7 @@ const Timeline = ({ addedClass = null }) => {
                     <rect
                       x={getRelativeX(timeStart)}
                       y={(i + 3) * 9 - 4 - Y_SHIFT}
-                      fill={color}
+                      fill={(j % 2) ? color : secondaryColor}
                       width={getRelativeX(timeEnd) - getRelativeX(timeStart)}
                       height='8'
                       className={cl.eventRect}
