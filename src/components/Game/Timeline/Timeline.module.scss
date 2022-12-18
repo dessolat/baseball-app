@@ -101,6 +101,6 @@
   pointer-events: none;
 }
 
-.draggableLine:hover ~ .siblingLine {
+.draggableLine:hover + .siblingLine {
   stroke-width: 4px;
 }

@@ -48,13 +48,45 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         name='drag-area'
         ref={ref}
       />
+			{/* Red line */}
+      <line
+        x1={redLineRelative - 1}
+        y1='0'
+        x2={redLineRelative - 1}
+        y2='52'
+        stroke='transparent'
+        strokeWidth='20'
+        className={cl.draggableLine}
+        onMouseDown={handleMouseDown}
+        onDragStart={e => e.preventDefault()}
+        name='red-line'
+      />
+      <line
+        x1={redLineRelative + 1}
+        y1='0'
+        x2={redLineRelative + 1}
+        y2='52'
+        id='red-border-line'
+        stroke='#E2001C'
+        strokeWidth='2'
+        className={cl.redLine + ' ' + cl.siblingLine}
+        onDragStart={e => e.preventDefault()}
+      />
+      <text
+        x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25}
+        y='49'
+        className={cl.redLineText}>
+        {redLineTime}
+      </text>
+
+			{/* Left line */}
       <line
         x1={x1relative + 1}
         y1='0'
         x2={x1relative + 1}
         y2='52'
         stroke='transparent'
-        strokeWidth='10'
+        strokeWidth='25'
         className={cl.draggableLine}
         onMouseDown={handleMouseDown}
         onDragStart={e => e.preventDefault()}
@@ -74,13 +106,15 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
       <text x={x1relative + 5} y='49' className={cl.verticalLineText}>
         {leftLineTime}
       </text>
+
+			{/* Right line */}
       <line
         x1={x2relative - 1}
         y1='0'
         x2={x2relative - 1}
         y2='52'
         stroke='transparent'
-        strokeWidth='10'
+        strokeWidth='25'
         className={cl.draggableLine}
         onMouseDown={handleMouseDown}
         onDragStart={e => e.preventDefault()}
@@ -100,35 +134,8 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
       <text x={x2 < 96 ? x2relative + 5 : x2relative - 25} y='49' className={cl.verticalLineText}>
         {rightLineTime}
       </text>
-      <line
-        x1={redLineRelative - 1}
-        y1='0'
-        x2={redLineRelative - 1}
-        y2='52'
-        stroke='transparent'
-        strokeWidth='20'
-        className={cl.draggableLine}
-        onMouseDown={handleMouseDown}
-        onDragStart={e => e.preventDefault()}
-        name='red-line'
-      />
-      <line
-        x1={redLineRelative - 1}
-        y1='0'
-        x2={redLineRelative - 1}
-        y2='52'
-        id='red-border-line'
-        stroke='#E2001C'
-        strokeWidth='2'
-        className={cl.redLine + ' ' + cl.siblingLine}
-        onDragStart={e => e.preventDefault()}
-      />
-      <text
-        x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25}
-        y='49'
-        className={cl.redLineText}>
-        {redLineTime}
-      </text>
+
+			
     </>
   );
 };

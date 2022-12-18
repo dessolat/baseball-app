@@ -429,8 +429,8 @@ const Timeline = ({ addedClass = null }) => {
                 ))}
               </Fragment>
             ))}
-            <use href='#left-border-line' />
             <use href='#red-border-line' />
+            <use href='#left-border-line' />
             <use href='#right-border-line' />
           </>
         )}
