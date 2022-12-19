@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './SimpleToggler.module.scss';
 
-const SimpleToggler = () => {
+const SimpleToggler = props => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleClick = () => setIsChecked(prev => !prev);
   return (
     <label>
-      <input type='checkbox' checked={isChecked} onChange={handleClick} />
+      <input type='checkbox' checked={isChecked} onChange={handleClick} {...props} />
     </label>
   );
 };
