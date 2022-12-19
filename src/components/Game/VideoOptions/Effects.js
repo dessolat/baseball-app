@@ -6,7 +6,7 @@ const Effects = () => {
   return (
     <div className={cl.effectsWrapper}>
       Effects
-      <SimpleToggler />
+      <SimpleToggler disabled />
     </div>
   );
 };
