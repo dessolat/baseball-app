@@ -42,7 +42,7 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   }, [videoState]);
 
   const handleFullscreenBtnClick = () =>
-    isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement);
+    isFullscreen ? closeFullscreen() : openFullscreen(ref.current.parentElement.parentElement);
 
   const playMode = videoState === 1 || videoState === 3 || isSynchronization ? 'pause' : 'play';
   const prefVideoStateValue = playMode === 'play' ? 1 : 2;
