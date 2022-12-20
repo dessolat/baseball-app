@@ -578,6 +578,7 @@ const VideoList = ({ viewMode }, ref) => {
           videoNumber={1}
           handleOnReady={handleOnReady}
           stateChangeHandler={stateChangeHandler}
+					setPlayPause={setPlayPause}
         />
       )}
       {viewModeNumber === 2 && (
@@ -587,24 +588,28 @@ const VideoList = ({ viewMode }, ref) => {
             videoNumber={1}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
         </>
       )}
@@ -615,32 +620,34 @@ const VideoList = ({ viewMode }, ref) => {
             videoNumber={1}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
+						setPlayPause={setPlayPause}
           />
         </>
       )}
       {currentMoment.video && (
         <VideoControls
           setPlayPause={setPlayPause}
-          playTimeout={playTimeoutRef.current}
-          syncTimeout={syncTimeoutRef.current}
           ref={ref}
         />
       )}
