@@ -1,3 +1,158 @@
+.outerWrapper {
+  height: 100%;
+
+  .sidePanelFull {
+    display: none;
+    grid-area: side-panel;
+    height: 100%;
+    // background: white;
+  }
+
+  .bottomPanelFull {
+    display: none;
+    grid-area: bottom-panel;
+    height: 100%;
+    // background: white;
+  }
+
+  &:fullscreen {
+    display: grid;
+    gap: 6px;
+    background: #e5e5e5;
+    grid-template: 1fr 50px / 98px 1fr;
+    grid-template-areas:
+      'side-panel videos'
+      'side-panel bottom-panel';
+
+    > .wrapper {
+      grid-area: videos;
+    }
+
+    // &.videos1 {
+    //   grid-template: 1fr 50px / 98px 1fr;
+    //   grid-template-areas:
+    //     'side-panel video-1'
+    //     'side-panel bottom-panel';
+    // }
+
+    // &.videos4 {
+    //   grid-template: 1fr 1fr 50px / 98px 1fr 1fr;
+    //   grid-template-areas:
+    //     'side-panel video-1 video-2'
+    //     'side-panel video-3 video-4'
+    //     'side-panel bottom-panel bottom-panel';
+    // }
+
+    .openFullscreen {
+      display: none;
+    }
+    .closeFullscreen {
+      display: inline-block;
+    }
+    .sidePanelFull {
+      display: block;
+    }
+
+    .bottomPanelFull {
+      display: flex;
+      gap: 6px;
+
+      > div:first-child {
+        padding-top: 0;
+      }
+
+      > .signs {
+        background: white;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0 0.6rem;
+
+        > div:first-child {
+          align-items: center;
+          align-content: center;
+        }
+      }
+
+      > .teamInfo {
+        background: white;
+        // width: 13.75rem;
+        padding: 0 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.875rem;
+
+        > .scoreTitle,
+        h2 {
+          font: 700 3.125rem / 1.75 var(--font-comfortaa);
+          margin-top: 6px;
+        }
+
+        > h2 {
+          width: unset;
+          margin-left: unset;
+          height: unset;
+        }
+
+        > .teamTitle {
+          font: 400 1.25rem var(--font-nunito);
+        }
+      }
+
+      .playersInfo {
+        background: white;
+        display: flex;
+        align-items: center;
+				justify-content: space-between;
+        gap: 2rem;
+        padding: 0.2rem 0.6rem;
+        flex: 1;
+
+        > .players > div {
+					font: 400 1rem / 1 var(--font-nunito);
+
+          > span {
+            display: inline-block;
+            font-weight: 700;
+            width: 1.3rem;
+          }
+        }
+
+        > .speed {
+          align-self: flex-start;
+          color: red;
+          font: 700 1.25rem / .9 var(--font-athiti);
+        }
+      }
+    }
+
+    .sidePanelFull {
+      display: flex;
+      flex-direction: column;
+
+      .events {
+        flex: 1;
+      }
+
+      .options {
+        height: 11.0625rem;
+        padding: 0 22px;
+        background: white;
+        margin-top: 6px;
+
+        > div {
+          padding: 0 0 5px;
+        }
+      }
+    }
+
+    .sidePanelFull ul::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+}
+
 .wrapper {
   height: 100%;
   display: grid;
@@ -17,17 +172,8 @@
     height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
 
-	.closeFullscreen {
-		display: none;
-	}
-
-  &:fullscreen {
-    .openFullscreen {
-      display: none;
-    }
-		.closeFullscreen {
-			display: inline-block;
-		}
+  .closeFullscreen {
+    display: none;
   }
 }
 
@@ -72,8 +218,8 @@
   position: absolute;
   left: 5%;
   top: 0;
-	right: 5%;
-	bottom: 0;
+  right: 5%;
+  bottom: 0;
   // width: 100%;
   // height: 100%;
   display: grid;
@@ -81,27 +227,27 @@
 }
 
 .innerWrapper {
-	background-color: rgba($color: #000000, $alpha: 0.3);
-	display: grid;
-	place-items: center;
-	opacity: 0;
-	width: 16rem;
-	height: 8rem;
-	transition: opacity 0.3s;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  width: 16rem;
+  height: 8rem;
+  transition: opacity 0.3s;
 }
 
 .fullOpacity {
-	opacity: 1;
+  opacity: 1;
 }
 
 .controls {
   width: 15.625rem;
   height: 6.25rem;
   text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 
   > button > svg > path {
     transition: fill 0.3s, opacity 0.3s;
@@ -109,7 +255,7 @@
 
   > button:hover > svg > path {
     fill: var(--side-color);
-		opacity: 1;
+    opacity: 1;
   }
 
   > button,
@@ -127,5 +273,5 @@
 }
 
 .leftZero {
-	left: 0;
+  left: 0;
 }
