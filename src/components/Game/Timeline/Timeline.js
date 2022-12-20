@@ -14,7 +14,7 @@ const VIEW_BOX_WIDTH = 825;
 // const VIEW_BOX_WIDTH = 885;
 // const SIDE_PADDINGS = 30;
 
-const Timeline = ({ addedClass = null }) => {
+const Timeline = ({ addedClass = null, isPreserve = false }) => {
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
   const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
   const currentMoment = useSelector(state => state.game.currentMoment);
@@ -370,7 +370,7 @@ const Timeline = ({ addedClass = null }) => {
   };
 
   return (
-    <div className={cl.wrapper + ' ' + addedClass}>
+    <div className={cl.wrapper + ' ' + addedClass} style={isPreserve ? {width: '54.75rem'} : null}>
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
         <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />
