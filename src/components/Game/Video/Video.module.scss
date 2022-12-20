@@ -23,13 +23,15 @@
       display: none;
     }
 
-    > .fromFullScreen {
+    > .fromFullScreen,
+    .videoControls {
       display: inline-block;
     }
   }
 }
 
-.fromFullScreen {
+.fromFullScreen,
+.videoControls {
   display: none;
 }
 
