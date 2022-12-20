@@ -7,22 +7,25 @@ import classNames from 'classnames';
 import NoVideoScreen from './NoVideoScreen';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 import { closeFullscreen, openFullscreen } from 'utils';
+import VideoControls from '../VideoControls/VideoControls';
 // import VideoControls from './VideoControls/VideoControls';
 
-const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
+const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPlayPause }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   // const [videoCurrentTime, setVideoCurrentTime] = useState(0)
   // const [isWrapperFullscreen, setWrapperFullscreen] = useState(false);
 
   const wrapperRef = useRef();
+  const timerRef = useRef();
+  const controlsWrapperRef = useRef();
 
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
 
   const viewMode = useSelector(state => state.game.viewMode);
 
-	const onReady = e => {
+  const onReady = e => {
     handleOnReady(videoNumber, e.target);
 
     setInterval(() => {
@@ -30,17 +33,9 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
     }, 20);
   };
 
-	const onStateChange = e => {
+  const onStateChange = e => {
     stateChangeHandler(videoNumber, e.target, e.data);
   };
-
-
-
-  
-
- 
-
- 
 
   // useEffect(() => {
   //   if (
@@ -77,7 +72,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
   //             return;
   //           }
 
-	// 					console.log('%cSet', 'color: red');
+  // 					console.log('%cSet', 'color: red');
   //           dispatch(setPlaybackMode('pause'));
   //         }
   //       }
@@ -85,7 +80,6 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
   //   }, 50);
   //   // eslint-disable-next-line
   // }, [filteredCards]);
-
 
   const openFullScreen = () => {
     openFullscreen(wrapperRef.current);
@@ -109,6 +103,23 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
     [cl.bottomLeftBtn]: videoNumber === 3,
     [cl.bottomRightBtn]: videoNumber === 4
   });
+
+  function handleMouseMove() {
+    if (!currentMoment.video) return;
+
+    clearTimeout(timerRef.current);
+
+    controlsWrapperRef.current.firstChild.style.opacity = 1;
+    controlsWrapperRef.current.firstChild.style.visibility = 'visible';
+
+    timerRef.current = setTimeout(() => {
+      if (!controlsWrapperRef.current) return;
+      controlsWrapperRef.current.firstChild.style.opacity = 0;
+      timerRef.current = setTimeout(() => {
+        controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+      }, 300);
+    }, 500);
+  }
 
   return (
     <div className={videoClasses} ref={wrapperRef}>
@@ -148,13 +159,16 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler }) => {
           </span>
           {/* <span style={{position: 'absolute', left: '50%', top: 30, transform: 'translateX(-50%)', color: 'white', fontWeight: 600}}>{videoCurrentTime?.toFixed(2)}</span> */}
           {/* <span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span> */}
-          <div className={fullscreenBtnClasses}>
+          <div className={fullscreenBtnClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>
             <button onClick={openFullScreen} className={cl.toFullScreen}>
               <FullscreenBtn isOff={true} width={'100%'} height={'100%'} />
             </button>
             <button onClick={closeFullScreen} className={cl.fromFullScreen}>
               <FullscreenBtn isOff={false} width={'100%'} height={'100%'} />
             </button>
+            <div className={cl.videoControls}>
+              <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
+            </div>
           </div>
           {!currentMoment.video && <NoVideoScreen />}
           {/* {isCustomVideoControls && (
