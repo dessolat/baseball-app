@@ -7,6 +7,8 @@ import classNames from 'classnames';
 // import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import VideoList from '../VideoList/VideoList';
 import { closeFullscreen, openFullscreen } from 'utils';
+import SidePanel from './SidePanel';
+import BottomPanel from './BottomPanel';
 
 const Videos = () => {
   const wrapperRef = useRef();
@@ -67,13 +69,13 @@ const Videos = () => {
 
   return (
     <>
-      <div
-        className={wrapperClasses}
-        onMouseMove={handleMouseMove}
-        onClick={handleMouseMove}
-        ref={wrapperRef}>
+      <div className={cl.outerWrapper} ref={wrapperRef}>
         {/* <div className={wrapperClasses} ref={ref}> */}
-        <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
+        <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>
+          <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
+        </div>
+        <SidePanel />
+        <BottomPanel />
         {/* <VideoEventsList /> */}
         {/* <VideoControls ref={controlsWrapperRef} /> */}
       </div>
