@@ -139,7 +139,7 @@ const HittingVideos = () => {
     if (!isAllReady) return;
 
     rateChangeHandler(videoPlaybackRate);
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [videoPlaybackRate]);
 
   useEffect(() => {
@@ -159,6 +159,8 @@ const HittingVideos = () => {
     // eslint-disable-next-line
   }, [currentMoment, videoState]);
 
+  const { batter_position: batterPosition } = currentMoment.metering?.pitch || {};
+
   const {
     left_add_link: topLeftLink,
     right_add_link: topRightLink,
@@ -170,10 +172,10 @@ const HittingVideos = () => {
     // right_main_link: bottomRightLink
   } = cameraInfo;
 
-  const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  const videoId2 = getYouTubeID(topRightLink) || null;
-  const videoId3 = getYouTubeID(bottomLeftLink) || null;
-  const videoId4 = getYouTubeID(bottomRightLink) || null;
+  const videoId1 = getYouTubeID(batterPosition === 0 ? topLeftLink : topRightLink) || 'WCjLd7QAJq8';
+  const videoId2 = getYouTubeID(batterPosition === 0 ? topRightLink : topLeftLink) || null;
+  const videoId3 = getYouTubeID(batterPosition === 0 ? bottomLeftLink : bottomRightLink) || null;
+  const videoId4 = getYouTubeID(batterPosition === 0 ? bottomRightLink : bottomLeftLink) || null;
 
   function toNextMomentOrCard() {
     const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner?.id);
@@ -317,6 +319,7 @@ const HittingVideos = () => {
   //Handle on funcs
 
   const handleOnReady = (position, target) => {
+		console.log(position, 'ready');
     VIDEO_REFS[position].current = target;
 
     const isForcePlay = preferredVideoState === 1;
@@ -338,6 +341,11 @@ const HittingVideos = () => {
     const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
       const entryState = entry[1].current?.getPlayerState();
       return entryState === 2 || entryState === 3 || position !== entry[0];
+    });
+
+		const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
+      const entryState = entry[1].current?.getPlayerState();
+      return entryState === 5 || position !== entry[0];
     });
 
     const video1 = video1Ref.current;
@@ -377,6 +385,13 @@ const HittingVideos = () => {
       video3 && preferredVideoState === 1 && video3.playVideo();
       video4 && preferredVideoState === 1 && video4.playVideo();
     }
+
+		if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
+			video1?.playVideo();
+      video2?.playVideo();
+      video3?.playVideo();
+      video4?.playVideo();
+		}
   };
 
   function handleMouseMove() {
@@ -435,7 +450,9 @@ const HittingVideos = () => {
       <div>
         <img src={BottomImage} alt='hit-image' />
       </div> */}
-      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />}
+      {currentMoment.video && (
+        <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
+      )}
     </div>
   );
 };

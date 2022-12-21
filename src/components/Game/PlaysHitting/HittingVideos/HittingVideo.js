@@ -5,16 +5,6 @@ import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 
-const POS_OPTIONS = {
-  'top-left': { x: -0.09, y: -0.535, delta: 0.24 },
-  // 'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
-  'top-right': { x: -0.5833, y: -0.535, delta: 0.24 },
-  'bottom-left': { x: -0.26, y: -0.07, delta: 0.48 },
-	'bottom-right': { x: -0.125, y: -0.07, delta: 0.48 }
-  // 'bottom-left': { x: -0.34, y: -0.2, delta: 0.14 },
-	// 'bottom-right': { x: -0.505, y: -0.205, delta: 0.14 }
-};
-
 const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -35,13 +25,26 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
     [cl.bottomRightVideo]: position === 'bottom-right'
   });
 
+  const { batter_position: batterPosition } = currentMoment.metering?.pitch || {};
+
+  const POS_OPTIONS = {
+    'top-left':
+      batterPosition === 0 ? { x: -0.09, y: -0.5, delta: 0.24 } : { x: -0.65, y: -0.52, delta: 0.24 },
+    'top-right':
+      batterPosition === 0 ? { x: -0.5833, y: -0.5, delta: 0.24 } : { x: -0.2, y: -0.5, delta: 0.24 },
+    'bottom-left':
+      batterPosition === 0 ? { x: -0.22, y: -0.01, delta: 0.52 } : { x: -0.15, y: -0.01, delta: 0.52 },
+    'bottom-right':
+      batterPosition === 0 ? { x: -0.1, y: -0.01, delta: 0.52 } : { x: -0.22, y: -0.01, delta: 0.52 }
+  };
+
   const xCoef = videoWrapperRef?.current?.clientWidth / ((1920 / 100) * (POS_OPTIONS[position].delta * 100));
 
   const onReady = e => {
     handleOnReady(position, e.target);
 
     setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime().toFixed(2));
+      setCurrentTime(e.target.getCurrentTime()?.toFixed(2));
     }, 20);
   };
 
