@@ -93,3 +93,14 @@ export const openFullscreen = element => {
 };
 
 export const closeFullscreen = () => document.exitFullscreen();
+
+export const isFullScreen = () => {
+	const fullScreenElement = document.fullscreenElement
+			|| document.webkitFullscreenElement
+			|| document.mozFullScreenElement
+			|| document.msFullscreenElement
+			|| null;
+	
+	if (fullScreenElement === null) return false;
+	return true;
+};
