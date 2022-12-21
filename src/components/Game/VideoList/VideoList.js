@@ -43,7 +43,7 @@ const VideoList = ({ viewMode }, ref) => {
   const nextMomentTimeoutRef = useRef();
   const videoHandlingTimeoutRef = useRef();
   const playTimeoutRef = useRef();
-	const alreadySeekingRef = useRef(false)
+  const alreadySeekingRef = useRef(false);
 
   // New synchronization method
   const allTimesIntervalRef = useRef();
@@ -65,7 +65,7 @@ const VideoList = ({ viewMode }, ref) => {
     if (preferredVideoState === 2) {
       clearTimeout(playTimeoutRef.current);
       syncTimeoutRef.current = false;
-			alreadySeekingRef.current = false
+      alreadySeekingRef.current = false;
     }
 
     if (viewMode === 'mode-1') return;
@@ -75,7 +75,7 @@ const VideoList = ({ viewMode }, ref) => {
       const video2Time = video2Ref.current?.getCurrentTime();
       const video3Time = video3Ref.current?.getCurrentTime();
       const video4Time = video4Ref.current?.getCurrentTime();
-     
+
       if (!video1Time || !video2Time || !video3Time || !video4Time) return;
 
       const delta1 = 0;
@@ -97,8 +97,7 @@ const VideoList = ({ viewMode }, ref) => {
         delta3 > deltaCap && video3Ref.current?.seekTo(video1Time, true);
         delta4 > deltaCap && video4Ref.current?.seekTo(video1Time, true);
 
-				// alreadySeekingRef.current = true
-
+        // alreadySeekingRef.current = true
       }
 
       const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
@@ -117,7 +116,7 @@ const VideoList = ({ viewMode }, ref) => {
         video3Ref.current?.getPlayerState(),
         video4Ref.current?.getPlayerState()
       );
-			
+
       if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
         syncTimeoutRef.current = true;
 
@@ -128,7 +127,7 @@ const VideoList = ({ viewMode }, ref) => {
         video4Ref.current?.playVideo();
 
         syncTimeoutRef.current = false;
-				alreadySeekingRef.current = false
+        alreadySeekingRef.current = false;
         // }, 20);
       }
     }, 90);
@@ -445,7 +444,7 @@ const VideoList = ({ viewMode }, ref) => {
     //   video4Ref.current?.pauseVideo();
     // }
     //
-		alreadySeekingRef.current = false
+    alreadySeekingRef.current = false;
     video1Ref.current?.seekTo(sec, true);
     video2Ref.current?.seekTo(sec, true);
     video3Ref.current?.seekTo(sec, true);
@@ -483,8 +482,6 @@ const VideoList = ({ viewMode }, ref) => {
   const handleOnReady = (videoNumber, target) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
-		
-
     // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
     const seekToCurrentTime = videoCurrentTime > 0;
@@ -498,7 +495,7 @@ const VideoList = ({ viewMode }, ref) => {
     console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
     videoNumber === 1 && dispatch(setVideoState(stateValue));
 
-		stateValue === 1 && preferredVideoState === 2 && target.pauseVideo()
+    stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
 
     const video1 = video1Ref.current;
     const video2 = video2Ref.current;
@@ -578,7 +575,7 @@ const VideoList = ({ viewMode }, ref) => {
           videoNumber={1}
           handleOnReady={handleOnReady}
           stateChangeHandler={stateChangeHandler}
-					setPlayPause={setPlayPause}
+          setPlayPause={setPlayPause}
         />
       )}
       {viewModeNumber === 2 && (
@@ -588,28 +585,28 @@ const VideoList = ({ viewMode }, ref) => {
             videoNumber={1}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
         </>
       )}
@@ -620,37 +617,32 @@ const VideoList = ({ viewMode }, ref) => {
             videoNumber={1}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId2}
             videoNumber={2}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId3}
             videoNumber={3}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
           <Video
             videoId={videoId4}
             videoNumber={4}
             handleOnReady={handleOnReady}
             stateChangeHandler={stateChangeHandler}
-						setPlayPause={setPlayPause}
+            setPlayPause={setPlayPause}
           />
         </>
       )}
-      {currentMoment.video && (
-        <VideoControls
-          setPlayPause={setPlayPause}
-          ref={ref}
-        />
-      )}
+      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} ref={ref} />}
     </>
   );
 };
