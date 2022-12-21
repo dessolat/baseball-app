@@ -2,19 +2,19 @@ import React, { useRef, useState } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
-
 import classNames from 'classnames';
 import NoVideoScreen from './NoVideoScreen';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 import { closeFullscreen, openFullscreen } from 'utils';
 import VideoControls from '../VideoControls/VideoControls';
-// import VideoControls from './VideoControls/VideoControls';
+import SidePanel from './SidePanel';
+import BottomPanel from './BottomPanel';
+
 
 const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPlayPause }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   // const [videoCurrentTime, setVideoCurrentTime] = useState(0)
-  // const [isWrapperFullscreen, setWrapperFullscreen] = useState(false);
 
   const wrapperRef = useRef();
   const timerRef = useRef();
@@ -36,50 +36,6 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   const onStateChange = e => {
     stateChangeHandler(videoNumber, e.target, e.data);
   };
-
-  // useEffect(() => {
-  //   if (
-  //     situationFilter !== 'All' ||
-  //     !videoRef.current ||
-  //     !currentCard.moments[momentRef.current + 1]?.video?.seconds_from
-  //   )
-  //     return;
-
-  //   clearInterval(intervalRef.current);
-  //   intervalRef.current = setInterval(() => {
-  //     const currentTime = videoRef.current.getCurrentTime();
-
-  //     if (currentTime >= endRef.current) {
-  //       momentRef.current += 1;
-
-  //       //If it's not last moment in the card
-  //       if (momentRef.current < currentCard.moments.length) {
-  //         videoRef.current.seekTo(currentCard.moments[momentRef.current].video.seconds_from);
-  //         endRef.current = currentCard.moments[momentRef.current].video.seconds_to;
-  //         //If last moment
-  //       } else {
-  //         if (modeRef.current === 'pause') {
-  //           videoHandling();
-  //         } else {
-  //           let index = filteredCards.findIndex(
-  //             card => card.moments[0].inner.id === currentCard.moments[0].inner.id
-  //           );
-
-  //           index++;
-
-  //           if (index < filteredCards.length) {
-  //             dispatch(setCurrentCard(filteredCards[index]));
-  //             return;
-  //           }
-
-  // 					console.log('%cSet', 'color: red');
-  //           dispatch(setPlaybackMode('pause'));
-  //         }
-  //       }
-  //     }
-  //   }, 50);
-  //   // eslint-disable-next-line
-  // }, [filteredCards]);
 
   const openFullScreen = () => {
     openFullscreen(wrapperRef.current);
@@ -116,7 +72,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
       if (!controlsWrapperRef.current) return;
       controlsWrapperRef.current.firstChild.style.opacity = 0;
       timerRef.current = setTimeout(() => {
-        controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+        if (controlsWrapperRef.current) controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
       }, 300);
     }, 500);
   }
@@ -124,14 +80,13 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   return (
     <div className={videoClasses} ref={wrapperRef}>
       {Object.keys(currentCard).length !== 0 ? (
-        <>
+        <div className={cl.wrapper}>
           <YouTube
-            // videoId={'ZTsgKIKW8GE'}
             videoId={videoId}
+            // videoId={'ZTsgKIKW8GE'}
             // videoId={'WCjLd7QAJq8'}
             onReady={onReady}
             onStateChange={onStateChange}
-            // onPlaybackRateChange={onPlaybackRateChange}
             opts={{
               height: '100%',
               width: '100%',
@@ -163,28 +118,20 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
             <button onClick={openFullScreen} className={cl.toFullScreen}>
               <FullscreenBtn isOff={true} width={'100%'} height={'100%'} />
             </button>
-            <button onClick={closeFullScreen} className={cl.fromFullScreen}>
+            {/* <button onClick={closeFullScreen} className={cl.fromFullScreen}>
               <FullscreenBtn isOff={false} width={'100%'} height={'100%'} />
-            </button>
+            </button> */}
             <div className={cl.videoControls}>
-              <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
+              <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={true} ref={controlsWrapperRef} />
             </div>
           </div>
           {!currentMoment.video && <NoVideoScreen />}
-          {/* {isCustomVideoControls && (
-            <VideoControls
-              controlsWrapper={cl.controlsWrapper}
-              rateChangeHandler={rateChangeHandler}
-              setPlayPause={setPlayPause}
-              currentMoment={currentMoment}
-              seekVideos={seekVideos}
-              ref={videoRef}
-            />
-          )} */}
-        </>
+        </div>
       ) : (
         <></>
       )}
+			<SidePanel />
+			<BottomPanel />
     </div>
   );
 };
