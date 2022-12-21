@@ -10,24 +10,167 @@
     height: 100%;
   }
 
-  > div {
-    height: 100%;
-  }
+  
 
   &:hover > .controlsWrapper {
     opacity: 1;
   }
 
-  &:fullscreen > .btnWrapper {
-    > .toFullScreen {
-      display: none;
+  &:fullscreen {
+		display: grid;
+    gap: 6px;
+    background: #e5e5e5;
+    grid-template: 1fr 50px / 98px 1fr;
+    grid-template-areas:
+      'side-panel videos'
+      'side-panel bottom-panel';
+
+    > .wrapper {
+      grid-area: videos;
+
+			> .btnWrapper {
+				> .toFullScreen {
+					display: none;
+				}
+	
+				> .fromFullScreen,
+				.videoControls {
+					display: inline-block;
+				}
+			}
     }
 
-    > .fromFullScreen,
-    .videoControls {
-      display: inline-block;
+
+		.sidePanelFull {
+      display: block;
     }
+
+    .bottomPanelFull {
+      display: flex;
+      gap: 6px;
+
+      > div:first-child {
+        padding-top: 0;
+      }
+
+      > .signs {
+        background: white;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0 0.6rem;
+
+        > div:first-child {
+          align-items: center;
+          align-content: center;
+        }
+      }
+
+      > .teamInfo {
+        background: white;
+        // width: 13.75rem;
+        padding: 0 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.875rem;
+
+        > .scoreTitle,
+        h2 {
+          font: 700 3.125rem / 1.75 var(--font-comfortaa);
+          margin-top: 6px;
+        }
+
+        > h2 {
+          width: unset;
+          margin-left: unset;
+          height: unset;
+        }
+
+        > .teamTitle {
+          font: 400 1.25rem var(--font-nunito);
+        }
+      }
+
+      .playersInfo {
+        background: white;
+        display: flex;
+        align-items: center;
+				justify-content: space-between;
+        gap: 2rem;
+        padding: 0.2rem 0.6rem;
+        flex: 1;
+
+        > .players > div {
+					font: 400 1rem / 1 var(--font-nunito);
+
+          > span {
+            display: inline-block;
+            font-weight: 700;
+            width: 1.3rem;
+          }
+        }
+
+        > .speed {
+          align-self: flex-start;
+          color: red;
+          font: 700 1.25rem / .9 var(--font-athiti);
+        }
+      }
+    }
+
+    .sidePanelFull {
+      display: flex;
+      flex-direction: column;
+
+      .events {
+        flex: 1;
+      }
+
+      .options {
+        height: 11.0625rem;
+        padding: 0 22px;
+        background: white;
+        margin-top: 6px;
+
+        > div {
+          padding: 0 0 5px;
+        }
+      }
+    }
+
+    .sidePanelFull ul::-webkit-scrollbar {
+      width: 0;
+    }
+
+
+
+
+    
   }
+}
+
+.wrapper {
+	position: relative;
+	height: 100%;
+
+	> div {
+    height: 100%;
+  }
+}
+
+.sidePanelFull,
+.bottomPanelFull {
+  display: none;
+  height: 100%;
+}
+
+.sidePanelFull {
+  grid-area: side-panel;
+}
+
+.bottomPanelFull {
+  grid-area: bottom-panel;
 }
 
 .fromFullScreen,
