@@ -4,6 +4,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
 import cl from './PlaysRunning.module.scss';
 
+const BallPaths = ({ field }) => {
+  const ballPaths = field.reduce((sum, { data_2d: data2d }) => {
+    let ballPath = '';
+    ballPath += `M${data2d[0][0]} ${data2d[0][1]}`;
+    data2d.slice(1).forEach(coord => (ballPath += `L${coord[0]} ${coord[1]}`));
+    sum.push(ballPath);
+
+    return sum;
+  }, []);
+
+  return (
+    <>
+      {ballPaths.map((path, i) => (
+        <path
+          key={i}
+          d={path}
+          stroke='red'
+          strokeWidth='25'
+          strokeLinejoin='round'
+          strokeLinecap='round'
+          strokeDasharray='1 35'
+        />
+      ))}
+    </>
+  );
+};
+
 const PlaysRunningField = ({ field, setRunningMode }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
@@ -78,27 +105,13 @@ const PlaysRunningField = ({ field, setRunningMode }) => {
     // eslint-disable-next-line
   }, [playbackMode]);
 
-  let ballPath = '';
-
-  field
-    ?.filter(coords => coords.length > 0)
-    .forEach(coords => {
-      ballPath += `M${coords[0][0]} ${coords[0][1]}`;
-      coords.slice(1).forEach(coord => (ballPath += `L${coord[0]} ${coord[1]}`));
-    });
-
+  const isBallPaths = field?.length > 0;
   return (
     <div className={cl.fieldWrapper}>
       <svg className={cl.field} viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'>
-        <path
-          d={ballPath}
-          stroke='red'
-          strokeWidth='25'
-          strokeLinejoin='round'
-          strokeLinecap='round'
-          strokeDasharray='1 35'></path>
+        {isBallPaths && <BallPaths field={field} />}
       </svg>
-			<div className={cl.rightArrowWrapper}>
+      <div className={cl.rightArrowWrapper}>
         <Arrow direction='right' onClick={() => setRunningMode('Info')} />
       </div>
     </div>
