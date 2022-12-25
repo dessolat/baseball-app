@@ -48,6 +48,12 @@ const HittingVideos = () => {
   const endRef = useRef(null);
   const nextMomentTimeoutRef = useRef();
   const videoHandlingTimeoutRef = useRef();
+  const playTimeoutRef = useRef();
+  const alreadySeekingRef = useRef(false);
+
+  // New synchronization method
+  const allTimesIntervalRef = useRef();
+  const syncTimeoutRef = useRef(false);
 
   const VIDEO_REFS = {
     'top-left': video1Ref,
@@ -57,6 +63,88 @@ const HittingVideos = () => {
   };
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  useEffect(() => {
+    clearInterval(allTimesIntervalRef.current);
+
+    if (preferredVideoState === 2) {
+      clearTimeout(playTimeoutRef.current);
+      syncTimeoutRef.current = false;
+      alreadySeekingRef.current = false;
+    }
+
+    allTimesIntervalRef.current = setInterval(() => {
+      const video1Time = video1Ref.current?.getCurrentTime();
+      const video2Time = video2Ref.current?.getCurrentTime();
+      const video3Time = video3Ref.current?.getCurrentTime();
+      const video4Time = video4Ref.current?.getCurrentTime();
+
+      if (!video1Time || !video2Time || !video3Time || !video4Time) return;
+
+      const delta1 = 0;
+      const delta2 = Math.abs(video1Time - video2Time);
+      const delta3 = Math.abs(video1Time - video3Time);
+      const delta4 = Math.abs(video1Time - video4Time);
+
+      const deltaArr = [delta1, delta2, delta3, delta4];
+
+      const deltaCap = 0.08;
+      const deltaCaps = [getCamDelta(1), getCamDelta(2), getCamDelta(3), getCamDelta(4)];
+      const isBigDelta = deltaArr.some(
+        (delta, i) =>
+          delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap ||
+          delta < Math.abs(deltaCaps[0] - deltaCaps[i]) - deltaCap
+      );
+
+      if (isBigDelta && !alreadySeekingRef.current) {
+        video1Ref.current.pauseVideo();
+        video2Ref.current?.pauseVideo();
+        video3Ref.current?.pauseVideo();
+        video4Ref.current?.pauseVideo();
+        // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+        (delta2 > Math.abs(deltaCaps[0] - deltaCaps[1]) + deltaCap ||
+          delta2 < Math.abs(deltaCaps[0] - deltaCaps[1]) - deltaCap) &&
+          video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+        (delta3 > Math.abs(deltaCaps[0] - deltaCaps[2]) + deltaCap ||
+          delta3 < Math.abs(deltaCaps[0] - deltaCaps[2]) - deltaCap) &&
+          video3Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[2]), true);
+        (delta4 > Math.abs(deltaCaps[0] - deltaCaps[3]) + deltaCap ||
+          delta4 < Math.abs(deltaCaps[0] - deltaCaps[3]) - deltaCap) &&
+          video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
+
+        // alreadySeekingRef.current = true
+      }
+
+      const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
+        const entryState = entry[1].current?.getPlayerState();
+        return entryState === 2;
+      });
+
+      const isAllReady = Object.entries(VIDEO_REFS).every(entry => {
+        const entryState = entry[1].current?.getPlayerState();
+        return entryState === -1 || entryState === 2;
+      });
+
+      if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
+        syncTimeoutRef.current = true;
+
+        // playTimeoutRef.current = setTimeout(() => {
+        video1Ref.current.playVideo();
+        video2Ref.current?.playVideo();
+        video3Ref.current?.playVideo();
+        video4Ref.current?.playVideo();
+
+        syncTimeoutRef.current = false;
+        alreadySeekingRef.current = false;
+        // }, 20);
+      }
+    }, 90);
+
+    return () => {
+      clearInterval(allTimesIntervalRef.current);
+      clearTimeout(playTimeoutRef.current);
+    };
+  }, [preferredVideoState]);
 
   useEffect(() => {
     const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
@@ -85,7 +173,9 @@ const HittingVideos = () => {
         video[`${videoLengthPrefix}_seconds_from`] +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-      Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(secondsFromRated));
+      Object.values(VIDEO_REFS).forEach((value, i) =>
+        value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true)
+      );
     }
 
     videoHandlingTimeoutRef.current = setTimeout(
@@ -172,6 +262,17 @@ const HittingVideos = () => {
     // right_main_link: bottomRightLink
   } = cameraInfo;
 
+  function getCamDelta(videoNumber) {
+    const titles = {
+      1: batterPosition === 0 ? 'left_add_time' : 'right_add_time',
+      2: batterPosition === 0 ? 'right_add_time' : 'left_add_time',
+      3: batterPosition === 0 ? 'bat_right_time' : 'bat_left_time',
+      4: batterPosition === 0 ? 'bat_left_time' : 'bat_right_time'
+    };
+
+    return cameraInfo[titles[videoNumber]];
+  }
+
   const videoId1 = getYouTubeID(batterPosition === 0 ? topLeftLink : topRightLink) || 'WCjLd7QAJq8';
   const videoId2 = getYouTubeID(batterPosition === 0 ? topRightLink : topLeftLink) || null;
   const videoId3 = getYouTubeID(batterPosition === 0 ? bottomLeftLink : bottomRightLink) || null;
@@ -201,7 +302,9 @@ const HittingVideos = () => {
       const secondsFromRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
-      Object.values(VIDEO_REFS).forEach(value => value.current.seekTo(secondsFromRated));
+      Object.values(VIDEO_REFS).forEach((value, i) =>
+        value.current.seekTo(secondsFromRated - getCamDelta(i + 1), true)
+      );
 
       const secondsToRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
@@ -258,7 +361,10 @@ const HittingVideos = () => {
 
     const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
 
-    doSeek && Object.values(VIDEO_REFS).forEach(value => value.current?.seekTo(seekToTime));
+    doSeek &&
+      Object.values(VIDEO_REFS).forEach((value, i) =>
+        value.current?.seekTo(seekToTime - getCamDelta(i + 1), true)
+      );
 
     isForcePlay &&
       Object.values(VIDEO_REFS).forEach(value => {
@@ -290,36 +396,35 @@ const HittingVideos = () => {
   function rateChangeHandler(e) {
     const value = typeof e === 'number' ? e : e.data;
 
-    VIDEO_REFS['top-left'].current.setPlaybackRate(value);
-    VIDEO_REFS['top-right'].current.setPlaybackRate(value);
-    VIDEO_REFS['bottom-left'].current.setPlaybackRate(value);
-    VIDEO_REFS['bottom-right'].current.setPlaybackRate(value);
+    VIDEO_REFS['top-left'].current?.setPlaybackRate(value);
+    VIDEO_REFS['top-right'].current?.setPlaybackRate(value);
+    VIDEO_REFS['bottom-left'].current?.setPlaybackRate(value);
+    VIDEO_REFS['bottom-right'].current?.setPlaybackRate(value);
   }
 
   const seekVideos = sec => {
-    Object.values(VIDEO_REFS).forEach(value => value.current.seekTo(sec));
+    Object.values(VIDEO_REFS).forEach((value, i) => value.current.seekTo(sec - getCamDelta(i + 1), true));
   };
 
   function setPlayPause(state) {
     if (state === 'play') {
-      video1Ref.current && video1Ref.current.playVideo();
-      video2Ref.current && video2Ref.current.playVideo();
-      video3Ref.current && video3Ref.current.playVideo();
-      video4Ref.current && video4Ref.current.playVideo();
+      video1Ref.current?.playVideo();
+      video2Ref.current?.playVideo();
+      video3Ref.current?.playVideo();
+      video4Ref.current?.playVideo();
 
       return;
     }
 
-    video1Ref.current && video1Ref.current.pauseVideo();
-    video2Ref.current && video2Ref.current.pauseVideo();
-    video3Ref.current && video3Ref.current.pauseVideo();
-    video4Ref.current && video4Ref.current.pauseVideo();
+    video1Ref.current?.pauseVideo();
+    video2Ref.current?.pauseVideo();
+    video3Ref.current?.pauseVideo();
+    video4Ref.current?.pauseVideo();
   }
 
   //Handle on funcs
 
   const handleOnReady = (position, target) => {
-		console.log(position, 'ready');
     VIDEO_REFS[position].current = target;
 
     const isForcePlay = preferredVideoState === 1;
@@ -333,65 +438,67 @@ const HittingVideos = () => {
   const stateChangeHandler = (position, target, stateValue) => {
     position === 'top-left' && dispatch(setVideoState(stateValue));
 
-    const isAllReady = !Object.entries(VIDEO_REFS).some(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return (entryState === 3 || entryState === -1) && position !== entry[0];
-    });
+    stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
 
-    const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return entryState === 2 || entryState === 3 || position !== entry[0];
-    });
+    // const isAllReady = !Object.entries(VIDEO_REFS).some(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return (entryState === 3 || entryState === -1) && position !== entry[0];
+    // });
 
-		const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return entryState === 5 || position !== entry[0];
-    });
+    // const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return entryState === 2 || entryState === 3 || position !== entry[0];
+    // });
 
-    const video1 = video1Ref.current;
-    const video2 = video2Ref.current;
-    const video3 = video3Ref.current;
-    const video4 = video4Ref.current;
+    // const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return entryState === 5 || position !== entry[0];
+    // });
 
-    if (stateValue === 1) {
-      !isAllReady && target.pauseVideo();
+    // const video1 = video1Ref.current;
+    // const video2 = video2Ref.current;
+    // const video3 = video3Ref.current;
+    // const video4 = video4Ref.current;
 
-      if (isAllReady) {
-        if (preferredVideoState === 2) {
-          video1.pauseVideo();
-          video2.pauseVideo();
-          video3.pauseVideo();
-          video4.pauseVideo();
-          return;
-        }
+    // if (stateValue === 1) {
+    //   !isAllReady && target.pauseVideo();
 
-        video1 && preferredVideoState === 1 && video1.playVideo();
-        video2 && preferredVideoState === 1 && video2.playVideo();
-        video3 && preferredVideoState === 1 && video3.playVideo();
-        video4 && preferredVideoState === 1 && video4.playVideo();
-      }
-    }
+    //   if (isAllReady) {
+    //     if (preferredVideoState === 2) {
+    //       video1.pauseVideo();
+    //       video2.pauseVideo();
+    //       video3.pauseVideo();
+    //       video4.pauseVideo();
+    //       return;
+    //     }
 
-    if (stateValue === 2) {
-      video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
-      video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
-      video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
-      video4 && video4.getPlayerState() === 1 && video4.pauseVideo();
-    }
+    //     video1 && preferredVideoState === 1 && video1.playVideo();
+    //     video2 && preferredVideoState === 1 && video2.playVideo();
+    //     video3 && preferredVideoState === 1 && video3.playVideo();
+    //     video4 && preferredVideoState === 1 && video4.playVideo();
+    //   }
+    // }
 
-    if (stateValue === 3 && isAllPaused) {
-      video1 && preferredVideoState === 1 && video1.playVideo();
-      video2 && preferredVideoState === 1 && video2.playVideo();
-      video3 && preferredVideoState === 1 && video3.playVideo();
-      video4 && preferredVideoState === 1 && video4.playVideo();
-    }
+    // if (stateValue === 2) {
+    //   video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
+    //   video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
+    //   video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
+    //   video4 && video4.getPlayerState() === 1 && video4.pauseVideo();
+    // }
 
-		if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
-			video1?.playVideo();
-      video2?.playVideo();
-      video3?.playVideo();
-      video4?.playVideo();
-		}
+    // if (stateValue === 3 && isAllPaused) {
+    //   video1 && preferredVideoState === 1 && video1.playVideo();
+    //   video2 && preferredVideoState === 1 && video2.playVideo();
+    //   video3 && preferredVideoState === 1 && video3.playVideo();
+    //   video4 && preferredVideoState === 1 && video4.playVideo();
+    // }
+
+    // if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
+    // 	video1?.playVideo();
+    //   video2?.playVideo();
+    //   video3?.playVideo();
+    //   video4?.playVideo();
+    // }
   };
 
   function handleMouseMove() {
