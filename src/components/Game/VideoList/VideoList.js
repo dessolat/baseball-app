@@ -516,15 +516,15 @@ const VideoList = ({ viewMode }, ref) => {
   };
 
   const stateChangeHandler = (videoNumber, target, stateValue) => {
-    console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
+    // console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
     videoNumber === 1 && dispatch(setVideoState(stateValue));
 
     stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
 
-    const video1 = video1Ref.current;
-    const video2 = video2Ref.current;
-    const video3 = video3Ref.current;
-    const video4 = video4Ref.current;
+    // const video1 = video1Ref.current;
+    // const video2 = video2Ref.current;
+    // const video3 = video3Ref.current;
+    // const video4 = video4Ref.current;
 
     // console.log(
     //   'states:',
@@ -534,18 +534,18 @@ const VideoList = ({ viewMode }, ref) => {
     //   video4?.getPlayerState()
     // );
 
-    const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return (entryState === 3 || entryState === -1) && videoNumber !== entry[0];
-    });
+    // const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return (entryState === 3 || entryState === -1) && videoNumber !== entry[0];
+    // });
 
-    const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return entryState === 2 && videoNumber !== entry[0];
-    });
+    // const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return entryState === 2 && videoNumber !== entry[0];
+    // });
 
-    console.log('isAllReady:', isAllReady);
-    console.log('isAllPaused:', isAllPaused);
+    // console.log('isAllReady:', isAllReady);
+    // console.log('isAllPaused:', isAllPaused);
 
     // const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
     //   const entryState = entry[1].current?.getPlayerState();
