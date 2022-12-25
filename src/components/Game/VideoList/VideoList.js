@@ -49,6 +49,8 @@ const VideoList = ({ viewMode }, ref) => {
   const allTimesIntervalRef = useRef();
   const syncTimeoutRef = useRef(false);
 
+	const modeNumber = +viewMode.slice(-1);
+
   const VIDEO_NUMBERS =
     viewMode.slice(-1) === '1'
       ? { 1: video1Ref }
@@ -76,6 +78,8 @@ const VideoList = ({ viewMode }, ref) => {
       const video3Time = video3Ref.current?.getCurrentTime();
       const video4Time = video4Ref.current?.getCurrentTime();
 
+      
+
       if (!video1Time || !video2Time || !video3Time || !video4Time) return;
 
       const delta1 = 0;
@@ -86,16 +90,25 @@ const VideoList = ({ viewMode }, ref) => {
       const deltaArr = [delta1, delta2, delta3, delta4];
       console.log(deltaArr);
       const deltaCap = 0.08;
-      const isBigDelta = deltaArr.some(delta => delta > deltaCap);
+      const deltaCaps = [
+        getCamDelta(modeNumber, 1),
+        getCamDelta(modeNumber, 2),
+        getCamDelta(modeNumber, 3),
+        getCamDelta(modeNumber, 4)
+      ];
+      const isBigDelta = deltaArr.some((delta, i) => delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap);
+			console.log(isBigDelta);
+      // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
         video1Ref.current.pauseVideo();
         video2Ref.current?.pauseVideo();
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
-        delta2 > deltaCap && video2Ref.current?.seekTo(video1Time, true);
-        delta3 > deltaCap && video3Ref.current?.seekTo(video1Time, true);
-        delta4 > deltaCap && video4Ref.current?.seekTo(video1Time, true);
+        // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+        delta2 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+        delta3 > deltaCaps[2] + deltaCap && video3Ref.current?.seekTo(video1Time+ (deltaCaps[0] - deltaCaps[2]), true);
+        delta4 > deltaCaps[3] + deltaCap && video4Ref.current?.seekTo(video1Time+ (deltaCaps[0] - deltaCaps[3]), true);
 
         // alreadySeekingRef.current = true
       }
@@ -191,10 +204,10 @@ const VideoList = ({ viewMode }, ref) => {
         video[`${videoLengthPrefix}_seconds_from`] +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-      video1Ref.current?.seekTo(secondsFromRated, true);
-      video2Ref.current?.seekTo(secondsFromRated, true);
-      video3Ref.current?.seekTo(secondsFromRated, true);
-      video4Ref.current?.seekTo(secondsFromRated, true);
+      video1Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 1), true);
+      video2Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 2), true);
+      video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3) , true);
+      video4Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 4), true);
     }
 
     videoHandlingTimeoutRef.current = setTimeout(
@@ -269,6 +282,11 @@ const VideoList = ({ viewMode }, ref) => {
 
   const getCamLink = (modeNumber, index) =>
     cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
+  function getCamDelta(modeNumber, videoNumber) {
+    return cameraInfo[
+      JSON.parse(cameraViews[modeNumber - 1]).cameras[videoNumber - 1].replace('link', 'time')
+    ];
+  }
 
   const MODE_LINKS = {
     'mode-1': [getCamLink(1, 0)],
@@ -323,10 +341,10 @@ const VideoList = ({ viewMode }, ref) => {
       const secondsFromRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
-      video1Ref.current?.seekTo(secondsFromRated, true);
-      video2Ref.current?.seekTo(secondsFromRated, true);
-      video3Ref.current?.seekTo(secondsFromRated, true);
-      video4Ref.current?.seekTo(secondsFromRated, true);
+      video1Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 1), true);
+      video2Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 2), true);
+      video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3), true);
+      video4Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 4), true);
 
       const secondsToRated =
         nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
@@ -390,10 +408,10 @@ const VideoList = ({ viewMode }, ref) => {
     const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
 
     if (doSeek) {
-      video1Ref.current?.seekTo(seekToTime, true);
-      video2Ref.current?.seekTo(seekToTime, true);
-      video3Ref.current?.seekTo(seekToTime, true);
-      video4Ref.current?.seekTo(seekToTime, true);
+      video1Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 1), true);
+      video2Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 2), true);
+      video3Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 3), true);
+      video4Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 4), true);
     }
 
     if (isForcePlay) {
@@ -445,10 +463,10 @@ const VideoList = ({ viewMode }, ref) => {
     // }
     //
     alreadySeekingRef.current = false;
-    video1Ref.current?.seekTo(sec, true);
-    video2Ref.current?.seekTo(sec, true);
-    video3Ref.current?.seekTo(sec, true);
-    video4Ref.current?.seekTo(sec, true);
+    video1Ref.current?.seekTo(sec - getCamDelta(modeNumber, 1), true);
+    video2Ref.current?.seekTo(sec - getCamDelta(modeNumber, 2), true);
+    video3Ref.current?.seekTo(sec - getCamDelta(modeNumber, 3), true);
+    video4Ref.current?.seekTo(sec - getCamDelta(modeNumber, 4), true);
   };
 
   function setPlayPause(state) {
