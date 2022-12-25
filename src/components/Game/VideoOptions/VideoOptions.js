@@ -4,11 +4,13 @@ import ModeList from './ModeList';
 import SpeedSelector from './SpeedSelector';
 import cl from './VideoOptions.module.scss';
 
-const VideoOptions = () => {
+const VideoOptions = ({ currentTab }) => {
+	const isModeListDisabled = currentTab === 'pitch' || currentTab === 'hitting'
+	
   return (
     <div className={cl.wrapper}>
       <div className={cl.videoOptions}>
-        <ModeList />
+        <ModeList disabled={isModeListDisabled} />
         <Effects />
         <SpeedSelector />
       </div>
