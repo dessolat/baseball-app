@@ -49,7 +49,7 @@ const VideoList = ({ viewMode }, ref) => {
   const allTimesIntervalRef = useRef();
   const syncTimeoutRef = useRef(false);
 
-	const modeNumber = +viewMode.slice(-1);
+  const modeNumber = +viewMode.slice(-1);
 
   const VIDEO_NUMBERS =
     viewMode.slice(-1) === '1'
@@ -60,6 +60,24 @@ const VideoList = ({ viewMode }, ref) => {
           3: video3Ref,
           4: video4Ref
         };
+
+  useEffect(() => {
+		function handleKeyDown(e) {
+			if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
+			e.preventDefault();
+	
+			const currentState = video1Ref.current.getPlayerState();
+
+			e.code === 'Space' && setPlayPause(currentState === 1 ? 'pause' : 'play');
+		}
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+    // eslint-disable-next-line
+  }, [currentMoment]);
 
   useEffect(() => {
     clearInterval(allTimesIntervalRef.current);
@@ -78,8 +96,6 @@ const VideoList = ({ viewMode }, ref) => {
       const video3Time = video3Ref.current?.getCurrentTime();
       const video4Time = video4Ref.current?.getCurrentTime();
 
-      
-
       if (!video1Time || !video2Time || !video3Time || !video4Time) return;
 
       const delta1 = 0;
@@ -96,8 +112,10 @@ const VideoList = ({ viewMode }, ref) => {
         getCamDelta(modeNumber, 3),
         getCamDelta(modeNumber, 4)
       ];
-      const isBigDelta = deltaArr.some((delta, i) => delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap);
-			console.log(isBigDelta);
+      const isBigDelta = deltaArr.some(
+        (delta, i) => delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap
+      );
+      console.log(isBigDelta);
       // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
@@ -106,9 +124,12 @@ const VideoList = ({ viewMode }, ref) => {
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
         // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
-        delta2 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
-        delta3 > deltaCaps[2] + deltaCap && video3Ref.current?.seekTo(video1Time+ (deltaCaps[0] - deltaCaps[2]), true);
-        delta4 > deltaCaps[3] + deltaCap && video4Ref.current?.seekTo(video1Time+ (deltaCaps[0] - deltaCaps[3]), true);
+        delta2 > deltaCaps[1] + deltaCap &&
+          video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+        delta3 > deltaCaps[2] + deltaCap &&
+          video3Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[2]), true);
+        delta4 > deltaCaps[3] + deltaCap &&
+          video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
 
         // alreadySeekingRef.current = true
       }
@@ -153,23 +174,6 @@ const VideoList = ({ viewMode }, ref) => {
 
   //
 
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
-      e.preventDefault();
-
-      const currentState = video1Ref.current.getPlayerState();
-      e.code === 'Space' && setPlayPause(currentState === 1 ? 'pause' : 'play');
-    }
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-    // eslint-disable-next-line
-  }, [isFullscreen]);
-
   useLayoutEffect(() => {
     video1Ref.current = null;
     video2Ref.current = null;
@@ -206,7 +210,7 @@ const VideoList = ({ viewMode }, ref) => {
 
       video1Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 1), true);
       video2Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 2), true);
-      video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3) , true);
+      video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3), true);
       video4Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 4), true);
     }
 
@@ -279,6 +283,8 @@ const VideoList = ({ viewMode }, ref) => {
   }, [currentMoment, videoState]);
 
   const { camera_info: cameraInfo, camera_views: cameraViews } = preview;
+
+  
 
   const getCamLink = (modeNumber, index) =>
     cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
