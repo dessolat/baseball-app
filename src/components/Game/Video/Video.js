@@ -1,34 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import NoVideoScreen from './NoVideoScreen';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
-import { closeFullscreen, openFullscreen } from 'utils';
+import { openFullscreen } from 'utils';
 import VideoControls from '../VideoControls/VideoControls';
 import SidePanel from './SidePanel';
 import BottomPanel from './BottomPanel';
 
-
 const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPlayPause }) => {
   const [currentTime, setCurrentTime] = useState(0);
-
-  // const [videoCurrentTime, setVideoCurrentTime] = useState(0)
 
   const wrapperRef = useRef();
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
+  const currentTimeInterval = useRef();
 
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
-
   const viewMode = useSelector(state => state.game.viewMode);
+
+  useEffect(() => () => clearInterval(currentTimeInterval.current), []);
 
   const onReady = e => {
     handleOnReady(videoNumber, e.target);
 
-    setInterval(() => {
+    currentTimeInterval.current = setInterval(() => {
       setCurrentTime(e.target.getCurrentTime().toFixed(2));
     }, 20);
   };
@@ -40,9 +39,9 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   const openFullScreen = () => {
     openFullscreen(wrapperRef.current);
   };
-  const closeFullScreen = () => {
-    closeFullscreen();
-  };
+  // const closeFullScreen = () => {
+  //   closeFullscreen();
+  // };
 
   const videoClasses = classNames(cl.videoWrapper, {
     [cl.videoOne]: videoNumber === 1,
@@ -122,7 +121,11 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               <FullscreenBtn isOff={false} width={'100%'} height={'100%'} />
             </button> */}
             <div className={cl.videoControls}>
-              <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={true} ref={controlsWrapperRef} />
+              <VideoControls
+                setPlayPause={setPlayPause}
+                fullscreenAvailable={true}
+                ref={controlsWrapperRef}
+              />
             </div>
           </div>
           {!currentMoment.video && <NoVideoScreen />}
@@ -130,8 +133,8 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
       ) : (
         <></>
       )}
-			<SidePanel />
-			<BottomPanel />
+      <SidePanel />
+      <BottomPanel />
     </div>
   );
 };

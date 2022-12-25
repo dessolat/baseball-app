@@ -15,8 +15,15 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
   const videoWrapperRef = useRef(null);
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
+  const currentTimeInterval = useRef();
 
-  useEffect(() => () => clearTimeout(timerRef.current), []);
+  useEffect(
+    () => () => {
+      clearTimeout(timerRef.current);
+			clearInterval(currentTimeInterval.current);
+    },
+    []
+  );
 
   const videoClasses = classNames(cl.video, {
     [cl.topLeftVideo]: position === 'top-left',
@@ -43,7 +50,7 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
   const onReady = e => {
     handleOnReady(position, e.target);
 
-    setInterval(() => {
+    currentTimeInterval.current = setInterval(() => {
       setCurrentTime(e.target.getCurrentTime()?.toFixed(2));
     }, 20);
   };
