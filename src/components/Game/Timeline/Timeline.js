@@ -28,6 +28,7 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
   const mouseDownStateRef = useRef();
   const rectRef = useRef();
   const mouseClickTimeRef = useRef(null);
+	const firstLoadRef = useRef(true)
 
   useEffect(() => {
     return () => {
@@ -37,6 +38,11 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
   }, []);
 
   useLayoutEffect(() => {
+		if (firstLoadRef.current === true) {
+			firstLoadRef.current = false
+			return
+		}
+		
     if (!currentMoment.video) return;
 
     dispatch(setSliderCoords({ x1: 0, x2: 100 }));
