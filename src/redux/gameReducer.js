@@ -31,7 +31,9 @@ const defaultState = {
   timelineSliderCoords: { x1: 0, x2: 100 },
   seekValue: null,
   isLastMomentMode: false,
-  isRedLineDragging: false
+  isRedLineDragging: false,
+  timelineWidth: 825,
+  fullTimelineWidth: 825
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -67,6 +69,8 @@ const SET_TIMELINE_SLIDER_COORDS = 'SET_TIMELINE_SLIDER_COORDS';
 const SET_SEEK_VALUE = 'SET_SEEK_VALUE';
 const SET_IS_LAST_MOMENT_MODE = 'SET_IS_LAST_MOMENT_MODE';
 const SET_IS_RED_LINE_DRAGGING = 'SET_IS_RED_LINE_DRAGGING';
+const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
+const SET_FULL_TIMELINE_WIDTH = 'SET_FULL_TIMELINE_WIDTH';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -136,6 +140,10 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, isLastMomentMode: !state.isLastMomentMode };
     case SET_IS_RED_LINE_DRAGGING:
       return { ...state, isRedLineDragging: action.payload };
+    case SET_TIMELINE_WIDTH:
+      return { ...state, timelineWidth: action.payload };
+    case SET_FULL_TIMELINE_WIDTH:
+      return { ...state, fullTimelineWidth: action.payload };
     default:
       return state;
   }
@@ -174,3 +182,5 @@ export const setTimelineSliderCoords = payload => ({ type: SET_TIMELINE_SLIDER_C
 export const setSeekValue = payload => ({ type: SET_SEEK_VALUE, payload });
 export const setIsLastMomentMode = () => ({ type: SET_IS_LAST_MOMENT_MODE });
 export const setIsRedLineDragging = () => ({ type: SET_IS_RED_LINE_DRAGGING });
+export const setTimelineWidth = payload => ({ type: SET_TIMELINE_WIDTH, payload });
+export const setFullTimelineWidth = payload => ({ type: SET_FULL_TIMELINE_WIDTH, payload });
