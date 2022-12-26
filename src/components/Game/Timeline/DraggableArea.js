@@ -2,7 +2,10 @@ import React, { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './Timeline.module.scss';
 
-const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, videoLengthPrefix }, ref) => {
+const DraggableArea = (
+  { x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, SECONDS_SRC, currentTab, forFullscreen },
+  ref
+) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
   // const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
@@ -22,7 +25,8 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
   const rightLineSecs = (rightLineTotalSecs - rightLineMins * 60).toFixed(0);
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
 
-  const redLineTotalSecs = videoCurrentTime - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
+  const redLineTotalSecs = videoCurrentTime - (SECONDS_SRC[currentTab].timeStart ?? 0);
+  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
   // const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
   const redLineMins = Math.floor(redLineTotalSecs / 60);
   const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
@@ -48,7 +52,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         name='drag-area'
         ref={ref}
       />
-			{/* Red line */}
+      {/* Red line */}
       <line
         x1={redLineRelative - 1}
         y1='0'
@@ -66,7 +70,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={redLineRelative + 1}
         y2='52'
-        id='red-border-line'
+        id={`red-border-line${forFullscreen ? '-full' : ''}`}
         stroke='#E2001C'
         strokeWidth='2'
         className={cl.redLine + ' ' + cl.siblingLine}
@@ -79,7 +83,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         {redLineTime}
       </text>
 
-			{/* Left line */}
+      {/* Left line */}
       <line
         x1={x1relative + 1}
         y1='0'
@@ -97,7 +101,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={x1relative + 1}
         y2='52'
-        id='left-border-line'
+        id={`left-border-line${forFullscreen ? '-full' : ''}`}
         stroke='#1A4C96'
         strokeWidth='2'
         className={cl.siblingLine}
@@ -107,7 +111,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         {leftLineTime}
       </text>
 
-			{/* Right line */}
+      {/* Right line */}
       <line
         x1={x2relative - 1}
         y1='0'
@@ -125,7 +129,7 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
         y1='0'
         x2={x2relative - 1}
         y2='52'
-        id='right-border-line'
+        id={`right-border-line${forFullscreen ? '-full' : ''}`}
         stroke='#1A4C96'
         strokeWidth='2'
         className={cl.siblingLine}
@@ -134,8 +138,6 @@ const DraggableArea = ({ x1, x2, handleMouseDown, viewBoxWidth, totalSeconds, vi
       <text x={x2 < 96 ? x2relative + 5 : x2relative - 25} y='49' className={cl.verticalLineText}>
         {rightLineTime}
       </text>
-
-			
     </>
   );
 };

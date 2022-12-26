@@ -5,20 +5,21 @@ import { useSelector } from 'react-redux';
 import {
   setSeekValue,
   setTimelineSliderCoords as setSliderCoords,
+  setTimelineWidth as setChartWidth,
+  setFullTimelineWidth as setFullChartWidth,
   setVideoCurrentTime
 } from 'redux/gameReducer';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
 
-const VIEW_BOX_WIDTH = 825;
-// const VIEW_BOX_WIDTH = 885;
-// const SIDE_PADDINGS = 30;
-
-const Timeline = ({ addedClass = null, isPreserve = false }) => {
+const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = false }) => {
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
   const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+  const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const chartWidth = useSelector(state => state.game[forFullscreen ? 'fullTimelineWidth' : 'timelineWidth']);
+  const mobileWidth = useSelector(state => state.shared.mobileWidth);
 
   const dispatch = useDispatch();
 
@@ -28,7 +29,39 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
   const mouseDownStateRef = useRef();
   const rectRef = useRef();
   const mouseClickTimeRef = useRef(null);
-	const firstLoadRef = useRef(true)
+  const chartRef = useRef(null);
+  const firstLoadRef = useRef(true);
+
+  const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
+  const SECONDS_SRC = currentMoment.video
+    ? {
+        pitch: {
+          timeStart:
+            currentMoment.metering?.pitch?.time_start_pitch_window ||
+            currentMoment.video[`${videoLengthPrefix}_seconds_from`],
+          timeEnd:
+            currentMoment.metering?.pitch?.time_end_pitch_window ||
+            currentMoment.video[`${videoLengthPrefix}_seconds_to`]
+        },
+        hitting: {
+          timeStart:
+            currentMoment.metering?.hit?.time_start_hit_window ||
+            currentMoment.video[`${videoLengthPrefix}_seconds_from`],
+          timeEnd:
+            currentMoment.metering?.hit?.time_end_hit_window ||
+            currentMoment.video[`${videoLengthPrefix}_seconds_to`]
+        },
+        running: {
+          timeStart: currentMoment.video[`${videoLengthPrefix}_seconds_from`],
+          timeEnd: currentMoment.video[`${videoLengthPrefix}_seconds_to`]
+        },
+        videos: {
+          timeStart: currentMoment.video[`${videoLengthPrefix}_seconds_from`],
+          timeEnd: currentMoment.video[`${videoLengthPrefix}_seconds_to`]
+        }
+      }
+    : {};
 
   useEffect(() => {
     return () => {
@@ -37,12 +70,22 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (chartRef.current.clientWidth === 0) return;
+
+    dispatch(
+      forFullscreen
+        ? setFullChartWidth(chartRef.current.clientWidth)
+        : setChartWidth(chartRef.current.clientWidth)
+    );
+  }, [mobileWidth, isFullscreen]);
+
   useLayoutEffect(() => {
-		if (firstLoadRef.current === true) {
-			firstLoadRef.current = false
-			return
-		}
-		
+    if (firstLoadRef.current === true) {
+      firstLoadRef.current = false;
+      return;
+    }
+
     if (!currentMoment.video) return;
 
     dispatch(setSliderCoords({ x1: 0, x2: 100 }));
@@ -103,16 +146,17 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
       return;
     }
     if (sliderNameRef.current === 'red-line') {
-      const { video } = currentMoment;
-      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      const secondsTotal = SECONDS_SRC[currentTab].timeEnd - SECONDS_SRC[currentTab].timeStart;
+      const seekToValue = SECONDS_SRC[currentTab].timeStart + (secondsTotal * currentCoordPercents) / 100;
 
-      const secondsTotal =
-        video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-      const seekToValue =
-        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
+      const leftSliderTime = SECONDS_SRC[currentTab].timeStart + (secondsTotal * sliderCoords.x1) / 100;
+      // const secondsTotal =
+      //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+      // const seekToValue =
+      //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
 
-      const leftSliderTime =
-        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * sliderCoords.x1) / 100;
+      // const leftSliderTime =
+      //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * sliderCoords.x1) / 100;
 
       const seekToTime = seekToValue <= leftSliderTime ? leftSliderTime : seekToValue;
 
@@ -180,16 +224,16 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
 
       const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
-      const { video } = currentMoment;
-      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
       // Old videoLengthPrefix method
       // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
-      const secondsTotal =
-        video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-      const seekToValue =
-        video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
+      const secondsTotal = SECONDS_SRC[currentTab].timeEnd - SECONDS_SRC[currentTab].timeStart;
+      const seekToValue = SECONDS_SRC[currentTab].timeStart + (secondsTotal * currentCoordPercents) / 100;
+      // const secondsTotal =
+      //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+      // const seekToValue =
+      //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
       dispatch(setSeekValue(seekToValue));
       dispatch(setVideoCurrentTime(seekToValue));
     }
@@ -210,15 +254,16 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-
   // Old method
   // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
   const totalSeconds = currentMoment.video
-    ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
-      currentMoment.video[`${videoLengthPrefix}_seconds_from`]
+    ? SECONDS_SRC[currentTab].timeEnd - SECONDS_SRC[currentTab].timeStart
     : 0;
+  // const totalSeconds = currentMoment.video
+  //   ? currentMoment.video[`${videoLengthPrefix}_seconds_to`] -
+  //     currentMoment.video[`${videoLengthPrefix}_seconds_from`]
+  //   : 0;
 
   const minutesSide = Math.floor(totalSeconds / 60);
   const secondsSide = (totalSeconds - minutesSide * 60).toFixed(0);
@@ -232,10 +277,11 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
   const LINES_TEXT_ABBR = ['H', 'B1', 'B2', 'B3'];
 
   const getRelativeX = time => {
-    const totalSecsToX = time - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
+    const totalSecsToX = time - (SECONDS_SRC[currentTab].timeStart ?? 0);
+    // const totalSecsToX = time - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
 
     const timelinePercents = (totalSecsToX * 100) / totalSeconds;
-    const relativeX = (VIEW_BOX_WIDTH / 100) * timelinePercents;
+    const relativeX = (chartWidth / 100) * timelinePercents;
     return relativeX;
   };
 
@@ -376,7 +422,8 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
   };
 
   return (
-    <div className={cl.wrapper + ' ' + addedClass} style={isPreserve ? {width: '54.75rem'} : null}>
+    <div className={cl.wrapper + ' ' + addedClass}>
+      {/* <div className={cl.wrapper + ' ' + addedClass} style={isPreserve ? { width: '54.75rem' } : null}> */}
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
         <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />
@@ -390,7 +437,12 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
             </text>
           ))}
       </svg>
-      <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} 52.5`} className={cl.chart} preserveAspectRatio='none'>
+      <svg
+        viewBox={`0 0 ${chartWidth} 52.5`}
+        // viewBox={`0 0 ${VIEW_BOX_WIDTH} 52.5`}
+        className={cl.chart}
+        preserveAspectRatio='none'
+        ref={chartRef}>
         {LINES_NUMBER > 0 && (
           <>
             {/* Draggable area */}
@@ -399,9 +451,12 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
                 x1={sliderCoords.x1}
                 x2={sliderCoords.x2}
                 handleMouseDown={handleMouseDown}
-                viewBoxWidth={VIEW_BOX_WIDTH}
+                viewBoxWidth={chartWidth}
                 totalSeconds={totalSeconds}
                 videoLengthPrefix={videoLengthPrefix}
+                SECONDS_SRC={SECONDS_SRC}
+                currentTab={currentTab}
+                forFullscreen={forFullscreen}
                 ref={rectRef}
               />
             )}
@@ -414,7 +469,7 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
                   key={i}
                   x1='0'
                   y1={(i + 3) * 9 - Y_SHIFT}
-                  x2={VIEW_BOX_WIDTH}
+                  x2={chartWidth}
                   y2={(i + 3) * 9 - Y_SHIFT}
                   stroke={color}
                   strokeWidth='0.5'
@@ -448,7 +503,7 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
                     /> */}
                       <text
                         x={getRelativeX(timeStart) + (getRelativeX(timeEnd) - getRelativeX(timeStart)) / 2}
-                        y={(i + 3) * 9 + 2.9 - Y_SHIFT + 0.5}
+                        y={(i + 3) * 9 + 2.9 - Y_SHIFT}
                         className={cl.horizontalLineText}>
                         {textFrom}-{textTo}
                       </text>
@@ -457,9 +512,9 @@ const Timeline = ({ addedClass = null, isPreserve = false }) => {
                 })}
               </Fragment>
             ))}
-            <use href='#red-border-line' />
-            <use href='#left-border-line' />
-            <use href='#right-border-line' />
+            <use href={`#red-border-line${forFullscreen ? '-full' : ''}`} />
+            <use href={`#left-border-line${forFullscreen ? '-full' : ''}`} />
+            <use href={`#right-border-line${forFullscreen ? '-full' : ''}`} />
           </>
         )}
       </svg>

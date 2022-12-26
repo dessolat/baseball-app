@@ -24,7 +24,7 @@ const BottomPanel = () => {
 	const speedValue = currentMoment?.metering?.pitch?.start_speed.toFixed(1) ?? '';
   return (
     <div className={cl.bottomPanelFull}>
-      <Timeline isPreserve={true}/>
+      <Timeline forFullscreen={true}/>
       <div className={cl.signs}>
         <BallsStrikes balls={balls} strikes={strikes} />
         <Bases r1={r1} r2={r2} r3={r3} />
