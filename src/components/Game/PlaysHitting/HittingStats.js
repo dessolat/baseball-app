@@ -2,10 +2,11 @@ import React from 'react';
 import cl from './PlaysHitting.module.scss';
 
 const HittingStats = ({ hit }) => {
-  const { start_speed: startSpeed, distance, angle } = hit || 0;
+  const { start_speed: startSpeed, distance, angle, max_height: maxHeight } = hit || 0;
 
   const exitVelocityValue = startSpeed !== undefined ? startSpeed.toFixed(1) + ' mph' : '—';
   const distanceValue = distance !== undefined ? distance.toFixed(1) + ' m' : '—';
+  const maxHeightValue = maxHeight !== undefined ? maxHeight.toFixed(1) + ' m' : '—';
   const angleValue = angle !== undefined ? angle.toFixed(0) + '°' : '—';
 
   return (
@@ -23,7 +24,7 @@ const HittingStats = ({ hit }) => {
       <div className={cl.rightSide}>
         <div className={cl.row}>
           <span className={cl.title}>Height</span>
-          <span className={cl.value}>37.2 m</span>
+          <span className={cl.value}>{maxHeightValue}</span>
         </div>
         <div className={cl.row}>
           <span className={cl.title}>Distance</span>
