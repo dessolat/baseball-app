@@ -10,14 +10,12 @@
     height: 100%;
   }
 
-  
-
   &:hover > .controlsWrapper {
     opacity: 1;
   }
 
   &:fullscreen {
-		display: grid;
+    display: grid;
     gap: 6px;
     background: #e5e5e5;
     grid-template: 1fr 50px / 98px 1fr;
@@ -28,20 +26,19 @@
     > .wrapper {
       grid-area: videos;
 
-			> .btnWrapper {
-				> .toFullScreen {
-					display: none;
-				}
-	
-				> .fromFullScreen,
-				.videoControls {
-					display: inline-block;
-				}
-			}
+      > .btnWrapper {
+        > .toFullScreen {
+          display: none;
+        }
+
+        > .fromFullScreen,
+        .videoControls {
+          display: inline-block;
+        }
+      }
     }
 
-
-		.sidePanelFull {
+    .sidePanelFull {
       display: block;
     }
 
@@ -51,6 +48,8 @@
 
       > div:first-child {
         padding-top: 0;
+        max-width: 55%;
+
       }
 
       > .signs {
@@ -60,9 +59,17 @@
         gap: 0.6rem;
         padding: 0 0.6rem;
 
+        @media screen and (max-width: 1600px) {
+          gap: 0.3rem;
+          padding: 0 0.3rem;
+        }
+
         > div:first-child {
           align-items: center;
           align-content: center;
+        }
+        > div:last-child {
+          min-width: 23px;
         }
       }
 
@@ -74,11 +81,18 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.875rem;
+        @media screen and (max-width: 1600px) {
+          gap: 0.4rem;
+        }
 
         > .scoreTitle,
         h2 {
           font: 700 3.125rem / 1.75 var(--font-comfortaa);
           margin-top: 6px;
+
+          @media screen and (max-width: 1600px) {
+            font-size: 1.8rem;
+          }
         }
 
         > h2 {
@@ -89,6 +103,10 @@
 
         > .teamTitle {
           font: 400 1.25rem var(--font-nunito);
+
+          @media screen and (max-width: 1600px) {
+            font-size: 0.8rem;
+          }
         }
       }
 
@@ -96,25 +114,47 @@
         background: white;
         display: flex;
         align-items: center;
-				justify-content: space-between;
+        justify-content: space-between;
         gap: 2rem;
         padding: 0.2rem 0.6rem;
         flex: 1;
+        @media screen and (max-width: 1600px) {
+          min-width: 13.5rem;
+          gap: 1rem;
+        }
 
-        > .players > div {
-					font: 400 1rem / 1 var(--font-nunito);
+        > .players {
+					width: 75%;
+					flex: 1 75%;
+          > div {
+            font: 400 1rem / 1 var(--font-nunito);
+            white-space: nowrap;
+            width: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
-          > span {
-            display: inline-block;
-            font-weight: 700;
-            width: 1.3rem;
+            @media screen and (max-width: 1600px) {
+              font-size: 0.8rem;
+            }
+
+            > span {
+              display: inline-block;
+              font-weight: 700;
+              width: 1.3rem;
+            }
           }
         }
 
         > .speed {
-          align-self: flex-start;
+          // align-self: flex-start;
           color: red;
-          font: 700 1.25rem / .9 var(--font-athiti);
+          font: 700 1.25rem / 0.9 var(--font-athiti);
+          width: 20%;
+          @media screen and (max-width: 1600px) {
+            // align-self: unset;
+            // flex: 0;
+            font-size: 0.9rem;
+          }
         }
       }
     }
@@ -142,19 +182,14 @@
     .sidePanelFull ul::-webkit-scrollbar {
       width: 0;
     }
-
-
-
-
-    
   }
 }
 
 .wrapper {
-	position: relative;
-	height: 100%;
+  position: relative;
+  height: 100%;
 
-	> div {
+  > div {
     height: 100%;
   }
 }
