@@ -68,6 +68,13 @@ export const getBeforeAfterFlags = (cards, innings) => {
 
 export const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
 
+export const getFixedNumber = (num, digits) => {
+	let zeroString = '.';
+	for (let i = 1; i <= digits; i++) zeroString += '0';
+
+	return num.toFixed(digits).replace(zeroString, '');
+};
+
 export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
   const result = {};
 
