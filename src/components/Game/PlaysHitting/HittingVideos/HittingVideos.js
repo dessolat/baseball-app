@@ -62,7 +62,7 @@ const HittingVideos = () => {
     'bottom-right': video4Ref
   };
 
-	const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+  const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
   const SECONDS_SRC = currentMoment.video
     ? {
@@ -130,11 +130,6 @@ const HittingVideos = () => {
         // alreadySeekingRef.current = true
       }
 
-      const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
-        const entryState = entry[1].current?.getPlayerState();
-        return entryState === 2;
-      });
-
       const isAllReady = Object.entries(VIDEO_REFS).every(entry => {
         const entryState = entry[1].current?.getPlayerState();
         return entryState === -1 || entryState === 2;
@@ -179,16 +174,18 @@ const HittingVideos = () => {
     const { video } = currentMoment;
 
     if (video) {
-      const secondsTotal =
-			SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
-
+      const secondsTotal = SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
       const secondsFromRated =
-			SECONDS_SRC.hitting.timeStart +
+        SECONDS_SRC.hitting.timeStart +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-      Object.values(VIDEO_REFS).forEach((value, i) =>
-        value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true)
-      );
+video1Ref.current.seekTo(secondsFromRated - getCamDelta(1), true);
+video2Ref.current.seekTo(secondsFromRated - getCamDelta(2), true);
+video3Ref.current.seekTo(secondsFromRated - getCamDelta(3), true);
+video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
+      // Object.values(VIDEO_REFS).forEach((value, i) => {
+      //   value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true);
+      // });
     }
 
     videoHandlingTimeoutRef.current = setTimeout(
@@ -308,7 +305,7 @@ const HittingVideos = () => {
         x2: 0
       });
 
-			const NEXT_SECONDS_SRC = {
+      const NEXT_SECONDS_SRC = {
         hitting: {
           timeStart:
             nextMoment.metering?.hit?.time_start_hit_window ||
@@ -319,18 +316,17 @@ const HittingVideos = () => {
         }
       };
 
-      const secondsTotal =
-			NEXT_SECONDS_SRC.hitting.timeEnd - NEXT_SECONDS_SRC.hitting.timeStart;
+      const secondsTotal = NEXT_SECONDS_SRC.hitting.timeEnd - NEXT_SECONDS_SRC.hitting.timeStart;
 
       const secondsFromRated =
-			NEXT_SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
+        NEXT_SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
       Object.values(VIDEO_REFS).forEach((value, i) =>
         value.current.seekTo(secondsFromRated - getCamDelta(i + 1), true)
       );
 
       const secondsToRated =
-        nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
+        NEXT_SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
       endRef.current = secondsToRated;
     } else {
       let cardIndex = filteredCards.findIndex(
@@ -369,15 +365,12 @@ const HittingVideos = () => {
 
     if (currentCard.moments.length === 0 || !currentCard.moments[0].video) {
       Object.values(VIDEO_REFS).forEach(value => value.current.pauseVideo());
-
       return;
     }
 
-    const secondsTotal =
-		SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
+    const secondsTotal = SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
 
-    const secondsFromRated =
-		SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * sliderCoords.x1;
+    const secondsFromRated = SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * sliderCoords.x1;
 
     const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
 
@@ -391,8 +384,7 @@ const HittingVideos = () => {
         value.current?.playVideo();
       });
 
-    const secondsToRated =
-		SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * sliderCoords.x2;
+    const secondsToRated = SECONDS_SRC.hitting.timeStart + (secondsTotal / 100) * sliderCoords.x2;
 
     endRef.current = secondsToRated;
 
@@ -470,15 +462,15 @@ const HittingVideos = () => {
     //   return entryState === 2 || entryState === 3 || position !== entry[0];
     // });
 
-    // const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return entryState === 5 || position !== entry[0];
-    // });
+    const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
+      const entryState = entry[1].current?.getPlayerState();
+      return entryState === 5 || position !== entry[0];
+    });
 
-    // const video1 = video1Ref.current;
-    // const video2 = video2Ref.current;
-    // const video3 = video3Ref.current;
-    // const video4 = video4Ref.current;
+    const video1 = video1Ref.current;
+    const video2 = video2Ref.current;
+    const video3 = video3Ref.current;
+    const video4 = video4Ref.current;
 
     // if (stateValue === 1) {
     //   !isAllReady && target.pauseVideo();
@@ -513,12 +505,12 @@ const HittingVideos = () => {
     //   video4 && preferredVideoState === 1 && video4.playVideo();
     // }
 
-    // if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
-    // 	video1?.playVideo();
-    //   video2?.playVideo();
-    //   video3?.playVideo();
-    //   video4?.playVideo();
-    // }
+    if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
+      video1?.playVideo();
+      video2?.playVideo();
+      video3?.playVideo();
+      video4?.playVideo();
+    }
   };
 
   function handleMouseMove() {
