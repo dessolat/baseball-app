@@ -115,7 +115,6 @@ const VideoList = ({ viewMode }, ref) => {
       const isBigDelta = deltaArr.some(
         (delta, i) => delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap
       );
-      console.log(isBigDelta);
       // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
@@ -144,17 +143,9 @@ const VideoList = ({ viewMode }, ref) => {
         return entryState === -1 || entryState === 2;
       });
 
-      console.log(
-        video1Ref.current?.getPlayerState(),
-        video2Ref.current?.getPlayerState(),
-        video3Ref.current?.getPlayerState(),
-        video4Ref.current?.getPlayerState()
-      );
-
       if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
         syncTimeoutRef.current = true;
 
-        // playTimeoutRef.current = setTimeout(() => {
         video1Ref.current.playVideo();
         video2Ref.current?.playVideo();
         video3Ref.current?.playVideo();
@@ -162,7 +153,6 @@ const VideoList = ({ viewMode }, ref) => {
 
         syncTimeoutRef.current = false;
         alreadySeekingRef.current = false;
-        // }, 20);
       }
     }, 90);
 
@@ -506,7 +496,6 @@ const VideoList = ({ viewMode }, ref) => {
   const handleOnReady = (videoNumber, target) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
-    // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
     const seekToCurrentTime = videoCurrentTime > 0;
 
@@ -516,7 +505,6 @@ const VideoList = ({ viewMode }, ref) => {
   };
 
   const stateChangeHandler = (videoNumber, target, stateValue) => {
-    // console.log('videoNumber:', videoNumber, 'stateValue:', stateValue);
     videoNumber === 1 && dispatch(setVideoState(stateValue));
 
     stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
