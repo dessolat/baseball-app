@@ -129,7 +129,8 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       dispatch(
         setSliderCoords({
           ...sliderCoords,
-          x1: sliderCoords.x2 - 1 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 1
+          x1: sliderCoords.x2 - 1 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 1,
+          changedCoord: 'x1'
         })
       );
 
