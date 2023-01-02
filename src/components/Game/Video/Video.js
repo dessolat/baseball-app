@@ -91,7 +91,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               width: '100%',
               playerVars: {
                 autoplay: 0,
-                controls: 1,
+                controls: 0,
                 modestbranding: 1,
                 disablekb: 1
                 // loop: 1,
