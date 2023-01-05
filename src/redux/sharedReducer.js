@@ -6,7 +6,8 @@ const newDate = new Date();
 
 const defaultState = {
   currentLeague: { id: -1, name: 'All' },
-  currentYear: newDate.getFullYear(),
+  currentYear: 2022,
+  // currentYear: newDate.getFullYear(),
   currentDate: newDate,
   currentLeaguesScroll: 0,
   mobileWidth: 0,
