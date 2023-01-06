@@ -8,9 +8,12 @@ import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/F
 import { closeFullscreen, openFullscreen } from 'utils';
 import { useDispatch } from 'react-redux';
 import { setPreferredVideoState } from 'redux/gameReducer';
+import useGameFocus from 'hooks/useGameFocus';
 
 const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
+
+	const setGameFocus = useGameFocus('timeline')
 
   const videoState = useSelector(state => state.game.videoState);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
@@ -85,12 +88,16 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     [cl.leftZero]: viewMode.slice(-1) === '1'
   });
 
+	const handleInnerWrapperClick = e => {
+		e.stopPropagation()
+		setGameFocus()
+	}
   return (
     <div className={wrapperClasses} ref={ref} onClick={e => handleWrapperClick(e)}>
       <div
         className={cl.innerWrapper}
         style={fullscreenAvailable ? null : { width: '10rem' }}
-        onClick={e => e.stopPropagation()}>
+        onClick={handleInnerWrapperClick}>
         <div className={cl.controls} style={fullscreenAvailable ? null : { width: '10rem' }}>
           {getPlayPauseBtn()}
           {fullscreenAvailable && (

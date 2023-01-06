@@ -1,4 +1,5 @@
 import TimelineEventChanger from 'components/UI/buttons/TimelineEventChanger/TimelineEventChanger';
+import useGameFocus from 'hooks/useGameFocus';
 import React, { useRef, useEffect, useLayoutEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const currentMoment = useSelector(state => state.game.currentMoment);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const focus = useSelector(state => state.game.focus);
   const chartWidth = useSelector(state => state.game[forFullscreen ? 'fullTimelineWidth' : 'timelineWidth']);
   const mobileWidth = useSelector(state => state.shared.mobileWidth);
 
@@ -69,6 +71,15 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+    // eslint-disable-next-line
+  }, [handleKeyDown]);
 
   useEffect(() => {
     if (chartRef.current.clientWidth === 0) return;
@@ -224,7 +235,6 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
           : e.clientX - parent.getBoundingClientRect().left;
 
       const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
-
 
       // Old videoLengthPrefix method
       // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
@@ -408,7 +418,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     play?.forEach(evt => timesArr.push(evt.time_start));
     pitch?.time_start && timesArr.push(pitch.time_start);
     hit?.time_start && timesArr.push(hit.time_start);
-		
+
     const sortValue = direction === 'right' ? 1 : -1;
     const sortValue2 = sortValue * -1;
     timesArr.sort((a, b) => (a > b ? sortValue : sortValue2));
@@ -419,12 +429,25 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       return;
     }
 
-    const closestValue = timesArr.find(value => videoCurrentTime > value + .2);
+    const closestValue = timesArr.find(value => videoCurrentTime > value + 0.2);
     closestValue > 0 && dispatch(setSeekValue(closestValue));
   };
 
+  function handleKeyDown(e) {
+    if (focus !== 'timeline') return;
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        dispatch(setSeekValue(videoCurrentTime - 1 / 60));
+      case 'ArrowRight':
+        dispatch(setSeekValue(videoCurrentTime + 1 / 60));
+      default:
+        break;
+    }
+  }
+
   return (
-    <div className={cl.wrapper + ' ' + addedClass}>
+    <div className={cl.wrapper + ' ' + addedClass} onClick={useGameFocus('timeline')}>
       {/* <div className={cl.wrapper + ' ' + addedClass} style={isPreserve ? { width: '54.75rem' } : null}> */}
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />

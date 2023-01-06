@@ -7,6 +7,8 @@ import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
+import classNames from 'classnames';
+import useGameFocus from 'hooks/useGameFocus';
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
   // const playbackMode = useSelector(state => state.game.playbackMode);
@@ -26,20 +28,21 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     dispatch(setCurrentCard({ ...player, manualClick: true }));
   };
 
-  const classes = [cl.blueDiv];
-  classes.push(activeCardList === 'cards' ? cl.wider : cl.taller);
+  const classes = classNames(cl.blueDiv, {
+    [cl.wider]: activeCardList === 'cards',
+    [cl.taller]: activeCardList !== 'cards'
+  });
 
-  const listClasses = [cl.list];
-  !isVideo && listClasses.push(cl.listNoVideo);
-  isVideo && listClasses.push(cl.mobilePlaysListHeight);
-  isVideo && currentTab === 'videos' && listClasses.push(cl.mobilePlaysListHeightVideo);
+  const listClasses = classNames(cl.list, {
+    [cl.listNoVideo]: !isVideo,
+    [cl.mobilePlaysListHeight]: isVideo,
+    [cl.mobilePlaysListHeightVideo]: isVideo && currentTab === 'videos'
+  });
 
   return (
-    <div className={cl.wrapper}>
-      {isVideo && currentTab !== 'videos' && (
-        <MobileLandscapeTabs cl={cl}/>
-      )}
-      <ul className={listClasses.join(' ')}>
+    <div className={cl.wrapper} onClick={useGameFocus('list')}>
+      {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
+      <ul className={listClasses}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem
             key={i}
@@ -52,13 +55,13 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
           />
         ))}
       </ul>
-      <div className={classes.join(' ')}></div>
+      <div className={classes}></div>
       {/* {!isVideo && ( */}
-        <div className={cl.controlsWrapper}>
-          <ContentControls noPlayPause />
-        </div>
+      <div className={cl.controlsWrapper}>
+        <ContentControls noPlayPause />
+      </div>
       {/* )} */}
-			<PlayerFilterField />
+      <PlayerFilterField />
     </div>
   );
 };
