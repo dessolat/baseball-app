@@ -33,7 +33,8 @@ const defaultState = {
   isLastMomentMode: false,
   isRedLineDragging: false,
   timelineWidth: 825,
-  fullTimelineWidth: 825
+  fullTimelineWidth: 825,
+	focus: 'list'
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -71,6 +72,7 @@ const SET_IS_LAST_MOMENT_MODE = 'SET_IS_LAST_MOMENT_MODE';
 const SET_IS_RED_LINE_DRAGGING = 'SET_IS_RED_LINE_DRAGGING';
 const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
 const SET_FULL_TIMELINE_WIDTH = 'SET_FULL_TIMELINE_WIDTH';
+const SET_FOCUS = 'SET_FOCUS';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -144,6 +146,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, timelineWidth: action.payload };
     case SET_FULL_TIMELINE_WIDTH:
       return { ...state, fullTimelineWidth: action.payload };
+    case SET_FOCUS:
+      return { ...state, focus: action.payload };
     default:
       return state;
   }
@@ -184,3 +188,4 @@ export const setIsLastMomentMode = () => ({ type: SET_IS_LAST_MOMENT_MODE });
 export const setIsRedLineDragging = () => ({ type: SET_IS_RED_LINE_DRAGGING });
 export const setTimelineWidth = payload => ({ type: SET_TIMELINE_WIDTH, payload });
 export const setFullTimelineWidth = payload => ({ type: SET_FULL_TIMELINE_WIDTH, payload });
+export const setFocus = payload => ({ type: SET_FOCUS, payload });
