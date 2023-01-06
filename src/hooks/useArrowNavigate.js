@@ -1,11 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveCardList, setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
+import { useDispatch, useSelector, useCallback } from 'react-redux';
+import { setActiveCardList, setCurrentCard, setCurrentMoment, setSeekValue } from 'redux/gameReducer';
 
 const KEYS = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
 
 const useArrowNavigate = (cards, currentCard) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
   const currentMoment = useSelector(state => state.game.currentMoment);
+  const focus = useSelector(state => state.game.focus);
+
   // const playbackMode = useSelector(state => state.game.playbackMode);
   const dispatch = useDispatch();
 
@@ -13,8 +15,8 @@ const useArrowNavigate = (cards, currentCard) => {
     if (!KEYS.includes(e.key)) return;
     e.preventDefault();
 
-		// Set playback mode to pause
-		// playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
+    // Set playback mode to pause
+    // playbackMode !== 'pause' && dispatch(setPlaybackMode('pause'));
 
     const cardIndex = cards.findIndex(card => card.moments[0].inner.id === currentCard.moments[0].inner.id);
     const newMoments = [];
@@ -22,6 +24,8 @@ const useArrowNavigate = (cards, currentCard) => {
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
     const momentIndex = newMoments?.findIndex(moment => moment.inner?.id === currentMoment?.inner?.id);
+
+    if (focus !== 'list') return;
 
     switch (e.key) {
       case 'ArrowUp':
