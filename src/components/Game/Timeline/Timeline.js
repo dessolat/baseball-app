@@ -402,12 +402,13 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const handleTimelineEvtChanger = direction => () => {
     // Calc array for start times of events
     const { field, hit, pitch, play } = currentMoment.metering;
+
     const timesArr = [];
     field?.forEach(evt => timesArr.push(evt.time_start));
     play?.forEach(evt => timesArr.push(evt.time_start));
     pitch?.time_start && timesArr.push(pitch.time_start);
     hit?.time_start && timesArr.push(hit.time_start);
-
+		
     const sortValue = direction === 'right' ? 1 : -1;
     const sortValue2 = sortValue * -1;
     timesArr.sort((a, b) => (a > b ? sortValue : sortValue2));
@@ -418,7 +419,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       return;
     }
 
-    const closestValue = timesArr.find(value => videoCurrentTime > value);
+    const closestValue = timesArr.find(value => videoCurrentTime > value + .2);
     closestValue > 0 && dispatch(setSeekValue(closestValue));
   };
 
