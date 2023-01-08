@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
 
@@ -25,20 +25,22 @@ const Header = ({ maxSpeed, angle }) => {
 };
 
 const Graph = ({ speeds }) => {
+  const [curveIndex, setCurveIndex] = useState(0);
+
+	const curveTimeoutRef = useRef()
+
   const VIEWBOX_WIDTH = 327;
   const VIEWBOX_HEIGHT = 84;
   const GRAPH_START_X = 33;
   const GRAPH_START_Y = 5;
   const GRAPH_WIDTH = 294;
   const GRAPH_HEIGHT = 60;
-  const GRAPH_BOTTOM_PADDING = 58;
 
   const minSpeed = speeds.slice(1).reduce((min, cur) => (cur[0] < min ? cur[0] : min), speeds[0][0]);
   const maxSpeed = speeds.slice(1).reduce((max, cur) => (cur[0] > max ? cur[0] : max), speeds[0][0]);
 
   const maxSpeedRounded = Math.ceil(maxSpeed);
   const minSpeedRounded = Math.floor(minSpeed);
-  const speedDelta = maxSpeedRounded - minSpeedRounded;
 
   const leftTitles = [
     maxSpeedRounded,
@@ -54,43 +56,40 @@ const Graph = ({ speeds }) => {
     (verticalGraphPart * 4).toFixed(2)
   ];
 
-  // const minXValue = 0;
   const maxXValue = +bottomTitles.slice(-1)[0] + verticalGraphPart;
-  // const minYValue = leftTitles.slice(-1)[0];
-  // const maxYValue = leftTitles[0];
 
   const xCoef = GRAPH_WIDTH / maxXValue;
   const yCoef = 42 / (maxSpeedRounded - minSpeedRounded);
 
-  // const curveCoordsSource = [
-  //   [0.02, 66],
-  //   [0.17, 73],
-  //   [0.45, 81],
-  //   [0.675, 81],
-  //   [0.9, 76],
-  //   [1.4, 64]
-  // ];
-
   const curveCoords = speeds.map(coords => [
     coords[1] * xCoef + GRAPH_START_X,
     GRAPH_START_Y + 11 + 42 - (coords[0] - minSpeedRounded) * yCoef
-    // (0 + GRAPH_HEIGHT) - (coords[0] - minSpeedRounded) * yCoef
-    // GRAPH_BOTTOM_PADDING - (coords[0] - minSpeedRounded) * yCoef
-    // coords[1] * yCoef + GRAPH_START_Y
   ]);
-  console.log(speeds);
-  console.log(curveCoords);
+
+  useEffect(() => {
+		clearTimeout(curveTimeoutRef.current)
+
+    setCurveIndex(0);
+  }, [speeds]);
+
+  useEffect(() => {
+    curveTimeoutRef.current = setTimeout(
+      () => {
+        setCurveIndex(prev => (prev < curveCoords.length ? prev + 1 : prev));
+      },
+      curveIndex === 0 ? 500 : 30
+    );
+  }, [curveIndex]);
 
   let curvePath = `M${curveCoords[0][0]} ${curveCoords[0][1]}`;
   curveCoords.shift();
-  curveCoords.forEach(coords => {
+  curveCoords.slice(0, curveIndex).forEach(coords => {
     curvePath += `L${coords[0]} ${coords[1]}`;
   });
 
   return (
     <div className={cl.graphWrapper}>
       <p className={cl.title}>Bat speed (mph)</p>
-      {/* <img src={GraphImage} alt='graph' width='100%' /> */}
       <svg viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`} width='95%'>
         {/* Horizontal lines */}
         {leftTitles.map((title, i) => (
