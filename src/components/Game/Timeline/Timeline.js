@@ -92,11 +92,8 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   }, [mobileWidth, isFullscreen]);
 
   useLayoutEffect(() => {
-    if (firstLoadRef.current === true) {
-      firstLoadRef.current = false;
-      return;
-    }
-
+    if (firstLoadRef.current === true) return;
+    
     if (!currentMoment.video) return;
 
     dispatch(setSliderCoords({ x1: 0, x2: 100 }));
@@ -121,7 +118,20 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
 
     // const newCoords = videoLengthMode === 'Super Short' ? { x1: 35, x2: 65 } : { x1: 0, x2: 100 };
     // eslint-disable-next-line
-  }, [currentMoment, videoLengthMode]);
+  }, [currentMoment]);
+
+	useLayoutEffect(() => {
+    if (firstLoadRef.current === true) {
+      firstLoadRef.current = false;
+      return;
+    }
+
+    if (!currentMoment.video) return;
+
+    dispatch(setSliderCoords({ x1: 0, x2: 100, noChange: true }));
+		
+    // eslint-disable-next-line
+  }, [videoLengthMode]);
 
   function handleMouseMove(e) {
     const slider = sliderRef.current;

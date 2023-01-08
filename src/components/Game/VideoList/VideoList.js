@@ -62,14 +62,14 @@ const VideoList = ({ viewMode }, ref) => {
         };
 
   useEffect(() => {
-		function handleKeyDown(e) {
-			if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
-			e.preventDefault();
-	
-			const currentState = video1Ref.current.getPlayerState();
+    function handleKeyDown(e) {
+      if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
+      e.preventDefault();
 
-			e.code === 'Space' && setPlayPause(currentState === 1 ? 'pause' : 'play');
-		}
+      const currentState = video1Ref.current.getPlayerState();
+
+      e.code === 'Space' && setPlayPause(currentState === 1 ? 'pause' : 'play');
+    }
 
     document.addEventListener('keydown', handleKeyDown);
 
@@ -177,6 +177,24 @@ const VideoList = ({ viewMode }, ref) => {
     clearTimeout(videoHandlingTimeoutRef.current);
     clearInterval(intervalRef.current);
 
+		const { video } = currentMoment;
+
+    let secondsTotal, secondsFromRated;
+
+    if (video) {
+      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+
+      secondsTotal = video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+      secondsFromRated =
+        video[`${videoLengthPrefix}_seconds_from`] +
+        (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
+    }
+
+    if (sliderCoords.noChange && videoCurrentTime > secondsFromRated) {
+      videoHandling(false, false);
+      return;
+    }
+
     // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
 
@@ -185,7 +203,6 @@ const VideoList = ({ viewMode }, ref) => {
     video3Ref.current?.pauseVideo();
     video4Ref.current?.pauseVideo();
 
-    const { video } = currentMoment;
 
     if (video) {
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
@@ -256,7 +273,7 @@ const VideoList = ({ viewMode }, ref) => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
-		const camDelta1 = getCamDelta(modeNumber, 1);
+    const camDelta1 = getCamDelta(modeNumber, 1);
 
     timeIntervalRef.current = setInterval(
       () => {
@@ -275,8 +292,6 @@ const VideoList = ({ viewMode }, ref) => {
   }, [currentMoment, videoState]);
 
   const { camera_info: cameraInfo, camera_views: cameraViews } = preview;
-
-  
 
   const getCamLink = (modeNumber, index) =>
     cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
@@ -424,7 +439,7 @@ const VideoList = ({ viewMode }, ref) => {
 
     endRef.current = secondsToRated;
 
-		const camDelta1 = getCamDelta(modeNumber, 1);
+    const camDelta1 = getCamDelta(modeNumber, 1);
 
     intervalRef.current = setInterval(() => {
       if (video1Ref.current === null) return;
