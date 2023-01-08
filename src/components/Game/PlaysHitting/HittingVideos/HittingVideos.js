@@ -448,7 +448,8 @@ const HittingVideos = () => {
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
-    position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
+    target.setPlaybackRate(videoPlaybackRate)
+    // position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
   };
 
   const stateChangeHandler = (position, target, stateValue) => {

@@ -520,7 +520,8 @@ const VideoList = ({ viewMode }, ref) => {
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
-    videoNumber === 1 && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
+    target.setPlaybackRate(videoPlaybackRate)
+    // videoNumber === 1 && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
   };
 
   const stateChangeHandler = (videoNumber, target, stateValue) => {

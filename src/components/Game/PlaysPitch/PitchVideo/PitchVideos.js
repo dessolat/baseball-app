@@ -516,7 +516,8 @@ const PitchVideos = () => {
     videoHandling(true, isForcePlay, false);
     // videoHandling(true, isForcePlay, seekToCurrentTime);
     // position === 'top-left' && videoHandling();
-    position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
+    target.setPlaybackRate(videoPlaybackRate)
+    // position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
 
     // const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
 
