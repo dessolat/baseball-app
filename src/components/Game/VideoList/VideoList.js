@@ -256,11 +256,13 @@ const VideoList = ({ viewMode }, ref) => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
+		const camDelta1 = getCamDelta(modeNumber, 1);
+
     timeIntervalRef.current = setInterval(
       () => {
         const time = video1Ref.current?.getCurrentTime();
 
-        time && dispatch(setVideoCurrentTime(time));
+        time && dispatch(setVideoCurrentTime(time + camDelta1));
         // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
       },
       videoState === 1 ? 15 : 200
@@ -422,11 +424,13 @@ const VideoList = ({ viewMode }, ref) => {
 
     endRef.current = secondsToRated;
 
+		const camDelta1 = getCamDelta(modeNumber, 1);
+
     intervalRef.current = setInterval(() => {
       if (video1Ref.current === null) return;
       // if (Object.values(VIDEO_REFS).some(value => !value.current)) return;
 
-      const currentTime = video1Ref.current.getCurrentTime();
+      const currentTime = video1Ref.current.getCurrentTime() + camDelta1;
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {

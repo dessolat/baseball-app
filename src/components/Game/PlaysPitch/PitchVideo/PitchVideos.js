@@ -278,10 +278,12 @@ const PitchVideos = () => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
+		const camDelta1 = getCamDelta(1);
+
     timeIntervalRef.current = setInterval(
       () => {
         const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
-        time && dispatch(setVideoCurrentTime(time));
+        time && dispatch(setVideoCurrentTime(time + camDelta1));
         // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
       },
       videoState === 1 ? 15 : 200
@@ -452,10 +454,12 @@ const PitchVideos = () => {
 
     endRef.current = secondsToRated;
 
+		const camDelta1 = getCamDelta(1);
+
     intervalRef.current = setInterval(() => {
       if (Object.values(VIDEO_REFS).some(value => !value.current)) return;
 
-      const currentTime = VIDEO_REFS['top-left'].current.getCurrentTime();
+      const currentTime = VIDEO_REFS['top-left'].current.getCurrentTime() + camDelta1;
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {

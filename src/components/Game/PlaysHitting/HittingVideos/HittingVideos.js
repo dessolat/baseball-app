@@ -179,10 +179,10 @@ const HittingVideos = () => {
         SECONDS_SRC.hitting.timeStart +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-video1Ref.current.seekTo(secondsFromRated - getCamDelta(1), true);
-video2Ref.current.seekTo(secondsFromRated - getCamDelta(2), true);
-video3Ref.current.seekTo(secondsFromRated - getCamDelta(3), true);
-video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
+      video1Ref.current.seekTo(secondsFromRated - getCamDelta(1), true);
+      video2Ref.current.seekTo(secondsFromRated - getCamDelta(2), true);
+      video3Ref.current.seekTo(secondsFromRated - getCamDelta(3), true);
+      video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
       // Object.values(VIDEO_REFS).forEach((value, i) => {
       //   value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true);
       // });
@@ -245,10 +245,12 @@ video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
+    const camDelta1 = getCamDelta(1);
+
     timeIntervalRef.current = setInterval(
       () => {
         const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
-        time && dispatch(setVideoCurrentTime(time));
+        time && dispatch(setVideoCurrentTime(time + camDelta1));
       },
       videoState === 1 ? 15 : 200
     );
@@ -388,10 +390,12 @@ video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
 
     endRef.current = secondsToRated;
 
+    const camDelta1 = getCamDelta(1);
+
     intervalRef.current = setInterval(() => {
       if (Object.values(VIDEO_REFS).some(value => !value.current)) return;
 
-      const currentTime = VIDEO_REFS['top-left'].current.getCurrentTime();
+      const currentTime = VIDEO_REFS['top-left'].current.getCurrentTime() + camDelta1;
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {
