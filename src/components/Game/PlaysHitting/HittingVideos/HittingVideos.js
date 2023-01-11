@@ -50,6 +50,7 @@ const HittingVideos = () => {
   const videoHandlingTimeoutRef = useRef();
   const playTimeoutRef = useRef();
   const alreadySeekingRef = useRef(false);
+  const prevBatterPositionRef = useRef(0);
 
   // New synchronization method
   const allTimesIntervalRef = useRef();
@@ -61,6 +62,20 @@ const HittingVideos = () => {
     'bottom-left': video3Ref,
     'bottom-right': video4Ref
   };
+
+	const getVideoNumByPos = {
+		'top-left': 1,
+    'top-right': 2,
+    'bottom-left': 3,
+    'bottom-right': 4
+	}
+
+  const prevVideoStatesRef = useRef({
+    'top-left': -1,
+    'top-right': -1,
+    'bottom-left': -1,
+    'bottom-right': -1
+  });
 
   const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
@@ -183,6 +198,8 @@ const HittingVideos = () => {
       video2Ref.current.seekTo(secondsFromRated - getCamDelta(2), true);
       video3Ref.current.seekTo(secondsFromRated - getCamDelta(3), true);
       video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
+
+      prevBatterPositionRef.current = currentMoment.metering?.pitch?.batter_position;
       // Object.values(VIDEO_REFS).forEach((value, i) => {
       //   value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true);
       // });
@@ -249,6 +266,7 @@ const HittingVideos = () => {
 
     timeIntervalRef.current = setInterval(
       () => {
+        // if (VIDEO_REFS['top-left'].current?.getPlayerState === 5) return
         const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
         time && dispatch(setVideoCurrentTime(time + camDelta1));
       },
@@ -285,6 +303,10 @@ const HittingVideos = () => {
     return cameraInfo[titles[videoNumber]];
   }
 
+  // const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
+  // const videoId2 = getYouTubeID(topRightLink) || null;
+  // const videoId3 = getYouTubeID(bottomLeftLink) || null;
+  // const videoId4 = getYouTubeID(bottomRightLink) || null;
   const videoId1 = getYouTubeID(batterPosition === 0 ? topLeftLink : topRightLink) || 'WCjLd7QAJq8';
   const videoId2 = getYouTubeID(batterPosition === 0 ? topRightLink : topLeftLink) || null;
   const videoId3 = getYouTubeID(batterPosition === 0 ? bottomLeftLink : bottomRightLink) || null;
@@ -448,12 +470,27 @@ const HittingVideos = () => {
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
-    target.setPlaybackRate(videoPlaybackRate)
+    target.setPlaybackRate(videoPlaybackRate);
     // position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
   };
 
   const stateChangeHandler = (position, target, stateValue) => {
     position === 'top-left' && dispatch(setVideoState(stateValue));
+
+
+    if (prevVideoStatesRef.current[position] === 5 && SECONDS_SRC.hitting?.timeEnd) {
+      const secondsTotal = SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
+      const secondsFromRated =
+        SECONDS_SRC.hitting.timeStart +
+        (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
+
+      target.seekTo(secondsFromRated - getCamDelta(getVideoNumByPos[position]), true);
+			preferredVideoState === 1 && setTimeout(() => {
+				target.playVideo()
+			}, 200);
+    }
+
+    prevVideoStatesRef.current[position] = stateValue;
 
     stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
 
@@ -510,12 +547,30 @@ const HittingVideos = () => {
     //   video4 && preferredVideoState === 1 && video4.playVideo();
     // }
 
-    if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
+    // if (stateValue === 5 && SECONDS_SRC.hitting) {
+
+    // 		const secondsTotal = SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
+    // 		const secondsFromRated =
+    // 			SECONDS_SRC.hitting.timeStart +
+    // 			(secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
+
+    // 		target.seekTo(secondsFromRated, true);
+    // 		console.log('asdasd');
+    // 		setTimeout(() => {target.playVideo()}, 100)
+    // }
+
+    if (stateValue === 5 && preferredVideoState === 1) {
       video1?.playVideo();
       video2?.playVideo();
       video3?.playVideo();
       video4?.playVideo();
     }
+    // if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
+    //   video1?.playVideo();
+    //   video2?.playVideo();
+    //   video3?.playVideo();
+    //   video4?.playVideo();
+    // }
   };
 
   function handleMouseMove() {
