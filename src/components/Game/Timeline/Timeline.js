@@ -129,7 +129,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     if (!currentMoment.video) return;
 
     dispatch(setSliderCoords({ x1: 0, x2: 100, noChange: true }));
-		
+
     // eslint-disable-next-line
   }, [videoLengthMode]);
 
@@ -526,7 +526,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
 
                   return (
                     <Fragment key={j}>
-                      <path d={path} fill={!(j % 2) ? color : secondaryColor} />
+                      <path d={path} fill={!(j % 2) ? color : secondaryColor} pointerEvents='none'/>
 
                       {/* <rect
                       x={getRelativeX(timeStart)}
