@@ -10,7 +10,7 @@ const fieldsInfo = [
 	{ name: 'L', type: 'pitching', fixed: null, addedClass: null },
 	{ name: 'CG', type: 'pitching', fixed: null, addedClass: null },
 	{ name: 'SV', type: 'pitching', fixed: null, addedClass: null },
-	{ name: 'IP', type: 'pitching', fixed: null, addedClass: cl.wide2 },
+	{ name: 'IP', type: 'pitching', fixed: null, addedClass: cl.wide2_4 },
 	{ name: 'PA', type: 'pitching', fixed: null, addedClass: cl.wide },
 	{ name: 'R', type: 'pitching', fixed: null, addedClass: null },
 	{ name: 'ER', type: 'pitching', fixed: null, addedClass: null },
@@ -27,9 +27,9 @@ const fieldsInfo = [
 	{ name: 'WP', type: 'pitching', fixed: null, addedClass: null },
 	{ name: 'BK', type: 'pitching', fixed: null, addedClass: null },
 	{ name: 'ERA', type: 'pitching', fixed: 3, addedClass: cl.wide3 },
-	{ name: 'NP', type: 'pitching', fixed: null, addedClass: cl.wide },
-	{ name: 'NS', type: 'pitching', fixed: null, addedClass: cl.wide },
-	{ name: 'NB', type: 'pitching', fixed: null, addedClass: cl.wide }
+	{ name: 'NP', type: 'pitching', fixed: null, addedClass: cl.wide2_2 },
+	{ name: 'NS', type: 'pitching', fixed: null, addedClass: cl.wide2_2 },
+	{ name: 'NB', type: 'pitching', fixed: null, addedClass: cl.wide2_2 }
 ];
 
 const ContentPitchingTable = ({
