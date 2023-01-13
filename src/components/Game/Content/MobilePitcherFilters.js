@@ -33,7 +33,7 @@ const MobilePitcherFilters = () => {
           options={filteredSituations}
           currentOption={situationFilter}
           handleClick={handleClick}
-          listStyles={{ left: '-1rem', width: 'calc(100% + 2.3rem)', fontSize: '13px' }}
+          listStyles={{ left: '-1rem', width: 'calc(100% + 2.3rem)', fontSize: '13px', maxHeight: '72vh' }}
           itemStyles={{ padding: '0 1rem' }}
         />
       </div>
