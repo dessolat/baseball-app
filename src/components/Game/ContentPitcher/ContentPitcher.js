@@ -7,12 +7,14 @@ const ContentPitcher = () => {
   const currentCard = useSelector(state => state.game.currentCard);
   const moments = useSelector(state => state.game.moments);
 
-  const { balls_count, strikes_count } =
+  const { balls_count: ballsCount, strikes_count: strikesCount } =
     (moments.length > 0 ? moments.slice(-1)[0].pitcher : currentCard.moments?.slice(-1)[0].pitcher) || '';
 
   const pitcherName = currentCard.moments?.slice(-1)[0]?.pitcher.pitches_name;
   const isPitcher = currentCard.moments;
 
+  const ballsEnding = ballsCount > 1 ? 's' : '';
+  const strikesEnding = strikesCount > 1 ? 's' : '';
   return (
     <div>
       <p className={cl.playerName}>Pitcher: {isPitcher && <span>{pitcherName}</span>}</p>
@@ -23,7 +25,7 @@ const ContentPitcher = () => {
         {isPitcher && (
           <>
             <span>
-              {balls_count + strikes_count} ({balls_count} ball, {strikes_count} strike)
+              {ballsCount + strikesCount} ({ballsCount} ball{ballsEnding}, {strikesCount} strike{strikesEnding})
             </span>
           </>
         )}

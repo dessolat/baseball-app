@@ -16,6 +16,9 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
   const playDataBefore = icons.circ_text_pitch || icons.circ_text_play === 'R' ? '' : icons.batter_moment;
 
   const topEventText = metering?.pitch?.start_speed ? metering?.pitch?.start_speed.toFixed(0) : '';
+
+	const ballsEnding = table.balls > 1 ? 's' : ''
+	const strikesEnding = table.strikes > 1 ? 's' : ''
   return (
     <>
       {icons.circ_color_pitch && (
@@ -26,7 +29,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
           <div className={cl.text}>
             <p>CU {topEventText}</p>
             <div className={cl.onlyDesktop}>
-              {!isVideo && <>{`(${table.balls} balls - ${table.strikes} strikes)`}</>}
+              {!isVideo && <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>}
             </div>
           </div>
         </li>
@@ -46,7 +49,7 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
               <> */}
               <p>CU {topEventText}</p>
               <div className={cl.onlyDesktop}>
-                {!isVideo && <>{`(${table.balls} balls - ${table.strikes} strikes)`}</>}
+                {!isVideo && <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>}
               </div>
 
               {/* ({table.balls} - {table.strikes}) */}
