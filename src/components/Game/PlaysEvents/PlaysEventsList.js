@@ -99,6 +99,7 @@ const PlaysEventsList = ({ moments }) => {
             moment={moment}
             currentMoment={currentMoment}
             handleClick={handleMomentClick}
+						isVideo={isVideo}
             ref={eventsChildRef}
           />
         ))}

@@ -40,7 +40,8 @@
 
 .contentNoVideo {
   display: grid;
-  grid-template: 33rem / minmax(10rem, 75.06rem) 3.5rem;
+  grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);;
+  // grid-template: 33rem / minmax(10rem, 75.06rem) 3.5rem;
   // grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   grid-template-areas: 'list moments';
 

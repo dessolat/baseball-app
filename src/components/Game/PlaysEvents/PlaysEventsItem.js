@@ -2,8 +2,8 @@ import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
 import React, { forwardRef } from 'react';
 import cl from './PlaysEvents.module.scss';
 
-const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
-  const { icons, inner, metering } = moment;
+const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) => {
+  const { icons, inner, metering, table } = moment;
 
   const isActive = inner.id === currentMoment.inner?.id;
   const classes = isActive ? cl.active : '';
@@ -25,7 +25,9 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
           </div>
           <div className={cl.text}>
             <p>CU {topEventText}</p>
-            {/* ({table.balls} - {table.strikes}) */}
+            <div className={cl.onlyDesktop}>
+              {!isVideo && <>{`(${table.balls} balls - ${table.strikes} strikes)`}</>}
+            </div>
           </div>
         </li>
       )}
@@ -42,7 +44,11 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick }, ref) => {
               </>
             ) : (
               <> */}
-              <p>cu {topEventText}</p>
+              <p>CU {topEventText}</p>
+              <div className={cl.onlyDesktop}>
+                {!isVideo && <>{`(${table.balls} balls - ${table.strikes} strikes)`}</>}
+              </div>
+
               {/* ({table.balls} - {table.strikes}) */}
               {/* </>
             )} */}
