@@ -28,7 +28,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
     handleOnReady(videoNumber, e.target);
 
     currentTimeInterval.current = setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime().toFixed(2));
+      setCurrentTime(e.target.getCurrentTime().toFixed(4));
     }, 20);
   };
 

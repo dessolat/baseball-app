@@ -51,7 +51,7 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
     handleOnReady(position, e.target);
 
     currentTimeInterval.current = setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime()?.toFixed(2));
+      setCurrentTime(e.target.getCurrentTime()?.toFixed(4));
     }, 20);
   };
 
