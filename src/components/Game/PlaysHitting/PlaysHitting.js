@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 // import PlaysBat from '../PlaysBat/PlaysBat';
 // import PlaysStats from '../PlaysStats/PlaysStats';
-import HittingField from './HittingField';
+import HittingField from './HittingField/HittingField';
 import HittingGraph from './HittingGraph';
 import HittingStats from './HittingStats';
 import HittingVideos from './HittingVideos/HittingVideos';
