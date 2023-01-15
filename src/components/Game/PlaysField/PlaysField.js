@@ -9,7 +9,7 @@ import classNames from 'classnames';
 
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
-  const [count, setCount] = useState(1);
+  // const [count, setCount] = useState(0);
   const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
 
   const pitchState = useSelector(state => state.game.pitchState);
@@ -32,7 +32,7 @@ const PlaysField = ({ currentMoment }) => {
       }, 100);
     };
 
-    const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
+    // const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
     const yScale = parent.current.clientHeight / 330;
     setCoeff({
       x: parent.current.clientWidth / 1920,
@@ -43,32 +43,32 @@ const PlaysField = ({ currentMoment }) => {
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
-      clearTimeout(timeout);
+      // clearTimeout(timeout);
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (count === 0) return;
+
+  //   let graphTimeout;
+  //   if (count < coords.length) {
+  //     graphTimeout = setTimeout(() => setCount(prev => prev + 1), 40);
+  //     return;
+  //   }
+
+  //   return () => {
+  //     clearTimeout(graphTimeout);
+  //   };
+  //   // eslint-disable-next-line
+  // }, [count]);
+
   useEffect(() => {
-    if (count === 1) return;
-
-    let graphTimeout;
-    if (count < coords.length) {
-      graphTimeout = setTimeout(() => setCount(prev => prev + 1), 40);
-      return;
-    }
-
-    return () => {
-      clearTimeout(graphTimeout);
-    };
-    // eslint-disable-next-line
-  }, [count]);
-
-  useEffect(() => {
-    setCount(1);
-    const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
+    // setCount(0);
+    // const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
     setCoords(currentMoment?.metering?.pitch?.data_2d || []);
 
     return () => {
-      clearTimeout(timeout);
+      // clearTimeout(timeout);
     };
   }, [currentMoment]);
 
@@ -84,23 +84,25 @@ const PlaysField = ({ currentMoment }) => {
       ? 'STRIKE'
       : 'BALL'
     : '';
-	
-	const STRIKE_BALL_COLORS = {
-		STRIKE: '#E2001C',
-		BALL: '#2B9D6A'
-	}
+
+  const STRIKE_BALL_COLORS = {
+    STRIKE: '#E2001C',
+    BALL: '#2B9D6A'
+  };
   return (
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
         <img className={cl.grid} src={gridImg} alt='grid' />
-        <PlaysFieldBalls coords={coords} count={count} coeff={coeff} />
+        <PlaysFieldBalls coords={coords} coeff={coeff} currentMoment={currentMoment}/>
         <Arrow
           direction='right'
           onClick={handleArrowClick}
           style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
         />
       </div>
-      <div className={cl.strikeBallWrapper} style={{color: STRIKE_BALL_COLORS[strikeBallValue]}}>{strikeBallValue}</div>
+      <div className={cl.strikeBallWrapper} style={{ color: STRIKE_BALL_COLORS[strikeBallValue] }}>
+        {strikeBallValue}
+      </div>
     </div>
   );
 };
