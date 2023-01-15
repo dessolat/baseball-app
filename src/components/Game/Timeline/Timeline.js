@@ -448,9 +448,9 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
 
     switch (e.key) {
       case 'ArrowLeft':
-        dispatch(setSeekValue(videoCurrentTime - 1 / 60));
+        dispatch(setSeekValue(videoCurrentTime - 1 / 30));
       case 'ArrowRight':
-        dispatch(setSeekValue(videoCurrentTime + 1 / 60));
+        dispatch(setSeekValue(videoCurrentTime + 1 / 30));
       default:
         break;
     }
