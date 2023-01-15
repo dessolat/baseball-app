@@ -88,7 +88,7 @@ const PitchVideos = () => {
       const delta3 = Math.abs(video1Time - video3Time);
 
       const deltaArr = [delta1, delta2, delta3];
-      console.log(deltaArr);
+
       const deltaCap = 0.08;
       const deltaCaps = [getCamDelta(1), getCamDelta(2), getCamDelta(3)];
       const isBigDelta = deltaArr.some(
@@ -96,7 +96,6 @@ const PitchVideos = () => {
           delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap ||
           delta < Math.abs(deltaCaps[0] - deltaCaps[i]) - deltaCap
       );
-      console.log(isBigDelta);
       // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
@@ -123,12 +122,6 @@ const PitchVideos = () => {
         const entryState = entry[1].current?.getPlayerState();
         return entryState === -1 || entryState === 2;
       });
-
-      console.log(
-        video1Ref.current?.getPlayerState(),
-        video2Ref.current?.getPlayerState(),
-        video3Ref.current?.getPlayerState()
-      );
 
       if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
         syncTimeoutRef.current = true;
@@ -278,7 +271,7 @@ const PitchVideos = () => {
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
-		const camDelta1 = getCamDelta(1);
+    const camDelta1 = getCamDelta(1);
 
     timeIntervalRef.current = setInterval(
       () => {
@@ -377,7 +370,7 @@ const PitchVideos = () => {
         NEXT_SECONDS_SRC.pitch.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
       // const secondsToRated =
       //   nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
-			
+
       endRef.current = secondsToRated;
     } else {
       let cardIndex = filteredCards.findIndex(
@@ -454,7 +447,7 @@ const PitchVideos = () => {
 
     endRef.current = secondsToRated;
 
-		const camDelta1 = getCamDelta(1);
+    const camDelta1 = getCamDelta(1);
 
     intervalRef.current = setInterval(() => {
       if (Object.values(VIDEO_REFS).some(value => !value.current)) return;
@@ -511,12 +504,12 @@ const PitchVideos = () => {
 
     // const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
 
-		// if (isAllReady && video1Ref.current.getCurrentTime() < )
+    // if (isAllReady && video1Ref.current.getCurrentTime() < )
 
     videoHandling(true, isForcePlay, false);
     // videoHandling(true, isForcePlay, seekToCurrentTime);
     // position === 'top-left' && videoHandling();
-    target.setPlaybackRate(videoPlaybackRate)
+    target.setPlaybackRate(videoPlaybackRate);
     // position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
 
     // const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
@@ -661,43 +654,45 @@ const PitchVideos = () => {
   };
 
   return (
-    <>
-      <PitchVideo
-        videoId={videoId1}
-        position='top-left'
-        handleOnReady={handleOnReady}
-        stateChangeHandler={stateChangeHandler}
-      />
-      <PitchVideo
-        videoId={videoId2}
-        position='top-right'
-        handleOnReady={handleOnReady}
-        stateChangeHandler={stateChangeHandler}
-      />
-      <PitchVideo
-        videoId={videoId3}
-        position='bottom'
-        handleOnReady={handleOnReady}
-        stateChangeHandler={stateChangeHandler}
-        setPlayPause={setPlayPause}
-      />
-      {/* <button
-        style={{
-          position: 'fixed',
-          left: '70%',
-          bottom: '15%',
-          background: 'lightgreen',
-          padding: '3px 7px'
-        }}
-        onClick={() => setPlayPause('play')}>
-        Play
-      </button>
-      <button
-        style={{ position: 'fixed', left: '73%', bottom: '15%', background: 'lightpink', padding: '3px 7px' }}
-        onClick={() => setPlayPause('pause')}>
-        Pause
-      </button> */}
-    </>
+    
+          <>
+            <PitchVideo
+              videoId={videoId1}
+              position='top-left'
+              handleOnReady={handleOnReady}
+              stateChangeHandler={stateChangeHandler}
+            />
+            <PitchVideo
+              videoId={videoId2}
+              position='top-right'
+              handleOnReady={handleOnReady}
+              stateChangeHandler={stateChangeHandler}
+            />
+            <PitchVideo
+              videoId={videoId3}
+              position='bottom'
+              handleOnReady={handleOnReady}
+              stateChangeHandler={stateChangeHandler}
+              setPlayPause={setPlayPause}
+            />
+          </>
+        
+    // {/* <button
+    //   style={{
+    //     position: 'fixed',
+    //     left: '70%',
+    //     bottom: '15%',
+    //     background: 'lightgreen',
+    //     padding: '3px 7px'
+    //   }}
+    //   onClick={() => setPlayPause('play')}>
+    //   Play
+    // </button>
+    // <button
+    //   style={{ position: 'fixed', left: '73%', bottom: '15%', background: 'lightpink', padding: '3px 7px' }}
+    //   onClick={() => setPlayPause('pause')}>
+    //   Pause
+    // </button> */}
   );
 };
 

@@ -14,7 +14,7 @@ const POS_OPTIONS = {
 
 const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
   // const [currentQuality, setCurrentQuality] = useState(null);
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
 
   // eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
@@ -49,9 +49,9 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   const onReady = e => {
     handleOnReady(position, e.target);
 
-    currentTimeInterval.current = setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime().toFixed(4));
-    }, 20);
+    // currentTimeInterval.current = setInterval(() => {
+    //   setCurrentTime(e.target.getCurrentTime().toFixed(4));
+    // }, 20);
   };
 
   const onStateChange = e => {
@@ -129,7 +129,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         }}>
         {currentQuality}
       </div> */}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           right: 15,
@@ -141,7 +141,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
           fontSize: '.8rem'
         }}>
         {currentTime}
-      </div>
+      </div> */}
       {isInvisWrapper && <div style={{ position: 'absolute', inset: 0 }}></div>}
       {!currentMoment.video && <NoVideoScreen />}
     </div>
