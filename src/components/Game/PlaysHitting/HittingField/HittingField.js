@@ -6,6 +6,8 @@ import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 import classNames from 'classnames';
 
+// extend({ TextGeometry });
+
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
     [cl.active]: isAutoRotate
@@ -48,6 +50,7 @@ const HittingField = ({ hit }) => {
   const handleAutoRotateClick = () => setAutoRotate(prev => !prev);
   const handleResetClick = () => controlsRef.current.reset();
 
+	// const font = new FontLoader().parse(ComfortaaFont)
   return (
     <div className={cl.field}>
       <Canvas
@@ -59,6 +62,10 @@ const HittingField = ({ hit }) => {
             <planeGeometry args={[1280, 1090]} />
             <meshBasicMaterial map={textureRef} toneMapped={false} />
           </mesh>
+          {/* <mesh position={[-500, 0, 0]}>
+						<textGeometry args={['test', {font, size:500, height: 200}]}/>
+            <meshBasicMaterial color={'lightblue'} toneMapped={false} />
+          </mesh> */}
           {data_2d?.map(coord => (
             <mesh position={[coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150]}>
               <sphereGeometry args={[5, 40, 40]} />
