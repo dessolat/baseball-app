@@ -75,19 +75,19 @@ const HorizontalLinesText = ({ startX, graphRatio, minMaxValues }) => {
   return (
     <>
       <text x={startX - 15} y='15' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {maxY / graphRatio}
+        {(maxY / graphRatio) * -1}
       </text>
       <text x={startX - 15} y='40' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((maxY - average) / graphRatio)}
+        {Math.round(((maxY - average) / graphRatio) * -1)}
       </text>
       <text x={startX - 15} y='65' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((maxY + minY) / 2 / graphRatio)}
+        {Math.round(((maxY + minY) / 2 / graphRatio) * -1)}
       </text>
       <text x={startX - 15} y='90' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((minY + average) / graphRatio)}
+        {Math.round(((minY + average) / graphRatio) * -1)}
       </text>
       <text x={startX - 15} y='115' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {minY / graphRatio}
+        {(minY / graphRatio) * -1}
       </text>
     </>
   );

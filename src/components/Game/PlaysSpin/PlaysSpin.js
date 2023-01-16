@@ -22,42 +22,46 @@ const PlaysSpin = ({ pitch }) => {
     const testData = [];
 
     let currentDotParams = {
-			type: pitch?.pitch_type,
+      type: pitch?.pitch_type,
       offsetX: pitch?.offset_x,
       offsetY: pitch?.offset_y
     };
     innings.forEach(inning => {
       inning['top/guests'].forEach(card =>
-        card.moments.forEach(moment => {
-          const pitchType = moment.metering.pitch?.pitch_type;
+        card.moments
+          .filter(moment => !moment.metering.pitch?.is_pick_off)
+          .forEach(moment => {
+            const pitchType = moment.metering.pitch?.pitch_type;
 
-          if (
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            testData.push({
-              pitchType,
-              offsetX: moment.metering.pitch.offset_x,
-              offsetY: moment.metering.pitch.offset_y
-            });
-          }
-        })
+            if (
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              testData.push({
+                pitchType,
+                offsetX: moment.metering.pitch.offset_x,
+                offsetY: moment.metering.pitch.offset_y
+              });
+            }
+          })
       );
       inning['bottom/owners']?.forEach(card =>
-        card.moments.forEach(moment => {
-          const pitchType = moment.metering.pitch?.pitch_type;
+        card.moments
+          .filter(moment => !moment.metering.pitch?.is_pick_off)
+          .forEach(moment => {
+            const pitchType = moment.metering.pitch?.pitch_type;
 
-          if (
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            testData.push({
-              pitchType,
-              offsetX: moment.metering.pitch.offset_x,
-              offsetY: moment.metering.pitch.offset_y
-            });
-          }
-        })
+            if (
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              testData.push({
+                pitchType,
+                offsetX: moment.metering.pitch.offset_x,
+                offsetY: moment.metering.pitch.offset_y
+              });
+            }
+          })
       );
     });
 
