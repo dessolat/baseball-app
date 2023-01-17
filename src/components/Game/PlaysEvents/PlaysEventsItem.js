@@ -1,4 +1,5 @@
 import ReplaceEvent from 'components/UI/icons/ReplaceEvent';
+import usePitchTypes from 'hooks/usePitchTypes';
 import React, { forwardRef } from 'react';
 import cl from './PlaysEvents.module.scss';
 
@@ -17,8 +18,10 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
 
   const topEventText = metering?.pitch?.start_speed ? metering?.pitch?.start_speed.toFixed(0) : '';
 
-	const ballsEnding = table.balls > 1 ? 's' : ''
-	const strikesEnding = table.strikes > 1 ? 's' : ''
+  const ballsEnding = table.balls > 1 ? 's' : '';
+  const strikesEnding = table.strikes > 1 ? 's' : '';
+
+  const pitchTypeName = usePitchTypes(metering.pitch?.pitch_type, false);
   return (
     <>
       {icons.circ_color_pitch && (
@@ -27,9 +30,15 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
             {icons.circ_text_pitch}
           </div>
           <div className={cl.text}>
-            <p>CU {topEventText}</p>
+            {isVideo && (
+              <p>
+                {pitchTypeName} {topEventText}
+              </p>
+            )}
             <div className={cl.onlyDesktop}>
-              {!isVideo && <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>}
+              {!isVideo && (
+                <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>
+              )}
             </div>
           </div>
         </li>
@@ -47,9 +56,15 @@ const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) =
               </>
             ) : (
               <> */}
-              <p>CU {topEventText}</p>
+              {isVideo && (
+                <p>
+                  {pitchTypeName} {topEventText}
+                </p>
+              )}
               <div className={cl.onlyDesktop}>
-                {!isVideo && <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>}
+                {!isVideo && (
+                  <>{`(${table.balls} ball${ballsEnding} - ${table.strikes} strike${strikesEnding})`}</>
+                )}
               </div>
 
               {/* ({table.balls} - {table.strikes}) */}
