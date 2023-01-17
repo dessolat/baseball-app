@@ -19,7 +19,7 @@ const PitchValues = () => {
   const platePointValue = plateSpeed?.toFixed(1) ?? '';
 
   const trueSpinValue = rotation ? rotation.toFixed(2) + ' rpm' : ' ';
-  const verticalBreakValue = offset_y ? (offset_y * 100).toFixed(2) + ' cm' : ' ';
+  const verticalBreakValue = offset_y ? (offset_y * -100).toFixed(2) + ' cm' : ' ';
   const horizontalBreakValue = offset_x ? (offset_x * 100).toFixed(2) + ' cm' : ' ';
 
   const releaseHeightValue = releaseHeight?.toFixed(1) ?? '';
