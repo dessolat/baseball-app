@@ -495,7 +495,6 @@ const PitchVideos = () => {
   }
 
   //Handle on funcs
-
   const handleOnReady = (position, target) => {
     VIDEO_REFS[position].current = target;
 
@@ -506,7 +505,12 @@ const PitchVideos = () => {
 
     // if (isAllReady && video1Ref.current.getCurrentTime() < )
 
-    videoHandling(true, isForcePlay, false);
+		const timeStartPitch = currentMoment?.metering?.pitch?.time_start_pitch_window;
+    const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
+    const seekToCurrentTime =
+      videoCurrentTime > 0 && videoCurrentTime > timeStartPitch && videoCurrentTime < timeEndPitch;
+
+    videoHandling(true, isForcePlay, seekToCurrentTime);
     // videoHandling(true, isForcePlay, seekToCurrentTime);
     // position === 'top-left' && videoHandling();
     target.setPlaybackRate(videoPlaybackRate);

@@ -63,12 +63,12 @@ const HittingVideos = () => {
     'bottom-right': video4Ref
   };
 
-	const getVideoNumByPos = {
-		'top-left': 1,
+  const getVideoNumByPos = {
+    'top-left': 1,
     'top-right': 2,
     'bottom-left': 3,
     'bottom-right': 4
-	}
+  };
 
   const prevVideoStatesRef = useRef({
     'top-left': -1,
@@ -466,7 +466,12 @@ const HittingVideos = () => {
     VIDEO_REFS[position].current = target;
 
     const isForcePlay = preferredVideoState === 1;
-    const seekToCurrentTime = videoCurrentTime > 0 && !currentMoment.metering.hit;
+
+    const timeStartHit = currentMoment?.metering?.hit?.time_start_hit_window;
+    const timeEndHit = currentMoment?.metering?.hit?.time_end_hit_window;
+    const seekToCurrentTime =
+      videoCurrentTime > 0 && videoCurrentTime > timeStartHit && videoCurrentTime < timeEndHit;
+    // const seekToCurrentTime = videoCurrentTime > 0 && !currentMoment.metering.hit;
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
@@ -477,7 +482,6 @@ const HittingVideos = () => {
   const stateChangeHandler = (position, target, stateValue) => {
     position === 'top-left' && dispatch(setVideoState(stateValue));
 
-
     if (prevVideoStatesRef.current[position] === 5 && SECONDS_SRC.hitting?.timeEnd) {
       const secondsTotal = SECONDS_SRC.hitting.timeEnd - SECONDS_SRC.hitting.timeStart;
       const secondsFromRated =
@@ -485,9 +489,10 @@ const HittingVideos = () => {
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
       target.seekTo(secondsFromRated - getCamDelta(getVideoNumByPos[position]), true);
-			preferredVideoState === 1 && setTimeout(() => {
-				target.playVideo()
-			}, 200);
+      preferredVideoState === 1 &&
+        setTimeout(() => {
+          target.playVideo();
+        }, 200);
     }
 
     prevVideoStatesRef.current[position] = stateValue;
