@@ -13,7 +13,7 @@ import useGameFocus from 'hooks/useGameFocus';
 const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
-	const setGameFocus = useGameFocus('timeline')
+  const setGameFocus = useGameFocus('timeline');
 
   const videoState = useSelector(state => state.game.videoState);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
@@ -88,12 +88,18 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
     [cl.leftZero]: viewMode.slice(-1) === '1'
   });
 
-	const handleInnerWrapperClick = e => {
-		e.stopPropagation()
-		setGameFocus()
-	}
+  const handleInnerWrapperClick = e => {
+    e.stopPropagation();
+    setGameFocus();
+  };
   return (
     <div className={wrapperClasses} ref={ref} onClick={e => handleWrapperClick(e)}>
+      <div
+        className={cl.activeArea}
+        style={{ position: 'absolute', left: '5%', top: 0, right: '57%', bottom: 0 }}></div>
+      <div
+        className={cl.activeArea}
+        style={{ position: 'absolute', left: '50%', top: 0, right: '5%', bottom: 0 }}></div>
       <div
         className={cl.innerWrapper}
         style={fullscreenAvailable ? null : { width: '10rem' }}

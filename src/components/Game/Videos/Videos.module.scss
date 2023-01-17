@@ -271,6 +271,7 @@
   // height: 100%;
   display: grid;
   place-items: center;
+	pointer-events: none;
 }
 
 .innerWrapper {
@@ -281,10 +282,16 @@
   width: 16rem;
   height: 8rem;
   transition: opacity 0.3s;
+	pointer-events: auto;
+	position: absolute;
 }
 
 .fullOpacity {
   opacity: 1;
+}
+
+.activeArea {
+	pointer-events: auto;
 }
 
 .controls {

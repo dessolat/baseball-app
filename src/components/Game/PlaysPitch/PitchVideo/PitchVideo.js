@@ -63,14 +63,14 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
 
     clearTimeout(timerRef.current);
 
-    controlsWrapperRef.current.firstChild.style.opacity = 1;
-    controlsWrapperRef.current.firstChild.style.visibility = 'visible';
+    controlsWrapperRef.current.lastChild.style.opacity = 1;
+    controlsWrapperRef.current.lastChild.style.visibility = 'visible';
 
     timerRef.current = setTimeout(() => {
       if (!controlsWrapperRef.current) return;
-      controlsWrapperRef.current.firstChild.style.opacity = 0;
+      controlsWrapperRef.current.lastChild.style.opacity = 0;
       timerRef.current = setTimeout(() => {
-        controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+        controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
       }, 300);
     }, 500);
   }

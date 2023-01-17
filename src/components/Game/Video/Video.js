@@ -90,14 +90,14 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
 
     clearTimeout(timerRef.current);
 
-    controlsWrapperRef.current.firstChild.style.opacity = 1;
-    controlsWrapperRef.current.firstChild.style.visibility = 'visible';
+    controlsWrapperRef.current.lastChild.style.opacity = 1;
+    controlsWrapperRef.current.lastChild.style.visibility = 'visible';
 
     timerRef.current = setTimeout(() => {
       if (!controlsWrapperRef.current) return;
-      controlsWrapperRef.current.firstChild.style.opacity = 0;
+      controlsWrapperRef.current.lastChild.style.opacity = 0;
       timerRef.current = setTimeout(() => {
-        if (controlsWrapperRef.current) controlsWrapperRef.current.firstChild.style.visibility = 'hidden';
+        if (controlsWrapperRef.current) controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
       }, 300);
     }, 500);
   }

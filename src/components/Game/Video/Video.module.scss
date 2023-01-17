@@ -49,7 +49,6 @@
       > div:first-child {
         padding-top: 0;
         max-width: 55%;
-
       }
 
       > .signs {
@@ -124,8 +123,8 @@
         }
 
         > .players {
-					width: 75%;
-					flex: 1 75%;
+          width: 75%;
+          flex: 1 75%;
           > div {
             font: 400 1rem / 1 var(--font-nunito);
             white-space: nowrap;
@@ -257,17 +256,26 @@
     height: 1.5rem;
   }
 
-  &.topLeftBtn > button {
-    left: 0.5rem;
-    top: 0.5rem;
+  &.topLeftBtn {
+    right: 3rem;
+
+    > button {
+      left: 0.5rem;
+      top: 0.5rem;
+    }
   }
   &.topRightBtn > button {
     right: 0.4rem;
     top: 0.5rem;
   }
-  &.bottomLeftBtn > button {
-    left: 0.5rem;
-    bottom: 0.5rem;
+	
+  &.bottomLeftBtn {
+    right: 3rem;
+
+    > button {
+      left: 0.5rem;
+      bottom: 0.5rem;
+    }
   }
   &.bottomRightBtn > button {
     right: 0.4rem;
