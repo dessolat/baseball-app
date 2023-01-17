@@ -89,7 +89,6 @@ const PlaysSpeed = ({ currentMoment }) => {
   chartData.forEach(pair => pitchTypesSet.add(pair[0]));
   const pitchTypesArr = Array.from(pitchTypesSet).sort((a, b) => (a > b ? 1 : -1));
 
-	console.log(chartData);
   return (
     <div ref={ref} className={wrapperClasses}>
       {Object.keys(chartData).length !== 0 && (

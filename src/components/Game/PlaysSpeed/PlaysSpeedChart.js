@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
+import { getChartColor } from 'utils';
 import cl from './PlaysSpeed.module.scss';
 
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
@@ -26,17 +27,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   // const DOT_COLOR = '#1A4C96';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
-
-  const COLORS = {
-    '-1': 'lightgray',
-    0: '#1A4C96',
-    1: 'red',
-    2: 'green',
-    3: 'olive',
-    4: 'yellow',
-    5: 'purple',
-    6: 'lightgreen'
-  };
 
   function getMaxMinYAxisValue(max, min) {
     max = Math.ceil(max);
@@ -145,7 +135,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           cx={dot.coords[0]}
           cy={dot.coords[1]}
           r={DOT_RADIUS}
-          fill={COLORS[dot.type]}
+          fill={getChartColor(dot.type)}
           stroke='#000'
           strokeWidth='0.5'
         />
@@ -197,7 +187,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
           cx={minXCoord + xInterval * currentDot.index}
           cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
           r={currentDotRadius}
-          fill={COLORS[currentDot.type]}
+          fill={getChartColor(currentDot.type)}
           stroke='#000'
           strokeWidth='0.5'
         />

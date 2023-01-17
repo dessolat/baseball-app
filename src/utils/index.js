@@ -69,10 +69,10 @@ export const getBeforeAfterFlags = (cards, innings) => {
 export const getShortName = (name, length) => (name.length > length ? name.slice(0, length - 1) + '…' : name);
 
 export const getFixedNumber = (num, digits) => {
-	let zeroString = '.';
-	for (let i = 1; i <= digits; i++) zeroString += '0';
+  let zeroString = '.';
+  for (let i = 1; i <= digits; i++) zeroString += '0';
 
-	return num.toFixed(digits).replace(zeroString, '');
+  return num.toFixed(digits).replace(zeroString, '');
 };
 
 export const getObjectsSum = (obj1, obj2, ignoredKeys) => {
@@ -102,12 +102,25 @@ export const openFullscreen = element => {
 export const closeFullscreen = () => document.exitFullscreen();
 
 export const isFullScreen = () => {
-	const fullScreenElement = document.fullscreenElement
-			|| document.webkitFullscreenElement
-			|| document.mozFullScreenElement
-			|| document.msFullscreenElement
-			|| null;
-	
-	if (fullScreenElement === null) return false;
-	return true;
+  const fullScreenElement =
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement ||
+    null;
+
+  if (fullScreenElement === null) return false;
+  return true;
 };
+
+export const getChartColor = num =>
+  ({
+    '-1': 'lightgray',
+    1: '#1A4C96',
+    2: 'red',
+    3: 'green',
+    4: 'olive',
+    5: 'yellow',
+    6: 'purple',
+    7: 'lightgreen'
+  }[num]);

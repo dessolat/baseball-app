@@ -1,19 +1,10 @@
 import React, { useState, useLayoutEffect, useRef, useEffect, Fragment, useMemo } from 'react';
+import { getChartColor } from 'utils';
 import cl from './PlaysSpin.module.scss';
 
 const DOT_RADIUS = 3;
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
-const COLORS = {
-  '-1': 'lightgray',
-  0: '#1A4C96',
-  1: 'red',
-  2: 'green',
-  3: 'olive',
-  4: 'yellow',
-  5: 'purple',
-  6: 'lightgreen'
-};
 
 const AxisLines = ({ startX, startY }) => (
   <>
@@ -190,7 +181,7 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
             cy={startY + 100 - coordY}
             // cy={coordY + startY}
             r={DOT_RADIUS}
-            fill={COLORS[dot.pitchType]}
+            fill={getChartColor(dot.pitchType)}
             stroke='black'
             strokeWidth='0.5'
           />
@@ -245,7 +236,7 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
           // cx={currentCoordX + startX}
           // cy={currentCoordY + startY}
           r={currentDotRadius}
-          fill={COLORS[currentDot.type]}
+          fill={getChartColor[currentDot.type]}
           stroke='black'
           strokeWidth='0.5'
         />
