@@ -70,9 +70,15 @@ const Graph = ({ speeds }) => {
 		clearTimeout(curveTimeoutRef.current)
 
     setCurveIndex(0);
+		if (curveCoords.length === 0) return
+		setTimeout(() => {
+			setCurveIndex(1);
+		}, 150);
   }, [speeds]);
 
   useEffect(() => {
+		if (curveIndex === 0) return
+
     curveTimeoutRef.current = setTimeout(
       () => {
         setCurveIndex(prev => (prev < curveCoords.length ? prev + 1 : prev));
