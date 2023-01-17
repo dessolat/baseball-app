@@ -18,7 +18,7 @@ const PlaysSpeed = ({ currentMoment }) => {
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0) {
-    // if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.start_speed) {
+      // if (Object.keys(currentCard).length === 0 || !currentCard.moments[0]?.metering?.pitch?.start_speed) {
       setChartData([]);
       return;
     }
@@ -29,27 +29,31 @@ const PlaysSpeed = ({ currentMoment }) => {
 
     innings.forEach(inning => {
       inning['top/guests'].forEach(card =>
-        card.moments.forEach(moment => {
-          const pitchType = moment.metering.pitch?.pitch_type;
-          if (
-            moment.inner.id === currentMoment?.inner?.id &&
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            currentDotParams.type = pitchType;
-            currentDotParams.speed = moment.metering.pitch.start_speed;
-            currentDotParams.index = testData.length;
-          }
-          if (
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            testData.push([pitchType, moment.metering.pitch.start_speed]);
-          }
-        })
+        card.moments
+          .filter(moment => !moment.metering.pitch?.is_pick_off)
+          .forEach(moment => {
+            const pitchType = moment.metering.pitch?.pitch_type;
+            if (
+              moment.inner.id === currentMoment?.inner?.id &&
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              currentDotParams.type = pitchType;
+              currentDotParams.speed = moment.metering.pitch.start_speed;
+              currentDotParams.index = testData.length;
+            }
+            if (
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              testData.push([pitchType, moment.metering.pitch.start_speed]);
+            }
+          })
       );
       inning['bottom/owners']?.forEach(card =>
-        card.moments.forEach(moment => {
+        card.moments
+				.filter(moment => !moment.metering.pitch?.is_pick_off)
+				.forEach(moment => {
           const pitchType = moment.metering.pitch?.pitch_type;
           if (
             moment.inner.id === currentMoment?.inner?.id &&
@@ -80,18 +84,19 @@ const PlaysSpeed = ({ currentMoment }) => {
     [cl.dnone]: pitchState === 'Field'
   });
 
-	// Pitch types array for Legend comp
-	const pitchTypesSet = new Set()
-	chartData.forEach(pair => pitchTypesSet.add(pair[0]))
-	const pitchTypesArr = Array.from(pitchTypesSet).sort((a,b) => a > b ? 1 : -1)
-	
+  // Pitch types array for Legend comp
+  const pitchTypesSet = new Set();
+  chartData.forEach(pair => pitchTypesSet.add(pair[0]));
+  const pitchTypesArr = Array.from(pitchTypesSet).sort((a, b) => (a > b ? 1 : -1));
+
+	console.log(chartData);
   return (
     <div ref={ref} className={wrapperClasses}>
       {Object.keys(chartData).length !== 0 && (
         <>
           <p className={cl.subHeader}>Release speed</p>
           <PlaysSpeedChart chartData={chartData} currentDot={currentDot} />
-					<Legend legendData={pitchTypesArr} />
+          <Legend legendData={pitchTypesArr} />
         </>
       )}
       <div className={cl.arrowWrapper}>
