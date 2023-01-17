@@ -1,3 +1,4 @@
+import usePitchTypes from 'hooks/usePitchTypes';
 import React, { useState, useLayoutEffect } from 'react';
 import { getChartColor } from 'utils';
 import cl from './PlaysSpeed.module.scss';
@@ -144,6 +145,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const lineBtwAvg = (maxYCoord - minYCoord) / 3;
 	const tempDotTextCoord = minXCoord + xInterval * currentDot.index - 14
 	const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 357 ? 357 : tempDotTextCoord
+	const curDotText = usePitchTypes(currentDot.type)
   return (
     <svg viewBox='0 0 440 160' className={cl.chart}>
       {/* Horizontal lines text */}
@@ -200,7 +202,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
             y='146'
             className={cl.ballType}
             textAnchor='end'>
-            Curveball
+            {curDotText}
           </text>
           <text
             x={curDotTextCoord + 6}
