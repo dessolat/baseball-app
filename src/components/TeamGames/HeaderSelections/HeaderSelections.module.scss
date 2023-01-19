@@ -50,7 +50,13 @@
 	}
 }
 
-.teamImg {
+.imgWrapper {
+	height: 2.0625rem;
+	width: 3.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	@media screen and (max-width: 800px) {
 		position: absolute;
 		right: 1rem;
@@ -61,6 +67,14 @@
 		right: 1rem;
 		height: 25.2px;
 	}
+}
+
+.imgLoader {
+	height: 1.25rem;
+}
+
+.teamImg {
+	height: 100%;
 }
 
 .years {
