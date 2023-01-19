@@ -1,10 +1,41 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useLayoutEffect, useState } from 'react';
 import cl from './ContentTable.module.scss';
 import LeagueImage from 'images/league_image.png';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { getShortName } from 'utils';
 import { setCurrentGuests, setCurrentHome } from 'redux/gamesReducer';
+
+const Logo = () => {
+  const [isLoaded, setLoaded] = useState(false);
+
+  const { logo: logoUrlPart } = useSelector(state => state.games.currentLeague);
+
+  const imgUrl = `http://baseball-gametrack.ru/api/logo/${logoUrlPart}`;
+
+  // useLayoutEffect(() => {
+  //   setLoaded(false);
+  // }, [logoUrlPart]);
+
+  const pHolderStyles = isLoaded && logoUrlPart ? { display: 'none' } : {};
+  const imgStyles = !isLoaded || !logoUrlPart ? { display: 'none' } : { marginLeft: 'unset' };
+  return (
+    <>
+      <img src={LeagueImage} alt='league-img' style={pHolderStyles} />
+      <img
+        // src={
+        //   leaguesImages[
+        //     currentLeague.id === undefined ? currentLeague.name || currentLeague.title : currentLeague.id
+        //   ] || LeagueImage
+        // }
+        src={imgUrl}
+        alt='league-img'
+        style={imgStyles}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
+  );
+};
 
 const ContentTeam = ({ games }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -44,17 +75,10 @@ const ContentTeam = ({ games }) => {
   useMemo(() => teamOptions.sort((a, b) => (a > b ? 1 : -1)), [teamOptions]);
   return (
     <div className={cl.teamWrapper}>
-      <img
-        src={
-          leaguesImages[
-            currentLeague.id === undefined ? currentLeague.name || currentLeague.title : currentLeague.id
-          ] || LeagueImage
-        }
-        alt='league-img'
-      />
+      <Logo />
       <div className={cl.teamName}>
         <h2>{currentLeague.name}</h2>
-				<p className={cl.teamSearch}>Search game:</p>
+        <p className={cl.teamSearch}>Search game:</p>
         <div className={cl.teamFilters}>
           <div className={cl.teamSelector}>
             <Dropdown
@@ -63,10 +87,10 @@ const ContentTeam = ({ games }) => {
               currentOption={currentHome}
               handleClick={handleHomeDropdownClick}
               listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-							searchField={true}
+              searchField={true}
             />
           </div>
-					<span>VS</span>
+          <span>VS</span>
           <div className={cl.teamSelector}>
             <Dropdown
               title={getShortName(currentGuests, 18)}
@@ -74,7 +98,7 @@ const ContentTeam = ({ games }) => {
               currentOption={currentGuests}
               handleClick={handleGuestsDropdownClick}
               listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-							searchField={true}
+              searchField={true}
             />
           </div>
         </div>

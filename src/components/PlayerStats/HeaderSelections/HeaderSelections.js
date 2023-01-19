@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,32 @@ import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 import { getShortName } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
+import { useParams } from 'react-router-dom';
 
 const YEARS = ['All years', 2022, 2021, 2020];
+
+const Logo = () => {
+  const [isLoaded, setLoaded] = useState(false);
+
+  const { playerId } = useParams();
+
+  useLayoutEffect(() => {
+    setLoaded(false);
+  }, [playerId]);
+
+  const imgUrl = `http://baseball-gametrack.ru/api/logo/${playerId}`;
+
+  const imgStyles = !isLoaded ? { display: 'none' } : {};
+  const pHolderStyles = isLoaded ? { display: 'none' } : {};
+  return (
+    <>
+      <div className={cl.portrait}>
+        <img src={imgUrl} alt='' onLoad={() => setLoaded(true)} style={imgStyles} />
+        <img src={PortraitImg} alt='' style={pHolderStyles} className={cl.default}/>
+      </div>
+    </>
+  );
+};
 
 const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) => {
   const firstMountRef = useRef(true);
@@ -161,7 +185,7 @@ const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) 
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>
-        <img src={PortraitImg} alt='' />
+        <Logo />
         <div className={cl.fullName}>
           {statsData.name}
           <p>{statsData.surname}</p>

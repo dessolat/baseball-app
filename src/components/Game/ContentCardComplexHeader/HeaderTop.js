@@ -22,7 +22,7 @@ const HeaderTop = ({ cl, eventsSummary, player, sit }) => {
     <div className={cl.top}>
       <ContentCardTitle player={player} />
       <div className={cl.portraitTextWrapper}>
-        <ContentCardPortrait className={imgClasses} src={imgSrc} cl={cl} />
+        <ContentCardPortrait playerId={player.who_id} cl={cl} />
         <p className={cl.text} ref={ref}>
           {cardText}
         </p>

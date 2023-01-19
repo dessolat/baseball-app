@@ -25,7 +25,7 @@ const ContentCardSimple = ({ player }) => {
     <div className={cl.classic}>
       <ContentCardTitle player={player} />
       <div className={cl.portraitTextWrapper}>
-        <ContentCardPortrait className={imgClassName} src={imgSrc} cl={cl} />
+        <ContentCardPortrait playerId={player.who_id} cl={cl} />
         <div className={cl.text}>
           {cardText}
           <div className={wrapperClasses}>
