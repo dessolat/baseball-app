@@ -26,8 +26,47 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
   );
 };
 
+const Curve = ({ data, coef, curveCount }) => {
+  const points = data.slice(0, curveCount).reduce((sum, coord) => {
+    const newCoord = new THREE.Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217);
+    // const newCoord = new THREE.Vector3(-320, coord[2] * 5, 217);
+    // const newCoord = new THREE.Vector3(coord[0]-325, coord[2] * 20, (coord[1] - 1490) / 3 + 150);
+    // const newCoord = new THREE.Vector3(coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150);
+    sum.push(newCoord);
+    return sum;
+  }, []);
+
+  const curveCoords = new CatmullRomCurve3(points);
+
+  return (
+    <>
+      {/* <mesh position={[0, 0, 0]}> */}
+      <mesh position={[-70, 0, 220]}>
+        <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
+        <meshBasicMaterial color={'blue'} side={THREE.DoubleSide} />
+      </mesh>
+    </>
+  );
+};
+
+const TouchPoints = ({ data, coef, curveCount }) => (
+  <>
+    {data
+      .slice(0, curveCount)
+      .filter(coords => coords[3] === 1)
+      .map(coord => (
+        <mesh position={[coord[0] * coef - 320-70, coord[2] * coef, coord[1] * -coef + 217+220]}>
+        {/* <mesh position={[coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217]}> */}
+          {/* <mesh position={[coord[0] / 3.5 - 450 - 70, coord[2] * 20, (coord[1] - 1490) / 3 + 150 + 220]}> */}
+          <sphereGeometry args={[5, 40, 40]} />
+          <meshStandardMaterial color={'red'} />
+        </mesh>
+      ))}
+  </>
+);
+
 const HittingField = ({ hit }) => {
-  const { data_2d } = hit || 0;
+  const { data_3d } = hit || 0;
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [curveCount, setCurveCount] = useState(null);
 
@@ -52,19 +91,19 @@ const HittingField = ({ hit }) => {
   useLayoutEffect(() => {
     setCurveCount(0);
 
-    if (!data_2d) return;
+    if (!data_3d) return;
 
     setTimeout(() => {
       setCurveCount(1);
     }, 150);
-  }, [data_2d]);
+  }, [data_3d]);
 
   useEffect(() => {
-    if (!data_2d || curveCount === 0) return;
+    if (!data_3d || curveCount === 0) return;
 
-    const length = data_2d.length;
-		
-		let timeout;
+    const length = data_3d.length;
+
+    let timeout;
 
     if (curveCount < length) {
       timeout = setTimeout(() => {
@@ -72,9 +111,9 @@ const HittingField = ({ hit }) => {
       }, 3);
     }
 
-		return () => {
-			clearTimeout(timeout)
-		}
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [curveCount]);
 
   const handleAutoRotateClick = () => setAutoRotate(prev => !prev);
@@ -82,17 +121,17 @@ const HittingField = ({ hit }) => {
 
   // const font = new FontLoader().parse(ComfortaaFont)
 
-  let points, curve;
+  // let points, curveCoords;
 
-  if (data_2d && curveCount > 0) {
-    points = data_2d?.slice(0, curveCount).reduce((sum, coord) => {
-      const newCoord = new THREE.Vector3(coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150);
-      sum.push(newCoord);
-      return sum;
-    }, []);
+  const coef = 925 / 90;
+  // const yCoef = 909 / 90;
+  // xStart = -320 (1)
+  // xEnd = 605 (1)
+  // yStart = 217 (3)
+  // yEnd = -692 (3)
 
-    curve = new CatmullRomCurve3(points);
-  }
+  // if (data_3d && curveCount > 1) {
+  // }
 
   return (
     <div className={cl.field}>
@@ -106,27 +145,15 @@ const HittingField = ({ hit }) => {
             <meshBasicMaterial map={textureRef} toneMapped={false} />
           </mesh>
 
-          {curveCount > 1 && (
-            <mesh position={[-70, 0, 220]}>
-              <tubeGeometry args={[curve, 70, 3, 50, false]} />
-              <meshBasicMaterial color={'blue'} side={THREE.DoubleSide} />
-            </mesh>
-          )}
+          {data_3d && curveCount > 1 && <Curve data={data_3d} coef={coef} curveCount={curveCount}/>}
           {/* {data_2d?.map(coord => (
             <mesh position={[coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150]}>
               <sphereGeometry args={[5, 40, 40]} />
               <meshStandardMaterial color={'blue'} />
             </mesh>
           ))} */}
-          {data_2d
-            ?.slice(0, curveCount)
-            .filter(coords => coords[3] === 1)
-            .map(coord => (
-              <mesh position={[coord[0] / 3.5 - 450 - 70, coord[2] * 20, (coord[1] - 1490) / 3 + 150 + 220]}>
-                <sphereGeometry args={[5, 40, 40]} />
-                <meshStandardMaterial color={'red'} />
-              </mesh>
-            ))}
+
+          {data_3d && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
           <ambientLight intensity={1} />
 
