@@ -1,7 +1,34 @@
 import usePitchTypes from 'hooks/usePitchTypes';
+import useSetMomentById from 'hooks/useSetMomentById';
 import React, { useState, useLayoutEffect } from 'react';
 import { getChartColor } from 'utils';
 import cl from './PlaysSpeed.module.scss';
+
+const Dots = ({ dotsCoords }) => {
+	const setMomentById = useSetMomentById()
+
+  const DOT_RADIUS = 3;
+
+  const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
+    pair[1].forEach(coords => sum.push({ type: +pair[0], coords: [coords[0], coords[1]], momentId: coords[2] }));
+    return sum;
+  }, []);
+
+	const handleDotClick = id => () => setMomentById(id);
+  return dotsArr.map((dot, i) => (
+    <circle
+      key={i}
+      cx={dot.coords[0]}
+      cy={dot.coords[1]}
+      r={DOT_RADIUS}
+      fill={getChartColor(dot.type)}
+      stroke='#000'
+      strokeWidth='0.5'
+      className={cl.dot}
+			onClick={handleDotClick(dot.momentId)}
+    />
+  ));
+};
 
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
@@ -24,7 +51,6 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   }, [currentDotRadius]);
 
   // const GRAPH_WIDTH = 1;
-  const DOT_RADIUS = 3;
   // const DOT_COLOR = '#1A4C96';
   const LINE_DOWN_WIDTH = 1;
   const LINE_DOWN_COLOR = '#ACACAC';
@@ -79,7 +105,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     dotsCoords = chartData.reduce((sum, pair, index) => {
       const newValue = [
         minXCoord + xInterval * index,
-        maxYCoord - (pair[1] - minYAxisValue) / yValuePerHeight
+        maxYCoord - (pair[1] - minYAxisValue) / yValuePerHeight,
+        pair[2]
       ];
 
       sum[pair[0]] = !sum[pair[0]] ? [newValue] : [...sum[pair[0]], newValue];
@@ -87,21 +114,21 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
     }, {});
   }
 
-  const linePaths = [];
+  // const linePaths = [];
 
-  Object.entries(dotsCoords).forEach(pair => {
-    let linePath = '';
-    pair[1].forEach((dot, i) => {
-      if (i === 0) {
-        linePath += `M${dot[0]} ${dot[1]}`;
-        return;
-      }
+  // Object.entries(dotsCoords).forEach(pair => {
+  //   let linePath = '';
+  //   pair[1].forEach((dot, i) => {
+  //     if (i === 0) {
+  //       linePath += `M${dot[0]} ${dot[1]}`;
+  //       return;
+  //     }
 
-      linePath += `L${dot[0]} ${dot[1]}`;
-    });
+  //     linePath += `L${dot[0]} ${dot[1]}`;
+  //   });
 
-    linePaths.push({ [pair[0]]: linePath });
-  });
+  //   linePaths.push({ [pair[0]]: linePath });
+  // });
 
   // const renderedGraphs = (
   //   <>
@@ -123,29 +150,11 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   // );
 
   const isDots = chartValuesArr.length > 1;
-  const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
-    pair[1].forEach(coords => sum.push({ type: +pair[0], coords: [coords[0], coords[1]] }));
-    return sum;
-  }, []);
-
-  const dots = !isDots
-    ? null
-    : dotsArr.map((dot, i) => (
-        <circle
-          key={i}
-          cx={dot.coords[0]}
-          cy={dot.coords[1]}
-          r={DOT_RADIUS}
-          fill={getChartColor(dot.type)}
-          stroke='#000'
-          strokeWidth='0.5'
-        />
-      ));
 
   const lineBtwAvg = (maxYCoord - minYCoord) / 3;
-	const tempDotTextCoord = minXCoord + xInterval * currentDot.index - 14
-	const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 357 ? 357 : tempDotTextCoord
-	const curDotText = usePitchTypes(currentDot.type)
+  const tempDotTextCoord = minXCoord + xInterval * currentDot.index - 14;
+  const curDotTextCoord = tempDotTextCoord < 90 ? 90 : tempDotTextCoord > 357 ? 357 : tempDotTextCoord;
+  const curDotText = usePitchTypes(currentDot.type);
   return (
     <svg viewBox='0 0 440 160' className={cl.chart}>
       {/* Horizontal lines text */}
@@ -170,7 +179,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       ))}
 
       {/* Dots */}
-      {dots}
+      {isDots && <Dots dotsCoords={dotsCoords} />}
 
       {/* Current dot line */}
       {currentDot.index !== undefined && (
@@ -197,18 +206,10 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       {/* Current dot text */}
       {currentDot.index !== undefined && (
         <>
-          <text
-            x={curDotTextCoord}
-            y='146'
-            className={cl.ballType}
-            textAnchor='end'>
+          <text x={curDotTextCoord} y='146' className={cl.ballType} textAnchor='end'>
             {curDotText}
           </text>
-          <text
-            x={curDotTextCoord + 6}
-            y='146'
-            className={cl.mphValue}
-            textAnchor='start'>
+          <text x={curDotTextCoord + 6} y='146' className={cl.mphValue} textAnchor='start'>
             {currentDot.speed.toFixed(1)} mph
           </text>
         </>

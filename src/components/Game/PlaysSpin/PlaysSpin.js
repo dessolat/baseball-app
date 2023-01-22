@@ -40,7 +40,8 @@ const PlaysSpin = ({ pitch }) => {
               testData.push({
                 pitchType,
                 offsetX: moment.metering.pitch.offset_x,
-                offsetY: moment.metering.pitch.offset_y
+                offsetY: moment.metering.pitch.offset_y,
+								momentId: moment.inner.id
               });
             }
           })
@@ -58,7 +59,8 @@ const PlaysSpin = ({ pitch }) => {
               testData.push({
                 pitchType,
                 offsetX: moment.metering.pitch.offset_x,
-                offsetY: moment.metering.pitch.offset_y
+                offsetY: moment.metering.pitch.offset_y,
+								momentId: moment.inner.id
               });
             }
           })

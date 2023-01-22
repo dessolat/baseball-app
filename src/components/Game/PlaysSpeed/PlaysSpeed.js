@@ -46,7 +46,7 @@ const PlaysSpeed = ({ currentMoment }) => {
               moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
               moment.metering.pitch
             ) {
-              testData.push([pitchType, moment.metering.pitch.start_speed]);
+              testData.push([pitchType, moment.metering.pitch.start_speed, moment.inner.id]);
             }
           })
       );
@@ -68,7 +68,7 @@ const PlaysSpeed = ({ currentMoment }) => {
             moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
             moment.metering.pitch
           ) {
-            testData.push([pitchType, moment.metering.pitch.start_speed]);
+            testData.push([pitchType, moment.metering.pitch.start_speed, moment.inner.id]);
           }
         })
       );

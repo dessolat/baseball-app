@@ -223,6 +223,7 @@ const Content = ({ currentTab }) => {
           card.moments[0].inner.id === currentCard.moments[0].inner.id
       )[0];
 
+			
       dispatch(setCurrentCard(newCurrentCard || filteredCards.slice(-1)[0]));
     }
 
@@ -261,7 +262,11 @@ const Content = ({ currentTab }) => {
     currentCard.type !== 'Replacement'
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
-    currentCard.toFirstMoment
+    currentCard.customMoment
+      ? dispatch(
+          setCurrentMoment(currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment))
+        )
+      : currentCard.toFirstMoment
       ? dispatch(setCurrentMoment(newMoments[0] || {}))
       : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
     // currentCard.manualMoment

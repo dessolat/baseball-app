@@ -4,18 +4,18 @@
   align-items: center;
   column-gap: 5px;
   background-color: white;
-  padding: 1.5125rem .2rem .2rem;
+  padding: 1.5125rem 0.2rem 0.2rem;
   // padding: 2.3125rem 1.25rem calc(1.25rem - 17px) calc(1.25rem - 17px);
   position: relative;
   // margin-left: 6px;
 
   &::before {
     position: absolute;
-    left: .5rem;
-    top: .25rem;
-		content: 'Break, sm';
-		font: 400 .875rem var(--font-nunito);
-		color: var(--side-color);
+    left: 0.5rem;
+    top: 0.25rem;
+    content: 'Break, sm';
+    font: 400 0.875rem var(--font-nunito);
+    color: var(--side-color);
   }
 
   > * {
@@ -77,9 +77,9 @@
 }
 
 .graphTitle {
-	fill: black;
-	stroke-width: .1px;
-	font-family: var(--font-nunito);
+  fill: black;
+  stroke-width: 0.1px;
+  font-family: var(--font-nunito);
 }
 
 .dnone {
@@ -120,4 +120,8 @@
       margin-left: 5px;
     }
   }
+}
+
+.dot:hover {
+  cursor: pointer;
 }

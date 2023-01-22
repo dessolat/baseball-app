@@ -1,3 +1,4 @@
+import useSetMomentById from 'hooks/useSetMomentById';
 import React, { useState, useLayoutEffect, useRef, useEffect, Fragment, useMemo } from 'react';
 import { getChartColor } from 'utils';
 import cl from './PlaysSpin.module.scss';
@@ -156,6 +157,8 @@ const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
 };
 
 const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
+	const setMomentById = useSetMomentById()
+
   const maxX = Math.ceil(minMaxValues.maxX * 100);
   const minX = Math.floor(minMaxValues.minX * 100);
   const maxY = Math.ceil(minMaxValues.maxY * 100);
@@ -164,6 +167,7 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
   const xCoef = 100 / (maxX - minX);
   const yCoef = 100 / (maxY - minY);
 
+	const handleDotClick = id => () => setMomentById(id);
   return (
     <>
       {chartData.map((dot, i) => {
@@ -184,6 +188,8 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
             fill={getChartColor(dot.pitchType)}
             stroke='black'
             strokeWidth='0.5'
+						onClick={handleDotClick(dot.momentId)}
+						className={cl.dot}
           />
         );
       })}
