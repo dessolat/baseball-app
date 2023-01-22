@@ -230,16 +230,28 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
   return (
     <>
       {isCurrentDot ? (
-        <circle
-          cx={coordX + startX}
-          cy={startY + 100 - coordY}
-          // cx={currentCoordX + startX}
-          // cy={currentCoordY + startY}
-          r={currentDotRadius}
-          fill={getChartColor[currentDot.type]}
-          stroke='black'
-          strokeWidth='0.5'
-        />
+        <>
+          <circle
+            cx={coordX + startX}
+            cy={startY + 100 - coordY}
+            // cx={currentCoordX + startX}
+            // cy={currentCoordY + startY}
+            r={currentDotRadius + 1.5}
+            fill='white'
+            // stroke='black'
+            // strokeWidth='0.5'
+          />
+          <circle
+            cx={coordX + startX}
+            cy={startY + 100 - coordY}
+            // cx={currentCoordX + startX}
+            // cy={currentCoordY + startY}
+            r={currentDotRadius}
+            fill={getChartColor(currentDot.type)}
+            stroke='black'
+            strokeWidth='0.5'
+          />
+        </>
       ) : (
         <></>
       )}
