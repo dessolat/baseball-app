@@ -14,12 +14,12 @@ const ContentCardPortrait = ({ playerId, cl, ...props }) => {
         style={pHolderStyles}
         alt='Portrait'
       />
-      <img
+      {/* <img
         src={`http://baseball-gametrack.ru/api/logo/${playerId}`}
         onLoad={() => setLoaded(true)}
         style={imgStyles}
         alt='Portrait'
-      />
+      /> */}
     </div>
   );
 };
