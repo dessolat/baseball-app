@@ -1,7 +1,7 @@
 import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
 import cl from './HittingField.module.scss';
 import { Canvas } from '@react-three/fiber';
-import { CatmullRomCurve3, TextureLoader } from 'three';
+import { CatmullRomCurve3, DoubleSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 import classNames from 'classnames';
@@ -41,9 +41,20 @@ const Curve = ({ data, coef, curveCount }) => {
   return (
     <>
       {/* <mesh position={[0, 0, 0]}> */}
-      <mesh position={[-70, 0, 220]}>
+      <mesh position={[-70, 0, 220]} castShadow={true}>
         <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
-        <meshBasicMaterial color={'blue'} side={THREE.DoubleSide} />
+        <meshPhysicalMaterial color={'blue'}
+				 side={DoubleSide}
+				 shadowSide={DoubleSide}
+				 metalness={0}
+				 roughness={0.2}
+				 clearcoat={0.3}
+				 clearcoatRoughness={0.25}
+				//  transmission={1}
+				 reflectivity={0}
+				 ior={1.2}
+				 thickness={10}
+				 />
       </mesh>
     </>
   );
@@ -138,11 +149,12 @@ const HittingField = ({ hit }) => {
       <Canvas
         className={cl.canvas}
         camera={{ position: [0, 700, 1000], far: 3000, zoom: 0.34 }}
+				shadows={true}
         orthographic={true}>
         <Suspense fallback={null}>
-          <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
             <planeGeometry args={[1280, 1090]} />
-            <meshBasicMaterial map={textureRef} toneMapped={false} />
+            <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide}/>
           </mesh>
 
           {data_3d && curveCount > 1 && <Curve data={data_3d} coef={coef} curveCount={curveCount}/>}
@@ -155,7 +167,14 @@ const HittingField = ({ hit }) => {
 
           {data_3d && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
-          <ambientLight intensity={1} />
+<spotLight 
+position={[0,499.9,0]} 
+// position={[-200,500,100]} 
+// position={[-300,200,400]} 
+// target={new THREE.Object3D(500,500,100)}
+ intensity={.4} castShadow={true}/>
+ 
+          <ambientLight intensity={.8} />
 
           <OrbitControls
             enableZoom={true}
