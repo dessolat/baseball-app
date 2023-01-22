@@ -1,12 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Effects from './Effects';
 import ModeList from './ModeList';
 import SpeedSelector from './SpeedSelector';
 import cl from './VideoOptions.module.scss';
 
 const VideoOptions = ({ currentTab }) => {
-	const isModeListDisabled = currentTab === 'pitch' || currentTab === 'hitting'
-	
+  const currentMoment = useSelector(state => state.game.currentMoment);
+
+  const timeData = {
+    pitch: currentMoment.metering?.pitch?.time_start_pitch_window,
+    hitting: currentMoment.metering?.hit?.time_start_hit_window
+  };
+
+  const isModeListDisabled = timeData[currentTab];
   return (
     <div className={cl.wrapper}>
       <div className={cl.videoOptions}>
