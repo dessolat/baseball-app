@@ -47,6 +47,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const viewMode = useSelector(state => state.game.viewMode);
+  const isVideoEffects = useSelector(state => state.game.isVideoEffects);
 
   useEffect(() => () => clearInterval(currentTimeInterval.current), []);
 
@@ -125,7 +126,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               }
             }}
           />
-          {videoNumber === 1 && (
+          {videoNumber === 1 && isVideoEffects && (
             <Canvas
               // camera={{ position: [0,0,100] }}
               camera={{ position: [150, 100, 150] }}

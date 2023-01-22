@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SimpleToggler.module.scss';
 
-const SimpleToggler = props => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleClick = () => setIsChecked(prev => !prev);
-  return (
-    <label>
-      <input type='checkbox' checked={isChecked} onChange={handleClick} {...props} />
-    </label>
-  );
-};
-
+const SimpleToggler = props => (
+  <label>
+    <input type='checkbox' {...props} />
+  </label>
+);
 export default SimpleToggler;
