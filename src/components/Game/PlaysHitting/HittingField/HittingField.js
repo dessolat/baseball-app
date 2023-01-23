@@ -1,9 +1,10 @@
 import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
 import cl from './HittingField.module.scss';
 import { Canvas } from '@react-three/fiber';
-import { CatmullRomCurve3, DoubleSide, TextureLoader } from 'three';
+import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
+import CurveTexture from 'images/blue_ball_curve.jpg';
 import classNames from 'classnames';
 import * as THREE from 'three';
 
@@ -38,23 +39,29 @@ const Curve = ({ data, coef, curveCount }) => {
 
   const curveCoords = new CatmullRomCurve3(points);
 
+  const textureRef = useMemo(() => new TextureLoader().load(CurveTexture), []);
+
   return (
     <>
       {/* <mesh position={[0, 0, 0]}> */}
       <mesh position={[-70, 0, 220]} castShadow={true}>
         <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
-        <meshPhysicalMaterial color={'blue'}
-				 side={DoubleSide}
-				 shadowSide={DoubleSide}
-				 metalness={0}
-				 roughness={0.2}
-				 clearcoat={0.3}
-				 clearcoatRoughness={0.25}
-				//  transmission={1}
-				 reflectivity={0}
-				 ior={1.2}
-				 thickness={10}
-				 />
+        <meshPhongMaterial
+          // color={'blue'}
+          map={textureRef}
+          side={FrontSide}
+          //  shadowSide={DoubleSide}
+          //  metalness={0}
+
+          //  roughness={0.2}
+          //  clearcoat={0.3}
+          //  clearcoatRoughness={0.25}
+          //  transmission={1}
+          //  reflectivity={1}
+          //  ior={1.2}
+          //  thickness={10}
+          //  envMap={textureRef}
+        />
       </mesh>
     </>
   );
@@ -66,8 +73,8 @@ const TouchPoints = ({ data, coef, curveCount }) => (
       .slice(0, curveCount)
       .filter(coords => coords[3] === 1)
       .map(coord => (
-        <mesh position={[coord[0] * coef - 320-70, coord[2] * coef, coord[1] * -coef + 217+220]}>
-        {/* <mesh position={[coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217]}> */}
+        <mesh position={[coord[0] * coef - 320 - 70, coord[2] * coef, coord[1] * -coef + 217 + 220]}>
+          {/* <mesh position={[coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217]}> */}
           {/* <mesh position={[coord[0] / 3.5 - 450 - 70, coord[2] * 20, (coord[1] - 1490) / 3 + 150 + 220]}> */}
           <sphereGeometry args={[5, 40, 40]} />
           <meshStandardMaterial color={'red'} />
@@ -149,15 +156,15 @@ const HittingField = ({ hit }) => {
       <Canvas
         className={cl.canvas}
         camera={{ position: [0, 700, 1000], far: 3000, zoom: 0.34 }}
-				shadows={true}
+        shadows={true}
         orthographic={true}>
         <Suspense fallback={null}>
           <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
             <planeGeometry args={[1280, 1090]} />
-            <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide}/>
+            <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
           </mesh>
 
-          {data_3d && curveCount > 1 && <Curve data={data_3d} coef={coef} curveCount={curveCount}/>}
+          {data_3d && curveCount > 1 && <Curve data={data_3d} coef={coef} curveCount={curveCount} />}
           {/* {data_2d?.map(coord => (
             <mesh position={[coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150]}>
               <sphereGeometry args={[5, 40, 40]} />
@@ -167,14 +174,16 @@ const HittingField = ({ hit }) => {
 
           {data_3d && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
-<spotLight 
-position={[0,499.9,0]} 
-// position={[-200,500,100]} 
-// position={[-300,200,400]} 
-// target={new THREE.Object3D(500,500,100)}
- intensity={.4} castShadow={true}/>
- 
-          <ambientLight intensity={.8} />
+          <spotLight
+            position={[0, 499.9, 0]}
+            // position={[-200,500,100]}
+            // position={[-300,200,400]}
+            // target={new THREE.Object3D(500,500,100)}
+            intensity={0.4}
+            castShadow={true}
+          />
+
+          <ambientLight intensity={0.8} />
 
           <OrbitControls
             enableZoom={true}
