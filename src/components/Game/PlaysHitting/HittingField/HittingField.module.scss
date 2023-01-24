@@ -31,16 +31,29 @@
 }
 
 .optionsBarWrapper {
-	position: absolute;
+  position: absolute;
   top: -15%;
   left: 2%;
   right: 2%;
-	padding-bottom: .7rem;
-  
-	transition: top var(--transition-speed);
+  padding-bottom: 0.7rem;
+
+  transition: top var(--transition-speed);
 
   &:hover {
     top: 0;
+
+    > .arrowDown {
+      opacity: 0;
+    }
+  }
+
+  > .arrowDown {
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%) scale(2, 1.5);
+    opacity: 0.5;
+    transition: opacity var(--transition-speed);
   }
 }
 
@@ -49,7 +62,7 @@
   background: #e0f0ff;
   border-radius: 0 0 3px 3px;
   display: flex;
-	gap: 0.7rem;
+  gap: 0.7rem;
   justify-content: space-between;
 
   > * {

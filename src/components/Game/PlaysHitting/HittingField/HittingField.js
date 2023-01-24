@@ -7,6 +7,7 @@ import FieldBg from 'images/field_right.jpg';
 import CurveTexture from 'images/blue_ball_curve.jpg';
 import classNames from 'classnames';
 import * as THREE from 'three';
+import ArrowDown from 'components/UI/icons/ArrowDown';
 
 // extend({ TextGeometry });
 
@@ -22,6 +23,9 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
           Auto-rotate
         </button>
         <button onClick={handleResetClick}>Reset field</button>
+      </div>
+			<div className={cl.arrowDown}>
+        <ArrowDown />
       </div>
     </div>
   );
