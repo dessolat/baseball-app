@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Suspense } from 'react';
+import React, { useRef, useState, useEffect, Suspense, Fragment } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
@@ -9,29 +9,55 @@ import { openFullscreen } from 'utils';
 import VideoControls from '../VideoControls/VideoControls';
 import SidePanel from './SidePanel';
 import BottomPanel from './BottomPanel';
-import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
+// import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+// import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+// import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+// import { Quaternion, Vector3 } from 'three';
+import { degToRad } from 'three/src/math/MathUtils';
 
-const TextList = () => {
-  const textRef = useRef(null);
+const BathPath = ({ batCoords }) => {
+  // const textRef = useRef(null);
 
-  useFrame(() => {
-    if (textRef.current === null) return;
-    let zPosition = textRef.current.position.z;
-    textRef.current.position.z = zPosition < 100 ? zPosition + 1 : -140;
-  });
+  // const { camera } = useThree();
+  // camera.aspect = 1.77777
+  // camera.lookAt(-80, 0, 0);
+  // useFrame(() => {
+  //   if (textRef.current === null) return;
+  //   let zPosition = textRef.current.position.z;
+  //   textRef.current.position.z = zPosition < 100 ? zPosition + 1 : -140;
+  // });
 
-  extend({ TextGeometry });
-  const font = new FontLoader().parse(ComfortaaFont);
+  // extend({ TextGeometry });
+  // const font = new FontLoader().parse(ComfortaaFont);
+
+  const dotRadius = 0.04;
+
+  const xCorrect = 1;
+  const zCorrect = -0.5;
   return (
     <>
-      {/* <mesh position={[0,0, -40]}> */}
-      <mesh position={[30, 20, -140]} ref={textRef}>
+      {batCoords.map((coords, i) => (
+        <Fragment key={i}>
+          <mesh position={[coords[0] + xCorrect, coords[1], coords[2] + zCorrect]}>
+            <sphereGeometry args={[dotRadius, 20, 20]} />
+            <meshStandardMaterial color={'#1A4C96'} toneMapped={false} />
+          </mesh>
+          <mesh position={[coords[3] + xCorrect, coords[4], coords[5] + zCorrect]}>
+            <sphereGeometry args={[dotRadius, 20, 20]} />
+            <meshStandardMaterial color='red' toneMapped={false} />
+          </mesh>
+          <mesh position={[coords[6] + xCorrect, coords[7], coords[8] + zCorrect]}>
+            <sphereGeometry args={[dotRadius, 20, 20]} />
+            <meshStandardMaterial color='yellow' toneMapped={false} />
+          </mesh>
+        </Fragment>
+      ))}
+
+      {/* <mesh position={[30, 20, -140]} ref={textRef}>
         <textGeometry args={['Test', { font, size: 30, height: 4 }]} />
         <meshBasicMaterial color={'#1A4C96'} toneMapped={false} />
-      </mesh>
+      </mesh> */}
     </>
   );
 };
@@ -103,6 +129,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
     }, 500);
   }
 
+  const isBatPath = videoNumber === 1 && isVideoEffects && currentMoment?.metering?.bat?.data_3d;
   return (
     <div className={videoClasses} ref={wrapperRef}>
       {Object.keys(currentCard).length !== 0 ? (
@@ -126,21 +153,32 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               }
             }}
           />
-          {videoNumber === 1 && isVideoEffects && (
+          {isBatPath && (
             <Canvas
               // camera={{ position: [0,0,100] }}
-              camera={{ position: [150, 100, 150] }}
+              camera={{
+                // position: [30, 50, 50]
+                // position: [12.12522834, -2.15615498, 2.94535569],
+                position: [12.12522834, -19.15615498, 2.94535569],
+                rotation: [degToRad(84.05143912), degToRad(30.70764465), degToRad(3.077909001)],
+                fov: 7.3189,
+                aspect: 1.77777
+              }}
+              // camera={{ position: [30, 50, 50] }}
+              // camera={{ position: [150, 100, 150] }}
               // orthographic={true}
               style={{
                 width: '100%',
                 height: '100%',
-                top: '10px',
+                top: 0,
+                left: 0,
                 position: 'absolute',
                 pointerEvents: 'none'
               }}>
               <Suspense fallback={null}>
-                <TextList />
-                <ambientLight intensity={1} />
+                <BathPath batCoords={currentMoment?.metering?.bat?.data_3d} />
+                <spotLight position={[100, 80, 50]} />
+                <ambientLight intensity={0.4} />
               </Suspense>
             </Canvas>
           )}
