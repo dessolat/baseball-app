@@ -80,6 +80,14 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.875rem;
+				height: 100%;
+				position: relative;
+
+				> img {
+					margin-left: unset;
+					height: 100%;
+				}
+				
         @media screen and (max-width: 1600px) {
           gap: 0.4rem;
         }

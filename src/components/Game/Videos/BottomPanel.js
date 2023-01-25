@@ -18,13 +18,16 @@ const BottomPanel = () => {
 
   const { r1, r2, r3, outs, balls, strikes } = situationsArr[situationsArr.length - 1]?.table || {};
 
-  const pitcherName = currentCard?.moments?.slice(-1)[0]?.pitcher.pitches_name.replace(' ', ' ').toUpperCase();
+  const pitcherName = currentCard?.moments
+    ?.slice(-1)[0]
+    ?.pitcher.pitches_name.replace(' ', ' ')
+    .toUpperCase();
   const ballPlayerName = currentCard?.who?.replace(' ', ' ').toUpperCase();
 
-	const speedValue = currentMoment?.metering?.pitch?.start_speed.toFixed(1) ?? '';
+  const speedValue = currentMoment?.metering?.pitch?.start_speed.toFixed(1) ?? '';
   return (
     <div className={cl.bottomPanelFull}>
-      <Timeline forFullscreen={true}/>
+      <Timeline forFullscreen={true} />
       <div className={cl.signs}>
         <BallsStrikes balls={balls} strikes={strikes} />
         <Bases r1={r1} r2={r2} r3={r3} />
@@ -36,14 +39,20 @@ const BottomPanel = () => {
         <h3 className={cl.scoreTitle}>{guests.score}</h3>
       </div>
       <div className={cl.teamInfo}>
-        <HeaderLogo teamName={owners.name} images={imagesData} />
+        <HeaderLogo teamName={owners.name} side='right' images={imagesData} />
         <span className={cl.teamTitle}>{owners.name}</span>
         <h3 className={cl.scoreTitle}>{owners.score}</h3>
       </div>
       <div className={cl.playersInfo}>
         <div className={cl.players}>
-          <div><span>P:</span>{pitcherName}</div>
-          <div><span>B:</span>{ballPlayerName}</div>
+          <div>
+            <span>P:</span>
+            {pitcherName}
+          </div>
+          <div>
+            <span>B:</span>
+            {ballPlayerName}
+          </div>
         </div>
         <span className={cl.speed}>{speedValue} mph</span>
       </div>
