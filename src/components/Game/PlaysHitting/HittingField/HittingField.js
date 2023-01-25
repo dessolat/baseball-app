@@ -24,7 +24,7 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
         </button>
         <button onClick={handleResetClick}>Reset field</button>
       </div>
-			<div className={cl.arrowDown}>
+      <div className={cl.arrowDown}>
         <ArrowDown />
       </div>
     </div>
@@ -88,7 +88,7 @@ const TouchPoints = ({ data, coef, curveCount }) => (
 );
 
 const HittingField = ({ hit }) => {
-  const { data_3d } = hit || 0;
+  const { data_3d, camera_2d: camera2D } = hit || 0;
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [curveCount, setCurveCount] = useState(null);
 
@@ -143,8 +143,6 @@ const HittingField = ({ hit }) => {
 
   // const font = new FontLoader().parse(ComfortaaFont)
 
-  // let points, curveCoords;
-
   const coef = 925 / 90;
   // const yCoef = 909 / 90;
   // xStart = -320 (1)
@@ -155,6 +153,7 @@ const HittingField = ({ hit }) => {
   // if (data_3d && curveCount > 1) {
   // }
 
+  const isRenderPath = data_3d && curveCount > 1 && camera2D === null;
   return (
     <div className={cl.field}>
       <Canvas
@@ -168,7 +167,7 @@ const HittingField = ({ hit }) => {
             <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
           </mesh>
 
-          {data_3d && curveCount > 1 && <Curve data={data_3d} coef={coef} curveCount={curveCount} />}
+          {isRenderPath && <Curve data={data_3d} coef={coef} curveCount={curveCount} />}
           {/* {data_2d?.map(coord => (
             <mesh position={[coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150]}>
               <sphereGeometry args={[5, 40, 40]} />
@@ -176,7 +175,7 @@ const HittingField = ({ hit }) => {
             </mesh>
           ))} */}
 
-          {data_3d && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
+          {isRenderPath && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
           <spotLight
             position={[0, 499.9, 0]}
