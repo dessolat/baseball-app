@@ -95,7 +95,11 @@ const Line = ({ runData, xStartPos, yStartPos, coef, count, lineNumber, curLineN
               rotation={[-Math.PI / 2, 0, 0]}
               receiveShadow={true}>
               <planeGeometry args={[10, 10]} />
-              <meshStandardMaterial color={getChartColor(+runnerName+1)} toneMapped={false} shadowSide={FrontSide} />
+              <meshStandardMaterial
+                color={getChartColor(+runnerName + 1)}
+                toneMapped={false}
+                shadowSide={FrontSide}
+              />
             </mesh>
           ))}
           <mesh
@@ -164,12 +168,16 @@ const Lines = ({ field, xStartPos, yStartPos, coef, currentMoment }) => {
 
     if (count === null || widerField.length === 0) return;
 
-    setCount(0);
-    setLineNumber(0);
+    setCount(null);
+		setLineNumber(0);
+
+    setTimeout(() => {
+      setCount(0);
+    }, 20);
   }, [currentMoment]);
 
   useEffect(() => {
-    if (count === null) return;
+    if (count === null || widerField.length === 0) return;
 
     timeoutRef.current = setTimeout(() => {
       if (widerField[curLineNumber].data_3d.length > count) {
