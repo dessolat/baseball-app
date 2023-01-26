@@ -157,7 +157,7 @@ const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
 };
 
 const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
-	const setMomentById = useSetMomentById()
+  const setMomentById = useSetMomentById();
 
   const maxX = Math.ceil(minMaxValues.maxX * 100);
   const minX = Math.floor(minMaxValues.minX * 100);
@@ -167,17 +167,13 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
   const xCoef = 100 / (maxX - minX);
   const yCoef = 100 / (maxY - minY);
 
-	const handleDotClick = id => () => setMomentById(id);
+  const handleDotClick = id => () => setMomentById(id);
   return (
     <>
       {chartData.map((dot, i) => {
         const coordX = (dot.offsetX * 100 - minX) * xCoef;
         const coordY = (dot.offsetY * 100 - minY) * yCoef;
-        // const coordX = 50 + 50 * dot.offsetX * graphRatio;
-        // const coordY = 50 - 50 * dot.offsetY * graphRatio;
 
-        // const isCircle =
-        //   coordX + 12 > startX && coordY + 8 > startY && coordX + startX < 112 && coordY + startY < 108;
         return (
           <circle
             key={i}
@@ -188,8 +184,8 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
             fill={getChartColor(dot.pitchType)}
             stroke='black'
             strokeWidth='0.5'
-						onClick={handleDotClick(dot.momentId)}
-						className={cl.dot}
+            onClick={handleDotClick(dot.momentId)}
+            className={cl.dot}
           />
         );
       })}
@@ -224,34 +220,21 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
 
   const coordX = (currentDot.offsetX * 100 - minX) * xCoef;
   const coordY = (currentDot.offsetY * 100 - minY) * yCoef;
-  // const currentCoordX = 50 + 50 * currentDot.offsetX * graphRatio;
-  // const currentCoordY = 50 - 50 * currentDot.offsetY * graphRatio;
 
   const isCurrentDot =
     currentDot.offsetX !== undefined &&
-    coordX + 12 > GRAPH_START_X &&
-    coordY + 8 > GRAPH_START_Y &&
-    coordX + GRAPH_START_X < 112 &&
-    coordY + GRAPH_START_Y < 108;
+    coordX + 15 > GRAPH_START_X &&
+    coordY + 10 > GRAPH_START_Y &&
+    coordX + GRAPH_START_X < 115 &&
+    coordY + GRAPH_START_Y < 110;
   return (
     <>
       {isCurrentDot ? (
         <>
+          <circle cx={coordX + startX} cy={startY + 100 - coordY} r={currentDotRadius + 1.5} fill='white' />
           <circle
             cx={coordX + startX}
             cy={startY + 100 - coordY}
-            // cx={currentCoordX + startX}
-            // cy={currentCoordY + startY}
-            r={currentDotRadius + 1.5}
-            fill='white'
-            // stroke='black'
-            // strokeWidth='0.5'
-          />
-          <circle
-            cx={coordX + startX}
-            cy={startY + 100 - coordY}
-            // cx={currentCoordX + startX}
-            // cy={currentCoordY + startY}
             r={currentDotRadius}
             fill={getChartColor(currentDot.type)}
             stroke='black'
@@ -315,8 +298,6 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
   //   };
   // }, []);
 
-  console.log(chartData);
-  console.log(currentDot);
   const minMaxValues = chartData.reduce((sum, cur) => {
     if (
       sum.maxX === undefined ||
@@ -339,8 +320,6 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
 
     return sum;
   }, {});
-
-  console.log(minMaxValues);
   return (
     <svg
       width='100%'
