@@ -137,7 +137,6 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
           <YouTube
             videoId={videoId}
             // videoId={'ZTsgKIKW8GE'}
-            // videoId={'WCjLd7QAJq8'}
             onReady={onReady}
             onStateChange={onStateChange}
             opts={{
@@ -148,25 +147,19 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
                 controls: 0,
                 modestbranding: 1,
                 disablekb: 1
-                // loop: 1,
-                // playlist: '-GR52czEd-0'
+                // loop: 1
               }
             }}
           />
           {isBatPath && (
             <Canvas
-              // camera={{ position: [0,0,100] }}
               camera={{
                 // position: [30, 50, 50]
-                // position: [12.12522834, -2.15615498, 2.94535569],
                 position: [12.12522834, -19.15615498, 2.94535569],
                 rotation: [degToRad(84.05143912), degToRad(30.70764465), degToRad(3.077909001)],
-                fov: 7.3189,
+                fov: 7.3189 / 1.5,
                 aspect: 1.77777
               }}
-              // camera={{ position: [30, 50, 50] }}
-              // camera={{ position: [150, 100, 150] }}
-              // orthographic={true}
               style={{
                 width: '100%',
                 height: '100%',
