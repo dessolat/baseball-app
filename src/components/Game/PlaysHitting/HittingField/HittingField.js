@@ -44,11 +44,11 @@ const Curve = ({ data, coef, curveCount }) => {
   const curveCoords = new CatmullRomCurve3(points);
 
   const textureRef = useMemo(() => new TextureLoader().load(CurveTexture), []);
-
   return (
     <>
       {/* <mesh position={[0, 0, 0]}> */}
-      <mesh position={[-70, 0, 220]} castShadow={true}>
+
+      <mesh position={[-70, 0, 220]} castShadow>
         <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
         <meshPhongMaterial
           // color={'blue'}
@@ -160,6 +160,7 @@ const HittingField = ({ hit }) => {
         className={cl.canvas}
         camera={{ position: [0, 700, 1000], far: 3000, zoom: 0.34 }}
         shadows={true}
+        shadowMap
         orthographic={true}>
         <Suspense fallback={null}>
           <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
@@ -177,16 +178,25 @@ const HittingField = ({ hit }) => {
 
           {isRenderPath && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
-          <spotLight
-            position={[0, 499.9, 0]}
-            // position={[-200,500,100]}
-            // position={[-300,200,400]}
+          {/* <spotLight
+            position={[0, 1500, 0]}
             // target={new THREE.Object3D(500,500,100)}
-            intensity={0.4}
+            intensity={1}
             castShadow={true}
-          />
+						distance={15000}
+						power={2.5}
+						/> */}
 
-          <ambientLight intensity={0.8} />
+          <directionalLight
+            position={[0, 400, 0]}
+            intensity={0.5}
+            castShadow
+            shadow-camera-left={-640}
+            shadow-camera-right={640}
+            shadow-camera-top={640}
+            shadow-camera-bottom={-640}
+          />
+          <ambientLight intensity={0.5} />
 
           <OrbitControls
             enableZoom={true}
