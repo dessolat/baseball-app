@@ -5,16 +5,18 @@ import { getChartColor } from 'utils';
 import cl from './PlaysSpeed.module.scss';
 
 const Dots = ({ dotsCoords }) => {
-	const setMomentById = useSetMomentById()
+  const setMomentById = useSetMomentById();
 
   const DOT_RADIUS = 3;
 
   const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
-    pair[1].forEach(coords => sum.push({ type: +pair[0], coords: [coords[0], coords[1]], momentId: coords[2] }));
+    pair[1].forEach(coords =>
+      sum.push({ type: +pair[0], coords: [coords[0], coords[1]], momentId: coords[2] })
+    );
     return sum;
   }, []);
 
-	const handleDotClick = id => () => setMomentById(id);
+  const handleDotClick = id => () => setMomentById(id);
   return dotsArr.map((dot, i) => (
     <circle
       key={i}
@@ -25,7 +27,7 @@ const Dots = ({ dotsCoords }) => {
       stroke='#000'
       strokeWidth='0.5'
       className={cl.dot}
-			onClick={handleDotClick(dot.momentId)}
+      onClick={handleDotClick(dot.momentId)}
     />
   ));
 };
@@ -194,14 +196,22 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       )}
       {/* Current dot */}
       {currentDot.index !== undefined && (
-        <circle
-          cx={minXCoord + xInterval * currentDot.index}
-          cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
-          r={currentDotRadius}
-          fill={getChartColor(currentDot.type)}
-          stroke='#000'
-          strokeWidth='0.5'
-        />
+        <>
+          <circle
+            cx={minXCoord + xInterval * currentDot.index}
+            cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
+            r={currentDotRadius + 1.5}
+            fill='white'
+          />
+          <circle
+            cx={minXCoord + xInterval * currentDot.index}
+            cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
+            r={currentDotRadius}
+            fill={getChartColor(currentDot.type)}
+            stroke='#000'
+            strokeWidth='0.5'
+          />
+        </>
       )}
       {/* Current dot text */}
       {currentDot.index !== undefined && (
