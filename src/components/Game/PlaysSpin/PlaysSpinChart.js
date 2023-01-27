@@ -195,13 +195,20 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
 
 const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
-
+  console.log(currentDotRadius);
   useLayoutEffect(() => {
-    setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
+    setCurrentDotRadius(0);
+
+    setTimeout(() => {
+      setCurrentDotRadius(1);
+    }, 10);
+    // setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
     // eslint-disable-next-line
   }, [currentDot]);
 
   useLayoutEffect(() => {
+    if (currentDotRadius === 0) return;
+
     currentDotRadius < 5 &&
       setTimeout(() => {
         setCurrentDotRadius(prev => (prev + 0.45 > 7.5 ? 7.5 : prev + 0.45));
@@ -227,10 +234,31 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
     coordY + 10 > GRAPH_START_Y &&
     coordX + GRAPH_START_X < 115 &&
     coordY + GRAPH_START_Y < 110;
+
+  const verticalLineY2Coord = Math.max((startY + 100) * (currentDotRadius / 5.05), startY + 100 - coordY);
+  const horizontalLineX1Coord = Math.min(startX / (currentDotRadius / 5.05), coordX + startX);
   return (
     <>
       {isCurrentDot ? (
         <>
+          {/* Axis lines projections */}
+          {/* Vertical */}
+          <line
+            x1={coordX + startX}
+            y1={startY + 100 - coordY}
+            x2={coordX + startX}
+            y2={verticalLineY2Coord}
+            className={cl.currentDotLine}
+          />
+          {/* Horizontal */}
+          <line
+            x1={horizontalLineX1Coord}
+            y1={startY + 100 - coordY}
+            x2={coordX + startX}
+            y2={startY + 100 - coordY}
+            className={cl.currentDotLine}
+          />
+          {/* Dot */}
           <circle cx={coordX + startX} cy={startY + 100 - coordY} r={currentDotRadius + 1.5} fill='white' />
           <circle
             cx={coordX + startX}
