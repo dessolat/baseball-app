@@ -8,6 +8,9 @@ import CurveTexture from 'images/blue_ball_curve.jpg';
 import classNames from 'classnames';
 import * as THREE from 'three';
 import ArrowDown from 'components/UI/icons/ArrowDown';
+import CameraIcon from 'images/video_camera_icon.png';
+import FieldIcon from 'images/field_icon.png';
+import CameraView from './CameraView';
 
 // extend({ TextGeometry });
 
@@ -91,6 +94,7 @@ const HittingField = ({ hit }) => {
   const { data_3d, camera_2d: camera2D } = hit || 0;
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [curveCount, setCurveCount] = useState(null);
+  const [isCameraView, setCameraView] = useState(false);
 
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
@@ -111,6 +115,8 @@ const HittingField = ({ hit }) => {
   // };
 
   useLayoutEffect(() => {
+    if (isCameraView) return;
+
     setCurveCount(0);
 
     if (!data_3d) return;
@@ -118,7 +124,7 @@ const HittingField = ({ hit }) => {
     setTimeout(() => {
       setCurveCount(1);
     }, 150);
-  }, [data_3d]);
+  }, [data_3d, isCameraView]);
 
   useEffect(() => {
     if (!data_3d || curveCount === 0) return;
@@ -153,32 +159,38 @@ const HittingField = ({ hit }) => {
   // if (data_3d && curveCount > 1) {
   // }
 
+  const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
+
   const isRenderPath = data_3d && curveCount > 1 && camera2D === null;
+  const btnIcon = isCameraView ? FieldIcon : CameraIcon;
+  const isBtnIcon = camera2D !== null;
   return (
     <div className={cl.field}>
-      <Canvas
-        className={cl.canvas}
-        camera={{ position: [0, 700, 1000], far: 3000, zoom: 0.34 }}
-        shadows={true}
-        shadowMap
-        orthographic={true}>
-        <Suspense fallback={null}>
-          <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
-            <planeGeometry args={[1280, 1090]} />
-            <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
-          </mesh>
+      {(!isCameraView || camera2D === null) && (
+        <>
+          <Canvas
+            className={cl.canvas}
+            camera={{ position: [0, 700, 1000], far: 3000, zoom: 0.34 }}
+            shadows={true}
+            shadowMap
+            orthographic={true}>
+            <Suspense fallback={null}>
+              <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
+                <planeGeometry args={[1280, 1090]} />
+                <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
+              </mesh>
 
-          {isRenderPath && <Curve data={data_3d} coef={coef} curveCount={curveCount} />}
-          {/* {data_2d?.map(coord => (
+              {isRenderPath && <Curve data={data_3d} coef={coef} curveCount={curveCount} />}
+              {/* {data_2d?.map(coord => (
             <mesh position={[coord[0] / 3.5 - 450, coord[2] * 20, (coord[1] - 1490) / 3 + 150]}>
               <sphereGeometry args={[5, 40, 40]} />
               <meshStandardMaterial color={'blue'} />
             </mesh>
           ))} */}
 
-          {isRenderPath && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
+              {isRenderPath && <TouchPoints data={data_3d} coef={coef} curveCount={curveCount} />}
 
-          {/* <spotLight
+              {/* <spotLight
             position={[0, 1500, 0]}
             // target={new THREE.Object3D(500,500,100)}
             intensity={1}
@@ -187,38 +199,38 @@ const HittingField = ({ hit }) => {
 						power={2.5}
 						/> */}
 
-          <directionalLight
-            position={[0, 400, 0]}
-            intensity={0.5}
-            castShadow
-            shadow-camera-left={-640}
-            shadow-camera-right={640}
-            shadow-camera-top={640}
-            shadow-camera-bottom={-640}
+              <directionalLight
+                position={[0, 400, 0]}
+                intensity={0.5}
+                castShadow
+                shadow-camera-left={-640}
+                shadow-camera-right={640}
+                shadow-camera-top={640}
+                shadow-camera-bottom={-640}
+              />
+              <ambientLight intensity={0.5} />
+
+              <OrbitControls
+                enableZoom={true}
+                autoRotate={isAutoRotate}
+                maxPolarAngle={Math.PI / 2.2}
+                minZoom={0.22}
+                maxZoom={3}
+                zoomSpeed={1.5}
+                enableDamping={false}
+                rotateSpeed={1.2}
+                ref={controlsRef}
+              />
+            </Suspense>
+          </Canvas>
+
+          <OptionsBar
+            isAutoRotate={isAutoRotate}
+            handleAutoRotateClick={handleAutoRotateClick}
+            handleResetClick={handleResetClick}
           />
-          <ambientLight intensity={0.5} />
 
-          <OrbitControls
-            enableZoom={true}
-            autoRotate={isAutoRotate}
-            maxPolarAngle={Math.PI / 2.2}
-            minZoom={0.22}
-            maxZoom={3}
-            zoomSpeed={1.5}
-            enableDamping={false}
-            rotateSpeed={1.2}
-            ref={controlsRef}
-          />
-        </Suspense>
-      </Canvas>
-
-      <OptionsBar
-        isAutoRotate={isAutoRotate}
-        handleAutoRotateClick={handleAutoRotateClick}
-        handleResetClick={handleResetClick}
-      />
-
-      {/* <div className={cl.fieldBg}>
+          {/* <div className={cl.fieldBg}>
         <svg width='100%' height='100%' viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'>
           <path
             d={ballPath}
@@ -229,6 +241,14 @@ const HittingField = ({ hit }) => {
           {intermediatePoints}
         </svg>
       </div> */}
+        </>
+      )}
+      {isCameraView && camera2D !== null && <CameraView camera2D={camera2D} />}
+      {isBtnIcon && (
+        <button className={cl.cameraSwitchBtn} onClick={cameraSwitchBtnHandler}>
+          <img src={btnIcon} alt='camera' />
+        </button>
+      )}
     </div>
   );
 };
