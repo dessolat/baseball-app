@@ -63,7 +63,7 @@ const BathPath = ({ batCoords }) => {
 };
 
 const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPlayPause }) => {
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
 
   const wrapperRef = useRef();
   const timerRef = useRef();
@@ -80,9 +80,9 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   const onReady = e => {
     handleOnReady(videoNumber, e.target);
 
-    currentTimeInterval.current = setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime().toFixed(4));
-    }, 20);
+    // currentTimeInterval.current = setInterval(() => {
+    //   setCurrentTime(e.target.getCurrentTime().toFixed(4));
+    // }, 20);
   };
 
   const onStateChange = e => {
@@ -176,7 +176,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
             </Canvas>
           )}
           {/* <span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span> */}
-          <span
+          {/* <span
             style={{
               position: 'absolute',
               left: '50%',
@@ -186,7 +186,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               fontWeight: 600
             }}>
             {currentTime}
-          </span>
+          </span> */}
           {/* <span style={{position: 'absolute', left: '50%', top: 30, transform: 'translateX(-50%)', color: 'white', fontWeight: 600}}>{videoCurrentTime?.toFixed(2)}</span> */}
           {/* <span style={{position: 'absolute', right: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_to.toFixed(2)}</span> */}
           <div className={fullscreenBtnClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>

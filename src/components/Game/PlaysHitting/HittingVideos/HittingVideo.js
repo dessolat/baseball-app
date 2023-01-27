@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import cl from './HittingVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 
 const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
 
   // eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
@@ -50,9 +50,9 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
   const onReady = e => {
     handleOnReady(position, e.target);
 
-    currentTimeInterval.current = setInterval(() => {
-      setCurrentTime(e.target.getCurrentTime()?.toFixed(4));
-    }, 20);
+    // currentTimeInterval.current = setInterval(() => {
+    //   setCurrentTime(e.target.getCurrentTime()?.toFixed(4));
+    // }, 20);
   };
 
   const onStateChange = e => {
@@ -125,7 +125,7 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
         }}>
         {currentQuality}
       </div> */}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           right: 15,
@@ -137,7 +137,7 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
           fontSize: '.8rem'
         }}>
         {currentTime}
-      </div>
+      </div> */}
       {!currentMoment.video && <NoVideoScreen />}
     </div>
   );
