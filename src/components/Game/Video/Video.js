@@ -16,7 +16,25 @@ import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 // import { Quaternion, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 
-const BathPath = ({ batCoords }) => {
+const BatPath = ({ currentMoment, videoCurrentTime }) => {
+  const { data_3d: batCoords, speeds } = currentMoment?.metering?.bat || {};
+  const { time_start: timeStart, time_end: timeEnd } = currentMoment?.metering?.hit || {};
+
+  const curTimeCorr = videoCurrentTime + 0.286;
+
+  const totalHitTime = speeds[speeds.length - 1][1];
+
+  const elapsedTime =
+    curTimeCorr < timeStart ||
+    videoCurrentTime > currentMoment.video.full_seconds_to ||
+    videoCurrentTime < currentMoment.video.full_seconds_from
+      ? 0
+      : curTimeCorr - timeStart;
+  const coordsLength = batCoords.length;
+
+  const sliceCoef = totalHitTime / coordsLength;
+  const sliceCount = elapsedTime / sliceCoef;
+
   // const textRef = useRef(null);
 
   // const { camera } = useThree();
@@ -35,30 +53,110 @@ const BathPath = ({ batCoords }) => {
 
   const xCorrect = 1;
   const zCorrect = -0.5;
+
+  const getDistance = (coords, prevCoords) =>
+    Math.sqrt(
+      (coords[3] - prevCoords[3]) ** 2 + (coords[4] - prevCoords[4]) ** 2 + (coords[5] - prevCoords[5]) ** 2
+    );
+
+  const firstDistance = getDistance(batCoords[1], batCoords[0]);
+  const defaultMinMaxDistance = { min: firstDistance, max: firstDistance };
+
+  const minMaxDistance = batCoords.reduce((sum, cur, i) => {
+    if (i < 2) return sum;
+
+    const curDistance = getDistance(cur, batCoords[i - 1]);
+
+    if (curDistance < sum.min) {
+      sum.min = curDistance;
+      return sum;
+    }
+
+    if (curDistance > sum.max) {
+      sum.max = curDistance;
+      return sum;
+    }
+
+    return sum;
+  }, defaultMinMaxDistance);
+
+  const minOpacity = 0.3;
+  const maxOpacity = 1;
+
+  const opacityCoef = (maxOpacity - minOpacity) / (minMaxDistance.max - minMaxDistance.min);
   return (
     <>
-      {batCoords.map((coords, i) => (
-        <Fragment key={i}>
-          <mesh position={[coords[0] + xCorrect, coords[1], coords[2] + zCorrect]}>
-            <sphereGeometry args={[dotRadius, 20, 20]} />
-            <meshStandardMaterial color={'#1A4C96'} toneMapped={false} />
-          </mesh>
-          <mesh position={[coords[3] + xCorrect, coords[4], coords[5] + zCorrect]}>
-            <sphereGeometry args={[dotRadius, 20, 20]} />
-            <meshStandardMaterial color='red' toneMapped={false} />
-          </mesh>
-          <mesh position={[coords[6] + xCorrect, coords[7], coords[8] + zCorrect]}>
-            <sphereGeometry args={[dotRadius, 20, 20]} />
-            <meshStandardMaterial color='yellow' toneMapped={false} />
-          </mesh>
-        </Fragment>
-      ))}
+      {sliceCount &&
+        batCoords.slice(0, sliceCount).map((coords, i, arr) => {
+          const curOpacity = i > 0 ? minOpacity + getDistance(coords, arr[i - 1]) * opacityCoef : minOpacity;
+
+          i > 0 && console.log(getDistance(coords, arr[i - 1]), curOpacity);
+          return (
+            <Fragment key={i}>
+              <mesh position={[coords[0] + xCorrect, coords[1], coords[2] + zCorrect]}>
+                <sphereGeometry args={[dotRadius, 20, 20]} />
+                <meshStandardMaterial
+                  color={'#1A4C96'}
+                  toneMapped={false}
+                  transparent={true}
+                  opacity={curOpacity}
+                />
+              </mesh>
+              <mesh position={[coords[3] + xCorrect, coords[4], coords[5] + zCorrect]}>
+                <sphereGeometry args={[dotRadius, 20, 20]} />
+                <meshStandardMaterial
+                  color='red'
+                  toneMapped={false}
+                  transparent={true}
+                  opacity={curOpacity}
+                />
+              </mesh>
+              <mesh position={[coords[6] + xCorrect, coords[7], coords[8] + zCorrect]}>
+                <sphereGeometry args={[dotRadius, 20, 20]} />
+                <meshStandardMaterial
+                  color='yellow'
+                  toneMapped={false}
+                  transparent={true}
+                  opacity={curOpacity}
+                />
+              </mesh>
+            </Fragment>
+          );
+        })}
 
       {/* <mesh position={[30, 20, -140]} ref={textRef}>
         <textGeometry args={['Test', { font, size: 30, height: 4 }]} />
         <meshBasicMaterial color={'#1A4C96'} toneMapped={false} />
       </mesh> */}
     </>
+  );
+};
+
+const CanvasWrapper = ({ currentMoment }) => {
+  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
+
+  return (
+    <Canvas
+      camera={{
+        position: [12.12522834, -19.15615498, 2.94535569],
+        rotation: [degToRad(84.05143912), degToRad(30.70764465), degToRad(3.077909001)],
+        fov: 7.3189 / 1.5,
+        aspect: 1.77777
+      }}
+      style={{
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        position: 'absolute',
+        pointerEvents: 'none'
+      }}>
+      <Suspense fallback={null}>
+        <BatPath currentMoment={currentMoment} videoCurrentTime={videoCurrentTime} />
+        <spotLight position={[100, 80, 50]} />
+        <ambientLight intensity={0.4} />
+      </Suspense>
+    </Canvas>
   );
 };
 
@@ -151,30 +249,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               }
             }}
           />
-          {isBatPath && (
-            <Canvas
-              camera={{
-                // position: [30, 50, 50]
-                position: [12.12522834, -19.15615498, 2.94535569],
-                rotation: [degToRad(84.05143912), degToRad(30.70764465), degToRad(3.077909001)],
-                fov: 7.3189 / 1.5,
-                aspect: 1.77777
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                top: 0,
-                left: 0,
-                position: 'absolute',
-                pointerEvents: 'none'
-              }}>
-              <Suspense fallback={null}>
-                <BathPath batCoords={currentMoment?.metering?.bat?.data_3d} />
-                <spotLight position={[100, 80, 50]} />
-                <ambientLight intensity={0.4} />
-              </Suspense>
-            </Canvas>
-          )}
+          {isBatPath && <CanvasWrapper currentMoment={currentMoment} />}
           {/* <span style={{position: 'absolute', left: 30, top: 30, color: 'white', fontWeight: 600}}>{currentMoment.video?.seconds_from.toFixed(2)}</span> */}
           {/* <span
             style={{
