@@ -193,9 +193,9 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
   );
 };
 
-const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
+const CurrentDotLines = ({ startX, startY, currentDot, minMaxValues }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
-  console.log(currentDotRadius);
+
   useLayoutEffect(() => {
     setCurrentDotRadius(0);
 
@@ -258,6 +258,59 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
             y2={startY + 100 - coordY}
             className={cl.currentDotLine}
           />
+        </>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
+
+const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
+  const [currentDotRadius, setCurrentDotRadius] = useState(0);
+
+  useLayoutEffect(() => {
+    setCurrentDotRadius(0);
+
+    setTimeout(() => {
+      setCurrentDotRadius(1);
+    }, 10);
+    // setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
+    // eslint-disable-next-line
+  }, [currentDot]);
+
+  useLayoutEffect(() => {
+    if (currentDotRadius === 0) return;
+
+    currentDotRadius < 5 &&
+      setTimeout(() => {
+        setCurrentDotRadius(prev => (prev + 0.45 > 7.5 ? 7.5 : prev + 0.45));
+      }, 10);
+
+    // eslint-disable-next-line
+  }, [currentDotRadius]);
+
+  const maxX = Math.ceil(minMaxValues.maxX * 100);
+  const minX = Math.floor(minMaxValues.minX * 100);
+  const maxY = Math.ceil(minMaxValues.maxY * 100);
+  const minY = Math.floor(minMaxValues.minY * 100);
+
+  const xCoef = 100 / (maxX - minX);
+  const yCoef = 100 / (maxY - minY);
+
+  const coordX = (currentDot.offsetX * 100 - minX) * xCoef;
+  const coordY = (currentDot.offsetY * 100 - minY) * yCoef;
+
+  const isCurrentDot =
+    currentDot.offsetX !== undefined &&
+    coordX + 15 > GRAPH_START_X &&
+    coordY + 10 > GRAPH_START_Y &&
+    coordX + GRAPH_START_X < 115 &&
+    coordY + GRAPH_START_Y < 110;
+  return (
+    <>
+      {isCurrentDot ? (
+        <>
           {/* Dot */}
           <circle cx={coordX + startX} cy={startY + 100 - coordY} r={currentDotRadius + 1.5} fill='white' />
           <circle
@@ -373,6 +426,14 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         startX={GRAPH_START_X}
         startY={GRAPH_START_Y}
         graphRatio={graphRatio}
+        minMaxValues={minMaxValues}
+      />
+
+      {/* Render current dot lines  */}
+      <CurrentDotLines
+        startX={GRAPH_START_X}
+        startY={GRAPH_START_Y}
+        currentDot={currentDot}
         minMaxValues={minMaxValues}
       />
 
