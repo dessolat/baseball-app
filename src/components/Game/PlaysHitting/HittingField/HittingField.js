@@ -161,7 +161,7 @@ const HittingField = ({ hit }) => {
 
   const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
 
-  const isRenderPath = data_3d && curveCount > 1 && camera2D === null;
+  const isRenderPath = data_3d && curveCount > 1;
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
   const isBtnIcon = camera2D !== null;
   return (

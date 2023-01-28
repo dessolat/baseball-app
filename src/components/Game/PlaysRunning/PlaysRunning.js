@@ -87,7 +87,7 @@ const PlaysRunning = () => {
   return (
     <>
       {(mobileWidth > 1000 || runningMode === 'Field') && (
-        <PlaysRunningField field={currentMoment.metering?.field} setRunningMode={setRunningMode} />
+        <PlaysRunningField hit={currentMoment.metering?.hit} field={currentMoment.metering?.field} setRunningMode={setRunningMode} />
       )}
       {(mobileWidth > 1000 || runningMode === 'Info') && <PlaysRunningInfo setRunningMode={setRunningMode} />}
     </>

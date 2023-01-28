@@ -4,7 +4,7 @@ import React, { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutE
 import { useDispatch, useSelector } from 'react-redux';
 import cl from './PlaysRunning.module.scss';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { FrontSide, TextureLoader } from 'three';
+import { CatmullRomCurve3, FrontSide, TextureLoader, Vector3 } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 import ArrowDown from 'components/UI/icons/ArrowDown';
@@ -12,6 +12,7 @@ import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { getChartColor } from 'utils';
+import CurveTexture from 'images/blue_ball_curve.jpg';
 
 extend({ TextGeometry });
 
@@ -169,7 +170,7 @@ const Lines = ({ field, xStartPos, yStartPos, coef, currentMoment }) => {
     if (count === null || widerField.length === 0) return;
 
     setCount(null);
-		setLineNumber(0);
+    setLineNumber(0);
 
     setTimeout(() => {
       setCount(0);
@@ -242,7 +243,85 @@ const Lines = ({ field, xStartPos, yStartPos, coef, currentMoment }) => {
   );
 };
 
-const PlaysRunningField = ({ field, setRunningMode }) => {
+const TouchPoints = ({ data_3d, coef, curveCount }) => (
+  <>
+    {data_3d
+      .slice(0, curveCount)
+      .filter(coords => coords[3] === 1)
+      .map(coord => (
+        <mesh position={[coord[0] * coef - 320 - 70, coord[2] * coef, coord[1] * -coef + 167 + 220]}>
+          <sphereGeometry args={[5, 40, 40]} />
+          <meshStandardMaterial color={'red'} />
+        </mesh>
+      ))}
+  </>
+);
+
+const CurvePath = ({ data_3d, coef, curveCount }) => {
+  const points = data_3d.slice(0, curveCount).reduce((sum, coord) => {
+    const newCoord = new Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 167);
+
+    sum.push(newCoord);
+    return sum;
+  }, []);
+
+  const curveCoords = new CatmullRomCurve3(points);
+
+  const textureRef = useMemo(() => new TextureLoader().load(CurveTexture), []);
+  return (
+    <mesh position={[-70, 0, 220]} castShadow>
+      <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
+      <meshPhongMaterial map={textureRef} side={FrontSide} />
+    </mesh>
+  );
+};
+
+const Curve = ({ data_3d, coef }) => {
+  const [curveCount, setCurveCount] = useState(null);
+
+  useLayoutEffect(() => {
+    setCurveCount(0);
+
+    if (!data_3d) return;
+
+    setTimeout(() => {
+      setCurveCount(1);
+    }, 150);
+  }, [data_3d]);
+
+  useEffect(() => {
+    if (!data_3d || curveCount === 0) return;
+
+    const length = data_3d.length;
+
+    let timeout;
+
+    if (curveCount < length) {
+      timeout = setTimeout(() => {
+        setCurveCount(prev => prev + 1);
+      }, 3);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [curveCount]);
+
+  const isRenderPath = data_3d && curveCount > 1;
+  return (
+    <>
+      {isRenderPath && (
+        <>
+          <CurvePath data_3d={data_3d} coef={coef} curveCount={curveCount} />
+          <TouchPoints data_3d={data_3d} coef={coef} curveCount={curveCount} />
+        </>
+      )}
+    </>
+  );
+};
+
+const PlaysRunningField = ({ hit, field, setRunningMode }) => {
+  const { data_3d } = hit || 0;
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [zoomCoef, setZoomCoef] = useState(1);
 
@@ -269,7 +348,6 @@ const PlaysRunningField = ({ field, setRunningMode }) => {
   const yStartPos = 388;
 
   const coef = 925 / 90;
-
   return (
     <div className={cl.fieldWrapper} ref={wrapperRef}>
       {/* <svg className={cl.field} viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'> */}
@@ -295,8 +373,19 @@ const PlaysRunningField = ({ field, setRunningMode }) => {
             />
           )}
 
-          <spotLight position={[0, 499.9, 0]} intensity={0.4} castShadow={true} />
-          <ambientLight intensity={0.8} />
+          <Curve data_3d={data_3d} coef={coef} />
+
+          {/* <spotLight position={[0, 499.9, 0]} intensity={0.4} castShadow={true} /> */}
+					<directionalLight
+                position={[0, 400, 0]}
+                intensity={0.5}
+                castShadow
+                shadow-camera-left={-640}
+                shadow-camera-right={640}
+                shadow-camera-top={640}
+                shadow-camera-bottom={-640}
+              />
+          <ambientLight intensity={0.5} />
 
           <OrbitControls
             enableZoom={true}
