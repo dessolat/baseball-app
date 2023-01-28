@@ -18,7 +18,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
 const BatPath = ({ currentMoment, videoCurrentTime }) => {
   const { data_3d: batCoords, speeds } = currentMoment?.metering?.bat || {};
-  const { time_start: timeStart, time_end: timeEnd } = currentMoment?.metering?.hit || {};
+  const { time_start: timeStart } = currentMoment?.metering?.hit || {};
 
   const curTimeCorr = videoCurrentTime + 0.286;
 
@@ -90,7 +90,6 @@ const BatPath = ({ currentMoment, videoCurrentTime }) => {
         batCoords.slice(0, sliceCount).map((coords, i, arr) => {
           const curOpacity = i > 0 ? minOpacity + getDistance(coords, arr[i - 1]) * opacityCoef : minOpacity;
 
-          i > 0 && console.log(getDistance(coords, arr[i - 1]), curOpacity);
           return (
             <Fragment key={i}>
               <mesh position={[coords[0] + xCorrect, coords[1], coords[2] + zCorrect]}>

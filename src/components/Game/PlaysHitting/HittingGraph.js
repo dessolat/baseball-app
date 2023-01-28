@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
 
@@ -24,10 +25,11 @@ const Header = ({ maxSpeed, angle }) => {
   );
 };
 
-const Graph = ({ speeds }) => {
+const Graph = ({ speeds, timeStart, video }) => {
   const [curveIndex, setCurveIndex] = useState(0);
+  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
 
-	const curveTimeoutRef = useRef()
+  const curveTimeoutRef = useRef();
 
   const VIEWBOX_WIDTH = 327;
   const VIEWBOX_HEIGHT = 84;
@@ -67,17 +69,17 @@ const Graph = ({ speeds }) => {
   ]);
 
   useEffect(() => {
-		clearTimeout(curveTimeoutRef.current)
+    clearTimeout(curveTimeoutRef.current);
 
     setCurveIndex(0);
-		if (curveCoords.length === 0) return
-		setTimeout(() => {
-			setCurveIndex(1);
-		}, 150);
+    if (curveCoords.length === 0) return;
+    setTimeout(() => {
+      setCurveIndex(1);
+    }, 150);
   }, [speeds]);
 
   useEffect(() => {
-		if (curveIndex === 0) return
+    if (curveIndex === 0) return;
 
     curveTimeoutRef.current = setTimeout(
       () => {
@@ -93,6 +95,22 @@ const Graph = ({ speeds }) => {
     curvePath += `L${coords[0]} ${coords[1]}`;
   });
 
+  const curTimeCorr = videoCurrentTime;
+
+  const totalHitTime = speeds[speeds.length - 1][1];
+
+  const elapsedTime =
+    curTimeCorr < timeStart ||
+    videoCurrentTime > video.full_seconds_to ||
+    videoCurrentTime < video.full_seconds_from
+      ? 0
+      : curTimeCorr - timeStart;
+
+  const coef = GRAPH_WIDTH / totalHitTime;
+  const redLineXCoord = GRAPH_START_X + elapsedTime * coef;
+  const isRedLine = elapsedTime < totalHitTime && elapsedTime > 0;
+
+  // const redLineXCoord = GRAPH_START_X + GRAPH_WIDTH / 4;
   return (
     <div className={cl.graphWrapper}>
       <p className={cl.title}>Bat speed (mph)</p>
@@ -143,6 +161,18 @@ const Graph = ({ speeds }) => {
           );
         })}
 
+        {/* Vertical red line */}
+        {isRedLine && (
+          <line
+            x1={redLineXCoord}
+            y1={GRAPH_START_Y}
+            x2={redLineXCoord}
+            y2={GRAPH_START_Y + GRAPH_HEIGHT}
+            stroke='red'
+            strokeWidth='.5'
+          />
+        )}
+
         {/* Curve */}
         <path d={curvePath} stroke='#1A4C96' fill='none' />
       </svg>
@@ -150,13 +180,14 @@ const Graph = ({ speeds }) => {
   );
 };
 
-const HittingGraph = ({ bat }) => {
-  const { max_speed: maxSpeed, attack_angle: angle, speeds } = bat || {};
+const HittingGraph = ({ currentMoment }) => {
+  const { max_speed: maxSpeed, attack_angle: angle, speeds } = currentMoment?.metering?.bat || {};
+  const { time_start: timeStart } = currentMoment?.metering?.hit || {};
 
   return (
     <div className={cl.graph}>
       <Header maxSpeed={maxSpeed} angle={angle} />
-      {speeds && <Graph speeds={speeds} />}
+      {speeds && <Graph speeds={speeds} timeStart={timeStart} video={currentMoment?.video} />}
     </div>
   );
 };
