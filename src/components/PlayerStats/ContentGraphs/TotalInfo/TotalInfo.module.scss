@@ -1,0 +1,34 @@
+.totalInfoWrapper {
+  border-top: 5px solid #e9eaec;
+  padding: 2.4375rem;
+  display: flex;
+	column-gap: 2.5625rem;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.group {
+  + .group {
+    margin-top: 1.3125rem;
+  }
+}
+
+.groupItem {
+  padding: 2px 0.5625rem 0;
+  display: flex;
+  justify-content: space-between;
+  font: 300 0.875rem / 1.6 var(--font-nunito);
+  background: rgba(#eaeaea, .4);
+
+  + .groupItem {
+    margin-top: 0.6875rem;
+  }
+}
+
+.title {
+  padding: 0 0.5625rem;
+  font: 700 0.875rem / 1.8 var(--font-nunito);
+  text-transform: capitalize;
+}
