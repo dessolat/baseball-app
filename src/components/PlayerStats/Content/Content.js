@@ -128,18 +128,20 @@ const Content = ({ playerYears, calculateTeamsArray }) => {
           ) : (
             <>
               {isMobile && <ContentMobilePlayerInfo statsData={statsData} />}
-              <p className={cl.playerChr}>
-                {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} | {statsData.height}{' '}
-                {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
-              </p>
-              <ContentTables
-                getSortedTableOptions={getSortedTableOptions}
-                filteredLeagues={filteredLeagues}
-                filteredLeague={filteredLeague}
-                handleTableOptionClick={handleTableOptionClick}
-								playerYears={playerYears}
-								handleLeagueClick={handleLeagueClick}
-              />
+              <div className={cl.innerContainer}>
+                <p className={cl.playerChr}>
+                  {statsData.pos || '—'} | B/T: {statsData.bat_hand}/{statsData.throw_hand} |{' '}
+                  {statsData.height} {statsData.weight}LBS | Age: {new Date().getFullYear() - statsData.yob}
+                </p>
+                <ContentTables
+                  getSortedTableOptions={getSortedTableOptions}
+                  filteredLeagues={filteredLeagues}
+                  filteredLeague={filteredLeague}
+                  handleTableOptionClick={handleTableOptionClick}
+                  playerYears={playerYears}
+                  handleLeagueClick={handleLeagueClick}
+                />
+              </div>
               {getSortedTableOptions().length !== 0 && !isMobile && <ContentGraphs />}
             </>
           )}
