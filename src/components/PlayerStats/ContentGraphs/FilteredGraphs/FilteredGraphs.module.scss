@@ -1,0 +1,37 @@
+.filteredGraphsWrapper {
+  margin-top: 5px;
+  display: flex;
+  column-gap: 5px;
+
+  > div:last-child {
+    height: 100rem;
+  }
+}
+
+h3 {
+  color: #1a4c96;
+  font: 700 1.125rem var(--font-nunito);
+}
+
+.leftColumnWrapper {
+  background-color: #fff;
+  flex: 1;
+  height: 30rem;
+  top: 0;
+  position: sticky;
+  padding: 0.625rem 0 0.625rem 0.625rem;
+
+  > h3 {
+    padding-left: 0.4rem;
+  }
+}
+
+.rightColumnWrapper {
+	background-color: #fff;
+  flex: 3;
+  padding: 0.625rem 0;
+	
+	> h3 {
+		text-align: center;
+	}
+}
