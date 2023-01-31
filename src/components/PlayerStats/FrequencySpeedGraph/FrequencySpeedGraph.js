@@ -7,14 +7,17 @@ const FrequencySpeedGraph = () => {
     RIGHT_VERTICAL_GRID_LINES_NUMBER: 7,
     VERTICAL_GRID_LINES_TOP: 0,
     VERTICAL_GRID_LINES_LEFT: 45,
-    VERTICAL_GRID_LINES_HEIGHT: 443,
+    VERTICAL_GRID_LINES_HEIGHT: 300,
+    // VERTICAL_GRID_LINES_HEIGHT: 325,
+    // VERTICAL_GRID_LINES_HEIGHT: 443,
     GRAPH_ROWS_HEIGHT: 22,
     BETWEEN_ROWS_HEIGHT: 28
   };
 
   PARAMS.LEFT_VERTICAL_GRID_LINES_STEP = 166 / PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 231 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
-  PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 209 };
+  PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
+  // PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 209 };
 
   const dimensionsArr = [
     { title: 'Fastball', frequency: 54.5, color: '#1A4C96', speed: { min: 86, max: 90 } },
@@ -62,7 +65,8 @@ const FrequencySpeedGraph = () => {
   const rightScaleMultiplier = 198 / (maxSpeedLineValue - minSpeedLineValue);
   return (
       <svg
-        viewBox='0 0 480 535'
+        viewBox='0 0 480 364'
+        // viewBox='0 0 480 535'
         xmlns='http://www.w3.org/2000/svg'
         className={cl.graph}
         // preserveAspectRatio='none'
@@ -91,7 +95,8 @@ const FrequencySpeedGraph = () => {
             {/* Bottom-left number */}
             <text
               x={PARAMS.ZERO_COORDS.X - (PARAMS.LEFT_VERTICAL_GRID_LINES_STEP * (i + 1) + 17 / 2)}
-              y={PARAMS.ZERO_COORDS.Y + 254}
+              y={PARAMS.ZERO_COORDS.Y + 163}
+              // y={PARAMS.ZERO_COORDS.Y + 254}
               className={cl.bottomNumber}>
               {number}
             </text>
@@ -104,7 +109,8 @@ const FrequencySpeedGraph = () => {
             (PARAMS.LEFT_VERTICAL_GRID_LINES_STEP * (PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER + 1) + 17 / 2) +
             10
           }
-          y={PARAMS.ZERO_COORDS.Y + 254}
+          y={PARAMS.ZERO_COORDS.Y + 163}
+          // y={PARAMS.ZERO_COORDS.Y + 254}
           className={cl.bottomNumber}>
           %
         </text>
@@ -115,7 +121,8 @@ const FrequencySpeedGraph = () => {
             (PARAMS.LEFT_VERTICAL_GRID_LINES_STEP * PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER + 17 / 2) -
             7
           }
-          y={PARAMS.ZERO_COORDS.Y + 280}
+          y={PARAMS.ZERO_COORDS.Y + 189}
+          // y={PARAMS.ZERO_COORDS.Y + 280}
           className={cl.sideTitle}>
           Pitch Type frequency
         </text>
@@ -135,7 +142,8 @@ const FrequencySpeedGraph = () => {
             {!(i % 2) && (
               <text
                 x={PARAMS.ZERO_COORDS.X + (PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP * (i + 1) - 17 / 2)}
-                y={PARAMS.ZERO_COORDS.Y + 254}
+                y={PARAMS.ZERO_COORDS.Y + 163}
+                // y={PARAMS.ZERO_COORDS.Y + 254}
                 className={cl.bottomNumber}>
                 {number}
               </text>
@@ -149,7 +157,8 @@ const FrequencySpeedGraph = () => {
             (PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP * PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER) / 2 -
             32
           }
-          y={PARAMS.ZERO_COORDS.Y + 280}
+          y={PARAMS.ZERO_COORDS.Y + 189}
+          // y={PARAMS.ZERO_COORDS.Y + 280}
           className={cl.sideTitle}>
           Speed, mph
         </text>
