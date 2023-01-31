@@ -1,8 +1,8 @@
 import React from 'react';
-import './SimpleToggler.module.scss';
+import cl from './SimpleToggler.module.scss';
 
 const SimpleToggler = props => (
-  <label>
+  <label className={cl.togglerLabel}>
     <input type='checkbox' {...props} />
   </label>
 );
