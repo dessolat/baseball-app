@@ -11,7 +11,7 @@ import ArrowDown from 'components/UI/icons/ArrowDown';
 import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { getChartColor } from 'utils';
+import { getFieldColor } from 'utils';
 import CurveTexture from 'images/blue_ball_curve.jpg';
 
 extend({ TextGeometry });
@@ -97,7 +97,7 @@ const Line = ({ runData, xStartPos, yStartPos, coef, count, lineNumber, curLineN
               receiveShadow={true}>
               <planeGeometry args={[10, 10]} />
               <meshStandardMaterial
-                color={getChartColor(+runnerName + 1)}
+                color={getFieldColor(runnerName)}
                 toneMapped={false}
                 shadowSide={FrontSide}
               />
@@ -107,7 +107,7 @@ const Line = ({ runData, xStartPos, yStartPos, coef, count, lineNumber, curLineN
             position={[xStartPos + lastCoords[0] * coef, 20, yStartPos - lastCoords[1] * coef]}
             ref={textRef}>
             <textGeometry args={[runnerName, { font, size: 30, height: 2 }]} />
-            <meshBasicMaterial color={'#1A4C96'} toneMapped={false} />
+            <meshBasicMaterial color={getFieldColor(runnerName)} toneMapped={false} />
           </mesh>
         </>
       ) : (

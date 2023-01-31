@@ -113,6 +113,14 @@ export const isFullScreen = () => {
   return true;
 };
 
+export const getFieldColor = dot =>
+  ({
+    H: '#1A4C96',
+    B1: 'red',
+    B2: 'green',
+    B3: 'olive'
+  }[dot]);
+
 export const getChartColor = num =>
   ({
     '-1': 'lightgray',
