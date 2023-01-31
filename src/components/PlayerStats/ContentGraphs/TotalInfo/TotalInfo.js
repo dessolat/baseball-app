@@ -97,7 +97,7 @@ const TotalInfo = () => {
       title: ' ',
       items: [
         { name: 'Fly (60 contacts)', value: 40 },
-        { name: 'Line (30 contacts )', value: 20 },
+        { name: 'Line (30 contacts)', value: 20 },
         { name: 'Grounds (60 contacts)', value: 80 }
       ]
     }

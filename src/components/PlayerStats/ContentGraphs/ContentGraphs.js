@@ -16,7 +16,7 @@ const ContentGraphs = () => {
       <TotalInfo />
 			<FilteredGraphs />
 
-      <div className={cl.graphRow}>
+      {/* <div className={cl.graphRow}>
         <FrequencySpeedGraph />
         <BreakGraph />
         <TypesGraph />
@@ -39,7 +39,7 @@ const ContentGraphs = () => {
         <DotsGraph color='blue' />
         <DotsGraph color='yellow' />
         <DotsGraph color='olive' />
-      </div>
+      </div> */}
     </div>
   );
 };
