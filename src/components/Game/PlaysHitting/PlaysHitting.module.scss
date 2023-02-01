@@ -226,6 +226,14 @@
   }
 }
 
+.impactDot {
+	transition: r .3s;
+}
+
+.impactDotLine {
+	transition: stroke-width .3s;
+}
+
 .videos {
   grid-area: videos;
   // background-color: white;
