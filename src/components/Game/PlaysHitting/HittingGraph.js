@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { Fragment, useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
@@ -25,7 +25,7 @@ const Header = ({ maxSpeed, angle }) => {
   );
 };
 
-const Graph = ({ speeds, timeStart, video }) => {
+const Graph = ({ speeds, video, impactTime }) => {
   const [curveIndex, setCurveIndex] = useState(0);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
 
@@ -50,7 +50,9 @@ const Graph = ({ speeds, timeStart, video }) => {
     minSpeedRounded
   ];
 
-  const verticalGraphPart = speeds[speeds.length - 1][1] / 5;
+  const verticalGraphPart = (speeds[speeds.length - 1][1] - speeds[0][1]) / 5;
+  // const verticalGraphPart = speeds[speeds.length - 1][1] / 5;
+
   const bottomTitles = [
     verticalGraphPart.toFixed(2),
     (verticalGraphPart * 2).toFixed(2),
@@ -63,12 +65,20 @@ const Graph = ({ speeds, timeStart, video }) => {
   const xCoef = GRAPH_WIDTH / maxXValue;
   const yCoef = 42 / (maxSpeedRounded - minSpeedRounded);
 
-  const curveCoords = speeds.map(coords => [
-    coords[1] * xCoef + GRAPH_START_X,
-    GRAPH_START_Y + 11 + 42 - (coords[0] - minSpeedRounded) * yCoef
-  ]);
+  const impactDotCoords = { x: 0, y: 0 };
 
-  useEffect(() => {
+  const curveCoords = speeds.map((coords, _, arr) => {
+    const newXCoord = (coords[1] - arr[0][1]) * xCoef + GRAPH_START_X;
+    const newYCoord = GRAPH_START_Y + 11 + 42 - (coords[0] - minSpeedRounded) * yCoef;
+
+    if (impactTime >= coords[1]) {
+      impactDotCoords.x = newXCoord;
+      impactDotCoords.y = newYCoord;
+    }
+    return [newXCoord, newYCoord];
+  });
+
+  useLayoutEffect(() => {
     clearTimeout(curveTimeoutRef.current);
 
     setCurveIndex(0);
@@ -97,14 +107,18 @@ const Graph = ({ speeds, timeStart, video }) => {
 
   const curTimeCorr = videoCurrentTime;
 
-  const totalHitTime = speeds[speeds.length - 1][1];
+  const totalHitTime = speeds[speeds.length - 1][1] - speeds[0][1];
+
+  const swingTimeStart = speeds[0][1];
 
   const elapsedTime =
-    curTimeCorr < timeStart ||
+    curTimeCorr < swingTimeStart ||
+    // curTimeCorr < timeStart ||
     videoCurrentTime > video.full_seconds_to ||
     videoCurrentTime < video.full_seconds_from
       ? 0
-      : curTimeCorr - timeStart;
+      : curTimeCorr - swingTimeStart;
+  // : curTimeCorr - timeStart;
 
   const coef = GRAPH_WIDTH / totalHitTime;
   const redLineXCoord = GRAPH_START_X + elapsedTime * coef;
@@ -175,19 +189,46 @@ const Graph = ({ speeds, timeStart, video }) => {
 
         {/* Curve */}
         <path d={curvePath} stroke='#1A4C96' fill='none' />
+
+        {/* Impact dot */}
+        <circle
+          className={cl.impactDot}
+          r={curveCoords.length > curveIndex ? 0 : 3}
+          fill='red'
+          cx={impactDotCoords.x}
+          cy={impactDotCoords.y}
+          style={curveCoords.length > curveIndex ? { opacity: 0 } : null}
+        />
+
+        {/* Impact dot projection */}
+        <line
+          x1={impactDotCoords.x}
+          y1={impactDotCoords.y}
+          x2={impactDotCoords.x}
+          y2={impactDotCoords.y + GRAPH_HEIGHT - impactDotCoords.y + 4}
+          stroke='red'
+          strokeWidth={curveCoords.length > curveIndex ? 0 : 0.5}
+          strokeDasharray='4 2'
+          style={curveCoords.length > curveIndex ? { opacity: 0 } : null}
+          className={cl.impactDotLine}
+        />
       </svg>
     </div>
   );
 };
 
 const HittingGraph = ({ currentMoment }) => {
-  const { max_speed: maxSpeed, attack_angle: angle, speeds } = currentMoment?.metering?.bat || {};
-  const { time_start: timeStart } = currentMoment?.metering?.hit || {};
-
+  const {
+    max_speed: maxSpeed,
+    attack_angle: angle,
+    speeds,
+    impact_time: impactTime
+  } = currentMoment?.metering?.bat || {};
+  // const { time_start: timeStart } = currentMoment?.metering?.hit || {};
   return (
     <div className={cl.graph}>
       <Header maxSpeed={maxSpeed} angle={angle} />
-      {speeds && <Graph speeds={speeds} timeStart={timeStart} video={currentMoment?.video} />}
+      {speeds && <Graph speeds={speeds} video={currentMoment?.video} impactTime={impactTime} />}
     </div>
   );
 };
