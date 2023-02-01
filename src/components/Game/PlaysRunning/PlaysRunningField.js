@@ -85,24 +85,29 @@ const Line = ({ runData, xStartPos, yStartPos, coef, count, lineNumber, curLineN
   }
 
   const isRender = curDataSlice > 0;
+
+  const newData3D = runData.data_3d.filter((coords, i, arr) => {
+    return i === 0 || (coords[0] !== arr[i - 1][0] && coords[1] !== arr[i - 1][1]);
+  });
+
+  const points = newData3D.slice(0, curDataSlice).reduce((sum, coord) => {
+  // const points = runData.data_3d.slice(0, curDataSlice).reduce((sum, coord) => {
+    const newCoord = new Vector3(coord[0] * coef - 320, -5, coord[1] * -coef + 167);
+
+    sum.push(newCoord);
+    return sum;
+  }, []);
+
+  const curveCoords = new CatmullRomCurve3(points);
   return (
     <>
       {isRender ? (
         <>
-          {renderedPart.map((coord, i) => (
-            <mesh
-              key={i}
-              position={[xStartPos + coord[0] * coef, 1, yStartPos - coord[1] * coef]}
-              rotation={[-Math.PI / 2, 0, 0]}
-              receiveShadow={true}>
-              <planeGeometry args={[10, 10]} />
-              <meshStandardMaterial
-                color={getFieldColor(runnerName)}
-                toneMapped={false}
-                shadowSide={FrontSide}
-              />
-            </mesh>
-          ))}
+          <mesh position={[-70, 0, 220]}>
+            <tubeGeometry args={[curveCoords, 70, 7, 50, false]} />
+            <meshPhongMaterial color={getFieldColor(runnerName)} side={FrontSide} />
+          </mesh>
+
           <mesh
             position={[xStartPos + lastCoords[0] * coef, 20, yStartPos - lastCoords[1] * coef]}
             ref={textRef}>
@@ -376,15 +381,15 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
           <Curve data_3d={data_3d} coef={coef} />
 
           {/* <spotLight position={[0, 499.9, 0]} intensity={0.4} castShadow={true} /> */}
-					<directionalLight
-                position={[0, 400, 0]}
-                intensity={0.5}
-                castShadow
-                shadow-camera-left={-640}
-                shadow-camera-right={640}
-                shadow-camera-top={640}
-                shadow-camera-bottom={-640}
-              />
+          <directionalLight
+            position={[0, 400, 0]}
+            intensity={0.5}
+            castShadow
+            shadow-camera-left={-640}
+            shadow-camera-right={640}
+            shadow-camera-top={640}
+            shadow-camera-bottom={-640}
+          />
           <ambientLight intensity={0.5} />
 
           <OrbitControls
