@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef, useState, useContext, createContext } from 'react';
 import cl from './TotalInfo.module.scss';
 
+const AnimationContext = createContext(0);
+
 const GroupItem = ({ data }) => {
+  const valueCoef = useContext(AnimationContext);
+
   const { name, value } = data;
   const isValueNumber = typeof value === 'number';
-  const dataValue = isValueNumber ? `${value}%` : value;
+  const dataValue = isValueNumber ? `${(value * valueCoef).toFixed(0)}%` : value;
 
   return (
     <div
@@ -12,9 +16,9 @@ const GroupItem = ({ data }) => {
       style={
         isValueNumber
           ? {
-              background: `linear-gradient(to left, hsla(${169 + 0.41 * value}, 30%, ${
-                88 - 0.15 * value
-              }%, 1) ${value}%, rgba(234, 234, 234, 0.4) 0)`
+              background: `linear-gradient(to left, hsla(${169 + 0.41 * value * valueCoef}, 30%, ${
+                88 - 0.15 * value * valueCoef
+              }%, 1) ${value * valueCoef}%, rgba(234, 234, 234, 0.4) 0)`
             }
           : null
       }>
@@ -38,6 +42,50 @@ const Group = ({ data }) => {
 };
 
 const TotalInfo = () => {
+  const [valueCoef, setValueCoef] = useState(0);
+
+  const wrapperRef = useRef();
+
+  // useEffect(() => {
+  //   let observer = new IntersectionObserver(entries => {
+  //     entries.forEach(entry => {
+  //       const { isIntersecting } = entry;
+
+  //       if (isIntersecting) {
+  //         setValueCoef(prev => prev + 0.01);
+  //       } else {
+  //         // setValueCoef(0);
+  //       }
+  //     });
+  //   });
+  //   observer.observe(wrapperRef.current);
+
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   if (valueCoef === 0) return;
+
+	// 	const getTimeoutDelay = coef => {
+	// 		if (coef < 0.5) return 4
+	// 		if (coef < 0.75) return 8
+	// 		if (coef < 0.9) return 16
+	// 		if (coef < 0.95) return 32
+	// 		if (coef < 0.98) return 64
+	// 		return 128
+	// 	}
+
+  //   const timeout = setTimeout(() => {
+  //     setValueCoef(prev => (prev < 1 ? prev + 0.01 : 1));
+  //   }, getTimeoutDelay(valueCoef));
+
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // }, [valueCoef]);
+
   const leftColumnGroups = [
     {
       title: 'Total info',
@@ -45,7 +93,7 @@ const TotalInfo = () => {
         { name: 'IP / G', value: 'N/N' },
         { name: 'Total pitches (800 pitches)', value: 100 },
         { name: 'Pitches / Batter', value: 'N/N' },
-        { name: 'Left / Rigth Handed Batters', value: 'N/N' }
+        { name: 'Left / Right Handed Batters', value: 'N/N' }
       ]
     },
     {
@@ -123,23 +171,25 @@ const TotalInfo = () => {
   ];
 
   return (
-    <div className={cl.totalInfoWrapper}>
-      <div>
-        {leftColumnGroups.map((group, i) => (
-          <Group key={i} data={group} />
-        ))}
+    <AnimationContext.Provider value={1}>
+      <div className={cl.totalInfoWrapper} ref={wrapperRef}>
+        <div>
+          {leftColumnGroups.map((group, i) => (
+            <Group key={i} data={group} />
+          ))}
+        </div>
+        <div>
+          {centerColumnGroups.map((group, i) => (
+            <Group key={i} data={group} />
+          ))}
+        </div>
+        <div>
+          {rightColumnGroups.map((group, i) => (
+            <Group key={i} data={group} />
+          ))}
+        </div>
       </div>
-      <div>
-        {centerColumnGroups.map((group, i) => (
-          <Group key={i} data={group} />
-        ))}
-      </div>
-      <div>
-        {rightColumnGroups.map((group, i) => (
-          <Group key={i} data={group} />
-        ))}
-      </div>
-    </div>
+    </AnimationContext.Provider>
   );
 };
 
