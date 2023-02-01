@@ -17,12 +17,21 @@ import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 import { degToRad } from 'three/src/math/MathUtils';
 
 const BatPath = ({ currentMoment, videoCurrentTime }) => {
+  // const { camera } = useThree();
+
+  // camera.lookAt(-5.39615, 8.88691, 0);
+	// camera.rotation.z = degToRad(3.077909001)
+
   const { data_3d: batCoords, speeds } = currentMoment?.metering?.bat || {};
-  const { time_start: timeStart } = currentMoment?.metering?.hit || {};
+  // const { time_start: timeStart } = currentMoment?.metering?.hit || {};
 
-  const curTimeCorr = videoCurrentTime + 0.286;
+  const curTimeCorr = videoCurrentTime;
+  // const curTimeCorr = videoCurrentTime + 0.286;
 
-  const totalHitTime = speeds[speeds.length - 1][1];
+  const timeStart = speeds[0][1];
+
+  const totalHitTime = speeds[speeds.length - 1][1] - timeStart;
+  // const totalHitTime = speeds[speeds.length - 1][1];
 
   const elapsedTime =
     curTimeCorr < timeStart ||
@@ -51,8 +60,10 @@ const BatPath = ({ currentMoment, videoCurrentTime }) => {
 
   const dotRadius = 0.04;
 
-  const xCorrect = 1;
-  const zCorrect = -0.5;
+  // const xCorrect = 0;
+  // const zCorrect = 0;
+  const xCorrect = 1;       
+  const zCorrect = -0.5;    
 
   const getDistance = (coords, prevCoords) =>
     Math.sqrt(
@@ -131,6 +142,28 @@ const BatPath = ({ currentMoment, videoCurrentTime }) => {
   );
 };
 
+const ControlSpheres = () => (
+  <>
+    {/* <mesh position={[1.39615, 8.88691, 0]}> */}
+    <mesh position={[5.9516, -11.3477, 2.66897]}>
+      <sphereGeometry args={[20, 20, 20]} />
+      <meshStandardMaterial color='red' />
+    </mesh>
+    <mesh position={[7.82522, -10.1832, 2.69391]}>
+      <sphereGeometry args={[20, 20, 20]} />
+      <meshStandardMaterial color='red' />
+    </mesh>
+    <mesh position={[7.88406, -10.277, 1.44497]}>
+      <sphereGeometry args={[20, 20, 20]} />
+      <meshStandardMaterial color='red' />
+    </mesh>
+    <mesh position={[6.00743, -11.4398, 1.46124]}>
+      <sphereGeometry args={[20, 20, 20]} />
+      <meshStandardMaterial color='red' />
+    </mesh>
+  </>
+);
+
 const CanvasWrapper = ({ currentMoment }) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
 
@@ -138,9 +171,13 @@ const CanvasWrapper = ({ currentMoment }) => {
     <Canvas
       camera={{
         position: [12.12522834, -19.15615498, 2.94535569],
+        // fov: 7.3189,
+        aspect: 1.77777,
+        // fov: 7.3189,
+        // rotation: [degToRad(84.05143912), 0,0],
+        // rotation: [0, 0, degToRad(3.077909001)],
         rotation: [degToRad(84.05143912), degToRad(30.70764465), degToRad(3.077909001)],
         fov: 7.3189 / 1.5,
-        aspect: 1.77777
       }}
       style={{
         width: '100%',
@@ -152,6 +189,7 @@ const CanvasWrapper = ({ currentMoment }) => {
       }}>
       <Suspense fallback={null}>
         <BatPath currentMoment={currentMoment} videoCurrentTime={videoCurrentTime} />
+        <ControlSpheres />
         <spotLight position={[100, 80, 50]} />
         <ambientLight intensity={0.4} />
       </Suspense>
