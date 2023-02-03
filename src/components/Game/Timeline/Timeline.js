@@ -344,7 +344,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     };
 
     field
-      ?.filter(value => value.who === 0)
+      ?.filter(value => value.who === 'H')
       .forEach(value =>
         tempLineData.events.push({
           timeStart: value.time_start,
@@ -366,7 +366,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       };
 
       field
-        ?.filter(value => value.who === 1)
+        ?.filter(value => value.who === 'B1')
         .forEach(value =>
           tempLineData.events.push({
             timeStart: value.time_start,
@@ -386,7 +386,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       };
 
       field
-        ?.filter(value => value.who === 2)
+        ?.filter(value => value.who === 'B2')
         .forEach(value =>
           tempLineData.events.push({
             timeStart: value.time_start,
@@ -406,7 +406,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
       };
 
       field
-        ?.filter(value => value.who === 3)
+        ?.filter(value => value.who === 'B3')
         .forEach(value =>
           tempLineData.events.push({
             timeStart: value.time_start,
