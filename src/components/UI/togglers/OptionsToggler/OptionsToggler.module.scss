@@ -1,0 +1,17 @@
+.wrapper {
+  border: 0.8px dashed #8a8a8a;
+  border-radius: 6px;
+	font: 400 .875rem / 1.4 var(--font-nunito);
+	text-align: center;
+	overflow: hidden;
+}
+
+.option {
+	padding: 0 .5rem;
+	cursor: pointer;
+}
+
+.active {
+	background-color: var(--side-color);
+	color: white;
+}
