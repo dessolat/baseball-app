@@ -9,6 +9,7 @@ import Header from 'components/PlayerStats/Header/Header';
 import Content from 'components/PlayerStats/Content/Content';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableMode } from 'redux/statsReducer';
+import { PlayerYearsContext } from 'context';
 
 const PlayerStats = () => {
   // eslint-disable-next-line
@@ -17,14 +18,14 @@ const PlayerStats = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const [playerYears, setPlayerYears] = useState(currentYear);
   const currentLeague = useSelector(state => state.games.currentLeague);
-  const playerTableMode = useSelector(state => state.playerStats.tableType);
+  const { tableType: playerTableMode, playerStatsData } = useSelector(state => state.playerStats);
 
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
 
   const { playerId } = useParams();
 
-  const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
+  // const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
   // const games = useSelector(state => state.games.games);
   const dispatch = useDispatch();
 
@@ -58,7 +59,7 @@ const PlayerStats = () => {
           timeout: 10000
         });
         setError('');
-
+        console.log(response.data);
         !isLeague(response.data.leagues) && dispatch(setCurrentLeague({ id: -1, name: 'All', title: 'All' }));
 
         dispatch(setPlayerStatsData(response.data));
@@ -165,14 +166,10 @@ const PlayerStats = () => {
       ) : Object.keys(playerStatsData).length === 0 ? (
         <></>
       ) : (
-        <>
-          <Header
-            playerYears={playerYears}
-            setPlayerYears={setPlayerYears}
-            calculateTeamsArray={calculateTeamsArray}
-          />
-          <Content playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
-        </>
+        <PlayerYearsContext.Provider value={{ playerYears, setPlayerYears, calculateTeamsArray }}>
+          <Header />
+          <Content />
+        </PlayerYearsContext.Provider>
       )}
     </>
   );

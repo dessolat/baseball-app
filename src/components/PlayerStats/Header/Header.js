@@ -4,12 +4,12 @@ import HeaderWrapper from 'components/HeaderWrapper/HeaderWrapper';
 import HeaderSelections from '../HeaderSelections/HeaderSelections';
 import HeaderLeagues from '../HeaderLeagues/HeaderLeagues';
 
-const Header = ({ playerYears, setPlayerYears, calculateTeamsArray }) => {
+const Header = () => {
   return (
     <HeaderWrapper>
       <div className={cl.headerContent}>
-        <HeaderSelections playerYears={playerYears} setPlayerYears={setPlayerYears} calculateTeamsArray={calculateTeamsArray}/>
-        <HeaderLeagues playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
+        <HeaderSelections />
+        <HeaderLeagues />
       </div>
     </HeaderWrapper>
   );

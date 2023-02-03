@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect, useContext } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/play
 import { getShortName } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
+import { PlayerYearsContext } from 'context';
 
 const YEARS = ['All years', 2022, 2021, 2020];
 
@@ -28,19 +29,23 @@ const Logo = () => {
     <>
       <div className={cl.portrait}>
         <img src={imgUrl} alt='' onLoad={() => setLoaded(true)} style={imgStyles} />
-        <img src={PortraitImg} alt='' style={pHolderStyles} className={cl.default}/>
+        <img src={PortraitImg} alt='' style={pHolderStyles} className={cl.default} />
       </div>
     </>
   );
 };
 
-const HeaderSelections = ({ playerYears, setPlayerYears, calculateTeamsArray }) => {
+const HeaderSelections = () => {
+  const { playerYears, setPlayerYears, calculateTeamsArray } = useContext(PlayerYearsContext);
+
   const firstMountRef = useRef(true);
 
-  const statsData = useSelector(state => state.playerStats.playerStatsData);
-  const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
+  const {
+    playerStatsData: statsData,
+    playerCurrentTeam: currentTeam,
+    tableType
+  } = useSelector(state => state.playerStats);
   const isMobile = useSelector(state => state.shared.isMobile);
-  const tableType = useSelector(state => state.playerStats.tableType);
   const currentLeague = useSelector(state => state.games.currentLeague);
 
   const dispatch = useDispatch();

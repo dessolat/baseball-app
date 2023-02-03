@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cl from './Content.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
@@ -6,13 +6,18 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
 import ContentGraphs from '../ContentGraphs/ContentGraphs';
 import ContentTables from '../ContentTables/ContentTables';
+import { PlayerYearsContext } from 'context';
 
-const Content = ({ playerYears, calculateTeamsArray }) => {
-  const statsData = useSelector(state => state.playerStats.playerStatsData);
+const Content = () => {
+  const { playerYears, calculateTeamsArray } = useContext(PlayerYearsContext);
+
+  const {
+    playerStatsData: statsData,
+    playerCurrentTeam: currentTeam,
+    tableType
+  } = useSelector(state => state.playerStats);
   const currentLeague = useSelector(state => state.games.currentLeague);
   const isMobile = useSelector(state => state.shared.isMobile);
-  const currentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
-  const tableType = useSelector(state => state.playerStats.tableType);
   const dispatch = useDispatch();
 
   const handleTableOptionClick = option => {

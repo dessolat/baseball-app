@@ -7,8 +7,7 @@ import { setPlayerCurrentTeam, setTableType } from 'redux/playerStatsReducer';
 
 const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
-  const statsData = useSelector(state => state.playerStats.playerStatsData);
-  const tableType = useSelector(state => state.playerStats.tableType);
+  const { playerStatsData: statsData, tableType } = useSelector(state => state.playerStats);
 
   const dispatch = useDispatch();
 
@@ -38,7 +37,7 @@ const HeaderLeaguesList = ({ leagues, playerYears }, ref) => {
     //Table type switching
     if (!league.teams.find(team => team[tableType.toLowerCase()])) {
       dispatch(setTableType(anotherTableType));
-			tempTableType = anotherTableType
+      tempTableType = anotherTableType;
     }
 
     const teamArr = league.teams.filter(team => team[tempTableType.toLowerCase()]);

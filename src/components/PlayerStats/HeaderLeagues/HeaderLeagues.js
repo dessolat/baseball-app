@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useMemo, useContext } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import HeaderLeaguesList from './HeaderLeaguesList';
@@ -6,8 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeaguesScroll } from 'redux/sharedReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
+import { PlayerYearsContext } from 'context';
 
-const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
+const HeaderLeagues = () => {
+  const { playerYears, calculateTeamsArray } = useContext(PlayerYearsContext);
+
   const [isLeftScroll, setIsLeftScroll] = useState(false);
   const [isRightScroll, setIsRightScroll] = useState(true);
 
@@ -16,10 +19,8 @@ const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  const playerStatsData = useSelector(state => state.playerStats.playerStatsData);
-  const playerCurrentTeam = useSelector(state => state.playerStats.playerCurrentTeam);
-  const currentScroll = useSelector(state => state.shared.currentLeaguesScroll);
-  const isMobile = useSelector(state => state.shared.isMobile);
+  const { playerStatsData, playerCurrentTeam } = useSelector(state => state.playerStats);
+  const { currentLeaguesScroll: currentScroll, isMobile } = useSelector(state => state.shared);
   const dispatch = useDispatch();
 
   const setScrollArrows = () => {
@@ -32,7 +33,7 @@ const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
     leaguesRef.current.scrollLeft = currentScroll;
     leaguesRef.current.style.scrollBehavior = 'smooth';
 
-		const filteredLeagues = playerStatsData.leagues.filter(league => league.year === playerYears);
+    const filteredLeagues = playerStatsData.leagues.filter(league => league.year === playerYears);
     filteredLeagues.length !== 1
       ? dispatch(setCurrentLeague({ id: -1, name: 'All' }))
       : dispatch(setCurrentLeague(filteredLeagues[0]));
@@ -102,7 +103,12 @@ const HeaderLeagues = ({ playerYears, calculateTeamsArray }) => {
         style={!isLeftScroll ? (!isMobile ? { visibility: 'hidden' } : { pointerEvents: 'none' }) : null}
         fillColor={!isLeftScroll && isMobile ? '#E5E5E5' : '#D1D1D1'}
       />
-      <HeaderLeaguesList leagues={filteredLeagues} ref={leaguesRef} playerYears={playerYears} calculateTeamsArray={calculateTeamsArray} />
+      <HeaderLeaguesList
+        leagues={filteredLeagues}
+        ref={leaguesRef}
+        playerYears={playerYears}
+        calculateTeamsArray={calculateTeamsArray}
+      />
       <Arrow
         direction='right'
         onClick={scrollLeagues}
