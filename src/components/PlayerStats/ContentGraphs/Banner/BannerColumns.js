@@ -135,13 +135,15 @@ const BannerColumns = () => {
   const { total, total_annual, teams, leagues } = statsData.pitcher_banner;
 
   const getParentObj = () => {
-    if (playerYears === 'All years') return total;
+    if (playerYears === 'All years' && currentTeam === 'All teams') return total;
+    if (playerYears === 'All years' && currentTeam !== 'All teams')
+      return teams.find(team => team.name === currentTeam);
     if (currentLeague.id === -1 && currentTeam === 'All teams') return total_annual[playerYears];
     if (currentLeague.id === -1 && currentTeam !== 'All teams')
-      return teams.find(team => team.name === currentTeam);
+      return teams.find(team => team.name === currentTeam).annual[playerYears];
 
-		const curLeague =	leagues.find(league => league.id === currentLeague.id)
-		return curLeague.teams.find(team => team.name === currentTeam)
+    const curLeague = leagues.find(league => league.id === currentLeague.id);
+    return curLeague.teams.find(team => team.name === currentTeam);
   };
 
   const parentObj = getParentObj();
