@@ -1,6 +1,9 @@
-import { useContext } from "react";
-import cl from './TotalInfo.module.scss';
-import { AnimationContext } from "./TotalInfo";
+import { useContext } from 'react';
+import cl from './Banner.module.scss';
+import { AnimationContext } from './Banner';
+import { useSelector } from 'react-redux';
+import TotalInfo from './Groups/TotalInfo';
+import { PlayerYearsContext } from 'context';
 
 const GroupItem = ({ data }) => {
   const valueCoef = useContext(AnimationContext);
@@ -40,13 +43,14 @@ const Group = ({ data }) => {
   );
 };
 
-const TotalInfoColumns = () => {
-	const leftColumnGroups = [
+const BannerColumns = () => {
+  const { playerYears } = useContext(PlayerYearsContext);
+
+  const leftColumnGroups = [
     {
       title: 'Total info',
       items: [
         { name: 'IP / G', value: 'N/N' },
-        { name: 'Total pitches (800 pitches)', value: 100 },
         { name: 'Pitches / Batter', value: 'N/N' },
         { name: 'Left / Right Handed Batters', value: 'N/N' }
       ]
@@ -125,25 +129,42 @@ const TotalInfoColumns = () => {
     }
   ];
 
+  const { playerStatsData: statsData, playerCurrentTeam: currentTeam } = useSelector(s => s.playerStats);
+  const { currentLeague } = useSelector(state => state.games);
+
+  const { total, total_annual, teams, leagues } = statsData.pitcher_banner;
+
+  const getParentObj = () => {
+    if (playerYears === 'All years') return total;
+    if (currentLeague.id === -1 && currentTeam === 'All teams') return total_annual[playerYears];
+    if (currentLeague.id === -1 && currentTeam !== 'All teams')
+      return teams.find(team => team.name === currentTeam);
+
+		const curLeague =	leagues.find(league => league.id === currentLeague.id)
+		return curLeague.teams.find(team => team.name === currentTeam)
+  };
+
+  const parentObj = getParentObj();
   return (
     <>
       <div>
-        {leftColumnGroups.map((group, i) => (
+        <TotalInfo data={parentObj} />
+        {/* {leftColumnGroups.map((group, i) => (
           <Group key={i} data={group} />
-        ))}
+        ))} */}
       </div>
       <div>
-        {centerColumnGroups.map((group, i) => (
+        {/* {centerColumnGroups.map((group, i) => (
           <Group key={i} data={group} />
-        ))}
+        ))} */}
       </div>
       <div>
-        {rightColumnGroups.map((group, i) => (
+        {/* {rightColumnGroups.map((group, i) => (
           <Group key={i} data={group} />
-        ))}
+        ))} */}
       </div>
     </>
   );
 };
 
-export default TotalInfoColumns;
+export default BannerColumns;

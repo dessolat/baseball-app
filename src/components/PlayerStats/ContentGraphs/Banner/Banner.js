@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, createContext } from 'react';
-import cl from './TotalInfo.module.scss';
-import TotalInfoColumns from './TotalInfoColumns';
+import cl from './Banner.module.scss';
+import BannerColumns from './BannerColumns';
 
 export const AnimationContext = createContext(0);
 
-const TotalInfo = () => {
+const Banner = () => {
   const [valueCoef, setValueCoef] = useState(0);
 
   const wrapperRef = useRef();
@@ -53,11 +53,11 @@ const TotalInfo = () => {
 
   return (
     <AnimationContext.Provider value={valueCoef}>
-      <div className={cl.totalInfoWrapper} ref={wrapperRef}>
-        <TotalInfoColumns />
+      <div className={cl.bannerWrapper} ref={wrapperRef}>
+        <BannerColumns />
       </div>
     </AnimationContext.Provider>
   );
 };
 
-export default TotalInfo;
+export default Banner;

@@ -1,19 +1,19 @@
 import React from 'react';
 import cl from './ContentGraphs.module.scss';
-import FrequencySpeedGraph from '../FrequencySpeedGraph/FrequencySpeedGraph';
-import BreakGraph from '../BreakGraph/BreakGraph';
-import TypesGraph from '../TypesGraph/TypesGraph';
-import ArsenalGraph from '../ArsenalGraph/ArsenalGraph';
-import DotsGraph from '../DotsGraph/DotsGraph';
-import PlayerImgLeft from '../../../images/player_left.png';
-import PlayerImgRight from '../../../images/player_right.png';
-import TotalInfo from './TotalInfo/TotalInfo';
+// import FrequencySpeedGraph from '../FrequencySpeedGraph/FrequencySpeedGraph';
+// import BreakGraph from '../BreakGraph/BreakGraph';
+// import TypesGraph from '../TypesGraph/TypesGraph';
+// import ArsenalGraph from '../ArsenalGraph/ArsenalGraph';
+// import DotsGraph from '../DotsGraph/DotsGraph';
+// import PlayerImgLeft from '../../../images/player_left.png';
+// import PlayerImgRight from '../../../images/player_right.png';
+import Banner from './Banner/Banner';
 import FilteredGraphs from './FilteredGraphs/FilteredGraphs';
 
 const ContentGraphs = () => {
   return (
     <div className={cl.graphsWrapper}>
-      <TotalInfo />
+      <Banner />
 			<FilteredGraphs />
 
       {/* <div className={cl.graphRow}>
