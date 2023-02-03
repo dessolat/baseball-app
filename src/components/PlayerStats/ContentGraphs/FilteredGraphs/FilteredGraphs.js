@@ -1,9 +1,10 @@
-import React from 'react';
 import cl from './FilteredGraphs.module.scss';
 import FrequencySpeedGraph from 'components/PlayerStats/FrequencySpeedGraph/FrequencySpeedGraph';
 import FieldImg from 'images/player_stats_field.jpg';
 import PitchesByZoneImg from 'images/pitches_by_zone.jpg';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
+import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
+import GraphsBlock from './GraphsBlock';
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -60,7 +61,7 @@ const CustomGroup = ({ data }) => {
         <input type='radio' name={title} value='Team' />
         <div className={cl.customItemBody}>
           <p>Team</p>
-					<FilterField placeholder='Search of team' style={{width: '11.25rem'}}/>
+          <FilterField placeholder='Search of team' style={{ width: '11.25rem' }} />
         </div>
         <span>
           <span></span>
@@ -70,7 +71,7 @@ const CustomGroup = ({ data }) => {
         <input type='radio' name={title} value='Batter' />
         <div className={cl.customItemBody}>
           <p>Batter</p>
-					<FilterField placeholder='Search of batter' style={{width: '11.25rem'}}/>
+          <FilterField placeholder='Search of batter' style={{ width: '11.25rem' }} />
         </div>
         <span>
           <span></span>
@@ -138,17 +139,31 @@ const LeftColumnOptions = () => {
       <h3>Dataset filter</h3>
       <CustomGroup data={customGroupData} />
       {groupsArr.map((group, i) => (
-        <Group data={group} />
+        <Group key={i} data={group} />
       ))}
     </div>
   );
 };
 
-const GraphsHeader = () => {
+const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOption }) => {
+  const optionsTogglerStyles = {
+    position: 'absolute',
+    right: '.3rem',
+    top: '50%',
+    transform: 'translateY(-50%)'
+  };
+
+  const handleOptionClick = option => () => setCurrentOption(option);
   return (
     <div className={cl.graphsHeader}>
-      <h3>Machine vision statistics</h3>
-      <p className={cl.title}>Name's pitches, their speed, movement and frequency</p>
+      <h3>{title}</h3>
+      <p className={cl.title}>{subTitle}</p>
+      <OptionsToggler
+        style={optionsTogglerStyles}
+        optionsArr={optionsArr}
+        currentOption={currentOption}
+        handleOptionClick={handleOptionClick}
+      />
     </div>
   );
 };
@@ -169,8 +184,20 @@ const PitchesByZone = () => {
 const RightColumnGraphs = () => {
   return (
     <div className={cl.rightColumnWrapper}>
-      <GraphsHeader />
-      <PitchesSpeedField />
+      <GraphsBlock defaultOption='All Pitches'>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Types', 'Gravity']}
+              title='Machine vision statistics'
+              subTitle="Name's pitches, their speed, movement and frequency"
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+            />
+            <PitchesSpeedField />
+          </>
+        )}
+      </GraphsBlock>
       <PitchesByZone />
       <PitchesSpeedField />
       <PitchesByZone />
