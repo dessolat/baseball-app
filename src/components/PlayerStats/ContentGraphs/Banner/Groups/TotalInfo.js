@@ -8,10 +8,11 @@ const TotalInfoItem = ({ item, parent }) => {
 
   const title = `${par1Title} / ${par2Title} (${parent[par1]} / ${parent[par2]})`;
   const value = parent[`${par1}/${par2}`];
+	const formattedValue = value !== '–' ? value : '—'
   return (
     <div className={cl.groupItem}>
       <p>{title}</p>
-      <p>{value}</p>
+      <p>{formattedValue}</p>
     </div>
   );
 };
