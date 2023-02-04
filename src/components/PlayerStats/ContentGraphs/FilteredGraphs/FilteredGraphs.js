@@ -136,11 +136,13 @@ const LeftColumnOptions = () => {
   ];
   return (
     <div className={cl.leftColumnWrapper}>
-      <h3>Dataset filter</h3>
-      <CustomGroup data={customGroupData} />
-      {groupsArr.map((group, i) => (
-        <Group key={i} data={group} />
-      ))}
+      <h3 className={cl.header}>Dataset filter</h3>
+      <div className={cl.body}>
+        <CustomGroup data={customGroupData} />
+        {groupsArr.map((group, i) => (
+          <Group key={i} data={group} />
+        ))}
+      </div>
     </div>
   );
 };
