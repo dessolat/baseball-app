@@ -1,0 +1,14 @@
+.pitchesSpeedFieldWrapper {
+  margin-top: 5px;
+  display: flex;
+  column-gap: 5px;
+
+  > * {
+    width: calc(50% - 2.5px);
+  }
+}
+
+.pitchesByZoneThumb {
+  margin-top: 5px;
+  width: 100%;
+}

@@ -1,10 +1,9 @@
 import cl from './FilteredGraphs.module.scss';
-import FrequencySpeedGraph from 'components/PlayerStats/FrequencySpeedGraph/FrequencySpeedGraph';
-import FieldImg from 'images/player_stats_field.jpg';
 import PitchesByZoneImg from 'images/pitches_by_zone.jpg';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import GraphsBlock from './GraphsBlock';
+import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField'
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -170,15 +169,6 @@ const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOp
   );
 };
 
-const PitchesSpeedField = () => {
-  return (
-    <div className={cl.pitchesSpeedFieldWrapper}>
-      <FrequencySpeedGraph />
-      <img src={FieldImg} alt='field' />
-    </div>
-  );
-};
-
 const PitchesByZone = () => {
   return <img src={PitchesByZoneImg} className={cl.pitchesByZoneThumb} alt='pitches-by-zone' />;
 };
@@ -196,7 +186,7 @@ const RightColumnGraphs = () => {
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
-            <PitchesSpeedField />
+						<PitchesSpeedField />
           </>
         )}
       </GraphsBlock>
