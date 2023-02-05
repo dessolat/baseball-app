@@ -1,0 +1,16 @@
+.graphsHeader {
+  background-color: #fff;
+  padding: 0.625rem 0;
+  position: sticky;
+  top: -1px;
+
+  > h3 {
+    text-align: center;
+  }
+}
+
+.title {
+  padding: 0 0.5625rem;
+  font: 700 0.875rem / 1.8 var(--font-nunito);
+  text-align: center;
+}

@@ -1,9 +1,9 @@
 import cl from './FilteredGraphs.module.scss';
 import PitchesByZoneImg from 'images/pitches_by_zone.jpg';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
-import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField'
+import GraphsHeader from './GraphsHeader/GraphsHeader';
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -142,29 +142,6 @@ const LeftColumnOptions = () => {
           <Group key={i} data={group} />
         ))}
       </div>
-    </div>
-  );
-};
-
-const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOption }) => {
-  const optionsTogglerStyles = {
-    position: 'absolute',
-    right: '.3rem',
-    top: '50%',
-    transform: 'translateY(-50%)'
-  };
-
-  const handleOptionClick = option => () => setCurrentOption(option);
-  return (
-    <div className={cl.graphsHeader}>
-      <h3>{title}</h3>
-      <p className={cl.title}>{subTitle}</p>
-      <OptionsToggler
-        style={optionsTogglerStyles}
-        optionsArr={optionsArr}
-        currentOption={currentOption}
-        handleOptionClick={handleOptionClick}
-      />
     </div>
   );
 };
