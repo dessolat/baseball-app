@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsLastMomentMode, setPlaybackMode } from 'redux/gameReducer';
 import ForwardRepeat from 'components/UI/buttons/ForwardRepeat/ForwardRepeat';
 import FirstLastMoment from 'components/UI/buttons/FirstLastMoment/FirstLastMoment';
+import { forwardRef } from 'react';
 
-const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props }) => {
+const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props }, ref) => {
   const playbackMode = useSelector(state => state.game.playbackMode);
   const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props })
     return '';
   };
 
+  const handleScrollDownClick = () => {
+		ref.current.scrollTop = ref.current.scrollHeight
+	};
   return (
     <div className={cl.controls} {...props}>
       {!noPlayPause && (
@@ -38,17 +42,18 @@ const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props })
             className={getClassName('play-pause')}
             playbackMode={playbackMode}
           />
-          <FirstLastMoment
-            onClick={handlefirstLastBtn}
-						isLastMomentMode={isLastMomentMode}
-          />
+          <FirstLastMoment onClick={handlefirstLastBtn} isLastMomentMode={isLastMomentMode} />
         </>
       )}
       {isPlayOnline && (
-        <PlayOnline name='play-online' onClick={playbackModeClick} className={getClassName('play-online')} />
+        <PlayOnline
+          name='play-online'
+          onClick={handleScrollDownClick}
+          className={getClassName('play-online')}
+        />
       )}
     </div>
   );
 };
 
-export default ContentControls;
+export default forwardRef(ContentControls);

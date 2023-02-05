@@ -35,7 +35,8 @@ const defaultState = {
   timelineWidth: 825,
   fullTimelineWidth: 825,
 	focus: 'list',
-	isVideoEffects: true
+	isVideoEffects: true,
+	listScrollTop: false
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -75,6 +76,7 @@ const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
 const SET_FULL_TIMELINE_WIDTH = 'SET_FULL_TIMELINE_WIDTH';
 const SET_FOCUS = 'SET_FOCUS';
 const SET_IS_VIDEO_EFFECTS = 'SET_IS_VIDEO_EFFECTS';
+const SET_LIST_SCROLL_TOP = 'SET_LIST_SCROLL_TOP';
 
 export const gameReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -152,6 +154,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, focus: action.payload };
     case SET_IS_VIDEO_EFFECTS:
       return { ...state, isVideoEffects: action.payload };
+    case SET_LIST_SCROLL_TOP:
+      return { ...state, listScrollTop: action.payload };
     default:
       return state;
   }
@@ -194,3 +198,4 @@ export const setTimelineWidth = payload => ({ type: SET_TIMELINE_WIDTH, payload 
 export const setFullTimelineWidth = payload => ({ type: SET_FULL_TIMELINE_WIDTH, payload });
 export const setFocus = payload => ({ type: SET_FOCUS, payload });
 export const setIsVideoEffects = payload => ({ type: SET_IS_VIDEO_EFFECTS, payload });
+export const setListScrollTop = payload => ({ type: SET_LIST_SCROLL_TOP, payload });
