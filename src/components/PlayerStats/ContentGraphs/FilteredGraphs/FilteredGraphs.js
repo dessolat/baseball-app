@@ -167,7 +167,7 @@ const RightColumnGraphs = () => {
           </>
         )}
       </GraphsBlock>
-      <PitchesByZone />
+      {/* <PitchesByZone />
       <PitchesSpeedField />
       <PitchesByZone />
       <PitchesSpeedField />
@@ -181,7 +181,7 @@ const RightColumnGraphs = () => {
       <PitchesSpeedField />
       <PitchesByZone />
       <PitchesSpeedField />
-      <PitchesByZone />
+      <PitchesByZone /> */}
     </div>
   );
 };
