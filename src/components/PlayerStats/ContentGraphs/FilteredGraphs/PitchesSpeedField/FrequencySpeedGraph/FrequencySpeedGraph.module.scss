@@ -8,12 +8,25 @@
 
 .bottomNumber {
 	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: middle;
+}
+
+.innerValue {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: end;
 }
 
 .innerText {
-	font: 700 .875rem 'Nunito', sans-serif;
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: start;
+}
+
+.rightTextTitle {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: middle;
 }
 
 .sideTitle {
 	font: 700 1.125rem 'Nunito', sans-serif;
+	text-anchor: middle;
 }
