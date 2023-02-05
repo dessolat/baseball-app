@@ -124,6 +124,8 @@ const Content = () => {
     return options;
   }
 
+  const isContentGraphs =
+    getSortedTableOptions().length !== 0 && !isMobile && statsData.pitcher_banner.teams.length > 0;
   return (
     <section>
       <div className='container'>
@@ -147,7 +149,7 @@ const Content = () => {
                   handleLeagueClick={handleLeagueClick}
                 />
               </div>
-              {getSortedTableOptions().length !== 0 && !isMobile && <ContentGraphs />}
+              {isContentGraphs && <ContentGraphs />}
             </>
           )}
         </div>
