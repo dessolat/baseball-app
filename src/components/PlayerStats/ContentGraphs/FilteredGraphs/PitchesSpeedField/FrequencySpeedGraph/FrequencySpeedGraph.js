@@ -247,6 +247,7 @@ const FrequencySpeedGraph = () => {
               width={rightValueCoef * (measure.speed.max - measure.speed.min)}
               height={PARAMS.GRAPH_ROWS_HEIGHT}
               fill={measure.color}
+							opacity='.7'
             />
             {/* Vertical slice line */}
 						<line
