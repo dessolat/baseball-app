@@ -1,3 +1,17 @@
 .wrapper {
-	aspect-ratio: 467 / 354.14;
+  aspect-ratio: 467 / 354.14;
+  background: url('/images/player_stats_field_bg.jpg') no-repeat center / 100% 100%;
+}
+
+.leftTextTitle,
+.bottomTextTitle {
+  font: 400 0.875rem 'Nunito', sans-serif;
+}
+
+.leftTextTitle {
+  text-anchor: start;
+}
+
+.bottomTextTitle {
+  text-anchor: end;
 }
