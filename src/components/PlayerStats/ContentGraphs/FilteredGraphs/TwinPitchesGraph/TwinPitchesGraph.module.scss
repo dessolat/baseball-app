@@ -1,0 +1,37 @@
+.wrapper {
+  aspect-ratio: 925 / 388;
+  margin-top: 5px;
+  position: relative;
+  background-color: white;
+  background-image: url('/images/player_stats_field_pad.jpg'), url('/images/player_stats_field_pad.jpg');
+  background-repeat: no-repeat, no-repeat;
+  background-position: 9.6% 98%, 66.3% 98%;
+  background-size: 14.1% 12.5%;
+}
+
+.title,
+.valueText,
+.percentValue {
+  text-anchor: middle;
+}
+
+.title {
+  font: 700 0.875rem var(--font-nunito);
+}
+
+.percentTitle,
+.percentValue {
+  font: 300 0.875rem var(--font-nunito);
+}
+
+.percentTitle {
+  text-anchor: start;
+}
+
+.valueText {
+  font: 300 0.625rem var(--font-nunito);
+}
+
+.animated {
+  transition: all .3s;
+}
