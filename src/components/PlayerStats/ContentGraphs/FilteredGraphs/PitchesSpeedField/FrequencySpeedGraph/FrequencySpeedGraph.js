@@ -21,10 +21,36 @@ const FrequencySpeedGraph = () => {
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
   // PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 209 };
 
+  const getRndValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+	const getMinMax = () => {
+		const min = getRndValue(25, 50)
+		const max = getRndValue(min + 4, min + 29)
+
+		return {
+			min, max
+		}
+	}
+
   const dimensionsArr = [
-    { title: 'Fastball (N Pitches)', frequency: 54.5, color: '#CE9587', speed: { min: 86, max: 91 } },
-    { title: 'Slider (N Pitches)', frequency: 29.4, color: '#EBE8B0', speed: { min: 76, max: 82 } },
-    { title: 'Curveball (N Pitches)', frequency: 16.1, color: '#CBC8E5', speed: { min: 51, max: 62 } }
+    {
+      title: 'Fastball (N Pitches)',
+      frequency: getRndValue(1, 100),
+      color: '#CE9587',
+      speed: getMinMax()
+    },
+    {
+      title: 'Slider (N Pitches)',
+      frequency: getRndValue(1, 100),
+      color: '#EBE8B0',
+      speed: getMinMax()
+    },
+    {
+      title: 'Curveball (N Pitches)',
+      frequency: getRndValue(1, 100),
+      color: '#CBC8E5',
+      speed: getMinMax()
+    }
   ];
 
   const frequenciesValues = dimensionsArr.reduce((sum, dimension) => {
@@ -72,8 +98,7 @@ const FrequencySpeedGraph = () => {
       // viewBox='0 0 480 535'
       xmlns='http://www.w3.org/2000/svg'
       className={cl.graph}
-      preserveAspectRatio='none'
-    >
+      preserveAspectRatio='none'>
       {/* Main layout rendering */}
       {/* Vertical center grid line */}
       <line
@@ -199,6 +224,7 @@ const FrequencySpeedGraph = () => {
               height={PARAMS.GRAPH_ROWS_HEIGHT}
               fill={measure.color}
               opacity='.7'
+              style={{ transition: 'all .3s' }}
             />
             {/* Row value */}
             <text
@@ -247,13 +273,16 @@ const FrequencySpeedGraph = () => {
               width={rightValueCoef * (measure.speed.max - measure.speed.min)}
               height={PARAMS.GRAPH_ROWS_HEIGHT}
               fill={measure.color}
-							opacity='.7'
+              opacity='.7'
+							style={{transition: 'all .3s'}}
             />
             {/* Vertical slice line */}
-						<line
-              x1={rightFirstLine +
+            <line
+              x1={
+                rightFirstLine +
                 (measure.speed.min - minSpeedLineValue) * rightValueCoef +
-                (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2}
+                (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
+              }
               y1={yCoord - 4}
               x2={
                 rightFirstLine +
@@ -262,7 +291,7 @@ const FrequencySpeedGraph = () => {
               }
               y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT + 4}
               stroke='#000000'
-							strokeWidth='1'
+              strokeWidth='1'
             />
           </Fragment>
         );

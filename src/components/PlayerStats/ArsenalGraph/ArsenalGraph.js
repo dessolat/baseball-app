@@ -38,72 +38,74 @@ const ArsenalGraph = props => {
     Y: PARAMS.HORIZONTAL_GRID_LINES_TOP + 322
   };
 
+	const getYCoord = () => Math.random() * 50
+
   const dimensionsArr = [
     {
       title: 'Yellow',
       coords: [
-        [0, 20],
-        [10, 15],
-        [20, 30],
-        [30, 25],
-        [40, 33],
-        [50, 45],
-        [60, 20],
-        [70, 35],
-        [80, 48],
-        [90, 20],
-        [100, 27]
+        [0, getYCoord()],
+        [10, getYCoord()],
+        [20, getYCoord()],
+        [30, getYCoord()],
+        [40, getYCoord()],
+        [50, getYCoord()],
+        [60, getYCoord()],
+        [70, getYCoord()],
+        [80, getYCoord()],
+        [90, getYCoord()],
+        [100, getYCoord()]
       ],
       color: 'yellow'
     },
     {
       title: 'Blue',
       coords: [
-        [0, 45],
-        [10, 10],
-        [20, 25],
-        [30, 40],
-        [40, 25],
-        [50, 7],
-        [60, 16],
-        [70, 34],
-        [80, 47],
-        [90, 8],
-        [100, 11]
+        [0, getYCoord()],
+        [10, getYCoord()],
+        [20, getYCoord()],
+        [30, getYCoord()],
+        [40, getYCoord()],
+        [50, getYCoord()],
+        [60, getYCoord()],
+        [70, getYCoord()],
+        [80, getYCoord()],
+        [90, getYCoord()],
+        [100, getYCoord()]
       ],
       color: 'blue'
     },
     {
       title: 'Olive',
       coords: [
-        [0, 25],
-        [10, 30],
-        [20, 45],
-        [30, 35],
-        [40, 20],
-        [50, 27],
-        [60, 35],
-        [70, 50],
-        [80, 11],
-        [90, 29],
-        [100, 15]
+        [0, getYCoord()],
+        [10, getYCoord()],
+        [20, getYCoord()],
+        [30, getYCoord()],
+        [40, getYCoord()],
+        [50, getYCoord()],
+        [60, getYCoord()],
+        [70, getYCoord()],
+        [80, getYCoord()],
+        [90, getYCoord()],
+        [100, getYCoord()]
       ],
       color: 'olive'
     },
     {
       title: 'Red',
       coords: [
-        [0, 10],
-        [10, 7],
-        [20, 15],
-        [30, 40],
-        [40, 20],
-        [50, 25],
-        [60, 22],
-        [70, 10],
-        [80, 44],
-        [90, 30],
-        [100, 38]
+        [0, getYCoord()],
+        [10, getYCoord()],
+        [20, getYCoord()],
+        [30, getYCoord()],
+        [40, getYCoord()],
+        [50, getYCoord()],
+        [60, getYCoord()],
+        [70, getYCoord()],
+        [80, getYCoord()],
+        [90, getYCoord()],
+        [100, getYCoord()]
       ],
       color: 'red'
     }
@@ -201,7 +203,7 @@ const ArsenalGraph = props => {
                 PARAMS.ZERO_COORDS.Y - coord[1] * yScaleMultiplier
               }`)
           );
-        return <path key={i} d={linePath} stroke={color} fill='none' />;
+        return <path key={i} d={linePath} stroke={color} fill='none' style={{transition: 'all .3s'}}/>;
       })}
     </svg>
   );
