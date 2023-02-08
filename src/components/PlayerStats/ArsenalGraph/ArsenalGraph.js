@@ -1,15 +1,37 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import cl from './ArsenalGraph.module.scss';
 import DownArrow from '../../../icons/down_arrow.png';
 
-const ArsenalGraph = () => {
-  const PARAMS = {
-    HORIZONTAL_GRID_LINES_NUMBER: 5,
-    HORIZONTAL_GRID_LINES_WIDTH: 1147,
-    HORIZONTAL_GRID_LINES_LEFT: 45,
-    HORIZONTAL_GRID_LINES_TOP: 65
-  };
+const PARAMS = {
+  HORIZONTAL_GRID_LINES_NUMBER: 5,
+  HORIZONTAL_GRID_LINES_WIDTH: 1147,
+  HORIZONTAL_GRID_LINES_LEFT: 45,
+  HORIZONTAL_GRID_LINES_TOP: 65
+};
 
+const Marks = ({ years }) => {
+  const marksInterval = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (years.length + 1);
+  const yCoords = [PARAMS.ZERO_COORDS.Y + 1, PARAMS.ZERO_COORDS.Y + 6];
+
+  return (
+    <>
+      {years.map((year, i) => {
+        const xCoord = PARAMS.ZERO_COORDS.X + marksInterval * (i + 1);
+
+        return (
+          <Fragment key={'mark-' + i}>
+            <line x1={xCoord} y1={yCoords[0]} x2={xCoord} y2={yCoords[1]} stroke='#ACACAC' />
+            <text x={xCoord} y={PARAMS.ZERO_COORDS.Y + 25} className={cl.bottomNumber}>
+              {year}
+            </text>
+          </Fragment>
+        );
+      })}
+    </>
+  );
+};
+
+const ArsenalGraph = props => {
   PARAMS.HORIZONTAL_GRID_LINES_STEP = 322 / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = {
     X: PARAMS.HORIZONTAL_GRID_LINES_LEFT,
@@ -105,13 +127,15 @@ const ArsenalGraph = () => {
     sum.push(dimension.color);
     return sum;
   }, []);
+  const years = [2020, 2021, 2022, 2023];
   return (
     <svg
       viewBox='0 0 1192 426'
       xmlns='http://www.w3.org/2000/svg'
       className={cl.graph}
+      {...props}
       // preserveAspectRatio='none'
-			>
+    >
       {/* Main layout rendering */}
       {/* Top-left title */}
       <text x='14' y='23' className={cl.sideTitle}>
@@ -162,21 +186,7 @@ const ArsenalGraph = () => {
       ))}
       {/* Horizontal marks + numbers*/}
       {/* Marks */}
-      <line
-        x1={PARAMS.ZERO_COORDS.X + 1057}
-        y1={PARAMS.ZERO_COORDS.Y + 1}
-        x2={PARAMS.ZERO_COORDS.X + 1057}
-        y2={PARAMS.ZERO_COORDS.Y + 6}
-        stroke='#ACACAC'
-      />
-      {/* Numbers */}
-      <text
-        x={PARAMS.ZERO_COORDS.X + 1057}
-        y={PARAMS.ZERO_COORDS.Y + 25}
-        textAnchor='middle'
-        className={cl.bottomNumber}>
-        2022
-      </text>
+      <Marks years={years} />
       {/* Graph lines rendering */}
       {dimensionsArr.map((dimension, i) => {
         const { coords, color } = dimension;
