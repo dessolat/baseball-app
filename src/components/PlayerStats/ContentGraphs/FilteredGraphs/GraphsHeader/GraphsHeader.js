@@ -1,7 +1,7 @@
-import cl from './GraphsHeader.module.scss'
+import cl from './GraphsHeader.module.scss';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 
-const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOption }) => {
+const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOption, ...props }) => {
   const optionsTogglerStyles = {
     position: 'absolute',
     right: '.3rem',
@@ -11,7 +11,7 @@ const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOp
 
   const handleOptionClick = option => () => setCurrentOption(option);
   return (
-    <div className={cl.graphsHeader}>
+    <div className={cl.graphsHeader} {...props}>
       <h3>{title}</h3>
       <p className={cl.title}>{subTitle}</p>
       <OptionsToggler
@@ -24,4 +24,4 @@ const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOp
   );
 };
 
-export default GraphsHeader
+export default GraphsHeader;
