@@ -1,10 +1,12 @@
 .graph {
 	aspect-ratio: 1192 / 426;
 	height: auto;
+	background-color: white;
 }
 
 .bottomNumber {
 	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: middle;
 }
 
 .typeText {
