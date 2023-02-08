@@ -40,16 +40,17 @@ const Banner = () => {
     if (valueCoef === 0) return;
 
 		const getTimeoutDelay = coef => {
-			if (coef < 0.5) return 4
-			if (coef < 0.75) return 8
-			if (coef < 0.9) return 16
-			if (coef < 0.95) return 32
-			return 64
+			if (coef < 0.5) return 9
+			if (coef < 0.75) return 6
+			return 3
+			// if (coef < 0.9) return 16
+			// if (coef < 0.95) return 32
+			// return 64
 		}
 
 		const getValueAddition = coef => {
 			if (coef < 0.5) return 0.03
-			if (coef < 0.95) return 0.02
+			if (coef < 0.75) return 0.02
 			return 0.01
 		}
 
