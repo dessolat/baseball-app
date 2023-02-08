@@ -2,8 +2,10 @@ import cl from './FilteredGraphs.module.scss';
 import PitchesByZoneImg from 'images/pitches_by_zone.jpg';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
-import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField'
+import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
+import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
+import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -163,7 +165,97 @@ const RightColumnGraphs = () => {
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
-						<PitchesSpeedField />
+            <PitchesSpeedField />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches'>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name pitches by zone'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <TwinPitchesGraph />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name time dynamic'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <ArsenalGraph />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name time dynamic'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <ArsenalGraph />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name time dynamic'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <ArsenalGraph />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name time dynamic'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <ArsenalGraph />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle='Name time dynamic'
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+							style={{padding: '.8rem 0'}}
+            />
+            <ArsenalGraph />
           </>
         )}
       </GraphsBlock>
