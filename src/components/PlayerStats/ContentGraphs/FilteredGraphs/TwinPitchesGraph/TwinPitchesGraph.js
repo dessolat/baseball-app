@@ -82,7 +82,7 @@ const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false })
         height={239 - 44}
         stroke='#B6DBD4'
         strokeWidth='2'
-        fill='transparent'
+        fill='#EAEAEA'
       />
       <text x={left + 179 / 2} y={top - 15 + 31 + 22} className={cl.title}>
         {title3}
@@ -94,6 +94,7 @@ const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false })
         height={239 - 44 * 2}
         stroke='#1A4C96'
         strokeWidth='2'
+				strokeDasharray='8 2'
         fill='transparent'
       />
       <text x={left + 179 / 2} y={top - 15 + 31 + 107} className={cl.title}>
@@ -106,7 +107,7 @@ const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false })
         height={239 - 44 * 3}
         stroke='#96BCC0'
         strokeWidth='2'
-        fill='transparent'
+        fill='#B6C6D6'
       />
     </>
   );
