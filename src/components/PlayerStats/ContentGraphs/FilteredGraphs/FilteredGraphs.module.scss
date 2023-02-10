@@ -28,25 +28,26 @@ h3 {
 
   > .header {
     padding-left: 0.4rem;
+    position: relative;
   }
 
   > .body {
-		overflow-y: auto;
+    overflow-y: auto;
 
-		&::-webkit-scrollbar {
-			width: 6px;
-		}
-	
-		&::-webkit-scrollbar-track {
-			background: white;
-		}
-	
-		&::-webkit-scrollbar-thumb {
-			width: 6px;
-			background: #e5e5e5;
-			border: 2px solid white;
-			border-radius: 5px;
-		}
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 6px;
+      background: #e5e5e5;
+      border: 2px solid white;
+      border-radius: 5px;
+    }
   }
 }
 
@@ -136,9 +137,26 @@ h3 {
 }
 
 * + .graphsBlock {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 
 .graphsBlock > * + * {
-	margin-top: 5px;
+  margin-top: 5px;
+}
+
+.tempButton {
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  transform: translateY(-50%);
+	background-color: rgb(225, 238, 243);
+	border: 1px solid var(--side-color);
+	padding: .25rem .5rem;
+	border-radius: 5px;
+	transition: all .15s;
+	box-shadow: 2px 2px 4px 1px #acacac;
+	
+	&:hover {
+		background-color: lightgreen;
+	}
 }
