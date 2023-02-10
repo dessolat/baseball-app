@@ -11,14 +11,10 @@ import Banner from './Banner/Banner';
 import FilteredGraphs from './FilteredGraphs/FilteredGraphs';
 
 const ContentGraphs = () => {
-	const fakeData = {}
-
-	
-
   return (
     <div className={cl.graphsWrapper}>
       <Banner />
-			<FilteredGraphs />
+      <FilteredGraphs />
 
       {/* <div className={cl.graphRow}>
         <FrequencySpeedGraph />

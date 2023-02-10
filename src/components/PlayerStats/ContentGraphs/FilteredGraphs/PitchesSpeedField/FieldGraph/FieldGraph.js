@@ -92,6 +92,7 @@ const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
         currentOption={currentOption}
         handleOptionClick={handleOptionClick}
         vertical>
+        Gravity
         <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
       </OptionsToggler>
     </div>

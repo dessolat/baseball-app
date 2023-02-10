@@ -15,8 +15,11 @@ const OptionsToggler = ({
 
   return (
     <ul className={wrapperClasses} {...props}>
-      {optionsArr.map((option, i) => {
-        const optionClasses = classNames(cl.option, { [cl.active]: option === currentOption });
+      {optionsArr.map((option, i, arr) => {
+        const optionClasses = classNames(cl.option, {
+          [cl.active]: option === currentOption,
+          [cl.lastListItem]: children && arr.length === i + 1
+        });
 
         return (
           <li key={i} className={optionClasses} onClick={handleOptionClick(option)}>

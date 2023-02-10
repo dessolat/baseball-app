@@ -1,11 +1,11 @@
 import cl from './FilteredGraphs.module.scss';
-import PitchesByZoneImg from 'images/pitches_by_zone.jpg';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+import { useState } from 'react';
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -82,7 +82,7 @@ const CustomGroup = ({ data }) => {
   );
 };
 
-const LeftColumnOptions = () => {
+const LeftColumnOptions = ({ handleFakeDataClick }) => {
   const customGroupData = {
     title: 'Against who',
     items: [
@@ -137,7 +137,10 @@ const LeftColumnOptions = () => {
   ];
   return (
     <div className={cl.leftColumnWrapper}>
-      <h3 className={cl.header}>Dataset filter</h3>
+      <h3 className={cl.header}>
+        Dataset filter
+        <button className={cl.tempButton}>Generate data</button>
+      </h3>
       <div className={cl.body}>
         <CustomGroup data={customGroupData} />
         {groupsArr.map((group, i) => (
@@ -146,10 +149,6 @@ const LeftColumnOptions = () => {
       </div>
     </div>
   );
-};
-
-const PitchesByZone = () => {
-  return <img src={PitchesByZoneImg} className={cl.pitchesByZoneThumb} alt='pitches-by-zone' />;
 };
 
 const RightColumnGraphs = () => {
@@ -164,7 +163,7 @@ const RightColumnGraphs = () => {
               noSelector
             />
             <PitchesSpeedField
-              optionsArr={['All Pitches', 'Types', 'Gravity']}
+              optionsArr={['All Pitches', 'Types']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
@@ -281,9 +280,12 @@ const RightColumnGraphs = () => {
 };
 
 const FilteredGraphs = () => {
+  const [fakeData, setFakeData] = useState({});
+
+  const handleFakeDataClick = () => {};
   return (
     <div className={cl.filteredGraphsWrapper}>
-      <LeftColumnOptions />
+      <LeftColumnOptions handleFakeDataClick={handleFakeDataClick} />
       <RightColumnGraphs />
     </div>
   );

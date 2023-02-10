@@ -23,8 +23,15 @@
 }
 
 .children {
-	padding: .15rem 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  padding-bottom: 0.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lastListItem {
+	border-bottom: 0.8px dashed #8a8a8a;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
