@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
+import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
 
 const PARAMS = {
@@ -65,6 +67,8 @@ const HorizontalGridLines = () => {
 };
 
 const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
+  const [isChecked, setChecked] = useState(false);
+
   const optionsTogglerStyles = {
     position: 'absolute',
     right: '.3rem',
@@ -72,6 +76,7 @@ const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
   };
 
   const handleOptionClick = option => () => setCurrentOption(option);
+  const handleTogglerChange = () => setChecked(prev => !prev);
   return (
     <div className={cl.wrapper}>
       <svg
@@ -86,7 +91,9 @@ const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
         optionsArr={optionsArr}
         currentOption={currentOption}
         handleOptionClick={handleOptionClick}
-      />
+        vertical>
+        <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
+      </OptionsToggler>
     </div>
   );
 };

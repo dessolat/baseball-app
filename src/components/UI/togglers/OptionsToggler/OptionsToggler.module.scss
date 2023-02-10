@@ -1,18 +1,30 @@
 .wrapper {
   border: 0.8px dashed #8a8a8a;
   border-radius: 6px;
-	font: 400 .875rem / 1.4 var(--font-nunito);
-	text-align: center;
-	overflow: hidden;
-	background-color: white;
+  font: 400 0.875rem / 1.4 var(--font-nunito);
+  text-align: center;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+}
+
+.vertical {
+  flex-direction: column;
 }
 
 .option {
-	padding: 0 .5rem;
-	cursor: pointer;
+  padding: 0 0.5rem;
+  cursor: pointer;
 }
 
 .active {
-	background-color: var(--side-color);
-	color: white;
+  background-color: var(--side-color);
+  color: white;
+}
+
+.children {
+	padding: .15rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

@@ -1,9 +1,20 @@
 import classNames from 'classnames';
 import cl from './OptionsToggler.module.scss';
 
-const OptionsToggler = ({ optionsArr, currentOption, handleOptionClick, ...props }) => {
+const OptionsToggler = ({
+  optionsArr,
+  currentOption,
+  handleOptionClick,
+  vertical = false,
+  children,
+  ...props
+}) => {
+  const wrapperClasses = classNames(cl.wrapper, {
+    [cl.vertical]: vertical
+  });
+
   return (
-    <ul className={cl.wrapper} {...props}>
+    <ul className={wrapperClasses} {...props}>
       {optionsArr.map((option, i) => {
         const optionClasses = classNames(cl.option, { [cl.active]: option === currentOption });
 
@@ -13,6 +24,7 @@ const OptionsToggler = ({ optionsArr, currentOption, handleOptionClick, ...props
           </li>
         );
       })}
+      {children && <li className={cl.children}>{children}</li>}
     </ul>
   );
 };
