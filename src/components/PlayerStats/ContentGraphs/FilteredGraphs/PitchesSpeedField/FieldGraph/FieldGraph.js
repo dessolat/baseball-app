@@ -1,3 +1,4 @@
+import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import cl from './FieldGraph.module.scss';
 
 const PARAMS = {
@@ -63,16 +64,30 @@ const HorizontalGridLines = () => {
   );
 };
 
-const FieldGraph = () => {
+const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
+  const optionsTogglerStyles = {
+    position: 'absolute',
+    right: '.3rem',
+    top: '.3rem'
+  };
+
+  const handleOptionClick = option => () => setCurrentOption(option);
   return (
-    <svg
-      viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-      xmlns='http://www.w3.org/2000/svg'
-      className={cl.wrapper}
-      preserveAspectRatio='none'>
-      <VerticalGridLines />
-      <HorizontalGridLines />
-    </svg>
+    <div className={cl.wrapper}>
+      <svg
+        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+        xmlns='http://www.w3.org/2000/svg'
+        preserveAspectRatio='none'>
+        <VerticalGridLines />
+        <HorizontalGridLines />
+      </svg>
+      <OptionsToggler
+        style={optionsTogglerStyles}
+        optionsArr={optionsArr}
+        currentOption={currentOption}
+        handleOptionClick={handleOptionClick}
+      />
+    </div>
   );
 };
 

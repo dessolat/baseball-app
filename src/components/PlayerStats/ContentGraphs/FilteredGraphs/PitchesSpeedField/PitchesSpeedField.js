@@ -3,11 +3,11 @@ import FrequencySpeedGraph from './FrequencySpeedGraph/FrequencySpeedGraph';
 import cl from './PitchesSpeedField.module.scss'
 import FieldGraph from './FieldGraph/FieldGraph';
 
-const PitchesSpeedField = () => {
+const PitchesSpeedField = (props) => {
   return (
     <div className={cl.pitchesSpeedFieldWrapper}>
       <FrequencySpeedGraph />
-			<FieldGraph />
+			<FieldGraph {...props} />
       {/* <img src={FieldImg} alt='field' /> */}
     </div>
   );

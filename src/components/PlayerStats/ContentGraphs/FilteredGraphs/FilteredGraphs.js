@@ -159,13 +159,15 @@ const RightColumnGraphs = () => {
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
-              optionsArr={['All Pitches', 'Types', 'Gravity']}
               title='Machine vision statistics'
               subTitle="Name's pitches, their speed, movement and frequency"
+              noSelector
+            />
+            <PitchesSpeedField
+              optionsArr={['All Pitches', 'Types', 'Gravity']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
-            <PitchesSpeedField />
           </>
         )}
       </GraphsBlock>
@@ -178,13 +180,13 @@ const RightColumnGraphs = () => {
               subTitle='Name pitches by zone'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <TwinPitchesGraph />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -193,13 +195,13 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -208,13 +210,13 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -223,13 +225,13 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -238,13 +240,13 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{marginTop: -1}}>
+      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -253,7 +255,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							style={{padding: '.8rem 0'}}
+              style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
