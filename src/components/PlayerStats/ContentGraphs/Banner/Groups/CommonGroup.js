@@ -5,7 +5,7 @@ import cl from '../Banner.module.scss';
 const CommonGroupItem = ({ item, parent, staticTitle }) => {
   const { par1, par2 } = item;
 
-	const valueCoef = useContext(AnimationContext)
+  const valueCoef = useContext(AnimationContext);
 
   const modifiedStaticTitle = par1 === 'GO' && par2 === 'FC' ? 'Outs' : staticTitle;
 
@@ -19,7 +19,15 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
   title += ` (${absValue} / ${absRelValue} ${modifiedStaticTitle})`;
 
   const formattedValue = value !== '–' ? value : '—';
-	const animatedValue = valueCoef < 1 && formattedValue !== 0  ? (formattedValue * valueCoef).toFixed(1) : formattedValue
+
+  let animatedValue = '—';
+
+  if (formattedValue !== '—') {
+    animatedValue =
+      valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+    animatedValue += '%';
+  }
+
   return (
     <div
       className={cl.groupItem}

@@ -9,8 +9,15 @@ const CountsDistributionItem = ({ item, staticTitle }) => {
 
   const formattedTitle = `${title} (${absValue} / ${absRelValue} ${staticTitle})`;
   const formattedValue = value !== '–' ? value : '—';
-  const animatedValue =
-    valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+
+  let animatedValue = '—';
+
+  if (formattedValue !== '—') {
+    animatedValue =
+      valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+    animatedValue += '%';
+  }
+
   return (
     <div
       className={cl.groupItem}
