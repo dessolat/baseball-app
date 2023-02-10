@@ -1,5 +1,5 @@
-import { useDispatch, useSelector, useCallback } from 'react-redux';
-import { setActiveCardList, setCurrentCard, setCurrentMoment, setSeekValue } from 'redux/gameReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveCardList, setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
 
 const KEYS = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
 
