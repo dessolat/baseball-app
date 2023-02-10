@@ -71,8 +71,8 @@ const FieldGraph = ({ optionsArr, currentOption, setCurrentOption }) => {
 
   const optionsTogglerStyles = {
     position: 'absolute',
-    right: '.3rem',
-    top: '.3rem'
+    right: '.4375rem',
+    top: '.4375rem'
   };
 
   const handleOptionClick = option => () => setCurrentOption(option);

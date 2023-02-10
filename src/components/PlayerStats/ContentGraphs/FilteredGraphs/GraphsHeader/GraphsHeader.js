@@ -4,7 +4,7 @@ import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler
 const GraphsHeader = ({ optionsArr, title, subTitle, currentOption, setCurrentOption, noSelector = false, ...props }) => {
   const optionsTogglerStyles = {
     position: 'absolute',
-    right: '.3rem',
+    right: '.4375rem',
     top: '50%',
     transform: 'translateY(-50%)'
   };

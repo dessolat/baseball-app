@@ -180,7 +180,7 @@ const RightColumnGraphs = () => {
               subTitle='Name pitches by zone'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <TwinPitchesGraph />
           </>
@@ -195,7 +195,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
@@ -210,7 +210,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
@@ -225,7 +225,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
@@ -240,7 +240,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
@@ -255,7 +255,7 @@ const RightColumnGraphs = () => {
               subTitle='Name time dynamic'
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              style={{ padding: '.8rem 0' }}
+              // style={{ padding: '.8rem 0' }}
             />
             <ArsenalGraph />
           </>
