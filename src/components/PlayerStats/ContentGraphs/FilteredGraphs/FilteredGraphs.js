@@ -6,6 +6,7 @@ import GraphsHeader from './GraphsHeader/GraphsHeader';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState } from 'react';
+import { getRndValue } from 'utils';
 
 const GroupItem = ({ data, title, index }) => {
   const { name, value } = data;
@@ -139,7 +140,9 @@ const LeftColumnOptions = ({ handleFakeDataClick }) => {
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>
         Dataset filter
-        <button className={cl.tempButton}>Generate data</button>
+        <button className={cl.tempButton} onClick={handleFakeDataClick}>
+          Generate data
+        </button>
       </h3>
       <div className={cl.body}>
         <CustomGroup data={customGroupData} />
@@ -282,7 +285,40 @@ const RightColumnGraphs = () => {
 const FilteredGraphs = () => {
   const [fakeData, setFakeData] = useState({});
 
-  const handleFakeDataClick = () => {};
+  console.log(fakeData);
+
+  const generateFakeData = () => {
+    const result = {};
+    result.preview = {};
+    result.pitches_all = {};
+
+    const { preview, pitches_all: pitchesAll } = result;
+
+    preview.pitch_types = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
+    preview.n_pitch_types = 4;
+
+    const totalPitches = getRndValue(300, 1000);
+    preview.total_pitches = totalPitches;
+
+    pitchesAll = [];
+
+    for (let i = 0; i < totalPitches; i++) {
+      const tempPitch = {
+				batter: {
+					'left handed': getRndValue(0, 1),
+					'right handed': !this['left handed']
+				}
+			};
+
+      pitchesAll.push(tempPitch);
+    }
+
+    return result;
+  };
+
+  const handleFakeDataClick = () => {
+    setFakeData(generateFakeData());
+  };
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions handleFakeDataClick={handleFakeDataClick} />
