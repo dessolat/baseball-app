@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
@@ -17,9 +17,8 @@ const VerticalGridLines = () => {
   return (
     <>
       {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => (
-        <>
+        <Fragment key={'vert-' + i}>
           <line
-            key={'vert-' + i}
             x1={columnWidth * i}
             y1={0}
             x2={columnWidth * i}
@@ -33,7 +32,7 @@ const VerticalGridLines = () => {
               {i * 30 - 120}
             </text>
           )}
-        </>
+        </Fragment>
       ))}
     </>
   );
@@ -46,9 +45,8 @@ const HorizontalGridLines = () => {
   return (
     <>
       {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => (
-        <>
+        <Fragment key={'hor-' + i}>
           <line
-            key={'hor-' + i}
             x1={0}
             y1={rowHeight * i}
             x2={graphWidth}
@@ -60,7 +58,7 @@ const HorizontalGridLines = () => {
           <text x='4' y={rowHeight * i + 15} className={cl.leftTextTitle}>
             {i * 30}
           </text>
-        </>
+        </Fragment>
       ))}
     </>
   );
