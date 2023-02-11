@@ -8,26 +8,60 @@ import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState } from 'react';
 import { getRndValue } from 'utils';
 
-const GroupItem = ({ data, title, index }) => {
-  const { name, value } = data;
-  const isValueNumber = typeof value === 'number';
-  const dataValue = isValueNumber ? `${value}%` : value;
+const FIELD_NAMES = {
+  batter: {
+    'All batters': 'all',
+    'Right handed': 'right handed',
+    'Left handed': 'left handed'
+  },
+  count: {
+    'Any count': 'all',
+    'Ahead in count': 'ahwad',
+    'Behind in count': 'behind',
+    '0-0': '0-0',
+    '0-2': '0-2',
+    '3-0': '3-0'
+  },
+  zone: {
+    'Any zone': 'all',
+    'In zone': 'in zone',
+    'Out zone': 'out zone',
+    Heart: 'heart',
+    Edge: 'edge',
+    'Chase&Waste': 'waste',
+    Low: 'low',
+    High: 'high',
+    Outside: 'outside',
+    Inside: 'inside'
+  }
+};
 
+const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
+  const { name, absValue, absValueTotal, relValue } = data;
+  const isRelValueNumber = typeof relValue === 'number';
+  const dataValue = isRelValueNumber ? `${relValue}%` : relValue;
+  console.log(data);
   return (
     <label className={cl.groupItem}>
-      <input type='radio' name={title} value={name} defaultChecked={index === 0} />
+      <input
+        type='radio'
+        name={groupName}
+        value={name}
+        onChange={() => handleFilterClick(groupName, FIELD_NAMES[groupName][name])}
+        checked={currentFilterValues[groupName] === FIELD_NAMES[groupName][name]}
+      />
       <div
         className={cl.itemBody}
         style={
-          isValueNumber
+          isRelValueNumber
             ? {
-                background: `linear-gradient(to left, hsla(${169 + 0.41 * value}, 30%, ${
-                  88 - 0.15 * value
-                }%, 1) ${value}%, rgba(234, 234, 234, 0.4) 0)`
+                background: `linear-gradient(to left, hsla(${169 + 0.41 * +relValue}, 30%, ${
+                  88 - 0.15 * +relValue
+                }%, 1) ${+relValue}%, rgba(234, 234, 234, 0.4) 0)`
               }
             : null
         }>
-        <p>{name}</p>
+        <p>{`${name} (${absValue} / ${absValueTotal})`}</p>
         <span>{dataValue}</span>
       </div>
       <span>
@@ -37,27 +71,120 @@ const GroupItem = ({ data, title, index }) => {
   );
 };
 
-const Group = ({ data }) => {
-  const { title, items } = data;
+const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
+  const { title, groupName, items } = groupData;
+
+  const groupsArr = ['batter', 'count', 'zone', 'result'];
+
+  const filteredData =
+    data.pitches_all?.filter(
+      pitch =>
+        groupsArr.every(
+          group =>
+            (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
+            group === groupName
+        )
+
+      // (currentFilterValues.batter === 'all' ? true : pitch.batter[currentFilterValues.batter]) &&
+      // (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
+      // (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result])
+    ) || [];
+
+  const total = filteredData.map(pitch => pitch[groupName]);
+
+  const totalLength = total.length;
+
+  const modifiedGroupData = items.map(({ name }) => {
+    const paramName = FIELD_NAMES[groupName][name];
+    const absValue = paramName !== 'all' ? total.filter(group => group[paramName]).length : totalLength;
+    console.log(+((absValue * 100) / totalLength).toFixed(1));
+    return {
+      name,
+      absValue,
+      absValueTotal: totalLength,
+      relValue:totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(1) : 0 ?? '-'
+    };
+  });
+
+  // const leftHandedRelValue = rightHandedRelValue !== '-' ? 100 - rightHandedRelValue : '-';
 
   return (
     <div className={cl.group}>
       <p className={cl.title}>{title}</p>
-      {items.map((item, i) => (
-        <GroupItem key={i} data={item} title={title} index={i} />
+      {modifiedGroupData.map((item, i) => (
+        <GroupItem
+          key={i}
+          data={item}
+          groupName={groupName}
+          handleFilterClick={handleFilterClick}
+          currentFilterValues={currentFilterValues}
+        />
       ))}
     </div>
   );
 };
 
-const CustomGroup = ({ data }) => {
-  const { title, items } = data;
+const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
+  const againstFilteredData =
+    data.pitches_all?.filter(
+      pitch =>
+        (currentFilterValues.count === 'all' ? true : pitch.count[currentFilterValues.count]) &&
+        (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
+        (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result])
+    ) || [];
+
+  const totalBatters = againstFilteredData.reduce((sum, cur) => {
+    const existBatterIndex = sum.findIndex(batter => batter.batter_id === cur.batter.batter_id);
+    existBatterIndex === -1 && sum.push(cur.batter);
+
+    return sum;
+  }, []);
+
+  const leftHandedBatters = totalBatters.filter(batter => batter['left handed']);
+  const rightHandedBattersLength = totalBatters.length - leftHandedBatters.length;
+
+  const rightHandedRelValue = +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) ?? '-';
+  const leftHandedRelValue = rightHandedRelValue !== '-' ? +(100 - rightHandedRelValue).toFixed(1) : '-';
+  // const rightHandedRelValue = Math.round((rightHandedBattersLength * 100) / totalBatters.length) ?? '-';
+  // const leftHandedRelValue = rightHandedRelValue !== '-' ? 100 - rightHandedRelValue : '-';
+
+  const customGroupData = {
+    title: 'Against who',
+    items: [
+      {
+        name: 'All batters',
+        absValue: totalBatters.length,
+        absValueTotal: totalBatters.length,
+        relValue: 100
+      },
+      {
+        name: 'Right handed',
+        absValue: rightHandedBattersLength,
+        absValueTotal: totalBatters.length,
+        relValue: rightHandedRelValue
+      },
+      {
+        name: 'Left handed',
+        absValue: leftHandedBatters.length,
+        absValueTotal: totalBatters.length,
+        relValue: leftHandedRelValue
+      }
+    ]
+  };
+
+  const { title, items } = customGroupData;
 
   return (
     <div className={cl.group}>
       <p className={cl.title}>{title}</p>
       {items.map((item, i) => (
-        <GroupItem key={i} data={item} title={title} index={i} />
+        <GroupItem
+          key={i}
+          data={item}
+          groupName='batter'
+          handleFilterClick={handleFilterClick}
+          currentFilterValues={currentFilterValues}
+        />
       ))}
       <label className={cl.groupItem}>
         <input type='radio' name={title} value='Team' />
@@ -83,58 +210,53 @@ const CustomGroup = ({ data }) => {
   );
 };
 
-const LeftColumnOptions = ({ handleFakeDataClick }) => {
-  const customGroupData = {
-    title: 'Against who',
-    items: [
-      { name: 'All batters (150 players)', value: 100 },
-      { name: 'Right handed (120)', value: 80 },
-      { name: 'Left handed (30)', value: 20 }
-    ]
-  };
-
+const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, currentFilterValues }) => {
   const groupsArr = [
     {
       title: 'Count',
+      groupName: 'count',
       items: [
-        { name: 'Any count (1000 pitches)', value: 100 },
-        { name: 'Ahead in count (600 pitches)', value: 60 },
-        { name: 'Behind in count (400 pitches)', value: 40 },
-        { name: '0-0 (150 pitches)', value: 15 },
-        { name: '0-2, 1-2 (180 pitches)', value: 18 },
-        { name: '3-0, 3-1 (32 pitches)', value: 3 }
+        {
+          name: 'Any count'
+        },
+        { name: 'Ahead in count' },
+        { name: 'Behind in count' },
+        { name: '0-0' },
+        { name: '0-2' },
+        { name: '3-0' }
       ]
     },
     {
       title: 'Zone',
+      groupName: 'zone',
       items: [
-        { name: 'Any zone (1000 pitches)', value: 100 },
-        { name: 'In zone (600 pitches)', value: 60 },
-        { name: 'Out zone (400 pitches)', value: 40 },
-        { name: 'Heart (500 pitches)', value: 50 },
-        { name: 'Edge (350 pitches)', value: 35 },
-        { name: 'Chase&Waste (150 pitches)', value: 15 },
-        { name: 'Low (450 pitches)', value: 45 },
-        { name: 'High (250 pitches)', value: 25 },
-        { name: 'Outside (600 pitches)', value: 60 },
-        { name: 'Inside (200 pitches)', value: 20 }
-      ]
-    },
-    {
-      title: 'Result',
-      items: [
-        { name: 'All pitches (1000 pitches)', value: 100 },
-        { name: 'Swing (300 pitches)', value: 50 },
-        { name: 'Take (500 pitches)', value: 50 },
-        { name: 'Miss (150 swings)', value: 50 },
-        { name: 'Contact (150 swings)', value: 50 },
-        { name: 'Base hits & Hard hit (50 contacts)', value: 30 },
-        { name: 'Slow hit (30 contacts)', value: 30 },
-        { name: 'Fly (60 contacts)', value: 40 },
-        { name: 'Line (30 contacts)', value: 20 },
-        { name: 'Grounds (60 contacts)', value: 40 }
+        { name: 'Any zone' },
+        { name: 'In zone' },
+        { name: 'Out zone' },
+        { name: 'Heart' },
+        { name: 'Edge' },
+        { name: 'Chase&Waste' },
+        { name: 'Low' },
+        { name: 'High' },
+        { name: 'Outside' },
+        { name: 'Inside' }
       ]
     }
+    // {
+    //   title: 'Result',
+    //   items: [
+    //     { name: 'All pitches (1000 pitches)', value: 100 },
+    //     { name: 'Swing (300 pitches)', value: 50 },
+    //     { name: 'Take (500 pitches)', value: 50 },
+    //     { name: 'Miss (150 swings)', value: 50 },
+    //     { name: 'Contact (150 swings)', value: 50 },
+    //     { name: 'Base hits & Hard hit (50 contacts)', value: 30 },
+    //     { name: 'Slow hit (30 contacts)', value: 30 },
+    //     { name: 'Fly (60 contacts)', value: 40 },
+    //     { name: 'Line (30 contacts)', value: 20 },
+    //     { name: 'Grounds (60 contacts)', value: 40 }
+    //   ]
+    // }
   ];
   return (
     <div className={cl.leftColumnWrapper}>
@@ -145,9 +267,19 @@ const LeftColumnOptions = ({ handleFakeDataClick }) => {
         </button>
       </h3>
       <div className={cl.body}>
-        <CustomGroup data={customGroupData} />
+        <CustomGroup
+          data={data}
+          currentFilterValues={currentFilterValues}
+          handleFilterClick={handleFilterClick}
+        />
         {groupsArr.map((group, i) => (
-          <Group key={i} data={group} />
+          <Group
+            key={i}
+            data={data}
+            groupData={group}
+            currentFilterValues={currentFilterValues}
+            handleFilterClick={handleFilterClick}
+          />
         ))}
       </div>
     </div>
@@ -284,34 +416,115 @@ const RightColumnGraphs = () => {
 
 const FilteredGraphs = () => {
   const [fakeData, setFakeData] = useState({});
-
+  const [currentFilterValues, setCurrentFilterValues] = useState({
+    batter: 'all',
+    count: 'all',
+    zone: 'all',
+    result: 'all'
+  });
   console.log(fakeData);
-
   const generateFakeData = () => {
-    const result = {};
-    result.preview = {};
-    result.pitches_all = {};
+    const totalPitches = getRndValue(10, 20);
+    // const totalPitches = getRndValue(300, 1000);
 
-    const { preview, pitches_all: pitchesAll } = result;
-
-    preview.pitch_types = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
-    preview.n_pitch_types = 4;
-
-    const totalPitches = getRndValue(300, 1000);
-    preview.total_pitches = totalPitches;
-
-    pitchesAll = [];
+    const pitchesAll = [];
+    const battersSet = new Set();
+    const batterIds = [];
 
     for (let i = 0; i < totalPitches; i++) {
+      // count
+      const count0_0 = getRndValue(0, 1);
+      const count0_2 = !count0_0 ? getRndValue(0, 1) : 0;
+      const count3_0 = !count0_0 && !count0_2 ? 1 : 0;
+      const ahwad = getRndValue(0, 1);
+      const behind = 1 - ahwad;
+
+      // zone
+      const inZone = getRndValue(0, 1);
+
+      const heart = getRndValue(0, 1);
+      const edge = !heart ? getRndValue(0, 1) : 0;
+      const waste = !heart && !edge ? 1 : 0;
+
+      const low = getRndValue(0, 1);
+      const inside = getRndValue(0, 1);
+
+      // result
+      const result = {
+        fly: 0,
+        line: 0,
+        miss: 0,
+        take: 0,
+        swing: 0,
+        ground: 0,
+        contact: 0,
+        'soft hit': 0,
+        'base hit & hard hit': 0
+      };
+
+      const resultLength = Object.keys(result).length;
+      const resultParam = Object.keys(result)[getRndValue(0, resultLength - 1)];
+      result[resultParam] = 1;
+
+      const newBatterId = getRndValue(0, totalPitches - 1);
+      const batterExistIndex = batterIds.findIndex(batter => batter.batter_id === newBatterId);
+
+      let batter;
+
+      if (batterExistIndex === -1) {
+        const leftHandedValue = getRndValue(0, 1);
+
+        batter = {
+          'left handed': leftHandedValue,
+          'right handed': 1 - leftHandedValue,
+          batter_id: newBatterId
+        };
+
+        batterIds.push(batter);
+      }
+
+      if (batterExistIndex !== -1) {
+        batter = batterIds[batterExistIndex];
+      }
+
       const tempPitch = {
-				batter: {
-					'left handed': getRndValue(0, 1),
-					'right handed': !this['left handed']
-				}
-			};
+        pitch_info: getRndValue(0, 3),
+        batter,
+        count: {
+          '0-0': count0_0,
+          '0-2': count0_2,
+          '3-0': count3_0,
+          ahwad,
+          behind
+        },
+        zone: {
+          'in zone': inZone,
+          'out zone': 1 - inZone,
+          heart,
+          edge,
+          waste,
+          low,
+          high: 1 - low,
+          inside,
+          outside: 1 - inside
+        },
+        result
+      };
+
+      battersSet.add(tempPitch.batter.batter_id);
 
       pitchesAll.push(tempPitch);
     }
+
+    const result = {
+      preview: {
+        pitch_types: ['Undefined', 'Fast ball', 'Curve ball', 'Slider'],
+        n_pitch_types: 4,
+        total_pitches: totalPitches,
+        total_batters: Array.from(battersSet).length
+      },
+      pitches_all: pitchesAll
+    };
 
     return result;
   };
@@ -319,9 +532,20 @@ const FilteredGraphs = () => {
   const handleFakeDataClick = () => {
     setFakeData(generateFakeData());
   };
+
+  function handleFilterClick(groupName, value) {
+    setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
+  }
+
+  // const filteredData = fakeData.pitches_all.filter(pitch => )
   return (
     <div className={cl.filteredGraphsWrapper}>
-      <LeftColumnOptions handleFakeDataClick={handleFakeDataClick} />
+      <LeftColumnOptions
+        handleFakeDataClick={handleFakeDataClick}
+        data={fakeData}
+        handleFilterClick={handleFilterClick}
+        currentFilterValues={currentFilterValues}
+      />
       <RightColumnGraphs />
     </div>
   );
