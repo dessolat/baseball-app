@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { getRndValue } from 'utils';
 import cl from './FrequencySpeedGraph.module.scss';
 
 const FrequencySpeedGraph = () => {
@@ -20,8 +21,6 @@ const FrequencySpeedGraph = () => {
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 185 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
   // PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 209 };
-
-  const getRndValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 	const getMinMax = () => {
 		const min = getRndValue(25, 50)

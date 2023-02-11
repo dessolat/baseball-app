@@ -132,3 +132,5 @@ export const getChartColor = num =>
     6: 'purple',
     7: 'lightgreen'
   }[num]);
+
+export const getRndValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
