@@ -34,22 +34,22 @@ const FIELD_NAMES = {
     Outside: 'outside',
     Inside: 'inside'
   },
-	result: {
-		'All pitches': 'all',
-		'Swing': 'swing',
-		'Take': 'take',
-		'Miss': 'miss',
-		'Contact': 'contact',
-		'Base hits & Hard hit': 'base hit & hard hit',
-		'Slow hit': 'soft hit',
-		'Fly': 'fly',
-		'Line': 'line',
-		'Grounds': 'ground'
-	}
+  result: {
+    'All pitches': 'all',
+    Swing: 'swing',
+    Take: 'take',
+    Miss: 'miss',
+    Contact: 'contact',
+    'Base hits & Hard hit': 'base hit & hard hit',
+    'Slow hit': 'soft hit',
+    Fly: 'fly',
+    Line: 'line',
+    Grounds: 'ground'
+  }
 };
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
-  const { name, absValue, absValueTotal, relValue } = data;
+  const { name, absValue, absValueTotal, relValue, staticText } = data;
   const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
 
   const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
@@ -74,7 +74,7 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
               }
             : null
         }>
-        <p>{`${name} (${absValue} / ${absValueTotal})`}</p>
+        <p>{`${name} (${absValue} / ${absValueTotal} ${staticText})`}</p>
         <span>{dataValue}</span>
       </div>
       <span>
@@ -85,33 +85,34 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
 };
 
 const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
-  const { title, groupName, items } = groupData;
+  const { title, groupName, staticText, items } = groupData;
 
   const groupsArr = ['batter', 'count', 'zone', 'result'];
 
   const filteredData =
-    data.pitches_all?.filter(
-      pitch =>
-        groupsArr.every(
-          group =>
-            (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
-            group === groupName
-        )
+    data.pitches_all?.filter(pitch =>
+      groupsArr.every(
+        group =>
+          (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
+          group === groupName
+      )
     ) || [];
 
   const total = filteredData.map(pitch => pitch[groupName]);
 
   const totalLength = total.length;
 
-  const modifiedGroupData = items.map(({ name }) => {
+  const modifiedGroupData = items.map(({ name, staticText }) => {
     const paramName = FIELD_NAMES[groupName][name];
     const absValue = paramName !== 'all' ? total.filter(group => group[paramName]).length : totalLength;
 
     return {
       name,
+			staticText,
       absValue,
       absValueTotal: totalLength,
-      relValue: paramName === 'all' ? 100 : totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(2) : 0 ?? '-'
+      relValue:
+        paramName === 'all' ? 100 : totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(2) : 0 ?? '-'
     };
   });
 
@@ -152,8 +153,10 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   const leftHandedBatters = totalBatters.filter(batter => batter['left handed']);
   const rightHandedBattersLength = totalBatters.length - leftHandedBatters.length;
 
-  const rightHandedRelValue = totalBatters.length > 0 ? +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
-  const leftHandedRelValue = totalBatters.length > 0 ? +((leftHandedBatters.length * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+  const rightHandedRelValue =
+    totalBatters.length > 0 ? +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+  const leftHandedRelValue =
+    totalBatters.length > 0 ? +((leftHandedBatters.length * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
 
   const customGroupData = {
     title: 'Against who',
@@ -162,24 +165,27 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
         name: 'All batters',
         absValue: totalBatters.length,
         absValueTotal: totalBatters.length,
-        relValue: 100
+        relValue: 100,
+        staticText: 'players'
       },
       {
         name: 'Right handed',
         absValue: rightHandedBattersLength,
         absValueTotal: totalBatters.length,
-        relValue: rightHandedRelValue
+        relValue: rightHandedRelValue,
+        staticText: 'players'
       },
       {
         name: 'Left handed',
         absValue: leftHandedBatters.length,
         absValueTotal: totalBatters.length,
-        relValue: leftHandedRelValue
+        relValue: leftHandedRelValue,
+        staticText: 'players'
       }
     ]
   };
 
-  const { title, items } = customGroupData;
+  const { title, staticText, items } = customGroupData;
 
   return (
     <div className={cl.group}>
@@ -222,47 +228,49 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
     {
       title: 'Count',
       groupName: 'count',
+
       items: [
         {
-          name: 'Any count'
+          name: 'Any count',
+          staticText: 'pitches'
         },
-        { name: 'Ahead in count' },
-        { name: 'Behind in count' },
-        { name: '0-0' },
-        { name: '0-2' },
-        { name: '3-0' }
+        { name: 'Ahead in count', staticText: 'pitches' },
+        { name: 'Behind in count', staticText: 'pitches' },
+        { name: '0-0', staticText: 'pitches' },
+        { name: '0-2', staticText: 'pitches' },
+        { name: '3-0', staticText: 'pitches' }
       ]
     },
     {
       title: 'Zone',
       groupName: 'zone',
       items: [
-        { name: 'Any zone' },
-        { name: 'In zone' },
-        { name: 'Out zone' },
-        { name: 'Heart' },
-        { name: 'Edge' },
-        { name: 'Chase&Waste' },
-        { name: 'Low' },
-        { name: 'High' },
-        { name: 'Outside' },
-        { name: 'Inside' }
+        { name: 'Any zone', staticText: 'pitches' },
+        { name: 'In zone', staticText: 'pitches' },
+        { name: 'Out zone', staticText: 'pitches' },
+        { name: 'Heart', staticText: 'pitches' },
+        { name: 'Edge', staticText: 'pitches' },
+        { name: 'Chase&Waste', staticText: 'pitches' },
+        { name: 'Low', staticText: 'pitches' },
+        { name: 'High', staticText: 'pitches' },
+        { name: 'Outside', staticText: 'pitches' },
+        { name: 'Inside', staticText: 'pitches' }
       ]
     },
     {
       title: 'Result',
       groupName: 'result',
       items: [
-        { name: 'All pitches'},
-        { name: 'Swing'},
-        { name: 'Take'},
-        { name: 'Miss'},
-        { name: 'Contact'},
-        { name: 'Base hits & Hard hit'},
-        { name: 'Slow hit'},
-        { name: 'Fly'},
-        { name: 'Line'},
-        { name: 'Grounds'}
+        { name: 'All pitches', staticText: 'pitches' },
+        { name: 'Swing', staticText: 'pitches' },
+        { name: 'Take', staticText: 'pitches' },
+        { name: 'Miss', staticText: 'swings' },
+        { name: 'Contact', staticText: 'swings' },
+        { name: 'Base hits & Hard hit', staticText: 'contacts' },
+        { name: 'Slow hit', staticText: 'contacts' },
+        { name: 'Fly', staticText: 'contacts' },
+        { name: 'Line', staticText: 'contacts' },
+        { name: 'Grounds', staticText: 'contacts' }
       ]
     }
   ];
