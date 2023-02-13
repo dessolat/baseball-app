@@ -1,12 +1,16 @@
 .wrapper {
-  aspect-ratio: 925 / 388;
-  margin-top: 5px;
+  aspect-ratio: 463 / 388;
+  // margin-top: 5px;
   position: relative;
   background-color: white;
-  background-image: url('/images/player_stats_field_pad.jpg'), url('/images/player_stats_field_pad.jpg');
-  background-repeat: no-repeat, no-repeat;
-  background-position: 9.6% 98%, 66.3% 98%;
-  background-size: 14.1% 12.5%;
+  background-image: url('/images/player_stats_field_pad.jpg');
+  background-repeat: no-repeat;
+  background-position: 23.2% 98%;
+  background-size: 28.2%;
+  // background-image: url('/images/player_stats_field_pad.jpg'), url('/images/player_stats_field_pad.jpg');
+  // background-repeat: no-repeat, no-repeat;
+  // background-position: 9.6% 98%, 66.3% 98%;
+	// background-size: 14.1% 12.5%;
 }
 
 .title,

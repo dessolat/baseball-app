@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 
 const PARAMS = {
-  GRAPH_WIDTH: 925,
+  GRAPH_WIDTH: 463,
   GRAPH_HEIGHT: 388,
   SIDE_PADDING: 50
 };
@@ -242,23 +242,23 @@ const LeftChart = () => {
   );
 };
 
-const RightChart = () => {
-  const leftCoord = PARAMS.GRAPH_WIDTH / 2 + 38;
-  return (
-    <>
-      <Frames
-        left={leftCoord}
-        top={40}
-        title1='Type1 (124)'
-        title2='+10 runs'
-        title3='+16 runs'
-        title4='+10 runs'
-        oneColor
-      />
-      <PercentsGraph left={leftCoord + 179 + 25} center={40 + 239 / 2} />
-    </>
-  );
-};
+// const RightChart = () => {
+//   const leftCoord = PARAMS.GRAPH_WIDTH / 2 + 38;
+//   return (
+//     <>
+//       <Frames
+//         left={leftCoord}
+//         top={40}
+//         title1='Type1 (124)'
+//         title2='+10 runs'
+//         title3='+16 runs'
+//         title4='+10 runs'
+//         oneColor
+//       />
+//       <PercentsGraph left={leftCoord + 179 + 25} center={40 + 239 / 2} />
+//     </>
+//   );
+// };
 
 const TwinPitchesGraph = () => {
   return (
@@ -268,7 +268,7 @@ const TwinPitchesGraph = () => {
       className={cl.wrapper}
       preserveAspectRatio='none'>
       <LeftChart />
-      <RightChart />
+      {/* <RightChart /> */}
     </svg>
   );
 };
