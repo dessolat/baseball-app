@@ -317,6 +317,8 @@ const RightColumnGraphs = ({ filteredData }) => {
               optionsArr={['All Pitches', 'Types']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
+							data={filteredData}
+							pitchTypes={pitchTypes}
             />
           </>
         )}
