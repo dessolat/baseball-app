@@ -33,14 +33,27 @@ const FIELD_NAMES = {
     High: 'high',
     Outside: 'outside',
     Inside: 'inside'
-  }
+  },
+	result: {
+		'All pitches': 'all',
+		'Swing': 'swing',
+		'Take': 'take',
+		'Miss': 'miss',
+		'Contact': 'contact',
+		'Base hits & Hard hit': 'base hit & hard hit',
+		'Slow hit': 'soft hit',
+		'Fly': 'fly',
+		'Line': 'line',
+		'Grounds': 'ground'
+	}
 };
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
   const { name, absValue, absValueTotal, relValue } = data;
-  const isRelValueNumber = typeof relValue === 'number';
-  const dataValue = isRelValueNumber ? `${relValue}%` : relValue;
-  console.log(data);
+  const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
+
+  const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
+
   return (
     <label className={cl.groupItem}>
       <input
@@ -84,10 +97,6 @@ const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
             (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
             group === groupName
         )
-
-      // (currentFilterValues.batter === 'all' ? true : pitch.batter[currentFilterValues.batter]) &&
-      // (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
-      // (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result])
     ) || [];
 
   const total = filteredData.map(pitch => pitch[groupName]);
@@ -97,12 +106,12 @@ const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
   const modifiedGroupData = items.map(({ name }) => {
     const paramName = FIELD_NAMES[groupName][name];
     const absValue = paramName !== 'all' ? total.filter(group => group[paramName]).length : totalLength;
-    console.log(+((absValue * 100) / totalLength).toFixed(1));
+
     return {
       name,
       absValue,
       absValueTotal: totalLength,
-      relValue:totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(1) : 0 ?? '-'
+      relValue: paramName === 'all' ? 100 : totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(2) : 0 ?? '-'
     };
   });
 
@@ -143,10 +152,8 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   const leftHandedBatters = totalBatters.filter(batter => batter['left handed']);
   const rightHandedBattersLength = totalBatters.length - leftHandedBatters.length;
 
-  const rightHandedRelValue = +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) ?? '-';
-  const leftHandedRelValue = rightHandedRelValue !== '-' ? +(100 - rightHandedRelValue).toFixed(1) : '-';
-  // const rightHandedRelValue = Math.round((rightHandedBattersLength * 100) / totalBatters.length) ?? '-';
-  // const leftHandedRelValue = rightHandedRelValue !== '-' ? 100 - rightHandedRelValue : '-';
+  const rightHandedRelValue = totalBatters.length > 0 ? +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+  const leftHandedRelValue = totalBatters.length > 0 ? +((leftHandedBatters.length * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
 
   const customGroupData = {
     title: 'Against who',
@@ -241,22 +248,23 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
         { name: 'Outside' },
         { name: 'Inside' }
       ]
+    },
+    {
+      title: 'Result',
+      groupName: 'result',
+      items: [
+        { name: 'All pitches'},
+        { name: 'Swing'},
+        { name: 'Take'},
+        { name: 'Miss'},
+        { name: 'Contact'},
+        { name: 'Base hits & Hard hit'},
+        { name: 'Slow hit'},
+        { name: 'Fly'},
+        { name: 'Line'},
+        { name: 'Grounds'}
+      ]
     }
-    // {
-    //   title: 'Result',
-    //   items: [
-    //     { name: 'All pitches (1000 pitches)', value: 100 },
-    //     { name: 'Swing (300 pitches)', value: 50 },
-    //     { name: 'Take (500 pitches)', value: 50 },
-    //     { name: 'Miss (150 swings)', value: 50 },
-    //     { name: 'Contact (150 swings)', value: 50 },
-    //     { name: 'Base hits & Hard hit (50 contacts)', value: 30 },
-    //     { name: 'Slow hit (30 contacts)', value: 30 },
-    //     { name: 'Fly (60 contacts)', value: 40 },
-    //     { name: 'Line (30 contacts)', value: 20 },
-    //     { name: 'Grounds (60 contacts)', value: 40 }
-    //   ]
-    // }
   ];
   return (
     <div className={cl.leftColumnWrapper}>
