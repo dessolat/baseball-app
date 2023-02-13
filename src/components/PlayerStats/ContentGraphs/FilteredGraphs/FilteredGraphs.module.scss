@@ -149,6 +149,14 @@ h3 {
   margin-top: 5px;
 }
 
+.twinGraphsWrapper {
+	line-height: 0;
+	
+	> * {
+		width: 50%;
+	}
+}
+
 .tempButton {
   position: absolute;
   right: .5rem;

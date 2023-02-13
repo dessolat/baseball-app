@@ -8,6 +8,7 @@ import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState } from 'react';
 import { getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
+import { useSelector } from 'react-redux';
 
 const FIELD_NAMES = {
   batter: {
@@ -49,7 +50,7 @@ const FIELD_NAMES = {
   }
 };
 
-const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider']
+const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
   const { name, absValue, absValueTotal, relValue, staticText } = data;
@@ -90,7 +91,7 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
 const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
   const { title, groupName, staticText, items } = groupData;
 
-  const filteredData = useFilterGroupData(data, currentFilterValues, groupName)
+  const filteredData = useFilterGroupData(data, currentFilterValues, groupName);
 
   const total = filteredData.map(pitch => pitch[groupName]);
 
@@ -297,7 +298,11 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
 };
 
 const RightColumnGraphs = ({ filteredData }) => {
-	console.log(filteredData);
+  const { name: playerName, surname: playerSurname } = useSelector(
+    state => state.playerStats.playerStatsData
+  );
+
+  console.log(filteredData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -305,7 +310,7 @@ const RightColumnGraphs = ({ filteredData }) => {
           <>
             <GraphsHeader
               title='Machine vision statistics'
-              subTitle="Name's pitches, their speed, movement and frequency"
+              subTitle={`${playerName} ${playerSurname} pitches, their speed, movement and frequency`}
               noSelector
             />
             <PitchesSpeedField
@@ -322,22 +327,28 @@ const RightColumnGraphs = ({ filteredData }) => {
             <GraphsHeader
               optionsArr={['All Pitches', 'Contours']}
               title={null}
-              subTitle='Name pitches by zone'
+              subTitle={`${playerName} ${playerSurname} pitches by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               // style={{ padding: '.8rem 0' }}
             />
-            <TwinPitchesGraph />
+            <div className={cl.twinGraphsWrapper}>
+              <TwinPitchesGraph />
+              <TwinPitchesGraph />
+              <TwinPitchesGraph />
+            </div>
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
+      <GraphsBlock defaultOption='All Pitches' 
+			// style={{ marginTop: -1 }}
+			>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
               optionsArr={['All Pitches', 'Contours']}
               title={null}
-              subTitle='Name time dynamic'
+              subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               // style={{ padding: '.8rem 0' }}
