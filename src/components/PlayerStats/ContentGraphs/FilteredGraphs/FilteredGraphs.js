@@ -7,6 +7,7 @@ import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState } from 'react';
 import { getRndValue } from 'utils';
+import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 
 const FIELD_NAMES = {
   batter: {
@@ -48,6 +49,8 @@ const FIELD_NAMES = {
   }
 };
 
+const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider']
+
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
   const { name, absValue, absValueTotal, relValue, staticText } = data;
   const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
@@ -87,16 +90,7 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
 const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
   const { title, groupName, staticText, items } = groupData;
 
-  const groupsArr = ['batter', 'count', 'zone', 'result'];
-
-  const filteredData =
-    data.pitches_all?.filter(pitch =>
-      groupsArr.every(
-        group =>
-          (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
-          group === groupName
-      )
-    ) || [];
+  const filteredData = useFilterGroupData(data, currentFilterValues, groupName)
 
   const total = filteredData.map(pitch => pitch[groupName]);
 
@@ -108,7 +102,7 @@ const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
 
     return {
       name,
-			staticText,
+      staticText,
       absValue,
       absValueTotal: totalLength,
       relValue:
@@ -302,7 +296,8 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
   );
 };
 
-const RightColumnGraphs = () => {
+const RightColumnGraphs = ({ filteredData }) => {
+	console.log(filteredData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -438,7 +433,7 @@ const FilteredGraphs = () => {
     zone: 'all',
     result: 'all'
   });
-  console.log(fakeData);
+
   const generateFakeData = () => {
     const totalPitches = getRndValue(10, 20);
     // const totalPitches = getRndValue(300, 1000);
@@ -504,7 +499,7 @@ const FilteredGraphs = () => {
       }
 
       const tempPitch = {
-        pitch_info: getRndValue(0, 3),
+        pitch_info: getRndValue(0, pitchTypes.length - 1),
         batter,
         count: {
           '0-0': count0_0,
@@ -534,8 +529,8 @@ const FilteredGraphs = () => {
 
     const result = {
       preview: {
-        pitch_types: ['Undefined', 'Fast ball', 'Curve ball', 'Slider'],
-        n_pitch_types: 4,
+        pitch_types: pitchTypes,
+        n_pitch_types: pitchTypes.length,
         total_pitches: totalPitches,
         total_batters: Array.from(battersSet).length
       },
@@ -553,7 +548,8 @@ const FilteredGraphs = () => {
     setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
   }
 
-  // const filteredData = fakeData.pitches_all.filter(pitch => )
+  const filteredData = useFilterFakeGraphsData(fakeData, currentFilterValues);
+
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
@@ -562,7 +558,7 @@ const FilteredGraphs = () => {
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
       />
-      <RightColumnGraphs />
+      <RightColumnGraphs filteredData={filteredData} />
     </div>
   );
 };
