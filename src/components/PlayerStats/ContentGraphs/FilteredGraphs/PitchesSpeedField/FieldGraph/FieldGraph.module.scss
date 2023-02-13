@@ -2,6 +2,10 @@
   aspect-ratio: 467 / 354.14;
   background: url('/images/player_stats_field_bg.jpg') no-repeat center / 100% 100%;
 	position: relative;
+
+	> svg {
+		display: inherit;
+	}
 }
 
 .leftTextTitle,

@@ -4,7 +4,7 @@ import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
 
 const PARAMS = {
-  GRAPH_WIDTH: 457,
+  GRAPH_WIDTH: 467,
   GRAPH_HEIGHT: 354.14,
   VERTICAL_COLUMNS_NUM: 8,
   HORIZONTAL_ROWS_NUM: 6
