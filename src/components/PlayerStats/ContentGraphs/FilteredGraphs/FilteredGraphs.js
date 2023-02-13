@@ -75,7 +75,7 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
             : null
         }>
         <p>{`${name} (${absValue} / ${absValueTotal} ${staticText})`}</p>
-        <span>{dataValue}</span>
+        <span className={cl.dataValue}>{dataValue}</span>
       </div>
       <span>
         <span></span>
