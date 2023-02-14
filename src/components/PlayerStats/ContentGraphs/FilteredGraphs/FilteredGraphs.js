@@ -103,8 +103,6 @@ const Group = ({
 
   const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
 
-  console.log(filteredData);
-
   const total = filteredData.map(pitch => pitch[groupName]);
 
   const totalLength = total.length;
@@ -611,7 +609,10 @@ const FilteredGraphs = () => {
   };
 
   const handleFakeDataClick = () => {
-    setFakeData(generateFakeData());
+		const data = generateFakeData()
+    setFakeData(data);
+		console.clear()
+		console.log(data);
   };
 
   function handleFilterClick(groupName, value) {
