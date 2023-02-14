@@ -193,8 +193,6 @@ const FrequencySpeedGraph = ({ data, pitchTypes }) => {
     relValuesData[pitchName].skoSpeed = skoSpeed;
   }
 
-  console.log(relValuesData);
-
   const dimensionsArr = [
     {
       title: 'Fastball (N Pitches)',

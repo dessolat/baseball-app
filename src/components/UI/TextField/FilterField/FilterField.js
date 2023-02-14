@@ -13,8 +13,7 @@ const FilterField = ({ mobile = false, handleChange, ...props }) => {
     clearTimeout(filterTimeoutRef.current);
 
     filterTimeoutRef.current = setTimeout(() => {
-			console.log(123);
-      // handleChange()
+			handleChange(value)
     }, 400);
   };
 

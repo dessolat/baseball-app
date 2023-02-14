@@ -5,7 +5,7 @@ import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
@@ -88,10 +88,22 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
   );
 };
 
-const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
+const Group = ({
+  data,
+  groupData,
+  currentFilterValues,
+  handleFilterClick,
+  filteredTeamName,
+  filteredPlayerFullName
+}) => {
   const { title, groupName, staticText, items } = groupData;
 
-  const filteredData = useFilterGroupData(data, currentFilterValues, groupName);
+  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
+
+  const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
+
+  console.log(filteredData);
 
   const total = filteredData.map(pitch => pitch[groupName]);
 
@@ -129,7 +141,13 @@ const Group = ({ data, groupData, currentFilterValues, handleFilterClick }) => {
   );
 };
 
-const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
+const CustomGroup = ({
+  data,
+  currentFilterValues,
+  handleFilterClick,
+  handleTeamNameChange,
+  handlePlayerNameChange
+}) => {
   const againstFilteredData =
     data.pitches_all?.filter(
       pitch =>
@@ -181,7 +199,7 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   };
 
   const { title, staticText, items } = customGroupData;
-
+  // onChange={() => handleFilterClick(groupName, FIELD_NAMES[groupName][name])}
   return (
     <div className={cl.group}>
       <p className={cl.title}>{title}</p>
@@ -195,20 +213,33 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
         />
       ))}
       <label className={cl.groupItem}>
-        <input type='radio' name={title} value='Team' />
+        <input type='radio' name='batter' value='Team' onChange={() => handleFilterClick('batter', 'team')} />
         <div className={cl.customItemBody}>
           <p>Team</p>
-          <FilterField placeholder='Search of team' style={{ width: '11.25rem' }} />
+          <FilterField
+            placeholder='Search of team'
+            style={{ width: '11.25rem' }}
+            handleChange={handleTeamNameChange}
+          />
         </div>
         <span>
           <span></span>
         </span>
       </label>
       <label className={cl.groupItem}>
-        <input type='radio' name={title} value='Batter' />
+        <input
+          type='radio'
+          name='batter'
+          value='Batter'
+          onChange={() => handleFilterClick('batter', 'batter')}
+        />
         <div className={cl.customItemBody}>
           <p>Batter</p>
-          <FilterField placeholder='Search of batter' style={{ width: '11.25rem' }} />
+          <FilterField
+            placeholder='Search of batter'
+            style={{ width: '11.25rem' }}
+            handleChange={handlePlayerNameChange}
+          />
         </div>
         <span>
           <span></span>
@@ -218,7 +249,16 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   );
 };
 
-const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, currentFilterValues }) => {
+const LeftColumnOptions = ({
+  handleFakeDataClick,
+  data = {},
+  handleFilterClick,
+  currentFilterValues,
+  filteredTeamName,
+  filteredPlayerFullName,
+  handleTeamNameChange,
+  handlePlayerNameChange
+}) => {
   const groupsArr = [
     {
       title: 'Count',
@@ -282,6 +322,8 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
           data={data}
           currentFilterValues={currentFilterValues}
           handleFilterClick={handleFilterClick}
+          handleTeamNameChange={handleTeamNameChange}
+          handlePlayerNameChange={handlePlayerNameChange}
         />
         {groupsArr.map((group, i) => (
           <Group
@@ -290,6 +332,8 @@ const LeftColumnOptions = ({ handleFakeDataClick, data = {}, handleFilterClick, 
             groupData={group}
             currentFilterValues={currentFilterValues}
             handleFilterClick={handleFilterClick}
+            filteredTeamName={filteredTeamName}
+            filteredPlayerFullName={filteredPlayerFullName}
           />
         ))}
       </div>
@@ -302,7 +346,6 @@ const RightColumnGraphs = ({ filteredData }) => {
     state => state.playerStats.playerStatsData
   );
 
-  console.log(filteredData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -447,6 +490,8 @@ const FilteredGraphs = () => {
     zone: 'all',
     result: 'all'
   });
+  const [filteredTeamName, setFilteredTeamName] = useState('Team1');
+  const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
   const generateFakeData = () => {
     const totalPitches = getRndValue(10, 20);
@@ -573,7 +618,16 @@ const FilteredGraphs = () => {
     setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
   }
 
-  const filteredData = useFilterFakeGraphsData(fakeData, currentFilterValues);
+  const handleTeamNameChange = name => {
+    setFilteredTeamName(name);
+  };
+  const handlePlayerNameChange = name => {
+    setFilteredPlayerFullName(name);
+  };
+
+  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
+  const filteredData = useFilterFakeGraphsData(fakeData, currentFilterValues, teamName, playerFullName);
 
   return (
     <div className={cl.filteredGraphsWrapper}>
@@ -582,6 +636,10 @@ const FilteredGraphs = () => {
         data={fakeData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
+        filteredTeamName={filteredTeamName}
+        filteredPlayerFullName={filteredPlayerFullName}
+        handleTeamNameChange={handleTeamNameChange}
+        handlePlayerNameChange={handlePlayerNameChange}
       />
       <RightColumnGraphs filteredData={filteredData} />
     </div>

@@ -2,28 +2,58 @@ import { useMemo } from 'react';
 
 const groupsArr = ['batter', 'count', 'zone', 'result'];
 
-export const useFilterGroupData = (data, currentFilterValues, groupName) =>
+export const useFilterGroupData = (
+  data,
+  currentFilterValues,
+  groupName,
+  teamName = null,
+  batterFullName = null
+) =>
   useMemo(() => {
     const result =
       data.pitches_all?.filter(pitch =>
         groupsArr.every(
           group =>
-            (currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]) ||
-            group === groupName
+            (currentFilterValues[group] === 'all'
+              ? true
+              : group === 'batter' && currentFilterValues.batter === 'team'
+              ? pitch.batter.team_name.includes(teamName)
+                ? true
+                : false
+              : group === 'batter' && currentFilterValues.batter === 'batter'
+              ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
+                ? true
+                : false
+              : pitch[group][currentFilterValues[group]]) || group === groupName
         )
       ) || [];
 
     return result;
-  }, [data, currentFilterValues, groupName]);
+  }, [data, currentFilterValues, groupName, teamName, batterFullName]);
 
-export const useFilterFakeGraphsData = (fakeData, currentFilterValues) =>
+export const useFilterFakeGraphsData = (
+  fakeData,
+  currentFilterValues,
+  teamName = null,
+  batterFullName = null
+) =>
   useMemo(() => {
     const result =
       fakeData.pitches_all?.filter(pitch =>
         groupsArr.every(group =>
-          currentFilterValues[group] === 'all' ? true : pitch[group][currentFilterValues[group]]
+          currentFilterValues[group] === 'all'
+            ? true
+            : group === 'batter' && currentFilterValues.batter === 'team'
+            ? pitch.batter.team_name.includes(teamName)
+              ? true
+              : false
+            : group === 'batter' && currentFilterValues.batter === 'batter'
+            ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
+              ? true
+              : false
+            : pitch[group][currentFilterValues[group]]
         )
       ) || [];
 
     return result;
-  }, [fakeData, currentFilterValues]);
+  }, [fakeData, currentFilterValues, teamName, batterFullName]);
