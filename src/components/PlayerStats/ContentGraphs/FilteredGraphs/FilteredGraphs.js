@@ -452,9 +452,11 @@ const FilteredGraphs = () => {
     const totalPitches = getRndValue(10, 20);
     // const totalPitches = getRndValue(300, 1000);
 
-    const pitchesAll = [];
-    const battersSet = new Set();
-    const batterIds = [];
+    const pitchesAll = [],
+      battersSet = new Set(),
+      batterIds = [];
+    let batterNames = 0,
+      batterSurnames = 0;
 
     for (let i = 0; i < totalPitches; i++) {
       // count
@@ -499,10 +501,19 @@ const FilteredGraphs = () => {
       if (batterExistIndex === -1) {
         const leftHandedValue = getRndValue(0, 1);
 
+        batterNames++;
+        batterSurnames++;
+
+        const batterName = 'Name' + batterNames;
+        const batterSurname = 'Surname' + batterSurnames;
+
         batter = {
           'left handed': leftHandedValue,
           'right handed': 1 - leftHandedValue,
-          batter_id: newBatterId
+          batter_id: newBatterId,
+          team_name: 'Team' + getRndValue(1, 3),
+          'batter name': batterName,
+          'batter surname': batterSurname
         };
 
         batterIds.push(batter);
