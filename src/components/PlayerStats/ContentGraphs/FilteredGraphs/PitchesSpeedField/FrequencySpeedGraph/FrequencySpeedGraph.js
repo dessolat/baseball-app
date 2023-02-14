@@ -23,11 +23,11 @@ const ROWS_COLORS_BY_NAME = {
   Undefined: '#9BCEA2'
 };
 
-const Rows = ({ dimensionsArr, maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitches }) => (
+const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitches }) => (
   <>
     {/* Rows rendering */}
     {Object.entries(relValuesData)
-      .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+      .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
       .map((measure, i, thisArr) => {
         const yCoord =
           PARAMS.ZERO_COORDS.Y -
@@ -45,7 +45,9 @@ const Rows = ({ dimensionsArr, maxSpeedLineValue, minSpeedLineValue, relValuesDa
         const rightValueCoef = rightSideWidth / (maxSpeedLineValue - minSpeedLineValue);
         const rightFirstLine = PARAMS.ZERO_COORDS.X + PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP;
 
-        const measureFrequency = (measure[1] * 100) / totalPitches;
+        const measureFrequency = (measure[1].count * 100) / totalPitches;
+        const minSpeed = measure[1].avgSpeed - measure[1].skoSpeed;
+        const maxSpeed = measure[1].avgSpeed + measure[1].skoSpeed;
         return (
           <Fragment key={i}>
             {/* Left chart row */}
@@ -84,60 +86,61 @@ const Rows = ({ dimensionsArr, maxSpeedLineValue, minSpeedLineValue, relValuesDa
               y={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2 + 5}
               textAnchor='end'
               className={cl.innerText}>
-              {`${measure[0]} (${measure[1]} pitches)`}
+              {`${measure[0]} (${measure[1].count} / ${totalPitches} pitches)`}
             </text>
             {/* Right chart row */}
             {/* Horizontal grid line */}
-            {/* <line
-            x1={PARAMS.ZERO_COORDS.X}
-            y1={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2}
-            x2={
-              PARAMS.ZERO_COORDS.X +
-              PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER * PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP +
-              4
-            }
-            y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2}
-            stroke='#ACACAC'
-          /> */}
+            <line
+              x1={PARAMS.ZERO_COORDS.X}
+              y1={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2}
+              x2={
+                PARAMS.ZERO_COORDS.X +
+                PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER * PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP +
+                4
+              }
+              y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2}
+              stroke='#ACACAC'
+            />
             {/* Row title */}
-            {/* <text
-            x={
-              rightFirstLine +
-              (measure.speed.min - minSpeedLineValue) * rightValueCoef +
-              (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
-            }
-            y={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2 - 18}
-            textAnchor='middle'
-            className={cl.rightTextTitle}>
-            {(measure.speed.min + measure.speed.max) / 2}
-          </text> */}
+            <text
+              x={
+                rightFirstLine +
+                (minSpeed - minSpeedLineValue) * rightValueCoef +
+                (rightValueCoef * (maxSpeed - minSpeed)) / 2
+                // (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
+              }
+              y={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2 - 18}
+              textAnchor='middle'
+              className={cl.rightTextTitle}>
+              {+((minSpeed + maxSpeed) / 2).toFixed(2)}
+            </text>
             {/* Row body */}
-            {/* <rect
-            x={rightFirstLine + (measure.speed.min - minSpeedLineValue) * rightValueCoef}
+            <rect
+            x={rightFirstLine + (minSpeed - minSpeedLineValue) * rightValueCoef}
             y={yCoord}
-            width={rightValueCoef * (measure.speed.max - measure.speed.min)}
+            width={rightValueCoef * (maxSpeed - minSpeed)}
             height={PARAMS.GRAPH_ROWS_HEIGHT}
-            fill={measure.color}
+            fill={ROWS_COLORS_BY_NAME[measure[0]]}
             opacity='.7'
-            style={{ transition: 'all .3s' }}
-          /> */}
+            style={{ transition: 'x .3s, width .3s' }}
+          />
             {/* Vertical slice line */}
-            {/* <line
+            <line
             x1={
               rightFirstLine +
-              (measure.speed.min - minSpeedLineValue) * rightValueCoef +
-              (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
+              (minSpeed - minSpeedLineValue) * rightValueCoef +
+              (rightValueCoef * (maxSpeed - minSpeed)) / 2
             }
             y1={yCoord - 4}
             x2={
               rightFirstLine +
-              (measure.speed.min - minSpeedLineValue) * rightValueCoef +
-              (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
+              (minSpeed - minSpeedLineValue) * rightValueCoef +
+              (rightValueCoef * (maxSpeed - minSpeed)) / 2
             }
             y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT + 4}
             stroke='#000000'
             strokeWidth='1'
-          /> */}
+          />
           </Fragment>
         );
       })}
@@ -161,12 +164,36 @@ const FrequencySpeedGraph = ({ data, pitchTypes }) => {
   };
 
   const relValuesData = data.reduce((sum, pitch) => {
-    const pitchType = pitchTypes[pitch.pitch_info];
+    const { speed, pitch_type } = pitch.pitch_info;
+    const pitchType = pitchTypes[pitch_type];
 
-    sum[pitchType] = sum[pitchType] !== undefined ? sum[pitchType] + 1 : 1;
+    if (sum[pitchType] !== undefined) {
+      sum[pitchType].count += 1;
+      sum[pitchType].speeds.push(speed);
+
+      return sum;
+    }
+
+    sum[pitchType] = { count: 1, speeds: [speed] };
 
     return sum;
   }, {});
+
+  for (let pitchName in relValuesData) {
+    const { speeds, count } = relValuesData[pitchName];
+
+    // Avg speed
+    const avgSpeed = speeds.reduce((sum, curSpeed) => sum + curSpeed, 0) / speeds.length;
+    relValuesData[pitchName].avgSpeed = avgSpeed;
+
+    // Sko speed
+    const sumDiffSpeeds = speeds.reduce((sum, curSpeed) => sum + (curSpeed - avgSpeed) ** 2, 0);
+    const sumDiffSpeedsAvg = sumDiffSpeeds / count;
+    const skoSpeed = Math.sqrt(sumDiffSpeedsAvg);
+    relValuesData[pitchName].skoSpeed = skoSpeed;
+  }
+
+  console.log(relValuesData);
 
   const dimensionsArr = [
     {
@@ -210,13 +237,33 @@ const FrequencySpeedGraph = ({ data, pitchTypes }) => {
   }, []);
 
   // const maxFrequency = Math.max(...frequenciesValues);
-  const minSpeed = Math.min(...minSpeedValues);
-  const maxSpeed = Math.max(...maxSpeedValues);
+  const minMaxSpeeds = data.reduce(
+    (sum, pitch, index) => {
+      const { speed } = pitch.pitch_info;
+
+      if (index === 0) {
+        sum.minSpeed = speed;
+        sum.maxSpeed = speed;
+
+        return sum;
+      }
+
+      if (speed < sum.minSpeed) sum.minSpeed = speed;
+      if (speed > sum.maxSpeed) sum.maxSpeed = speed;
+
+      return sum;
+    },
+    { minSpeed: 0, maxSpeed: 0 }
+  );
+
+  const { minSpeed, maxSpeed } = minMaxSpeeds;
+  // const minSpeed = Math.min(...minSpeedValues);
+  // const maxSpeed = Math.max(...maxSpeedValues);
 
   const maxFrequencyLineValue = 100;
   // const maxFrequencyLineValue = (Math.floor(maxFrequency / 10) + 1) * 10;
-  const minSpeedLineValue = Math.ceil(minSpeed / 10 - 1) * 10;
-  const maxSpeedLineValue = Math.ceil(maxSpeed / 10) * 10;
+  const minSpeedLineValue = Math.ceil(minSpeed / 10 - 2) * 10;
+  const maxSpeedLineValue = Math.ceil(maxSpeed / 10 + 1) * 10;
 
   const bottomLeftNumbers = [];
   for (let i = 1; i <= PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER; i++) {

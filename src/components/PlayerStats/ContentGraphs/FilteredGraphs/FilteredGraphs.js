@@ -317,8 +317,8 @@ const RightColumnGraphs = ({ filteredData }) => {
               optionsArr={['All Pitches', 'Types']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							data={filteredData}
-							pitchTypes={pitchTypes}
+              data={filteredData}
+              pitchTypes={pitchTypes}
             />
           </>
         )}
@@ -342,9 +342,10 @@ const RightColumnGraphs = ({ filteredData }) => {
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' 
-			// style={{ marginTop: -1 }}
-			>
+      <GraphsBlock
+        defaultOption='All Pitches'
+        // style={{ marginTop: -1 }}
+      >
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -512,7 +513,7 @@ const FilteredGraphs = () => {
       }
 
       const tempPitch = {
-        pitch_info: getRndValue(0, pitchTypes.length - 1),
+        pitch_info: { pitch_type: getRndValue(0, pitchTypes.length - 1), speed: getRndValue(25, 80) },
         batter,
         count: {
           '0-0': count0_0,
