@@ -134,3 +134,11 @@ export const getChartColor = num =>
   }[num]);
 
 export const getRndValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+export const getPitchColorByName = name =>
+  ({
+    'Fast ball': '#CE9587',
+    'Curve ball': '#CBC8E5',
+    Slider: '#EBE8B0',
+    Undefined: '#9BCEA2'
+  }[name]);
