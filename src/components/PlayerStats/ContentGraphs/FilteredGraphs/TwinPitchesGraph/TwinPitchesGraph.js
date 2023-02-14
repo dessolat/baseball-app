@@ -4,7 +4,7 @@ import cl from './TwinPitchesGraph.module.scss';
 const PARAMS = {
   GRAPH_WIDTH: 463,
   GRAPH_HEIGHT: 388,
-  SIDE_PADDING: 50
+  SIDE_PADDING: 30
 };
 
 const Dots = ({ coords }) => {
@@ -64,19 +64,26 @@ const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false })
 
   return (
     <>
-      {/* Dots */}
-      <Dots coords={dotsCoords} />
-
       {/* Frames */}
-      <text x={left + 179 / 2} y={top - 15} className={cl.title}>
+      <text x={left + 179 / 2} y={top - 5} className={cl.title}>
         {title1}
       </text>
-      <rect x={left} y={top} width='179' height='239' stroke='#B6DBD4' strokeWidth='2' fill='transparent' />
-      <text x={left + 179 / 2} y={top - 15 + 31} className={cl.title}>
-        {title2}
-      </text>
       <rect
-        x={left + 15}
+        x='14'
+        y='14'
+        width='217'
+        height={PARAMS.GRAPH_HEIGHT - 14 - 33}
+        stroke='#B6DBD4'
+        strokeWidth='2'
+        fill='transparent'
+      />
+      {/* <rect x={left} y={top} width='179' height='239' stroke='#B6DBD4' strokeWidth='2' fill='transparent' /> */}
+      {/* <text x={left + 179 / 2} y={top - 15 + 31} className={cl.title}>
+        {title2}
+      </text> */}
+      <rect
+        // x='48'
+        x={left + 18}
         y={top + 22}
         width={179 - 30}
         height={239 - 44}
@@ -84,30 +91,36 @@ const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false })
         strokeWidth='2'
         fill='#EAEAEA'
       />
-      <text x={left + 179 / 2} y={top - 15 + 31 + 22} className={cl.title}>
+      {/* <text x={left + 179 / 2} y={top - 15 + 31 + 22} className={cl.title}>
         {title3}
-      </text>
-      <rect
-        x={left + 15 * 2}
-        y={top + 22 * 2}
-        width={179 - 30 * 2}
-        height={239 - 44 * 2}
-        stroke='#1A4C96'
-        strokeWidth='2'
-				strokeDasharray='8 2'
-        fill='transparent'
-      />
-      <text x={left + 179 / 2} y={top - 15 + 31 + 107} className={cl.title}>
+      </text> */}
+
+      {/* <text x={left + 179 / 2} y={top - 15 + 31 + 107} className={cl.title}>
         {title4}
-      </text>
+      </text> */}
       <rect
-        x={left + 15 * 3}
+        x={left + 18 + 15 * 2}
         y={top + 22 * 3}
         width={179 - 30 * 3}
         height={239 - 44 * 3}
         stroke='#96BCC0'
         strokeWidth='2'
         fill='#B6C6D6'
+      />
+
+      {/* Dots */}
+      <Dots coords={dotsCoords} />
+
+      {/* Dashed frame */}
+      <rect
+        x={left + 18 + 15}
+        y={top + 22 * 2}
+        width={179 - 30 * 2}
+        height={239 - 44 * 2}
+        stroke='#1A4C96'
+        strokeWidth='2'
+        strokeDasharray='8 2'
+        fill='transparent'
       />
     </>
   );
@@ -232,12 +245,12 @@ const LeftChart = () => {
       <Frames
         left={PARAMS.SIDE_PADDING}
         top={40}
-        title1='All pitches (567)'
+        title1='All pitches'
         title2='Chase'
         title3='Shadow'
         title4='Heart'
       />
-      <PercentsGraph left={PARAMS.SIDE_PADDING + 179 + 25} center={40 + 239 / 2} />
+      <PercentsGraph left={PARAMS.SIDE_PADDING + 179 + 45} center={40 + 239 / 2} />
     </>
   );
 };
