@@ -40,7 +40,7 @@ const Dots = ({ coords }) => {
   );
 };
 
-const Frames = ({ left, top, title1, oneColor = false, data }) => {
+const Frames = ({ left, top, title1, data, selectedPitchType }) => {
   // const dotsRectXCoord = left + 15;
   // const dotsRectYCoord = top + 22;
   // const dotsRectWidth = 149;
@@ -49,8 +49,11 @@ const Frames = ({ left, top, title1, oneColor = false, data }) => {
   // const numDotsOfColor = Math.ceil(Math.random() * 20);
   // const dotsColors = ['#CE9587', '#EBE8B0', '#B08194', '#CBC8E5', '#9BCEA2'];
   // const dotsCoordsSlice = oneColor ? 1 : dotsColors.length;
+  const arrData = selectedPitchType
+    ? Object.entries(data).filter(entry => entry[0] === selectedPitchType)
+    : Object.entries(data);
 
-  const dotsCoords = Object.entries(data).reduce((sum, entry) => {
+  const dotsCoords = arrData.reduce((sum, entry) => {
     // const xCoridorStart = Math.random() * (dotsRectWidth - 69);
     // const yCoridorStart = Math.random() * (dotsRectHeight - 55);
 
@@ -64,7 +67,6 @@ const Frames = ({ left, top, title1, oneColor = false, data }) => {
 
     return sum;
   }, []);
-
 
   return (
     <>
@@ -243,10 +245,18 @@ const PercentsGraph = ({ left, center }) => {
   );
 };
 
-const LeftChart = ({ data }) => {
+const LeftChart = ({ data, selectedPitchType }) => {
+  const mainTitle = selectedPitchType ?? 'All pitches';
+
   return (
     <>
-      <Frames left={PARAMS.SIDE_PADDING} top={40} title1='All pitches' data={data} />
+      <Frames
+        left={PARAMS.SIDE_PADDING}
+        top={40}
+        title1={mainTitle}
+        data={data}
+        selectedPitchType={selectedPitchType}
+      />
       <PercentsGraph left={PARAMS.SIDE_PADDING + 179 + 45} center={40 + 239 / 2} />
     </>
   );
@@ -270,14 +280,14 @@ const LeftChart = ({ data }) => {
 //   );
 // };
 
-const TwinPitchesGraph = ({ data }) => {
+const TwinPitchesGraph = ({ data, selectedPitchType = null }) => {
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       xmlns='http://www.w3.org/2000/svg'
       className={cl.wrapper}
       preserveAspectRatio='none'>
-      <LeftChart data={data} />
+      <LeftChart data={data} selectedPitchType={selectedPitchType} />
       {/* <RightChart /> */}
     </svg>
   );

@@ -362,7 +362,6 @@ const RightColumnGraphs = ({ filteredData }) => {
     return sum;
   }, {});
 
-  console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -397,9 +396,9 @@ const RightColumnGraphs = ({ filteredData }) => {
             <div className={cl.twinGraphsWrapper}>
               <TwinPitchesGraph data={relValuesData} />
 
-              {/* {Object.entries(relValuesData).map((entry, index) => (
-                <TwinPitchesGraph key={index} />
-              ))} */}
+              {Object.entries(relValuesData).map((entry, index) => (
+                <TwinPitchesGraph key={index} data={relValuesData} selectedPitchType={entry[0]}/>
+              ))}
             </div>
           </>
         )}
