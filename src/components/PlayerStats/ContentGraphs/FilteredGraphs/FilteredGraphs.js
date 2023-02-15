@@ -6,7 +6,7 @@ import GraphsHeader from './GraphsHeader/GraphsHeader';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useMemo, useState } from 'react';
-import { getRndValue } from 'utils';
+import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
 
@@ -344,6 +344,25 @@ const RightColumnGraphs = ({ filteredData }) => {
     state => state.playerStats.playerStatsData
   );
 
+  // Count and speed values
+  const relValuesData = filteredData.reduce((sum, pitch) => {
+    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+    const pitchType = pitchTypes[pitch_type];
+
+    if (sum[pitchType] !== undefined) {
+      sum[pitchType].count += 1;
+      sum[pitchType].speeds.push(speed);
+      sum[pitchType].pitchGraphCoords.push({...pitchGraphCoords, color: getPitchColorByName(pitchType)});
+
+      return sum;
+    }
+
+    sum[pitchType] = { count: 1, speeds: [speed], pitchGraphCoords: [{...pitchGraphCoords, color: getPitchColorByName(pitchType)}],  };
+
+    return sum;
+  }, {});
+
+  console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -359,7 +378,7 @@ const RightColumnGraphs = ({ filteredData }) => {
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               data={filteredData}
-              pitchTypes={pitchTypes}
+              relValuesData={relValuesData}
             />
           </>
         )}
@@ -376,9 +395,11 @@ const RightColumnGraphs = ({ filteredData }) => {
               // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph />
-              <TwinPitchesGraph />
-              <TwinPitchesGraph />
+              <TwinPitchesGraph data={relValuesData} />
+
+              {/* {Object.entries(relValuesData).map((entry, index) => (
+                <TwinPitchesGraph key={index} />
+              ))} */}
             </div>
           </>
         )}
@@ -566,8 +587,27 @@ const FilteredGraphs = () => {
         batter = batterIds[batterExistIndex];
       }
 
+      // Pitch graph coords calculation
+      const dotsRectXCoord = 30 + 15;
+      const dotsRectYCoord = 40 + 22;
+      const dotsRectWidth = 149;
+      const dotsRectHeight = 195;
+
+      const xCoridorStart = Math.random() * (dotsRectWidth - 69);
+      const yCoridorStart = Math.random() * (dotsRectHeight - 55);
+
+      const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
+      const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
+
+      const pitchGraphCoords = { x, y };
+      //
+
       const tempPitch = {
-        pitch_info: { pitch_type: getRndValue(0, pitchTypes.length - 1), speed: getRndValue(25, 80) },
+        pitch_info: {
+          pitch_type: getRndValue(0, pitchTypes.length - 1),
+          speed: getRndValue(25, 80),
+          pitchGraphCoords
+        },
         batter,
         count: {
           '0-0': count0_0,
@@ -609,10 +649,10 @@ const FilteredGraphs = () => {
   };
 
   const handleFakeDataClick = () => {
-		const data = generateFakeData()
+    const data = generateFakeData();
     setFakeData(data);
-		console.clear()
-		console.log(data);
+    console.clear();
+    console.log(data);
   };
 
   function handleFilterClick(groupName, value) {

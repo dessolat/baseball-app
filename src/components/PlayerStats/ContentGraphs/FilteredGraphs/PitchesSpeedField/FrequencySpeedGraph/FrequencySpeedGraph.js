@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { getRndValue } from 'utils';
+import { getPitchColorByName, getRndValue } from 'utils';
 import cl from './FrequencySpeedGraph.module.scss';
 
 const PARAMS = {
@@ -14,13 +14,6 @@ const PARAMS = {
   // VERTICAL_GRID_LINES_HEIGHT: 443,
   GRAPH_ROWS_HEIGHT: 22,
   BETWEEN_ROWS_HEIGHT: 28
-};
-
-const ROWS_COLORS_BY_NAME = {
-  'Fast ball': '#CE9587',
-  'Curve ball': '#CBC8E5',
-  Slider: '#EBE8B0',
-  Undefined: '#9BCEA2'
 };
 
 const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitches }) => (
@@ -69,7 +62,7 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
               width={leftValueCoef * measureFrequency}
               // width={leftScaleMultiplier * measure.frequency}
               height={PARAMS.GRAPH_ROWS_HEIGHT}
-              fill={ROWS_COLORS_BY_NAME[measure[0]]}
+              fill={getPitchColorByName(measure[0])}
               opacity='.7'
               style={{ transition: 'x .3s, width .3s' }}
             />
@@ -116,38 +109,38 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
             </text>
             {/* Row body */}
             <rect
-            x={rightFirstLine + (minSpeed - minSpeedLineValue) * rightValueCoef}
-            y={yCoord}
-            width={rightValueCoef * (maxSpeed - minSpeed)}
-            height={PARAMS.GRAPH_ROWS_HEIGHT}
-            fill={ROWS_COLORS_BY_NAME[measure[0]]}
-            opacity='.7'
-            style={{ transition: 'x .3s, width .3s' }}
-          />
+              x={rightFirstLine + (minSpeed - minSpeedLineValue) * rightValueCoef}
+              y={yCoord}
+              width={rightValueCoef * (maxSpeed - minSpeed)}
+              height={PARAMS.GRAPH_ROWS_HEIGHT}
+              fill={getPitchColorByName(measure[0])}
+              opacity='.7'
+              style={{ transition: 'x .3s, width .3s' }}
+            />
             {/* Vertical slice line */}
             <line
-            x1={
-              rightFirstLine +
-              (minSpeed - minSpeedLineValue) * rightValueCoef +
-              (rightValueCoef * (maxSpeed - minSpeed)) / 2
-            }
-            y1={yCoord - 4}
-            x2={
-              rightFirstLine +
-              (minSpeed - minSpeedLineValue) * rightValueCoef +
-              (rightValueCoef * (maxSpeed - minSpeed)) / 2
-            }
-            y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT + 4}
-            stroke='#000000'
-            strokeWidth='1'
-          />
+              x1={
+                rightFirstLine +
+                (minSpeed - minSpeedLineValue) * rightValueCoef +
+                (rightValueCoef * (maxSpeed - minSpeed)) / 2
+              }
+              y1={yCoord - 4}
+              x2={
+                rightFirstLine +
+                (minSpeed - minSpeedLineValue) * rightValueCoef +
+                (rightValueCoef * (maxSpeed - minSpeed)) / 2
+              }
+              y2={yCoord + PARAMS.GRAPH_ROWS_HEIGHT + 4}
+              stroke='#000000'
+              strokeWidth='1'
+            />
           </Fragment>
         );
       })}
   </>
 );
 
-const FrequencySpeedGraph = ({ data, pitchTypes }) => {
+const FrequencySpeedGraph = ({ data, relValuesData }) => {
   PARAMS.LEFT_VERTICAL_GRID_LINES_STEP = 255 / PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 185 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
@@ -162,22 +155,6 @@ const FrequencySpeedGraph = ({ data, pitchTypes }) => {
       max
     };
   };
-
-  const relValuesData = data.reduce((sum, pitch) => {
-    const { speed, pitch_type } = pitch.pitch_info;
-    const pitchType = pitchTypes[pitch_type];
-
-    if (sum[pitchType] !== undefined) {
-      sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed);
-
-      return sum;
-    }
-
-    sum[pitchType] = { count: 1, speeds: [speed] };
-
-    return sum;
-  }, {});
 
   for (let pitchName in relValuesData) {
     const { speeds, count } = relValuesData[pitchName];
