@@ -352,12 +352,16 @@ const RightColumnGraphs = ({ filteredData }) => {
     if (sum[pitchType] !== undefined) {
       sum[pitchType].count += 1;
       sum[pitchType].speeds.push(speed);
-      sum[pitchType].pitchGraphCoords.push({...pitchGraphCoords, color: getPitchColorByName(pitchType)});
+      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
       return sum;
     }
 
-    sum[pitchType] = { count: 1, speeds: [speed], pitchGraphCoords: [{...pitchGraphCoords, color: getPitchColorByName(pitchType)}],  };
+    sum[pitchType] = {
+      count: 1,
+      speeds: [speed],
+      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+    };
 
     return sum;
   }, {});
@@ -397,7 +401,7 @@ const RightColumnGraphs = ({ filteredData }) => {
               <TwinPitchesGraph data={relValuesData} />
 
               {Object.entries(relValuesData).map((entry, index) => (
-                <TwinPitchesGraph key={index} data={relValuesData} selectedPitchType={entry[0]}/>
+                <TwinPitchesGraph key={index} data={relValuesData} selectedPitchType={entry[0]} />
               ))}
             </div>
           </>
@@ -513,7 +517,7 @@ const FilteredGraphs = () => {
 
   const generateFakeData = () => {
     const totalPitches = getRndValue(10, 20);
-    // const totalPitches = getRndValue(300, 1000);
+    // const totalPitches = getRndValue(300, 500);
 
     const pitchesAll = [],
       battersSet = new Set(),
