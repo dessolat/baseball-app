@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 
 const PARAMS = {
@@ -8,15 +7,15 @@ const PARAMS = {
 };
 
 const Dots = ({ coords }) => {
-  const [radius, setRadius] = useState(1);
+  // const [radius, setRadius] = useState(1);
 
-  useEffect(() => {
-    setRadius(1);
+  // useEffect(() => {
+  //   setRadius(1);
 
-    setTimeout(() => {
-      setRadius(8);
-    }, 300);
-  }, [coords]);
+  //   setTimeout(() => {
+  //     setRadius(8);
+  //   }, 300);
+  // }, [coords]);
 
   return (
     <>
@@ -26,9 +25,10 @@ const Dots = ({ coords }) => {
         return (
           <circle
             key={i}
+            // key={`${i}-x-${x}-y-${y}`}
             cx={x}
             cy={y}
-            r={radius}
+            // r={radius}
             stroke='black'
             strokeWidth='.5'
             fill={color}
@@ -40,27 +40,31 @@ const Dots = ({ coords }) => {
   );
 };
 
-const Frames = ({ left, top, title1, title2, title3, title4, oneColor = false }) => {
-  const dotsRectXCoord = left + 15;
-  const dotsRectYCoord = top + 22;
-  const dotsRectWidth = 149;
-  const dotsRectHeight = 195;
+const Frames = ({ left, top, title1, oneColor = false, data }) => {
+  // const dotsRectXCoord = left + 15;
+  // const dotsRectYCoord = top + 22;
+  // const dotsRectWidth = 149;
+  // const dotsRectHeight = 195;
 
-  const numDotsOfColor = Math.ceil(Math.random() * 20);
-  const dotsColors = ['#CE9587', '#EBE8B0', '#B08194', '#CBC8E5', '#9BCEA2'];
-  const dotsCoordsSlice = oneColor ? 1 : dotsColors.length;
-  const dotsCoords = dotsColors.slice(0, dotsCoordsSlice).reduce((sum, color) => {
-    const xCoridorStart = Math.random() * (dotsRectWidth - 69);
-    const yCoridorStart = Math.random() * (dotsRectHeight - 55);
+  // const numDotsOfColor = Math.ceil(Math.random() * 20);
+  // const dotsColors = ['#CE9587', '#EBE8B0', '#B08194', '#CBC8E5', '#9BCEA2'];
+  // const dotsCoordsSlice = oneColor ? 1 : dotsColors.length;
 
-    for (let i = 0; i <= numDotsOfColor; i++) {
-      const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
-      const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
-      sum.push({ x, y, color });
-    }
+  const dotsCoords = Object.entries(data).reduce((sum, entry) => {
+    // const xCoridorStart = Math.random() * (dotsRectWidth - 69);
+    // const yCoridorStart = Math.random() * (dotsRectHeight - 55);
+
+    // for (let i = 0; i < entry[1].count; i++) {
+    //   const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
+    //   const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
+    // sum.push({ x, y, color: getPitchColorByName(entry[0]) });
+    // }
+
+    sum = [...sum, ...entry[1].pitchGraphCoords];
 
     return sum;
   }, []);
+
 
   return (
     <>
@@ -239,17 +243,10 @@ const PercentsGraph = ({ left, center }) => {
   );
 };
 
-const LeftChart = () => {
+const LeftChart = ({ data }) => {
   return (
     <>
-      <Frames
-        left={PARAMS.SIDE_PADDING}
-        top={40}
-        title1='All pitches'
-        title2='Chase'
-        title3='Shadow'
-        title4='Heart'
-      />
+      <Frames left={PARAMS.SIDE_PADDING} top={40} title1='All pitches' data={data} />
       <PercentsGraph left={PARAMS.SIDE_PADDING + 179 + 45} center={40 + 239 / 2} />
     </>
   );
@@ -273,14 +270,14 @@ const LeftChart = () => {
 //   );
 // };
 
-const TwinPitchesGraph = () => {
+const TwinPitchesGraph = ({ data }) => {
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       xmlns='http://www.w3.org/2000/svg'
       className={cl.wrapper}
       preserveAspectRatio='none'>
-      <LeftChart />
+      <LeftChart data={data} />
       {/* <RightChart /> */}
     </svg>
   );

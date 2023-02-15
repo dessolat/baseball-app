@@ -38,4 +38,14 @@
 
 .animated {
   transition: all .3s;
+	animation: animatedDots .3s forwards;
+}
+
+@keyframes animatedDots {
+	from {
+		r:0;
+	}
+	to {
+		r:8;
+	}
 }
