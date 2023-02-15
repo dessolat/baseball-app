@@ -11,6 +11,8 @@
   // background-repeat: no-repeat, no-repeat;
   // background-position: 9.6% 98%, 66.3% 98%;
 	// background-size: 14.1% 12.5%;
+	opacity: 0;
+	animation: increaseOpacity .3s forwards;
 }
 
 .title,
@@ -38,14 +40,25 @@
 
 .animated {
   transition: all .3s;
-	animation: animatedDots .3s forwards;
+	animation: growRadius .3s forwards;
 }
 
-@keyframes animatedDots {
+@keyframes growRadius {
 	from {
 		r:0;
 	}
 	to {
 		r:8;
+	}
+}
+
+@keyframes increaseOpacity {
+	from {
+		opacity: 0;
+		scale: .2;
+	}
+	to {
+		opacity: 1;
+		scale: 1;
 	}
 }
