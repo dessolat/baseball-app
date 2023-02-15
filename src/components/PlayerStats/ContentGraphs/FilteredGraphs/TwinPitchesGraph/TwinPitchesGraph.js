@@ -46,24 +46,13 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
   // const dotsRectWidth = 149;
   // const dotsRectHeight = 195;
 
-  // const numDotsOfColor = Math.ceil(Math.random() * 20);
-  // const dotsColors = ['#CE9587', '#EBE8B0', '#B08194', '#CBC8E5', '#9BCEA2'];
-  // const dotsCoordsSlice = oneColor ? 1 : dotsColors.length;
   const arrData = selectedPitchType
     ? Object.entries(data).filter(entry => entry[0] === selectedPitchType)
     : Object.entries(data);
-
+  let totalPitches = 0;
   const dotsCoords = arrData.reduce((sum, entry) => {
-    // const xCoridorStart = Math.random() * (dotsRectWidth - 69);
-    // const yCoridorStart = Math.random() * (dotsRectHeight - 55);
-
-    // for (let i = 0; i < entry[1].count; i++) {
-    //   const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
-    //   const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
-    // sum.push({ x, y, color: getPitchColorByName(entry[0]) });
-    // }
-
     sum = [...sum, ...entry[1].pitchGraphCoords];
+		totalPitches += entry[1].count
 
     return sum;
   }, []);
@@ -72,7 +61,7 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
     <>
       {/* Frames */}
       <text x={left + 179 / 2} y={top - 5} className={cl.title}>
-        {title1}
+        {`${title1} (${totalPitches})`}
       </text>
       <rect
         x='14'
