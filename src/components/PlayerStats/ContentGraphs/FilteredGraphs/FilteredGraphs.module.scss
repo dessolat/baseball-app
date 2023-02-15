@@ -151,9 +151,14 @@ h3 {
 
 .twinGraphsWrapper {
 	line-height: 0;
-	
+	background-color: #fff;
+
 	> * {
 		width: 50%;
+
+		@media screen and (max-width: 1023px) {
+			width: unset;			
+		}
 	}
 }
 
