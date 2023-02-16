@@ -414,7 +414,7 @@ const RightColumnGraphs = ({ filteredData }) => {
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
+              optionsArr={{'All Pitches': null, ...relValuesData}}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}

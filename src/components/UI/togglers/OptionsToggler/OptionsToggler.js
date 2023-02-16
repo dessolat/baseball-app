@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { getPitchColorByName } from 'utils';
 import cl from './OptionsToggler.module.scss';
 
 const OptionsToggler = ({
@@ -13,16 +14,22 @@ const OptionsToggler = ({
     [cl.vertical]: vertical
   });
 
+  const isDataArray = Array.isArray(optionsArr);
+  const existData = isDataArray ? optionsArr : Object.keys(optionsArr);
+	const sortedData = existData.slice(1).sort((a,b) => a > b ? 1 : -1)
+	sortedData.unshift(existData[0])
   return (
     <ul className={wrapperClasses} {...props}>
-      {optionsArr.map((option, i, arr) => {
+      {sortedData.map((option, i, arr) => {
         const optionClasses = classNames(cl.option, {
           [cl.active]: option === currentOption,
           [cl.lastListItem]: children && arr.length === i + 1
         });
 
+        const isStyles = isDataArray || optionsArr.option === null || option === currentOption;
+        const itemStyles = isStyles ? null : { backgroundColor: getPitchColorByName(option) };
         return (
-          <li key={i} className={optionClasses} onClick={handleOptionClick(option)}>
+          <li key={i} className={optionClasses} onClick={handleOptionClick(option)} style={itemStyles}>
             {option}
           </li>
         );
