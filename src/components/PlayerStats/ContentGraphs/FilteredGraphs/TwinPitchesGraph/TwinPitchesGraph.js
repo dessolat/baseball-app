@@ -340,8 +340,7 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType }) => {
 
 const LeftChart = ({ data, filteredData, selectedPitchType }) => {
   const mainTitle = selectedPitchType ?? 'All pitches';
-  console.log(data);
-  console.log(filteredData);
+
   return (
     <>
       <Frames
