@@ -1,3 +1,4 @@
+import { useRef, useLayoutEffect } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 
 const PARAMS = {
@@ -52,7 +53,7 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
   let totalPitches = 0;
   const dotsCoords = arrData.reduce((sum, entry) => {
     sum = [...sum, ...entry[1].pitchGraphCoords];
-		totalPitches += entry[1].count
+    totalPitches += entry[1].count;
 
     return sum;
   }, []);
@@ -124,6 +125,20 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
 const Column = ({ right, center, coef, data, columnHeight, reverse = false }) => {
   const { value, percents, footer } = data;
 
+  const percentValueRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (percentValueRef.current === null) return;
+
+    percentValueRef.current.style.transition = 'unset';
+    percentValueRef.current.style.opacity = 0;
+
+    setTimeout(() => {
+      percentValueRef.current.style.transition = 'opacity .3s';
+      percentValueRef.current.style.opacity = 1;
+    }, 300);
+  }, [data]);
+
   const xCoord = right - 20;
   const yCoordFilled = reverse ? center : center - coef * percents;
   const yCoordEmpty = reverse ? coef * percents + center : center - columnHeight;
@@ -131,7 +146,14 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
   const valueXCoord = xCoord + 10;
   const valueYCoord = reverse ? center + 12 : center - 5;
 
-  const percentsYCoord = reverse ? center + columnHeight + 25 : 25;
+  const percentsYCoord = reverse
+    ? yCoordFilled + coef * percents + 16
+    : footer
+    ? center + 15
+    : yCoordFilled - 5;
+  // const percentsYCoord = reverse ? center + columnHeight + 25 : yCoordFilled - 5;
+  const legendCircleFill = footer === 'Heart' ? '#B6C6D6' : footer === 'Shadow' ? '#EAEAEA' : 'transparent';
+  const isLegendText = footer === 'Heart';
   return (
     <>
       {/* Filled */}
@@ -144,27 +166,43 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
         fill={`hsla(${169 + 0.41 * percents}, 30%, ${88 - 0.15 * percents}%, 1)`}
       />
       {/* Empty */}
-      <rect
+      {/* <rect
         x={xCoord}
         y={yCoordEmpty}
         width='20'
         height={coef * (100 - percents)}
         fill='#EAEAEA'
         className={cl.animated}
-      />
+      /> */}
       {/* Value */}
-      <text x={valueXCoord} y={valueYCoord} className={cl.valueText}>
+      {/* <text x={valueXCoord} y={valueYCoord} className={cl.valueText}>
         {value}
-      </text>
+      </text> */}
       {/* Percents */}
-      <text x={valueXCoord} y={percentsYCoord} className={cl.percentValue}>
+      <text x={valueXCoord} y={percentsYCoord} className={cl.percentValue} ref={percentValueRef}>
         {percents}%
       </text>
       {/* Footer */}
       {footer && (
-        <text x={valueXCoord} y={percentsYCoord + 20} className={cl.valueText}>
-          {footer}
-        </text>
+        <>
+          <circle
+            cx={valueXCoord}
+            cy={percentsYCoord + 22}
+            r='10'
+            stroke='#B6DBD4'
+            strokeWidth='2'
+            fill={legendCircleFill}
+            className={cl.animated}
+          />
+          {isLegendText && (
+            <text x={valueXCoord - 56} y={percentsYCoord + 42} className={cl.valueText} textAnchor='start'>
+              Legend:
+            </text>
+          )}
+          <text x={valueXCoord} y={percentsYCoord + 42} className={cl.valueText}>
+            {footer}
+          </text>
+        </>
       )}
     </>
   );
@@ -173,70 +211,137 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
 const Columns = ({ right, center, values }) => {
   const { topRight, topCenter, topLeft, bottomRight, bottomCenter, bottomLeft } = values;
 
-  const columnHeight = 239 / 2;
+  const columnHeight = 150 / 2;
+  // const columnHeight = 239 / 2;
   const coef = columnHeight / 100;
   return (
     <>
       {/* Top columns */}
-      <Column right={right} center={center} coef={coef} data={topRight} columnHeight={columnHeight} />
-      <Column right={right - 42} center={center} coef={coef} data={topCenter} columnHeight={columnHeight} />
-      <Column right={right - 42 * 2} center={center} coef={coef} data={topLeft} columnHeight={columnHeight} />
+      {topRight && (
+        <Column right={right} center={center} coef={coef} data={topRight} columnHeight={columnHeight} />
+      )}
+      {topCenter && (
+        <Column right={right - 42} center={center} coef={coef} data={topCenter} columnHeight={columnHeight} />
+      )}
+      {topLeft && (
+        <Column
+          right={right - 42 * 2}
+          center={center}
+          coef={coef}
+          data={topLeft}
+          columnHeight={columnHeight}
+        />
+      )}
       {/* Bottom columns */}
-      <Column
-        right={right}
-        center={center}
-        coef={coef}
-        data={bottomRight}
-        columnHeight={columnHeight}
-        reverse
-      />
-      <Column
-        right={right - 42}
-        center={center}
-        coef={coef}
-        data={bottomCenter}
-        columnHeight={columnHeight}
-        reverse
-      />
-      <Column
-        right={right - 42 * 2}
-        center={center}
-        coef={coef}
-        data={bottomLeft}
-        columnHeight={columnHeight}
-        reverse
-      />
+      {bottomRight && (
+        <Column
+          right={right}
+          center={center}
+          coef={coef}
+          data={bottomRight}
+          columnHeight={columnHeight}
+          reverse
+        />
+      )}
+      {bottomCenter && (
+        <Column
+          right={right - 42}
+          center={center}
+          coef={coef}
+          data={bottomCenter}
+          columnHeight={columnHeight}
+          reverse
+        />
+      )}
+      {bottomLeft && (
+        <Column
+          right={right - 42 * 2}
+          center={center}
+          coef={coef}
+          data={bottomLeft}
+          columnHeight={columnHeight}
+          reverse
+        />
+      )}
     </>
   );
 };
 
-const PercentsGraph = ({ left, center }) => {
-  const values = {
+const PercentsGraph = ({ left, center, filteredData, selectedPitchType }) => {
+  const filteredPitches = selectedPitchType
+    ? filteredData.filter(pitch => pitch.pitch_info.pitch_name === selectedPitchType)
+    : filteredData;
+
+  const totalPitchesCount = filteredData.length;
+  const filteredPitchesCount = filteredPitches.length;
+
+  const defaultCountByResult = {
+    swingHeart: 0,
+    swingShadow: 0,
+    swingChase: 0,
+    takeHeart: 0,
+    takeShadow: 0,
+    takeChase: 0
+  };
+  const pitchesCountByResult = filteredPitches.reduce((sum, pitch) => {
+    const { result, zone } = pitch;
+
+    if (result.swing && zone.heart) sum.swingHeart++;
+    if (result.swing && zone.edge) sum.swingShadow++;
+    if (result.swing && zone.waste) sum.swingChase++;
+    if (result.take && zone.heart) sum.takeHeart++;
+    if (result.take && zone.edge) sum.takeShadow++;
+    if (result.take && zone.waste) sum.takeChase++;
+
+    return sum;
+  }, defaultCountByResult);
+
+  const topValues = {
     topRight: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomRight: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Chase' },
+    bottomRight: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
     topCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Shadow' },
+    bottomCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
     topLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Heart' }
+    bottomLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: null }
+  };
+  const bottomValues = {
+    topRight: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Chase' },
+    topCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Shadow' },
+    topLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Heart' }
   };
 
   return (
     <>
+      {/* Top line titles */}
       <text x={left} y={center - 5} className={cl.percentTitle}>
         Swing
       </text>
       <text x={left} y={center + 15} className={cl.percentTitle}>
         Take
       </text>
-      <Columns right={left + 167} center={center} values={values} />
+      {/* Bottom line titles */}
+      <text x={left} y={center + 170} className={cl.percentTitle}>
+        Pitches
+      </text>
+      <text x={left} y={center + 185} className={cl.percentTitle}>
+        by zone
+      </text>
+      <Columns right={left + 167} center={center} values={topValues} />
+      {/* Bottom columns */}
+      <Columns right={left + 167} center={center + 190} values={bottomValues} />
+
+      {/* Top line */}
       <line x1={left} y1={center} x2={left + 167} y2={center} stroke='#ACACAC' />
+      {/* Bottom line */}
+      <line x1={left} y1={center + 190} x2={left + 167} y2={center + 190} stroke='#ACACAC' />
     </>
   );
 };
 
-const LeftChart = ({ data, selectedPitchType }) => {
+const LeftChart = ({ data, filteredData, selectedPitchType }) => {
   const mainTitle = selectedPitchType ?? 'All pitches';
-
+  console.log(data);
+  console.log(filteredData);
   return (
     <>
       <Frames
@@ -246,7 +351,13 @@ const LeftChart = ({ data, selectedPitchType }) => {
         data={data}
         selectedPitchType={selectedPitchType}
       />
-      <PercentsGraph left={PARAMS.SIDE_PADDING + 179 + 45} center={40 + 239 / 2} />
+      <PercentsGraph
+        left={PARAMS.SIDE_PADDING + 179 + 45}
+        center={106}
+        // center={40 + 239 / 2}
+        filteredData={filteredData}
+        selectedPitchType={selectedPitchType}
+      />
     </>
   );
 };
@@ -269,14 +380,14 @@ const LeftChart = ({ data, selectedPitchType }) => {
 //   );
 // };
 
-const TwinPitchesGraph = ({ data, selectedPitchType = null }) => {
+const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null }) => {
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       xmlns='http://www.w3.org/2000/svg'
       className={cl.wrapper}
       preserveAspectRatio='none'>
-      <LeftChart data={data} selectedPitchType={selectedPitchType} />
+      <LeftChart data={data} filteredData={filteredData} selectedPitchType={selectedPitchType} />
       {/* <RightChart /> */}
     </svg>
   );
