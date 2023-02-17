@@ -28,10 +28,15 @@
 .percentTitle,
 .percentValue {
   font: 300 0.875rem var(--font-nunito);
+	transition: y .3s;
 }
 
 .percentTitle {
   text-anchor: start;
+}
+
+.percentValue {
+	transition: opacity .3s;
 }
 
 .valueText {
