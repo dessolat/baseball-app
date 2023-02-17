@@ -398,10 +398,15 @@ const RightColumnGraphs = ({ filteredData }) => {
               // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph data={relValuesData} />
+              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} />
 
               {Object.entries(relValuesData).map((entry, index) => (
-                <TwinPitchesGraph key={index} data={relValuesData} selectedPitchType={entry[0]} />
+                <TwinPitchesGraph
+                  key={index}
+                  data={relValuesData}
+                  filteredData={filteredData}
+                  selectedPitchType={entry[0]}
+                />
               ))}
             </div>
           </>
@@ -414,7 +419,7 @@ const RightColumnGraphs = ({ filteredData }) => {
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
-              optionsArr={{'All Pitches': null, ...relValuesData}}
+              optionsArr={{ 'All Pitches': null, ...relValuesData }}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
@@ -605,9 +610,12 @@ const FilteredGraphs = () => {
       const pitchGraphCoords = { x, y };
       //
 
+			const tempPitchType = getRndValue(0, pitchTypes.length - 1)
+
       const tempPitch = {
         pitch_info: {
-          pitch_type: getRndValue(0, pitchTypes.length - 1),
+          pitch_type: tempPitchType,
+          pitch_name: pitchTypes[tempPitchType],
           speed: getRndValue(25, 80),
           pitchGraphCoords
         },
