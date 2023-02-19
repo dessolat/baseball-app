@@ -10,11 +10,12 @@ import cl from './ContentGraphs.module.scss';
 import Banner from './Banner/Banner';
 import FilteredGraphs from './FilteredGraphs/FilteredGraphs';
 
-const ContentGraphs = () => {
+const ContentGraphs = ({ pitchesData }) => {
+  const isFilteredGraphs = pitchesData !== null;
   return (
     <div className={cl.graphsWrapper}>
       <Banner />
-      <FilteredGraphs />
+      {isFilteredGraphs && <FilteredGraphs pitchesData={pitchesData} />}
 
       {/* <div className={cl.graphRow}>
         <FrequencySpeedGraph />

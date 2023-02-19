@@ -8,7 +8,7 @@ import ContentGraphs from '../ContentGraphs/ContentGraphs';
 import ContentTables from '../ContentTables/ContentTables';
 import { PlayerYearsContext } from 'context';
 
-const Content = () => {
+const Content = ({ pitchesData }) => {
   const { playerYears, calculateTeamsArray } = useContext(PlayerYearsContext);
 
   const {
@@ -149,7 +149,7 @@ const Content = () => {
                   handleLeagueClick={handleLeagueClick}
                 />
               </div>
-              {isContentGraphs && <ContentGraphs />}
+              {isContentGraphs && <ContentGraphs pitchesData={pitchesData} />}
             </>
           )}
         </div>

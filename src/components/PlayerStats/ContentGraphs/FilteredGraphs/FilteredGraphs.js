@@ -509,7 +509,8 @@ const RightColumnGraphs = ({ filteredData }) => {
   );
 };
 
-const FilteredGraphs = () => {
+const FilteredGraphs = ({ pitchesData }) => {
+  console.log(pitchesData);
   const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
     batter: 'all',
@@ -610,7 +611,7 @@ const FilteredGraphs = () => {
       const pitchGraphCoords = { x, y };
       //
 
-			const tempPitchType = getRndValue(0, pitchTypes.length - 1)
+      const tempPitchType = getRndValue(0, pitchTypes.length - 1);
 
       const tempPitch = {
         pitch_info: {
