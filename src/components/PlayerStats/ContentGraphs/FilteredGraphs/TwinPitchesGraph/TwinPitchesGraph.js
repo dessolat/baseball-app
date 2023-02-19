@@ -134,8 +134,10 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
     percentValueRef.current.style.opacity = 0;
 
     setTimeout(() => {
-      percentValueRef.current.style.transition = 'opacity .3s';
-      percentValueRef.current.style.opacity = 1;
+      if (percentValueRef.current) {
+        percentValueRef.current.style.transition = 'opacity .3s';
+        percentValueRef.current.style.opacity = 1;
+      }
     }, 300);
   }, [data]);
 
