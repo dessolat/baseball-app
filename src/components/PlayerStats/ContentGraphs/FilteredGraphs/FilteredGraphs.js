@@ -680,13 +680,13 @@ const FilteredGraphs = ({ pitchesData }) => {
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterFakeGraphsData(fakeData, currentFilterValues, teamName, playerFullName);
+  const filteredData = useFilterFakeGraphsData(pitchesData, currentFilterValues, teamName, playerFullName);
 
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
         handleFakeDataClick={handleFakeDataClick}
-        data={fakeData}
+        data={pitchesData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
