@@ -155,7 +155,7 @@ const CustomGroup = ({
     ) || [];
 
   const totalBatters = againstFilteredData.reduce((sum, cur) => {
-    const existBatterIndex = sum.findIndex(batter => batter.batter_id === cur.batter.batter_id);
+    const existBatterIndex = sum.findIndex(batter => batter.h_id === cur.batter.h_id);
     existBatterIndex === -1 && sum.push(cur.batter);
 
     return sum;
