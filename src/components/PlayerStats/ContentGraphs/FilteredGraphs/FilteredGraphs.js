@@ -46,7 +46,7 @@ const FIELD_NAMES = {
     'Slow hit': 'soft hit',
     Fly: 'fly',
     Line: 'line',
-    Grounds: 'ground'
+    Grounds: 'gruond'
   }
 };
 
