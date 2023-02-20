@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const groupsArr = ['batter', 'count', 'zone', 'result'];
+const groupsArr = ['batter', 'count', 'zone', 'result', 'swing', 'contact'];
 
 export const useFilterGroupData = (
   data,
@@ -24,7 +24,7 @@ export const useFilterGroupData = (
               ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
                 ? true
                 : false
-              : pitch[group][currentFilterValues[group]]) || group === groupName
+              : pitch[(group === 'swing' || group === 'contact') ? 'result' : group][currentFilterValues[group]]) || group === groupName
         )
       ) || [];
 
@@ -51,7 +51,7 @@ export const useFilterFakeGraphsData = (
             ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
               ? true
               : false
-            : pitch[group][currentFilterValues[group]]
+            : pitch[(group === 'swing' || group === 'contact') ? 'result' : group][currentFilterValues[group]]
         )
       ) || [];
 
