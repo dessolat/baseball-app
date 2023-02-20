@@ -141,6 +141,8 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
 );
 
 const FrequencySpeedGraph = ({ data, relValuesData }) => {
+	console.log(data);
+	console.log(relValuesData);
   PARAMS.LEFT_VERTICAL_GRID_LINES_STEP = 255 / PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 185 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
@@ -197,34 +199,35 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
     }
   ];
 
-  const frequenciesValues = dimensionsArr.reduce((sum, dimension) => {
-    sum.push(dimension.frequency);
-    return sum;
-  }, []);
+  // const frequenciesValues = dimensionsArr.reduce((sum, dimension) => {
+  //   sum.push(dimension.frequency);
+  //   return sum;
+  // }, []);
 
-  const minSpeedValues = dimensionsArr.reduce((sum, dimension) => {
-    sum.push(dimension.speed.min);
-    return sum;
-  }, []);
-  const maxSpeedValues = dimensionsArr.reduce((sum, dimension) => {
-    sum.push(dimension.speed.max);
-    return sum;
-  }, []);
+  // const minSpeedValues = dimensionsArr.reduce((sum, dimension) => {
+  //   sum.push(dimension.speed.min);
+  //   return sum;
+  // }, []);
+  // const maxSpeedValues = dimensionsArr.reduce((sum, dimension) => {
+  //   sum.push(dimension.speed.max);
+  //   return sum;
+  // }, []);
 
   // const maxFrequency = Math.max(...frequenciesValues);
   const minMaxSpeeds = data.reduce(
     (sum, pitch, index) => {
       const { speed } = pitch.pitch_info;
+			const mphSpeed = speed * 2.23741
 
       if (index === 0) {
-        sum.minSpeed = speed;
-        sum.maxSpeed = speed;
+        sum.minSpeed = mphSpeed;
+        sum.maxSpeed = mphSpeed;
 
         return sum;
       }
 
-      if (speed < sum.minSpeed) sum.minSpeed = speed;
-      if (speed > sum.maxSpeed) sum.maxSpeed = speed;
+      if (mphSpeed < sum.minSpeed) sum.minSpeed = mphSpeed;
+      if (mphSpeed > sum.maxSpeed) sum.maxSpeed = mphSpeed;
 
       return sum;
     },
