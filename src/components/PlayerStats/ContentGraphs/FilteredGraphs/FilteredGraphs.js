@@ -39,9 +39,15 @@ const FIELD_NAMES = {
   result: {
     'All pitches': 'all',
     Swing: 'swing',
-    Take: 'take',
+    Take: 'take'
+  },
+  swing: {
+    'All swings': 'all',
     Miss: 'miss',
-    Contact: 'contact',
+    Contact: 'contact'
+  },
+  contact: {
+    'All contacts': 'all',
     'Base hits & Hard hit': 'base hit & hard hit',
     'Slow hit': 'soft hit',
     Fly: 'fly',
@@ -103,7 +109,20 @@ const Group = ({
 
   const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
 
-  const total = filteredData.map(pitch => pitch[groupName]);
+  const total =
+    groupName === 'swing' || groupName === 'contact'
+      ? filteredData
+          .map(pitch => pitch.result)
+          .filter(group =>
+            groupName === 'swing'
+              ? group[FIELD_NAMES[groupName]['Miss']] || group[FIELD_NAMES[groupName]['Contact']]
+              : group[FIELD_NAMES[groupName]['Base hits & Hard hit']] ||
+                group[FIELD_NAMES[groupName]['Slow hit']] ||
+                group[FIELD_NAMES[groupName]['Fly']] ||
+                group[FIELD_NAMES[groupName]['Line']] ||
+                group[FIELD_NAMES[groupName]['Grounds']]
+          )
+      : filteredData.map(pitch => pitch[groupName]);
 
   const totalLength = total.length;
 
@@ -146,12 +165,15 @@ const CustomGroup = ({
   handleTeamNameChange,
   handlePlayerNameChange
 }) => {
+	console.log(data?.pitches_all);
   const againstFilteredData =
     data.pitches_all?.filter(
       pitch =>
         (currentFilterValues.count === 'all' ? true : pitch.count[currentFilterValues.count]) &&
         (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
-        (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result])
+        (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result]) &&
+        (currentFilterValues.swing === 'all' ? true : pitch.result[currentFilterValues.swing]) &&
+        (currentFilterValues.contact === 'all' ? true : pitch.result[currentFilterValues.contact])
     ) || [];
 
   const totalBatters = againstFilteredData.reduce((sum, cur) => {
@@ -296,9 +318,23 @@ const LeftColumnOptions = ({
       items: [
         { name: 'All pitches', staticText: 'pitches' },
         { name: 'Swing', staticText: 'pitches' },
-        { name: 'Take', staticText: 'pitches' },
+        { name: 'Take', staticText: 'pitches' }
+      ]
+    },
+    {
+      title: ' ',
+      groupName: 'swing',
+      items: [
+        { name: 'All swings', staticText: 'swings' },
         { name: 'Miss', staticText: 'swings' },
-        { name: 'Contact', staticText: 'swings' },
+        { name: 'Contact', staticText: 'swings' }
+      ]
+    },
+    {
+      title: ' ',
+      groupName: 'contact',
+      items: [
+        { name: 'All contacts', staticText: 'contacts' },
         { name: 'Base hits & Hard hit', staticText: 'contacts' },
         { name: 'Slow hit', staticText: 'contacts' },
         { name: 'Fly', staticText: 'contacts' },
@@ -317,7 +353,8 @@ const LeftColumnOptions = ({
       </h3>
       <div className={cl.body}>
         <CustomGroup
-          data={data}
+          data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
+          // data={data}
           currentFilterValues={currentFilterValues}
           handleFilterClick={handleFilterClick}
           handleTeamNameChange={handleTeamNameChange}
@@ -326,7 +363,8 @@ const LeftColumnOptions = ({
         {groupsArr.map((group, i) => (
           <Group
             key={i}
-            data={data}
+            data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
+            // data={data}
             groupData={group}
             currentFilterValues={currentFilterValues}
             handleFilterClick={handleFilterClick}
@@ -351,7 +389,7 @@ const RightColumnGraphs = ({ filteredData }) => {
 
     if (sum[pitchType] !== undefined) {
       sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed);
+      sum[pitchType].speeds.push(speed * 2.23741);
       sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
       return sum;
@@ -516,7 +554,9 @@ const FilteredGraphs = ({ pitchesData }) => {
     batter: 'all',
     count: 'all',
     zone: 'all',
-    result: 'all'
+    result: 'all',
+    swing: 'all',
+    contact: 'all'
   });
   const [filteredTeamName, setFilteredTeamName] = useState('Team1');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
