@@ -353,8 +353,8 @@ const LeftColumnOptions = ({
       </h3>
       <div className={cl.body}>
         <CustomGroup
-          data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
-          // data={data}
+          // data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
+          data={data}
           currentFilterValues={currentFilterValues}
           handleFilterClick={handleFilterClick}
           handleTeamNameChange={handleTeamNameChange}
@@ -363,8 +363,8 @@ const LeftColumnOptions = ({
         {groupsArr.map((group, i) => (
           <Group
             key={i}
-            data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
-            // data={data}
+            // data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
+            data={data}
             groupData={group}
             currentFilterValues={currentFilterValues}
             handleFilterClick={handleFilterClick}
