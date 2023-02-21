@@ -172,48 +172,6 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
     relValuesData[pitchName].skoSpeed = skoSpeed;
   }
 
-  const dimensionsArr = [
-    {
-      title: 'Fastball (N Pitches)',
-      frequency: getRndValue(1, 100),
-      color: '#CE9587',
-      speed: getMinMax()
-    },
-    {
-      title: 'Slider (N Pitches)',
-      frequency: getRndValue(1, 100),
-      color: '#EBE8B0',
-      speed: getMinMax()
-    },
-    {
-      title: 'Curveball (N Pitches)',
-      frequency: getRndValue(1, 100),
-      color: '#CBC8E5',
-      speed: getMinMax()
-    },
-    {
-      title: 'Curveball (N Pitches)',
-      frequency: getRndValue(1, 100),
-      color: '#9BCEA2',
-      speed: getMinMax()
-    }
-  ];
-
-  // const frequenciesValues = dimensionsArr.reduce((sum, dimension) => {
-  //   sum.push(dimension.frequency);
-  //   return sum;
-  // }, []);
-
-  // const minSpeedValues = dimensionsArr.reduce((sum, dimension) => {
-  //   sum.push(dimension.speed.min);
-  //   return sum;
-  // }, []);
-  // const maxSpeedValues = dimensionsArr.reduce((sum, dimension) => {
-  //   sum.push(dimension.speed.max);
-  //   return sum;
-  // }, []);
-
-  // const maxFrequency = Math.max(...frequenciesValues);
   const minMaxSpeeds = data.reduce(
     (sum, pitch, index) => {
       const { speed } = pitch.pitch_info;
@@ -257,8 +215,6 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
     );
   }
 
-  const leftScaleMultiplier = 165 / maxFrequencyLineValue;
-  const rightScaleMultiplier = 198 / (maxSpeedLineValue - minSpeedLineValue);
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
@@ -354,7 +310,6 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
       <Rows
         relValuesData={relValuesData}
         totalPitches={data.length}
-        dimensionsArr={dimensionsArr}
         maxSpeedLineValue={maxSpeedLineValue}
         minSpeedLineValue={minSpeedLineValue}
       />
