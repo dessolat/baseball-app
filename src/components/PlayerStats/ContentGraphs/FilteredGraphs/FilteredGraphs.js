@@ -56,7 +56,7 @@ const FIELD_NAMES = {
   }
 };
 
-const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
+// const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
   const { name, absValue, absValueTotal, relValue, staticText } = data;
@@ -165,7 +165,7 @@ const CustomGroup = ({
   handleTeamNameChange,
   handlePlayerNameChange
 }) => {
-	console.log(data?.pitches_all);
+  console.log(data?.pitches_all);
   const againstFilteredData =
     data.pitches_all?.filter(
       pitch =>
@@ -270,7 +270,7 @@ const CustomGroup = ({
 };
 
 const LeftColumnOptions = ({
-  handleFakeDataClick,
+  // handleFakeDataClick,
   data = {},
   handleFilterClick,
   currentFilterValues,
@@ -347,7 +347,10 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>
         Dataset filter
-        <button className={cl.tempButton} onClick={handleFakeDataClick}>
+        <button
+          className={cl.tempButton}
+          // onClick={handleFakeDataClick}
+        >
           Generate data
         </button>
       </h3>
@@ -377,10 +380,12 @@ const LeftColumnOptions = ({
   );
 };
 
-const RightColumnGraphs = ({ filteredData }) => {
+const RightColumnGraphs = ({ filteredData, pitchTypes }) => {
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
   );
+
+  
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
@@ -548,8 +553,7 @@ const RightColumnGraphs = ({ filteredData }) => {
 };
 
 const FilteredGraphs = ({ pitchesData }) => {
-  console.log(pitchesData);
-  const [fakeData, setFakeData] = useState({});
+  // const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
     batter: 'all',
     count: 'all',
@@ -560,6 +564,10 @@ const FilteredGraphs = ({ pitchesData }) => {
   });
   const [filteredTeamName, setFilteredTeamName] = useState('Team1');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
+
+	const { pitch_types: pitchTypes } = pitchesData.preview;
+
+	console.log(pitchesData);
 
   const generateFakeData = () => {
     const totalPitches = getRndValue(10, 20);
@@ -700,12 +708,12 @@ const FilteredGraphs = ({ pitchesData }) => {
     return result;
   };
 
-  const handleFakeDataClick = () => {
-    const data = generateFakeData();
-    setFakeData(data);
-    console.clear();
-    console.log(data);
-  };
+  // const handleFakeDataClick = () => {
+  //   const data = generateFakeData();
+  //   setFakeData(data);
+  //   console.clear();
+  //   console.log(data);
+  // };
 
   function handleFilterClick(groupName, value) {
     setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
@@ -725,7 +733,7 @@ const FilteredGraphs = ({ pitchesData }) => {
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
-        handleFakeDataClick={handleFakeDataClick}
+        // handleFakeDataClick={handleFakeDataClick}
         data={pitchesData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
@@ -734,7 +742,7 @@ const FilteredGraphs = ({ pitchesData }) => {
         handleTeamNameChange={handleTeamNameChange}
         handlePlayerNameChange={handlePlayerNameChange}
       />
-      <RightColumnGraphs filteredData={filteredData} />
+      <RightColumnGraphs filteredData={filteredData} pitchTypes={pitchTypes} />
     </div>
   );
 };
