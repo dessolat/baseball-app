@@ -1,5 +1,6 @@
 import { useRef, useLayoutEffect } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
+import { getPitchColorByName } from 'utils';
 
 const PARAMS = {
   GRAPH_WIDTH: 463,
@@ -7,7 +8,7 @@ const PARAMS = {
   SIDE_PADDING: 30
 };
 
-const Dots = ({ coords }) => {
+const Dots = ({ arrData, pitchTypes, coords }) => {
   // const [radius, setRadius] = useState(1);
 
   // useEffect(() => {
@@ -20,19 +21,24 @@ const Dots = ({ coords }) => {
 
   return (
     <>
-      {coords.map((coord, i) => {
-        const { x, y, color } = coord;
+      {arrData.map((pitch, i) => {
+        const { coordinates, pitch_info: pitchInfo } = pitch;
+        const { zone_x: x, zone_y: y } = coordinates;
+        const { pitch_type: pitchType } = pitchInfo;
 
+        const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
+
+        const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
         return (
           <circle
             key={i}
             // key={`${i}-x-${x}-y-${y}`}
-            cx={x}
-            cy={y}
+            cx={zeroXCoord + x * xCoordRelCoef}
+            cy={yCoord}
             // r={radius}
             stroke='black'
             strokeWidth='.5'
-            fill={color}
+            fill={getPitchColorByName(pitchTypes[pitchType])}
             className={cl.animated}
           />
         );
@@ -41,12 +47,9 @@ const Dots = ({ coords }) => {
   );
 };
 
-const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
-  // const dotsRectXCoord = left + 15;
-  // const dotsRectYCoord = top + 22;
-  // const dotsRectWidth = 149;
-  // const dotsRectHeight = 195;
-  const { zone } = preview;
+const Frames = ({ top, title1, filteredData, selectedPitchType, preview }) => {
+  const { zone, pitch_types: pitchTypes } = preview;
+  console.log(preview);
   const {
     y_strike_down: yStrikeDown,
     x_strike_up: yStrikeUp,
@@ -54,17 +57,12 @@ const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
     x_strike_right: xStrikeRight,
     shadow_border: shadowBorder
   } = zone;
-  console.log(zone);
-  const arrData = selectedPitchType
-    ? Object.entries(data).filter(entry => entry[0] === selectedPitchType)
-    : Object.entries(data);
-  let totalPitches = 0;
-  const dotsCoords = arrData.reduce((sum, entry) => {
-    sum = [...sum, ...entry[1].pitchGraphCoords];
-    totalPitches += entry[1].count;
 
-    return sum;
-  }, []);
+  const arrData = selectedPitchType
+    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
+    : filteredData;
+
+  let totalPitches = arrData.length;
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.85;
   const yCoordRelCoef = 340;
@@ -82,9 +80,6 @@ const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
     <>
       {/* Frames */}
       {/* Wrapper frame */}
-      <text x={zeroXCoord} y={top - 5} className={cl.title}>
-        {`${title1} (${totalPitches})`}
-      </text>
       <rect
         x='14'
         y='14'
@@ -116,7 +111,11 @@ const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
       />
 
       {/* Dots */}
-      {/* <Dots coords={dotsCoords} /> */}
+      <Dots
+        arrData={arrData}
+        pitchTypes={pitchTypes}
+        coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+      />
 
       {/* Dashed frame */}
       <rect
@@ -129,6 +128,11 @@ const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
         strokeDasharray='8 2'
         fill='transparent'
       />
+
+      {/* Title */}
+      <text x={zeroXCoord} y={top - 5} className={cl.title}>
+        {`${title1} (${totalPitches})`}
+      </text>
     </>
   );
 };
@@ -357,10 +361,9 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
   return (
     <>
       <Frames
-        left={PARAMS.SIDE_PADDING}
         top={40}
         title1={mainTitle}
-        data={data}
+        filteredData={filteredData}
         selectedPitchType={selectedPitchType}
         preview={preview}
       />
@@ -394,6 +397,7 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
 // };
 
 const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview }) => {
+  console.log(filteredData);
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
