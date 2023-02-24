@@ -381,7 +381,9 @@ const LeftColumnOptions = ({
 };
 
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
-  const { pitch_types: pitchTypes } = data.preview;
+  const { preview } = data;
+  const { pitch_types: pitchTypes } = preview;
+
 
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
@@ -445,7 +447,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} />
+              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} preview={preview}/>
 
               {Object.entries(relValuesData).map((entry, index) => (
                 <TwinPitchesGraph
@@ -453,6 +455,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                   data={relValuesData}
                   filteredData={filteredData}
                   selectedPitchType={entry[0]}
+									preview={preview}
                 />
               ))}
             </div>

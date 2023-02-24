@@ -41,12 +41,20 @@ const Dots = ({ coords }) => {
   );
 };
 
-const Frames = ({ left, top, title1, data, selectedPitchType }) => {
+const Frames = ({ left, top, title1, data, selectedPitchType, preview }) => {
   // const dotsRectXCoord = left + 15;
   // const dotsRectYCoord = top + 22;
   // const dotsRectWidth = 149;
   // const dotsRectHeight = 195;
-
+  const { zone } = preview;
+  const {
+    y_strike_down: yStrikeDown,
+    x_strike_up: yStrikeUp,
+    x_strike_left: xStrikeLeft,
+    x_strike_right: xStrikeRight,
+    shadow_border: shadowBorder
+  } = zone;
+  console.log(zone);
   const arrData = selectedPitchType
     ? Object.entries(data).filter(entry => entry[0] === selectedPitchType)
     : Object.entries(data);
@@ -58,10 +66,23 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
     return sum;
   }, []);
 
+  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.85;
+  const yCoordRelCoef = 340;
+  const yCoordAbsCoef = 75;
+
+  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
+  const xCoordRelCoef = 248;
+
+  // Dashed frame params
+  const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
+  const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
+  const dashedFrameY = zeroYCoord - yStrikeUp * yCoordRelCoef + yCoordAbsCoef;
+  const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
   return (
     <>
       {/* Frames */}
-      <text x={left + 179 / 2} y={top - 5} className={cl.title}>
+      {/* Wrapper frame */}
+      <text x={zeroXCoord} y={top - 5} className={cl.title}>
         {`${title1} (${totalPitches})`}
       </text>
       <rect
@@ -73,46 +94,36 @@ const Frames = ({ left, top, title1, data, selectedPitchType }) => {
         strokeWidth='2'
         fill='transparent'
       />
-      {/* <rect x={left} y={top} width='179' height='239' stroke='#B6DBD4' strokeWidth='2' fill='transparent' /> */}
-      {/* <text x={left + 179 / 2} y={top - 15 + 31} className={cl.title}>
-        {title2}
-      </text> */}
+
+      {/* Outer frame */}
       <rect
-        // x='48'
-        x={left + 18}
-        y={top + 22}
-        width={179 - 30}
-        height={239 - 44}
+        x={dashedFrameX - shadowBorder * xCoordRelCoef}
+        y={dashedFrameY - shadowBorder * yCoordRelCoef}
+        width={dashedFrameWidth + shadowBorder * xCoordRelCoef * 2}
+        height={dashedFrameHeight + shadowBorder * yCoordRelCoef * 2}
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='#EAEAEA'
       />
-      {/* <text x={left + 179 / 2} y={top - 15 + 31 + 22} className={cl.title}>
-        {title3}
-      </text> */}
 
-      {/* <text x={left + 179 / 2} y={top - 15 + 31 + 107} className={cl.title}>
-        {title4}
-      </text> */}
+      {/* Inner frame */}
       <rect
-        x={left + 18 + 15 * 2}
-        y={top + 22 * 3}
-        width={179 - 30 * 3}
-        height={239 - 44 * 3}
-        stroke='#96BCC0'
-        strokeWidth='2'
+        x={dashedFrameX + shadowBorder * xCoordRelCoef}
+        y={dashedFrameY + shadowBorder * yCoordRelCoef}
+        width={dashedFrameWidth - shadowBorder * xCoordRelCoef * 2}
+        height={dashedFrameHeight - shadowBorder * yCoordRelCoef * 2}
         fill='#B6C6D6'
       />
 
       {/* Dots */}
-      <Dots coords={dotsCoords} />
+      {/* <Dots coords={dotsCoords} /> */}
 
       {/* Dashed frame */}
       <rect
-        x={left + 18 + 15}
-        y={top + 22 * 2}
-        width={179 - 30 * 2}
-        height={239 - 44 * 2}
+        x={dashedFrameX}
+        y={dashedFrameY}
+        width={dashedFrameWidth}
+        height={dashedFrameHeight}
         stroke='#1A4C96'
         strokeWidth='2'
         strokeDasharray='8 2'
@@ -340,7 +351,7 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType }) => {
   );
 };
 
-const LeftChart = ({ data, filteredData, selectedPitchType }) => {
+const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
   const mainTitle = selectedPitchType ?? 'All pitches';
 
   return (
@@ -351,6 +362,7 @@ const LeftChart = ({ data, filteredData, selectedPitchType }) => {
         title1={mainTitle}
         data={data}
         selectedPitchType={selectedPitchType}
+        preview={preview}
       />
       <PercentsGraph
         left={PARAMS.SIDE_PADDING + 179 + 45}
@@ -381,14 +393,19 @@ const LeftChart = ({ data, filteredData, selectedPitchType }) => {
 //   );
 // };
 
-const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null }) => {
+const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview }) => {
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       xmlns='http://www.w3.org/2000/svg'
       className={cl.wrapper}
       preserveAspectRatio='none'>
-      <LeftChart data={data} filteredData={filteredData} selectedPitchType={selectedPitchType} />
+      <LeftChart
+        data={data}
+        filteredData={filteredData}
+        selectedPitchType={selectedPitchType}
+        preview={preview}
+      />
       {/* <RightChart /> */}
     </svg>
   );
