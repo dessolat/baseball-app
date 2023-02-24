@@ -380,12 +380,16 @@ const LeftColumnOptions = ({
   );
 };
 
-const RightColumnGraphs = ({ filteredData, pitchTypes }) => {
+const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
+  const { pitch_types: pitchTypes } = data.preview;
+
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
   );
 
-  
+  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
+  const filteredData = useFilterFakeGraphsData(data, currentFilterValues, teamName, playerFullName);
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
@@ -565,148 +569,144 @@ const FilteredGraphs = ({ pitchesData }) => {
   const [filteredTeamName, setFilteredTeamName] = useState('Team1');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
-	const { pitch_types: pitchTypes } = pitchesData.preview;
+  // const generateFakeData = () => {
+  //   const totalPitches = getRndValue(10, 20);
+  //   // const totalPitches = getRndValue(300, 500);
 
-	console.log(pitchesData);
+  //   const pitchesAll = [],
+  //     battersSet = new Set(),
+  //     batterIds = [];
+  //   let batterNames = 0,
+  //     batterSurnames = 0;
 
-  const generateFakeData = () => {
-    const totalPitches = getRndValue(10, 20);
-    // const totalPitches = getRndValue(300, 500);
+  //   for (let i = 0; i < totalPitches; i++) {
+  //     // count
+  //     const count0_0 = getRndValue(0, 1);
+  //     const count0_2 = !count0_0 ? getRndValue(0, 1) : 0;
+  //     const count3_0 = !count0_0 && !count0_2 ? 1 : 0;
+  //     const ahwad = getRndValue(0, 1);
+  //     const behind = 1 - ahwad;
 
-    const pitchesAll = [],
-      battersSet = new Set(),
-      batterIds = [];
-    let batterNames = 0,
-      batterSurnames = 0;
+  //     // zone
+  //     const inZone = getRndValue(0, 1);
 
-    for (let i = 0; i < totalPitches; i++) {
-      // count
-      const count0_0 = getRndValue(0, 1);
-      const count0_2 = !count0_0 ? getRndValue(0, 1) : 0;
-      const count3_0 = !count0_0 && !count0_2 ? 1 : 0;
-      const ahwad = getRndValue(0, 1);
-      const behind = 1 - ahwad;
+  //     const heart = getRndValue(0, 1);
+  //     const edge = !heart ? getRndValue(0, 1) : 0;
+  //     const waste = !heart && !edge ? 1 : 0;
 
-      // zone
-      const inZone = getRndValue(0, 1);
+  //     const low = getRndValue(0, 1);
+  //     const inside = getRndValue(0, 1);
 
-      const heart = getRndValue(0, 1);
-      const edge = !heart ? getRndValue(0, 1) : 0;
-      const waste = !heart && !edge ? 1 : 0;
+  //     // result
+  //     const result = {
+  //       fly: 0,
+  //       line: 0,
+  //       miss: 0,
+  //       take: 0,
+  //       swing: 0,
+  //       ground: 0,
+  //       contact: 0,
+  //       'soft hit': 0,
+  //       'base hit & hard hit': 0
+  //     };
 
-      const low = getRndValue(0, 1);
-      const inside = getRndValue(0, 1);
+  //     const resultLength = Object.keys(result).length;
+  //     const resultParam = Object.keys(result)[getRndValue(0, resultLength - 1)];
+  //     result[resultParam] = 1;
 
-      // result
-      const result = {
-        fly: 0,
-        line: 0,
-        miss: 0,
-        take: 0,
-        swing: 0,
-        ground: 0,
-        contact: 0,
-        'soft hit': 0,
-        'base hit & hard hit': 0
-      };
+  //     const newBatterId = getRndValue(0, totalPitches - 1);
+  //     const batterExistIndex = batterIds.findIndex(batter => batter.batter_id === newBatterId);
 
-      const resultLength = Object.keys(result).length;
-      const resultParam = Object.keys(result)[getRndValue(0, resultLength - 1)];
-      result[resultParam] = 1;
+  //     let batter;
 
-      const newBatterId = getRndValue(0, totalPitches - 1);
-      const batterExistIndex = batterIds.findIndex(batter => batter.batter_id === newBatterId);
+  //     if (batterExistIndex === -1) {
+  //       const leftHandedValue = getRndValue(0, 1);
 
-      let batter;
+  //       batterNames++;
+  //       batterSurnames++;
 
-      if (batterExistIndex === -1) {
-        const leftHandedValue = getRndValue(0, 1);
+  //       const batterName = 'Name' + batterNames;
+  //       const batterSurname = 'Surname' + batterSurnames;
 
-        batterNames++;
-        batterSurnames++;
+  //       batter = {
+  //         'left handed': leftHandedValue,
+  //         'right handed': 1 - leftHandedValue,
+  //         batter_id: newBatterId,
+  //         team_name: 'Team' + getRndValue(1, 3),
+  //         'batter name': batterName,
+  //         'batter surname': batterSurname
+  //       };
 
-        const batterName = 'Name' + batterNames;
-        const batterSurname = 'Surname' + batterSurnames;
+  //       batterIds.push(batter);
+  //     }
 
-        batter = {
-          'left handed': leftHandedValue,
-          'right handed': 1 - leftHandedValue,
-          batter_id: newBatterId,
-          team_name: 'Team' + getRndValue(1, 3),
-          'batter name': batterName,
-          'batter surname': batterSurname
-        };
+  //     if (batterExistIndex !== -1) {
+  //       batter = batterIds[batterExistIndex];
+  //     }
 
-        batterIds.push(batter);
-      }
+  //     // Pitch graph coords calculation
+  //     const dotsRectXCoord = 30 + 15;
+  //     const dotsRectYCoord = 40 + 22;
+  //     const dotsRectWidth = 149;
+  //     const dotsRectHeight = 195;
 
-      if (batterExistIndex !== -1) {
-        batter = batterIds[batterExistIndex];
-      }
+  //     const xCoridorStart = Math.random() * (dotsRectWidth - 69);
+  //     const yCoridorStart = Math.random() * (dotsRectHeight - 55);
 
-      // Pitch graph coords calculation
-      const dotsRectXCoord = 30 + 15;
-      const dotsRectYCoord = 40 + 22;
-      const dotsRectWidth = 149;
-      const dotsRectHeight = 195;
+  //     const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
+  //     const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
 
-      const xCoridorStart = Math.random() * (dotsRectWidth - 69);
-      const yCoridorStart = Math.random() * (dotsRectHeight - 55);
+  //     const pitchGraphCoords = { x, y };
+  //     //
 
-      const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
-      const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
+  //     const tempPitchType = getRndValue(0, pitchTypes.length - 1);
 
-      const pitchGraphCoords = { x, y };
-      //
+  //     const tempPitch = {
+  //       pitch_info: {
+  //         pitch_type: tempPitchType,
+  //         pitch_name: pitchTypes[tempPitchType],
+  //         speed: getRndValue(25, 80),
+  //         pitchGraphCoords
+  //       },
+  //       batter,
+  //       count: {
+  //         '0-0': count0_0,
+  //         '0-2': count0_2,
+  //         '3-0': count3_0,
+  //         ahwad,
+  //         behind
+  //       },
+  //       zone: {
+  //         'in zone': inZone,
+  //         'out zone': 1 - inZone,
+  //         heart,
+  //         edge,
+  //         waste,
+  //         low,
+  //         high: 1 - low,
+  //         inside,
+  //         outside: 1 - inside
+  //       },
+  //       result
+  //     };
 
-      const tempPitchType = getRndValue(0, pitchTypes.length - 1);
+  //     battersSet.add(tempPitch.batter.batter_id);
 
-      const tempPitch = {
-        pitch_info: {
-          pitch_type: tempPitchType,
-          pitch_name: pitchTypes[tempPitchType],
-          speed: getRndValue(25, 80),
-          pitchGraphCoords
-        },
-        batter,
-        count: {
-          '0-0': count0_0,
-          '0-2': count0_2,
-          '3-0': count3_0,
-          ahwad,
-          behind
-        },
-        zone: {
-          'in zone': inZone,
-          'out zone': 1 - inZone,
-          heart,
-          edge,
-          waste,
-          low,
-          high: 1 - low,
-          inside,
-          outside: 1 - inside
-        },
-        result
-      };
+  //     pitchesAll.push(tempPitch);
+  //   }
 
-      battersSet.add(tempPitch.batter.batter_id);
+  //   const result = {
+  //     preview: {
+  //       pitch_types: pitchTypes,
+  //       n_pitch_types: pitchTypes.length,
+  //       total_pitches: totalPitches,
+  //       total_batters: Array.from(battersSet).length
+  //     },
+  //     pitches_all: pitchesAll
+  //   };
 
-      pitchesAll.push(tempPitch);
-    }
-
-    const result = {
-      preview: {
-        pitch_types: pitchTypes,
-        n_pitch_types: pitchTypes.length,
-        total_pitches: totalPitches,
-        total_batters: Array.from(battersSet).length
-      },
-      pitches_all: pitchesAll
-    };
-
-    return result;
-  };
+  //   return result;
+  // };
 
   // const handleFakeDataClick = () => {
   //   const data = generateFakeData();
@@ -726,10 +726,6 @@ const FilteredGraphs = ({ pitchesData }) => {
     setFilteredPlayerFullName(name);
   };
 
-  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
-  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterFakeGraphsData(pitchesData, currentFilterValues, teamName, playerFullName);
-
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
@@ -742,7 +738,12 @@ const FilteredGraphs = ({ pitchesData }) => {
         handleTeamNameChange={handleTeamNameChange}
         handlePlayerNameChange={handlePlayerNameChange}
       />
-      <RightColumnGraphs filteredData={filteredData} pitchTypes={pitchTypes} />
+      <RightColumnGraphs
+        currentFilterValues={currentFilterValues}
+        filteredTeamName={filteredTeamName}
+        filteredPlayerFullName={filteredPlayerFullName}
+        data={pitchesData}
+      />
     </div>
   );
 };
