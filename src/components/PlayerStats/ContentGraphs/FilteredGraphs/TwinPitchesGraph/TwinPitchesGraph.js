@@ -49,7 +49,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
 
 const Frames = ({ top, title1, filteredData, selectedPitchType, preview }) => {
   const { zone, pitch_types: pitchTypes } = preview;
-  console.log(preview);
+
   const {
     y_strike_down: yStrikeDown,
     x_strike_up: yStrikeUp,
@@ -197,7 +197,7 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
       </text> */}
       {/* Percents */}
       <text x={valueXCoord} y={percentsYCoord} className={cl.percentValue} ref={percentValueRef}>
-        {percents}%
+        {Math.round(percents)}%
       </text>
       {/* Footer */}
       {footer && (
@@ -284,47 +284,97 @@ const Columns = ({ right, center, values }) => {
   );
 };
 
-const PercentsGraph = ({ left, center, filteredData, selectedPitchType }) => {
+const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview }) => {
+  const { pitch_types: pitchTypes } = preview;
+
   const filteredPitches = selectedPitchType
-    ? filteredData.filter(pitch => pitch.pitch_info.pitch_name === selectedPitchType)
+    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
     : filteredData;
 
-  const totalPitchesCount = filteredData.length;
   const filteredPitchesCount = filteredPitches.length;
-
   const defaultCountByResult = {
     swingHeart: 0,
     swingShadow: 0,
     swingChase: 0,
     takeHeart: 0,
     takeShadow: 0,
-    takeChase: 0
+    takeChase: 0,
+    totalHeart: 0,
+    totalShadow: 0,
+    totalChase: 0
   };
+
   const pitchesCountByResult = filteredPitches.reduce((sum, pitch) => {
     const { result, zone } = pitch;
 
-    if (result.swing && zone.heart) sum.swingHeart++;
-    if (result.swing && zone.edge) sum.swingShadow++;
-    if (result.swing && zone.waste) sum.swingChase++;
-    if (result.take && zone.heart) sum.takeHeart++;
-    if (result.take && zone.edge) sum.takeShadow++;
-    if (result.take && zone.waste) sum.takeChase++;
+    if (result.swing) {
+      zone.heart && sum.swingHeart++;
+      zone.edge && sum.swingShadow++;
+      zone.waste && sum.swingChase++;
+    }
+
+    if (result.take) {
+      zone.heart && sum.takeHeart++;
+      zone.edge && sum.takeShadow++;
+      zone.waste && sum.takeChase++;
+    }
+
+    zone.heart && sum.totalHeart++;
+    zone.edge && sum.totalShadow++;
+    zone.waste && sum.totalChase++;
 
     return sum;
   }, defaultCountByResult);
 
   const topValues = {
-    topRight: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomRight: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    topCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    topLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: null },
-    bottomLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: null }
+    topRight: {
+      value: 999,
+      percents: (pitchesCountByResult.swingChase * 100) / filteredPitchesCount,
+      footer: null
+    },
+    bottomRight: {
+      value: 999,
+      percents: (pitchesCountByResult.takeChase * 100) / filteredPitchesCount,
+      footer: null
+    },
+    topCenter: {
+      value: 999,
+      percents: (pitchesCountByResult.swingShadow * 100) / filteredPitchesCount,
+      footer: null
+    },
+    bottomCenter: {
+      value: 999,
+      percents: (pitchesCountByResult.takeShadow * 100) / filteredPitchesCount,
+      footer: null
+    },
+    topLeft: {
+      value: 999,
+      percents: (pitchesCountByResult.swingHeart * 100) / filteredPitchesCount,
+      footer: null
+    },
+    bottomLeft: {
+      value: 999,
+      percents: (pitchesCountByResult.takeHeart * 100) / filteredPitchesCount,
+      footer: null
+    }
   };
+
   const bottomValues = {
-    topRight: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Chase' },
-    topCenter: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Shadow' },
-    topLeft: { value: 999, percents: Math.round(Math.random() * 100), footer: 'Heart' }
+    topRight: {
+      value: 999,
+      percents: (pitchesCountByResult.totalChase * 100) / filteredPitchesCount,
+      footer: 'Chase'
+    },
+    topCenter: {
+      value: 999,
+      percents: (pitchesCountByResult.totalShadow * 100) / filteredPitchesCount,
+      footer: 'Shadow'
+    },
+    topLeft: {
+      value: 999,
+      percents: (pitchesCountByResult.totalHeart * 100) / filteredPitchesCount,
+      footer: 'Heart'
+    }
   };
 
   return (
@@ -370,31 +420,13 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
       <PercentsGraph
         left={PARAMS.SIDE_PADDING + 179 + 45}
         center={106}
-        // center={40 + 239 / 2}
         filteredData={filteredData}
         selectedPitchType={selectedPitchType}
+        preview={preview}
       />
     </>
   );
 };
-
-// const RightChart = () => {
-//   const leftCoord = PARAMS.GRAPH_WIDTH / 2 + 38;
-//   return (
-//     <>
-//       <Frames
-//         left={leftCoord}
-//         top={40}
-//         title1='Type1 (124)'
-//         title2='+10 runs'
-//         title3='+16 runs'
-//         title4='+10 runs'
-//         oneColor
-//       />
-//       <PercentsGraph left={leftCoord + 179 + 25} center={40 + 239 / 2} />
-//     </>
-//   );
-// };
 
 const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview }) => {
   console.log(filteredData);
@@ -410,7 +442,6 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
         selectedPitchType={selectedPitchType}
         preview={preview}
       />
-      {/* <RightChart /> */}
     </svg>
   );
 };
