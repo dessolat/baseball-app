@@ -140,5 +140,6 @@ export const getPitchColorByName = name =>
     'Fast ball': '#CE9587',
     'Curve ball': '#CBC8E5',
     Slider: '#EBE8B0',
-    Undefined: '#9BCEA2'
+    Undefined: '#9BCEA2',
+		'All Pitches': '#1A4C96'
   }[name]);
