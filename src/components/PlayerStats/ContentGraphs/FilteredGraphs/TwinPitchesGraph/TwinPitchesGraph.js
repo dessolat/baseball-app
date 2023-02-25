@@ -1,6 +1,7 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchColorByName } from 'utils';
+import h337 from 'heatmap.js';
 
 const PARAMS = {
   GRAPH_WIDTH: 463,
@@ -28,12 +29,13 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
 
         const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
 
+        const xCoord = zeroXCoord + x * xCoordRelCoef;
         const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
         return (
           <circle
             key={i}
             // key={`${i}-x-${x}-y-${y}`}
-            cx={zeroXCoord + x * xCoordRelCoef}
+            cx={xCoord}
             cy={yCoord}
             // r={radius}
             stroke='black'
@@ -429,20 +431,159 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
 };
 
 const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview }) => {
-  console.log(filteredData);
+  const { pitch_types: pitchTypes } = preview;
+
+  const wrapperRef = useRef();
+  const heatmapInstanceRef = useRef();
+
+  // useEffect(() => {
+  //   heatmapInstanceRef.current = h337.create({
+  //     // only container is required, the rest will be defaults
+  //     // container: document.getElementById('root')
+  //     container: wrapperRef.current
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const heatmapInstance = h337.create({
+      // only container is required, the rest will be defaults
+      // container: document.getElementById('root')
+      container: wrapperRef.current
+    });
+
+    const zeroYCoord = wrapperRef.current.clientHeight * 0.85;
+    // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.85;
+    const yCoordRelCoef = 340;
+    const yCoordAbsCoef = wrapperRef.current.clientHeight / 5.173333;
+
+    const zeroXCoord = wrapperRef.current.clientWidth * 0.2645;
+    // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
+    const xCoordRelCoef = 248;
+
+    console.log(wrapperRef.current.clientWidth, wrapperRef.current.clientHeight);
+    const arrData = selectedPitchType
+      ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
+      : filteredData;
+
+    const heatRowsCount = 30;
+    const heatColsCount = 30;
+    const rowHeight = wrapperRef.current.clientHeight / heatRowsCount;
+    const colWidth = wrapperRef.current.clientWidth / heatColsCount;
+    console.log(rowHeight, colWidth);
+    // now generate some random data
+    let max = 0;
+
+    const width = wrapperRef.current.clientWidth;
+    const height = wrapperRef.current.clientHeight;
+
+    let maxValue = 0;
+
+    const dotsCoords = arrData.reduce((sum, pitch) => {
+      const { coordinates, pitch_info: pitchInfo } = pitch;
+      const { zone_x: x, zone_y: y } = coordinates;
+
+      const xCoord = zeroXCoord + x * xCoordRelCoef;
+      const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
+
+      const rowNumber = Math.floor(yCoord / rowHeight);
+      const colNumber = Math.floor(xCoord / colWidth);
+
+      if (!sum[rowNumber]) {
+        sum[rowNumber] = [];
+      }
+
+      if (!sum[rowNumber][colNumber]) {
+        sum[rowNumber][colNumber] = 1;
+
+        return sum;
+      }
+
+      sum[rowNumber][colNumber]++;
+
+      maxValue = Math.max(maxValue, sum[rowNumber][colNumber]);
+
+      return sum;
+    }, []);
+
+    const points = dotsCoords.reduce((sum, coords, i) => {
+      if (coords === undefined) return sum;
+
+      coords.forEach((col, j) => {
+        if (col === undefined) return;
+
+        const newPoint = {
+          x: +(j * colWidth + colWidth / 2).toFixed(2),
+          y: +(i * rowHeight + rowHeight / 2).toFixed(2),
+          value: col <= 5 ? +col : 5
+        };
+
+        sum.push(newPoint);
+      });
+
+      return sum;
+    }, []);
+
+    // console.log(dotsCoords);
+    // console.log(maxValue);
+
+    // let len = arrData.length;
+
+    // while (len--) {
+    //   const val = Math.floor(Math.random() * 100);
+    //   max = Math.max(max, val);
+    //   const point = {
+    //     // x: zeroXCoord,
+    //     y: zeroYCoord,
+    //     x: Math.floor(Math.random() * width),
+    //     // y: Math.floor(Math.random() * height),
+    //     value: val
+    //   };
+    //   points.push(point);
+    // }
+    console.log(points);
+    // console.log(maxValue);
+
+    // heatmap data format
+    const dataValues = {
+      min: 1,
+      max: 5,
+      // data: [
+      //   { x: 40, y: 50, value: 1 },
+      //   { x: 80.5, y: 50.4, value: 1 },
+      //   { x: 90, y: 50.3, value: 1 },
+      //   { x: 200, y: 150, value: 3 },
+      //   { x: 150, y: 50, value: 10 }
+      // ]
+      data: points
+    };
+
+    // console.log(data);
+    // if you have a set of datapoints always use setData instead of addData
+    // for data initialization
+
+    heatmapInstance.setData(dataValues);
+
+    heatmapInstance.repaint();
+    // heatmapInstanceRef.current.setData(data);
+
+    // heatmapInstanceRef.current.repaint();
+  }, [filteredData]);
+
   return (
-    <svg
-      viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-      xmlns='http://www.w3.org/2000/svg'
-      className={cl.wrapper}
-      preserveAspectRatio='none'>
-      <LeftChart
-        data={data}
-        filteredData={filteredData}
-        selectedPitchType={selectedPitchType}
-        preview={preview}
-      />
-    </svg>
+    <div ref={wrapperRef}>
+      <svg
+        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+        xmlns='http://www.w3.org/2000/svg'
+        className={cl.wrapper}
+        preserveAspectRatio='none'>
+        <LeftChart
+          data={data}
+          filteredData={filteredData}
+          selectedPitchType={selectedPitchType}
+          preview={preview}
+        />
+      </svg>
+    </div>
   );
 };
 
