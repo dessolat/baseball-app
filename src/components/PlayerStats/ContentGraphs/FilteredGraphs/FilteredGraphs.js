@@ -166,7 +166,6 @@ const CustomGroup = ({
   handleTeamNameChange,
   handlePlayerNameChange
 }) => {
-  console.log(data?.pitches_all);
   const againstFilteredData =
     data.pitches_all?.filter(
       pitch =>

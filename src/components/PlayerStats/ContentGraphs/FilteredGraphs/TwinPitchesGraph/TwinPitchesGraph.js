@@ -460,7 +460,6 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
     const xCoordRelCoef = 248;
 
-    console.log(wrapperRef.current.clientWidth, wrapperRef.current.clientHeight);
     const arrData = selectedPitchType
       ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
       : filteredData;
@@ -469,7 +468,7 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     const heatColsCount = 30;
     const rowHeight = wrapperRef.current.clientHeight / heatRowsCount;
     const colWidth = wrapperRef.current.clientWidth / heatColsCount;
-    console.log(rowHeight, colWidth);
+
     // now generate some random data
     let max = 0;
 
@@ -540,8 +539,6 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     //   };
     //   points.push(point);
     // }
-    console.log(points);
-    // console.log(maxValue);
 
     // heatmap data format
     const dataValues = {
