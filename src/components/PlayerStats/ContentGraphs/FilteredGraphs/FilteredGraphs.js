@@ -9,6 +9,7 @@ import { useMemo, useState } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
+import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 
 const FIELD_NAMES = {
   batter: {
@@ -384,7 +385,6 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   const { preview } = data;
   const { pitch_types: pitchTypes } = preview;
 
-
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
   );
@@ -447,7 +447,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} preview={preview}/>
+              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} preview={preview} />
 
               {Object.entries(relValuesData).map((entry, index) => (
                 <TwinPitchesGraph
@@ -455,31 +455,31 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                   data={relValuesData}
                   filteredData={filteredData}
                   selectedPitchType={entry[0]}
-									preview={preview}
+                  preview={preview}
                 />
               ))}
             </div>
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock
-        defaultOption='All Pitches'
-        // style={{ marginTop: -1 }}
-      >
-        {(currentOption, setCurrentOption) => (
+      <GraphsTimeDynamicBlock defaultOption='Season' defaultOption2={pitchTypes}>
+        {(currentOption, setCurrentOption, currentOption2, setCurrentOption2) => (
           <>
             <GraphsHeader
-              optionsArr={{ 'All Pitches': null, ...relValuesData }}
+              optionsArr={['Season', 'Month', 'Game']}
+              // optionsArr2={{ 'All Pitches': null, ...relValuesData }}
+							availableOptions={Object.keys(relValuesData)}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
+              currentOption2={currentOption2}
+              setCurrentOption2={setCurrentOption2}
             />
             <ArsenalGraph />
           </>
         )}
-      </GraphsBlock>
+      </GraphsTimeDynamicBlock>
       <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
