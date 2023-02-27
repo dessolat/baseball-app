@@ -57,8 +57,6 @@ const FIELD_NAMES = {
   }
 };
 
-// const pitchTypes = ['Undefined', 'Fast ball', 'Curve ball', 'Slider'];
-
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
   const { name, absValue, absValueTotal, relValue, staticText } = data;
   const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
