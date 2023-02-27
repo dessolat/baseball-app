@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import cl from './ArsenalGraph.module.scss';
-import { MONTHS } from 'utils';
+import BottomMarks from './BottomMarks';
 // import DownArrow from '../../../icons/down_arrow.png';
 
 const PARAMS = {
@@ -11,34 +11,6 @@ const PARAMS = {
   GRAPH_LINES_HEIGHT: 322,
   LEFT_PADDING: 12,
   TOP_PADDING: 30
-};
-
-const BottomMarks = ({ bottomMarks, currentTimeInterval }) => {
-  const marksInterval = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (bottomMarks.length + 1);
-  const yCoords = [PARAMS.ZERO_COORDS.Y + 1, PARAMS.ZERO_COORDS.Y + 6];
-  console.log(bottomMarks);
-  return (
-    <>
-      {bottomMarks.map((mark, i) => {
-        const xCoord = PARAMS.ZERO_COORDS.X + marksInterval * (i + 1);
-
-        const text =
-          currentTimeInterval === 'Season'
-            ? mark
-            : currentTimeInterval === 'Month'
-            ? `${MONTHS[+mark.slice(5, 7) - 1]}, ${mark.slice(2, 4)}`
-            : mark.split('-').reverse().join('.');
-        return (
-          <Fragment key={'mark-' + i}>
-            <line x1={xCoord} y1={yCoords[0]} x2={xCoord} y2={yCoords[1]} stroke='#ACACAC' />
-            <text x={xCoord} y={PARAMS.ZERO_COORDS.Y + 18} className={cl.bottomNumber}>
-              {text}
-            </text>
-          </Fragment>
-        );
-      })}
-    </>
-  );
 };
 
 const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) => {
@@ -221,7 +193,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
 
       {/* Horizontal marks + numbers*/}
       {/* Marks */}
-      <BottomMarks bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
+      <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
       {/* Graph lines rendering */}
       {dimensionsArr.map((dimension, i) => {
         const { coords, color } = dimension;
