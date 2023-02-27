@@ -51,6 +51,7 @@ const GraphsHeader = ({
           optionsArr={optionsArr}
           currentOption={currentOption}
           handleOptionClick={handleOptionClick}
+					noSort={currentOption2 !== null}
         />
       )}
       {currentOption2 !== null && (

@@ -7,6 +7,7 @@ const OptionsToggler = ({
   currentOption,
   handleOptionClick,
   vertical = false,
+	noSort = false,
   children,
   ...props
 }) => {
@@ -16,7 +17,11 @@ const OptionsToggler = ({
 
   const isDataArray = Array.isArray(optionsArr);
   const existData = isDataArray ? optionsArr : Object.keys(optionsArr);
-	const sortedData = existData.slice(1).sort((a,b) => a > b ? 1 : -1)
+	
+	let sortedData = existData.slice(1);
+	if (!noSort) {
+		sortedData.sort((a,b) => a > b ? 1 : -1)
+	}
 	sortedData.unshift(existData[0])
   return (
     <ul className={wrapperClasses} {...props}>
