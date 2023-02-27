@@ -14,7 +14,7 @@ const PARAMS = {
 };
 
 const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes }) => {
-	console.log(filteredData.filter(pitch => pitch.pitch_info.pitch_type === 0));
+  console.log(filteredData.filter(pitch => pitch.pitch_info.pitch_type === 0));
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -108,8 +108,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       return { leftValues: result, summary: sumByYear };
     }
     if (currentTimeInterval === 'Month') {
-			console.log(bottomMarks);
-			const defaultSumByMonthYear = bottomMarks.reduce((sum, monthYear) => {
+      const defaultSumByMonthYear = bottomMarks.reduce((sum, monthYear) => {
         sum[monthYear] = {};
         return sum;
       }, {});
@@ -158,11 +157,61 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
         result.push(Math.floor(value));
       }
 
-			console.log(sumByMonthYear);
+      console.log(sumByMonthYear);
       return { leftValues: result, summary: sumByMonthYear };
     }
 
-    return [];
+    const defaultSumByDayMonthYear = bottomMarks.reduce((sum, dayMonthYear) => {
+      sum[dayMonthYear] = {};
+      return sum;
+    }, {});
+
+    const sumByDayMonthYear = bottomMarks.reduce((totalSum, curDayMonthYear) => {
+      const pitches = filteredByAvailablePitchTypes.filter(
+        ({ pitch_info }) => pitch_info.date.slice(0, 10) === curDayMonthYear
+      );
+
+      const defaultSumByType = availablePitchTypes.reduce((sum, type) => {
+        sum[type] = 0;
+        return sum;
+      }, {});
+
+      const sumByType = pitches.reduce((sum, { pitch_info }) => {
+        const { pitch_type: pitchType } = pitch_info;
+
+        sum[pitchType]++;
+        availablePitchTypes.includes(-1) && sum['-1']++;
+
+        return sum;
+      }, defaultSumByType);
+
+      totalSum[curDayMonthYear] = sumByType;
+      return totalSum;
+    }, defaultSumByDayMonthYear);
+
+    const minMaxValues = Object.values(sumByDayMonthYear).reduce((sum, dayMonthYear) => {
+      const dayMonthYearValues = Object.values(dayMonthYear);
+      const maxValue = Math.max(...dayMonthYearValues);
+      const minValue = Math.min(...dayMonthYearValues);
+
+      if (sum.max < maxValue || sum.max === undefined) sum.max = maxValue;
+      if (sum.min > minValue || sum.min === undefined) sum.min = minValue;
+
+      return sum;
+    }, {});
+
+    const correctedMinMaxValues = { min: minMaxValues.min - 5, max: minMaxValues.max + 5 };
+
+    const result = [];
+    const valueDelta =
+      (correctedMinMaxValues.max - correctedMinMaxValues.min) / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
+    for (let i = 0; i <= PARAMS.HORIZONTAL_GRID_LINES_NUMBER; i++) {
+      const value = correctedMinMaxValues.min + valueDelta * i;
+      result.push(Math.floor(value));
+    }
+
+    console.log(sumByDayMonthYear);
+    return { leftValues: result, summary: sumByDayMonthYear };
   }
 
   const bottomMarks = getBottomMarks();
@@ -202,7 +251,12 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
 
       {/* Dots */}
-      <Dots PARAMS={PARAMS} leftMarks={leftMarks} pitchTypes={pitchTypes} yScaleMultiplier={yScaleMultiplier} />
+      <Dots
+        PARAMS={PARAMS}
+        leftMarks={leftMarks}
+        pitchTypes={pitchTypes}
+        yScaleMultiplier={yScaleMultiplier}
+      />
 
       {/* Graph lines rendering */}
       {/* {dimensionsArr.map((dimension, i) => {
