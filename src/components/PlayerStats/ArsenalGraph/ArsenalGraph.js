@@ -14,6 +14,7 @@ const PARAMS = {
 };
 
 const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes }) => {
+	console.log(filteredData.filter(pitch => pitch.pitch_info.pitch_type === 0));
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -47,7 +48,6 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
   }
 
   function getLeftMarks(bottomMarks) {
-    console.log(bottomMarks);
     const availablePitchTypes = currentPitchTypes
       .filter(pitchType => pitchType.checked)
       .map(pitchType => pitchType.type);
@@ -107,24 +107,60 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
 
       return { leftValues: result, summary: sumByYear };
     }
-    // if (currentTimeInterval === 'Month') {
-    //   const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
-    //     sum.add(pitchInfo.date.slice(0, 7));
+    if (currentTimeInterval === 'Month') {
+			console.log(bottomMarks);
+			const defaultSumByMonthYear = bottomMarks.reduce((sum, monthYear) => {
+        sum[monthYear] = {};
+        return sum;
+      }, {});
 
-    //     return sum;
-    //   }, new Set());
+      const sumByMonthYear = bottomMarks.reduce((totalSum, curMonthYear) => {
+        const pitches = filteredByAvailablePitchTypes.filter(
+          ({ pitch_info }) => pitch_info.date.slice(0, 7) === curMonthYear
+        );
 
-    //   return Array.from(datesSet).sort((a, b) => (a > b ? 1 : -1));
-    // }
-    // if (currentTimeInterval === 'Game') {
-    //   const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
-    //     sum.add(pitchInfo.date);
+        const defaultSumByType = availablePitchTypes.reduce((sum, type) => {
+          sum[type] = 0;
+          return sum;
+        }, {});
 
-    //     return sum;
-    //   }, new Set());
+        const sumByType = pitches.reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
 
-    //   return Array.from(datesSet).sort((a, b) => (a > b ? 1 : -1));
-    // }
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, defaultSumByType);
+
+        totalSum[curMonthYear] = sumByType;
+        return totalSum;
+      }, defaultSumByMonthYear);
+
+      const minMaxValues = Object.values(sumByMonthYear).reduce((sum, monthYear) => {
+        const monthYearValues = Object.values(monthYear);
+        const maxValue = Math.max(...monthYearValues);
+        const minValue = Math.min(...monthYearValues);
+
+        if (sum.max < maxValue || sum.max === undefined) sum.max = maxValue;
+        if (sum.min > minValue || sum.min === undefined) sum.min = minValue;
+
+        return sum;
+      }, {});
+
+      const correctedMinMaxValues = { min: minMaxValues.min - 5, max: minMaxValues.max + 5 };
+
+      const result = [];
+      const valueDelta =
+        (correctedMinMaxValues.max - correctedMinMaxValues.min) / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
+      for (let i = 0; i <= PARAMS.HORIZONTAL_GRID_LINES_NUMBER; i++) {
+        const value = correctedMinMaxValues.min + valueDelta * i;
+        result.push(Math.floor(value));
+      }
+
+			console.log(sumByMonthYear);
+      return { leftValues: result, summary: sumByMonthYear };
+    }
 
     return [];
   }
