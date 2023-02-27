@@ -467,7 +467,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <GraphsHeader
               optionsArr={['Season', 'Month', 'Game']}
               // optionsArr2={{ 'All Pitches': null, ...relValuesData }}
-							availableOptions={Object.keys(relValuesData)}
+              availableOptions={Object.keys(relValuesData)}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
@@ -475,11 +475,15 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption2={currentOption2}
               setCurrentOption2={setCurrentOption2}
             />
-            <ArsenalGraph />
+            <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+            />
           </>
         )}
       </GraphsTimeDynamicBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
+      {/* <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -538,7 +542,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <ArsenalGraph />
           </>
         )}
-      </GraphsBlock>
+      </GraphsBlock> */}
       {/* <PitchesByZone />
       <PitchesSpeedField />
       <PitchesByZone />

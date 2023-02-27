@@ -1,28 +1,38 @@
 import { Fragment } from 'react';
 import cl from './ArsenalGraph.module.scss';
-import DownArrow from '../../../icons/down_arrow.png';
+import { MONTHS } from 'utils';
+// import DownArrow from '../../../icons/down_arrow.png';
 
 const PARAMS = {
   HORIZONTAL_GRID_LINES_NUMBER: 5,
-  HORIZONTAL_GRID_LINES_WIDTH: 1147,
+  HORIZONTAL_GRID_LINES_WIDTH: 1120,
   HORIZONTAL_GRID_LINES_LEFT: 45,
-  HORIZONTAL_GRID_LINES_TOP: 65
+  HORIZONTAL_GRID_LINES_TOP: 65,
+  GRAPH_LINES_HEIGHT: 322,
+  LEFT_PADDING: 12,
+  TOP_PADDING: 30
 };
 
-const Marks = ({ years }) => {
-  const marksInterval = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (years.length + 1);
+const BottomMarks = ({ bottomMarks, currentTimeInterval }) => {
+  const marksInterval = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (bottomMarks.length + 1);
   const yCoords = [PARAMS.ZERO_COORDS.Y + 1, PARAMS.ZERO_COORDS.Y + 6];
-
+  console.log(bottomMarks);
   return (
     <>
-      {years.map((year, i) => {
+      {bottomMarks.map((mark, i) => {
         const xCoord = PARAMS.ZERO_COORDS.X + marksInterval * (i + 1);
 
+        const text =
+          currentTimeInterval === 'Season'
+            ? mark
+            : currentTimeInterval === 'Month'
+            ? `${MONTHS[+mark.slice(5, 7) - 1]}, ${mark.slice(2, 4)}`
+            : mark.split('-').reverse().join('.');
         return (
           <Fragment key={'mark-' + i}>
             <line x1={xCoord} y1={yCoords[0]} x2={xCoord} y2={yCoords[1]} stroke='#ACACAC' />
-            <text x={xCoord} y={PARAMS.ZERO_COORDS.Y + 25} className={cl.bottomNumber}>
-              {year}
+            <text x={xCoord} y={PARAMS.ZERO_COORDS.Y + 18} className={cl.bottomNumber}>
+              {text}
             </text>
           </Fragment>
         );
@@ -31,14 +41,50 @@ const Marks = ({ years }) => {
   );
 };
 
-const ArsenalGraph = props => {
-  PARAMS.HORIZONTAL_GRID_LINES_STEP = 322 / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
+const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) => {
+  console.log(filteredData);
+
+  function getBottomMarks() {
+    if (currentTimeInterval === 'Season') {
+      const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
+        sum.add(pitchInfo.date.slice(0, 4));
+
+        return sum;
+      }, new Set());
+
+      return Array.from(datesSet).sort((a, b) => (a > b ? 1 : -1));
+    }
+    if (currentTimeInterval === 'Month') {
+      const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
+        sum.add(pitchInfo.date.slice(0, 7));
+
+        return sum;
+      }, new Set());
+
+      return Array.from(datesSet).sort((a, b) => (a > b ? 1 : -1));
+    }
+    if (currentTimeInterval === 'Game') {
+      const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
+        sum.add(pitchInfo.date);
+
+        return sum;
+      }, new Set());
+
+      return Array.from(datesSet).sort((a, b) => (a > b ? 1 : -1));
+    }
+
+    return [];
+  }
+
+  const bottomMarks = getBottomMarks();
+
+  PARAMS.HORIZONTAL_GRID_LINES_STEP = PARAMS.GRAPH_LINES_HEIGHT / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = {
     X: PARAMS.HORIZONTAL_GRID_LINES_LEFT,
-    Y: PARAMS.HORIZONTAL_GRID_LINES_TOP + 322
+    Y: PARAMS.HORIZONTAL_GRID_LINES_TOP + PARAMS.GRAPH_LINES_HEIGHT
   };
 
-	const getYCoord = () => Math.random() * 50
+  const getYCoord = () => Math.random() * 50;
 
   const dimensionsArr = [
     {
@@ -124,47 +170,25 @@ const ArsenalGraph = props => {
   }
 
   const xScaleMultiplier = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (maxHorizontalValue - minHorizontalValue);
-  const yScaleMultiplier = 322 / (maxVerticalValue - minVerticalValue);
+  const yScaleMultiplier = PARAMS.GRAPH_LINES_HEIGHT / (maxVerticalValue - minVerticalValue);
   const colorsArr = dimensionsArr.reduce((sum, dimension) => {
     sum.push(dimension.color);
     return sum;
   }, []);
-  const years = [2020, 2021, 2022, 2023];
+
   return (
     <svg
-      viewBox='0 0 1192 426'
+      viewBox='0 0 1192 500'
       xmlns='http://www.w3.org/2000/svg'
       className={cl.graph}
-      {...props}
       // preserveAspectRatio='none'
     >
       {/* Main layout rendering */}
       {/* Top-left title */}
-      <text x='14' y='23' className={cl.sideTitle}>
-        Pitching arsenal
+      <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
+        Pitches
       </text>
-      {/* Top-left selector */}
-      <text x='200' y='23' className={cl.selectorText}>
-        Pitch %{' '}
-      </text>
-      <image x='250' y='17' href={DownArrow} height='5' width='7' />
-      {/* Types legend */}
-      {colorsArr.map((curColor, i) => (
-        <Fragment key={i}>
-          <circle cx={310 + 105 * i} cy='18' r='3.75' fill={curColor} stroke='black' strokeWidth='0.5' />
-          <text x={325 + 105 * i} y='22' className={cl.typeText}>
-            Type
-          </text>
-        </Fragment>
-      ))}
-      {/* Horizontal center grid line */}
-      <line
-        x1={PARAMS.ZERO_COORDS.X}
-        y1={PARAMS.ZERO_COORDS.Y}
-        x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
-        y2={PARAMS.ZERO_COORDS.Y}
-        stroke='#ACACAC'
-      />
+
       {/* Horizontal lines + left numbers rendering */}
       {leftNumbers.map((number, i) => (
         <Fragment key={i}>
@@ -179,16 +203,25 @@ const ArsenalGraph = props => {
           />
           {/* Left numbers */}
           <text
-            x={PARAMS.ZERO_COORDS.X - 31}
+            x={PARAMS.LEFT_PADDING}
             y={PARAMS.ZERO_COORDS.Y - PARAMS.HORIZONTAL_GRID_LINES_STEP * (i + 1) + 5}
-            className={cl.bottomNumber}>
+            className={cl.leftNumber}>
             {number}
           </text>
         </Fragment>
       ))}
+      {/* Horizontal center grid line */}
+      <line
+        x1={PARAMS.ZERO_COORDS.X}
+        y1={PARAMS.ZERO_COORDS.Y}
+        x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
+        y2={PARAMS.ZERO_COORDS.Y}
+        stroke='#ACACAC'
+      />
+
       {/* Horizontal marks + numbers*/}
       {/* Marks */}
-      <Marks years={years} />
+      <BottomMarks bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
       {/* Graph lines rendering */}
       {dimensionsArr.map((dimension, i) => {
         const { coords, color } = dimension;
@@ -203,8 +236,22 @@ const ArsenalGraph = props => {
                 PARAMS.ZERO_COORDS.Y - coord[1] * yScaleMultiplier
               }`)
           );
-        return <path key={i} d={linePath} stroke={color} fill='none' style={{transition: 'all .3s'}}/>;
+        return <path key={i} d={linePath} stroke={color} fill='none' style={{ transition: 'all .3s' }} />;
       })}
+      {/* Top-left selector */}
+      {/* <text x='200' y='23' className={cl.selectorText}>
+        Pitch %{' '}
+      </text> */}
+      {/* <image x='250' y='17' href={DownArrow} height='5' width='7' /> */}
+      {/* Types legend */}
+      {/* {colorsArr.map((curColor, i) => (
+        <Fragment key={i}>
+          <circle cx={310 + 105 * i} cy='18' r='3.75' fill={curColor} stroke='black' strokeWidth='0.5' />
+          <text x={325 + 105 * i} y='22' className={cl.typeText}>
+            Type
+          </text>
+        </Fragment>
+      ))} */}
     </svg>
   );
 };
