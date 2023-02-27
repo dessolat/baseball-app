@@ -141,5 +141,20 @@ export const getPitchColorByName = name =>
     'Curve ball': '#CBC8E5',
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
-		'All Pitches': '#1A4C96'
+    'All Pitches': '#1A4C96'
   }[name]);
+
+export const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
