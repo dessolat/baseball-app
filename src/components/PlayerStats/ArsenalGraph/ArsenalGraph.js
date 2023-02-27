@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
-// import DownArrow from '../../../icons/down_arrow.png';
 
 const PARAMS = {
   HORIZONTAL_GRID_LINES_NUMBER: 5,
@@ -210,20 +209,6 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
           );
         return <path key={i} d={linePath} stroke={color} fill='none' style={{ transition: 'all .3s' }} />;
       })}
-      {/* Top-left selector */}
-      {/* <text x='200' y='23' className={cl.selectorText}>
-        Pitch %{' '}
-      </text> */}
-      {/* <image x='250' y='17' href={DownArrow} height='5' width='7' /> */}
-      {/* Types legend */}
-      {/* {colorsArr.map((curColor, i) => (
-        <Fragment key={i}>
-          <circle cx={310 + 105 * i} cy='18' r='3.75' fill={curColor} stroke='black' strokeWidth='0.5' />
-          <text x={325 + 105 * i} y='22' className={cl.typeText}>
-            Type
-          </text>
-        </Fragment>
-      ))} */}
     </svg>
   );
 };
