@@ -1,5 +1,6 @@
 import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
+import Dots from './Dots';
 import HorizontalLinesAndNumbers from './HorizontalLinesAndNumbers';
 
 const PARAMS = {
@@ -12,11 +13,7 @@ const PARAMS = {
   TOP_PADDING: 30
 };
 
-const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) => {
-  console.log(filteredData);
-
-  console.log(currentPitchTypes);
-
+const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes }) => {
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -59,12 +56,12 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
     );
 
     if (currentTimeInterval === 'Season') {
-      const defaultMinMaxSum = bottomMarks.reduce((sum, year) => {
+      const defaultSumByYear = bottomMarks.reduce((sum, year) => {
         sum[year] = {};
         return sum;
       }, {});
 
-      const minMaxSumByYear = bottomMarks.reduce((totalSum, curYear) => {
+      const sumByYear = bottomMarks.reduce((totalSum, curYear) => {
         const pitches = filteredByAvailablePitchTypes.filter(
           ({ pitch_info }) => pitch_info.date.slice(0, 4) === curYear
         );
@@ -85,9 +82,9 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
 
         totalSum[curYear] = sumByType;
         return totalSum;
-      }, defaultMinMaxSum);
+      }, defaultSumByYear);
 
-      const minMaxValues = Object.values(minMaxSumByYear).reduce((sum, year) => {
+      const minMaxValues = Object.values(sumByYear).reduce((sum, year) => {
         const yearValues = Object.values(year);
         const maxValue = Math.max(...yearValues);
         const minValue = Math.min(...yearValues);
@@ -108,7 +105,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
         result.push(Math.floor(value));
       }
 
-      return result;
+      return { leftValues: result, summary: sumByYear };
     }
     // if (currentTimeInterval === 'Month') {
     //   const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -134,6 +131,9 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
 
   const bottomMarks = getBottomMarks();
   const leftMarks = getLeftMarks(bottomMarks);
+
+  const { leftValues } = leftMarks;
+  const yScaleMultiplier = PARAMS.GRAPH_LINES_HEIGHT / (leftValues[leftValues.length - 1] - leftValues[0]);
 
   PARAMS.HORIZONTAL_GRID_LINES_STEP = PARAMS.GRAPH_LINES_HEIGHT / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = {
@@ -226,8 +226,8 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
     );
   }
 
-  const xScaleMultiplier = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (maxHorizontalValue - minHorizontalValue);
-  const yScaleMultiplier = PARAMS.GRAPH_LINES_HEIGHT / (maxVerticalValue - minVerticalValue);
+  // const xScaleMultiplier = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (maxHorizontalValue - minHorizontalValue);
+
   return (
     <svg viewBox='0 0 1192 500' xmlns='http://www.w3.org/2000/svg' className={cl.graph}>
       {/* Main layout rendering */}
@@ -235,6 +235,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
       <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
         Pitches
       </text>
+
       {/* Horizontal center grid line */}
       <line
         x1={PARAMS.ZERO_COORDS.X}
@@ -245,12 +246,17 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
       />
 
       {/* Horizontal lines + left numbers rendering */}
-      <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks} />
+      <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} />
+
       {/* Horizontal marks + numbers*/}
       {/* Marks */}
       <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
+
+      {/* Dots */}
+      <Dots PARAMS={PARAMS} leftMarks={leftMarks} pitchTypes={pitchTypes} yScaleMultiplier={yScaleMultiplier} />
+
       {/* Graph lines rendering */}
-      {dimensionsArr.map((dimension, i) => {
+      {/* {dimensionsArr.map((dimension, i) => {
         const { coords, color } = dimension;
         let linePath = `M${PARAMS.ZERO_COORDS.X + coords[0][0] * xScaleMultiplier} ${
           PARAMS.ZERO_COORDS.Y - coords[0][1] * yScaleMultiplier
@@ -264,7 +270,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes }) 
               }`)
           );
         return <path key={i} d={linePath} stroke={color} fill='none' style={{ transition: 'all .3s' }} />;
-      })}
+      })} */}
     </svg>
   );
 };
