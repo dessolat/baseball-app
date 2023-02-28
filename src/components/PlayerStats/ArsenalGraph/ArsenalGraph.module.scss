@@ -10,10 +10,10 @@
 }
 
 .bottomNumber {
-	text-anchor: end;
-	transform-origin: right;
-	transform-box: fill-box;
-	transform: rotateZ(270deg);
+  text-anchor: end;
+  transform-origin: right;
+  transform-box: fill-box;
+  transform: rotateZ(270deg);
 }
 
 .innerText {
@@ -22,4 +22,48 @@
 
 .sideTitle {
   font: 700 1.125rem 'Nunito', sans-serif;
+}
+
+.hoveringLine {
+  cursor: pointer;
+}
+
+.hoveringLine1:hover ~ .graphPath1,
+.hoveringLine2:hover ~ .graphPath2,
+.hoveringLine3:hover ~ .graphPath3,
+.hoveringLine4:hover ~ .graphPath4,
+.hoveringLine5:hover ~ .graphPath5,
+.hoveringLine6:hover ~ .graphPath6 {
+  stroke-width: 4;
+  r: 5;
+}
+
+.hoveringLine1:hover ~ *:not(.graphPath1),
+.hoveringLine2:hover ~ *:not(.graphPath2),
+.hoveringLine3:hover ~ *:not(.graphPath3),
+.hoveringLine4:hover ~ *:not(.graphPath4),
+.hoveringLine5:hover ~ *:not(.graphPath5),
+.hoveringLine6:hover ~ *:not(.graphPath6) {
+  opacity: 0.2;
+}
+
+.graphPath {
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+circle.graphPath {
+  transition: cy .3s, r 0.3s;
+  animation: showing .6s;
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+    r: 1;
+  }
+  to {
+    opacity: 1;
+    r: 3;
+  }
 }
