@@ -1,3 +1,6 @@
+import { Fragment } from 'react';
+import classNames from 'classnames';
+import { getPitchColorByName } from 'utils';
 import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
 import Dots from './Dots';
@@ -13,19 +16,13 @@ const PARAMS = {
   TOP_PADDING: 30
 };
 
-const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
+const HoveringLines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
-  console.log(availablePitchTypes);
   const minValue = +leftValues[0];
-
-  const typesArr = Object.values(summary);
-
   const totalColumns = Object.keys(summary).length;
-
   const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
   const columnStartX = PARAMS.HORIZONTAL_GRID_LINES_LEFT + columnStepX;
   const rowsStartY = PARAMS.HORIZONTAL_GRID_LINES_TOP + PARAMS.GRAPH_LINES_HEIGHT;
-
   const defaultTotalValues = availablePitchTypes.reduce((sum, type) => {
     sum[type] = [];
     return sum;
@@ -36,14 +33,121 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
     sum[type] = values;
     return sum;
   }, defaultTotalValues);
+  return (
+    <>
+      {Object.entries(totalValues).map(([type, values], i) => {
+        const startPointX = columnStartX;
+        const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+        let pathDest = `M${startPointX},${startPointY}`;
+        values
+          .slice(1)
+          .forEach(
+            (value, j, arr) =>
+						(pathDest += value === 0 ? '' : `${arr[j-1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
+							rowsStartY - (value - minValue) * yScaleMultiplier
+						}`)
+          );
+        const pathClasses = classNames(cl.hoveringLine, {
+          [cl.hoveringLine1]: i === 0,
+          [cl.hoveringLine2]: i === 1,
+          [cl.hoveringLine3]: i === 2,
+          [cl.hoveringLine4]: i === 3,
+          [cl.hoveringLine5]: i === 4,
+          [cl.hoveringLine6]: i === 5
+        });
+        return (
+          <path
+            key={i}
+            d={pathDest}
+            fill='none'
+            stroke='transparent'
+            strokeWidth='12'
+            className={pathClasses}
+          />
+        );
+      })}
+    </>
+  );
+};
+const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInterval = null }) => {
+  const { leftValues, summary, availablePitchTypes } = leftMarks;
+  const minValue = +leftValues[0];
+  const totalColumns = Object.keys(summary).length;
+  const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
+  const columnStartX = PARAMS.HORIZONTAL_GRID_LINES_LEFT + columnStepX;
+  const rowsStartY = PARAMS.HORIZONTAL_GRID_LINES_TOP + PARAMS.GRAPH_LINES_HEIGHT;
+  const defaultTotalValues = availablePitchTypes.reduce((sum, type) => {
+    sum[type] = [];
+    return sum;
+  }, {});
 
-  const paths = [];
+  const totalValues = availablePitchTypes.reduce((sum, type) => {
+    const values = Object.values(summary).map(obj => obj[type]);
+    sum[type] = values;
+    return sum;
+  }, defaultTotalValues);
+  return (
+    <>
+      {Object.entries(totalValues).map(([type, values], i) => {
+        const startPointX = columnStartX;
+        const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+        let pathDest = `M${startPointX},${startPointY}`;
+        values
+          .slice(1)
+          .forEach(
+            (value, j, arr) =>
+              (pathDest += value === 0 ? '' : `${arr[j-1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
+                rowsStartY - (value - minValue) * yScaleMultiplier
+              }`)
+          );
+        const pathClasses = classNames(cl.graphPath, {
+          [cl.graphPath1]: i === 0,
+          [cl.graphPath2]: i === 1,
+          [cl.graphPath3]: i === 2,
+          [cl.graphPath4]: i === 3,
+          [cl.graphPath5]: i === 4,
+          [cl.graphPath6]: i === 5
+        });
+        return (
+          <Fragment key={type + '-' + currentTimeInterval}>
+            <path
+              d={pathDest}
+              fill='none'
+              stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+              strokeWidth='2'
+              className={pathClasses}
+            />
+            <circle
+              cx={startPointX}
+              cy={startPointY}
+              r='3'
+              fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+							className={pathClasses}
+            />
+            {values.slice(1).map(
+              (value, j) =>
+                value !== 0 ? (
+                  <circle
+                    key={type + '-' + j}
+                    cx={columnStartX + columnStepX * (j + 1)}
+                    cy={rowsStartY - (value - minValue) * yScaleMultiplier}
+                    r='3'
+                    fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+										className={pathClasses}
+                  />
+                ) : (
+                  <Fragment key={i + '-' + j}></Fragment>
+                )
 
-  Object.entries(totalValues).forEach((entry, i) => {
-    const dest = `M${entry[1][0]}`;
-  });
-  return <>{/* {totalValues.map(values =>  )} */}</>;
-	// <path d='M100,100L150,150L150,200M150,250L200,300' fill='none' stroke='black' strokeWidth='2' className={cl.graphPath}/>
+              // value !== 0 ? 'L' : 'M'}${columnStartX + columnStepX * (j + 1)},${
+              //   rowsStartY - (value - minValue) * yScaleMultiplier
+              // }`)
+            )}
+          </Fragment>
+        );
+      })}
+    </>
+  );
 };
 
 const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes }) => {
@@ -130,8 +234,9 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
     function getMinMaxValues(sumByTimeInterval) {
       return Object.values(sumByTimeInterval).reduce((sum, interval) => {
         const intervalValues = Object.values(interval);
-        const maxValue = Math.max(...intervalValues);
-        const minValue = Math.min(...intervalValues);
+				const intervalValuesWOZero = intervalValues.filter(value => value !== 0)
+        const maxValue = Math.max(...intervalValuesWOZero);
+        const minValue = Math.min(...intervalValuesWOZero);
 
         if (sum.max < maxValue || sum.max === undefined) sum.max = maxValue;
         if (sum.min > minValue || sum.min === undefined) sum.min = minValue;
@@ -213,21 +318,28 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       {/* Marks */}
       <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
 
-      {/* Dots */}
-      <Dots
+      {/* Graph lines */}
+      <HoveringLines
         PARAMS={PARAMS}
         leftMarks={leftMarks}
         pitchTypes={pitchTypes}
         yScaleMultiplier={yScaleMultiplier}
       />
-
-      {/* Graph lines */}
       <Lines
         PARAMS={PARAMS}
         leftMarks={leftMarks}
         pitchTypes={pitchTypes}
         yScaleMultiplier={yScaleMultiplier}
+				currentTimeInterval={currentTimeInterval}
       />
+
+      {/* Dots */}
+      {/* <Dots
+        PARAMS={PARAMS}
+        leftMarks={leftMarks}
+        pitchTypes={pitchTypes}
+        yScaleMultiplier={yScaleMultiplier}
+      /> */}
 
       {/* Graph lines rendering */}
       {/* {dimensionsArr.map((dimension, i) => {

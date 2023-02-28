@@ -412,6 +412,44 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     return sum;
   }, {});
 
+	//! Delete after testing
+  const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
+
+  for (let i = 0; i < 5000; i++) {
+		let month = getRndValue(6, 10)
+		month = month < 10 ? `0${month}` : month
+		let day = getRndValue(5, 6)
+		day = day < 10 ? `0${day}` : day
+
+    const date = `${getRndValue(2018, 2023)}-${month}-${day}`;
+		console.log(date);
+    const pitch_type = getRndValue(0, 3);
+    const newPitch = { pitch_info: { pitch_type, date } };
+
+    arsenalAddedData.push(newPitch);
+  }
+
+	const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
+    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+    const pitchType = pitchTypes[pitch_type];
+
+    if (sum[pitchType] !== undefined) {
+      sum[pitchType].count += 1;
+      sum[pitchType].speeds.push(speed * 2.23741);
+      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+
+      return sum;
+    }
+
+    sum[pitchType] = {
+      count: 1,
+      speeds: [speed],
+      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+    };
+
+    return sum;
+  }, {});
+
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -465,7 +503,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <GraphsHeader
               optionsArr={['Season', 'Month', 'Game']}
               // optionsArr2={{ 'All Pitches': null, ...relValuesData }}
-              availableOptions={Object.keys(relValuesData)}
+              availableOptions={Object.keys(arsenalRelValuesData)}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
@@ -474,10 +512,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               setCurrentOption2={setCurrentOption2}
             />
             <ArsenalGraph
-              filteredData={filteredData}
+              filteredData={arsenalAddedData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
-							pitchTypes={pitchTypes}
+              pitchTypes={pitchTypes}
             />
           </>
         )}
