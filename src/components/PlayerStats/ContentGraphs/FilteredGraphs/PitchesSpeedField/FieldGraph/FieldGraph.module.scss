@@ -25,6 +25,10 @@
   transition: all .3s;
 	animation: growRadius .3s forwards;
 }
+.animatedEllipse {
+  transition: all .3s;
+	animation: growRadiusEllipse .3s forwards;
+}
 
 @keyframes growRadius {
 	from {
@@ -32,5 +36,13 @@
 	}
 	to {
 		r:8;
+	}
+}
+@keyframes growRadiusEllipse {
+	from {
+		r:0;
+	}
+	to {
+		r:15;
 	}
 }
