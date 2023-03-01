@@ -7,7 +7,7 @@ const PitchesSpeedField = ({ filteredData, preview, relValuesData, ...props }) =
   return (
     <div className={cl.pitchesSpeedFieldWrapper}>
       <FrequencySpeedGraph data={filteredData} relValuesData={relValuesData} />
-      <FieldGraph filteredData={filteredData} preview={preview} {...props} />
+      <FieldGraph filteredData={filteredData} relValuesData={relValuesData} preview={preview} {...props} />
       {/* <img src={FieldImg} alt='field' /> */}
     </div>
   );

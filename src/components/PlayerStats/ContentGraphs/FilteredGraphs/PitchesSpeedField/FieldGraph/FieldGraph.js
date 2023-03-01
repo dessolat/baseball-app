@@ -52,7 +52,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
     </>
   );
 };
-const EllipsedDots = ({ arrData, pitchTypes, coords }) => {
+const EllipsedDots = ({ arrData, pitchTypes, coords, relValuesData }) => {
   const avgCoords = arrData.reduce((sum, { pitch_info: pitchInfo, coordinates }) => {
     if (sum[pitchInfo.pitch_type] === undefined) {
       sum[pitchInfo.pitch_type] = { sumX: 0, sumY: 0, count: 0 };
@@ -67,8 +67,7 @@ const EllipsedDots = ({ arrData, pitchTypes, coords }) => {
     return sum;
   }, {});
 
-  console.log(avgCoords);
-
+  const totalPitches = arrData.length;
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
@@ -84,10 +83,11 @@ const EllipsedDots = ({ arrData, pitchTypes, coords }) => {
         const yCoord = data.avgY === 0 ? zeroYCoord : zeroYCoord - data.avgY * yCoordRelCoef + yCoordAbsCoef;
 
         const circleColor = getPitchColorByName(pitchTypes[pitchType]);
+
+        const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
         return (
-          <>
+          <Fragment key={i}>
             <circle
-              key={i}
               // key={`${i}-x-${x}-y-${y}`}
               cx={xCoord}
               cy={yCoord}
@@ -95,30 +95,27 @@ const EllipsedDots = ({ arrData, pitchTypes, coords }) => {
               stroke={circleColor}
               strokeWidth='2'
               fill={circleColor}
-              // className={cl.animated}
             />
             <circle
-              key={i}
               // key={`${i}-x-${x}-y-${y}`}
               cx={xCoord}
               cy={yCoord}
-              r='15'
+              // r='15'
               stroke={circleColor}
               strokeWidth='2'
               fill={circleColor}
-              fillOpacity={0.5}
-              // className={cl.animated}
+              fillOpacity={opacityValue}
+              className={cl.animatedEllipse}
             />
-          </>
+          </Fragment>
         );
       })}
     </>
   );
 };
 
-const Frames = ({ arrData, preview }) => {
+const Frames = ({ arrData, preview, isDots, relValuesData }) => {
   const { zone, pitch_types: pitchTypes } = preview;
-  console.log(arrData);
   const {
     y_strike_down: yStrikeDown,
     x_strike_up: yStrikeUp,
@@ -179,16 +176,22 @@ const Frames = ({ arrData, preview }) => {
       />
 
       {/* Dots */}
-      <Dots
-        arrData={arrData}
-        pitchTypes={pitchTypes}
-        coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-      />
-      <EllipsedDots
-        arrData={arrData}
-        pitchTypes={pitchTypes}
-        coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-      />
+      {isDots && (
+        <Dots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+        />
+      )}
+      {/* Ellipsed Dots */}
+      {!isDots && (
+        <EllipsedDots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+          relValuesData={relValuesData}
+        />
+      )}
 
       {/* Dashed frame */}
       <rect
@@ -263,7 +266,14 @@ const HorizontalGridLines = () => {
   );
 };
 
-const FieldGraph = ({ filteredData, preview, optionsArr, currentOption, setCurrentOption }) => {
+const FieldGraph = ({
+  filteredData,
+  relValuesData,
+  preview,
+  optionsArr,
+  currentOption,
+  setCurrentOption
+}) => {
   const [isChecked, setChecked] = useState(false);
 
   const optionsTogglerStyles = {
@@ -274,6 +284,8 @@ const FieldGraph = ({ filteredData, preview, optionsArr, currentOption, setCurre
 
   const handleOptionClick = option => () => setCurrentOption(option);
   const handleTogglerChange = () => setChecked(prev => !prev);
+
+  const isDots = currentOption === 'All Pitches';
   return (
     <div className={cl.wrapper}>
       <svg
@@ -282,7 +294,7 @@ const FieldGraph = ({ filteredData, preview, optionsArr, currentOption, setCurre
         preserveAspectRatio='none'>
         <VerticalGridLines />
         <HorizontalGridLines />
-        <Frames arrData={filteredData} preview={preview} />
+        <Frames arrData={filteredData} preview={preview} isDots={isDots} relValuesData={relValuesData} />
       </svg>
       <OptionsToggler
         style={optionsTogglerStyles}
