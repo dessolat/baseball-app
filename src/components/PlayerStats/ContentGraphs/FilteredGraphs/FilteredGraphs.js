@@ -464,7 +464,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               optionsArr={['All Pitches', 'Types']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              data={filteredData}
+              filteredData={filteredData}
+							preview={preview}
               relValuesData={relValuesData}
             />
           </>
