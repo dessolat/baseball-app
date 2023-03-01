@@ -141,22 +141,10 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
 );
 
 const FrequencySpeedGraph = ({ data, relValuesData }) => {
-	console.log(data);
 	console.log(relValuesData);
   PARAMS.LEFT_VERTICAL_GRID_LINES_STEP = 255 / PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 185 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
-  // PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 166, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 209 };
-
-  const getMinMax = () => {
-    const min = getRndValue(25, 50);
-    const max = getRndValue(min + 4, min + 29);
-
-    return {
-      min,
-      max
-    };
-  };
 
   for (let pitchName in relValuesData) {
     const { speeds, count } = relValuesData[pitchName];
@@ -218,7 +206,6 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
   return (
     <svg
       viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-      // viewBox='0 0 480 535'
       xmlns='http://www.w3.org/2000/svg'
       className={cl.graph}
       preserveAspectRatio='none'>

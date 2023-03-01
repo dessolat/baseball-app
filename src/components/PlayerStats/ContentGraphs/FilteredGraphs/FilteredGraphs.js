@@ -422,7 +422,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 		day = day < 10 ? `0${day}` : day
 
     const date = `${getRndValue(2018, 2023)}-${month}-${day}`;
-		console.log(date);
+
     const pitch_type = getRndValue(0, 3);
     const newPitch = { pitch_info: { pitch_type, date } };
 
