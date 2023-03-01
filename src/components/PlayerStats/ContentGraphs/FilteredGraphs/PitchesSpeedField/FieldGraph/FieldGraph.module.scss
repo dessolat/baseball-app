@@ -20,3 +20,17 @@
 .bottomTextTitle {
   text-anchor: end;
 }
+
+.animated {
+  transition: all .3s;
+	animation: growRadius .3s forwards;
+}
+
+@keyframes growRadius {
+	from {
+		r:0;
+	}
+	to {
+		r:8;
+	}
+}
