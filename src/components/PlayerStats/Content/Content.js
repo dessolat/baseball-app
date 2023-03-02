@@ -125,7 +125,10 @@ const Content = ({ pitchesData }) => {
   }
 
   const isContentGraphs =
-    getSortedTableOptions().length !== 0 && !isMobile && statsData.pitcher_banner.teams.length > 0;
+    tableType === 'Pitching' &&
+    getSortedTableOptions().length !== 0 &&
+    !isMobile &&
+    statsData.pitcher_banner.teams.length > 0;
   return (
     <section>
       <div className='container'>
