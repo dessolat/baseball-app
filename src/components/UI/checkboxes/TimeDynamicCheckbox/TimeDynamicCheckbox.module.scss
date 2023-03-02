@@ -15,7 +15,7 @@
 .option {
   padding: 0 0.5rem;
   cursor: pointer;
-	transition: opacity .3s;
+	transition: color .3s, background-color .3s;
 	user-select: none;
 }
 
@@ -25,7 +25,8 @@
 }
 
 .inActive {
-  opacity: 0.3;
+  background-color: white !important;
+	color: black !important;
 }
 
 .children {
