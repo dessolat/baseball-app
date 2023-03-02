@@ -12,7 +12,7 @@ const GraphsTimeDynamicBlock = ({ defaultOption, defaultOption2, children, ...pr
       {
         name: 'All Pitches',
 				type: -1,
-        checked: true
+        checked: false
       }
     ]
   );
