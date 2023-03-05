@@ -33,7 +33,7 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
         // const { coordinates, pitch_info: pitchInfo } = pitch;
         // const { zone_x: x, zone_y: y } = coordinates;
 
-        const xCoord = zeroXCoord + x * xCoordRelCoef;;
+        const xCoord = zeroXCoord + x * xCoordRelCoef;
         const yCoord = y === 0 ? zeroYBreakLine : zeroYBreakLine + y * 100 * yZeroBreakCoef;
         // const xCoord = zeroXCoord + x * xCoordRelCoef;
         // const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
@@ -54,9 +54,18 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
     </>
   );
 };
-const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, totalPitches, linesCoords }) => {
+const EllipsedDots = ({
+  avgCoords,
+  pitchTypes,
+  coords,
+  relValuesData,
+  totalPitches,
+  linesCoords,
+  arrData
+}) => {
   const { xCoordRelCoef, zeroXCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
+  console.log(avgCoords);
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
@@ -72,6 +81,28 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, totalPitch
 
         const circleColor = getPitchColorByName(pitchTypes[pitchType]);
         const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
+
+        const filteredArrData = arrData.filter(pitch => pitch.pitch_info.pitch_type === +pitchType);
+
+        const sumDiffBreaks = filteredArrData.reduce(
+          (sum, { break: breakValues }) => {
+            const x = sum.x + (breakValues.break_x - data.avgBreakX) ** 2;
+            const y = sum.y + (breakValues.break_y - data.avgBreakY) ** 2;
+
+            return { x, y };
+          },
+          {
+            x: 0,
+            y: 0
+          }
+        );
+        const sumDiffBreaksAvg = { x: sumDiffBreaks.x / data.count, y: sumDiffBreaks.y / data.count };
+        const skoBreaks = { x: Math.sqrt(sumDiffBreaksAvg.x), y: Math.sqrt(sumDiffBreaksAvg.y) };
+
+        console.log(skoBreaks);
+        // 		const sumDiffSpeeds = speeds.reduce((sum, curSpeed) => sum + (curSpeed - avgSpeed) ** 2, 0);
+        // const sumDiffSpeedsAvg = sumDiffSpeeds / count;
+        // const skoSpeed = Math.sqrt(sumDiffSpeedsAvg);
         return (
           <Fragment key={i}>
             <circle
@@ -83,7 +114,17 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, totalPitch
               strokeWidth='2'
               fill={circleColor}
             />
-            <circle
+            <ellipse
+              cx={xCoord}
+              cy={yCoord}
+              rx={skoBreaks.x * xCoordRelCoef}
+              ry={skoBreaks.y * yZeroBreakCoef * -100}
+              stroke={circleColor}
+              strokeWidth='2'
+              fill={circleColor}
+              fillOpacity={opacityValue}
+            />
+            {/* <circle
               // key={`${i}-x-${x}-y-${y}`}
               cx={xCoord}
               cy={yCoord}
@@ -93,7 +134,7 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, totalPitch
               fill={circleColor}
               fillOpacity={opacityValue}
               className={cl.animatedEllipse}
-            />
+            /> */}
           </Fragment>
         );
       })}
@@ -169,6 +210,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
           relValuesData={relValuesData}
           totalPitches={totalPitches}
           linesCoords={linesCoords}
+          arrData={arrData}
         />
       )}
 
@@ -319,6 +361,8 @@ const FieldGraph = ({
   setCurrentOption
 }) => {
   const [isChecked, setChecked] = useState(false);
+  const [coordsAltered, setCoordsAltered] = useState(false);
+  const [isAbsCoef, setIsAbsCoef] = useState(true);
   console.log(preview);
   const optionsTogglerStyles = {
     position: 'absolute',
@@ -334,10 +378,13 @@ const FieldGraph = ({
   const { zone } = preview;
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
-  const yCoordRelCoef = 340;
-  const yCoordAbsCoef = 75;
+  const yCoordRelCoef = coordsAltered ? 200 : 340;
+  // const yCoordRelCoef = 340;
+  const yCoordAbsCoef = isAbsCoef ? 75 : 0;
+  // const yCoordAbsCoef = 75;
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.5;
-  const xCoordRelCoef = 248;
+  const xCoordRelCoef = coordsAltered ? 150 : 248;
+  // const xCoordRelCoef = 248;
   const coords = { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord };
 
   const avgCoords = filteredData.reduce((sum, { pitch_info: pitchInfo, coordinates, break: breakValues }) => {
@@ -436,7 +483,7 @@ const FieldGraph = ({
           coords={coords}
           linesCoords={linesCoords}
         />
-				<VerticalGridLines linesCoords={linesCoords} />
+        <VerticalGridLines linesCoords={linesCoords} />
         <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
       </svg>
       <OptionsToggler
@@ -448,6 +495,29 @@ const FieldGraph = ({
         Gravity
         <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
       </OptionsToggler>
+      <div
+        style={{
+          position: 'absolute',
+          right: 0,
+          top: '50%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+        <button
+          onClick={() => setCoordsAltered(prev => !prev)}
+          style={{ padding: 5, backgroundColor: coordsAltered ? 'white' : 'lightgray' }}>
+          Toggle rel coef
+        </button>
+        <button
+          onClick={() => setIsAbsCoef(prev => !prev)}
+          style={{
+            borderTop: '1px solid gray',
+            padding: 5,
+            backgroundColor: isAbsCoef ? 'white' : 'lightgray'
+          }}>
+          Toggle abs coef
+        </button>
+      </div>
     </div>
   );
 };
