@@ -52,71 +52,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
     </>
   );
 };
-const EllipsedDots = ({ arrData, pitchTypes, coords, relValuesData, zone }) => {
-  const avgCoords = arrData.reduce((sum, { pitch_info: pitchInfo, coordinates, break: breakValues }) => {
-    if (sum[pitchInfo.pitch_type] === undefined) {
-      sum[pitchInfo.pitch_type] = { sumX: 0, sumY: 0, count: 0, sumBreakX: 0, sumBreakY: 0 };
-    }
-
-    sum[pitchInfo.pitch_type].sumX += coordinates.zone_x;
-    sum[pitchInfo.pitch_type].sumY += coordinates.zone_y;
-    sum[pitchInfo.pitch_type].count++;
-    sum[pitchInfo.pitch_type].avgX = sum[pitchInfo.pitch_type].sumX / sum[pitchInfo.pitch_type].count;
-    sum[pitchInfo.pitch_type].avgY = sum[pitchInfo.pitch_type].sumY / sum[pitchInfo.pitch_type].count;
-    sum[pitchInfo.pitch_type].sumBreakX += breakValues.break_x;
-    sum[pitchInfo.pitch_type].sumBreakY += breakValues.break_y;
-    sum[pitchInfo.pitch_type].avgBreakX =
-      sum[pitchInfo.pitch_type].sumBreakX / sum[pitchInfo.pitch_type].count;
-    sum[pitchInfo.pitch_type].avgBreakY =
-      sum[pitchInfo.pitch_type].sumBreakY / sum[pitchInfo.pitch_type].count;
-
-    return sum;
-  }, {});
-
-  const minMaxAvgBreak = Object.values(avgCoords).reduce((sum, value) => {
-    if (sum.minX === undefined) {
-      sum.minX = value.avgBreakX;
-      sum.maxX = value.avgBreakX;
-      sum.minY = value.avgBreakY;
-      sum.maxY = value.avgBreakY;
-
-      return sum;
-    }
-
-    if (value.avgBreakX < sum.minX) sum.minX = value.avgBreakX;
-    if (value.avgBreakX > sum.maxX) sum.maxX = value.avgBreakX;
-    if (value.avgBreakY < sum.minY) sum.minY = value.avgBreakY;
-    if (value.avgBreakY > sum.maxY) sum.maxY = value.avgBreakY;
-
-    return sum;
-  }, {});
-
-  const avgDelta = {
-    x: minMaxAvgBreak.maxX - minMaxAvgBreak.minX,
-    y: minMaxAvgBreak.maxY - minMaxAvgBreak.minY
-  };
-
-  const totalPitches = arrData.length;
-
-  const zoneYAvg = (zone.x_strike_up + zone.y_strike_down) / 2;
-
-  const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
-
-
-  const centerYFieldLine = zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef;
-
-  const topFieldLine = centerYFieldLine - (avgDelta.y / 2) * yCoordRelCoef;
-  const bottomYFieldLine = centerYFieldLine + (avgDelta.y / 2) * yCoordRelCoef;
-
-  const centerFieldValue = Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100);
-  const bottomYFieldValue = Math.floor(minMaxAvgBreak.minY * 100);
-
-  const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
-
-  const topBorderValue = centerFieldValue + centerYFieldLine / valuesCoef;
-  const bottomBorderValue = centerFieldValue - (PARAMS.GRAPH_HEIGHT - centerYFieldLine) / valuesCoef;
-
-	console.log(topBorderValue, bottomBorderValue);
+const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, zone }) => {
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
@@ -126,69 +62,15 @@ const EllipsedDots = ({ arrData, pitchTypes, coords, relValuesData, zone }) => {
         // const { zone_x: x, zone_y: y } = coordinates;
         // const { pitch_type: pitchType } = pitchInfo;
 
-        const xCoord = zeroXCoord + data.avgX * xCoordRelCoef;
-        const yCoord = data.avgY === 0 ? zeroYCoord : zeroYCoord - data.avgY * yCoordRelCoef + yCoordAbsCoef;
+        // const xCoord = zeroXCoord + data.avgX * xCoordRelCoef;
+        // const yCoord = data.avgY === 0 ? zeroYCoord : zeroYCoord - data.avgY * yCoordRelCoef + yCoordAbsCoef;
 
-        const circleColor = getPitchColorByName(pitchTypes[pitchType]);
+        // const circleColor = getPitchColorByName(pitchTypes[pitchType]);
 
-        const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
+        // const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
         return (
           <Fragment key={i}>
-            {/* top Y field line */}
-            <line
-              x1={zeroXCoord - 57}
-              y1={zeroYCoord - zone.x_strike_up * yCoordRelCoef}
-              // y1={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              x2={zeroXCoord + 57}
-              y2={zeroYCoord - zone.x_strike_up * yCoordRelCoef}
-              // y2={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              strokeWidth='3'
-              stroke='orange'
-              strokeDasharray='4 4'
-              // shapeRendering='crispEdges'
-            />
-            <text x='140' y={zeroYCoord - zone.x_strike_up * yCoordRelCoef + 4} className={cl.leftTextTitle}>
-              Top {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
-            </text>
-            {/* center Y field line */}
-            <line
-              x1={zeroXCoord - 57}
-              y1={centerYFieldLine}
-              // y1={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              x2={zeroXCoord + 57}
-              y2={centerYFieldLine}
-              // y2={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              strokeWidth='3'
-              stroke='orange'
-              strokeDasharray='4 4'
-              // shapeRendering='crispEdges'
-            />
-            <text x='90' y={centerYFieldLine + 4} className={cl.leftTextTitle}>
-              Center {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
-            </text>
-
-            {/* bottom Y field line */}
-            <line
-              x1={zeroXCoord - 57}
-              y1={centerYFieldLine + (avgDelta.y / 2) * yCoordRelCoef}
-              // y1={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              x2={zeroXCoord + 57}
-              y2={centerYFieldLine + (avgDelta.y / 2) * yCoordRelCoef}
-              // y2={zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef}
-              strokeWidth='3'
-              stroke='orange'
-              strokeDasharray='4 4'
-              // shapeRendering='crispEdges'
-            />
-            <text
-              x='90'
-              y={centerYFieldLine + (avgDelta.y / 2) * yCoordRelCoef + 4}
-              className={cl.leftTextTitle}>
-              Bottom {Math.floor(minMaxAvgBreak.minY * 100)}
-            </text>
-
-          
-            <circle
+            {/* <circle
               // key={`${i}-x-${x}-y-${y}`}
               cx={xCoord}
               cy={yCoord}
@@ -207,7 +89,7 @@ const EllipsedDots = ({ arrData, pitchTypes, coords, relValuesData, zone }) => {
               fill={circleColor}
               fillOpacity={opacityValue}
               className={cl.animatedEllipse}
-            />
+            /> */}
           </Fragment>
         );
       })}
@@ -215,7 +97,7 @@ const EllipsedDots = ({ arrData, pitchTypes, coords, relValuesData, zone }) => {
   );
 };
 
-const Frames = ({ arrData, preview, isDots, relValuesData }) => {
+const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords }) => {
   const { zone, pitch_types: pitchTypes } = preview;
   const {
     y_strike_down: yStrikeDown,
@@ -226,13 +108,9 @@ const Frames = ({ arrData, preview, isDots, relValuesData }) => {
   } = zone;
 
   let totalPitches = arrData.length;
+  const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
 
-  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
-  const yCoordRelCoef = 340;
-  const yCoordAbsCoef = 75;
-
-  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.5;
-  const xCoordRelCoef = 248;
+  // xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord
 
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
@@ -287,9 +165,9 @@ const Frames = ({ arrData, preview, isDots, relValuesData }) => {
       {/* Ellipsed Dots */}
       {!isDots && (
         <EllipsedDots
-          arrData={arrData}
+          avgCoords={avgCoords}
           pitchTypes={pitchTypes}
-          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+          coords={coords}
           relValuesData={relValuesData}
           zone={zone}
         />
@@ -342,28 +220,87 @@ const VerticalGridLines = () => {
   );
 };
 
-const HorizontalGridLines = () => {
+const HorizontalGridLines = ({ coords, linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, HORIZONTAL_ROWS_NUM: rowsNumber } = PARAMS;
   const rowHeight = graphHeight / rowsNumber;
 
+  const { zeroXCoord } = coords;
+
+  const {
+    topFieldLine,
+    minMaxAvgBreak,
+    avgDelta,
+    centerYFieldLine,
+    bottomYFieldLine,
+    bottomYFieldValue,
+    topBorderValue,
+    bottomBorderValue
+  } = linesCoords;
+
+  const valuePerRow = (bottomBorderValue - topBorderValue) / rowsNumber;
   return (
     <>
-      {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => (
-        <Fragment key={'hor-' + i}>
-          <line
-            x1={0}
-            y1={rowHeight * i}
-            x2={graphWidth}
-            y2={rowHeight * i}
-            stroke='#ACACAC'
-            strokeDasharray='4 2'
-            // shapeRendering='crispEdges'
-          />
-          <text x='4' y={rowHeight * i + 15} className={cl.leftTextTitle}>
-            {i * 30}
-          </text>
-        </Fragment>
-      ))}
+      {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => {
+        const rowText = Math.floor(topBorderValue + i * valuePerRow);
+
+        return (
+          <Fragment key={'hor-' + i}>
+            <line
+              x1={0}
+              y1={rowHeight * i}
+              x2={graphWidth}
+              y2={rowHeight * i}
+              stroke='#ACACAC'
+              strokeDasharray='4 2'
+            />
+            <text x='4' y={rowHeight * i + 15} className={cl.leftTextTitle}>
+              {rowText}
+            </text>
+          </Fragment>
+        );
+      })}
+
+      {/* top Y field line */}
+      <line
+        x1={zeroXCoord - 57}
+        y1={topFieldLine}
+        x2={zeroXCoord + 57}
+        y2={topFieldLine}
+        strokeWidth='3'
+        stroke='orange'
+        strokeDasharray='4 4'
+      />
+      <text x='140' y={topFieldLine + 4} className={cl.leftTextTitle}>
+        Top {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
+      </text>
+
+      {/* center Y field line */}
+      <line
+        x1={zeroXCoord - 57}
+        y1={centerYFieldLine}
+        x2={zeroXCoord + 57}
+        y2={centerYFieldLine}
+        strokeWidth='3'
+        stroke='orange'
+        strokeDasharray='4 4'
+      />
+      <text x='90' y={centerYFieldLine + 4} className={cl.leftTextTitle}>
+        Center {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
+      </text>
+
+      {/* bottom Y field line */}
+      <line
+        x1={zeroXCoord - 57}
+        y1={bottomYFieldLine}
+        x2={zeroXCoord + 57}
+        y2={bottomYFieldLine}
+        strokeWidth='3'
+        stroke='orange'
+        strokeDasharray='4 4'
+      />
+      <text x='90' y={bottomYFieldLine + 4} className={cl.leftTextTitle}>
+        Bottom {bottomYFieldValue}
+      </text>
     </>
   );
 };
@@ -388,6 +325,85 @@ const FieldGraph = ({
   const handleTogglerChange = () => setChecked(prev => !prev);
 
   const isDots = currentOption === 'All Pitches';
+
+  const { zone } = preview;
+
+  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
+  const yCoordRelCoef = 340;
+  const yCoordAbsCoef = 75;
+  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.5;
+  const xCoordRelCoef = 248;
+  const coords = { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord };
+
+  const avgCoords = filteredData.reduce((sum, { pitch_info: pitchInfo, coordinates, break: breakValues }) => {
+    if (sum[pitchInfo.pitch_type] === undefined) {
+      sum[pitchInfo.pitch_type] = { sumX: 0, sumY: 0, count: 0, sumBreakX: 0, sumBreakY: 0 };
+    }
+
+    sum[pitchInfo.pitch_type].sumX += coordinates.zone_x;
+    sum[pitchInfo.pitch_type].sumY += coordinates.zone_y;
+    sum[pitchInfo.pitch_type].count++;
+    sum[pitchInfo.pitch_type].avgX = sum[pitchInfo.pitch_type].sumX / sum[pitchInfo.pitch_type].count;
+    sum[pitchInfo.pitch_type].avgY = sum[pitchInfo.pitch_type].sumY / sum[pitchInfo.pitch_type].count;
+    sum[pitchInfo.pitch_type].sumBreakX += breakValues.break_x;
+    sum[pitchInfo.pitch_type].sumBreakY += breakValues.break_y;
+    sum[pitchInfo.pitch_type].avgBreakX =
+      sum[pitchInfo.pitch_type].sumBreakX / sum[pitchInfo.pitch_type].count;
+    sum[pitchInfo.pitch_type].avgBreakY =
+      sum[pitchInfo.pitch_type].sumBreakY / sum[pitchInfo.pitch_type].count;
+
+    return sum;
+  }, {});
+
+  const minMaxAvgBreak = Object.values(avgCoords).reduce((sum, value) => {
+    if (sum.minX === undefined) {
+      sum.minX = value.avgBreakX;
+      sum.maxX = value.avgBreakX;
+      sum.minY = value.avgBreakY;
+      sum.maxY = value.avgBreakY;
+
+      return sum;
+    }
+
+    if (value.avgBreakX < sum.minX) sum.minX = value.avgBreakX;
+    if (value.avgBreakX > sum.maxX) sum.maxX = value.avgBreakX;
+    if (value.avgBreakY < sum.minY) sum.minY = value.avgBreakY;
+    if (value.avgBreakY > sum.maxY) sum.maxY = value.avgBreakY;
+
+    return sum;
+  }, {});
+
+  const avgDelta = {
+    x: minMaxAvgBreak.maxX - minMaxAvgBreak.minX,
+    y: minMaxAvgBreak.maxY - minMaxAvgBreak.minY
+  };
+
+  const totalPitches = filteredData.length;
+
+  const centerYFieldLine =
+    zeroYCoord - ((zone.x_strike_up + zone.y_strike_down) / 2) * yCoordRelCoef + yCoordAbsCoef;
+
+  const topFieldLine = centerYFieldLine - (avgDelta.y / 2) * yCoordRelCoef;
+  const bottomYFieldLine = centerYFieldLine + (avgDelta.y / 2) * yCoordRelCoef;
+
+  const centerFieldValue = Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100);
+  const bottomYFieldValue = Math.floor(minMaxAvgBreak.minY * 100);
+
+  const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
+
+  const topBorderValue = centerFieldValue + centerYFieldLine / valuesCoef;
+  const bottomBorderValue = centerFieldValue - (PARAMS.GRAPH_HEIGHT - centerYFieldLine) / valuesCoef;
+
+  const linesCoords = {
+    topFieldLine,
+    minMaxAvgBreak,
+    avgDelta,
+    centerYFieldLine,
+    bottomYFieldLine,
+    bottomYFieldValue,
+    topBorderValue,
+    bottomBorderValue
+  };
   return (
     <div className={cl.wrapper}>
       <svg
@@ -395,8 +411,15 @@ const FieldGraph = ({
         xmlns='http://www.w3.org/2000/svg'
         preserveAspectRatio='none'>
         <VerticalGridLines />
-        <HorizontalGridLines />
-        <Frames arrData={filteredData} preview={preview} isDots={isDots} relValuesData={relValuesData} />
+        <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+        <Frames
+          avgCoords={avgCoords}
+          arrData={filteredData}
+          preview={preview}
+          isDots={isDots}
+          relValuesData={relValuesData}
+          coords={coords}
+        />
       </svg>
       <OptionsToggler
         style={optionsTogglerStyles}
