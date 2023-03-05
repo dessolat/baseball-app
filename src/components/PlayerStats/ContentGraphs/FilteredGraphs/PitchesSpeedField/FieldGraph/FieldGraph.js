@@ -192,30 +192,36 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords }) 
   );
 };
 
-const VerticalGridLines = () => {
+const VerticalGridLines = ({ linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, VERTICAL_COLUMNS_NUM: columnsNumber } = PARAMS;
   const columnWidth = graphWidth / columnsNumber;
 
+  const { leftBorderValue, rightBorderValue } = linesCoords;
+
+  const valuePerRow = (rightBorderValue - leftBorderValue) / columnsNumber;
   return (
     <>
-      {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => (
-        <Fragment key={'vert-' + i}>
-          <line
-            x1={columnWidth * i}
-            y1={0}
-            x2={columnWidth * i}
-            y2={graphHeight}
-            stroke='#ACACAC'
-            strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
-            // shapeRendering='crispEdges'
-          />
-          {i !== 0 && (
-            <text x={columnWidth * i - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
-              {i * 30 - 120}
-            </text>
-          )}
-        </Fragment>
-      ))}
+      {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => {
+        const colText = +(i * valuePerRow + leftBorderValue).toFixed(1);
+
+        return (
+          <Fragment key={'vert-' + i}>
+            <line
+              x1={columnWidth * i}
+              y1={0}
+              x2={columnWidth * i}
+              y2={graphHeight}
+              stroke='#ACACAC'
+              strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
+            />
+            {i !== 0 && (
+              <text x={columnWidth * i - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
+                {colText}
+              </text>
+            )}
+          </Fragment>
+        );
+      })}
     </>
   );
 };
@@ -314,7 +320,7 @@ const FieldGraph = ({
   setCurrentOption
 }) => {
   const [isChecked, setChecked] = useState(false);
-
+console.log(preview);
   const optionsTogglerStyles = {
     position: 'absolute',
     right: '.4375rem',
@@ -394,6 +400,10 @@ const FieldGraph = ({
   const topBorderValue = centerFieldValue + centerYFieldLine / valuesCoef;
   const bottomBorderValue = centerFieldValue - (PARAMS.GRAPH_HEIGHT - centerYFieldLine) / valuesCoef;
 
+  const halfGraphWidth = PARAMS.GRAPH_WIDTH / 2;
+  const leftBorderValue = (-halfGraphWidth / xCoordRelCoef) * 100;
+  const rightBorderValue = (halfGraphWidth / xCoordRelCoef) * 100;
+
   const linesCoords = {
     topFieldLine,
     minMaxAvgBreak,
@@ -402,7 +412,9 @@ const FieldGraph = ({
     bottomYFieldLine,
     bottomYFieldValue,
     topBorderValue,
-    bottomBorderValue
+    bottomBorderValue,
+    leftBorderValue,
+    rightBorderValue
   };
   return (
     <div className={cl.wrapper}>
@@ -410,7 +422,7 @@ const FieldGraph = ({
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
         preserveAspectRatio='none'>
-        <VerticalGridLines />
+        <VerticalGridLines linesCoords={linesCoords} />
         <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
         <Frames
           avgCoords={avgCoords}
