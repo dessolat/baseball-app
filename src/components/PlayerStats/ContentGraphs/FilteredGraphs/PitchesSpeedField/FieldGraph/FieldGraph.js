@@ -11,7 +11,7 @@ const PARAMS = {
   HORIZONTAL_ROWS_NUM: 6
 };
 
-const Dots = ({ arrData, pitchTypes, coords }) => {
+const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
   // const [radius, setRadius] = useState(1);
 
   // useEffect(() => {
@@ -21,20 +21,22 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   //     setRadius(8);
   //   }, 300);
   // }, [coords]);
+  const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
+  const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
 
   return (
     <>
       {arrData.map((pitch, i) => {
-        // const { break: breakCoords, pitch_info: pitchInfo } = pitch;
-        const { coordinates, pitch_info: pitchInfo } = pitch;
-        // const { break_x: x, break_y: y } = breakCoords;
-        const { zone_x: x, zone_y: y } = coordinates;
+        const { break: breakCoords, pitch_info: pitchInfo } = pitch;
+        const { break_x: x, break_y: y } = breakCoords;
         const { pitch_type: pitchType } = pitchInfo;
+        // const { coordinates, pitch_info: pitchInfo } = pitch;
+        // const { zone_x: x, zone_y: y } = coordinates;
 
-        const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
-
-        const xCoord = zeroXCoord + x * xCoordRelCoef;
-        const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
+        const xCoord = zeroXCoord + x * xCoordRelCoef;;
+        const yCoord = y === 0 ? zeroYBreakLine : zeroYBreakLine + y * 100 * yZeroBreakCoef;
+        // const xCoord = zeroXCoord + x * xCoordRelCoef;
+        // const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
         return (
           <circle
             key={i}
@@ -52,7 +54,9 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
     </>
   );
 };
-const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, zone }) => {
+const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, totalPitches, linesCoords }) => {
+  const { xCoordRelCoef, zeroXCoord } = coords;
+  const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
@@ -62,15 +66,15 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, zone }) =>
         // const { zone_x: x, zone_y: y } = coordinates;
         // const { pitch_type: pitchType } = pitchInfo;
 
-        // const xCoord = zeroXCoord + data.avgX * xCoordRelCoef;
-        // const yCoord = data.avgY === 0 ? zeroYCoord : zeroYCoord - data.avgY * yCoordRelCoef + yCoordAbsCoef;
+        const xCoord = zeroXCoord + data.avgBreakX * xCoordRelCoef;
+        const yCoord =
+          data.avgBreakY === 0 ? zeroYBreakLine : zeroYBreakLine + data.avgBreakY * 100 * yZeroBreakCoef;
 
-        // const circleColor = getPitchColorByName(pitchTypes[pitchType]);
-
-        // const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
+        const circleColor = getPitchColorByName(pitchTypes[pitchType]);
+        const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
         return (
           <Fragment key={i}>
-            {/* <circle
+            <circle
               // key={`${i}-x-${x}-y-${y}`}
               cx={xCoord}
               cy={yCoord}
@@ -89,7 +93,7 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, zone }) =>
               fill={circleColor}
               fillOpacity={opacityValue}
               className={cl.animatedEllipse}
-            /> */}
+            />
           </Fragment>
         );
       })}
@@ -97,7 +101,7 @@ const EllipsedDots = ({ avgCoords, pitchTypes, coords, relValuesData, zone }) =>
   );
 };
 
-const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords }) => {
+const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, linesCoords }) => {
   const { zone, pitch_types: pitchTypes } = preview;
   const {
     y_strike_down: yStrikeDown,
@@ -155,13 +159,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords }) 
       />
 
       {/* Dots */}
-      {isDots && (
-        <Dots
-          arrData={arrData}
-          pitchTypes={pitchTypes}
-          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-        />
-      )}
+      {isDots && <Dots arrData={arrData} pitchTypes={pitchTypes} coords={coords} linesCoords={linesCoords} />}
       {/* Ellipsed Dots */}
       {!isDots && (
         <EllipsedDots
@@ -169,7 +167,8 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords }) 
           pitchTypes={pitchTypes}
           coords={coords}
           relValuesData={relValuesData}
-          zone={zone}
+          totalPitches={totalPitches}
+          linesCoords={linesCoords}
         />
       )}
 
@@ -320,7 +319,7 @@ const FieldGraph = ({
   setCurrentOption
 }) => {
   const [isChecked, setChecked] = useState(false);
-console.log(preview);
+  console.log(preview);
   const optionsTogglerStyles = {
     position: 'absolute',
     right: '.4375rem',
@@ -404,6 +403,10 @@ console.log(preview);
   const leftBorderValue = (-halfGraphWidth / xCoordRelCoef) * 100;
   const rightBorderValue = (halfGraphWidth / xCoordRelCoef) * 100;
 
+  const yZeroBreakCoef = PARAMS.GRAPH_HEIGHT / (bottomBorderValue - topBorderValue);
+  // console.log(yZeroCoef);
+  const zeroYBreakLine = -topBorderValue * yZeroBreakCoef;
+
   const linesCoords = {
     topFieldLine,
     minMaxAvgBreak,
@@ -414,7 +417,9 @@ console.log(preview);
     topBorderValue,
     bottomBorderValue,
     leftBorderValue,
-    rightBorderValue
+    rightBorderValue,
+    yZeroBreakCoef,
+    zeroYBreakLine
   };
   return (
     <div className={cl.wrapper}>
@@ -422,8 +427,6 @@ console.log(preview);
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
         preserveAspectRatio='none'>
-        <VerticalGridLines linesCoords={linesCoords} />
-        <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
         <Frames
           avgCoords={avgCoords}
           arrData={filteredData}
@@ -431,7 +434,10 @@ console.log(preview);
           isDots={isDots}
           relValuesData={relValuesData}
           coords={coords}
+          linesCoords={linesCoords}
         />
+				<VerticalGridLines linesCoords={linesCoords} />
+        <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
       </svg>
       <OptionsToggler
         style={optionsTogglerStyles}
