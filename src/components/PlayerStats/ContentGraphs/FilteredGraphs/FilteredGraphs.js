@@ -345,12 +345,12 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>
         Dataset filter
-        <button
+        {/* <button
           className={cl.tempButton}
           // onClick={handleFakeDataClick}
         >
           Generate data
-        </button>
+        </button> */}
       </h3>
       <div className={cl.body}>
         <CustomGroup
