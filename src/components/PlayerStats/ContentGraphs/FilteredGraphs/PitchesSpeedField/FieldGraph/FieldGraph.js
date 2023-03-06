@@ -163,7 +163,6 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
   const dashedFrameY = zeroYCoord - yStrikeUp * yCoordRelCoef + yCoordAbsCoef;
   const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
 
-	console.log(arrData);
   return (
     <>
       {/* Frames */}
@@ -198,7 +197,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
         stroke='#B6C6D6'
         strokeWidth='2'
         fill='none'
-				style={{transition: 'all .3s'}}
+        style={{ transition: 'all .3s' }}
         // fill='#B6C6D6'
       />
 
@@ -226,7 +225,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
         stroke='#1A4C96'
         strokeWidth='2'
         fill='transparent'
-				style={{transition: 'all .3s'}}
+        style={{ transition: 'all .3s' }}
       />
 
       {/* Title */}
@@ -505,7 +504,11 @@ const FieldGraph = ({
           right: 0,
           top: '50%',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          boxShadow: '1px 1px 3px 0px grey',
+          overflow: 'hidden',
+          borderTopLeftRadius: '5px',
+          borderBottomLeftRadius: '5px'
         }}>
         <button
           onClick={() => setCoordsAltered(prev => !prev)}
