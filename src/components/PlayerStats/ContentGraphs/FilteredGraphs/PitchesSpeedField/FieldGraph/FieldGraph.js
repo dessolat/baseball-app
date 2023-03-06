@@ -162,6 +162,8 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
   const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
   const dashedFrameY = zeroYCoord - yStrikeUp * yCoordRelCoef + yCoordAbsCoef;
   const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
+
+	console.log(arrData);
   return (
     <>
       {/* Frames */}
@@ -196,6 +198,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
         stroke='#B6C6D6'
         strokeWidth='2'
         fill='none'
+				style={{transition: 'all .3s'}}
         // fill='#B6C6D6'
       />
 
@@ -223,6 +226,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
         stroke='#1A4C96'
         strokeWidth='2'
         fill='transparent'
+				style={{transition: 'all .3s'}}
       />
 
       {/* Title */}
