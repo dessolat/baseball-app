@@ -43,9 +43,12 @@ const HoveringLines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
           .slice(1)
           .forEach(
             (value, j, arr) =>
-						(pathDest += value === 0 ? '' : `${arr[j-1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
-							rowsStartY - (value - minValue) * yScaleMultiplier
-						}`)
+              (pathDest +=
+                value === 0
+                  ? ''
+                  : `${arr[j - 1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
+                      rowsStartY - (value - minValue) * yScaleMultiplier
+                    }`)
           );
         const pathClasses = classNames(cl.hoveringLine, {
           [cl.hoveringLine1]: i === 0,
@@ -96,9 +99,12 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           .slice(1)
           .forEach(
             (value, j, arr) =>
-              (pathDest += value === 0 ? '' : `${arr[j-1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
-                rowsStartY - (value - minValue) * yScaleMultiplier
-              }`)
+              (pathDest +=
+                value === 0
+                  ? ''
+                  : `${arr[j - 1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
+                      rowsStartY - (value - minValue) * yScaleMultiplier
+                    }`)
           );
         const pathClasses = classNames(cl.graphPath, {
           [cl.graphPath1]: i === 0,
@@ -108,22 +114,28 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           [cl.graphPath5]: i === 4,
           [cl.graphPath6]: i === 5
         });
+
+        const isPath = values.some(value => value !== 0);
         return (
           <Fragment key={type + '-' + currentTimeInterval}>
-            <path
-              d={pathDest}
-              fill='none'
-              stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-              strokeWidth='2'
-              className={pathClasses}
-            />
-            <circle
-              cx={startPointX}
-              cy={startPointY}
-              r='3'
-              fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-							className={pathClasses}
-            />
+            {isPath && (
+              <>
+                <path
+                  d={pathDest}
+                  fill='none'
+                  stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                  strokeWidth='2'
+                  className={pathClasses}
+                />
+                <circle
+                  cx={startPointX}
+                  cy={startPointY}
+                  r='3'
+                  fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                  className={pathClasses}
+                />
+              </>
+            )}
             {values.slice(1).map(
               (value, j) =>
                 value !== 0 ? (
@@ -133,7 +145,7 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
                     cy={rowsStartY - (value - minValue) * yScaleMultiplier}
                     r='3'
                     fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-										className={pathClasses}
+                    className={pathClasses}
                   />
                 ) : (
                   <Fragment key={i + '-' + j}></Fragment>
@@ -234,7 +246,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
     function getMinMaxValues(sumByTimeInterval) {
       return Object.values(sumByTimeInterval).reduce((sum, interval) => {
         const intervalValues = Object.values(interval);
-				const intervalValuesWOZero = intervalValues.filter(value => value !== 0)
+        const intervalValuesWOZero = intervalValues.filter(value => value !== 0);
         const maxValue = Math.max(...intervalValuesWOZero);
         const minValue = Math.min(...intervalValuesWOZero);
 
@@ -330,7 +342,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
         leftMarks={leftMarks}
         pitchTypes={pitchTypes}
         yScaleMultiplier={yScaleMultiplier}
-				currentTimeInterval={currentTimeInterval}
+        currentTimeInterval={currentTimeInterval}
       />
 
       {/* Dots */}
