@@ -1,7 +1,8 @@
 import useSetMomentById from 'hooks/useSetMomentById';
 import React, { useState, useLayoutEffect, useRef, useEffect, Fragment, useMemo } from 'react';
-import { getChartColor } from 'utils';
+import { getChartColor, getPitchColorByName } from 'utils';
 import cl from './PlaysSpin.module.scss';
+import { useSelector } from 'react-redux';
 
 const DOT_RADIUS = 3;
 const GRAPH_START_X = 15;
@@ -158,6 +159,7 @@ const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
 
 const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
   const setMomentById = useSetMomentById();
+  const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
 
   const maxX = Math.ceil(minMaxValues.maxX * 100);
   const minX = Math.floor(minMaxValues.minX * 100);
@@ -181,7 +183,9 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
             cy={startY + 100 - coordY}
             // cy={coordY + startY}
             r={DOT_RADIUS}
-            fill={getChartColor(dot.pitchType)}
+            fill={getPitchColorByName(pitchTypes[dot.pitchType][0])}
+            // fill={getPitchColorByNumber(dot.pitchType)}
+            // fill={getChartColor(dot.pitchType)}
             stroke='black'
             strokeWidth='0.5'
             onClick={handleDotClick(dot.momentId)}
@@ -269,6 +273,8 @@ const CurrentDotLines = ({ startX, startY, currentDot, minMaxValues }) => {
 const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
 
+  const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
+
   useLayoutEffect(() => {
     setCurrentDotRadius(0);
 
@@ -317,7 +323,9 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
             cx={coordX + startX}
             cy={startY + 100 - coordY}
             r={currentDotRadius}
-            fill={getChartColor(currentDot.type)}
+            fill={getPitchColorByName(pitchTypes[currentDot.type][0])}
+            // fill={getPitchColorByNumber(currentDot.type)}
+            // fill={getChartColor(currentDot.type)}
             stroke='black'
             strokeWidth='0.5'
           />

@@ -1,10 +1,11 @@
 import usePitchTypes from 'hooks/usePitchTypes';
 import useSetMomentById from 'hooks/useSetMomentById';
 import React, { useState, useLayoutEffect } from 'react';
-import { getChartColor } from 'utils';
+import { getChartColor, getPitchColorByName } from 'utils';
 import cl from './PlaysSpeed.module.scss';
+import { useSelector } from 'react-redux';
 
-const Dots = ({ dotsCoords }) => {
+const Dots = ({ dotsCoords, pitchTypes }) => {
   const setMomentById = useSetMomentById();
 
   const DOT_RADIUS = 3;
@@ -23,7 +24,8 @@ const Dots = ({ dotsCoords }) => {
       cx={dot.coords[0]}
       cy={dot.coords[1]}
       r={DOT_RADIUS}
-      fill={getChartColor(dot.type)}
+      fill={getPitchColorByName(pitchTypes[dot.type][0])}
+      // fill={getChartColor(dot.type)}
       stroke='#000'
       strokeWidth='0.5'
       className={cl.dot}
@@ -34,6 +36,8 @@ const Dots = ({ dotsCoords }) => {
 
 const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
+
+  const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
 
   useLayoutEffect(() => {
     if (currentDot.index === undefined) return;
@@ -181,7 +185,7 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       ))}
 
       {/* Dots */}
-      {isDots && <Dots dotsCoords={dotsCoords} />}
+      {isDots && <Dots dotsCoords={dotsCoords} pitchTypes={pitchTypes} />}
 
       {/* Current dot line */}
       {currentDot.index !== undefined && (
@@ -207,7 +211,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
             cx={minXCoord + xInterval * currentDot.index}
             cy={maxYCoord - (currentDot.speed - minYAxisValue) / yValuePerHeight}
             r={currentDotRadius}
-            fill={getChartColor(currentDot.type)}
+            fill={getPitchColorByName(pitchTypes[currentDot.type][0])}
+            // fill={getChartColor(currentDot.type)}
             stroke='#000'
             strokeWidth='0.5'
           />

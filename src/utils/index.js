@@ -141,6 +141,7 @@ export const getPitchColorByName = name =>
     'Curve ball': '#CBC8E5',
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
+    Submarine: '#B08194',
     'All Pitches': '#1A4C96'
   }[name]);
 
