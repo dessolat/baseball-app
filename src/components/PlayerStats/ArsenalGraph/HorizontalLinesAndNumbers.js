@@ -2,6 +2,8 @@ import { Fragment } from 'react';
 import cl from './ArsenalGraph.module.scss';
 
 const HorizontalLinesAndNumbers = ({ PARAMS, marks }) => {
+  const isLeftMarks = marks.some(value => !isNaN(value));
+
   return (
     <>
       {marks.map((number, i) => (
@@ -16,12 +18,12 @@ const HorizontalLinesAndNumbers = ({ PARAMS, marks }) => {
             strokeDasharray='4 2'
           />
           {/* Left numbers */}
-          <text
+          {isLeftMarks && <text
             x={PARAMS.LEFT_PADDING}
             y={PARAMS.ZERO_COORDS.Y - PARAMS.HORIZONTAL_GRID_LINES_STEP * i + 5}
             className={cl.leftNumber}>
             {number}
-          </text>
+          </text>}
         </Fragment>
       ))}
     </>

@@ -278,7 +278,6 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       const valueDelta = getValueDelta(correctedMinMaxValues);
       const leftValues = getLeftValues(correctedMinMaxValues, valueDelta);
 
-      console.log(summary);
       return { leftValues, summary, availablePitchTypes };
     }
 
