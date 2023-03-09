@@ -517,6 +517,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
+							title='Pitches'
+            />
+            <ArsenalGraph
+              filteredData={arsenalAddedData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+							title='Pitch, %'
             />
           </>
         )}

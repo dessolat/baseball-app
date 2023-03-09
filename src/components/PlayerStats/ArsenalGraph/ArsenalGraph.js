@@ -162,7 +162,7 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
   );
 };
 
-const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes }) => {
+const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes, title }) => {
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -310,7 +310,7 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       {/* Main layout rendering */}
       {/* Top-left title */}
       <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
-        Pitches
+        {title}
       </text>
 
       {/* Horizontal center grid line */}
