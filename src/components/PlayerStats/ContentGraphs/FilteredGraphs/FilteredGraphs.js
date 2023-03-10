@@ -412,24 +412,25 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     return sum;
   }, {});
 
-	//! Delete after testing
+  //! Delete after testing
   const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
-
+  
   for (let i = 0; i < 5000; i++) {
-		let month = getRndValue(6, 10)
-		month = month < 10 ? `0${month}` : month
-		let day = getRndValue(5, 6)
-		day = day < 10 ? `0${day}` : day
+    let month = getRndValue(6, 10);
+    month = month < 10 ? `0${month}` : month;
+    let day = getRndValue(5, 6);
+    day = day < 10 ? `0${day}` : day;
 
     const date = `${getRndValue(2018, 2023)}-${month}-${day}`;
 
     const pitch_type = getRndValue(0, pitchTypes.length - 1);
-    const newPitch = { pitch_info: { pitch_type, date } };
+    const speed = getRndValue(11, 14);
+    const newPitch = { pitch_info: { pitch_type, date, speed } };
 
     arsenalAddedData.push(newPitch);
   }
-
-	const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
+	console.log(arsenalAddedData);
+  const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
     const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
     const pitchType = pitchTypes[pitch_type];
 
@@ -465,7 +466,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               filteredData={filteredData}
-							preview={preview}
+              preview={preview}
               relValuesData={relValuesData}
             />
           </>
@@ -517,15 +518,23 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-							title='Pitches'
+              title='Pitches'
             />
             <ArsenalGraph
               filteredData={arsenalAddedData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-							title='Pitch, %'
-							graphType='PitchesRel'
+              title='Pitch, %'
+              graphType='PitchesRel'
+            />
+            <ArsenalGraph
+              filteredData={arsenalAddedData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Speed'
+              graphType='Speed'
             />
           </>
         )}

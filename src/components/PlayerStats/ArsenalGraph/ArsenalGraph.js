@@ -260,8 +260,7 @@ const ArsenalGraph = ({
         return sum;
       }, defaultSumByType);
     }
-    function getRelSumByType(allPitchesByTime, pitches) {
-      const sumByType = getSumByType(pitches, getDefaultSumByType());
+    function getRelSumByType(allPitchesByTime, sumByType) {
       const relByType = {};
 
       for (let key in sumByType) {
@@ -269,6 +268,25 @@ const ArsenalGraph = ({
       }
 
       return relByType;
+    }
+    function getSpeedRelByType(allPitchesByTime, sumByType) {
+      const speedsSumByType = allPitchesByTime.reduce((sum, { pitch_info }) => {
+        const { pitch_type: pitchType, speed } = pitch_info;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += speed * 3.6;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in speedsSumByType) {
+        result[pitchType] = speedsSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
     }
 
     function getSumByTimeInterval(sliceTo) {
@@ -278,16 +296,18 @@ const ArsenalGraph = ({
         const pitches = getFilteredPitches(interval, sliceTo);
         const allPitchesByTime = getPitchesByTime(interval, sliceTo);
         const defaultSumByType = getDefaultSumByType();
+        const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
-          Pitches: getSumByType(pitches, defaultSumByType),
-          PitchesRel: getRelSumByType(allPitchesByTime, pitches)
+          Pitches: sumByType,
+          PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
+          Speed: getSpeedRelByType(allPitchesByTime, sumByType)
         };
 
-        const sumByType = GRAPH_FUNCS[graphType];
+        const total = GRAPH_FUNCS[graphType];
         // const sumByType = getSumByType(pitches, defaultSumByType);
 
-        totalSum[interval] = sumByType;
+        totalSum[interval] = total;
         return totalSum;
       }, defaultSumByInterval);
     }
@@ -313,7 +333,8 @@ const ArsenalGraph = ({
     function getLeftValues(correctedMinMaxValues, valueDelta) {
       const GRAPH_FIXES = {
         Pitches: 0,
-        PitchesRel: 2
+        PitchesRel: 2,
+        Speed: 2
       };
 
       const result = [];
