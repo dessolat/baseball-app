@@ -271,7 +271,7 @@ const ArsenalGraph = ({
 
       return relByType;
     }
-    function getSpeedRelByType(pitches, sumByType) {
+    function getSpeedByType(pitches, sumByType) {
       const speedsSumByType = pitches.reduce((sum, { pitch_info }) => {
         const { pitch_type: pitchType, speed } = pitch_info;
 
@@ -290,7 +290,7 @@ const ArsenalGraph = ({
 
       return result;
     }
-    function getSpinRelByType(pitches, sumByType) {
+    function getSpinByType(pitches, sumByType) {
       const spinSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
         const { pitch_type: pitchType } = pitch_info;
         const { spin } = breakValue;
@@ -310,6 +310,26 @@ const ArsenalGraph = ({
 
       return result;
     }
+    function getVerticalBreakByType(pitches, sumByType) {
+      const verticalBreakSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { break_y } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += break_y * 100;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in verticalBreakSumByType) {
+        result[pitchType] = verticalBreakSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
 
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
@@ -323,8 +343,9 @@ const ArsenalGraph = ({
         const GRAPH_FUNCS = {
           Pitches: sumByType,
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
-          Speed: getSpeedRelByType(pitches, sumByType),
-          Spin: getSpinRelByType(pitches, sumByType)
+          Speed: getSpeedByType(pitches, sumByType),
+          Spin: getSpinByType(pitches, sumByType),
+          VerticalBreak: getVerticalBreakByType(pitches, sumByType)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -358,7 +379,8 @@ const ArsenalGraph = ({
         Pitches: 0,
         PitchesRel: 2,
         Speed: 2,
-        Spin: 0
+        Spin: 0,
+        VerticalBreak: 1
       };
 
       const result = [];

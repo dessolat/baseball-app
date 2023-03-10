@@ -426,11 +426,12 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     const pitch_type = getRndValue(0, pitchTypes.length - 1);
     const speed = getRndValue(11, 14);
     const spin = getRndValue(200, 2000);
-    const newPitch = { pitch_info: { pitch_type, date, speed }, break: { spin } };
+    const break_y = getRndValue(1200, 2900) / -1000;
+    const newPitch = { pitch_info: { pitch_type, date, speed }, break: { spin, break_y } };
 
     arsenalAddedData.push(newPitch);
   }
-  console.log(arsenalAddedData);
+	
   const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
     const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
     const pitchType = pitchTypes[pitch_type];
@@ -544,6 +545,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               pitchTypes={pitchTypes}
               title='Spin'
               graphType='Spin'
+            />
+            <ArsenalGraph
+              filteredData={arsenalAddedData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Vertical break'
+              graphType='VerticalBreak'
             />
           </>
         )}
