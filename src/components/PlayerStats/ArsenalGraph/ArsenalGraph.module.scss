@@ -5,8 +5,17 @@
 }
 
 .bottomNumber,
-.leftNumber {
+.leftNumber,
+.graphNumber {
   font: 400 0.875rem 'Nunito', sans-serif;
+}
+
+.graphNumber {
+	display: none;
+	opacity: 0;
+	transition: all .3s;
+	text-anchor: middle;
+	pointer-events: none;
 }
 
 .bottomNumber {
@@ -38,12 +47,22 @@
   r: 5;
 }
 
-.hoveringLine1:hover ~ *:not(.graphPath1),
-.hoveringLine2:hover ~ *:not(.graphPath2),
-.hoveringLine3:hover ~ *:not(.graphPath3),
-.hoveringLine4:hover ~ *:not(.graphPath4),
-.hoveringLine5:hover ~ *:not(.graphPath5),
-.hoveringLine6:hover ~ *:not(.graphPath6) {
+.hoveringLine1:hover ~ .graphNumber1,
+.hoveringLine2:hover ~ .graphNumber2,
+.hoveringLine3:hover ~ .graphNumber3,
+.hoveringLine4:hover ~ .graphNumber4,
+.hoveringLine5:hover ~ .graphNumber5,
+.hoveringLine6:hover ~ .graphNumber6 {
+  display: inline;
+	opacity: 1;
+}
+
+.hoveringLine1:hover ~ *:not(.graphPath1):not(.graphNumber),
+.hoveringLine2:hover ~ *:not(.graphPath2):not(.graphNumber),
+.hoveringLine3:hover ~ *:not(.graphPath3):not(.graphNumber),
+.hoveringLine4:hover ~ *:not(.graphPath4):not(.graphNumber),
+.hoveringLine5:hover ~ *:not(.graphPath5):not(.graphNumber),
+.hoveringLine6:hover ~ *:not(.graphPath6):not(.graphNumber) {
   opacity: 0.2;
 }
 
@@ -53,8 +72,8 @@
 }
 
 circle.graphPath {
-  transition: cy .3s, r 0.3s;
-  animation: showing .6s;
+  transition: cy 0.3s, r 0.3s;
+  animation: showing 0.6s;
 }
 
 @keyframes showing {

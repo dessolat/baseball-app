@@ -114,6 +114,14 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           [cl.graphPath5]: i === 4,
           [cl.graphPath6]: i === 5
         });
+        // const textClasses = classNames(cl.graphNumber, {
+        //   [cl.graphNumber1]: i === 0,
+        //   [cl.graphNumber2]: i === 1,
+        //   [cl.graphNumber3]: i === 2,
+        //   [cl.graphNumber4]: i === 3,
+        //   [cl.graphNumber5]: i === 4,
+        //   [cl.graphNumber6]: i === 5
+        // });
 
         const isPath = values.some(value => value !== 0);
         return (
@@ -134,6 +142,12 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
                   fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
                   className={pathClasses}
                 />
+                {/* <text
+                  x={startPointX}
+                  y={startPointY - 10}
+                  className={textClasses}>
+                  {values[0]}
+                </text> */}
               </>
             )}
             {values.slice(1).map(
