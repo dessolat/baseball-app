@@ -1,19 +1,19 @@
 import useSetMomentById from 'hooks/useSetMomentById';
-import React, { useState, useLayoutEffect, useRef, useEffect, Fragment, useMemo } from 'react';
-import { getChartColor, getPitchColorByName } from 'utils';
+import React, { useState, useLayoutEffect, useRef, useContext } from 'react';
+import { getPitchColorByName } from 'utils';
 import cl from './PlaysSpin.module.scss';
 import { useSelector } from 'react-redux';
+import { DotRadiusContext } from 'context';
 
-const DOT_RADIUS = 3;
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
 
-const AxisLines = ({ startX, startY }) => (
-  <>
-    <line x1={startX + 49.5} y1={startY + 0} x2={startX + 49.5} y2={startY + 100} stroke='#ACACAC' />
-    <line x1={startX} y1={startY + 49.5} x2={startX + 100} y2={startY + 49.5} stroke='#ACACAC' />
-  </>
-);
+// const AxisLines = ({ startX, startY }) => (
+//   <>
+//     <line x1={startX + 49.5} y1={startY + 0} x2={startX + 49.5} y2={startY + 100} stroke='#ACACAC' />
+//     <line x1={startX} y1={startY + 49.5} x2={startX + 100} y2={startY + 49.5} stroke='#ACACAC' />
+//   </>
+// );
 
 const HorizontalLines = ({ startX, startY }) => (
   <>
@@ -158,6 +158,8 @@ const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
 };
 
 const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
+  const DOT_RADIUS = useContext(DotRadiusContext);
+
   const setMomentById = useSetMomentById();
   const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
 

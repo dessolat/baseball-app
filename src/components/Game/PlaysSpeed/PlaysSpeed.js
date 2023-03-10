@@ -52,25 +52,25 @@ const PlaysSpeed = ({ currentMoment }) => {
       );
       inning['bottom/owners']?.forEach(card =>
         card.moments
-				.filter(moment => !moment.metering.pitch?.is_pick_off)
-				.forEach(moment => {
-          const pitchType = moment.metering.pitch?.pitch_type;
-          if (
-            moment.inner.id === currentMoment?.inner?.id &&
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            currentDotParams.type = pitchType;
-            currentDotParams.speed = moment.metering.pitch.start_speed;
-            currentDotParams.index = testData.length;
-          }
-          if (
-            moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
-            moment.metering.pitch
-          ) {
-            testData.push([pitchType, moment.metering.pitch.start_speed, moment.inner.id]);
-          }
-        })
+          .filter(moment => !moment.metering.pitch?.is_pick_off)
+          .forEach(moment => {
+            const pitchType = moment.metering.pitch?.pitch_type;
+            if (
+              moment.inner.id === currentMoment?.inner?.id &&
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              currentDotParams.type = pitchType;
+              currentDotParams.speed = moment.metering.pitch.start_speed;
+              currentDotParams.index = testData.length;
+            }
+            if (
+              moment.pitcher?.pitches_name === currentMoment?.pitcher?.pitches_name &&
+              moment.metering.pitch
+            ) {
+              testData.push([pitchType, moment.metering.pitch.start_speed, moment.inner.id]);
+            }
+          })
       );
     });
 

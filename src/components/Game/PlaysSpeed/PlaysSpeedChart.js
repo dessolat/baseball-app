@@ -1,14 +1,15 @@
 import usePitchTypes from 'hooks/usePitchTypes';
 import useSetMomentById from 'hooks/useSetMomentById';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { getChartColor, getPitchColorByName } from 'utils';
 import cl from './PlaysSpeed.module.scss';
 import { useSelector } from 'react-redux';
+import { DotRadiusContext } from 'context';
 
 const Dots = ({ dotsCoords, pitchTypes }) => {
   const setMomentById = useSetMomentById();
 
-  const DOT_RADIUS = 3;
+  const DOT_RADIUS = useContext(DotRadiusContext)
 
   const dotsArr = Object.entries(dotsCoords).reduce((sum, pair) => {
     pair[1].forEach(coords =>
