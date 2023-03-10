@@ -525,6 +525,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
 							title='Pitch, %'
+							graphType='PitchesRel'
             />
           </>
         )}
