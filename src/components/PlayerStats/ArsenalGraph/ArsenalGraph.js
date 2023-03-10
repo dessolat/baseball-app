@@ -330,6 +330,26 @@ const ArsenalGraph = ({
 
       return result;
     }
+    function getHorizontalBreakByType(pitches, sumByType) {
+      const horizontalBreakSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { break_x } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += break_x * 100;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in horizontalBreakSumByType) {
+        result[pitchType] = horizontalBreakSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
 
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
