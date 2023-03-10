@@ -94,6 +94,7 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
       {Object.entries(totalValues).map(([type, values], i) => {
         const startPointX = columnStartX;
         const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+
         let pathDest = `M${startPointX},${startPointY}`;
         values
           .slice(1)
@@ -106,6 +107,7 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
                       rowsStartY - (value - minValue) * yScaleMultiplier
                     }`)
           );
+
         const pathClasses = classNames(cl.graphPath, {
           [cl.graphPath1]: i === 0,
           [cl.graphPath2]: i === 1,
@@ -269,8 +271,8 @@ const ArsenalGraph = ({
 
       return relByType;
     }
-    function getSpeedRelByType(allPitchesByTime, sumByType) {
-      const speedsSumByType = allPitchesByTime.reduce((sum, { pitch_info }) => {
+    function getSpeedRelByType(pitches, sumByType) {
+      const speedsSumByType = pitches.reduce((sum, { pitch_info }) => {
         const { pitch_type: pitchType, speed } = pitch_info;
 
         if (sum[pitchType] === undefined) sum[pitchType] = 0;
@@ -288,6 +290,26 @@ const ArsenalGraph = ({
 
       return result;
     }
+    function getSpinRelByType(pitches, sumByType) {
+      const spinSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { spin } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += spin;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in spinSumByType) {
+        result[pitchType] = spinSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
 
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
@@ -301,7 +323,8 @@ const ArsenalGraph = ({
         const GRAPH_FUNCS = {
           Pitches: sumByType,
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
-          Speed: getSpeedRelByType(allPitchesByTime, sumByType)
+          Speed: getSpeedRelByType(pitches, sumByType),
+          Spin: getSpinRelByType(pitches, sumByType)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -334,13 +357,14 @@ const ArsenalGraph = ({
       const GRAPH_FIXES = {
         Pitches: 0,
         PitchesRel: 2,
-        Speed: 2
+        Speed: 2,
+        Spin: 0
       };
 
       const result = [];
       for (let i = 0; i <= PARAMS.HORIZONTAL_GRID_LINES_NUMBER; i++) {
         const value = correctedMinMaxValues.min + valueDelta * i;
-        result.push(+value.toFixed(GRAPH_FIXES[graphType]));
+        result.push(value.toFixed(GRAPH_FIXES[graphType]));
         // result.push(Math.floor(value));
       }
 
