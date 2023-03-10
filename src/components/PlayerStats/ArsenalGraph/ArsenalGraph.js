@@ -422,7 +422,7 @@ const ArsenalGraph = ({
       />
 
       {/* Horizontal lines + left numbers rendering */}
-      <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} />
+      <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} graphType={graphType} />
 
       {/* Horizontal marks + numbers*/}
       {/* Marks */}
