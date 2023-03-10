@@ -423,7 +423,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
     const date = `${getRndValue(2018, 2023)}-${month}-${day}`;
 
-    const pitch_type = getRndValue(0, 3);
+    const pitch_type = getRndValue(0, pitchTypes.length - 1);
     const newPitch = { pitch_info: { pitch_type, date } };
 
     arsenalAddedData.push(newPitch);
