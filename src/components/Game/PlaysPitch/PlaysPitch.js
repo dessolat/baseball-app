@@ -12,13 +12,15 @@ const PlaysPitch = () => {
 
   const { Provider } = DotRadiusContext;
   return (
-    <Provider value={3}>
+    <>
       <PlaysField currentMoment={currentMoment} />
-      <PlaysSpeed currentMoment={currentMoment} />
-      <PlaysSpin pitch={currentMoment?.metering?.pitch} />
+      <Provider value={3}>
+        <PlaysSpeed currentMoment={currentMoment} />
+        <PlaysSpin pitch={currentMoment?.metering?.pitch} />
+      </Provider>
       <PitchVideos />
       <PitchValues />
-    </Provider>
+    </>
   );
 };
 
