@@ -415,7 +415,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   //! Delete after testing
   const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
 
-  for (let i = 0; i < 5000; i++) {
+  for (let i = 0; i < 1500; i++) {
     let month = getRndValue(6, 10);
     month = month < 10 ? `0${month}` : month;
     let day = getRndValue(5, 6);
@@ -427,11 +427,12 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     const speed = getRndValue(11, 14);
     const spin = getRndValue(200, 2000);
     const break_y = getRndValue(1200, 2900) / -1000;
-    const newPitch = { pitch_info: { pitch_type, date, speed }, break: { spin, break_y } };
+    const break_x = (getRndValue(0, 1000) - 500) / 1000;
+    const newPitch = { pitch_info: { pitch_type, date, speed }, break: { spin, break_y, break_x } };
 
     arsenalAddedData.push(newPitch);
   }
-	
+
   const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
     const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
     const pitchType = pitchTypes[pitch_type];
@@ -553,6 +554,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               pitchTypes={pitchTypes}
               title='Vertical break'
               graphType='VerticalBreak'
+            />
+            <ArsenalGraph
+              filteredData={arsenalAddedData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Horizontal break'
+              graphType='HorizontalBreak'
             />
           </>
         )}
