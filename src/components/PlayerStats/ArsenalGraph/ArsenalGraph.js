@@ -9,7 +9,7 @@ import HorizontalLinesAndNumbers from './HorizontalLinesAndNumbers';
 const PARAMS = {
   HORIZONTAL_GRID_LINES_NUMBER: 5,
   HORIZONTAL_GRID_LINES_WIDTH: 1120,
-  HORIZONTAL_GRID_LINES_LEFT: 45,
+  HORIZONTAL_GRID_LINES_LEFT: 55,
   HORIZONTAL_GRID_LINES_TOP: 65,
   GRAPH_LINES_HEIGHT: 322,
   LEFT_PADDING: 12,
@@ -162,7 +162,14 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
   );
 };
 
-const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pitchTypes, title }) => {
+const ArsenalGraph = ({
+  filteredData,
+  currentTimeInterval,
+  currentPitchTypes,
+  pitchTypes,
+  title,
+  graphType = 'Pitches'
+}) => {
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -195,8 +202,13 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
     return [];
   }
   function getLeftMarks(bottomMarks) {
+    const graphsWithAllPitches = ['Pitches'];
+
     const availablePitchTypes = currentPitchTypes
-      .filter(pitchType => pitchType.checked)
+      .filter(
+        pitchType =>
+          pitchType.checked && (pitchType.type === -1 ? graphsWithAllPitches.includes(graphType) : 1)
+      )
       .map(pitchType => pitchType.type);
     const filteredByAvailablePitchTypes = filteredData.filter(({ pitch_info: pitchInfo }) =>
       availablePitchTypes.includes(pitchInfo.pitch_type)
@@ -215,6 +227,9 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
         ({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur
       );
     }
+    function getPitchesByTime(cur, sliceTo) {
+      return filteredData.filter(({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur);
+    }
     function getDefaultSumByType() {
       return availablePitchTypes.reduce((sum, type) => {
         sum[type] = 0;
@@ -231,13 +246,32 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
         return sum;
       }, defaultSumByType);
     }
+    function getRelSumByType(allPitchesByTime, pitches) {
+      const sumByType = getSumByType(pitches, getDefaultSumByType());
+      const relByType = {};
+
+      for (let key in sumByType) {
+        relByType[key] = (sumByType[key] * 100) / allPitchesByTime.length;
+      }
+
+      return relByType;
+    }
+
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
 
       return bottomMarks.reduce((totalSum, interval) => {
         const pitches = getFilteredPitches(interval, sliceTo);
+        const allPitchesByTime = getPitchesByTime(interval, sliceTo);
         const defaultSumByType = getDefaultSumByType();
-        const sumByType = getSumByType(pitches, defaultSumByType);
+
+        const GRAPH_FUNCS = {
+          Pitches: getSumByType(pitches, defaultSumByType),
+          PitchesRel: getRelSumByType(allPitchesByTime, pitches)
+        };
+
+        const sumByType = GRAPH_FUNCS[graphType];
+        // const sumByType = getSumByType(pitches, defaultSumByType);
 
         totalSum[interval] = sumByType;
         return totalSum;
@@ -263,10 +297,16 @@ const ArsenalGraph = ({ filteredData, currentTimeInterval, currentPitchTypes, pi
       return (correctedMinMaxValues.max - correctedMinMaxValues.min) / PARAMS.HORIZONTAL_GRID_LINES_NUMBER;
     }
     function getLeftValues(correctedMinMaxValues, valueDelta) {
+      const GRAPH_FIXES = {
+        Pitches: 0,
+        PitchesRel: 2
+      };
+
       const result = [];
       for (let i = 0; i <= PARAMS.HORIZONTAL_GRID_LINES_NUMBER; i++) {
         const value = correctedMinMaxValues.min + valueDelta * i;
-        result.push(Math.floor(value));
+        result.push(+value.toFixed(GRAPH_FIXES[graphType]));
+        // result.push(Math.floor(value));
       }
 
       return result;
