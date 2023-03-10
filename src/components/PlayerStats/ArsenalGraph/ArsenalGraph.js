@@ -365,7 +365,8 @@ const ArsenalGraph = ({
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
-          VerticalBreak: getVerticalBreakByType(pitches, sumByType)
+          VerticalBreak: getVerticalBreakByType(pitches, sumByType),
+          HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -400,7 +401,8 @@ const ArsenalGraph = ({
         PitchesRel: 2,
         Speed: 2,
         Spin: 0,
-        VerticalBreak: 1
+        VerticalBreak: 1,
+        HorizontalBreak: 1
       };
 
       const result = [];
