@@ -430,10 +430,11 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     const break_x = (getRndValue(0, 1000) - 500) / 1000;
     const inZone = getRndValue(0, 1);
     const outZone = 1 - inZone;
+    const inside = getRndValue(0, 1);
     const newPitch = {
       pitch_info: { pitch_type, date, speed },
       break: { spin, break_y, break_x },
-      zone: { 'in zone': inZone, 'out zone': outZone }
+      zone: { 'in zone': inZone, 'out zone': outZone, inside }
     };
 
     arsenalAddedData.push(newPitch);
