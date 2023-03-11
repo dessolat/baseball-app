@@ -218,7 +218,7 @@ const ArsenalGraph = ({
     return [];
   }
   function getLeftMarks(bottomMarks) {
-    const graphsWithAllPitches = ['Pitches', 'InZone', 'OutZone'];
+    const graphsWithAllPitches = ['Pitches', 'InZone', 'OutZone', 'Inside', 'Outside'];
 
     const availablePitchTypes = currentPitchTypes
       .filter(
@@ -404,7 +404,8 @@ const ArsenalGraph = ({
           VerticalBreak: getVerticalBreakByType(pitches, sumByType),
           HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
           InZone: getSumInZoneByType(pitches),
-          OutZone: getSumOutZoneByType(pitches)
+          OutZone: getSumOutZoneByType(pitches),
+					Inside: getSumInsideByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -442,7 +443,8 @@ const ArsenalGraph = ({
         VerticalBreak: 1,
         HorizontalBreak: 1,
 				InZone: 0,
-				OutZone: 0
+				OutZone: 0,
+				Inside: 0
       };
 
       const result = [];
