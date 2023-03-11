@@ -218,7 +218,7 @@ const ArsenalGraph = ({
     return [];
   }
   function getLeftMarks(bottomMarks) {
-    const graphsWithAllPitches = ['Pitches'];
+    const graphsWithAllPitches = ['Pitches', 'InZone', 'OutZone'];
 
     const availablePitchTypes = currentPitchTypes
       .filter(
@@ -415,7 +415,8 @@ const ArsenalGraph = ({
         Speed: 2,
         Spin: 0,
         VerticalBreak: 1,
-        HorizontalBreak: 1
+        HorizontalBreak: 1,
+				InZone: 0
       };
 
       const result = [];
