@@ -417,7 +417,8 @@ const ArsenalGraph = ({
           HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
           InZone: getSumInZoneByType(pitches),
           OutZone: getSumOutZoneByType(pitches),
-					Inside: getSumInsideByType(pitches)
+					Inside: getSumInsideByType(pitches),
+					Outside: getSumOutsideByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -456,7 +457,8 @@ const ArsenalGraph = ({
         HorizontalBreak: 1,
 				InZone: 0,
 				OutZone: 0,
-				Inside: 0
+				Inside: 0,
+				Outside: 0
       };
 
       const result = [];
