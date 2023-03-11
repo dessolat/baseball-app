@@ -262,6 +262,18 @@ const ArsenalGraph = ({
         return sum;
       }, defaultSumByType);
     }
+    function getSumInZoneByType(pitches) {
+      return pitches
+        .filter(({ zone }) => zone['in zone'])
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+    }
     function getRelSumByType(allPitchesByTime, sumByType) {
       const relByType = {};
 
@@ -367,6 +379,7 @@ const ArsenalGraph = ({
           Spin: getSpinByType(pitches, sumByType),
           VerticalBreak: getVerticalBreakByType(pitches, sumByType),
           HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
+          InZone: getSumInZoneByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
