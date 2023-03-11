@@ -286,6 +286,18 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
     }
+    function getSumInsideByType(pitches) {
+      return pitches
+        .filter(({ zone }) => zone.inside)
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+    }
     function getRelSumByType(allPitchesByTime, sumByType) {
       const relByType = {};
 
