@@ -391,7 +391,8 @@ const ArsenalGraph = ({
           Spin: getSpinByType(pitches, sumByType),
           VerticalBreak: getVerticalBreakByType(pitches, sumByType),
           HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
-          InZone: getSumInZoneByType(pitches)
+          InZone: getSumInZoneByType(pitches),
+          OutZone: getSumOutZoneByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -428,7 +429,8 @@ const ArsenalGraph = ({
         Spin: 0,
         VerticalBreak: 1,
         HorizontalBreak: 1,
-				InZone: 0
+				InZone: 0,
+				OutZone: 0
       };
 
       const result = [];
