@@ -420,8 +420,9 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     month = month < 10 ? `0${month}` : month;
     let day = getRndValue(5, 6);
     day = day < 10 ? `0${day}` : day;
+		const year = getRndValue(2019, 2023)
 
-    const date = `${getRndValue(2018, 2023)}-${month}-${day}`;
+    const date = `${year}-${month}-${day}`;
 
     const pitch_type = getRndValue(0, pitchTypes.length - 1);
     const speed = getRndValue(11, 14);
