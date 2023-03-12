@@ -443,7 +443,8 @@ const ArsenalGraph = ({
           OutZone: getSumOutZoneByType(pitches),
 					Inside: getSumInsideByType(pitches),
 					Outside: getSumOutsideByType(pitches),
-					Low: getSumLowByType(pitches)
+					Low: getSumLowByType(pitches),
+					High: getSumHighByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -484,7 +485,8 @@ const ArsenalGraph = ({
 				OutZone: 0,
 				Inside: 0,
 				Outside: 0,
-				Low: 0
+				Low: 0,
+				High: 0
       };
 
       const result = [];
