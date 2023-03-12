@@ -420,7 +420,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     month = month < 10 ? `0${month}` : month;
     let day = getRndValue(5, 6);
     day = day < 10 ? `0${day}` : day;
-		const year = getRndValue(2019, 2023)
+    const year = getRndValue(2019, 2023);
 
     const date = `${year}-${month}-${day}`;
 
@@ -434,10 +434,12 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     const inside = getRndValue(0, 1);
     const outside = 1 - inside;
     const low = getRndValue(0, 1);
+    const high = 1 - low;
+
     const newPitch = {
       pitch_info: { pitch_type, date, speed },
       break: { spin, break_y, break_x },
-      zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low }
+      zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
     };
 
     arsenalAddedData.push(newPitch);
