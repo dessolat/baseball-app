@@ -57,7 +57,8 @@ const useGameFetch = url => {
           dispatch(setPlayersInfo(newPlayersInfo));
           dispatch(
             setIsVideo(
-              resp.data.innings[0]['top/guests'][0].moments[0].video !== null || gameId === '958' || gameId === '1258' ? true : false
+              resp.data.preview.has_measures
+              // resp.data.innings[0]['top/guests'][0].moments[0].video !== null || gameId === '958' || gameId === '1258' ? true : false
             )
           );
         }
