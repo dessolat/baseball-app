@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
@@ -366,7 +366,35 @@ const FieldGraph = ({
   const [isChecked, setChecked] = useState(false);
   const [coordsAltered, setCoordsAltered] = useState(false);
   const [isAbsCoef, setIsAbsCoef] = useState(true);
-  console.log(preview);
+  const [isGraphVisible, setGraphVisibility] = useState(false);
+
+  const graphRef = useRef();
+
+  useEffect(() => {
+		let options = {
+			root: null,
+			rootMargin: "300px 0px",
+			threshold: 0,
+		};
+
+    let observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const { isIntersecting } = entry;
+
+        if (isIntersecting) {
+          setGraphVisibility(true);
+        } else {
+          setGraphVisibility(false);
+        }
+      });
+    }, options);
+    observer.observe(graphRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const optionsTogglerStyles = {
     position: 'absolute',
     right: '.4375rem',
@@ -476,18 +504,23 @@ const FieldGraph = ({
       <svg
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
-        preserveAspectRatio='none'>
-        <Frames
-          avgCoords={avgCoords}
-          arrData={filteredData}
-          preview={preview}
-          isDots={isDots}
-          relValuesData={relValuesData}
-          coords={coords}
-          linesCoords={linesCoords}
-        />
-        <VerticalGridLines linesCoords={linesCoords} />
-        <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+        preserveAspectRatio='none'
+        ref={graphRef}>
+        {isGraphVisible && (
+          <>
+            <Frames
+              avgCoords={avgCoords}
+              arrData={filteredData}
+              preview={preview}
+              isDots={isDots}
+              relValuesData={relValuesData}
+              coords={coords}
+              linesCoords={linesCoords}
+            />
+            <VerticalGridLines linesCoords={linesCoords} />
+            <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+          </>
+        )}
       </svg>
       <OptionsToggler
         style={optionsTogglerStyles}

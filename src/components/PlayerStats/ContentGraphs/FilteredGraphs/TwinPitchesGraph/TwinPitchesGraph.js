@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchColorByName } from 'utils';
 import h337 from 'heatmap.js';
@@ -436,6 +436,35 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
   const wrapperRef = useRef();
   const heatmapInstanceRef = useRef();
 
+  const [isGraphVisible, setGraphVisibility] = useState(false);
+
+  const graphRef = useRef();
+
+  useEffect(() => {
+    let options = {
+      root: null,
+      rootMargin: '300px 0px',
+      threshold: 0
+    };
+
+    let observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const { isIntersecting } = entry;
+
+        if (isIntersecting) {
+          setGraphVisibility(true);
+        } else {
+          setGraphVisibility(false);
+        }
+      });
+    }, options);
+    observer.observe(graphRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   // useEffect(() => {
   //   heatmapInstanceRef.current = h337.create({
   //     // only container is required, the rest will be defaults
@@ -572,13 +601,16 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
         className={cl.wrapper}
-        preserveAspectRatio='none'>
-        <LeftChart
-          data={data}
-          filteredData={filteredData}
-          selectedPitchType={selectedPitchType}
-          preview={preview}
-        />
+        preserveAspectRatio='none'
+        ref={graphRef}>
+        {isGraphVisible && (
+          <LeftChart
+            data={data}
+            filteredData={filteredData}
+            selectedPitchType={selectedPitchType}
+            preview={preview}
+          />
+        )}
       </svg>
     </div>
   );
