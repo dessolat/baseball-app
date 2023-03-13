@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { getPitchColorByName } from 'utils';
 import cl from './ArsenalGraph.module.scss';
@@ -186,6 +186,29 @@ const ArsenalGraph = ({
   title,
   graphType = 'Pitches'
 }) => {
+  const [isGraphVisible, setGraphVisibility] = useState(false);
+
+  const graphRef = useRef();
+
+  useEffect(() => {
+    let observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const { isIntersecting } = entry;
+
+        if (isIntersecting) {
+          setGraphVisibility(true);
+        } else {
+          setGraphVisibility(false);
+        }
+      });
+    });
+    observer.observe(graphRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   function getBottomMarks() {
     if (currentTimeInterval === 'Season') {
       const datesSet = filteredData.reduce((sum, { pitch_info: pitchInfo }) => {
@@ -441,10 +464,10 @@ const ArsenalGraph = ({
           HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
           InZone: getSumInZoneByType(pitches),
           OutZone: getSumOutZoneByType(pitches),
-					Inside: getSumInsideByType(pitches),
-					Outside: getSumOutsideByType(pitches),
-					Low: getSumLowByType(pitches),
-					High: getSumHighByType(pitches)
+          Inside: getSumInsideByType(pitches),
+          Outside: getSumOutsideByType(pitches),
+          Low: getSumLowByType(pitches),
+          High: getSumHighByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
@@ -481,12 +504,12 @@ const ArsenalGraph = ({
         Spin: 0,
         VerticalBreak: 1,
         HorizontalBreak: 1,
-				InZone: 0,
-				OutZone: 0,
-				Inside: 0,
-				Outside: 0,
-				Low: 0,
-				High: 0
+        InZone: 0,
+        OutZone: 0,
+        Inside: 0,
+        Outside: 0,
+        Low: 0,
+        High: 0
       };
 
       const result = [];
@@ -533,43 +556,44 @@ const ArsenalGraph = ({
   };
 
   return (
-    <svg viewBox='0 0 1192 500' xmlns='http://www.w3.org/2000/svg' className={cl.graph}>
-      {/* Main layout rendering */}
-      {/* Top-left title */}
-      <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
-        {title}
-      </text>
-
-      {/* Horizontal center grid line */}
-      <line
-        x1={PARAMS.ZERO_COORDS.X}
-        y1={PARAMS.ZERO_COORDS.Y}
-        x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
-        y2={PARAMS.ZERO_COORDS.Y}
-        stroke='#ACACAC'
-      />
-
-      {/* Horizontal lines + left numbers rendering */}
-      <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} graphType={graphType} />
-
-      {/* Horizontal marks + numbers*/}
-      {/* Marks */}
-      <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
-
-      {/* Graph lines */}
-      <HoveringLines
-        PARAMS={PARAMS}
-        leftMarks={leftMarks}
-        pitchTypes={pitchTypes}
-        yScaleMultiplier={yScaleMultiplier}
-      />
-      <Lines
-        PARAMS={PARAMS}
-        leftMarks={leftMarks}
-        pitchTypes={pitchTypes}
-        yScaleMultiplier={yScaleMultiplier}
-        currentTimeInterval={currentTimeInterval}
-      />
+    <svg viewBox='0 0 1192 500' xmlns='http://www.w3.org/2000/svg' className={cl.graph} ref={graphRef}>
+      {isGraphVisible && (
+        <>
+          {' '}
+          {/* Main layout rendering */}
+          {/* Top-left title */}
+          <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
+            {title}
+          </text>
+          {/* Horizontal center grid line */}
+          <line
+            x1={PARAMS.ZERO_COORDS.X}
+            y1={PARAMS.ZERO_COORDS.Y}
+            x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
+            y2={PARAMS.ZERO_COORDS.Y}
+            stroke='#ACACAC'
+          />
+          {/* Horizontal lines + left numbers rendering */}
+          <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} graphType={graphType} />
+          {/* Horizontal marks + numbers*/}
+          {/* Marks */}
+          <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
+          {/* Graph lines */}
+          <HoveringLines
+            PARAMS={PARAMS}
+            leftMarks={leftMarks}
+            pitchTypes={pitchTypes}
+            yScaleMultiplier={yScaleMultiplier}
+          />
+          <Lines
+            PARAMS={PARAMS}
+            leftMarks={leftMarks}
+            pitchTypes={pitchTypes}
+            yScaleMultiplier={yScaleMultiplier}
+            currentTimeInterval={currentTimeInterval}
+          />
+        </>
+      )}
 
       {/* Dots */}
       {/* <Dots
