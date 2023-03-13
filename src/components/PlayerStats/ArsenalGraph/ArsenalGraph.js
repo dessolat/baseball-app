@@ -191,6 +191,12 @@ const ArsenalGraph = ({
   const graphRef = useRef();
 
   useEffect(() => {
+		let options = {
+			root: null,
+			rootMargin: "200px 0px",
+			threshold: 0,
+		};
+
     let observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const { isIntersecting } = entry;
@@ -201,7 +207,7 @@ const ArsenalGraph = ({
           setGraphVisibility(false);
         }
       });
-    });
+    }, options);
     observer.observe(graphRef.current);
 
     return () => {
