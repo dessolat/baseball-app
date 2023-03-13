@@ -156,7 +156,7 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
         percentValueRef.current.style.opacity = 1;
       }
     }, 300);
-  }, [data]);
+  }, [percents]);
 
   const xCoord = right - 20;
   const yCoordFilled = reverse ? center : center - coef * percents;
@@ -173,6 +173,7 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
   // const percentsYCoord = reverse ? center + columnHeight + 25 : yCoordFilled - 5;
   const legendCircleFill = footer === 'Heart' ? '#B6C6D6' : footer === 'Shadow' ? '#EAEAEA' : 'transparent';
   const isLegendText = footer === 'Heart';
+	const percentsValue = Math.round(percents)
   return (
     <>
       {/* Filled */}
@@ -199,7 +200,7 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
       </text> */}
       {/* Percents */}
       <text x={valueXCoord} y={percentsYCoord} className={cl.percentValue} ref={percentValueRef}>
-        {Math.round(percents)}%
+        {percentsValue}%
       </text>
       {/* Footer */}
       {footer && (
