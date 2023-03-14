@@ -466,6 +466,45 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     return sum;
   }, {});
 
+  // ! delete after testing
+
+  let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
+
+	twinFilteredData = twinFilteredData.map(pitch => pitch.coordinates.zone_y === 0 ? {...pitch, coordinates: {zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }} : pitch) 
+
+  for (let i = 0; i < 100; i++) {
+    const pitch = {
+      pitch_info: { pitch_type: 1 },
+      coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
+      result: {
+        swing: 0,
+        take: 1,
+        miss: 0,
+        contact: 0,
+        'base hit & hard hit': 0,
+        'soft hit': 0,
+        fly: 0,
+        line: 0,
+        gruond: 0
+      },
+      zone: {
+        'in zone': 0,
+        'out zone': 1,
+        heart: 0,
+        edge: 0,
+        waste: 1,
+        low: 1,
+        high: 0,
+        outside: 0,
+        inside: 0
+      }
+    };
+
+    twinFilteredData.push(pitch);
+  }
+
+  // !
+
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -499,15 +538,21 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph data={relValuesData} filteredData={filteredData} preview={preview} />
+              <TwinPitchesGraph
+                data={relValuesData}
+                filteredData={twinFilteredData}
+                preview={preview}
+                currentOption={currentOption}
+              />
 
               {Object.entries(relValuesData).map((entry, index) => (
                 <TwinPitchesGraph
                   key={index}
                   data={relValuesData}
-                  filteredData={filteredData}
+                  filteredData={twinFilteredData}
                   selectedPitchType={entry[0]}
                   preview={preview}
+                  currentOption={currentOption}
                 />
               ))}
             </div>
