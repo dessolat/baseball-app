@@ -1,7 +1,7 @@
-import { useRef, useLayoutEffect, useEffect, useState } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
-import { getPitchColorByName } from 'utils';
-import h337 from 'heatmap.js';
+import { getPitchColorByName, getRndValue } from 'utils';
+// import h337 from 'heatmap.js';
 
 const PARAMS = {
   GRAPH_WIDTH: 463,
@@ -49,7 +49,225 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   );
 };
 
-const Frames = ({ top, title1, filteredData, selectedPitchType, preview }) => {
+const HeatAreas = ({ arrData, pitchTypes, coords }) => {
+  const { zeroXCoord, zeroYCoord, xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef } = coords;
+  const heatRowsCount = 35;
+  const heatColsCount = 32;
+  const rowHeight = PARAMS.GRAPH_HEIGHT / heatRowsCount;
+  const colWidth = PARAMS.GRAPH_WIDTH / heatColsCount;
+
+  // now generate some random data
+  let maxValue = 0;
+
+  const dotsCoords = arrData.reduce((sum, pitch) => {
+    const { coordinates, pitch_info: pitchInfo } = pitch;
+    const { zone_x: x, zone_y: y } = coordinates;
+
+    const xCoord = zeroXCoord + x * xCoordRelCoef;
+    const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
+
+    const rowNumber = Math.floor(yCoord / rowHeight);
+    const colNumber = Math.floor(xCoord / colWidth);
+
+    if (!sum[rowNumber]) sum[rowNumber] = [];
+    if (!sum[rowNumber][colNumber]) sum[rowNumber][colNumber] = 0;
+
+    sum[rowNumber][colNumber]++;
+
+    maxValue = Math.max(maxValue, sum[rowNumber][colNumber]);
+
+    return sum;
+  }, []);
+
+  console.log(dotsCoords);
+  console.log(maxValue);
+
+  const points = dotsCoords.reduce((sum, coords, i) => {
+    if (coords === undefined) return sum;
+
+    coords.forEach((col, j) => {
+      if (col === undefined) return;
+
+      const newPoint = {
+        x: +(j * colWidth + colWidth / 2).toFixed(2),
+        y: +(i * rowHeight + rowHeight / 2).toFixed(2),
+        value: col
+        // value: col <= 5 ? +col : 5
+      };
+
+      sum.push(newPoint);
+    });
+
+    return sum;
+  }, []);
+
+  console.log(points);
+  const maxRadius = 18;
+  return (
+    <>
+      {points.map((point, i) => {
+        const { x, y, value } = point;
+
+        const firstLayerMaxValue = maxValue < 5 ? maxValue * 0.5 : maxValue * 0.33;
+        const firstLayerRadius =
+          maxValue === 1
+            ? maxRadius / 3
+            : maxValue < 3
+            ? value * (maxRadius / 3)
+            : value < firstLayerMaxValue
+            ? (value / firstLayerMaxValue) * maxRadius
+            : maxRadius;
+        
+
+        //  value > maxValue * 0.33
+        // ? maxRadius
+        // : value * (maxRadius / maxValue);
+
+        // const secondLayerRadius = maxValue < 4 ? 0 : (maxValue * 0.33)
+
+        // let path = '';
+        // const topLeftX = x - firstLayerRadius;
+        // const topLeftY = y - firstLayerRadius;
+        // const topRightX = x + firstLayerRadius;
+        // const topRightY = topLeftY;
+        // const bottomRightX = topRightX;
+        // const bottomRightY = y + firstLayerRadius;
+        // const bottomLeftX = topLeftX;
+        // const bottomLeftY = bottomRightY;
+
+        // const topRightCornering = getRndValue(-firstLayerRadius, firstLayerRadius);
+        // const bottomRightCornering = getRndValue(-firstLayerRadius, firstLayerRadius)
+        // const bottomLeftCornering = getRndValue(-firstLayerRadius, firstLayerRadius)
+
+        // // top-left point
+        // path += `M${topLeftX},${topLeftY}`;
+        // // top-right
+        // path += `C${topLeftX + getRndValue(0, firstLayerRadius)} ${
+        //   topLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // }, ${topRightX - getRndValue(0, firstLayerRadius)} ${
+        //   topRightY + topRightCornering
+        // }, ${topRightX} ${topRightY}`;
+        // // bottom-right
+        // path += `C${topRightX + getRndValue(0, firstLayerRadius)} ${topRightY - topRightCornering}, ${
+        //   bottomRightX + bottomRightCornering
+        //   // bottomRightX + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // } ${bottomRightY - getRndValue(0, firstLayerRadius)}, ${bottomRightX} ${bottomRightY}`;
+        // // bottom-left
+        // path += `C${bottomRightX - getRndValue(0, firstLayerRadius)} ${
+        //   bottomRightY - bottomRightCornering
+        //   // bottomRightY + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // }, ${bottomLeftX + getRndValue(0, firstLayerRadius)} ${
+        //   bottomLeftY + bottomLeftCornering
+        //   // bottomLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // }, ${bottomLeftX} ${bottomLeftY}`;
+        // // top-left
+        // path += `C${bottomLeftX - getRndValue(0, firstLayerRadius)} ${
+        //   bottomLeftY - bottomLeftCornering
+        //   // bottomRightY + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // }, ${topLeftX + getRndValue(-firstLayerRadius, firstLayerRadius)} ${
+        //   topLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
+        // }, ${topLeftX} ${topLeftY}`;
+
+        return (
+          <Fragment key={i}>
+            <filter id='goo'>
+              <feGaussianBlur in='SourceGraphic' stdDeviation='1' />
+            </filter>
+            {/* <path d={path} fill='#8aa3cf' className={cl.blurredPath} filter='url(#goo)' /> */}
+            {/* <rect
+              x='60'
+              y='30'
+              width='30'
+              height='30'
+              fill='#8aa3cf'
+              style={{
+                borderTopLeftRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
+                borderTopRightRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
+                borderBottomLeftRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
+                borderBottomRightRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`
+              }}
+            /> */}
+            <circle
+              // key={`${i}-x-${x}-y-${y}`}
+              cx={point.x}
+              cy={point.y}
+              r={firstLayerRadius}
+              // stroke='black'
+              // strokeWidth='.5'
+              fill='#8aa3cf'
+							filter='url(#goo)'
+              // opacity='.5'
+              // className={cl.animated}
+            />
+           
+          </Fragment>
+        );
+      })}
+			{/* Second layer */}
+			{points.map((point, i) => {
+        const { x, y, value } = point;
+
+        const secondLayerMaxValue = maxValue < 5 ? maxValue : maxValue * 0.66;
+
+        const secondLayerRadius =
+          value >= 3
+            ? value < secondLayerMaxValue
+              ? (value / secondLayerMaxValue) * (maxRadius - 3)
+              : maxRadius - 3
+            : 0;
+
+
+        return (
+          <Fragment key={i}>
+            <filter id='goo'>
+              <feGaussianBlur in='SourceGraphic' stdDeviation='1' />
+            </filter>
+
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r={secondLayerRadius}
+              fill='lightblue'
+							filter='url(#goo)'
+            />
+          </Fragment>
+        );
+      })}
+			{/* Third layer */}
+			{points.map((point, i) => {
+        const { x, y, value } = point;
+
+        const thirdLayerMaxValue = maxValue;
+
+        const thirdLayerRadius =
+          value >= 5
+            ? value < thirdLayerMaxValue
+              ? (value / thirdLayerMaxValue) * (maxRadius - 10)
+              : maxRadius - 10
+            : 0;
+
+
+        return (
+          <Fragment key={i}>
+            <filter id='goo'>
+              <feGaussianBlur in='SourceGraphic' stdDeviation='2' />
+            </filter>
+
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r={thirdLayerRadius}
+              fill='red'
+							filter='url(#goo)'
+            />
+          </Fragment>
+        );
+      })}
+    </>
+  );
+};
+
+const Frames = ({ top, title1, filteredData, selectedPitchType, preview, currentOption }) => {
   const { zone, pitch_types: pitchTypes } = preview;
 
   const {
@@ -78,6 +296,8 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview }) => {
   const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
   const dashedFrameY = zeroYCoord - yStrikeUp * yCoordRelCoef + yCoordAbsCoef;
   const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
+
+  const isDots = currentOption === 'All Pitches';
   return (
     <>
       {/* Frames */}
@@ -113,11 +333,22 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview }) => {
       />
 
       {/* Dots */}
-      <Dots
-        arrData={arrData}
-        pitchTypes={pitchTypes}
-        coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-      />
+      {isDots && (
+        <Dots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+        />
+      )}
+
+      {/* Heat areas */}
+      {!isDots && (
+        <HeatAreas
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+        />
+      )}
 
       {/* Dashed frame */}
       <rect
@@ -173,7 +404,7 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
   // const percentsYCoord = reverse ? center + columnHeight + 25 : yCoordFilled - 5;
   const legendCircleFill = footer === 'Heart' ? '#B6C6D6' : footer === 'Shadow' ? '#EAEAEA' : 'transparent';
   const isLegendText = footer === 'Heart';
-	const percentsValue = Math.round(percents)
+  const percentsValue = Math.round(percents);
   return (
     <>
       {/* Filled */}
@@ -408,7 +639,7 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
   );
 };
 
-const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
+const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOption }) => {
   const mainTitle = selectedPitchType ?? 'All pitches';
 
   return (
@@ -419,6 +650,7 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
         filteredData={filteredData}
         selectedPitchType={selectedPitchType}
         preview={preview}
+        currentOption={currentOption}
       />
       <PercentsGraph
         left={PARAMS.SIDE_PADDING + 179 + 45}
@@ -431,11 +663,11 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview }) => {
   );
 };
 
-const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview }) => {
+const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview, currentOption }) => {
   const { pitch_types: pitchTypes } = preview;
 
   const wrapperRef = useRef();
-  const heatmapInstanceRef = useRef();
+  // const heatmapInstanceRef = useRef();
 
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
@@ -466,97 +698,18 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     };
   }, []);
 
-  // useEffect(() => {
-  //   heatmapInstanceRef.current = h337.create({
-  //     // only container is required, the rest will be defaults
-  //     // container: document.getElementById('root')
-  //     container: wrapperRef.current
-  //   });
-  // }, []);
-
   useEffect(() => {
-    const heatmapInstance = h337.create({
-      // only container is required, the rest will be defaults
-      // container: document.getElementById('root')
-      container: wrapperRef.current
-    });
-
-    const zeroYCoord = wrapperRef.current.clientHeight * 0.85;
-    // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.85;
-    const yCoordRelCoef = 340;
-    const yCoordAbsCoef = wrapperRef.current.clientHeight / 5.173333;
-
-    const zeroXCoord = wrapperRef.current.clientWidth * 0.2645;
-    // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
-    const xCoordRelCoef = 248;
-
-    const arrData = selectedPitchType
-      ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
-      : filteredData;
-
-    const heatRowsCount = 30;
-    const heatColsCount = 30;
-    const rowHeight = wrapperRef.current.clientHeight / heatRowsCount;
-    const colWidth = wrapperRef.current.clientWidth / heatColsCount;
-
-    // now generate some random data
-    let max = 0;
-
-    const width = wrapperRef.current.clientWidth;
-    const height = wrapperRef.current.clientHeight;
-
-    let maxValue = 0;
-
-    const dotsCoords = arrData.reduce((sum, pitch) => {
-      const { coordinates, pitch_info: pitchInfo } = pitch;
-      const { zone_x: x, zone_y: y } = coordinates;
-
-      const xCoord = zeroXCoord + x * xCoordRelCoef;
-      const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
-
-      const rowNumber = Math.floor(yCoord / rowHeight);
-      const colNumber = Math.floor(xCoord / colWidth);
-
-      if (!sum[rowNumber]) {
-        sum[rowNumber] = [];
-      }
-
-      if (!sum[rowNumber][colNumber]) {
-        sum[rowNumber][colNumber] = 1;
-
-        return sum;
-      }
-
-      sum[rowNumber][colNumber]++;
-
-      maxValue = Math.max(maxValue, sum[rowNumber][colNumber]);
-
-      return sum;
-    }, []);
-
-    const points = dotsCoords.reduce((sum, coords, i) => {
-      if (coords === undefined) return sum;
-
-      coords.forEach((col, j) => {
-        if (col === undefined) return;
-
-        const newPoint = {
-          x: +(j * colWidth + colWidth / 2).toFixed(2),
-          y: +(i * rowHeight + rowHeight / 2).toFixed(2),
-          value: col <= 5 ? +col : 5
-        };
-
-        sum.push(newPoint);
-      });
-
-      return sum;
-    }, []);
-
+    // const heatmapInstance = h337.create({
+    //   // only container is required, the rest will be defaults
+    //   // container: document.getElementById('root')
+    //   container: wrapperRef.current
+    // });
+    // const zeroYCoord = wrapperRef.current.clientHeight * 0.85;
+    // const yCoordAbsCoef = wrapperRef.current.clientHeight / 5.173333;
+    // const zeroXCoord = wrapperRef.current.clientWidth * 0.2645;
     // console.log(dotsCoords);
     // console.log(maxValue);
-
     // let len = arrData.length;
-
     // while (len--) {
     //   const val = Math.floor(Math.random() * 100);
     //   max = Math.max(max, val);
@@ -569,30 +722,25 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     //   };
     //   points.push(point);
     // }
-
     // heatmap data format
-    const dataValues = {
-      min: 1,
-      max: 5,
-      // data: [
-      //   { x: 40, y: 50, value: 1 },
-      //   { x: 80.5, y: 50.4, value: 1 },
-      //   { x: 90, y: 50.3, value: 1 },
-      //   { x: 200, y: 150, value: 3 },
-      //   { x: 150, y: 50, value: 10 }
-      // ]
-      data: points
-    };
-
+    // const dataValues = {
+    //   min: 1,
+    //   max: 5,
+    //   // data: [
+    //   //   { x: 40, y: 50, value: 1 },
+    //   //   { x: 80.5, y: 50.4, value: 1 },
+    //   //   { x: 90, y: 50.3, value: 1 },
+    //   //   { x: 200, y: 150, value: 3 },
+    //   //   { x: 150, y: 50, value: 10 }
+    //   // ]
+    //   data: points
+    // };
     // console.log(data);
     // if you have a set of datapoints always use setData instead of addData
     // for data initialization
-
-    heatmapInstance.setData(dataValues);
-
-    heatmapInstance.repaint();
+    // heatmapInstance.setData(dataValues);
+    // heatmapInstance.repaint();
     // heatmapInstanceRef.current.setData(data);
-
     // heatmapInstanceRef.current.repaint();
   }, [filteredData]);
 
@@ -610,6 +758,7 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
             filteredData={filteredData}
             selectedPitchType={selectedPitchType}
             preview={preview}
+            currentOption={currentOption}
           />
         )}
       </svg>
