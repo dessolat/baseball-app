@@ -102,7 +102,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
   }, []);
 
   console.log(points);
-  const maxRadius = 18;
+  const maxRadius = 20;
   return (
     <>
       {points.map((point, i) => {
@@ -242,8 +242,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
         const thirdLayerRadius =
           value >= 5
             ? value < thirdLayerMaxValue
-              ? (value / thirdLayerMaxValue) * (maxRadius - 10)
-              : maxRadius - 10
+              ? (value / thirdLayerMaxValue) * (maxRadius - 8)
+              : maxRadius - 8
             : 0;
 
 
