@@ -382,6 +382,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   const { preview } = data;
   const { pitch_types: pitchTypes } = preview;
 
+  // ! Remove after testing
+  const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
+  // !
+
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
   );
@@ -470,7 +474,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
 
-	twinFilteredData = twinFilteredData.map(pitch => pitch.coordinates.zone_y === 0 ? {...pitch, coordinates: {zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }} : pitch) 
+  twinFilteredData = twinFilteredData.map(pitch =>
+    pitch.coordinates.zone_y === 0
+      ? {
+          ...pitch,
+          coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
+        }
+      : pitch
+  );
 
   for (let i = 0; i < 100; i++) {
     const pitch = {
@@ -503,6 +514,9 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     twinFilteredData.push(pitch);
   }
 
+	const twinData = isFakeTwinBalls ? twinFilteredData : filteredData
+
+	const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev)
   // !
 
   return (
@@ -540,7 +554,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <div className={cl.twinGraphsWrapper}>
               <TwinPitchesGraph
                 data={relValuesData}
-                filteredData={twinFilteredData}
+                filteredData={twinData}
                 preview={preview}
                 currentOption={currentOption}
               />
@@ -549,12 +563,24 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                 <TwinPitchesGraph
                   key={index}
                   data={relValuesData}
-                  filteredData={twinFilteredData}
+                  filteredData={twinData}
                   selectedPitchType={entry[0]}
                   preview={preview}
                   currentOption={currentOption}
                 />
               ))}
+              <button
+                style={{
+                  position: 'absolute',
+                  right: '30px',
+                  top: '20px',
+                  padding: '5px 10px',
+                  background: 'lightgray',
+                  borderRadius: '3px'
+                }}
+                onClick={twinFakeBallsHandler}>
+                {`${isFakeTwinBalls ? 'Remove' : 'Add'} balls`}
+              </button>
             </div>
           </>
         )}
