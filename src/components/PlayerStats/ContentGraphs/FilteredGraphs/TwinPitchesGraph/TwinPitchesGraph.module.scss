@@ -57,6 +57,10 @@
   animation: growRadius 0.3s forwards;
 }
 
+.blur2 {
+	filter: blur(2px);
+}
+
 @keyframes growRadius {
   from {
     r: 0;
