@@ -102,7 +102,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
   }, []);
 
   console.log(points);
-  const maxRadius = 20;
+  const maxRadius = 25;
   return (
     <>
       {points.map((point, i) => {
@@ -196,6 +196,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               // strokeWidth='.5'
               fill='#8aa3cf'
 							filter='url(#goo)'
+							className={cl.blur2}
               // opacity='.5'
               // className={cl.animated}
             />
@@ -212,8 +213,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
         const secondLayerRadius =
           value >= 3
             ? value < secondLayerMaxValue
-              ? (value / secondLayerMaxValue) * (maxRadius - 3)
-              : maxRadius - 3
+              ? (value / secondLayerMaxValue) * (maxRadius - 4)
+              : maxRadius - 4
             : 0;
 
 
@@ -229,6 +230,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               r={secondLayerRadius}
               fill='lightblue'
 							filter='url(#goo)'
+							className={cl.blur2}
+
             />
           </Fragment>
         );
@@ -242,8 +245,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
         const thirdLayerRadius =
           value >= 5
             ? value < thirdLayerMaxValue
-              ? (value / thirdLayerMaxValue) * (maxRadius - 8)
-              : maxRadius - 8
+              ? (value / thirdLayerMaxValue) * (maxRadius - 10)
+              : maxRadius - 10
             : 0;
 
 
@@ -259,6 +262,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               r={thirdLayerRadius}
               fill='red'
 							filter='url(#goo)'
+							className={cl.blur2}
+
             />
           </Fragment>
         );
