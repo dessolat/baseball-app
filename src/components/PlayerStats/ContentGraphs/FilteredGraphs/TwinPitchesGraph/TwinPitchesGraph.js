@@ -117,13 +117,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
             : value < firstLayerMaxValue
             ? (value / firstLayerMaxValue) * maxRadius
             : maxRadius;
-        
 
-        //  value > maxValue * 0.33
-        // ? maxRadius
-        // : value * (maxRadius / maxValue);
-
-        // const secondLayerRadius = maxValue < 4 ? 0 : (maxValue * 0.33)
+						const opacity = firstLayerRadius / maxRadius
 
         // let path = '';
         // const topLeftX = x - firstLayerRadius;
@@ -170,46 +165,25 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
 
         return (
           <Fragment key={i}>
-            <filter id='goo'>
-              <feGaussianBlur in='SourceGraphic' stdDeviation='1' />
-            </filter>
             {/* <path d={path} fill='#8aa3cf' className={cl.blurredPath} filter='url(#goo)' /> */}
-            {/* <rect
-              x='60'
-              y='30'
-              width='30'
-              height='30'
-              fill='#8aa3cf'
-              style={{
-                borderTopLeftRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
-                borderTopRightRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
-                borderBottomLeftRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`,
-                borderBottomRightRadius: `${getRndValue(30, 70)}% ${getRndValue(30, 70)}%`
-              }}
-            /> */}
             <circle
               // key={`${i}-x-${x}-y-${y}`}
-              cx={point.x}
-              cy={point.y}
+              cx={x}
+              cy={y}
               r={firstLayerRadius}
-              // stroke='black'
-              // strokeWidth='.5'
               fill='#8aa3cf'
-							filter='url(#goo)'
-							className={cl.blur2}
-              // opacity='.5'
-              // className={cl.animated}
+              filter='url(#goo)'
+              className={cl.blur2}
+							opacity={opacity * 1.5}
             />
-           
           </Fragment>
         );
       })}
-			{/* Second layer */}
-			{points.map((point, i) => {
+      {/* Second layer */}
+      {points.map((point, i) => {
         const { x, y, value } = point;
 
         const secondLayerMaxValue = maxValue < 5 ? maxValue : maxValue * 0.66;
-
         const secondLayerRadius =
           value >= 3
             ? value < secondLayerMaxValue
@@ -217,27 +191,22 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               : maxRadius - 4
             : 0;
 
-
+        const opacity = secondLayerRadius / (maxRadius - 4);
         return (
-          <Fragment key={i}>
-            <filter id='goo'>
-              <feGaussianBlur in='SourceGraphic' stdDeviation='1' />
-            </filter>
-
-            <circle
-              cx={point.x}
-              cy={point.y}
-              r={secondLayerRadius}
-              fill='lightblue'
-							filter='url(#goo)'
-							className={cl.blur2}
-
-            />
-          </Fragment>
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r={secondLayerRadius}
+            fill='lightblue'
+            filter='url(#goo)'
+						opacity={opacity}
+            className={cl.blur2}
+          />
         );
       })}
-			{/* Third layer */}
-			{points.map((point, i) => {
+      {/* Third layer */}
+      {points.map((point, i) => {
         const { x, y, value } = point;
 
         const thirdLayerMaxValue = maxValue;
@@ -249,21 +218,17 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               : maxRadius - 10
             : 0;
 
-
+        const opacity = thirdLayerRadius / (maxRadius - 10);
         return (
           <Fragment key={i}>
-            <filter id='goo'>
-              <feGaussianBlur in='SourceGraphic' stdDeviation='2' />
-            </filter>
-
             <circle
-              cx={point.x}
-              cy={point.y}
+              cx={x}
+              cy={y}
               r={thirdLayerRadius}
               fill='red'
-							filter='url(#goo)'
-							className={cl.blur2}
-
+              filter='url(#goo)'
+              className={cl.blur2}
+              opacity={opacity}
             />
           </Fragment>
         );
@@ -348,11 +313,16 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
 
       {/* Heat areas */}
       {!isDots && (
-        <HeatAreas
-          arrData={arrData}
-          pitchTypes={pitchTypes}
-          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-        />
+        <>
+          <filter id='goo'>
+            <feGaussianBlur stdDeviation='2' />
+          </filter>
+          <HeatAreas
+            arrData={arrData}
+            pitchTypes={pitchTypes}
+            coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+          />
+        </>
       )}
 
       {/* Dashed frame */}
