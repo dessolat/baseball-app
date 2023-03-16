@@ -3,6 +3,7 @@ import cl from './ContentSideTables.module.scss';
 import { useSelector } from 'react-redux';
 import PctTable from './PctTable';
 import SwitchTable from './SwitchTable';
+import classNames from 'classnames';
 
 const ContentSideTables = () => {
   const currentLeague = useSelector(state => state.games.currentLeague);
@@ -11,13 +12,13 @@ const ContentSideTables = () => {
 
   const isTables = currentLeague.id !== -1;
 
-  const sideStyles = [cl.side];
-  mobileTableMode === 'Team tablo/Leader' && sideStyles.push(cl.addHeight);
+  const sideClasses = classNames(cl.side, {
+    [cl.addHeight]: mobileTableMode === 'Team tablo/Leader'
+  });
 
   return (
-    // <div className={cl.side} style={{ maxHeight: '70vh' }}>
     <div
-      className={sideStyles.join(' ')}
+      className={sideClasses}
       style={!isTables ? { height: isMobile ? 'auto' : '70vh' } : { maxHeight: isMobile ? 'auto' : '75vh' }}>
       {isTables && (
         <>
@@ -27,8 +28,6 @@ const ContentSideTables = () => {
               <SwitchTable />
             </>
           )}
-          {/* {(!isMobile || mobileTableMode === 'Team tablo') && <PctTable currentLeague={currentLeague} />}
-          {(!isMobile || mobileTableMode === 'Leaders') && <SwitchTable />} */}
         </>
       )}
     </div>
