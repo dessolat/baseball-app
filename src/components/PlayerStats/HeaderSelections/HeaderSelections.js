@@ -5,12 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
-import { getShortName } from 'utils';
+import { getShortName, getYears } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
 import { PlayerYearsContext } from 'context';
-
-const YEARS = ['All years', 2022, 2021, 2020];
 
 const Logo = () => {
   const [isLoaded, setLoaded] = useState(false);
@@ -187,6 +185,8 @@ const HeaderSelections = () => {
     return options;
   }
 
+	const yearsArr = getYears()
+	yearsArr.unshift('All years')
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>
@@ -200,7 +200,7 @@ const HeaderSelections = () => {
         <div className={cl.years}>
           <Dropdown
             title={playerYears}
-            options={YEARS}
+            options={yearsArr}
             currentOption={playerYears}
             handleClick={handleYearClick}
             listStyles={{ textAlign: 'center' }}

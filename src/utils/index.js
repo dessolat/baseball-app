@@ -159,3 +159,12 @@ export const MONTHS = [
   'November',
   'December'
 ];
+
+export const getYears = () => {
+  const YEARS = [];
+  for (let year = 2000; year <= new Date().getFullYear(); year++) {
+    YEARS.push(year);
+  }
+
+  return YEARS.reverse();
+};

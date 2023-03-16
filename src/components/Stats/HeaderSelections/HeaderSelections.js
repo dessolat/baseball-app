@@ -6,8 +6,8 @@ import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/shared
 import { Link, useParams } from 'react-router-dom';
 import { setTableMode } from 'redux/statsReducer';
 import ContentPlayerFilterField from '../ContentPlayerTable/ContentPlayerFilterField';
+import { getYears } from 'utils';
 
-const YEARS = [2022, 2021, 2020];
 const TABLE_MODES = ['Batting', 'Fielding / Running', 'Pitching'];
 
 const HeaderSelections = () => {
@@ -31,6 +31,8 @@ const HeaderSelections = () => {
 
   const handleModeClick = mode => dispatch(setTableMode(mode));
   const handleGameTypeClick = gameType => dispatch(setCurrentGameType(gameType));
+
+  const yearsArr = getYears();
   return (
     <div className={cl.selections}>
       <div className={cl.types}>
@@ -70,7 +72,7 @@ const HeaderSelections = () => {
         <div className={cl.years}>
           <Dropdown
             title={currentYear}
-            options={YEARS}
+            options={yearsArr}
             currentOption={currentYear}
             handleClick={handleClick}
           />

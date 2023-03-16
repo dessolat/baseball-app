@@ -12,7 +12,7 @@ import {
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { getSearchParam, setSearchParam } from 'utils';
+import { getSearchParam, getYears, setSearchParam } from 'utils';
 import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
 
 const Games = () => {
@@ -66,8 +66,8 @@ const Games = () => {
         }
 
         if (getSearchParam('year')) {
-          const YEARS = [2020, 2021, 2022];
-          YEARS.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
+          const yearsArr = getYears()
+          yearsArr.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
         }
 
         if (getSearchParam('league_id')) {

@@ -3,13 +3,11 @@ import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate, setCurrentGameType } from 'redux/sharedReducer';
-import { setSearchParam } from 'utils';
+import { getYears, setSearchParam } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentTableModeLinks from '../ContentTable/ContentTableModeLinks';
 import ContentTeam from '../ContentTable/ContentTeam';
 import ContentCalendars from '../ContentTable/ContentCalendars';
-
-const YEARS = [2022, 2021, 2020];
 
 const HeaderSelections = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
@@ -54,10 +52,11 @@ const HeaderSelections = () => {
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
+	const yearsArr = getYears()
   return (
     <div className={cl.selections}>
       <div className={cl.years}>
-        <Dropdown title={currentYear} options={YEARS} currentOption={currentYear} handleClick={handleClick} />
+        <Dropdown title={currentYear} options={yearsArr} currentOption={currentYear} handleClick={handleClick} />
       </div>
       <ul className={cl.types}>
         <li className={getClassName('Baseball')} onClick={handleTypeClick('Baseball')}>

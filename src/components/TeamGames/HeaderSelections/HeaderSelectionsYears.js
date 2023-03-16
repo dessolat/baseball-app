@@ -3,8 +3,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
-
-const YEARS = [2022, 2021, 2020];
+import { getYears } from 'utils';
 
 const HeaderSelectionsYears = ({yearsClass}) => {
   const currentYear = useSelector(state => state.shared.currentYear);
@@ -20,9 +19,10 @@ const HeaderSelectionsYears = ({yearsClass}) => {
     dispatch(setCurrentLeague({ id: -1, title: 'All' }));
   };
 
+	const yearsArr = getYears()
   return (
     <div className={yearsClass}>
-      <Dropdown title={currentYear} options={YEARS} currentOption={currentYear} handleClick={handleClick} />
+      <Dropdown title={currentYear} options={yearsArr} currentOption={currentYear} handleClick={handleClick} />
     </div>
   );
 };
