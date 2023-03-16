@@ -8,14 +8,10 @@ import ContentTableHeader from './ContentTableHeader';
 import ContentTableList from './ContentTableList';
 
 const ContentTable = ({ games }) => {
-  const currentStadium = useSelector(state => state.games.currentStadium);
-  const currentLeague = useSelector(state => state.games.currentLeague);
-  const currentHome = useSelector(state => state.games.currentHome);
-  const currentGuests = useSelector(state => state.games.currentGuests);
-  const currentGameType = useSelector(state => state.shared.currentGameType);
-  const currentDate = useSelector(state => state.shared.currentDate);
-  const isMobile = useSelector(state => state.shared.isMobile);
-  const mobileTableMode = useSelector(state => state.games.mobileTableMode);
+  const { currentStadium, currentLeague, currentHome, currentGuests, mobileTableMode } = useSelector(
+    state => state.games
+  );
+  const { currentGameType, currentDate, isMobile } = useSelector(state => state.shared);
   const dispatch = useDispatch();
 
   const scrollItemRef = useRef(null);
@@ -24,7 +20,7 @@ const ContentTable = ({ games }) => {
     if (scrollItemRef.current === null) return;
 
     setTimeout(() => {
-			if (!scrollItemRef.current) return
+      if (!scrollItemRef.current) return;
       scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
     }, 100);
   }, [currentDate, currentLeague]);
