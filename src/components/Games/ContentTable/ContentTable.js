@@ -24,6 +24,7 @@ const ContentTable = ({ games }) => {
     if (scrollItemRef.current === null) return;
 
     setTimeout(() => {
+			if (!scrollItemRef.current) return
       scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
     }, 100);
   }, [currentDate, currentLeague]);
