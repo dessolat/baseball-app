@@ -14,6 +14,7 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { getSearchParam, getYears, setSearchParam } from 'utils';
 import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
+import { GamesLoadingContext } from 'context';
 
 const Games = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +67,7 @@ const Games = () => {
         }
 
         if (getSearchParam('year')) {
-          const yearsArr = getYears()
+          const yearsArr = getYears();
           yearsArr.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
         }
 
@@ -177,6 +178,16 @@ const Games = () => {
     // dispatch(setMobileTableMode('Calendar'));
     // eslint-disable-next-line
   }, [currentGameType, currentYear]);
+
+  const contentLoaderStyles = {
+    margin: 'unset',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)'
+  };
+
+  const { Provider } = GamesLoadingContext;
   return (
     <>
       {error !== '' ? (
@@ -187,8 +198,10 @@ const Games = () => {
         <></>
       ) : (
         <>
-          <Header />
-          <Content games={games} />
+          <Provider value={isLoading}>
+            <Header />
+          </Provider>
+          {isLoading ? <Loader styles={contentLoaderStyles} /> : <Content games={games} />}
         </>
       )}
     </>

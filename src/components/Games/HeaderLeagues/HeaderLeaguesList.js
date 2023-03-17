@@ -1,11 +1,14 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 import { setMobileTableMode, setCurrentLeague } from 'redux/gamesReducer';
 import { setSearchParam } from 'utils';
+import { GamesLoadingContext } from 'context';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
+	const isLoading = useContext(GamesLoadingContext)
+
   const currentLeague = useSelector(state => state.games.currentLeague);
   const dispatch = useDispatch();
 
@@ -26,6 +29,8 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   }, [currentLeague]);
 
   const handleLeagueClick = league => () => {
+		if (isLoading) return
+
     league.id === -1 && dispatch(setMobileTableMode('Calendar'));
     dispatch(setCurrentLeague(league));
     // setSearchParam('league_id', league.id)
@@ -39,6 +44,7 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
           league={league}
           handleClick={handleLeagueClick}
           currentLeague={currentLeague}
+					isLoading={isLoading}
         />
       ))}
     </ul>
