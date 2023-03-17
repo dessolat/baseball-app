@@ -141,7 +141,6 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
 );
 
 const FrequencySpeedGraph = ({ data, relValuesData }) => {
-	console.log(relValuesData);
   PARAMS.LEFT_VERTICAL_GRID_LINES_STEP = 255 / PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP = 185 / PARAMS.RIGHT_VERTICAL_GRID_LINES_NUMBER;
   PARAMS.ZERO_COORDS = { X: PARAMS.VERTICAL_GRID_LINES_LEFT + 230, Y: PARAMS.VERTICAL_GRID_LINES_TOP + 155 };
@@ -163,7 +162,7 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
   const minMaxSpeeds = data.reduce(
     (sum, pitch, index) => {
       const { speed } = pitch.pitch_info;
-			const mphSpeed = speed * 2.23741
+			const mphSpeed = speed * 2.24
 
       if (index === 0) {
         sum.minSpeed = mphSpeed;

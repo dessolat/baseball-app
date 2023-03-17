@@ -378,7 +378,7 @@ const ArsenalGraph = ({
 
         if (sum[pitchType] === undefined) sum[pitchType] = 0;
 
-        sum[pitchType] += speed * 3.6;
+        sum[pitchType] += speed * 2.24;
 
         return sum;
       }, {});
