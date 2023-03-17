@@ -619,7 +619,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Speed'
+              title='Speed, mph'
               graphType='Speed'
             />
             <ArsenalGraph
@@ -627,7 +627,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Spin'
+              title='Spin, rpm'
               graphType='Spin'
             />
             <ArsenalGraph
@@ -635,7 +635,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Vertical break'
+              title='Vertical break, sm'
               graphType='VerticalBreak'
             />
             <ArsenalGraph
@@ -643,7 +643,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Horizontal break'
+              title='Horizontal break, sm'
               graphType='HorizontalBreak'
             />
             <ArsenalGraph
