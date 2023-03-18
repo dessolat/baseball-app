@@ -1,9 +1,9 @@
 import React from 'react';
-import cl from './ContentTables.module.scss';
 import ContentBattingTable from '../ContentBattingTable/ContentBattingTable';
 import ContentPitchingTable from '../ContentPitchingTable/ContentPitchingTable';
 import ContentMobileTable from '../ContentMobileTable/ContentMobileTable';
 import { useSelector } from 'react-redux';
+import NoDataMessage from 'components/NoDataMessage/NoDataMessage';
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -18,19 +18,25 @@ const ContentTables = ({
   const isMobile = useSelector(state => state.shared.isMobile);
   const tableType = useSelector(state => state.playerStats.tableType);
 
+  const isStatsEmpty = getSortedTableOptions().length === 0;
+
+	// Rendering
+  if (isStatsEmpty) return <NoDataMessage text='There are no statistics for selected options.' />;
+
+  if (isMobile)
+    return (
+      <ContentMobileTable
+        filteredLeagues={filteredLeagues}
+        filteredLeague={filteredLeague}
+        playerYears={playerYears}
+        MONTHS={MONTHS}
+        handleLeagueClick={handleLeagueClick}
+      />
+    );
+
   return (
     <>
-      {getSortedTableOptions().length === 0 ? (
-        <p className={cl.noDataFound}>No data found for current options.</p>
-      ) : isMobile ? (
-        <ContentMobileTable
-          filteredLeagues={filteredLeagues}
-          filteredLeague={filteredLeague}
-          playerYears={playerYears}
-          MONTHS={MONTHS}
-          handleLeagueClick={handleLeagueClick}
-        />
-      ) : tableType === 'Batting' ? (
+      {tableType === 'Batting' ? (
         <ContentBattingTable
           filteredLeagues={filteredLeagues}
           filteredLeague={filteredLeague}
