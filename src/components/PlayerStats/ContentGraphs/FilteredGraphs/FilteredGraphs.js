@@ -10,6 +10,7 @@ import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
+import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 
 const FIELD_NAMES = {
   batter: {
@@ -514,9 +515,9 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     twinFilteredData.push(pitch);
   }
 
-	const twinData = isFakeTwinBalls ? twinFilteredData : filteredData
+  const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
 
-	const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev)
+  const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
 
   return (
@@ -697,81 +698,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsTimeDynamicBlock>
-      {/* <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
+      <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
-              title={null}
-              subTitle='Name time dynamic'
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
+              title='Pitches Trajectories'
+              subTitle={`${playerName} ${playerSurname} pitches trajectories`}
+              noSelector
             />
-            <ArsenalGraph />
+            <PitchesTrajectories data={filteredData} />
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
-              title={null}
-              subTitle='Name time dynamic'
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
-            />
-            <ArsenalGraph />
-          </>
-        )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
-              title={null}
-              subTitle='Name time dynamic'
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
-            />
-            <ArsenalGraph />
-          </>
-        )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches' style={{ marginTop: -1 }}>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
-              title={null}
-              subTitle='Name time dynamic'
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
-            />
-            <ArsenalGraph />
-          </>
-        )}
-      </GraphsBlock> */}
-      {/* <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone />
-      <PitchesSpeedField />
-      <PitchesByZone /> */}
     </div>
   );
 };
