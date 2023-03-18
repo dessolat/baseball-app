@@ -1,11 +1,10 @@
-import classNames from 'classnames';
-import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
+import NoDataMessage from 'components/NoDataMessage/NoDataMessage';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentStadium } from 'redux/gamesReducer';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 import ContentTableList from './ContentTableList';
+import ContentTableSubHeader from './ContentTableSubHeader';
 
 const ContentTable = ({ games }) => {
   const { currentStadium, currentLeague, currentHome, currentGuests, mobileTableMode } = useSelector(
@@ -24,12 +23,6 @@ const ContentTable = ({ games }) => {
       scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
     }, 100);
   }, [currentDate, currentLeague]);
-
-  const handleStadiumDropdownClick = option => dispatch(setCurrentStadium(option));
-
-  const filteredHeadings = games.filter(game => {
-    return currentLeague.id === -1 ? currentGameType === game.game_type : game.league_id === currentLeague.id;
-  });
 
   //Games filtering
   let filteredData = useMemo(() => {
@@ -66,52 +59,16 @@ const ContentTable = ({ games }) => {
     [filteredData]
   );
 
-  //stadiumOptions calculation
-  const stadiumOptions = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          filteredHeadings.reduce(
-            (sum, cur) => {
-              sum.push(cur.stadium_name);
-              return sum;
-            },
-            ['All']
-          )
-        )
-      ),
-    [filteredHeadings]
-  );
-
-  const headerClasses = classNames(cl.tableHeader, {
-    [cl.paddingRightOne]: currentLeague.id !== -1
-  });
-
+  const isGamesEmpty = filteredData.length === 0;
   return (
     <div className={cl.wrapper}>
       <ContentTableHeader games={games} />
 
       {(!isMobile || mobileTableMode === 'Calendar') && JSON.stringify(currentDate) !== null && (
         <div className={cl.table}>
-          <div className={headerClasses}>
-            <div>Time</div>
-            <div>
-              <Dropdown
-                title={'Stadium'}
-                options={stadiumOptions}
-                currentOption={currentStadium}
-                handleClick={handleStadiumDropdownClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-              />
-            </div>
-            <div>Home</div>
-            <div> </div>
-            <div>Guests</div>
-            <div> </div>
-            <div>Inn</div>
-            {currentLeague.id === -1 && <div>League</div>}
-          </div>
-          <ContentTableList cl={cl} filteredData={filteredData} ref={scrollItemRef} />
+          <ContentTableSubHeader curLeagueId={currentLeague.id} games={games} />
+          {!isGamesEmpty && <ContentTableList cl={cl} filteredData={filteredData} ref={scrollItemRef} />}
+          {isGamesEmpty && <NoDataMessage text='There are no games for selected options.' />}
         </div>
       )}
     </div>
