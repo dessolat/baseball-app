@@ -118,7 +118,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
             ? (value / firstLayerMaxValue) * maxRadius
             : maxRadius;
 
-						const opacity = firstLayerRadius / maxRadius
+        const opacity = firstLayerRadius / maxRadius;
 
         // let path = '';
         // const topLeftX = x - firstLayerRadius;
@@ -174,7 +174,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
               fill='#8aa3cf'
               filter='url(#goo)'
               className={cl.blur2}
-							opacity={opacity * 1.5}
+              opacity={opacity * 1.5}
             />
           </Fragment>
         );
@@ -200,7 +200,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
             r={secondLayerRadius}
             fill='lightblue'
             filter='url(#goo)'
-						opacity={opacity}
+            opacity={opacity}
             className={cl.blur2}
           />
         );
@@ -254,12 +254,15 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
 
   let totalPitches = arrData.length;
 
-  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.85;
-  const yCoordRelCoef = 340;
-  const yCoordAbsCoef = 75;
+  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8615;
+  const yCoordRelCoef = 245;
+  // const yCoordRelCoef = 340;
+  const yCoordAbsCoef = 0;
+  // const yCoordAbsCoef = 75;
 
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
-  const xCoordRelCoef = 248;
+  const xCoordRelCoef = 179;
+  // const xCoordRelCoef = 248;
 
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
@@ -270,6 +273,15 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
   const isDots = currentOption === 'All Pitches';
   return (
     <>
+      {/* Center X line */}
+      {/* <line x1={0} y1={zeroYCoord} x2={PARAMS.GRAPH_WIDTH} y2={zeroYCoord} stroke='red' /> */}
+      {/* Center Y line */}
+      {/* <line x1={zeroXCoord} y1={0} x2={zeroXCoord} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+			{/* Left Dashed Line */}
+      {/* <line x1={dashedFrameX} y1={0} x2={dashedFrameX} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+			{/* Right Dashed Line */}
+      {/* <line x1={dashedFrameX + dashedFrameWidth} y1={0} x2={dashedFrameX + dashedFrameWidth} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+
       {/* Frames */}
       {/* Wrapper frame */}
       <rect
