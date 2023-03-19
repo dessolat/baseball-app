@@ -651,13 +651,9 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOpti
 };
 
 const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview, currentOption }) => {
-  const { pitch_types: pitchTypes } = preview;
-
+	const [isGraphVisible, setGraphVisibility] = useState(false);
+	
   const wrapperRef = useRef();
-  // const heatmapInstanceRef = useRef();
-
-  const [isGraphVisible, setGraphVisibility] = useState(false);
-
   const graphRef = useRef();
 
   useEffect(() => {
