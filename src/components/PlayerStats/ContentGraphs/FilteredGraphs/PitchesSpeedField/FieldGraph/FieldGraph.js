@@ -5,8 +5,11 @@ import cl from './FieldGraph.module.scss';
 import { getPitchColorByName } from 'utils';
 
 const PARAMS = {
-  GRAPH_WIDTH: 467,
-  GRAPH_HEIGHT: 354.14,
+  GRAPH_WIDTH: 455,
+  GRAPH_HEIGHT: 330,
+  // GRAPH_HEIGHT: 326,
+  // GRAPH_WIDTH: 467,
+  // GRAPH_HEIGHT: 354.14,
   VERTICAL_COLUMNS_NUM: 8,
   HORIZONTAL_ROWS_NUM: 6
 };
@@ -217,6 +220,8 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       )}
 
       {/* Dashed frame */}
+      {/* <line x1={dashedFrameX} y1={0} x2={dashedFrameX} y2={PARAMS.GRAPH_HEIGHT} stroke='red' strokeWidth='1' />
+      <line x1={dashedFrameX + dashedFrameWidth} y1={0} x2={dashedFrameX + dashedFrameWidth} y2={PARAMS.GRAPH_HEIGHT} stroke='red' strokeWidth='1' /> */}
       <rect
         x={dashedFrameX}
         y={dashedFrameY}
@@ -364,18 +369,18 @@ const FieldGraph = ({
   setCurrentOption
 }) => {
   const [isChecked, setChecked] = useState(false);
-  const [coordsAltered, setCoordsAltered] = useState(false);
-  const [isAbsCoef, setIsAbsCoef] = useState(true);
+  const [coordsAltered, setCoordsAltered] = useState(true);
+  const [isAbsCoef, setIsAbsCoef] = useState(false);
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
   const graphRef = useRef();
 
   useEffect(() => {
-		let options = {
-			root: null,
-			rootMargin: "300px 0px",
-			threshold: 0,
-		};
+    let options = {
+      root: null,
+      rootMargin: '300px 0px',
+      threshold: 0
+    };
 
     let observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -408,13 +413,17 @@ const FieldGraph = ({
 
   const { zone } = preview;
 
-  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
-  const yCoordRelCoef = coordsAltered ? 200 : 340;
+  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.88;
+  // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
+  const yCoordRelCoef = 213;
+  // const yCoordRelCoef = coordsAltered ? 213 : 340;
   // const yCoordRelCoef = 340;
-  const yCoordAbsCoef = isAbsCoef ? 75 : 0;
+  const yCoordAbsCoef = 0;
+  // const yCoordAbsCoef = isAbsCoef ? 75 : 0;
   // const yCoordAbsCoef = 75;
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.5;
-  const xCoordRelCoef = coordsAltered ? 150 : 248;
+  const xCoordRelCoef = 160;
+  // const xCoordRelCoef = coordsAltered ? 160 : 248;
   // const xCoordRelCoef = 248;
   const coords = { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord };
 
@@ -500,64 +509,81 @@ const FieldGraph = ({
     zeroYBreakLine
   };
   return (
-    <div className={cl.wrapper}>
-      <svg
-        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-        xmlns='http://www.w3.org/2000/svg'
-        preserveAspectRatio='none'
-        ref={graphRef}>
-        {isGraphVisible && (
-          <>
-            <Frames
-              avgCoords={avgCoords}
-              arrData={filteredData}
-              preview={preview}
-              isDots={isDots}
-              relValuesData={relValuesData}
-              coords={coords}
-              linesCoords={linesCoords}
-            />
-            <VerticalGridLines linesCoords={linesCoords} />
-            <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
-          </>
-        )}
-      </svg>
-      <OptionsToggler
-        style={optionsTogglerStyles}
-        optionsArr={optionsArr}
-        currentOption={currentOption}
-        handleOptionClick={handleOptionClick}
-        vertical>
-        Gravity
-        <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
-      </OptionsToggler>
-      <div
-        style={{
-          position: 'absolute',
-          right: 0,
-          top: '50%',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '1px 1px 3px 0px grey',
-          overflow: 'hidden',
-          borderTopLeftRadius: '5px',
-          borderBottomLeftRadius: '5px'
-        }}>
-        <button
-          onClick={() => setCoordsAltered(prev => !prev)}
-          style={{ padding: 5, backgroundColor: coordsAltered ? 'white' : 'lightgray' }}>
-          Toggle rel coef
-        </button>
-        <button
-          onClick={() => setIsAbsCoef(prev => !prev)}
+    <div className={cl.outerWrapper}>
+      <div className={cl.svgWrapper}>
+        <svg
+          viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+          xmlns='http://www.w3.org/2000/svg'
+          preserveAspectRatio='none'
+          ref={graphRef}>
+          {/* zero Y line */}
+          {/* <line x1={0} y1={zeroYCoord} x2={PARAMS.GRAPH_WIDTH} y2={zeroYCoord} stroke='red' strokeWidth='1' /> */}
+          {/* zero X line */}
+          {/* <line
+            x1={zeroXCoord}
+            y1={0}
+            x2={zeroXCoord}
+            y2={PARAMS.GRAPH_HEIGHT}
+            stroke='red'
+            strokeWidth='2'
+          /> */}
+          {isGraphVisible && (
+            <>
+              <Frames
+                avgCoords={avgCoords}
+                arrData={filteredData}
+                preview={preview}
+                isDots={isDots}
+                relValuesData={relValuesData}
+                coords={coords}
+                linesCoords={linesCoords}
+              />
+              <VerticalGridLines linesCoords={linesCoords} />
+              <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+            </>
+          )}
+        </svg>
+        <OptionsToggler
+          style={optionsTogglerStyles}
+          optionsArr={optionsArr}
+          currentOption={currentOption}
+          handleOptionClick={handleOptionClick}
+          vertical>
+          Gravity
+          <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
+        </OptionsToggler>
+        <div
           style={{
-            borderTop: '1px solid gray',
-            padding: 5,
-            backgroundColor: isAbsCoef ? 'white' : 'lightgray'
+            position: 'absolute',
+            right: 0,
+            top: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            boxShadow: '1px 1px 3px 0px grey',
+            overflow: 'hidden',
+            borderTopLeftRadius: '5px',
+            borderBottomLeftRadius: '5px'
           }}>
-          Toggle abs coef
-        </button>
+          <button
+            onClick={() => setCoordsAltered(prev => !prev)}
+            style={{ padding: 5, backgroundColor: coordsAltered ? 'white' : 'lightgray' }}>
+            Toggle rel coef
+          </button>
+          <button
+            onClick={() => setIsAbsCoef(prev => !prev)}
+            style={{
+              borderTop: '1px solid gray',
+              padding: 5,
+              backgroundColor: isAbsCoef ? 'white' : 'lightgray'
+            }}>
+            Toggle abs coef
+          </button>
+        </div>
       </div>
+      {/* Bottom wrapper title */}
+      <p className={cl.bottomWrapperTitle}>Horizontal break, cm</p>
+      {/* Left wrapper title */}
+      <p className={cl.leftWrapperTitle}>Downward Vertical Break, cm</p>
     </div>
   );
 };
