@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { getRndValue } from 'utils';
 import Curve from './Curve';
 // import CurveTexture from 'images/blue_ball_curve.jpg';
@@ -37,4 +37,8 @@ const Curves = ({ hitsData }) => {
   );
 };
 
-export default Curves;
+function propsComparison(prevProps, nextProps) {
+  return JSON.stringify(prevProps) === JSON.stringify(nextProps);
+}
+
+export default memo(Curves, propsComparison);
