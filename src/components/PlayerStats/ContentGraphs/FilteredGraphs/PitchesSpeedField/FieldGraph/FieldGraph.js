@@ -552,7 +552,7 @@ const FieldGraph = ({
           Gravity
           <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
         </OptionsToggler>
-        <div
+        {/* <div
           style={{
             position: 'absolute',
             right: 0,
@@ -578,7 +578,7 @@ const FieldGraph = ({
             }}>
             Toggle abs coef
           </button>
-        </div>
+        </div> */}
       </div>
       {/* Bottom wrapper title */}
       <p className={cl.bottomWrapperTitle}>Horizontal break, cm</p>
