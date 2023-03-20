@@ -39,13 +39,6 @@ const HitsAnglesGraph = () => {
       <BgLayout />
       {/* <circle r={1} stroke='red' cx={PARAMS.ZERO_X} cy={PARAMS.ZERO_Y} />
       <circle r={1} stroke='red' cx={centerDotXCoord} cy={centerDotYCoord} /> */}
-      <line
-        stroke='red'
-        x1={PARAMS.ZERO_X}
-        x2={PARAMS.ZERO_X + PARAMS.LINE_WIDTH}
-        y1={PARAMS.ZERO_Y}
-        y2={PARAMS.ZERO_Y}
-      />
 			<path d={path} fill='lightblue'/>
     </svg>
   );
