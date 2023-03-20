@@ -11,6 +11,7 @@ import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFake
 import { useSelector } from 'react-redux';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
+import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 
 const FIELD_NAMES = {
   batter: {
@@ -698,7 +699,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsTimeDynamicBlock>
-      <GraphsBlock defaultOption='All Pitches'>
+      <GraphsBlock defaultOption=''>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -707,6 +708,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               noSelector
             />
             <PitchesTrajectories data={filteredData} />
+          </>
+        )}
+      </GraphsBlock>
+      <GraphsBlock defaultOption=''>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              title=''
+              subTitle={`Hits from ${playerName} ${playerSurname}`}
+              noSelector
+            />
+            <HitsAnglesGraphs data={filteredData} />
           </>
         )}
       </GraphsBlock>
