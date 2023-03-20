@@ -15,11 +15,21 @@ const Curves = ({ hitsData }) => {
   const [curveCount, setCurveCount] = useState(maxLength);
 
   const isRenderCurves = curveCount > 1;
+  // 240 - 359
+
+  const defaultMinMaxDistance = { min: hitsData[0].hit_info.distance, max: hitsData[0].hit_info.distance };
+  const minMaxDistance = hitsData.reduce((result, { hit_info: { distance } }) => {
+    if (distance < result.min) result.min = distance;
+    if (distance > result.max) result.max = distance;
+
+    return result;
+  }, defaultMinMaxDistance);
   return (
     <>
       {isRenderCurves &&
         hitsData.map((hit, i) => {
-          const { data_3d: data3D } = hit.hit_info;
+          const { hit_info: hitInfo } = hit;
+          const { data_3d: data3D } = hitInfo;
 
           const curCurveCount = curveCount > data3D.length ? data3D.length : curveCount;
 
@@ -27,8 +37,9 @@ const Curves = ({ hitsData }) => {
             <Curve
               key={'curve-' + getRndValue(0, 100000)}
               number={i}
-              data3D={data3D}
+              hitInfo={hitInfo}
               curveCount={curCurveCount}
+              minMaxDistance={minMaxDistance}
               // curveTextureBlue={curveTextureBlue}
             />
           );
