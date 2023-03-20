@@ -67,8 +67,6 @@ const Curve = ({ data3D, curveCount, number }) => {
   const [drawPoints, setDrawPoints] = useState(false);
   const coef = 925 / 90;
 
-  console.log('curve', number);
-  console.log('curveCount', curveCount);
   return (
     <>
       <CurvePath data3D={data3D} coef={coef} curveCount={curveCount} setDrawPoints={setDrawPoints} />
