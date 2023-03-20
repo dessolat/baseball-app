@@ -7,9 +7,9 @@ const HitsAnglesGraphs = ({ data }) => {
   console.log(notNullAngleData);
   return (
     <div className={cl.wrapper}>
-      <HitsAnglesGraph title='Hits by angle (hits)' />
-      <HitsAnglesGraph title='Exit velocity by angle (mph)' />
-      <HitsAnglesGraph title='Distance by angle (m)' />
+      <HitsAnglesGraph title='Hits by angle, hits' />
+      <HitsAnglesGraph title='Exit velocity by angle, mph' />
+      <HitsAnglesGraph title='Distance by angle, m' />
     </div>
   );
 };

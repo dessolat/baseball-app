@@ -12,21 +12,20 @@ const PARAMS = {
   // GRAPH_HEIGHT: 428
 };
 
-const HitsAnglesGraph = () => {
+const HitsAnglesGraph = ({ title }) => {
   let path = `M${PARAMS.ZERO_X},${PARAMS.ZERO_Y}`;
 
   let secondDotXCoord = PARAMS.LINE_WIDTH * 0.55 * Math.cos(degToRad(20)) + PARAMS.ZERO_X;
   let secondDotYCoord = PARAMS.ZERO_Y - PARAMS.LINE_WIDTH * 0.55 * Math.sin(degToRad(20));
   path += `L${secondDotXCoord},${secondDotYCoord}`;
 
-	let centerDotXCoord = PARAMS.LINE_WIDTH * 0.5555 * Math.cos(degToRad(15)) + PARAMS.ZERO_X;
+  let centerDotXCoord = PARAMS.LINE_WIDTH * 0.5555 * Math.cos(degToRad(15)) + PARAMS.ZERO_X;
   let centerDotYCoord = PARAMS.ZERO_Y - PARAMS.LINE_WIDTH * 0.5555 * Math.sin(degToRad(15));
-	
+
   let thirdDotXCoord = PARAMS.LINE_WIDTH * 0.55 * Math.cos(degToRad(10)) + PARAMS.ZERO_X;
   let thirdDotYCoord = PARAMS.ZERO_Y - PARAMS.LINE_WIDTH * 0.55 * Math.sin(degToRad(10));
 
   path += `Q${centerDotXCoord},${centerDotYCoord} ${thirdDotXCoord},${thirdDotYCoord}Z`;
-	
 
   return (
     <svg
@@ -39,7 +38,11 @@ const HitsAnglesGraph = () => {
       <BgLayout />
       {/* <circle r={1} stroke='red' cx={PARAMS.ZERO_X} cy={PARAMS.ZERO_Y} />
       <circle r={1} stroke='red' cx={centerDotXCoord} cy={centerDotYCoord} /> */}
-			<path d={path} fill='lightblue'/>
+
+      {/* Title */}
+      <text x='0' y='20' className={cl.title}>{title}</text>
+
+      <path d={path} fill='lightblue' />
     </svg>
   );
 };
