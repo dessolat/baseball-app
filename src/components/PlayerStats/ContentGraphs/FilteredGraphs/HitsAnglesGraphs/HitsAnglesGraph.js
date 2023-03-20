@@ -32,12 +32,9 @@ const Segment = ({ angle, dataField, minMaxValue }) => {
   let thirdDotYCoord = PARAMS.ZERO_Y - PARAMS.LINE_WIDTH * rel * Math.sin(degToRad(deg));
 
   path += `Q${centerDotXCoord},${centerDotYCoord} ${thirdDotXCoord},${thirdDotYCoord}Z`;
-  return (
-    <path
-      d={path}
-      fill={`hsla(${169 + 0.41 * rel * 100}, 30%, ${88 - 0.15 * rel * 100}%, 1)`}
-    />
-  );
+
+  const pathFillColor = `hsla(${169 + 0.41 * rel * 100}, 30%, ${88 - 0.15 * rel * 100}%, 1)`;
+  return <path d={path} fill={pathFillColor} className={cl.animated}/>;
 };
 
 const Segments = ({ angleValues, dataField }) => {
