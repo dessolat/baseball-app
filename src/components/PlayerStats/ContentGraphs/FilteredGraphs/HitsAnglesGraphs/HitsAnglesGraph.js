@@ -12,7 +12,7 @@ const PARAMS = {
   // GRAPH_HEIGHT: 428
 };
 
-const HitsAnglesGraph = ({ title }) => {
+const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
   let path = `M${PARAMS.ZERO_X},${PARAMS.ZERO_Y}`;
 
   let secondDotXCoord = PARAMS.LINE_WIDTH * 0.55 * Math.cos(degToRad(20)) + PARAMS.ZERO_X;
@@ -40,7 +40,9 @@ const HitsAnglesGraph = ({ title }) => {
       <circle r={1} stroke='red' cx={centerDotXCoord} cy={centerDotYCoord} /> */}
 
       {/* Title */}
-      <text x='0' y='20' className={cl.title}>{title}</text>
+      <text x='0' y='20' className={cl.title}>
+        {title}
+      </text>
 
       <path d={path} fill='lightblue' />
     </svg>
