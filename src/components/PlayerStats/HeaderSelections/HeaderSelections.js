@@ -9,25 +9,42 @@ import { getShortName, getYears } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
 import { PlayerYearsContext } from 'context';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
-const Logo = () => {
+export const Logo = () => {
   const [isLoaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
 
   const { playerId } = useParams();
 
   useLayoutEffect(() => {
     setLoaded(false);
+    setError(false);
   }, [playerId]);
 
   const imgUrl = `http://baseball-gametrack.ru/api/logo/${playerId}`;
 
   const imgStyles = !isLoaded ? { display: 'none' } : {};
-  const pHolderStyles = isLoaded ? { display: 'none' } : {};
+  const pHolderStyles = isLoaded || error ? { display: 'none' } : {};
+  const defaultImgStyles = error ? {} : { display: 'none' };
   return (
     <>
       <div className={cl.portrait}>
-        <img src={imgUrl} alt='' onLoad={() => setLoaded(true)} style={imgStyles} />
-        <img src={PortraitImg} alt='' style={pHolderStyles} className={cl.default} />
+        <img
+          src={imgUrl}
+          alt=''
+          onLoad={() => setLoaded(true)}
+          onError={() => setError(true)}
+          style={imgStyles}
+        />
+        <Skeleton
+          // width={22}
+          // circle={true}
+          height={'100%'}
+          style={pHolderStyles}
+        />
+        <img src={PortraitImg} alt='' style={defaultImgStyles} className={cl.default} />
       </div>
     </>
   );
@@ -185,8 +202,8 @@ const HeaderSelections = () => {
     return options;
   }
 
-	const yearsArr = getYears()
-	yearsArr.unshift('All years')
+  const yearsArr = getYears();
+  yearsArr.unshift('All years');
   return (
     <div className={cl.selections}>
       <div className={cl.playerInfo}>

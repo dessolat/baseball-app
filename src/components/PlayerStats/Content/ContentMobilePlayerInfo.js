@@ -1,12 +1,12 @@
 import React from 'react';
 import cl from './Content.module.scss';
-import PortraitImg from 'images/portrait.png';
+import { Logo } from '../HeaderSelections/HeaderSelections';
 
 const ContentMobilePlayerInfo = ({ statsData }) => {
   return (
     <div className={cl.mobilePlayerChr}>
       <div className={cl.playerInfo}>
-        <img src={PortraitImg} alt='' />
+				<Logo />
         <div>
           <div className={cl.fullName}>
             {statsData.name} {statsData.surname}
