@@ -64,7 +64,6 @@ const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) 
   const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
 
   const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
-
   return (
     <label className={cl.groupItem}>
       <input
@@ -137,7 +136,7 @@ const Group = ({
       absValue,
       absValueTotal: totalLength,
       relValue:
-        paramName === 'all' ? 100 : totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(2) : 0 ?? '-'
+        paramName === 'all' ? 100 : totalLength > 0 ? +((absValue * 100) / totalLength).toFixed(1) : 0 ?? '-'
     };
   });
 
@@ -218,8 +217,7 @@ const CustomGroup = ({
     ]
   };
 
-  const { title, staticText, items } = customGroupData;
-  // onChange={() => handleFilterClick(groupName, FIELD_NAMES[groupName][name])}
+  const { title, items } = customGroupData;
   return (
     <div className={cl.group}>
       <p className={cl.title}>{title}</p>
@@ -270,7 +268,6 @@ const CustomGroup = ({
 };
 
 const LeftColumnOptions = ({
-  // handleFakeDataClick,
   data = {},
   handleFilterClick,
   currentFilterValues,
@@ -347,16 +344,9 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>
         Dataset filter
-        {/* <button
-          className={cl.tempButton}
-          // onClick={handleFakeDataClick}
-        >
-          Generate data
-        </button> */}
       </h3>
       <div className={cl.body}>
         <CustomGroup
-          // data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
           data={data}
           currentFilterValues={currentFilterValues}
           handleFilterClick={handleFilterClick}
@@ -366,7 +356,6 @@ const LeftColumnOptions = ({
         {groupsArr.map((group, i) => (
           <Group
             key={i}
-            // data={{ ...data, pitches_all: data.pitches_all.slice(0, 10) }}
             data={data}
             groupData={group}
             currentFilterValues={currentFilterValues}
