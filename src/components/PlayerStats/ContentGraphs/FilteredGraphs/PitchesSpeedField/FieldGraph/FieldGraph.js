@@ -326,7 +326,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
         strokeDasharray='4 4'
       />
       <text x='140' y={topFieldLine + 4} className={cl.leftTextTitle}>
-        Top {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
+        Top {Math.floor((minMaxAvgBreak.maxY) * 100)}
       </text>
 
       {/* center Y field line */}
