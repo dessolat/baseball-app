@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSeekValue, setVideoCurrentTime } from 'redux/gameReducer';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
 
@@ -30,6 +31,9 @@ const Graph = ({ speeds, video, impactTime }) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
 
   const curveTimeoutRef = useRef();
+  const svgRef = useRef();
+
+  const dispatch = useDispatch();
 
   const VIEWBOX_WIDTH = 327;
   const VIEWBOX_HEIGHT = 84;
@@ -67,13 +71,16 @@ const Graph = ({ speeds, video, impactTime }) => {
 
   const impactDotCoords = { x: 0, y: 0 };
 
-  const curveCoords = speeds.map((coords, _, arr) => {
+  const curveCoords = speeds.map((coords, index, arr) => {
     const newXCoord = (coords[1] - arr[0][1]) * xCoef + GRAPH_START_X;
     const newYCoord = GRAPH_START_Y + 11 + 42 - (coords[0] - minSpeedRounded) * yCoef;
-
+		
     if (impactTime >= coords[1]) {
-      impactDotCoords.x = newXCoord;
-      impactDotCoords.y = newYCoord;
+			const nextXCoord = (arr[index + 2][1] - arr[0][1]) * xCoef + GRAPH_START_X;
+			const nextYCoord = GRAPH_START_Y + 11 + 42 - (arr[index + 2][0] - minSpeedRounded) * yCoef;
+
+      impactDotCoords.x = nextXCoord;
+      impactDotCoords.y = nextYCoord;
     }
     return [newXCoord, newYCoord];
   });
@@ -113,22 +120,49 @@ const Graph = ({ speeds, video, impactTime }) => {
 
   const elapsedTime =
     curTimeCorr < swingTimeStart ||
-    // curTimeCorr < timeStart ||
     videoCurrentTime > video.full_seconds_to ||
     videoCurrentTime < video.full_seconds_from
       ? 0
       : curTimeCorr - swingTimeStart;
-  // : curTimeCorr - timeStart;
 
   const coef = GRAPH_WIDTH / totalHitTime;
   const redLineXCoord = GRAPH_START_X + elapsedTime * coef;
   const isRedLine = elapsedTime < totalHitTime && elapsedTime > 0;
 
-  // const redLineXCoord = GRAPH_START_X + GRAPH_WIDTH / 4;
+  // !
+
+  const handleMouseDown = e => {
+    const { left: svgLeft, right: svgRight } = svgRef.current.getBoundingClientRect();
+    const svgWidth = svgRight - svgLeft;
+
+    const graphFullWidth = GRAPH_START_X + GRAPH_WIDTH;
+
+    const graphStartsRel = (GRAPH_START_X / graphFullWidth) * 100;
+    const clickRel = ((e.clientX - svgLeft) / svgWidth) * 100;
+
+    // Return if clicked outside graph path
+    if (clickRel < graphStartsRel) return;
+
+    const pathStartsXCoord = svgWidth * (GRAPH_START_X / graphFullWidth) + svgLeft;
+    const pathEndsXCoord = svgRight;
+    const pathWidth = pathEndsXCoord - pathStartsXCoord;
+
+    const clickPathRel = (e.clientX - pathStartsXCoord) / pathWidth;
+
+    const clickTime = speeds[0][1] + totalHitTime * clickPathRel;
+
+		dispatch(setSeekValue(clickTime));
+    // dispatch(setVideoCurrentTime(clickTime));
+  };
+  // !
   return (
     <div className={cl.graphWrapper}>
       <p className={cl.title}>Bat speed (mph)</p>
-      <svg viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`} width='95%'>
+      <svg
+        viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
+        width='95%'
+        onMouseDown={handleMouseDown}
+        ref={svgRef}>
         {/* Horizontal lines */}
         {leftTitles.map((title, i) => (
           <Fragment key={i}>
@@ -224,7 +258,7 @@ const HittingGraph = ({ currentMoment }) => {
     speeds,
     impact_time: impactTime
   } = currentMoment?.metering?.bat || {};
-  // const { time_start: timeStart } = currentMoment?.metering?.hit || {};
+
   return (
     <div className={cl.graph}>
       <Header maxSpeed={maxSpeed} angle={angle} />
