@@ -8,12 +8,9 @@ const DraggableArea = (
 ) => {
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const currentMoment = useSelector(state => state.game.currentMoment);
-  // const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
 
   const x1relative = (viewBoxWidth / 100) * x1;
   const x2relative = (viewBoxWidth / 100) * x2;
-  // const x1relative = paddings + ((viewBoxWidth - paddings) / 100) * x1;
-  // const x2relative = ((viewBoxWidth - paddings) / 100) * x2;
 
   const leftLineTotalSecs = (totalSeconds / 100) * x1;
   const leftLineMins = Math.floor(leftLineTotalSecs / 60);
@@ -26,8 +23,6 @@ const DraggableArea = (
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
 
   const redLineTotalSecs = videoCurrentTime - (SECONDS_SRC[currentTab].timeStart ?? 0);
-  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video[`${videoLengthPrefix}_seconds_from`] ?? 0);
-  // const redLineTotalSecs = videoCurrentTime - (currentMoment.video?.seconds_from ?? 0);
   const redLineMins = Math.floor(redLineTotalSecs / 60);
   const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
   const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
