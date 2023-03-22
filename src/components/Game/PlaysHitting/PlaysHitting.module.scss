@@ -224,6 +224,10 @@
   .sideTitle {
     font: 400 0.875rem var(--font-athiti);
   }
+
+	> svg {
+		cursor: pointer;
+	}
 }
 
 .impactDot {
