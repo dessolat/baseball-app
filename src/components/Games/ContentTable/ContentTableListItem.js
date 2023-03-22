@@ -26,7 +26,9 @@ const ItemLinks = ({ game, linksClass }) => (
       {game.has_moments && (
         <>
           <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-          <Link to={`/game/${game.id}?tab=pitch`}>Pitch</Link>
+          <Link to={`/game/${game.id}?tab=${game.has_videos ? 'pitch' : 'plays'}`}>
+            {game.has_videos ? 'Pitch' : 'Plays'}
+          </Link>
         </>
       )}
       {game.has_videos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
