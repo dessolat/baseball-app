@@ -80,6 +80,7 @@ const PitchesTrajectories = ({ data }) => {
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
   const hitsData = data.filter(({ hit_info }) => hit_info.data_3d !== null);
+	const isCurves = hitsData.length > 0
   return (
     <div className={cl.fieldWrapper} ref={wrapperRef}>
       <Canvas
@@ -95,7 +96,7 @@ const PitchesTrajectories = ({ data }) => {
               <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
             </mesh>
 
-            <Curves hitsData={hitsData} />
+            {isCurves && <Curves hitsData={hitsData} />}
 
             <directionalLight
               position={[0, 400, 0]}
