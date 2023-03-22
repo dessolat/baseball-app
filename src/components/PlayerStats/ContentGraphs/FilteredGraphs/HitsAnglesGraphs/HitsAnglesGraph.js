@@ -7,9 +7,59 @@ const PARAMS = {
   GRAPH_HEIGHT: 423,
   LINE_WIDTH: 179,
   ZERO_X: 98.45,
-  ZERO_Y: 230.35
-  // GRAPH_WIDTH: 313,
-  // GRAPH_HEIGHT: 428
+  ZERO_Y: 230.35,
+  RADIALS_NUMBER: 8
+};
+
+const MainTitle = ({ title }) => (
+  <text x='0' y='20' className={cl.title}>
+    {title}
+  </text>
+);
+
+const RadialTitles = ({ minMaxValue, title }) => {
+  const { min, max } = minMaxValue;
+
+  const minMaxDelta = max - min;
+  const valuePerCircle = minMaxDelta / PARAMS.RADIALS_NUMBER;
+
+  const titles = [];
+  for (let i = 1; i <= PARAMS.RADIALS_NUMBER; i++) {
+    titles.push((min + valuePerCircle * i).toFixed(1));
+  }
+
+  const xCoord = PARAMS.ZERO_X - 4;
+  return (
+    <>
+      {/* Center value */}
+      {/* <text x={xCoord} y={PARAMS.ZERO_Y - 1} className={cl.leftValues} textAnchor='end'>
+        {min}
+      </text> */}
+
+      {/* Top values */}
+      {titles.map((value, i) => {
+        const yCoord = PARAMS.ZERO_Y - 20 - i * 22.5;
+        const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
+
+        return (
+          <text key={i} x={xCoord} y={yCoord} className={cl.leftValues} textAnchor='end'>
+            {filteredValue}
+          </text>
+        );
+      })}
+      {/* Bottom values */}
+      {titles.map((value, i) => {
+        const yCoord = PARAMS.ZERO_Y + 20 + i * 22.5;
+        const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
+
+        return (
+          <text key={i} x={xCoord} y={yCoord} className={cl.leftValues} textAnchor='end'>
+            {filteredValue}
+          </text>
+        );
+      })}
+    </>
+  );
 };
 
 const Segment = ({ angle, dataField, minMaxValue }) => {
@@ -34,10 +84,18 @@ const Segment = ({ angle, dataField, minMaxValue }) => {
   path += `Q${centerDotXCoord},${centerDotYCoord} ${thirdDotXCoord},${thirdDotYCoord}Z`;
 
   const pathFillColor = `hsla(${169 + 0.41 * rel * 100}, 30%, ${88 - 0.15 * rel * 100}%, 1)`;
-  return <path d={path} fill={pathFillColor} className={cl.animated}/>;
+  return <path d={path} fill={pathFillColor} className={cl.animated} />;
 };
 
-const Segments = ({ angleValues, dataField }) => {
+const Segments = ({ angleValues, dataField, minMaxValue }) => (
+  <>
+    {angleValues.map((angle, i) => (
+      <Segment key={i} angle={angle} dataField={dataField} minMaxValue={minMaxValue} />
+    ))}
+  </>
+);
+
+const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
   const minMaxValue = angleValues.reduce(
     (sum, value) => {
       if (value[dataField] > sum.max) sum.max = value[dataField];
@@ -49,16 +107,6 @@ const Segments = ({ angleValues, dataField }) => {
   );
 
   return (
-    <>
-      {angleValues.map((angle, i) => (
-        <Segment key={i} angle={angle} dataField={dataField} minMaxValue={minMaxValue} />
-      ))}
-    </>
-  );
-};
-
-const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
-  return (
     <svg
       width='307'
       height='423'
@@ -67,17 +115,15 @@ const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
       className={cl.graph}
       xmlns='http://www.w3.org/2000/svg'>
       <BgLayout />
-      {/* <circle r={1} stroke='red' cx={PARAMS.ZERO_X} cy={PARAMS.ZERO_Y} />
-      <circle r={1} stroke='red' cx={centerDotXCoord} cy={centerDotYCoord} /> */}
 
       {/* Title */}
-      <text x='0' y='20' className={cl.title}>
-        {title}
-      </text>
+      <MainTitle title={title} />
 
-      <Segments angleValues={angleValues} dataField={dataField} />
+      {/* Radial Titles */}
+      <RadialTitles minMaxValue={minMaxValue} title={title} />
 
-      {/* <path d={path} fill='lightblue' /> */}
+      {/* Segments */}
+      <Segments angleValues={angleValues} dataField={dataField} minMaxValue={minMaxValue} />
     </svg>
   );
 };
