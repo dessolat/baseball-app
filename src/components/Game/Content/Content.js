@@ -145,15 +145,21 @@ const Content = ({ currentTab }) => {
     /*************************************************/
     setCards(newCards);
     dispatch(setFilteredCards(newFilteredCards));
-
     if ((playbackMode === 'play' || playbackMode === 'pause') && Object.keys(currentCard).length === 0) {
       const card = +getSearchParam('card');
       let cardIndex =
-        card !== undefined ? newFilteredCards.findIndex(player => player.moments[0].inner.id === card) : 0;
+        card !== undefined
+          ? newFilteredCards.findIndex(({ moments }) => {
+              return moments.some(({ inner }) => inner.id === card);
+
+              // player.moments[0].inner.id === card;
+            })
+          : 0;
 
       if (cardIndex === -1) cardIndex = 0;
 
-      dispatch(setCurrentCard(newFilteredCards[cardIndex]));
+      const newCurCard = { ...newFilteredCards[cardIndex], customMoment: card };
+      dispatch(setCurrentCard(newCurCard));
     }
 
     playbackMode === 'playOnline' &&
@@ -223,8 +229,11 @@ const Content = ({ currentTab }) => {
           card.moments[0].inner.id === currentCard.moments[0].inner.id
       )[0];
 
-			
-      dispatch(setCurrentCard(newCurrentCard || filteredCards.slice(-1)[0]));
+      dispatch(
+        setCurrentCard(
+          { ...newCurrentCard, customMoment: currentCard.customMoment } || filteredCards.slice(-1)[0]
+        )
+      );
     }
 
     playbackMode === 'playOnline' &&
@@ -251,27 +260,29 @@ const Content = ({ currentTab }) => {
   useEffect(() => {
     if (Object.keys(currentCard).length === 0) return;
 
-    const cardId = currentCard.moments && currentCard.moments[0].inner.id;
+    const cardId = currentCard.customMoment || currentCard.moments && currentCard.moments[0].inner.id;
     setSearchParam('card', cardId);
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
-    // currentCard.manualClick && dispatch(setPlaybackMode('pause'));
 
     //Set moments
     const newMoments = [];
     currentCard.type !== 'Replacement'
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
-    currentCard.customMoment
-      ? dispatch(
-          setCurrentMoment(currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment))
-        )
-      : currentCard.toFirstMoment
-      ? dispatch(setCurrentMoment(newMoments[0] || {}))
-      : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
-    // currentCard.manualMoment
-    //   ? dispatch(setCurrentMoment(newMoments[0] || {}))
-    //   : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
+
+    if (currentCard.customMoment) {
+      const newMoment = currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment);
+
+      dispatch(setCurrentMoment(newMoment));
+    }
+
+    if (!currentCard.customMoment) {
+      currentCard.toFirstMoment
+        ? dispatch(setCurrentMoment(newMoments[0] || {}))
+        : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
+    }
+
     dispatch(setMoments(newMoments));
 
     if (currentCard.manualClick || !situationsChildRef.current) return;

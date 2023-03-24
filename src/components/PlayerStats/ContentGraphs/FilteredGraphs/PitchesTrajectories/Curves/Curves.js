@@ -28,8 +28,7 @@ const Curves = ({ hitsData }) => {
     <>
       {isRenderCurves &&
         hitsData.map((hit, i) => {
-          const { hit_info: hitInfo } = hit;
-          const { data_3d: data3D } = hitInfo;
+          const { data_3d: data3D } = hit.hit_info;
 
           const curCurveCount = curveCount > data3D.length ? data3D.length : curveCount;
 
@@ -37,7 +36,7 @@ const Curves = ({ hitsData }) => {
             <Curve
               key={'curve-' + getRndValue(0, 100000)}
               number={i}
-              hitInfo={hitInfo}
+              hit={hit}
               curveCount={curCurveCount}
               minMaxDistance={minMaxDistance}
               // curveTextureBlue={curveTextureBlue}
