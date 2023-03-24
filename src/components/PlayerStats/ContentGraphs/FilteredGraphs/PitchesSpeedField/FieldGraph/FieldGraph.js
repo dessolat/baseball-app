@@ -27,12 +27,15 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
   const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
 
+  const handleDotClick = (gameId, momentId) => () => {
+    window.open(`/game/${gameId}?card=${momentId}&tab=pitching`, '_blank');
+  };
   return (
     <>
       {arrData.map((pitch, i) => {
         const { break: breakCoords, pitch_info: pitchInfo } = pitch;
         const { break_x: x, break_y: y } = breakCoords;
-        const { pitch_type: pitchType } = pitchInfo;
+        const { pitch_type: pitchType, game_id: gameId, mom_id: momentId } = pitchInfo;
         // const { coordinates, pitch_info: pitchInfo } = pitch;
         // const { zone_x: x, zone_y: y } = coordinates;
 
@@ -50,7 +53,8 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
             stroke='black'
             strokeWidth='.5'
             fill={getPitchColorByName(pitchTypes[pitchType])}
-            className={cl.animated}
+            className={cl.animatedDot}
+            onClick={handleDotClick(gameId, momentId)}
           />
         );
       })}
@@ -326,7 +330,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
         strokeDasharray='4 4'
       />
       <text x='140' y={topFieldLine + 4} className={cl.leftTextTitle}>
-        Top {Math.floor((minMaxAvgBreak.maxY) * 100)}
+        Top {Math.floor(minMaxAvgBreak.maxY * 100)}
       </text>
 
       {/* center Y field line */}
@@ -416,6 +420,7 @@ const FieldGraph = ({
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.88;
   // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
   const yCoordRelCoef = 213;
+  // const yCoordRelCoef = 213;
   // const yCoordRelCoef = coordsAltered ? 213 : 340;
   // const yCoordRelCoef = 340;
   const yCoordAbsCoef = 0;
