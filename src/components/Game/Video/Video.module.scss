@@ -80,14 +80,14 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.875rem;
-				height: 100%;
-				position: relative;
+        height: 100%;
+        position: relative;
 
-				> img {
-					margin-left: unset;
-					height: 100%;
-				}
-				
+        > img {
+          margin-left: unset;
+          height: 100%;
+        }
+
         @media screen and (max-width: 1600px) {
           gap: 0.4rem;
         }
@@ -257,34 +257,30 @@
   top: 0;
   bottom: 0;
   right: 0;
+	pointer-events: none;
 
   > button {
     position: absolute;
     width: 1.5rem;
     height: 1.5rem;
+		pointer-events: auto;
   }
 
-  &.topLeftBtn {
-    right: 3rem;
-
-    > button {
-      left: 0.5rem;
-      top: 0.5rem;
-    }
+  &.topLeftBtn > button {
+    left: 0.5rem;
+    top: 0.5rem;
   }
+
   &.topRightBtn > button {
     right: 0.4rem;
     top: 0.5rem;
   }
-	
-  &.bottomLeftBtn {
-    right: 3rem;
 
-    > button {
-      left: 0.5rem;
-      bottom: 0.5rem;
-    }
+  &.bottomLeftBtn > button {
+    left: 0.5rem;
+    bottom: 0.5rem;
   }
+
   &.bottomRightBtn > button {
     right: 0.4rem;
     bottom: 0.5rem;
