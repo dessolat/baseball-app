@@ -2,7 +2,7 @@
 
 .fieldWrapper {
   grid-area: field;
-	aspect-ratio: 16/15;
+  aspect-ratio: 16/15;
   overflow: hidden;
   background-color: white;
   position: relative;
@@ -36,7 +36,7 @@
 }
 
 .canvas {
-  cursor: grab;
+  // cursor: grab;
 
   &:active {
     cursor: grabbing;
@@ -54,9 +54,9 @@
   &:hover {
     top: 0;
 
-		> .arrowDown {
-			opacity: 0;
-		}
+    > .arrowDown {
+      opacity: 0;
+    }
   }
 
   > .arrowDown {
@@ -64,8 +64,8 @@
     bottom: -7px;
     left: 50%;
     transform: translateX(-50%) scale(2, 1.5);
-		opacity: .5;
-		transition: opacity var(--transition-speed);
+    opacity: 0.5;
+    transition: opacity var(--transition-speed);
   }
 }
 
