@@ -6,7 +6,7 @@ import { Canvas } from '@react-three/fiber';
 import { FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
-import ArrowDown from 'components/UI/icons/ArrowDown';
+// import ArrowDown from 'components/UI/icons/ArrowDown';
 import Curves from './Curves/Curves';
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
@@ -22,15 +22,15 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
         </button>
         <button onClick={handleResetClick}>Reset field</button>
       </div>
-      <div className={cl.arrowDown}>
+      {/* <div className={cl.arrowDown}>
         <ArrowDown />
-      </div>
+      </div> */}
     </div>
   );
 };
 
 const PitchesTrajectories = ({ data }) => {
-  const [isAutoRotate, setAutoRotate] = useState(false);
+  const [isAutoRotate, setAutoRotate] = useState(true);
   const [zoomCoef, setZoomCoef] = useState(1);
   const [isGraphVisible, setGraphVisibility] = useState(false);
 

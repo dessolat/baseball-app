@@ -92,7 +92,7 @@ const TouchPoints = ({ data, coef, curveCount }) => (
 
 const HittingField = ({ hit }) => {
   const { data_3d, camera_2d: camera2D } = hit || 0;
-  const [isAutoRotate, setAutoRotate] = useState(false);
+  const [isAutoRotate, setAutoRotate] = useState(true);
   const [curveCount, setCurveCount] = useState(null);
   const [isCameraView, setCameraView] = useState(false);
 

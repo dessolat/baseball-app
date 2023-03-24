@@ -45,28 +45,29 @@
 
 .optionsBarWrapper {
   position: absolute;
-  top: -34px;
+  top: 0;
+  // top: -34px;
   left: 2%;
   right: 2%;
   padding-bottom: 0.7rem;
-  transition: top var(--transition-speed);
+  // transition: top var(--transition-speed);
 
-  &:hover {
-    top: 0;
+  // &:hover {
+  //   top: 0;
 
-    > .arrowDown {
-      opacity: 0;
-    }
-  }
+  //   > .arrowDown {
+  //     opacity: 0;
+  //   }
+  // }
 
-  > .arrowDown {
-    position: absolute;
-    bottom: -7px;
-    left: 50%;
-    transform: translateX(-50%) scale(2, 1.5);
-    opacity: 0.5;
-    transition: opacity var(--transition-speed);
-  }
+  // > .arrowDown {
+  //   position: absolute;
+  //   bottom: -7px;
+  //   left: 50%;
+  //   transform: translateX(-50%) scale(2, 1.5);
+  //   opacity: 0.5;
+  //   transition: opacity var(--transition-speed);
+  // }
 }
 
 .optionsBar {
