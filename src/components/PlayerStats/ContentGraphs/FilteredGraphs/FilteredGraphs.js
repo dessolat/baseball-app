@@ -704,8 +704,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
-              title='Pitches Trajectories'
-              subTitle={`${playerName} ${playerSurname} pitches trajectories`}
+              title=''
+              subTitle={`Hits from ${playerName} ${playerSurname}`}
               noSelector
             />
             <PitchesTrajectories data={filteredData} />
