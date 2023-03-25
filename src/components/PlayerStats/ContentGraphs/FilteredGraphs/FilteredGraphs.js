@@ -688,6 +688,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsTimeDynamicBlock>
+			<GraphsBlock defaultOption=''>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              title=''
+              subTitle={`Hits from ${playerName} ${playerSurname}`}
+              noSelector
+            />
+            <HitsAnglesGraphs data={filteredData} />
+          </>
+        )}
+      </GraphsBlock>
       <GraphsBlock defaultOption=''>
         {(currentOption, setCurrentOption) => (
           <>
@@ -697,18 +709,6 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               noSelector
             />
             <PitchesTrajectories data={filteredData} />
-          </>
-        )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption=''>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              title=''
-              subTitle={`Hits from ${playerName} ${playerSurname}`}
-              noSelector
-            />
-            <HitsAnglesGraphs data={filteredData} />
           </>
         )}
       </GraphsBlock>
