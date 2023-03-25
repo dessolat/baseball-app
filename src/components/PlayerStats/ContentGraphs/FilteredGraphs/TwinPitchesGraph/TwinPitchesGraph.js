@@ -255,7 +255,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
   let totalPitches = arrData.length;
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8615;
-  const yCoordRelCoef = 245;
+  const yCoordRelCoef = 179;
   // const yCoordRelCoef = 340;
   const yCoordAbsCoef = 0;
   // const yCoordAbsCoef = 75;

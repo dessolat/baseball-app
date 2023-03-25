@@ -419,7 +419,7 @@ const FieldGraph = ({
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.88;
   // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
-  const yCoordRelCoef = 213;
+  const yCoordRelCoef = 160;
   // const yCoordRelCoef = 213;
   // const yCoordRelCoef = coordsAltered ? 213 : 340;
   // const yCoordRelCoef = 340;
