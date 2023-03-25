@@ -11,7 +11,7 @@ h3 {
 
 .title {
   padding: 0 0.5625rem;
-  font: 700 0.875rem / 1.5 var(--font-nunito);
+  font: 700 0.875rem / 1 var(--font-nunito);
   text-align: center;
 }
 
@@ -34,7 +34,7 @@ h3 {
   }
 
   > .body {
-    overflow-y: auto;
+    // overflow-y: auto;
 
     &::-webkit-scrollbar {
       width: 6px;
@@ -62,7 +62,7 @@ h3 {
   position: relative;
 
   + .groupItem {
-    margin-top: 0.35rem;
+    margin-top: 0.13rem;
   }
 
   > input {
@@ -124,7 +124,7 @@ h3 {
 
 .itemBody {
   padding: 2px 0.4rem 0;
-  font: 300 0.875rem / 1.2 var(--font-nunito);
+  font: 300 0.875rem / 1.1 var(--font-nunito);
 
   > p {
     white-space: nowrap;
