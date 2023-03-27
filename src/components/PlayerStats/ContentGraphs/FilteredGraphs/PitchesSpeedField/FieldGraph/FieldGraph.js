@@ -72,7 +72,7 @@ const EllipsedDots = ({
 }) => {
   const { xCoordRelCoef, zeroXCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
-  console.log(avgCoords);
+
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
@@ -87,7 +87,8 @@ const EllipsedDots = ({
           data.avgBreakY === 0 ? zeroYBreakLine : zeroYBreakLine + data.avgBreakY * 100 * yZeroBreakCoef;
 
         const circleColor = getPitchColorByName(pitchTypes[pitchType]);
-        const opacityValue = (relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100;
+        const opacityValue =
+          0.5 + ((relValuesData[pitchTypes[pitchType]].count * 100) / totalPitches / 100) * 0.5;
 
         const filteredArrData = arrData.filter(pitch => pitch.pitch_info.pitch_type === +pitchType);
 
@@ -106,7 +107,6 @@ const EllipsedDots = ({
         const sumDiffBreaksAvg = { x: sumDiffBreaks.x / data.count, y: sumDiffBreaks.y / data.count };
         const skoBreaks = { x: Math.sqrt(sumDiffBreaksAvg.x), y: Math.sqrt(sumDiffBreaksAvg.y) };
 
-        console.log(skoBreaks);
         // 		const sumDiffSpeeds = speeds.reduce((sum, curSpeed) => sum + (curSpeed - avgSpeed) ** 2, 0);
         // const sumDiffSpeedsAvg = sumDiffSpeeds / count;
         // const skoSpeed = Math.sqrt(sumDiffSpeedsAvg);
