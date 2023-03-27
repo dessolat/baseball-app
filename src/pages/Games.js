@@ -17,7 +17,7 @@ import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
 import { GamesLoadingContext } from 'context';
 
 const Games = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
   const cancelTokenRef = useRef();
@@ -188,22 +188,15 @@ const Games = () => {
   };
 
   const { Provider } = GamesLoadingContext;
+
+  if (error !== '') return <ErrorLoader error={error} />;
+
   return (
     <>
-      {error !== '' ? (
-        <ErrorLoader error={error} />
-      ) : isLoading && games === null ? (
-        <Loader />
-      ) : games === null ? (
-        <></>
-      ) : (
-        <>
-          <Provider value={isLoading}>
-            <Header />
-          </Provider>
-          {isLoading ? <Loader styles={contentLoaderStyles} /> : <Content games={games} />}
-        </>
-      )}
+      <Provider value={isLoading}>
+        <Header />
+      </Provider>
+      {isLoading ? <Loader styles={contentLoaderStyles} /> : <Content games={games} />}
     </>
   );
 };
