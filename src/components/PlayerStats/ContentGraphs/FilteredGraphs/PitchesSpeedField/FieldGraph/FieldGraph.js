@@ -171,7 +171,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
   const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
 
   return (
-    <>
+    <g className={cl.frames}>
       {/* Frames */}
       {/* Wrapper frame */}
       {/* <rect
@@ -241,7 +241,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       {/* <text x={zeroXCoord} y={ 5} className={cl.title}>
         {`${title1} (${totalPitches})`}
       </text> */}
-    </>
+    </g>
   );
 };
 
