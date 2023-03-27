@@ -36,8 +36,6 @@ const HitsAnglesGraphs = ({ data }) => {
     defaultAnglesValues
   );
 
-  console.log(angleValues);
-  console.log(notNullAngleData);
   return (
     <div className={cl.wrapper}>
       <HitsAnglesGraph title='Hits by angle, hits' angleValues={angleValues} dataField='hitsCount' />
