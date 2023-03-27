@@ -342,9 +342,7 @@ const LeftColumnOptions = ({
   ];
   return (
     <div className={cl.leftColumnWrapper}>
-      <h3 className={cl.header}>
-        Dataset filter
-      </h3>
+      <h3 className={cl.header}>Dataset filter</h3>
       <div className={cl.body}>
         <CustomGroup
           data={data}
@@ -688,14 +686,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsTimeDynamicBlock>
-			<GraphsBlock defaultOption=''>
+      <GraphsBlock defaultOption=''>
         {(currentOption, setCurrentOption) => (
           <>
-            <GraphsHeader
-              title=''
-              subTitle={`Hits from ${playerName} ${playerSurname}`}
-              noSelector
-            />
+            <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
             <HitsAnglesGraphs data={filteredData} />
           </>
         )}
