@@ -277,9 +277,9 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
       {/* <line x1={0} y1={zeroYCoord} x2={PARAMS.GRAPH_WIDTH} y2={zeroYCoord} stroke='red' /> */}
       {/* Center Y line */}
       {/* <line x1={zeroXCoord} y1={0} x2={zeroXCoord} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
-			{/* Left Dashed Line */}
+      {/* Left Dashed Line */}
       {/* <line x1={dashedFrameX} y1={0} x2={dashedFrameX} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
-			{/* Right Dashed Line */}
+      {/* Right Dashed Line */}
       {/* <line x1={dashedFrameX + dashedFrameWidth} y1={0} x2={dashedFrameX + dashedFrameWidth} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
 
       {/* Frames */}
@@ -547,53 +547,56 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
     return sum;
   }, defaultCountByResult);
 
+  const {
+    swingChase,
+    takeChase,
+    swingShadow,
+    takeShadow,
+    swingHeart,
+    takeHeart,
+    totalChase,
+    totalShadow,
+    totalHeart
+  } = pitchesCountByResult;
+
   const topValues = {
     topRight: {
-      value: 999,
-      percents: (pitchesCountByResult.swingChase * 100) / filteredPitchesCount,
+      percents: (swingChase * 100) / (swingChase + takeChase),
       footer: null
     },
     bottomRight: {
-      value: 999,
-      percents: (pitchesCountByResult.takeChase * 100) / filteredPitchesCount,
+      percents: (takeChase * 100) / (swingChase + takeChase),
       footer: null
     },
     topCenter: {
-      value: 999,
-      percents: (pitchesCountByResult.swingShadow * 100) / filteredPitchesCount,
+      percents: (swingShadow * 100) / (swingShadow + takeShadow),
       footer: null
     },
     bottomCenter: {
-      value: 999,
-      percents: (pitchesCountByResult.takeShadow * 100) / filteredPitchesCount,
+      percents: (takeShadow * 100) / (swingShadow + takeShadow),
       footer: null
     },
     topLeft: {
-      value: 999,
-      percents: (pitchesCountByResult.swingHeart * 100) / filteredPitchesCount,
+      percents: (swingHeart * 100) / (swingHeart + takeHeart),
       footer: null
     },
     bottomLeft: {
-      value: 999,
-      percents: (pitchesCountByResult.takeHeart * 100) / filteredPitchesCount,
+      percents: (takeHeart * 100) / (swingHeart + takeHeart),
       footer: null
     }
   };
 
   const bottomValues = {
     topRight: {
-      value: 999,
-      percents: (pitchesCountByResult.totalChase * 100) / filteredPitchesCount,
+      percents: (totalChase * 100) / filteredPitchesCount,
       footer: 'Chase'
     },
     topCenter: {
-      value: 999,
-      percents: (pitchesCountByResult.totalShadow * 100) / filteredPitchesCount,
+      percents: (totalShadow * 100) / filteredPitchesCount,
       footer: 'Shadow'
     },
     topLeft: {
-      value: 999,
-      percents: (pitchesCountByResult.totalHeart * 100) / filteredPitchesCount,
+      percents: (totalHeart * 100) / filteredPitchesCount,
       footer: 'Heart'
     }
   };
@@ -651,8 +654,8 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOpti
 };
 
 const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview, currentOption }) => {
-	const [isGraphVisible, setGraphVisibility] = useState(false);
-	
+  const [isGraphVisible, setGraphVisibility] = useState(false);
+
   const wrapperRef = useRef();
   const graphRef = useRef();
 
