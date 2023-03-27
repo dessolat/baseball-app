@@ -559,29 +559,33 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
     totalHeart
   } = pitchesCountByResult;
 
+  const topRightPercents = Math.round((swingChase * 100) / (swingChase + takeChase));
+  const topCenterPercents = Math.round((swingShadow * 100) / (swingShadow + takeShadow));
+  const topLeftPercents = Math.round((swingHeart * 100) / (swingHeart + takeHeart));
+
   const topValues = {
     topRight: {
-      percents: (swingChase * 100) / (swingChase + takeChase),
+      percents: topRightPercents,
       footer: null
     },
     bottomRight: {
-      percents: (takeChase * 100) / (swingChase + takeChase),
+      percents: 100 - topRightPercents,
       footer: null
     },
     topCenter: {
-      percents: (swingShadow * 100) / (swingShadow + takeShadow),
+      percents: topCenterPercents,
       footer: null
     },
     bottomCenter: {
-      percents: (takeShadow * 100) / (swingShadow + takeShadow),
+      percents: 100 - topCenterPercents,
       footer: null
     },
     topLeft: {
-      percents: (swingHeart * 100) / (swingHeart + takeHeart),
+      percents: topLeftPercents,
       footer: null
     },
     bottomLeft: {
-      percents: (takeHeart * 100) / (swingHeart + takeHeart),
+      percents: 100 - topLeftPercents,
       footer: null
     }
   };
