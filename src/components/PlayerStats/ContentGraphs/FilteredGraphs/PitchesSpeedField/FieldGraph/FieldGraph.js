@@ -10,7 +10,7 @@ const PARAMS = {
   // GRAPH_HEIGHT: 326,
   // GRAPH_WIDTH: 467,
   // GRAPH_HEIGHT: 354.14,
-  VERTICAL_COLUMNS_NUM: 8,
+  VERTICAL_COLUMNS_NUM: 12,
   HORIZONTAL_ROWS_NUM: 6
 };
 
@@ -247,41 +247,111 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
 
 const VerticalGridLines = ({ linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, VERTICAL_COLUMNS_NUM: columnsNumber } = PARAMS;
-  const columnWidth = graphWidth / columnsNumber;
+  const columnWidth = 30;
+  // const columnWidth = graphWidth / columnsNumber;
 
-  const { leftBorderValue, rightBorderValue } = linesCoords;
+  const { rightBorderValue } = linesCoords;
 
-  const valuePerRow = (rightBorderValue - leftBorderValue) / columnsNumber;
+  // const valuePerColumn = (rightBorderValue - leftBorderValue) / columnsNumber;
+  // const valuePerColumn = (rightBorderValue - leftBorderValue) / columnsNumber;
+  console.log(linesCoords);
+  const centerLineX = graphWidth / 2;
+  const xCoordPerLine = (graphWidth / 2 / rightBorderValue) * columnWidth;
   return (
     <>
-      {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => {
-        const colText = +(i * valuePerRow + leftBorderValue).toFixed(1);
+      {/* Center Line */}
+      <line
+        x1={centerLineX}
+        y1={0}
+        x2={centerLineX}
+        y2={graphHeight}
+        stroke='#ACACAC'
+        // strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
+      />
+      <text x={centerLineX - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
+        0
+      </text>
+
+      {/* Left Lines */}
+      {new Array(columnsNumber / 2).fill(null).map((_, i, arr) => {
+        const colText = (i + 1) * -30;
+        const colXCoord = centerLineX - (i + 1) * xCoordPerLine;
+        const isBottomTextTitle = colXCoord > 0;
 
         return (
-          <Fragment key={'vert-' + i}>
+          <Fragment key={'vertical-left-' + i}>
             <line
-              x1={columnWidth * i}
+              x1={colXCoord}
               y1={0}
-              x2={columnWidth * i}
+              x2={colXCoord}
               y2={graphHeight}
               stroke='#ACACAC'
-              strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
+              strokeDasharray='4 2'
             />
-            {i !== 0 && (
-              <text x={columnWidth * i - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
+            {isBottomTextTitle && (
+              <text x={colXCoord - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
                 {colText}
               </text>
             )}
           </Fragment>
         );
       })}
+
+      {/* Right Lines */}
+      {new Array(columnsNumber / 2).fill(null).map((_, i, arr) => {
+        const colText = (i + 1) * 30;
+        const colXCoord = centerLineX + (i + 1) * xCoordPerLine;
+        const isBottomTextTitle = colXCoord < graphWidth;
+
+        return (
+          <Fragment key={'vertical-right-' + i}>
+            <line
+              x1={colXCoord}
+              y1={0}
+              x2={colXCoord}
+              y2={graphHeight}
+              stroke='#ACACAC'
+              strokeDasharray='4 2'
+            />
+            {isBottomTextTitle && (
+              <text x={colXCoord - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
+                {colText}
+              </text>
+            )}
+          </Fragment>
+        );
+      })}
+
+      {/* Old lines */}
+      {/* {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => {
+        const colText = +(i * valuePerColumn + leftBorderValue).toFixed(0);
+
+        return (
+          <Fragment key={'vert-right-' + i}>
+            <line
+              x1={columnWidth * i}
+              y1={0}
+              x2={columnWidth * i}
+              y2={graphHeight}
+              stroke='red'
+              strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
+            />
+            {i !== 0 && (
+              <text x={columnWidth * i - 5} y={graphHeight - 7} stroke='red' strokeWidth='.5' className={cl.bottomTextTitle}>
+                {colText}
+              </text>
+            )}
+          </Fragment>
+        );
+      })} */}
     </>
   );
 };
 
 const HorizontalGridLines = ({ coords, linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, HORIZONTAL_ROWS_NUM: rowsNumber } = PARAMS;
-  const rowHeight = graphHeight / rowsNumber;
+  const rowHeight = 30;
+  // const rowHeight = graphHeight / rowsNumber;
 
   const { zeroXCoord } = coords;
 
@@ -296,10 +366,70 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
     bottomBorderValue
   } = linesCoords;
 
-  const valuePerRow = (bottomBorderValue - topBorderValue) / rowsNumber;
+  // const valuePerRow = (bottomBorderValue - topBorderValue) / rowsNumber;
+  const centerLineY = graphHeight / 2;
+  const centerLineValue = Math.round((bottomBorderValue + topBorderValue) / 2);
+  const yCoordPerLine = (graphHeight / 2 / ((bottomBorderValue - topBorderValue) / 2)) * rowHeight;
   return (
     <>
-      {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => {
+      {/* Center Line */}
+      <line x1={0} y1={centerLineY} x2={graphWidth} y2={centerLineY} stroke='#ACACAC' strokeDasharray='4 2' />
+      <text x='4' y={centerLineY + 15} className={cl.leftTextTitle}>
+        {centerLineValue}
+      </text>
+
+      {/* Top Lines */}
+      {new Array(rowsNumber / 2).fill(null).map((_, i, arr) => {
+        const rowText = centerLineValue + (i + 1) * 30;
+        const rowYCoord = centerLineY + yCoordPerLine * (i + 1);
+        const isLeftTextTitle = rowYCoord >= 0;
+
+        return (
+          <Fragment key={'horizontal-top-' + i}>
+            <line
+              x1={0}
+              y1={rowYCoord}
+              x2={graphWidth}
+              y2={rowYCoord}
+              stroke='#ACACAC'
+              strokeDasharray='4 2'
+            />
+            {isLeftTextTitle && (
+              <text x='4' y={rowYCoord + 15} className={cl.leftTextTitle}>
+                {rowText}
+              </text>
+            )}
+          </Fragment>
+        );
+      })}
+
+      {/* Bottom Lines */}
+      {new Array(rowsNumber / 2).fill(null).map((_, i, arr) => {
+        const rowText = centerLineValue - (i + 1) * 30;
+        const rowYCoord = centerLineY - yCoordPerLine * (i + 1);
+        const isLeftTextTitle = rowYCoord + 25 < graphHeight;
+
+        return (
+          <Fragment key={'horizontal-bottom-' + i}>
+            <line
+              x1={0}
+              y1={rowYCoord}
+              x2={graphWidth}
+              y2={rowYCoord}
+              stroke='#ACACAC'
+              strokeDasharray='4 2'
+            />
+            {isLeftTextTitle && (
+              <text x='4' y={rowYCoord + 15} className={cl.leftTextTitle}>
+                {rowText}
+              </text>
+            )}
+          </Fragment>
+        );
+      })}
+
+      {/* Old lines */}
+      {/* {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => {
         const rowText = Math.floor(topBorderValue + i * valuePerRow);
 
         return (
@@ -317,7 +447,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
             </text>
           </Fragment>
         );
-      })}
+      })} */}
 
       {/* top Y field line */}
       <line
