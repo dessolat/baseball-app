@@ -106,7 +106,6 @@ const EllipsedDots = ({
         const sumDiffBreaksAvg = { x: sumDiffBreaks.x / data.count, y: sumDiffBreaks.y / data.count };
         const skoBreaks = { x: Math.sqrt(sumDiffBreaksAvg.x), y: Math.sqrt(sumDiffBreaksAvg.y) };
 
-        console.log(skoBreaks);
         // 		const sumDiffSpeeds = speeds.reduce((sum, curSpeed) => sum + (curSpeed - avgSpeed) ** 2, 0);
         // const sumDiffSpeedsAvg = sumDiffSpeeds / count;
         // const skoSpeed = Math.sqrt(sumDiffSpeedsAvg);
@@ -171,7 +170,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
   const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
 
   return (
-    <>
+    <g className={cl.frames}>
       {/* Frames */}
       {/* Wrapper frame */}
       {/* <rect
@@ -241,7 +240,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       {/* <text x={zeroXCoord} y={ 5} className={cl.title}>
         {`${title1} (${totalPitches})`}
       </text> */}
-    </>
+    </g>
   );
 };
 
