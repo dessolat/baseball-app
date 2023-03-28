@@ -162,7 +162,7 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
   const minMaxSpeeds = data.reduce(
     (sum, pitch, index) => {
       const { speed } = pitch.pitch_info;
-			const mphSpeed = speed * 2.24
+      const mphSpeed = speed * 2.24;
 
       if (index === 0) {
         sum.minSpeed = mphSpeed;
@@ -185,8 +185,8 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
 
   const maxFrequencyLineValue = 100;
   // const maxFrequencyLineValue = (Math.floor(maxFrequency / 10) + 1) * 10;
-  const minSpeedLineValue = Math.ceil(minSpeed / 10 - 2) * 10;
-  const maxSpeedLineValue = Math.ceil(maxSpeed / 10 + 1) * 10;
+  const minSpeedLineValue = Math.ceil(minSpeed / 10 - 1) * 10;
+  const maxSpeedLineValue = Math.ceil(maxSpeed / 10 + 0) * 10;
 
   const bottomLeftNumbers = [];
   for (let i = 1; i <= PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER; i++) {

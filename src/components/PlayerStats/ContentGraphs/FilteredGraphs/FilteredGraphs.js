@@ -390,7 +390,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
     if (sum[pitchType] !== undefined) {
       sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed * 2.23741);
+      sum[pitchType].speeds.push(speed * 2.24);
       sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
       return sum;
@@ -398,7 +398,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
     sum[pitchType] = {
       count: 1,
-      speeds: [speed],
+      speeds: [speed* 2.24],
       pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
     };
 
@@ -720,7 +720,7 @@ const FilteredGraphs = ({ pitchesData }) => {
     swing: 'all',
     contact: 'all'
   });
-  const [filteredTeamName, setFilteredTeamName] = useState('Team1');
+  const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
   // const generateFakeData = () => {
