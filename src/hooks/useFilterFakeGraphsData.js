@@ -9,27 +9,26 @@ export const useFilterGroupData = (
   teamName = null,
   batterFullName = null
 ) =>
-  useMemo(() => {
-    const result =
-      data.pitches_all?.filter(pitch =>
-        groupsArr.every(
-          group =>
-            (currentFilterValues[group] === 'all'
-              ? true
-              : group === 'batter' && currentFilterValues.batter === 'team'
-              ? pitch.batter.team_name.includes(teamName)
-                ? true
-                : false
-              : group === 'batter' && currentFilterValues.batter === 'batter'
-              ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
-                ? true
-                : false
-              : pitch[(group === 'swing' || group === 'contact') ? 'result' : group][currentFilterValues[group]]) || group === groupName
-        )
-      ) || [];
+  useMemo(
+    () =>
+      data.pitches_all?.filter(pitch => {
+        const { batter } = pitch;
+        const { batter: curBatter } = currentFilterValues;
 
-    return result;
-  }, [data, currentFilterValues, groupName, teamName, batterFullName]);
+        return groupsArr.every(group => {
+          if (currentFilterValues[group] === 'all') return true;
+
+          if (group === 'batter' && curBatter === 'team') return batter.team_name.includes(teamName);
+
+          if (group === 'batter' && curBatter === 'batter')
+            return `${batter['batter name']} ${batter['batter surname']}`.includes(batterFullName);
+
+          const tempGroupName = group === 'swing' || group === 'contact' ? 'result' : group;
+          return pitch[tempGroupName][currentFilterValues[group]] || group === groupName;
+        });
+      }) || [],
+    [data, currentFilterValues, groupName, teamName, batterFullName]
+  );
 
 export const useFilterFakeGraphsData = (
   fakeData,
@@ -37,23 +36,23 @@ export const useFilterFakeGraphsData = (
   teamName = null,
   batterFullName = null
 ) =>
-  useMemo(() => {
-    const result =
-      fakeData.pitches_all?.filter(pitch =>
-        groupsArr.every(group =>
-          currentFilterValues[group] === 'all'
-            ? true
-            : group === 'batter' && currentFilterValues.batter === 'team'
-            ? pitch.batter.team_name.includes(teamName)
-              ? true
-              : false
-            : group === 'batter' && currentFilterValues.batter === 'batter'
-            ? (pitch.batter['batter name'] + ' ' + pitch.batter['batter surname']).includes(batterFullName)
-              ? true
-              : false
-            : pitch[(group === 'swing' || group === 'contact') ? 'result' : group][currentFilterValues[group]]
-        )
-      ) || [];
+  useMemo(
+    () =>
+      fakeData.pitches_all?.filter(pitch => {
+        const { batter } = pitch;
+        const { batter: curBatter } = currentFilterValues;
 
-    return result;
-  }, [fakeData, currentFilterValues, teamName, batterFullName]);
+        return groupsArr.every(group => {
+          if (currentFilterValues[group] === 'all') return true;
+
+          if (group === 'batter' && curBatter === 'team') return batter.team_name.includes(teamName);
+
+          if (group === 'batter' && curBatter === 'batter')
+            return `${batter['batter name']} ${batter['batter surname']}`.includes(batterFullName);
+
+          const tempGroupName = group === 'swing' || group === 'contact' ? 'result' : group;
+          return pitch[tempGroupName][currentFilterValues[group]];
+        });
+      }) || [],
+    [fakeData, currentFilterValues, teamName, batterFullName]
+  );
