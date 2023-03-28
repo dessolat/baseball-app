@@ -1,10 +1,10 @@
-import React, { Suspense, useMemo, useState, useRef, useLayoutEffect, memo } from 'react';
+import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import cl from './HittingField.module.scss';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
-import CurveTexture from 'images/blue_ball_curve.jpg';
+// import CurveTexture from 'images/blue_ball_curve.jpg';
 import classNames from 'classnames';
 import * as THREE from 'three';
 import ArrowDown from 'components/UI/icons/ArrowDown';
@@ -12,6 +12,7 @@ import CameraIcon from 'images/video_camera_icon.png';
 import FieldIcon from 'images/field_icon.png';
 import CameraView from './CameraView';
 import { useSelector } from 'react-redux';
+import useSetMomentById from 'hooks/useSetMomentById';
 
 // extend({ TextGeometry });
 
@@ -35,11 +36,19 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
   );
 };
 
-const Curve = ({ moment, coef, setDrawPoints, currentMoment }) => {
+const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) => {
   const { data_3d: data } = moment?.metering?.hit;
+
+  const [hovered, setHovered] = useState(false);
 
   const cashedStepTotal = useRef(0);
   const tubeRef = useRef(null);
+
+  useEffect(() => {
+    if (tubeRef.current === null) return;
+
+    document.body.style.cursor = hovered ? 'pointer' : 'auto';
+  }, [hovered]);
 
   let stepTotalRef = cashedStepTotal.current;
 
@@ -76,9 +85,22 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment }) => {
     tubeRef.current.setDrawRange(0, stepTotalRef);
   });
   const isCurrentTube = currentMoment.inner.id === moment.inner.id;
+
+  const handleMeshClick = () => setMomentById(moment.inner.id);
   return (
     <>
-      <mesh position={[-70, 0, 220]} castShadow>
+      <mesh
+        position={[-70, 0, 220]}
+        castShadow
+        onClick={handleMeshClick}
+        onPointerOver={() => {
+          if (cashedStepTotal.current < 30110) return;
+          setHovered(true);
+        }}
+        onPointerOut={() => {
+          if (cashedStepTotal.current < 30110) return;
+          setHovered(false);
+        }}>
         <tubeGeometry args={[curveCoords, 70, 3, 50, false]} ref={tubeRef} />
         <meshPhongMaterial
           color={isCurrentTube ? 'blue' : '#0099E6'}
@@ -102,13 +124,19 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment }) => {
   );
 };
 
-const CurveAndPoints = memo(({ moment, coef, currentMoment }) => {
+const CurveAndPoints = memo(({ moment, coef, currentMoment, setMomentById }) => {
   const [drawPoints, setDrawPoints] = useState(false);
   const { data_3d: data3D } = moment?.metering?.hit;
 
   return (
     <>
-      <Curve moment={moment} coef={coef} setDrawPoints={setDrawPoints} currentMoment={currentMoment} />
+      <Curve
+        moment={moment}
+        coef={coef}
+        setDrawPoints={setDrawPoints}
+        currentMoment={currentMoment}
+        setMomentById={setMomentById}
+      />
       {drawPoints && <TouchPoints data={data3D} coef={coef} />}
     </>
   );
@@ -119,11 +147,17 @@ function propsComparison(prevProps, nextProps) {
 }
 
 const Curves = memo(
-  ({ batterMoments, coef, currentMoment }) => (
+  ({ batterMoments, coef, currentMoment, setMomentById }) => (
     <>
       {batterMoments.map((moment, i) => {
         return (
-          <CurveAndPoints key={moment.inner.id} moment={moment} coef={coef} currentMoment={currentMoment} />
+          <CurveAndPoints
+            key={moment.inner.id}
+            moment={moment}
+            coef={coef}
+            currentMoment={currentMoment}
+            setMomentById={setMomentById}
+          />
         );
         // return <CurveAndPoints key={'curve-points-' + i} data3D={data3D} coef={coef} />;
       })}
@@ -241,6 +275,8 @@ const HittingField = () => {
   // const isOtherTrajectories = curveCount > 1;
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
   const isBtnIcon = camera2D !== null;
+
+  const setMomentById = useSetMomentById();
   return (
     <div className={cl.field}>
       {(!isCameraView || camera2D === null) && (
@@ -263,7 +299,12 @@ const HittingField = () => {
               {isCurrentTrajectory && <TouchPoints data={data_3d} coef={coef} />} */}
 
               {/* Other trajectories */}
-              <Curves batterMoments={batterMoments} coef={coef} currentMoment={currentMoment} />
+              <Curves
+                batterMoments={batterMoments}
+                coef={coef}
+                currentMoment={currentMoment}
+                setMomentById={setMomentById}
+              />
 
               <directionalLight
                 position={[0, 400, 0]}
