@@ -375,12 +375,12 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       {/* Center Line */}
       <line x1={0} y1={centerLineY} x2={graphWidth} y2={centerLineY} stroke='#ACACAC' strokeDasharray='4 2' />
       <text x='4' y={centerLineY + 15} className={cl.leftTextTitle}>
-        {centerLineValue}
+        {-centerLineValue}
       </text>
 
       {/* Top Lines */}
       {new Array(rowsNumber / 2).fill(null).map((_, i, arr) => {
-        const rowText = centerLineValue + (i + 1) * 30;
+        const rowText = -(centerLineValue + (i + 1) * 30);
         const rowYCoord = centerLineY + yCoordPerLine * (i + 1);
         const isLeftTextTitle = rowYCoord >= 0;
 
@@ -405,7 +405,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
 
       {/* Bottom Lines */}
       {new Array(rowsNumber / 2).fill(null).map((_, i, arr) => {
-        const rowText = centerLineValue - (i + 1) * 30;
+        const rowText = -(centerLineValue - (i + 1) * 30);
         const rowYCoord = centerLineY - yCoordPerLine * (i + 1);
         const isLeftTextTitle = rowYCoord + 25 < graphHeight;
 
