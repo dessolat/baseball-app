@@ -358,7 +358,9 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
 };
 
 const Column = ({ right, center, coef, data, columnHeight, reverse = false }) => {
-  const { value, percents, footer } = data;
+  console.log(data);
+  const { percents: srcPercents, footer } = data;
+  const percents = isNaN(srcPercents) ? 0 : srcPercents;
 
   const percentValueRef = useRef(null);
 
@@ -378,10 +380,8 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
 
   const xCoord = right - 20;
   const yCoordFilled = reverse ? center : center - coef * percents;
-  const yCoordEmpty = reverse ? coef * percents + center : center - columnHeight;
 
   const valueXCoord = xCoord + 10;
-  const valueYCoord = reverse ? center + 12 : center - 5;
 
   const percentsYCoord = reverse
     ? yCoordFilled + coef * percents + 16
@@ -447,60 +447,22 @@ const Column = ({ right, center, coef, data, columnHeight, reverse = false }) =>
 };
 
 const Columns = ({ right, center, values }) => {
-  const { topRight, topCenter, topLeft, bottomRight, bottomCenter, bottomLeft } = values;
-
   const columnHeight = 150 / 2;
-  // const columnHeight = 239 / 2;
   const coef = columnHeight / 100;
+
   return (
     <>
-      {/* Top columns */}
-      {topRight && (
-        <Column right={right} center={center} coef={coef} data={topRight} columnHeight={columnHeight} />
-      )}
-      {topCenter && (
-        <Column right={right - 42} center={center} coef={coef} data={topCenter} columnHeight={columnHeight} />
-      )}
-      {topLeft && (
+      {Object.entries(values).map((entry, i) => (
         <Column
-          right={right - 42 * 2}
+          key={entry[0]}
+          right={right - 42 * (3 - entry[1].column)}
           center={center}
           coef={coef}
-          data={topLeft}
+          data={entry[1]}
           columnHeight={columnHeight}
+          reverse={entry[1].reverse}
         />
-      )}
-      {/* Bottom columns */}
-      {bottomRight && (
-        <Column
-          right={right}
-          center={center}
-          coef={coef}
-          data={bottomRight}
-          columnHeight={columnHeight}
-          reverse
-        />
-      )}
-      {bottomCenter && (
-        <Column
-          right={right - 42}
-          center={center}
-          coef={coef}
-          data={bottomCenter}
-          columnHeight={columnHeight}
-          reverse
-        />
-      )}
-      {bottomLeft && (
-        <Column
-          right={right - 42 * 2}
-          center={center}
-          coef={coef}
-          data={bottomLeft}
-          columnHeight={columnHeight}
-          reverse
-        />
-      )}
+      ))}
     </>
   );
 };
@@ -566,42 +528,54 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
   const topValues = {
     topRight: {
       percents: topRightPercents,
-      footer: null
+      footer: null,
+      column: 3
     },
     bottomRight: {
       percents: 100 - topRightPercents,
-      footer: null
+      footer: null,
+      reverse: true,
+      column: 3
     },
     topCenter: {
       percents: topCenterPercents,
-      footer: null
+      footer: null,
+      column: 2
     },
     bottomCenter: {
       percents: 100 - topCenterPercents,
-      footer: null
+      footer: null,
+      reverse: true,
+      column: 2
     },
     topLeft: {
       percents: topLeftPercents,
-      footer: null
+      footer: null,
+      column: 1
     },
     bottomLeft: {
       percents: 100 - topLeftPercents,
-      footer: null
+      footer: null,
+      reverse: true,
+      column: 1
     }
   };
 
   const bottomValues = {
     topRight: {
       percents: (totalChase * 100) / filteredPitchesCount,
-      footer: 'Chase'
+      footer: 'Chase',
+      column: 3
     },
     topCenter: {
       percents: (totalShadow * 100) / filteredPitchesCount,
-      footer: 'Shadow'
+      footer: 'Shadow',
+      column: 2
     },
     topLeft: {
       percents: (totalHeart * 100) / filteredPitchesCount,
-      footer: 'Heart'
+      footer: 'Heart',
+      column: 1
     }
   };
 
