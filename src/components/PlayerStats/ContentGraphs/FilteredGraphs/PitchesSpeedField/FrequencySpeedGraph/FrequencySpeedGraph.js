@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { getPitchColorByName, getRndValue } from 'utils';
+import { getPitchColorByName } from 'utils';
 import cl from './FrequencySpeedGraph.module.scss';
 
 const PARAMS = {
@@ -10,8 +10,6 @@ const PARAMS = {
   VERTICAL_GRID_LINES_TOP: 0,
   VERTICAL_GRID_LINES_LEFT: 45,
   VERTICAL_GRID_LINES_HEIGHT: 300,
-  // VERTICAL_GRID_LINES_HEIGHT: 325,
-  // VERTICAL_GRID_LINES_HEIGHT: 443,
   GRAPH_ROWS_HEIGHT: 22,
   BETWEEN_ROWS_HEIGHT: 28
 };
@@ -49,7 +47,6 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
               x={leftEdgeLine}
               y={yCoord}
               width={leftSideWidth}
-              // width={leftScaleMultiplier * measure.frequency}
               height={PARAMS.GRAPH_ROWS_HEIGHT}
               fill='#EAEAEA'
               opacity='.5'
@@ -57,10 +54,8 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
             {/* Row body */}
             <rect
               x={leftEdgeLine + leftValueCoef * (100 - measureFrequency)}
-              // x={PARAMS.ZERO_COORDS.X - leftScaleMultiplier * measure.frequency}
               y={yCoord}
               width={leftValueCoef * measureFrequency}
-              // width={leftScaleMultiplier * measure.frequency}
               height={PARAMS.GRAPH_ROWS_HEIGHT}
               fill={getPitchColorByName(measure[0])}
               opacity='.7'
@@ -100,7 +95,6 @@ const Rows = ({ maxSpeedLineValue, minSpeedLineValue, relValuesData, totalPitche
                 rightFirstLine +
                 (minSpeed - minSpeedLineValue) * rightValueCoef +
                 (rightValueCoef * (maxSpeed - minSpeed)) / 2
-                // (rightValueCoef * (measure.speed.max - measure.speed.min)) / 2
               }
               y={yCoord + PARAMS.GRAPH_ROWS_HEIGHT / 2 - 18}
               textAnchor='middle'
@@ -180,11 +174,9 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
   );
 
   const { minSpeed, maxSpeed } = minMaxSpeeds;
-  // const minSpeed = Math.min(...minSpeedValues);
-  // const maxSpeed = Math.max(...maxSpeedValues);
 
   const maxFrequencyLineValue = 100;
-  // const maxFrequencyLineValue = (Math.floor(maxFrequency / 10) + 1) * 10;
+
   const minSpeedLineValue = Math.ceil(minSpeed / 10 - 1) * 10;
   const maxSpeedLineValue = Math.ceil(maxSpeed / 10 + 0) * 10;
 
@@ -233,30 +225,16 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
           <text
             x={PARAMS.ZERO_COORDS.X - PARAMS.LEFT_VERTICAL_GRID_LINES_STEP * (i + 1)}
             y={PARAMS.ZERO_COORDS.Y + 163}
-            // y={PARAMS.ZERO_COORDS.Y + 254}
             className={cl.bottomNumber}>
             {number}
           </text>
         </Fragment>
       ))}
 
-      {/* Bottom-left unit measurement */}
-      {/* <text
-          x={
-            PARAMS.ZERO_COORDS.X -
-            (PARAMS.LEFT_VERTICAL_GRID_LINES_STEP * (PARAMS.LEFT_VERTICAL_GRID_LINES_NUMBER + 1) + 17 / 2) +
-            10
-          }
-          y={PARAMS.ZERO_COORDS.Y + 163}
-          // y={PARAMS.ZERO_COORDS.Y + 254}
-          className={cl.bottomNumber}>
-          %
-        </text> */}
       {/* Left side title */}
       <text
         x={PARAMS.ZERO_COORDS.X / 2}
         y={PARAMS.ZERO_COORDS.Y + 194}
-        // y={PARAMS.ZERO_COORDS.Y + 280}
         className={cl.sideTitle}>
         Pitch Type, %
       </text>
@@ -277,7 +255,6 @@ const FrequencySpeedGraph = ({ data, relValuesData }) => {
             <text
               x={PARAMS.ZERO_COORDS.X + PARAMS.RIGHT_VERTICAL_GRID_LINES_STEP * (i + 1)}
               y={PARAMS.ZERO_COORDS.Y + 163}
-              // y={PARAMS.ZERO_COORDS.Y + 254}
               className={cl.bottomNumber}>
               {number}
             </text>
