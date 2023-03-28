@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const innings = useSelector(state => state.game.innings);
+  const { innings } = useSelector(state => state.game);
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();
