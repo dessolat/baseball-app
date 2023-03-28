@@ -17,7 +17,7 @@ import { HSVtoRGB } from 'utils';
 //   </>
 // );
 
-const CurvePath = memo(({ hit, coef, curveCount, setDrawPoints, minMaxDistance }) => {
+const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
   const { data_3d: data3D, distance } = hit.hit_info;
   const { game_id: gameId, mom_id: momentId } = hit.pitch_info;
 

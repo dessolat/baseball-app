@@ -8,12 +8,13 @@ import HittingVideos from './HittingVideos/HittingVideos';
 const PlaysHitting = () => {
   const [hittingMode] = useState('Field');
 
-  const currentMoment = useSelector(state => state.game.currentMoment);
+  const { currentMoment } = useSelector(state => state.game);
+
   const mobileWidth = useSelector(state => state.shared.mobileWidth);
 
   return (
     <>
-      {(mobileWidth > 1000 || hittingMode === 'Field') && <HittingField hit={currentMoment.metering?.hit} />}
+      {(mobileWidth > 1000 || hittingMode === 'Field') && <HittingField />}
       {(mobileWidth > 1000 || hittingMode === 'Stats') && <HittingStats hit={currentMoment.metering?.hit} />}
       {(mobileWidth > 1000 || hittingMode === 'Graph') && <HittingGraph currentMoment={currentMoment} />}
       {(mobileWidth > 1000 || hittingMode === 'Videos') && <HittingVideos />}
