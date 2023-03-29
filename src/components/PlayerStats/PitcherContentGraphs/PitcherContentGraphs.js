@@ -1,9 +1,9 @@
 import React from 'react';
-import cl from './ContentGraphs.module.scss';
+import cl from './PitcherContentGraphs.module.scss';
 import Banner from './Banner/Banner';
 import FilteredGraphs from './FilteredGraphs/FilteredGraphs';
 
-const ContentGraphs = ({ pitchesData }) => {
+const PitcherContentGraphs = ({ pitchesData }) => {
   const isFilteredGraphs = !!pitchesData;
 	
   return (
@@ -14,4 +14,4 @@ const ContentGraphs = ({ pitchesData }) => {
   );
 };
 
-export default ContentGraphs;
+export default PitcherContentGraphs;

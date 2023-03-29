@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
-import ContentGraphs from '../ContentGraphs/ContentGraphs';
+import PitcherContentGraphs from '../PitcherContentGraphs/PitcherContentGraphs';
 import ContentTables from '../ContentTables/ContentTables';
 import { PlayerYearsContext } from 'context';
 
@@ -152,7 +152,7 @@ const Content = ({ pitchesData }) => {
                   handleLeagueClick={handleLeagueClick}
                 />
               </div>
-              {isContentGraphs && <ContentGraphs pitchesData={pitchesData} />}
+              {isContentGraphs && <PitcherContentGraphs pitchesData={pitchesData} />}
             </>
           )}
         </div>
