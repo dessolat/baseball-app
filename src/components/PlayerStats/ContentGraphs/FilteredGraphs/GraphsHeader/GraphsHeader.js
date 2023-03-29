@@ -43,7 +43,7 @@ const GraphsHeader = ({
   });
   return (
     <div className={cl.graphsHeader} {...props}>
-      <h3>{title}</h3>
+      <h3 className={cl.header}>{title}</h3>
       <p className={titleClasses}>{subTitle}</p>
       {!noSelector && (
         <OptionsToggler

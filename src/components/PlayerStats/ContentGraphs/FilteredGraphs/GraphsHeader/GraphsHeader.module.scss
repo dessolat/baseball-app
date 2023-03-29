@@ -5,9 +5,15 @@
   top: -1px;
 	z-index: 2;
 
-  > h3 {
-    text-align: center;
-  }
+  > .header {
+		color: #1a4c96;
+		font: 700 1.125rem var(--font-nunito);
+		text-align: center;
+	
+		@media screen and (orientation: landscape) and (max-height: 950px) {
+			line-height: .8;
+		}
+	}
 }
 
 .title {
