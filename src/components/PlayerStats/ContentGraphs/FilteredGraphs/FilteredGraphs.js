@@ -5,7 +5,7 @@ import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
@@ -158,6 +158,43 @@ const Group = ({
   );
 };
 
+const TextGroup = ({ setTextGroupFilter }) => {
+  return (
+    <div className={cl.textGroup}>
+      <div className={cl.textGroupItem}>
+        <p>Team</p>
+        <FilterField
+          placeholder='Search of team'
+          style={{ width: '82%' }}
+          handleChange={value => {
+            setTextGroupFilter(prev => ({ ...prev, team: value }));
+          }}
+        />
+      </div>
+      <div className={cl.textGroupItem}>
+        <p>Game</p>
+        <FilterField
+          placeholder='Search of game'
+          style={{ width: '82%' }}
+          handleChange={value => {
+            setTextGroupFilter(prev => ({ ...prev, game: value }));
+          }}
+        />
+      </div>
+      <div className={cl.textGroupItem}>
+        <p>Batter</p>
+        <FilterField
+          placeholder='Search of batter'
+          style={{ width: '82%' }}
+          handleChange={value => {
+            setTextGroupFilter(prev => ({ ...prev, batter: value }));
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
 const CustomGroup = ({
   data,
   currentFilterValues,
@@ -230,39 +267,6 @@ const CustomGroup = ({
           currentFilterValues={currentFilterValues}
         />
       ))}
-      <label className={cl.groupItem}>
-        <input type='radio' name='batter' value='Team' onChange={() => handleFilterClick('batter', 'team')} />
-        <div className={cl.customItemBody}>
-          <p>Team</p>
-          <FilterField
-            placeholder='Search of team'
-            style={{ width: '11.25rem' }}
-            handleChange={handleTeamNameChange}
-          />
-        </div>
-        <span>
-          <span></span>
-        </span>
-      </label>
-      <label className={cl.groupItem}>
-        <input
-          type='radio'
-          name='batter'
-          value='Batter'
-          onChange={() => handleFilterClick('batter', 'batter')}
-        />
-        <div className={cl.customItemBody}>
-          <p>Batter</p>
-          <FilterField
-            placeholder='Search of batter'
-            style={{ width: '11.25rem' }}
-            handleChange={handlePlayerNameChange}
-          />
-        </div>
-        <span>
-          <span></span>
-        </span>
-      </label>
     </div>
   );
 };
@@ -274,7 +278,8 @@ const LeftColumnOptions = ({
   filteredTeamName,
   filteredPlayerFullName,
   handleTeamNameChange,
-  handlePlayerNameChange
+  handlePlayerNameChange,
+  setTextGroupFilter
 }) => {
   const groupsArr = [
     {
@@ -344,6 +349,8 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>Dataset filter</h3>
       <div className={cl.body}>
+        <TextGroup setTextGroupFilter={setTextGroupFilter} />
+
         <CustomGroup
           data={data}
           currentFilterValues={currentFilterValues}
@@ -398,7 +405,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
     sum[pitchType] = {
       count: 1,
-      speeds: [speed* 2.24],
+      speeds: [speed * 2.24],
       pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
     };
 
@@ -723,6 +730,50 @@ const FilteredGraphs = ({ pitchesData }) => {
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
+  const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', batter: '' });
+
+  const filteredData = useMemo(() => {
+    function checkFieldIdentity(comparedFields, fieldFilter, exactComparing = true) {
+      if (fieldFilter === '') return true;
+
+      const filterArr = fieldFilter.split(' ');
+
+      return filterArr.reduce((sum, word) => {
+        if (
+          !exactComparing &&
+          !comparedFields.some(
+            field => String(field).slice(0, word.length).toLowerCase() === String(word).toLowerCase()
+          )
+        ) {
+          sum = false;
+        }
+
+        if (
+          exactComparing &&
+          !comparedFields.some(field => String(field).toLowerCase() === String(word).toLowerCase())
+        ) {
+          sum = false;
+        }
+
+        return sum;
+      }, true);
+    }
+
+    const { pitches_all: pitchesAll } = pitchesData;
+
+    const newPitchesAll = pitchesAll.filter(({ batter, pitch_info: pitchInfo }) => {
+      const { team: teamFilter, game: gameFilter, batter: batterFilter } = textGroupFilter;
+
+      return (
+        checkFieldIdentity([batter.team_name], teamFilter) &&
+        checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
+        checkFieldIdentity([batter['batter name'], batter['batter surname']], batterFilter)
+      );
+    });
+
+    return { preview: pitchesData.preview, pitches_all: newPitchesAll };
+  }, [textGroupFilter, pitchesData]);
+
   // const generateFakeData = () => {
   //   const totalPitches = getRndValue(10, 20);
   //   // const totalPitches = getRndValue(300, 500);
@@ -884,19 +935,20 @@ const FilteredGraphs = ({ pitchesData }) => {
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
         // handleFakeDataClick={handleFakeDataClick}
-        data={pitchesData}
+        data={filteredData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
         filteredPlayerFullName={filteredPlayerFullName}
         handleTeamNameChange={handleTeamNameChange}
         handlePlayerNameChange={handlePlayerNameChange}
+        setTextGroupFilter={setTextGroupFilter}
       />
       <RightColumnGraphs
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
         filteredPlayerFullName={filteredPlayerFullName}
-        data={pitchesData}
+        data={filteredData}
       />
     </div>
   );
