@@ -60,7 +60,6 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     scrollTimeoutRef.current = setTimeout(() => {
       const isListScroll = e.target.scrollTop + e.target.clientHeight < e.target.scrollHeight;
       dispatch(setListScrollTop(isListScroll));
-      console.log(isListScroll);
     }, 100);
   };
 

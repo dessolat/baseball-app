@@ -1,6 +1,6 @@
 const defaultState = {
-  games: null,
-  leagues: null,
+  games: [],
+  leagues: [],
   players: null,
   currentLeague: { id: -1, name: 'All', title: 'All' },
   currentStadium: 'All',

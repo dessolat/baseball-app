@@ -9,9 +9,10 @@ import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
+import { StatsLoadingContext } from 'context';
 
 const Stats = () => {
-  const [isStatsLoading, setIsStatsLoading] = useState(false);
+  const [isStatsLoading, setIsStatsLoading] = useState(true);
   const [error, setError] = useState('');
 
   const firstMountRef = useRef(true);
@@ -24,11 +25,11 @@ const Stats = () => {
 
   useEffect(() => () => cancelStatsTokenRef.current.cancel(null), []);
 
-	useEffect(() => {
+  useEffect(() => {
     if (firstMountRef.current === true) return;
 
-		dispatch(setTableType(statsTableMode === 'Pitching' ? 'Pitching' : 'Batting'));
-		// eslint-disable-next-line
+    dispatch(setTableType(statsTableMode === 'Pitching' ? 'Pitching' : 'Batting'));
+    // eslint-disable-next-line
   }, [statsTableMode]);
 
   useEffect(() => {
@@ -132,18 +133,23 @@ const Stats = () => {
   // 	// eslint-disable-next-line
   // }, [currentYear]);
 
+  const contentLoaderStyles = {
+    margin: 'unset',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)'
+  };
+
+  const { Provider } = StatsLoadingContext;
+
+  if (error !== '') return <ErrorLoader error={error} />;
   return (
     <>
-      {error !== '' ? (
-        <ErrorLoader error={error} />
-      ) : isStatsLoading && statsData.length === 0 ? (
-        <Loader />
-      ) : (
-        <>
-          <Header />
-          <Content />
-        </>
-      )}
+      <Provider value={isStatsLoading}>
+        <Header />
+      </Provider>
+      {isStatsLoading ? <Loader styles={contentLoaderStyles} /> : <Content />}
     </>
   );
 };

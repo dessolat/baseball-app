@@ -23,6 +23,7 @@ const ContentPitchingTableHeader = ({
       <>
         {fieldsInfo.map((field, i) => (
           <SortField
+						key={i}
             sortField={sortField}
             sortDirection={sortDirection}
             handleClick={handleFieldClick}

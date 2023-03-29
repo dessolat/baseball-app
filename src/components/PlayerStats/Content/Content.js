@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTableType, setPlayerCurrentTeam } from 'redux/playerStatsReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentMobilePlayerInfo from './ContentMobilePlayerInfo';
-import ContentGraphs from '../ContentGraphs/ContentGraphs';
+import PitcherContentGraphs from '../PitcherContentGraphs/PitcherContentGraphs';
 import ContentTables from '../ContentTables/ContentTables';
 import { PlayerYearsContext } from 'context';
+import BatterContentGraphs from '../BatterContentGraphs/BatterContentGraphs';
 
 const Content = ({ pitchesData }) => {
   const { playerYears, calculateTeamsArray } = useContext(PlayerYearsContext);
@@ -124,7 +125,13 @@ const Content = ({ pitchesData }) => {
     return options;
   }
 
-  const isContentGraphs =
+  const isBatterGraphs =
+    tableType === 'Batting' &&
+    getSortedTableOptions().length !== 0 &&
+    !isMobile &&
+    statsData.pitcher_banner.teams.length > 0;
+
+  const isPitcherGraphs =
     tableType === 'Pitching' &&
     getSortedTableOptions().length !== 0 &&
     !isMobile &&
@@ -152,7 +159,8 @@ const Content = ({ pitchesData }) => {
                   handleLeagueClick={handleLeagueClick}
                 />
               </div>
-              {isContentGraphs && <ContentGraphs pitchesData={pitchesData} />}
+              {isBatterGraphs && <BatterContentGraphs pitchesData={pitchesData} />}
+              {isPitcherGraphs && <PitcherContentGraphs pitchesData={pitchesData} />}
             </>
           )}
         </div>

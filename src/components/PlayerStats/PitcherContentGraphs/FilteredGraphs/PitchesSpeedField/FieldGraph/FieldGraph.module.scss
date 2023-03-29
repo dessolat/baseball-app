@@ -1,0 +1,107 @@
+.outerWrapper {
+  aspect-ratio: 455 / 326;
+  padding: 0 0 2.3rem 1.9rem;
+  background: white;
+  position: relative;
+}
+
+.bottomWrapperTitle,
+.leftWrapperTitle {
+  position: absolute;
+  font: 700 1.07rem 'Nunito', sans-serif;
+
+  @media screen and (max-width: 1242px) {
+    font-size: 1rem;
+  }
+  @media screen and (max-width: 1155px) {
+    font-size: 0.92rem;
+  }
+  @media screen and (max-width: 1080px) {
+    font-size: 0.9rem;
+  }
+}
+
+.bottomWrapperTitle {
+  left: 1.9rem;
+  bottom: 0.47rem;
+
+	@media screen and (max-width: 1080px) {
+		bottom: 0.48rem;
+  }
+}
+
+.leftWrapperTitle {
+  left: 0.3rem;
+  bottom: 2.3rem;
+  writing-mode: vertical-lr;
+  transform: rotateZ(180deg);
+}
+
+.svgWrapper {
+  aspect-ratio: 455 / 330;
+  // aspect-ratio: 467 / 354.14;
+  background: url('/images/player_stats_field_bg.jpg') no-repeat center / 100% 100%;
+  position: relative;
+  // padding: 0 0 2.5rem 1.5rem;
+
+  > svg {
+    display: inherit;
+  }
+}
+
+.leftTextTitle,
+.bottomTextTitle {
+  font: 400 0.875rem 'Nunito', sans-serif;
+}
+
+.leftTextTitle {
+  text-anchor: start;
+}
+
+.bottomTextTitle {
+  text-anchor: end;
+}
+
+.animatedDot {
+  transition: all 0.3s;
+  animation: growRadius 0.3s forwards;
+	cursor: pointer;
+
+	&:hover {
+		animation: growRadiusMore 0.3s forwards;
+	}
+}
+
+.animatedEllipse {
+  transition: all 0.3s;
+  animation: growRadiusEllipse 0.3s forwards;
+}
+
+.frames > rect {
+	pointer-events: none;
+}
+
+@keyframes growRadius {
+  from {
+    r: 0;
+  }
+  to {
+    r: 8;
+  }
+}
+@keyframes growRadiusMore {
+  from {
+    r: 8;
+  }
+  to {
+    r: 12;
+  }
+}
+@keyframes growRadiusEllipse {
+  from {
+    r: 0;
+  }
+  to {
+    r: 15;
+  }
+}
