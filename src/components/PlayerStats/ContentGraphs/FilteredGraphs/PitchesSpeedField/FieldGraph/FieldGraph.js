@@ -252,9 +252,6 @@ const VerticalGridLines = ({ linesCoords }) => {
 
   const { rightBorderValue } = linesCoords;
 
-  // const valuePerColumn = (rightBorderValue - leftBorderValue) / columnsNumber;
-  // const valuePerColumn = (rightBorderValue - leftBorderValue) / columnsNumber;
-  console.log(linesCoords);
   const centerLineX = graphWidth / 2;
   const xCoordPerLine = (graphWidth / 2 / rightBorderValue) * columnWidth;
   return (

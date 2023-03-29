@@ -357,8 +357,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
   );
 };
 
-const Column = ({ right, center, coef, data, columnHeight, reverse = false }) => {
-  console.log(data);
+const Column = ({ right, center, coef, data, reverse = false }) => {
   const { percents: srcPercents, footer } = data;
   const percents = isNaN(srcPercents) ? 0 : srcPercents;
 
