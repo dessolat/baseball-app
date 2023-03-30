@@ -5,9 +5,7 @@ import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 
-const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
-  // const [currentTime, setCurrentTime] = useState(0);
-
+const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler}) => {
   // eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
   const currentMoment = useSelector(state => state.game.currentMoment);
@@ -49,10 +47,6 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
 
   const onReady = e => {
     handleOnReady(position, e.target);
-
-    // currentTimeInterval.current = setInterval(() => {
-    //   setCurrentTime(e.target.getCurrentTime()?.toFixed(4));
-    // }, 20);
   };
 
   const onStateChange = e => {
@@ -95,8 +89,6 @@ const HittingVideo = ({ videoId, position, handleOnReady, stateChangeHandler, se
           // videoId={'WCjLd7QAJq8'}
           onReady={onReady}
           onStateChange={onStateChange}
-          // onPlaybackRateChange={onPlaybackRateChange}
-          // onPlaybackQualityChange={playbackQualityHandle}
           containerClassName={cl.YTContainer}
           opts={{
             width: '100%',

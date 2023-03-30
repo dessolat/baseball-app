@@ -1,7 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from 'react';
 import cl from '../PlaysHitting.module.scss';
-// import TopImage from 'images/hit_top_image.jpg';
-// import BottomImage from 'images/hit_bottom_image.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
 import getYouTubeID from 'get-youtube-id';
@@ -11,7 +9,6 @@ import {
   setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
-  setVideoPlaybackRate,
   setVideoState
 } from 'redux/gameReducer';
 import HittingVideo from './HittingVideo';
@@ -21,19 +18,21 @@ const HittingVideos = () => {
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
 
-  const { camera_info: cameraInfo } = useSelector(state => state.game.preview);
-  const videoState = useSelector(state => state.game.videoState);
-  const preferredVideoState = useSelector(state => state.game.preferredVideoState);
-  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
-  const currentMoment = useSelector(state => state.game.currentMoment);
-  const currentCard = useSelector(state => state.game.currentCard);
-  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
-  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  const filteredCards = useSelector(state => state.game.filteredCards);
-  const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const seekValue = useSelector(state => state.game.seekValue);
-  const videoPlaybackRate = useSelector(state => state.game.videoPlaybackRate);
+  const {
+    preview: { camera_info: cameraInfo },
+    videoState,
+    preferredVideoState,
+    videoCurrentTime,
+    currentMoment,
+    currentCard,
+    timelineSliderCoords: sliderCoords,
+    videoLengthMode,
+    filteredCards,
+    isLastMomentMode,
+    playbackMode,
+    seekValue,
+    videoPlaybackRate
+  } = useSelector(state => state.game);
 
   const dispatch = useDispatch();
 
@@ -570,12 +569,6 @@ const HittingVideos = () => {
       video3?.playVideo();
       video4?.playVideo();
     }
-    // if (stateValue === 5 && isAllQued && preferredVideoState === 1) {
-    //   video1?.playVideo();
-    //   video2?.playVideo();
-    //   video3?.playVideo();
-    //   video4?.playVideo();
-    // }
   };
 
   function handleMouseMove() {
@@ -622,18 +615,6 @@ const HittingVideos = () => {
         stateChangeHandler={stateChangeHandler}
       />
 
-      {/* <div>
-        <img src={TopImage} alt='hit-image' />
-      </div>
-      <div>
-        <img src={TopImage} alt='hit-image' />
-      </div>
-      <div>
-        <img src={BottomImage} alt='hit-image' />
-      </div>
-      <div>
-        <img src={BottomImage} alt='hit-image' />
-      </div> */}
       {currentMoment.video && (
         <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
       )}
