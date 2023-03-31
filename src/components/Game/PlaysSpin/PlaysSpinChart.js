@@ -5,61 +5,10 @@ import cl from './PlaysSpin.module.scss';
 import { useSelector } from 'react-redux';
 import { DotRadiusContext } from 'context';
 import Lines from './Chart/Lines';
+import LinesText from './Chart/LinesText';
 
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
-
-const HorizontalLinesText = ({ startX, graphRatio, minMaxValues }) => {
-  const maxY = Math.ceil(minMaxValues.maxY * 100);
-  const minY = Math.floor(minMaxValues.minY * 100);
-  const average = (maxY - minY) / 4;
-
-  return (
-    <>
-      <text x={startX - 15} y='15' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {(maxY / graphRatio) * -1}
-      </text>
-      <text x={startX - 15} y='40' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round(((maxY - average) / graphRatio) * -1)}
-      </text>
-      <text x={startX - 15} y='65' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round(((maxY + minY) / 2 / graphRatio) * -1)}
-      </text>
-      <text x={startX - 15} y='90' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round(((minY + average) / graphRatio) * -1)}
-      </text>
-      <text x={startX - 15} y='115' stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {(minY / graphRatio) * -1}
-      </text>
-    </>
-  );
-};
-
-const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
-  const maxX = Math.ceil(minMaxValues.maxX * 100);
-  const minX = Math.floor(minMaxValues.minX * 100);
-  const average = (maxX - minX) / 4;
-
-  return (
-    <>
-      <text x={startX + 0} y={startY + 117} stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {minX / graphRatio}
-      </text>
-      <text x={startX + 25} y={startY + 117} stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((minX + average) / graphRatio)}
-      </text>
-      <text x={startX + 50} y={startY + 117} stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((maxX + minX) / 2 / graphRatio)}
-      </text>
-      <text x={startX + 75} y={startY + 117} stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {Math.round((maxX - average) / graphRatio)}
-      </text>
-      <text x={startX + 100} y={startY + 117} stroke='black' textAnchor='middle' className={cl.graphTitle}>
-        {maxX / graphRatio}
-      </text>
-    </>
-  );
-};
 
 const Dots = ({ chartData, startX, startY, minMaxValues }) => {
   const DOT_RADIUS = useContext(DotRadiusContext);
@@ -321,11 +270,8 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
       {/* Render horizontal and vertical grid lines */}
       <Lines startX={GRAPH_START_X} startY={GRAPH_START_Y} />
 
-      {/* Render horizontal lines text */}
-      <HorizontalLinesText startX={GRAPH_START_X} graphRatio={graphRatio} minMaxValues={minMaxValues} />
-
-      {/* Render vertical lines text */}
-      <VerticalLinesText
+      {/* Lines text */}
+      <LinesText
         startX={GRAPH_START_X}
         startY={GRAPH_START_Y}
         graphRatio={graphRatio}
