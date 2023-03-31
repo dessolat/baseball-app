@@ -137,8 +137,8 @@ export const getRndValue = (min, max) => Math.floor(Math.random() * (max - min +
 
 export const getPitchColorByName = name =>
   ({
-    'Fast ball': '#CE9587',
-    'Curve ball': '#CBC8E5',
+    'Fastball': '#CE9587',
+    'Curveball': '#CBC8E5',
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
     Submarine: '#B08194',
