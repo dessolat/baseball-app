@@ -28,7 +28,7 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
 
         return (
           <circle
-            key={i}
+            key={`${coordX}-${coordY}`}
             cx={coordX + startX}
             cy={startY + 100 - coordY}
             r={DOT_RADIUS}

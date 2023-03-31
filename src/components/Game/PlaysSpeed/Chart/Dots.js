@@ -19,7 +19,7 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
   const handleDotClick = id => () => setMomentById(id);
   return dotsArr.map((dot, i) => (
     <circle
-      key={i}
+      key={`${dot.coords[0]}-${dot.coords[1]}`}
       cx={dot.coords[0]}
       cy={dot.coords[1]}
       r={DOT_RADIUS}
