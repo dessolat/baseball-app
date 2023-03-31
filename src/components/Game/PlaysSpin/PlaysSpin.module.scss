@@ -122,11 +122,59 @@
   }
 }
 
-.dot:hover {
-  cursor: pointer;
-}
-
 .currentDotLine {
 	stroke: #ACACAC;
 	stroke-width: 1;
+}
+
+.dot {
+  animation: growRadius 0.3s forwards;
+
+  &:hover {
+    cursor: pointer;
+    animation: growRadiusMore 0.3s forwards;
+  }
+}
+
+.currentDot {
+  animation: currentGrowRadius 0.3s forwards;
+}
+
+.currentDotWhite {
+  animation: currentWhiteGrowRadius 0.3s forwards;
+}
+
+@keyframes growRadius {
+  from {
+    r: 0;
+  }
+  to {
+    r: 4;
+  }
+}
+@keyframes growRadiusMore {
+  from {
+    r: 4;
+  }
+  to {
+    r: 6;
+  }
+}
+
+@keyframes currentGrowRadius {
+  from {
+    r: 4;
+  }
+  to {
+    r: 7;
+  }
+}
+
+@keyframes currentWhiteGrowRadius {
+  from {
+    r: 5;
+  }
+  to {
+    r: 9;
+  }
 }
