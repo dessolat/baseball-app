@@ -1,32 +1,21 @@
 import { getPitchColorByName } from 'utils';
 import { useSelector } from 'react-redux';
-import { useLayoutEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { currentDot as dotClass, currentDotWhite as whiteDotClass } from '../PlaysSpin.module.scss';
+import classNames from 'classnames';
 
 const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
-  const [currentDotRadius, setCurrentDotRadius] = useState(0);
+  const [classToggled, setClassToggled] = useState(false);
 
   const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
 
-  useLayoutEffect(() => {
-    setCurrentDotRadius(0);
+  useEffect(() => {
+    setClassToggled(true);
 
     setTimeout(() => {
-      setCurrentDotRadius(1);
-    }, 10);
-
-    // eslint-disable-next-line
+      setClassToggled(false);
+    }, 0);
   }, [currentDot]);
-
-  useLayoutEffect(() => {
-    if (currentDotRadius === 0) return;
-
-    currentDotRadius < 5 &&
-      setTimeout(() => {
-        setCurrentDotRadius(prev => (prev + 0.45 > 7.5 ? 7.5 : prev + 0.45));
-      }, 10);
-
-    // eslint-disable-next-line
-  }, [currentDotRadius]);
 
   const maxX = Math.ceil(minMaxValues.maxX * 100);
   const minX = Math.floor(minMaxValues.minX * 100);
@@ -45,24 +34,28 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
     coordY + 10 > startY &&
     coordX + startX < 115 &&
     coordY + startY < 110;
+
+  const whiteDotClasses = classNames({
+    [whiteDotClass]: !classToggled
+  });
+  const dotClasses = classNames({
+    [dotClass]: !classToggled
+  });
+
+  if (!isCurrentDot) return <></>;
+
   return (
     <>
-      {isCurrentDot ? (
-        <>
-          {/* Dot */}
-          <circle cx={coordX + startX} cy={startY + 100 - coordY} r={currentDotRadius + 1.5} fill='white' />
-          <circle
-            cx={coordX + startX}
-            cy={startY + 100 - coordY}
-            r={currentDotRadius}
-            fill={getPitchColorByName(pitchTypes[currentDot.type][0])}
-            stroke='black'
-            strokeWidth='0.5'
-          />
-        </>
-      ) : (
-        <></>
-      )}
+      {/* Dot */}
+      <circle cx={coordX + startX} cy={startY + 100 - coordY} fill='white' className={whiteDotClasses} />
+      <circle
+        cx={coordX + startX}
+        cy={startY + 100 - coordY}
+        fill={getPitchColorByName(pitchTypes[currentDot.type][0])}
+        stroke='black'
+        strokeWidth='0.5'
+        className={dotClasses}
+      />
     </>
   );
 };
