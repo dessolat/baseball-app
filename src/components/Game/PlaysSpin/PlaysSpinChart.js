@@ -1,53 +1,13 @@
-import useSetMomentById from 'hooks/useSetMomentById';
-import React, { useState, useLayoutEffect, useRef, useContext } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import { getPitchColorByName } from 'utils';
 import cl from './PlaysSpin.module.scss';
 import { useSelector } from 'react-redux';
-import { DotRadiusContext } from 'context';
 import Lines from './Chart/Lines';
 import LinesText from './Chart/LinesText';
+import Dots from './Chart/Dots';
 
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
-
-const Dots = ({ chartData, startX, startY, minMaxValues }) => {
-  const DOT_RADIUS = useContext(DotRadiusContext);
-
-  const setMomentById = useSetMomentById();
-  const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
-
-  const maxX = Math.ceil(minMaxValues.maxX * 100);
-  const minX = Math.floor(minMaxValues.minX * 100);
-  const maxY = Math.ceil(minMaxValues.maxY * 100);
-  const minY = Math.floor(minMaxValues.minY * 100);
-
-  const xCoef = 100 / (maxX - minX);
-  const yCoef = 100 / (maxY - minY);
-
-  const handleDotClick = id => () => setMomentById(id);
-  return (
-    <>
-      {chartData.map((dot, i) => {
-        const coordX = (dot.offsetX * 100 - minX) * xCoef;
-        const coordY = (dot.offsetY * 100 - minY) * yCoef;
-
-        return (
-          <circle
-            key={i}
-            cx={coordX + startX}
-            cy={startY + 100 - coordY}
-            r={DOT_RADIUS}
-            fill={getPitchColorByName(pitchTypes[dot.pitchType][0])}
-            stroke='black'
-            strokeWidth='0.5'
-            onClick={handleDotClick(dot.momentId)}
-            className={cl.dot}
-          />
-        );
-      })}
-    </>
-  );
-};
 
 const CurrentDotLines = ({ startX, startY, currentDot, minMaxValues }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
@@ -188,7 +148,7 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
 };
 
 const PlaysSpinChart = ({ chartData, currentDot }) => {
-  const [graphRatio, setGraphRatio] = useState(1);
+  const [graphRatio] = useState(1);
 
   const ref = useRef();
 
@@ -278,7 +238,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         minMaxValues={minMaxValues}
       />
 
-      {/* Render current dot lines  */}
+      {/* Current dot lines  */}
       <CurrentDotLines
         startX={GRAPH_START_X}
         startY={GRAPH_START_Y}
@@ -286,14 +246,8 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         minMaxValues={minMaxValues}
       />
 
-      {/* Render dots */}
-      <Dots
-        chartData={chartData}
-        startX={GRAPH_START_X}
-        startY={GRAPH_START_Y}
-        graphRatio={graphRatio}
-        minMaxValues={minMaxValues}
-      />
+      {/* Dots */}
+      <Dots chartData={chartData} startX={GRAPH_START_X} startY={GRAPH_START_Y} minMaxValues={minMaxValues} />
 
       {/* Render current dot  */}
       <CurrentDot
