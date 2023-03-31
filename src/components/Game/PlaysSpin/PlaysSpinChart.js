@@ -4,61 +4,10 @@ import { getPitchColorByName } from 'utils';
 import cl from './PlaysSpin.module.scss';
 import { useSelector } from 'react-redux';
 import { DotRadiusContext } from 'context';
+import Lines from './Chart/Lines';
 
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
-
-// const AxisLines = ({ startX, startY }) => (
-//   <>
-//     <line x1={startX + 49.5} y1={startY + 0} x2={startX + 49.5} y2={startY + 100} stroke='#ACACAC' />
-//     <line x1={startX} y1={startY + 49.5} x2={startX + 100} y2={startY + 49.5} stroke='#ACACAC' />
-//   </>
-// );
-
-const HorizontalLines = ({ startX, startY }) => (
-  <>
-    <line
-      x1={startX}
-      y1={startY + 0}
-      x2={startX + 100}
-      y2={startY + 0}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX}
-      y1={startY + 25}
-      x2={startX + 100}
-      y2={startY + 25}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX}
-      y1={startY + 50}
-      x2={startX + 100}
-      y2={startY + 50}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX}
-      y1={startY + 75}
-      x2={startX + 100}
-      y2={startY + 75}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX}
-      y1={startY + 100}
-      x2={startX + 100}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-  </>
-);
 
 const HorizontalLinesText = ({ startX, graphRatio, minMaxValues }) => {
   const maxY = Math.ceil(minMaxValues.maxY * 100);
@@ -86,51 +35,6 @@ const HorizontalLinesText = ({ startX, graphRatio, minMaxValues }) => {
   );
 };
 
-const VerticalLines = ({ startX, startY }) => (
-  <>
-    <line
-      x1={startX + 0}
-      y1={startY}
-      x2={startX + 0}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX + 25}
-      y1={startY}
-      x2={startX + 25}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX + 50}
-      y1={startY}
-      x2={startX + 50}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX + 75}
-      y1={startY}
-      x2={startX + 75}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-    <line
-      x1={startX + 100}
-      y1={startY}
-      x2={startX + 100}
-      y2={startY + 100}
-      stroke='#E3E1E1'
-      strokeDasharray='4 2'
-    />
-  </>
-);
-
 const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
   const maxX = Math.ceil(minMaxValues.maxX * 100);
   const minX = Math.floor(minMaxValues.minX * 100);
@@ -157,7 +61,7 @@ const VerticalLinesText = ({ startX, startY, graphRatio, minMaxValues }) => {
   );
 };
 
-const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
+const Dots = ({ chartData, startX, startY, minMaxValues }) => {
   const DOT_RADIUS = useContext(DotRadiusContext);
 
   const setMomentById = useSetMomentById();
@@ -183,11 +87,8 @@ const Dots = ({ chartData, startX, startY, graphRatio, minMaxValues }) => {
             key={i}
             cx={coordX + startX}
             cy={startY + 100 - coordY}
-            // cy={coordY + startY}
             r={DOT_RADIUS}
             fill={getPitchColorByName(pitchTypes[dot.pitchType][0])}
-            // fill={getPitchColorByNumber(dot.pitchType)}
-            // fill={getChartColor(dot.pitchType)}
             stroke='black'
             strokeWidth='0.5'
             onClick={handleDotClick(dot.momentId)}
@@ -208,7 +109,7 @@ const CurrentDotLines = ({ startX, startY, currentDot, minMaxValues }) => {
     setTimeout(() => {
       setCurrentDotRadius(1);
     }, 10);
-    // setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
+
     // eslint-disable-next-line
   }, [currentDot]);
 
@@ -283,7 +184,7 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
     setTimeout(() => {
       setCurrentDotRadius(1);
     }, 10);
-    // setCurrentDotRadius(prev => (prev === 1 ? 0.99999 : 1));
+
     // eslint-disable-next-line
   }, [currentDot]);
 
@@ -326,8 +227,6 @@ const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
             cy={startY + 100 - coordY}
             r={currentDotRadius}
             fill={getPitchColorByName(pitchTypes[currentDot.type][0])}
-            // fill={getPitchColorByNumber(currentDot.type)}
-            // fill={getChartColor(currentDot.type)}
             stroke='black'
             strokeWidth='0.5'
           />
@@ -419,17 +318,11 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       ref={ref}>
-      {/* Render axis lines */}
-      {/* <AxisLines startX={GRAPH_START_X} startY={GRAPH_START_Y} /> */}
-
-      {/* Render horizontal grid lines */}
-      <HorizontalLines startX={GRAPH_START_X} startY={GRAPH_START_Y} />
+      {/* Render horizontal and vertical grid lines */}
+      <Lines startX={GRAPH_START_X} startY={GRAPH_START_Y} />
 
       {/* Render horizontal lines text */}
       <HorizontalLinesText startX={GRAPH_START_X} graphRatio={graphRatio} minMaxValues={minMaxValues} />
-
-      {/* Render vertical grid lines */}
-      <VerticalLines startX={GRAPH_START_X} startY={GRAPH_START_Y} />
 
       {/* Render vertical lines text */}
       <VerticalLinesText
