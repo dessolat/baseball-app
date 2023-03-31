@@ -1,86 +1,13 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { getPitchColorByName } from 'utils';
-import cl from './PlaysSpin.module.scss';
 import { useSelector } from 'react-redux';
 import Lines from './Chart/Lines';
 import LinesText from './Chart/LinesText';
 import Dots from './Chart/Dots';
+import CurrentDotLines from './Chart/CurrentDotLines';
 
 const GRAPH_START_X = 15;
 const GRAPH_START_Y = 10;
-
-const CurrentDotLines = ({ startX, startY, currentDot, minMaxValues }) => {
-  const [currentDotRadius, setCurrentDotRadius] = useState(0);
-
-  useLayoutEffect(() => {
-    setCurrentDotRadius(0);
-
-    setTimeout(() => {
-      setCurrentDotRadius(1);
-    }, 10);
-
-    // eslint-disable-next-line
-  }, [currentDot]);
-
-  useLayoutEffect(() => {
-    if (currentDotRadius === 0) return;
-
-    currentDotRadius < 5 &&
-      setTimeout(() => {
-        setCurrentDotRadius(prev => (prev + 0.45 > 7.5 ? 7.5 : prev + 0.45));
-      }, 10);
-
-    // eslint-disable-next-line
-  }, [currentDotRadius]);
-
-  const maxX = Math.ceil(minMaxValues.maxX * 100);
-  const minX = Math.floor(minMaxValues.minX * 100);
-  const maxY = Math.ceil(minMaxValues.maxY * 100);
-  const minY = Math.floor(minMaxValues.minY * 100);
-
-  const xCoef = 100 / (maxX - minX);
-  const yCoef = 100 / (maxY - minY);
-
-  const coordX = (currentDot.offsetX * 100 - minX) * xCoef;
-  const coordY = (currentDot.offsetY * 100 - minY) * yCoef;
-
-  const isCurrentDot =
-    currentDot.offsetX !== undefined &&
-    coordX + 15 > GRAPH_START_X &&
-    coordY + 10 > GRAPH_START_Y &&
-    coordX + GRAPH_START_X < 115 &&
-    coordY + GRAPH_START_Y < 110;
-
-  const verticalLineY2Coord = Math.max((startY + 100) * (currentDotRadius / 5.05), startY + 100 - coordY);
-  const horizontalLineX1Coord = Math.min(startX / (currentDotRadius / 5.05), coordX + startX);
-  return (
-    <>
-      {isCurrentDot ? (
-        <>
-          {/* Axis lines projections */}
-          {/* Vertical */}
-          <line
-            x1={coordX + startX}
-            y1={startY + 100 - coordY}
-            x2={coordX + startX}
-            y2={verticalLineY2Coord}
-            className={cl.currentDotLine}
-          />
-          {/* Horizontal */}
-          <line
-            x1={horizontalLineX1Coord}
-            y1={startY + 100 - coordY}
-            x2={coordX + startX}
-            y2={startY + 100 - coordY}
-            className={cl.currentDotLine}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-    </>
-  );
-};
 
 const CurrentDot = ({ startX, startY, currentDot, minMaxValues }) => {
   const [currentDotRadius, setCurrentDotRadius] = useState(0);
@@ -245,7 +172,7 @@ const PlaysSpinChart = ({ chartData, currentDot }) => {
         currentDot={currentDot}
         minMaxValues={minMaxValues}
       />
-
+			
       {/* Dots */}
       <Dots chartData={chartData} startX={GRAPH_START_X} startY={GRAPH_START_Y} minMaxValues={minMaxValues} />
 
