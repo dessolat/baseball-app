@@ -144,6 +144,10 @@
   animation: currentWhiteGrowRadius 0.3s forwards;
 }
 
+.showingGroup {
+	animation: showing .3s forwards;
+}
+
 @keyframes growRadius {
   from {
     r: 0;
@@ -176,5 +180,14 @@
   }
   to {
     r: 9;
+  }
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
