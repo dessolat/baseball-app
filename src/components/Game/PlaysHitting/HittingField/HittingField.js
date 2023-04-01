@@ -46,7 +46,7 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
 
   const cashedStepTotal = useRef(0);
   const tubeRef = useRef(null);
-  const textRef = useRef();
+  const textRef = useRef(null);
 
   useEffect(() => {
     if (tubeRef.current === null) return;
@@ -96,7 +96,7 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
   const isCurrentTube = currentMoment.inner.id === moment.inner.id;
 
   const handleMeshClick = () => setMomentById(moment.inner.id);
-console.log(moment);
+
   const font = new FontLoader().parse(ComfortaaFont);
   const textCoords = data[Math.floor(data.length / 2)];
 

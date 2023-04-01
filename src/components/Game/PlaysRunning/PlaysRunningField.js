@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cl from './PlaysRunning.module.scss';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader, Vector3 } from 'three';
@@ -91,7 +91,7 @@ const Line = ({ runData, xStartPos, yStartPos, coef, count, lineNumber, curLineN
   });
 
   const points = newData3D.slice(0, curDataSlice).reduce((sum, coord) => {
-  // const points = runData.data_3d.slice(0, curDataSlice).reduce((sum, coord) => {
+    // const points = runData.data_3d.slice(0, curDataSlice).reduce((sum, coord) => {
     const newCoord = new Vector3(coord[0] * coef - 320, -5, coord[1] * -coef + 167);
 
     sum.push(newCoord);
@@ -262,7 +262,49 @@ const TouchPoints = ({ data_3d, coef, curveCount }) => (
   </>
 );
 
-const CurvePath = ({ data_3d, coef, curveCount }) => {
+const ToolTip = memo(({ hit, coef }) => {
+  const { data_3d, start_speed, angle, distance } = hit || {};
+
+  const textRef = useRef();
+
+  useFrame(({ camera }) => {
+    if (textRef.current) {
+      textRef.current.quaternion.copy(camera.quaternion);
+      textRef.current.geometry.center();
+    }
+  });
+
+  const font = new FontLoader().parse(ComfortaaFont);
+  const textCoords = data_3d[Math.floor(data_3d.length / 2)];
+
+  const distanceText = useMemo(
+    () => `Angle: ${String(Math.round(angle))}° Speed: ${String(Math.round(start_speed))} mph 
+Distance: ${String(Math.round(distance))} m.`,
+    [angle, distance, start_speed]
+  );
+  return (
+    <mesh
+      position={[textCoords[0] * coef - 390, textCoords[2] * coef + 75, textCoords[1] * -coef + 400]}
+      ref={textRef}>
+      <textGeometry args={[distanceText, { font, size: 22, height: 2 }]} />
+      <meshBasicMaterial color='blue' toneMapped={false} />
+    </mesh>
+  );
+});
+
+const CurvePath = ({ hit, coef, curveCount }) => {
+  const { data_3d } = hit || {};
+
+	const [hovered, setHovered] = useState(false)
+
+	const tubeRef = useRef(null);
+
+	useEffect(() => {
+    if (tubeRef.current === null) return;
+
+    document.body.style.cursor = hovered ? 'pointer' : 'auto';
+  }, [hovered]);
+
   const points = data_3d.slice(0, curveCount).reduce((sum, coord) => {
     const newCoord = new Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 167);
 
@@ -274,14 +316,26 @@ const CurvePath = ({ data_3d, coef, curveCount }) => {
 
   const textureRef = useMemo(() => new TextureLoader().load(CurveTexture), []);
   return (
-    <mesh position={[-70, 0, 220]} castShadow>
-      <tubeGeometry args={[curveCoords, 70, 3, 50, false]} />
-      <meshPhongMaterial map={textureRef} side={FrontSide} />
-    </mesh>
+    <>
+      <mesh
+        position={[-70, 0, 220]}
+        castShadow
+        onPointerOver={() => {
+          setHovered(true);
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+        }}>
+        <tubeGeometry args={[curveCoords, 70, 3, 50, false]} ref={tubeRef}/>
+        <meshPhongMaterial map={textureRef} side={FrontSide} />
+      </mesh>
+      {hovered && <ToolTip hit={hit} coef={coef} />}
+    </>
   );
 };
 
-const Curve = ({ data_3d, coef }) => {
+const Curve = ({ hit, coef }) => {
+  const { data_3d } = hit || 0;
   const [curveCount, setCurveCount] = useState(null);
 
   useLayoutEffect(() => {
@@ -317,7 +371,7 @@ const Curve = ({ data_3d, coef }) => {
     <>
       {isRenderPath && (
         <>
-          <CurvePath data_3d={data_3d} coef={coef} curveCount={curveCount} />
+          <CurvePath hit={hit} coef={coef} curveCount={curveCount} />
           <TouchPoints data_3d={data_3d} coef={coef} curveCount={curveCount} />
         </>
       )}
@@ -326,12 +380,11 @@ const Curve = ({ data_3d, coef }) => {
 };
 
 const PlaysRunningField = ({ hit, field, setRunningMode }) => {
-  const { data_3d } = hit || 0;
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [zoomCoef, setZoomCoef] = useState(1);
 
   const currentMoment = useSelector(state => state.game.currentMoment);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const controlsRef = useRef();
   const wrapperRef = useRef();
@@ -378,7 +431,7 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
             />
           )}
 
-          <Curve data_3d={data_3d} coef={coef} />
+          <Curve hit={hit} coef={coef} />
 
           {/* <spotLight position={[0, 499.9, 0]} intensity={0.4} castShadow={true} /> */}
           <directionalLight
