@@ -215,3 +215,7 @@ export function HSVtoRGB(h, s, v) {
   }
   return `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 }
+
+export function propsAreEqual(prevProps, nextProps) {
+  return JSON.stringify(prevProps) === JSON.stringify(nextProps);
+}
