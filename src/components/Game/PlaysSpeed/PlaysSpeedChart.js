@@ -49,7 +49,8 @@ const PlaysSpeedChart = ({ chartData, currentDot = {} }) => {
       const newValue = [
         minXCoord + xInterval * index,
         maxYCoord - (pair[1] - minYAxisValue) / yValuePerHeight,
-        pair[2]
+        pair[2],
+        pair[1]
       ];
 
       sum[pair[0]] = !sum[pair[0]] ? [newValue] : [...sum[pair[0]], newValue];

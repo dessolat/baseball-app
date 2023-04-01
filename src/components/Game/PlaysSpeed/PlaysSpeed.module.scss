@@ -52,6 +52,10 @@
   font: 400 1.07rem var(--font-nunito);
 }
 
+.showingGroup {
+	animation: showing .3s forwards;
+}
+
 .ballType {
   font: 300 1rem var(--font-nunito);
 }
@@ -135,5 +139,14 @@
   }
   to {
     r: 9;
+  }
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
