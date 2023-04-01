@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import cl from './HittingField.module.scss';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, extend } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
@@ -13,8 +13,11 @@ import FieldIcon from 'images/field_icon.png';
 import CameraView from './CameraView';
 import { useSelector } from 'react-redux';
 import useSetMomentById from 'hooks/useSetMomentById';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 
-// extend({ TextGeometry });
+extend({ TextGeometry });
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
@@ -43,6 +46,7 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
 
   const cashedStepTotal = useRef(0);
   const tubeRef = useRef(null);
+  const textRef = useRef();
 
   useEffect(() => {
     if (tubeRef.current === null) return;
@@ -72,7 +76,12 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
 
   // const textureRef = useMemo(() => new TextureLoader().load(CurveTexture), []);
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
+    if (textRef.current) {
+      textRef.current.quaternion.copy(camera.quaternion);
+      textRef.current.geometry.center();
+    }
+
     if (stepTotalRef > 30510) return;
     if (stepTotalRef > 30110) {
       setDrawPoints(true);
@@ -87,6 +96,14 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
   const isCurrentTube = currentMoment.inner.id === moment.inner.id;
 
   const handleMeshClick = () => setMomentById(moment.inner.id);
+console.log(moment);
+  const font = new FontLoader().parse(ComfortaaFont);
+  const textCoords = data[Math.floor(data.length / 2)];
+
+  const distanceText = `Angle: ${String(Math.round(moment.metering.hit.angle))}° Speed: ${String(
+    Math.round(moment.metering.hit.start_speed)
+  )} mph 
+Distance: ${String(Math.round(moment.metering.hit.distance))} m.`;
   return (
     <>
       <mesh
@@ -101,25 +118,21 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
           if (cashedStepTotal.current < 30110) return;
           setHovered(false);
         }}>
-        <tubeGeometry args={[curveCoords, 70, 3, 50, false]} ref={tubeRef} />
+        <tubeGeometry args={[curveCoords, 70, 4, 50, false]} ref={tubeRef} />
         <meshPhongMaterial
           color={isCurrentTube ? 'blue' : '#0099E6'}
           // map={textureRef}
           side={FrontSide}
-
-          //  shadowSide={DoubleSide}
-          //  metalness={0}
-
-          //  roughness={0.2}
-          //  clearcoat={0.3}
-          //  clearcoatRoughness={0.25}
-          //  transmission={1}
-          //  reflectivity={1}
-          //  ior={1.2}
-          //  thickness={10}
-          //  envMap={textureRef}
         />
       </mesh>
+      {hovered && (
+        <mesh
+          position={[textCoords[0] * coef - 390, textCoords[2] * coef + 77, textCoords[1] * -coef + 450]}
+          ref={textRef}>
+          <textGeometry args={[distanceText, { font, size: 22, height: 2 }]} />
+          <meshBasicMaterial color='blue' toneMapped={false} />
+        </mesh>
+      )}
     </>
   );
 };
@@ -146,10 +159,10 @@ function propsComparison(prevProps, nextProps) {
   return JSON.stringify(prevProps) === JSON.stringify(nextProps);
 }
 
-const Curves = memo(
-  ({ batterMoments, coef, currentMoment, setMomentById }) => (
+const Curves = memo(({ batterMoments, coef, currentMoment, setMomentById }) => {
+  return (
     <>
-      {batterMoments.map((moment, i) => {
+      {batterMoments.map(moment => {
         return (
           <CurveAndPoints
             key={moment.inner.id}
@@ -162,9 +175,8 @@ const Curves = memo(
         // return <CurveAndPoints key={'curve-points-' + i} data3D={data3D} coef={coef} />;
       })}
     </>
-  ),
-  propsComparison
-);
+  );
+}, propsComparison);
 
 const TouchPoints = ({ data, coef }) => (
   <>

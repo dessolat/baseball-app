@@ -16,32 +16,32 @@ import CurveTexture from 'images/blue_ball_curve.jpg';
 
 extend({ TextGeometry });
 
-const BallPaths = ({ field }) => {
-  const ballPaths = field.reduce((sum, { data_2d: data2d }) => {
-    let ballPath = '';
-    ballPath += `M${data2d[0][0]} ${data2d[0][1]}`;
-    data2d.slice(1).forEach(coord => (ballPath += `L${coord[0]} ${coord[1]}`));
-    sum.push(ballPath);
+// const BallPaths = ({ field }) => {
+//   const ballPaths = field.reduce((sum, { data_2d: data2d }) => {
+//     let ballPath = '';
+//     ballPath += `M${data2d[0][0]} ${data2d[0][1]}`;
+//     data2d.slice(1).forEach(coord => (ballPath += `L${coord[0]} ${coord[1]}`));
+//     sum.push(ballPath);
 
-    return sum;
-  }, []);
+//     return sum;
+//   }, []);
 
-  return (
-    <>
-      {ballPaths.map((path, i) => (
-        <path
-          key={i}
-          d={path}
-          stroke='red'
-          strokeWidth='25'
-          strokeLinejoin='round'
-          strokeLinecap='round'
-          strokeDasharray='1 35'
-        />
-      ))}
-    </>
-  );
-};
+//   return (
+//     <>
+//       {ballPaths.map((path, i) => (
+//         <path
+//           key={i}
+//           d={path}
+//           stroke='red'
+//           strokeWidth='25'
+//           strokeLinejoin='round'
+//           strokeLinecap='round'
+//           strokeDasharray='1 35'
+//         />
+//       ))}
+//     </>
+//   );
+// };
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
