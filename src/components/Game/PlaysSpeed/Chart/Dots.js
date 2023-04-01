@@ -39,6 +39,13 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
   const handleDotClick = id => () => setMomentById(id);
 
   const speedValue = +(hoveredDot.speed * 10).toFixed(0) / 10;
+  const hoveredDotXCoord =
+    hoveredDot.coords[1] > 40
+      ? hoveredDot.coords[0]
+      : hoveredDot.coords[0] > 400
+      ? hoveredDot.coords[0] - 34
+      : hoveredDot.coords[0] + 34;
+  const hoveredDotYCoord = hoveredDot.coords[1] > 40 ? hoveredDot.coords[1] : hoveredDot.coords[1] + 18;
   return (
     <>
       {dotsArr.map(dot => {
@@ -55,8 +62,8 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
       {hoveredDot.visible && (
         <g className={showingGroup}>
           <rect
-            x={hoveredDot.coords[0] - 20}
-            y={hoveredDot.coords[1] - 27}
+            x={hoveredDotXCoord - 20}
+            y={hoveredDotYCoord - 29}
             width={40}
             height={20}
             stroke='grey'
@@ -65,8 +72,8 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
             radius='10'
           />
           <text
-            x={hoveredDot.coords[0]}
-            y={hoveredDot.coords[1] - 11}
+            x={hoveredDotXCoord}
+            y={hoveredDotYCoord - 13}
             className={plainText}
             textAnchor='middle'
             filter='url(#solid)'>
