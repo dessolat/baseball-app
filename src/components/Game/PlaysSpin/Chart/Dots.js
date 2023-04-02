@@ -2,10 +2,16 @@ import useSetMomentById from 'hooks/useSetMomentById';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getPitchColorByName } from 'utils';
-import { dot as dotClass, graphTitle, showingGroup } from '../PlaysSpin.module.scss';
+import { dot as dotClass, showingGroup, graphTooltip } from '../PlaysSpin.module.scss';
 
 const Dots = ({ chartData, startX, startY, minMaxValues }) => {
-  const [hoveredDot, setHoveredDot] = useState({ visible: false, spinX: 0, spinY: 0, coords: [0, 0] });
+  const [hoveredDot, setHoveredDot] = useState({
+    visible: false,
+    spinX: 0,
+    spinY: 0,
+    coords: [0, 0],
+    pitchType: ''
+  });
 
   const setMomentById = useSetMomentById();
   const { pitch_types: pitchTypes } = useSelector(state => state.game.preview);
@@ -24,13 +30,12 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
   const spinValueY = hoveredDot.spinY.toFixed(0);
 
   const hoveredDotXCoord =
-    hoveredDot.coords[1] > 42 && hoveredDot.coords[0] < 90
-      ? hoveredDot.coords[0]
-      : hoveredDot.coords[0] >= 90
-      ? hoveredDot.coords[0] - 34
-      : hoveredDot.coords[0] + 38;
-  const hoveredDotYCoord =
-    hoveredDot.coords[1] > 42 && hoveredDot.coords[0] < 90 ? hoveredDot.coords[1] : hoveredDot.coords[1] + 32;
+    hoveredDot.coords[0] >= 90
+      ? hoveredDot.coords[0] - 51
+      : hoveredDot.coords[0] < 28
+      ? hoveredDot.coords[0] + 57
+      : hoveredDot.coords[0];
+  const hoveredDotYCoord = hoveredDot.coords[1] <= 42 ? hoveredDot.coords[1] + 60 : hoveredDot.coords[1];
   return (
     <>
       {chartData.map(dot => {
@@ -53,7 +58,8 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
                 spinX: dot.offsetX * 100,
                 spinY: dot.offsetY * -100,
                 visible: true,
-                coords: [coordX + startX, startY + 100 - coordY]
+                coords: [coordX + startX, startY + 100 - coordY],
+                pitchType: pitchTypes[dot.pitchType][0]
               }))
             }
             onPointerOut={() => setHoveredDot(prev => ({ ...prev, visible: false }))}
@@ -63,30 +69,20 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
       {hoveredDot.visible && (
         <g className={showingGroup}>
           <rect
-            x={hoveredDotXCoord - 23.5}
+            x={hoveredDotXCoord - 41}
             y={hoveredDotYCoord - 42}
-            width={47}
+            width={82}
             height={33}
             stroke='grey'
             strokeWidth='.5'
             fill='white'
             radius='10'
           />
-          <text
-            x={hoveredDotXCoord}
-            y={hoveredDotYCoord - 27}
-            className={graphTitle}
-            textAnchor='middle'
-            filter='url(#solid)'>
-            x: {spinValueX}
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord - 28} className={graphTooltip} textAnchor='middle'>
+            {hoveredDot.pitchType}
           </text>
-          <text
-            x={hoveredDotXCoord}
-            y={hoveredDotYCoord - 13}
-            className={graphTitle}
-            textAnchor='middle'
-            filter='url(#solid)'>
-            y: {spinValueY}
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord - 13} className={graphTooltip} textAnchor='middle'>
+            x: {spinValueX} y: {spinValueY}
           </text>
         </g>
       )}

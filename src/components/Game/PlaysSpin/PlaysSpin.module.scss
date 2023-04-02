@@ -82,6 +82,16 @@
   font-family: var(--font-nunito);
 }
 
+.graphTooltip {
+	fill: black;
+	stroke: black;
+  stroke-width: 0.5px;
+  font-family: var(--font-nunito);
+	font-size: .875rem;
+	font-smooth: none;
+	font-weight: 300;
+}
+
 .dnone {
   @media screen and (max-width: 800px) {
     display: none;
