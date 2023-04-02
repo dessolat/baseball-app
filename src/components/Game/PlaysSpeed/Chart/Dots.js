@@ -17,7 +17,8 @@ const Dot = ({ dot, handleDotClick, pitchTypes, setHoveredDot }) => (
         ...prev,
         speed: dot.speed,
         visible: true,
-        coords: [dot.coords[0], dot.coords[1]]
+        coords: [dot.coords[0], dot.coords[1]],
+        pitchType: pitchTypes[dot.type][0]
       }))
     }
     onPointerOut={() => setHoveredDot(prev => ({ ...prev, visible: false }))}
@@ -39,13 +40,9 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
   const handleDotClick = id => () => setMomentById(id);
 
   const speedValue = +(hoveredDot.speed * 10).toFixed(0) / 10;
-  const hoveredDotXCoord =
-    hoveredDot.coords[1] > 40
-      ? hoveredDot.coords[0]
-      : hoveredDot.coords[0] > 400
-      ? hoveredDot.coords[0] - 34
-      : hoveredDot.coords[0] + 34;
-  const hoveredDotYCoord = hoveredDot.coords[1] > 40 ? hoveredDot.coords[1] : hoveredDot.coords[1] + 18;
+
+  const hoveredDotXCoord = hoveredDot.coords[0] <= 390 ? hoveredDot.coords[0] : hoveredDot.coords[0] - 65;
+  const hoveredDotYCoord = hoveredDot.coords[1] > 40 ? hoveredDot.coords[1] : hoveredDot.coords[1] + 75;
   return (
     <>
       {dotsArr.map(dot => {
@@ -62,22 +59,20 @@ const Dots = ({ dotsCoords, pitchTypes }) => {
       {hoveredDot.visible && (
         <g className={showingGroup}>
           <rect
-            x={hoveredDotXCoord - 20}
-            y={hoveredDotYCoord - 29}
-            width={40}
-            height={20}
+            x={hoveredDotXCoord - 50}
+            y={hoveredDotYCoord - 44}
+            width={100}
+            height={35}
             stroke='grey'
             strokeWidth='.5'
             fill='white'
             radius='10'
           />
-          <text
-            x={hoveredDotXCoord}
-            y={hoveredDotYCoord - 13}
-            className={plainText}
-            textAnchor='middle'
-            filter='url(#solid)'>
-            {speedValue}
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord - 29} className={plainText} textAnchor='middle'>
+            {hoveredDot.pitchType}
+          </text>
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord - 13} className={plainText} textAnchor='middle'>
+            {speedValue} mph
           </text>
         </g>
       )}
