@@ -12,7 +12,7 @@ const PARAMS = {
 };
 
 const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
-  const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
+  const { xCoordRelCoef, zeroXCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
 
   const handleDotClick = (gameId, momentId) => () => {
@@ -359,7 +359,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       })}
 
       {/* top Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={topFieldLine}
         x2={zeroXCoord + 57}
@@ -370,10 +370,10 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='140' y={topFieldLine + 4} className={cl.leftTextTitle}>
         Top {Math.floor(minMaxAvgBreak.maxY * 100)}
-      </text>
+      </text> */}
 
       {/* center Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={centerYFieldLine}
         x2={zeroXCoord + 57}
@@ -384,10 +384,10 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='90' y={centerYFieldLine + 4} className={cl.leftTextTitle}>
         Center {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
-      </text>
+      </text> */}
 
       {/* bottom Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={bottomYFieldLine}
         x2={zeroXCoord + 57}
@@ -398,7 +398,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='90' y={bottomYFieldLine + 4} className={cl.leftTextTitle}>
         Bottom {bottomYFieldValue}
-      </text>
+      </text> */}
     </>
   );
 };
