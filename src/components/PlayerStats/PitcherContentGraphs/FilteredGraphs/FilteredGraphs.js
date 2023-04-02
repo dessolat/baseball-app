@@ -7,7 +7,7 @@ import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState, useMemo } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
-import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
+import { useFilterPitcherGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
@@ -102,12 +102,18 @@ const Group = ({
   filteredTeamName,
   filteredPlayerFullName
 }) => {
-  const { title, groupName, staticText, items } = groupData;
+  const { title, groupName, items } = groupData;
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
 
-  const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
+  const filteredData = useFilterPitcherGroupData(
+    data,
+    currentFilterValues,
+    groupName,
+    teamName,
+    playerFullName
+  );
 
   const total =
     groupName === 'swing' || groupName === 'contact'
@@ -195,13 +201,7 @@ const TextGroup = ({ setTextGroupFilter }) => {
   );
 };
 
-const CustomGroup = ({
-  data,
-  currentFilterValues,
-  handleFilterClick,
-  handleTeamNameChange,
-  handlePlayerNameChange
-}) => {
+const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   const againstFilteredData =
     data.pitches_all?.filter(
       pitch =>
@@ -388,7 +388,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterFakeGraphsData(data, currentFilterValues, teamName, playerFullName);
+  const filteredData = useFilterPitcherGroupData(data, currentFilterValues, teamName, playerFullName);
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
