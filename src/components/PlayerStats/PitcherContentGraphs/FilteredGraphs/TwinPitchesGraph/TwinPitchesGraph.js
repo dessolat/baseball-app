@@ -19,13 +19,15 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   //     setRadius(8);
   //   }, 300);
   // }, [coords]);
-
+	const handleDotClick = (gameId, momentId) => () => {
+    window.open(`/game/${gameId}?card=${momentId}&tab=pitching`, '_blank');
+  };
   return (
     <>
       {arrData.map((pitch, i) => {
         const { coordinates, pitch_info: pitchInfo } = pitch;
         const { zone_x: x, zone_y: y } = coordinates;
-        const { pitch_type: pitchType } = pitchInfo;
+        const { pitch_type: pitchType, game_id: gameId, mom_id: momentId } = pitchInfo;
 
         const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
 
@@ -42,6 +44,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
             strokeWidth='.5'
             fill={getPitchColorByName(pitchTypes[pitchType])}
             className={cl.animated}
+            onClick={handleDotClick(gameId, momentId)}
           />
         );
       })}
