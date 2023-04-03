@@ -26,8 +26,8 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
 
   const handleDotClick = id => () => setMomentById(id);
 
-  const spinValueX = hoveredDot.spinX.toFixed(0);
-  const spinValueY = hoveredDot.spinY.toFixed(0);
+  const spinValueX = Math.round(hoveredDot.spinX);
+  const spinValueY = Math.round(hoveredDot.spinY);
 
   const hoveredDotXCoord =
     hoveredDot.coords[0] >= 90
