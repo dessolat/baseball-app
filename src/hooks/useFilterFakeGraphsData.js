@@ -21,7 +21,7 @@ export const useFilterBatterGroupData = (
           if (group === 'pitcher' && curPitcher === 'team') return pitcher.team_name.includes(teamName);
 
           if (group === 'pitcher' && curPitcher === 'pitcher')
-            return `${pitcher['pitcher name']} ${pitcher['batter surname']}`.includes(pitcherFullName);
+            return `${pitcher['pitcher name']} ${pitcher['pitcher surname']}`.includes(pitcherFullName);
 
           const tempGroupName = group === 'swing' || group === 'contact' ? 'result' : group;
           return pitch[tempGroupName][currentFilterValues[group]] || group === groupName;
