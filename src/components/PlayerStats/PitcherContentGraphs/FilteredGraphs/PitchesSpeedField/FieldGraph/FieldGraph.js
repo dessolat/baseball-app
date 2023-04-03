@@ -3,6 +3,7 @@ import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
 import { getPitchColorByName } from 'utils';
+import Tooltip from './Tooltip';
 
 const PARAMS = {
   GRAPH_WIDTH: 455,
@@ -11,7 +12,7 @@ const PARAMS = {
   HORIZONTAL_ROWS_NUM: 6
 };
 
-const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
+const Dots = ({ arrData, pitchTypes, coords, linesCoords, setHoveredDot }) => {
   const { xCoordRelCoef, zeroXCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
 
@@ -38,6 +39,17 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
             fill={getPitchColorByName(pitchTypes[pitchType])}
             className={cl.animatedDot}
             onClick={handleDotClick(gameId, momentId)}
+            onPointerOver={() =>
+              setHoveredDot(prev => ({
+                ...prev,
+                spinX: x * 100,
+                spinY: y * -100,
+                visible: true,
+                coords: [xCoord, yCoord],
+                pitchType: pitchTypes[pitchType]
+              }))
+            }
+            onPointerOut={() => setHoveredDot(prev => ({ ...prev, visible: false }))}
           />
         );
       })}
@@ -111,7 +123,16 @@ const EllipsedDots = ({
   );
 };
 
-const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, linesCoords }) => {
+const Frames = ({
+  avgCoords,
+  arrData,
+  preview,
+  isDots,
+  relValuesData,
+  coords,
+  linesCoords,
+  setHoveredDot
+}) => {
   const { zone, pitch_types: pitchTypes } = preview;
   const {
     y_strike_down: yStrikeDown,
@@ -169,7 +190,7 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       />
 
       {/* Dots */}
-      {isDots && <Dots arrData={arrData} pitchTypes={pitchTypes} coords={coords} linesCoords={linesCoords} />}
+      {isDots && <Dots arrData={arrData} pitchTypes={pitchTypes} coords={coords} linesCoords={linesCoords} setHoveredDot={setHoveredDot}/>}
       {/* Ellipsed Dots */}
       {!isDots && (
         <EllipsedDots
@@ -215,13 +236,7 @@ const VerticalGridLines = ({ linesCoords }) => {
   return (
     <>
       {/* Center Line */}
-      <line
-        x1={centerLineX}
-        y1={0}
-        x2={centerLineX}
-        y2={graphHeight}
-        stroke='#ACACAC'
-      />
+      <line x1={centerLineX} y1={0} x2={centerLineX} y2={graphHeight} stroke='#ACACAC' />
       <text x={centerLineX - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
         0
       </text>
@@ -279,23 +294,12 @@ const VerticalGridLines = ({ linesCoords }) => {
   );
 };
 
-const HorizontalGridLines = ({ coords, linesCoords }) => {
+const HorizontalGridLines = ({ linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, HORIZONTAL_ROWS_NUM: rowsNumber } = PARAMS;
   const rowHeight = 30;
   // const rowHeight = graphHeight / rowsNumber;
 
-  const { zeroXCoord } = coords;
-
-  const {
-    topFieldLine,
-    minMaxAvgBreak,
-    avgDelta,
-    centerYFieldLine,
-    bottomYFieldLine,
-    bottomYFieldValue,
-    topBorderValue,
-    bottomBorderValue
-  } = linesCoords;
+  const { topBorderValue, bottomBorderValue } = linesCoords;
 
   const centerLineY = graphHeight / 2;
   const centerLineValue = Math.round((bottomBorderValue + topBorderValue) / 2);
@@ -413,6 +417,7 @@ const FieldGraph = ({
 }) => {
   const [isChecked, setChecked] = useState(false);
   const [isGraphVisible, setGraphVisibility] = useState(false);
+  const [hoveredDot, setHoveredDot] = useState({ visible: false, speed: 0, coords: [0, 0] });
 
   const graphRef = useRef();
 
@@ -516,7 +521,10 @@ const FieldGraph = ({
   const centerFieldValue = Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100);
   const bottomYFieldValue = Math.floor(minMaxAvgBreak.minY * 100);
 
-  const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
+  const valuesCoef = 1.6;
+  // const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
+
+  // console.log(valuesCoef);
 
   const topBorderValue = centerFieldValue + centerYFieldLine / valuesCoef;
   const bottomBorderValue = centerFieldValue - (PARAMS.GRAPH_HEIGHT - centerYFieldLine) / valuesCoef;
@@ -560,9 +568,15 @@ const FieldGraph = ({
                 relValuesData={relValuesData}
                 coords={coords}
                 linesCoords={linesCoords}
+                setHoveredDot={setHoveredDot}
               />
-              <VerticalGridLines linesCoords={linesCoords} />
-              <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+              {filteredData.length > 0 && (
+                <>
+                  <VerticalGridLines linesCoords={linesCoords} />
+                  <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+                </>
+              )}
+              {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} />}
             </>
           )}
         </svg>
