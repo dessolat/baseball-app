@@ -40,6 +40,7 @@
 .percentValue {
   font: 300 0.875rem var(--font-nunito);
   transition: y 0.3s;
+  pointer-events: none;
 }
 
 .percentTitle {
@@ -54,13 +55,22 @@
   font: 300 0.625rem var(--font-nunito);
 }
 
+.eventsNone {
+  pointer-events: none;
+}
+
 .animated {
   transition: all 0.3s;
   animation: growRadius 0.3s forwards;
+  cursor: pointer;
+
+  &:hover {
+    animation: growRadiusMore 0.3s forwards;
+  }
 }
 
 .blur2 {
-	filter: blur(4px);
+  filter: blur(4px);
 }
 
 @keyframes growRadius {
@@ -69,6 +79,15 @@
   }
   to {
     r: 8;
+  }
+}
+
+@keyframes growRadiusMore {
+  from {
+    r: 8;
+  }
+  to {
+    r: 12;
   }
 }
 
@@ -82,10 +101,3 @@
     // scale: 1;
   }
 }
-
-// .blurredPath {
-//   filter: blur(1px);
-// }
-// rect {
-// 	filter: blur(1)
-// }
