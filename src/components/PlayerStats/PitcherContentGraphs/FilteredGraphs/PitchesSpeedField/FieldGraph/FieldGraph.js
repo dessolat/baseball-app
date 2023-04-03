@@ -190,7 +190,15 @@ const Frames = ({
       />
 
       {/* Dots */}
-      {isDots && <Dots arrData={arrData} pitchTypes={pitchTypes} coords={coords} linesCoords={linesCoords} setHoveredDot={setHoveredDot}/>}
+      {isDots && (
+        <Dots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={coords}
+          linesCoords={linesCoords}
+          setHoveredDot={setHoveredDot}
+        />
+      )}
       {/* Ellipsed Dots */}
       {!isDots && (
         <EllipsedDots
@@ -417,7 +425,7 @@ const FieldGraph = ({
 }) => {
   const [isChecked, setChecked] = useState(false);
   const [isGraphVisible, setGraphVisibility] = useState(false);
-  const [hoveredDot, setHoveredDot] = useState({ visible: false, speed: 0, coords: [0, 0] });
+  const [hoveredDot, setHoveredDot] = useState({ visible: false, spinX: 0, spinY: 0, coords: [0, 0] });
 
   const graphRef = useRef();
 
