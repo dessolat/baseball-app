@@ -7,33 +7,27 @@ import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState, useMemo } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
-import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
+import { useFilterBatterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 
 const FIELD_NAMES = {
-  batter: {
-    'All batters': 'all',
-    'Right handed': 'right handed',
-    'Left handed': 'left handed'
+  pitcher: {
+    'All pitchers': 'all',
+    'Right handed': 'RHP',
+    'Left handed': 'LHP'
   },
   count: {
     'Any count': 'all',
-    'Ahead in count': 'ahwad',
-    'Behind in count': 'behind',
-    '0-0': '0-0',
-    '0-2': '0-2',
-    '3-0': '3-0'
+    'First pitches': 'first_pitch',
+    'Close to BB': 'close_to_BB',
+    '2 strikes': 'strike2',
+    'Other': 'other'
   },
   zone: {
     'Any zone': 'all',
-    'In zone': 'in zone',
-    'Out zone': 'out zone',
-    Heart: 'heart',
-    Edge: 'edge',
-    'Chase&Waste': 'waste',
     Low: 'low',
     High: 'high',
     Outside: 'outside',
@@ -102,12 +96,12 @@ const Group = ({
   filteredTeamName,
   filteredPlayerFullName
 }) => {
-  const { title, groupName, staticText, items } = groupData;
+  const { title, groupName, items } = groupData;
 
-  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
-  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
+  const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
 
-  const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
+  const filteredData = useFilterBatterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
 
   const total =
     groupName === 'swing' || groupName === 'contact'
@@ -182,12 +176,12 @@ const TextGroup = ({ setTextGroupFilter }) => {
         />
       </div>
       <div className={cl.textGroupItem}>
-        <p>Batter</p>
+        <p>Pitcher</p>
         <FilterField
-          placeholder='Search of batter'
+          placeholder='Search of pitcher'
           style={{ width: '82%' }}
           handleChange={value => {
-            setTextGroupFilter(prev => ({ ...prev, batter: value }));
+            setTextGroupFilter(prev => ({ ...prev, pitcher: value }));
           }}
         />
       </div>
@@ -195,59 +189,57 @@ const TextGroup = ({ setTextGroupFilter }) => {
   );
 };
 
-const CustomGroup = ({
-  data,
-  currentFilterValues,
-  handleFilterClick,
-  handleTeamNameChange,
-  handlePlayerNameChange
-}) => {
+const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   const againstFilteredData =
     data.pitches_all?.filter(
-      pitch =>
-        (currentFilterValues.count === 'all' ? true : pitch.count[currentFilterValues.count]) &&
-        (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
-        (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result]) &&
-        (currentFilterValues.swing === 'all' ? true : pitch.result[currentFilterValues.swing]) &&
-        (currentFilterValues.contact === 'all' ? true : pitch.result[currentFilterValues.contact])
+      batt =>
+        (currentFilterValues.count === 'all' ? true : batt.count[currentFilterValues.count]) &&
+        (currentFilterValues.zone === 'all' ? true : batt.zone[currentFilterValues.zone]) &&
+        (currentFilterValues.result === 'all' ? true : batt.result[currentFilterValues.result]) &&
+        (currentFilterValues.swing === 'all' ? true : batt.result[currentFilterValues.swing]) &&
+        (currentFilterValues.contact === 'all' ? true : batt.result[currentFilterValues.contact])
     ) || [];
 
-  const totalBatters = againstFilteredData.reduce((sum, cur) => {
-    const existBatterIndex = sum.findIndex(batter => batter.h_id === cur.batter.h_id);
-    existBatterIndex === -1 && sum.push(cur.batter);
+  const totalPitchers = againstFilteredData.reduce((sum, cur) => {
+    const existPitcherIndex = sum.findIndex(pitcher => pitcher.h_id === cur.pitcher.h_id);
+    existPitcherIndex === -1 && sum.push(cur.pitcher);
 
     return sum;
   }, []);
 
-  const leftHandedBatters = totalBatters.filter(batter => batter['left handed']);
-  const rightHandedBattersLength = totalBatters.length - leftHandedBatters.length;
+  const leftHandedPitchers = totalPitchers.filter(pitcher => pitcher.LHP);
+  const rightHandedPitchersLength = totalPitchers.length - leftHandedPitchers.length;
 
   const rightHandedRelValue =
-    totalBatters.length > 0 ? +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+    totalPitchers.length > 0
+      ? +((rightHandedPitchersLength * 100) / totalPitchers.length).toFixed(1)
+      : 0 ?? '-';
   const leftHandedRelValue =
-    totalBatters.length > 0 ? +((leftHandedBatters.length * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+    totalPitchers.length > 0
+      ? +((leftHandedPitchers.length * 100) / totalPitchers.length).toFixed(1)
+      : 0 ?? '-';
 
   const customGroupData = {
     title: 'Against who',
     items: [
       {
-        name: 'All batters',
-        absValue: totalBatters.length,
-        absValueTotal: totalBatters.length,
+        name: 'All pitchers',
+        absValue: totalPitchers.length,
+        absValueTotal: totalPitchers.length,
         relValue: 100,
         staticText: 'players'
       },
       {
         name: 'Right handed',
-        absValue: rightHandedBattersLength,
-        absValueTotal: totalBatters.length,
+        absValue: rightHandedPitchersLength,
+        absValueTotal: totalPitchers.length,
         relValue: rightHandedRelValue,
         staticText: 'players'
       },
       {
         name: 'Left handed',
-        absValue: leftHandedBatters.length,
-        absValueTotal: totalBatters.length,
+        absValue: leftHandedPitchers.length,
+        absValueTotal: totalPitchers.length,
         relValue: leftHandedRelValue,
         staticText: 'players'
       }
@@ -262,7 +254,7 @@ const CustomGroup = ({
         <GroupItem
           key={i}
           data={item}
-          groupName='batter'
+          groupName='pitcher'
           handleFilterClick={handleFilterClick}
           currentFilterValues={currentFilterValues}
         />
@@ -291,23 +283,17 @@ const LeftColumnOptions = ({
           name: 'Any count',
           staticText: 'pitches'
         },
-        { name: 'Ahead in count', staticText: 'pitches' },
-        { name: 'Behind in count', staticText: 'pitches' },
-        { name: '0-0', staticText: 'pitches' },
-        { name: '0-2', staticText: 'pitches' },
-        { name: '3-0', staticText: 'pitches' }
+        { name: 'First pitches', staticText: 'pitches' },
+        { name: 'Close to BB', staticText: 'pitches' },
+        { name: '2 strikes', staticText: 'pitches' },
+        { name: 'Other', staticText: 'pitches' }
       ]
     },
     {
-      title: 'Zone',
+      title: 'Pitch zone',
       groupName: 'zone',
       items: [
         { name: 'Any zone', staticText: 'pitches' },
-        { name: 'In zone', staticText: 'pitches' },
-        { name: 'Out zone', staticText: 'pitches' },
-        { name: 'Heart', staticText: 'pitches' },
-        { name: 'Edge', staticText: 'pitches' },
-        { name: 'Chase&Waste', staticText: 'pitches' },
         { name: 'Low', staticText: 'pitches' },
         { name: 'High', staticText: 'pitches' },
         { name: 'Outside', staticText: 'pitches' },
@@ -345,6 +331,7 @@ const LeftColumnOptions = ({
       ]
     }
   ];
+
   return (
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>Dataset filter</h3>
@@ -388,7 +375,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterFakeGraphsData(data, currentFilterValues, teamName, playerFullName);
+  const filteredData = useFilterBatterGroupData(data, currentFilterValues, teamName, playerFullName);
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
@@ -717,10 +704,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   );
 };
 
-const FilteredGraphs = ({ pitchesData }) => {
+const FilteredGraphs = ({ battingData }) => {
   // const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
-    batter: 'all',
+    pitcher: 'all',
     count: 'all',
     zone: 'all',
     result: 'all',
@@ -730,7 +717,7 @@ const FilteredGraphs = ({ pitchesData }) => {
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
-  const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', batter: '' });
+  const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', pitcher: '' });
 
   const filteredData = useMemo(() => {
     function checkFieldIdentity(comparedFields, fieldFilter, exactComparing = true) {
@@ -759,20 +746,19 @@ const FilteredGraphs = ({ pitchesData }) => {
       }, true);
     }
 
-    const { pitches_all: pitchesAll } = pitchesData;
+    const { pitches_all: pitchesAll } = battingData;
 
-    const newPitchesAll = pitchesAll.filter(({ batter, pitch_info: pitchInfo }) => {
-      const { team: teamFilter, game: gameFilter, batter: batterFilter } = textGroupFilter;
-
+    const newPitchesAll = pitchesAll.filter(({ pitcher, pitch_info: pitchInfo }) => {
+      const { team: teamFilter, game: gameFilter, pitcher: pitcherFilter } = textGroupFilter;
       return (
-        checkFieldIdentity([batter.team_name], teamFilter) &&
+        checkFieldIdentity([pitcher.team_name], teamFilter) &&
         checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
-        checkFieldIdentity([batter['batter name'], batter['batter surname']], batterFilter)
+        checkFieldIdentity([pitcher['pitcher name'], pitcher['pitcher surname']], pitcherFilter)
       );
     });
 
-    return { preview: pitchesData.preview, pitches_all: newPitchesAll };
-  }, [textGroupFilter, pitchesData]);
+    return { preview: battingData.preview, pitches_all: newPitchesAll };
+  }, [textGroupFilter, battingData]);
 
   // const generateFakeData = () => {
   //   const totalPitches = getRndValue(10, 20);
@@ -930,6 +916,8 @@ const FilteredGraphs = ({ pitchesData }) => {
   const handlePlayerNameChange = name => {
     setFilteredPlayerFullName(name);
   };
+
+console.log(filteredData);
 
   return (
     <div className={cl.filteredGraphsWrapper}>
