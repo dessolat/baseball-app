@@ -1,7 +1,8 @@
-import { CatmullRomCurve3, FrontSide, Vector3 } from 'three';
-import { memo, useRef, useState, useEffect, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { memo, useRef, useState, useEffect, useContext } from 'react';
+import { useFrame, extend } from '@react-three/fiber';
 import { HSVtoRGB } from 'utils';
+import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+import { ctx } from 'context/ThreeTextCtx';
 
 // const TouchPoints = ({ data3D, coef, curveCount }) => (
 //   <>
@@ -18,13 +19,19 @@ import { HSVtoRGB } from 'utils';
 // );
 
 const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
-  const { data_3d: data3D, distance } = hit.hit_info;
+  const { data_3d: data3D, distance, angle, 'exit velocity': speed } = hit.hit_info;
   const { game_id: gameId, mom_id: momentId } = hit.pitch_info;
 
   const [hovered, setHovered] = useState(false);
-  const [tubeRadius, setTubeRadius] = useState(3);
+  // const [tubeRadius, setTubeRadius] = useState(3);
 
   const tubeRef = useRef(null);
+  const textRef = useRef(null);
+
+  const { TextGeometry, Vector3, CatmullRomCurve3, FontLoader, FrontSide } = useContext(ctx);
+
+  extend({ TextGeometry });
+
   useEffect(() => {
     if (tubeRef.current === null) return;
 
@@ -41,24 +48,24 @@ const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
     cashedStepTotal.current = 0;
   }, [data3D]);
 
-  useEffect(() => {
-    if (!hovered) {
-      setTubeRadius(3);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!hovered) {
+  //     setTubeRadius(3);
+  //     return;
+  //   }
 
-    setTubeRadius(prev => prev + 0.1);
-  }, [hovered]);
+  //   setTubeRadius(prev => prev + 0.1);
+  // }, [hovered]);
 
-  useEffect(() => {
-    if (!hovered) {
-      setTubeRadius(3);
-      return;
-    }
-    if (tubeRadius <= 3 || tubeRadius >= 5) return;
+  // useEffect(() => {
+  //   if (!hovered) {
+  //     setTubeRadius(3);
+  //     return;
+  //   }
+  //   if (tubeRadius <= 3 || tubeRadius >= 5) return;
 
-    setTubeRadius(prev => prev + 0.1);
-  }, [tubeRadius, hovered]);
+  //   setTubeRadius(prev => prev + 0.1);
+  // }, [tubeRadius, hovered]);
 
   const points = data3D.reduce((sum, coord) => {
     const newCoord = new Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 167);
@@ -69,7 +76,15 @@ const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
 
   const curveCoords = new CatmullRomCurve3(points);
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
+    if (textRef.current) {
+      textRef.current.quaternion.copy(camera.quaternion);
+      textRef.current.geometry.center();
+    }
+
+
+		// if (hovered) tubeRef.current
+
     if (stepTotalRef > 30510) return;
     if (stepTotalRef > 30110) {
       setDrawPoints(true);
@@ -94,26 +109,42 @@ const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
   const handleMeshClick = () => {
     window.open(`/game/${gameId}?card=${momentId}&tab=hitting`, '_blank');
   };
+
+  const font = new FontLoader().parse(ComfortaaFont);
+  const textCoords = data3D[Math.floor(data3D.length / 2)];
+
+  const distanceText = `Angle: ${String(Math.round(angle))}° Speed: ${String(Math.round(speed))} mph 
+Distance: ${String(Math.round(distance))} m.`;
   return (
-    <mesh
-      position={[-70, 0, 220]}
-      castShadow
-      onClick={handleMeshClick}
-      onPointerOver={() => {
-        if (cashedStepTotal.current < 30110) return;
-        setHovered(true);
-      }}
-      onPointerOut={() => {
-        if (cashedStepTotal.current < 30110) return;
-        setHovered(false);
-      }}>
-      <tubeGeometry
-        args={[curveCoords, 500, tubeRadius, 10, false]}
-        // drawRange={{ start: 0, count: 200 }}
-        ref={tubeRef}
-      />
-      <meshPhongMaterial color={meshColor} side={FrontSide} />
-    </mesh>
+    <>
+      <mesh
+        position={[-70, 0, 220]}
+        castShadow
+        onClick={handleMeshClick}
+        onPointerOver={() => {
+          if (cashedStepTotal.current < 30110) return;
+          setHovered(true);
+        }}
+        onPointerOut={() => {
+          if (cashedStepTotal.current < 30110) return;
+          setHovered(false);
+        }}>
+        <tubeGeometry
+          args={[curveCoords, 500, 3, 10, false]}
+          // drawRange={{ start: 0, count: 200 }}
+          ref={tubeRef}
+        />
+        <meshPhongMaterial color={meshColor} side={FrontSide} />
+      </mesh>
+      {hovered && (
+        <mesh
+          position={[textCoords[0] * coef - 390, textCoords[2] * coef + 100, textCoords[1] * -coef + 450]}
+          ref={textRef}>
+          <textGeometry args={[distanceText, { font, size: 22, height: 2 }]} />
+          <meshBasicMaterial color='blue' toneMapped={false} />
+        </mesh>
+      )}
+    </>
   );
 });
 
