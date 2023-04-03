@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import cl from './FilteredGraphs.module.scss';
 
-const GraphsBlock = ({ defaultOption, children, ...props }) => {
+const GraphsBlock = ({ defaultOption, children, noSelector = false, ...props }) => {
   const [currentOption, setCurrentOption] = useState(defaultOption);
+
+  if (noSelector)
+    return (
+      <div className={cl.graphsBlock} {...props}>
+        {children}
+      </div>
+    );
 
   return (
     <div className={cl.graphsBlock} {...props}>

@@ -24,7 +24,7 @@ const FIELD_NAMES = {
     'First pitches': 'first_pitch',
     'Close to BB': 'close_to_BB',
     '2 strikes': 'strike2',
-    'Other': 'other'
+    Other: 'other'
   },
   zone: {
     'Any zone': 'all',
@@ -101,7 +101,13 @@ const Group = ({
   const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
 
-  const filteredData = useFilterBatterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
+  const filteredData = useFilterBatterGroupData(
+    data,
+    currentFilterValues,
+    groupName,
+    teamName,
+    playerFullName
+  );
 
   const total =
     groupName === 'swing' || groupName === 'contact'
@@ -568,14 +574,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      
-      <GraphsBlock defaultOption=''>
-        {(_, _) => (
-          <>
-            <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
-            <HitsAnglesGraphs data={filteredData} />
-          </>
-        )}
+
+      <GraphsBlock defaultOption='' noSelector>
+        <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
+        <HitsAnglesGraphs data={filteredData} />
       </GraphsBlock>
     </div>
   );
@@ -794,7 +796,7 @@ const FilteredGraphs = ({ battingData }) => {
     setFilteredPlayerFullName(name);
   };
 
-console.log(filteredData);
+  console.log(filteredData);
 
   return (
     <div className={cl.filteredGraphsWrapper}>
