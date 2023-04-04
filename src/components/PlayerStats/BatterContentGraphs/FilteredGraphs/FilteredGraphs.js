@@ -579,6 +579,9 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
       </GraphsBlock>
+      <GraphsBlock defaultOption='' noSelector>
+        <PitchesTrajectories data={filteredData} />
+      </GraphsBlock>
     </div>
   );
 };
