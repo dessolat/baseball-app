@@ -1,6 +1,6 @@
 import React from 'react';
 import cl from './BatterContentGraphs.module.scss';
-// import Banner from './Banner/Banner';
+import Banner from './Banner/Banner';
 import FilteredGraphs from './FilteredGraphs/FilteredGraphs';
 
 const BatterContentGraphs = ({ battingData }) => {
@@ -8,7 +8,7 @@ const BatterContentGraphs = ({ battingData }) => {
 	
   return (
     <div className={cl.graphsWrapper}>
-      {/* <Banner /> */}
+      <Banner />
       {isFilteredGraphs && <FilteredGraphs battingData={battingData} />}
     </div>
   );
