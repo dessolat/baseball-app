@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 // import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
+import FacedGraph from './FacedGraph/FacedGraph';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -765,6 +766,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         )}
       </GraphsBlock> */}
 
+      <GraphsBlock defaultOption='' noSelector>
+        <GraphsHeader title='Machine vision statistics' subTitle={`${playerName} ${playerSurname} Pitches batter faced`} noSelector />
+				<FacedGraph />
+      </GraphsBlock>
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
