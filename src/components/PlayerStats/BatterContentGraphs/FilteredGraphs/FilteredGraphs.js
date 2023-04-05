@@ -1,15 +1,15 @@
 import cl from './FilteredGraphs.module.scss';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
-import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
+// import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
-import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useState, useMemo } from 'react';
+// import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
+// import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+import { useState, useMemo, useRef } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterBatterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
-import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
+// import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 
@@ -25,6 +25,12 @@ const FIELD_NAMES = {
     'Close to BB': 'close_to_BB',
     '2 strikes': 'strike2',
     Other: 'other'
+  },
+  type: {
+    'All pitches': 'all',
+    Fastballs: 'Fastball',
+    Breaking: 'Breaking',
+    Offspeed: 'Offspeed'
   },
   zone: {
     'Any zone': 'all',
@@ -51,6 +57,211 @@ const FIELD_NAMES = {
     Line: 'line',
     Grounds: 'gruond'
   }
+};
+
+const SpeedGroupItem = ({ pitchClass }) => {
+  const { r, g, b } = pitchClass;
+
+  // const [leftSliderRel, setLeftSliderRel] = useState(0);
+  // const [rightSliderRel, setRightSliderRel] = useState(100);
+
+  const [sliderCoords, setSliderCoords] = useState({ x1: 0, x2: 100 });
+
+  const sliderRef = useRef();
+  const sliderNameRef = useRef();
+  const mouseDownXCoordRef = useRef();
+  const mouseDownStateRef = useRef();
+  const mouseClickTimeRef = useRef(null);
+
+  function handleMouseMove(e) {
+    const slider = sliderRef.current;
+    const parent = slider.parentElement;
+
+    const sliderWidth = slider.getBoundingClientRect().width;
+    const fixedX =
+      sliderNameRef.current === 'left-slider' ? e.clientX - sliderWidth / 2 : e.clientX + sliderWidth / 2;
+
+    let currentCoord =
+      fixedX <= parent.getBoundingClientRect().left
+        ? 0
+        : fixedX > parent.getBoundingClientRect().right
+        ? parent.getBoundingClientRect().width
+        : fixedX - parent.getBoundingClientRect().left;
+
+    const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+
+    if (sliderNameRef.current === 'left-slider') {
+      setSliderCoords({
+        ...sliderCoords,
+        x1: sliderCoords.x2 - 30 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 30,
+        changedCoord: 'x1'
+      });
+
+      return;
+    }
+    if (sliderNameRef.current === 'right-slider') {
+      setSliderCoords({
+        ...sliderCoords,
+        x2: sliderCoords.x1 + 30 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 30,
+        changedCoord: 'x2'
+      });
+
+      return;
+    }
+    // if (sliderNameRef.current === 'red-line') {
+    //   const secondsTotal = SECONDS_SRC[currentTab].timeEnd - SECONDS_SRC[currentTab].timeStart;
+    //   const seekToValue = SECONDS_SRC[currentTab].timeStart + (secondsTotal * currentCoordPercents) / 100;
+
+    //   const leftSliderTime = SECONDS_SRC[currentTab].timeStart + (secondsTotal * sliderCoords.x1) / 100;
+    //   // const secondsTotal =
+    //   //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
+    //   // const seekToValue =
+    //   //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
+
+    //   // const leftSliderTime =
+    //   //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * sliderCoords.x1) / 100;
+
+    //   const seekToTime = seekToValue <= leftSliderTime ? leftSliderTime : seekToValue;
+
+    //   dispatch(setSeekValue(seekToTime));
+    //   dispatch(setVideoCurrentTime(seekToTime));
+
+    //   return;
+    // }
+
+    // if (sliderNameRef.current === 'drag-area') {
+    //   const slider = sliderRef.current;
+    //   const parent = slider.parentElement;
+
+    //   const percentRatio = parent.getBoundingClientRect().width / 100;
+    //   const pixelsDelta = e.clientX - mouseDownXCoordRef.current;
+    //   const percentsDelta = +(pixelsDelta / percentRatio).toFixed(4);
+
+    //   const getCoords = () => {
+    //     let tempX1 = sliderCoords.x1;
+    //     let tempX2 = sliderCoords.x2;
+
+    //     if (mouseDownStateRef.current.x1 + percentsDelta < 0) {
+    //       tempX1 = 0;
+    //       tempX2 = mouseDownStateRef.current.x2 - mouseDownStateRef.current.x1;
+
+    //       return { x1: tempX1, x2: tempX2 };
+    //     }
+
+    //     if (mouseDownStateRef.current.x2 + percentsDelta > 100) {
+    //       tempX1 = mouseDownStateRef.current.x1 + (100 - mouseDownStateRef.current.x2);
+    //       tempX2 = 100;
+
+    //       return { x1: tempX1, x2: tempX2 };
+    //     }
+
+    //     return {
+    //       x1: mouseDownStateRef.current.x1 + percentsDelta,
+    //       x2: mouseDownStateRef.current.x2 + percentsDelta
+    //     };
+    //   };
+
+    //   dispatch(setSliderCoords(getCoords()));
+    //   return;
+    // }
+  }
+
+  const handleMouseUp = e => {
+    // sliderRef.current.parentElement.style.cursor = 'default';
+    // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab';
+
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+
+    const mouseClickDelta = Date.now() - mouseClickTimeRef.current;
+    if (mouseClickDelta < 140) {
+      const slider = sliderRef.current;
+      const parent = slider.parentElement;
+
+      let currentCoord =
+        e.clientX <= parent.getBoundingClientRect().left
+          ? 0
+          : e.clientX > parent.getBoundingClientRect().right
+          ? parent.getBoundingClientRect().width
+          : e.clientX - parent.getBoundingClientRect().left;
+
+      const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+
+      // dispatch(setSeekValue(seekToValue));
+      // dispatch(setVideoCurrentTime(seekToValue));
+    }
+  };
+
+  const handleMouseDown = e => {
+    mouseClickTimeRef.current = Date.now();
+
+    sliderRef.current = e.target;
+    sliderNameRef.current = e.target.attributes.name.value;
+    mouseDownXCoordRef.current = e.clientX;
+    mouseDownStateRef.current = JSON.parse(JSON.stringify(sliderCoords));
+
+    // sliderRef.current.parentElement.style.cursor = 'e-resize';
+    // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize';
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const minMph = 45;
+  const maxMph = 90;
+  const minMaxDelta = maxMph - minMph;
+  const x1SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
+  const x2SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
+	const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2
+  return (
+    <div className={cl.speedGroupItem}>
+      <p className={cl.classTitle}>{pitchClass.title}</p>
+      <div className={cl.barWrapper} style={{ backgroundColor: `rgba(${r},${g},${b},0.6)` }}>
+        <div
+          className={cl.leftSlider}
+          style={{ backgroundColor: `rgb(${r},${g},${b})`, left: `${sliderCoords.x1}%` }}
+          name='left-slider'
+          onMouseDown={handleMouseDown}
+          onDragStart={e => e.preventDefault()}></div>
+        <div
+          className={cl.rightSlider}
+          style={{ backgroundColor: `rgb(${r},${g},${b})`, right: `${100 - sliderCoords.x2}%` }}
+          name='right-slider'
+          onMouseDown={handleMouseDown}
+          onDragStart={e => e.preventDefault()}></div>
+        <span className={cl.minSpeedTitle}>Min: {minMph} mph</span>
+        <span className={cl.maxSpeedTitle}>Max: {maxMph} mph</span>
+        <span className={cl.x1SpeedTitle} style={{ left: `${sliderCoords.x1}%` }}>
+          {x1SpeedValue} mph
+        </span>
+        <span className={cl.x2SpeedTitle} style={{ right: `${x2SliderRightCoord}%` }}>
+          {x2SpeedValue} mph
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const SpeedGroup = () => {
+  // const { name, absValue, absValueTotal, relValue, staticText } = data;
+  // const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
+
+  // const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
+
+  const pitchClassesArr = [
+    { title: 'Fastballs', r: 217, g: 43, b: 51, bgColor: '#D92B33' },
+    { title: 'Breaking', r: 36, g: 168, b: 215, bgColor: '#24A8D7' },
+    { title: 'Offspeed', r: 141, g: 181, b: 142, bgColor: '#8DB58E' }
+  ];
+
+  return (
+    <div>
+      <p className={cl.title}>Pitch speed</p>
+      {pitchClassesArr.map((pitchClass, i) => (
+        <SpeedGroupItem key={'pitch-class-' + i} pitchClass={pitchClass} />
+      ))}
+    </div>
+  );
 };
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
@@ -122,13 +333,28 @@ const Group = ({
                 group[FIELD_NAMES[groupName]['Line']] ||
                 group[FIELD_NAMES[groupName]['Grounds']]
           )
+      : groupName === 'type'
+      ? filteredData.map(pitch => pitch.pitch_info)
       : filteredData.map(pitch => pitch[groupName]);
 
   const totalLength = total.length;
 
   const modifiedGroupData = items.map(({ name, staticText }) => {
     const paramName = FIELD_NAMES[groupName][name];
-    const absValue = paramName !== 'all' ? total.filter(group => group[paramName]).length : totalLength;
+
+    const getAbsValue = () => {
+      if (paramName === 'all') return totalLength;
+
+      if (groupName === 'type') {
+        const { pitch_classes: pitchClasses } = data.preview;
+        console.log(total);
+        return total.filter(({ pitch_type: pitchType }) => paramName === pitchClasses[pitchType]).length;
+      }
+
+      return total.filter(group => group[paramName]).length;
+    };
+
+    const absValue = getAbsValue();
 
     return {
       name,
@@ -296,6 +522,26 @@ const LeftColumnOptions = ({
       ]
     },
     {
+      title: 'Pitch type',
+      groupName: 'type',
+      items: [
+        { name: 'All pitches', staticText: 'pitches' },
+        { name: 'Fastballs', staticText: 'pitches' },
+        { name: 'Breaking', staticText: 'pitches' },
+        { name: 'Offspeed', staticText: 'pitches' }
+      ]
+    },
+    {
+      title: 'Pitch speed',
+      groupName: 'speed',
+      items: [
+        { name: 'All pitches', staticText: 'pitches' },
+        { name: 'Fastballs', staticText: 'pitches' },
+        { name: 'Breaking', staticText: 'pitches' },
+        { name: 'Offspeed', staticText: 'pitches' }
+      ]
+    },
+    {
       title: 'Pitch zone',
       groupName: 'zone',
       items: [
@@ -351,17 +597,20 @@ const LeftColumnOptions = ({
           handleTeamNameChange={handleTeamNameChange}
           handlePlayerNameChange={handlePlayerNameChange}
         />
-        {groupsArr.map((group, i) => (
-          <Group
-            key={i}
-            data={data}
-            groupData={group}
-            currentFilterValues={currentFilterValues}
-            handleFilterClick={handleFilterClick}
-            filteredTeamName={filteredTeamName}
-            filteredPlayerFullName={filteredPlayerFullName}
-          />
-        ))}
+        {groupsArr.map((group, i) => {
+          if (group.groupName === 'speed') return <SpeedGroup key={i} />;
+          return (
+            <Group
+              key={i}
+              data={data}
+              groupData={group}
+              currentFilterValues={currentFilterValues}
+              handleFilterClick={handleFilterClick}
+              filteredTeamName={filteredTeamName}
+              filteredPlayerFullName={filteredPlayerFullName}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -461,56 +710,56 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   // ! delete after testing
 
-  let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
+  // let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
 
-  twinFilteredData = twinFilteredData.map(pitch =>
-    pitch.coordinates.zone_y === 0
-      ? {
-          ...pitch,
-          coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
-        }
-      : pitch
-  );
+  // twinFilteredData = twinFilteredData.map(pitch =>
+  //   pitch.coordinates.zone_y === 0
+  //     ? {
+  //         ...pitch,
+  //         coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
+  //       }
+  //     : pitch
+  // );
 
-  for (let i = 0; i < 100; i++) {
-    const pitch = {
-      pitch_info: { pitch_type: 1 },
-      coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
-      result: {
-        swing: 0,
-        take: 1,
-        miss: 0,
-        contact: 0,
-        'base hit & hard hit': 0,
-        'soft hit': 0,
-        fly: 0,
-        line: 0,
-        gruond: 0
-      },
-      zone: {
-        'in zone': 0,
-        'out zone': 1,
-        heart: 0,
-        edge: 0,
-        waste: 1,
-        low: 1,
-        high: 0,
-        outside: 0,
-        inside: 0
-      }
-    };
+  // for (let i = 0; i < 100; i++) {
+  //   const pitch = {
+  //     pitch_info: { pitch_type: 1 },
+  //     coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
+  //     result: {
+  //       swing: 0,
+  //       take: 1,
+  //       miss: 0,
+  //       contact: 0,
+  //       'base hit & hard hit': 0,
+  //       'soft hit': 0,
+  //       fly: 0,
+  //       line: 0,
+  //       gruond: 0
+  //     },
+  //     zone: {
+  //       'in zone': 0,
+  //       'out zone': 1,
+  //       heart: 0,
+  //       edge: 0,
+  //       waste: 1,
+  //       low: 1,
+  //       high: 0,
+  //       outside: 0,
+  //       inside: 0
+  //     }
+  //   };
 
-    twinFilteredData.push(pitch);
-  }
+  //   twinFilteredData.push(pitch);
+  // }
 
-  const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
+  // const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
 
-  const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
+  // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
 
   return (
     <div className={cl.rightColumnWrapper}>
-      <GraphsBlock defaultOption='All Pitches'>
+      {/* <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -573,7 +822,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             </div>
           </>
         )}
-      </GraphsBlock>
+      </GraphsBlock> */}
 
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
@@ -591,6 +840,7 @@ const FilteredGraphs = ({ battingData }) => {
   const [currentFilterValues, setCurrentFilterValues] = useState({
     pitcher: 'all',
     count: 'all',
+    type: 'all',
     zone: 'all',
     result: 'all',
     swing: 'all',
