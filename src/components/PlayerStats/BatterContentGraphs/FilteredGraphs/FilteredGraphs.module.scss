@@ -18,6 +18,7 @@
   padding: 0 0.5625rem;
   font: 700 0.875rem / 1.5 var(--font-nunito);
   text-align: center;
+  user-select: none;
 
   @media screen and (orientation: landscape) and (max-height: 950px) {
     line-height: 1;
@@ -161,6 +162,7 @@
 .itemBody {
   padding: 2px 0.4rem 0;
   font: 300 0.875rem / 1.2 var(--font-nunito);
+  user-select: none;
 
   @media screen and (orientation: landscape) and (max-height: 950px) {
     font: 300 0.875rem / 1.1 var(--font-nunito);

@@ -4,16 +4,20 @@
   background-color: white;
 }
 
+.title,
+.leftValues {
+  fill: black;
+  user-select: none;
+}
+
 .title {
   font: 700 0.875rem / 1.8 var(--font-nunito);
-	fill: black;
 }
 
 .leftValues {
   font: 400 0.875rem / 1.8 var(--font-nunito);
-	fill: black;
 }
 
 .animated {
-	transition: all .6s;
+  transition: all 0.6s;
 }
