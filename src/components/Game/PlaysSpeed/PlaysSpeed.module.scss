@@ -33,12 +33,10 @@
   position: absolute;
   top: 0.25rem;
   left: 0.5rem;
-  // margin-left: 0.8rem;
 }
 
 .chart {
   background-color: white;
-  // margin-left: 0.2rem;
   width: 99%;
   height: 96%;
 
@@ -52,6 +50,20 @@
 
 .plainText {
   font: 400 1.07rem var(--font-nunito);
+}
+
+// .graphTooltip {
+// 	fill: black;
+// 	stroke: black;
+//   stroke-width: .6px;
+//   font-family: var(--font-nunito);
+// 	font-size: .875rem;
+// 	font-smooth: none;
+// 	font-weight: 200;
+// }
+
+.showingGroup {
+	animation: showing .3s forwards;
 }
 
 .ballType {
@@ -88,6 +100,63 @@
   }
 }
 
-.dot:hover {
-  cursor: pointer;
+.dot {
+  animation: growRadius 0.3s forwards;
+
+  &:hover {
+    cursor: pointer;
+    animation: growRadiusMore 0.3s forwards;
+  }
+}
+
+.currentDot {
+  animation: currentGrowRadius 0.3s forwards;
+}
+
+.currentDotWhite {
+  animation: currentWhiteGrowRadius 0.3s forwards;
+}
+
+@keyframes growRadius {
+  from {
+    r: 0;
+  }
+  to {
+    r: 4;
+  }
+}
+@keyframes growRadiusMore {
+  from {
+    r: 4;
+  }
+  to {
+    r: 6;
+  }
+}
+
+@keyframes currentGrowRadius {
+  from {
+    r: 4;
+  }
+  to {
+    r: 7;
+  }
+}
+
+@keyframes currentWhiteGrowRadius {
+  from {
+    r: 5;
+  }
+  to {
+    r: 9;
+  }
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSeekValue, setVideoCurrentTime } from 'redux/gameReducer';
+import { setSeekValue } from 'redux/gameReducer';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
 

@@ -1,39 +1,39 @@
 import cl from './FilteredGraphs.module.scss';
 import FilterField from 'components/UI/TextField/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
-import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
+// import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
-import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useState, useMemo } from 'react';
+// import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
+// import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+import { useState, useMemo, useRef } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
-import { useFilterFakeGraphsData, useFilterGroupData } from 'hooks/useFilterFakeGraphsData';
+import { useFilterBatterGroupData } from 'hooks/useFilterFakeGraphsData';
 import { useSelector } from 'react-redux';
-import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
+// import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 
 const FIELD_NAMES = {
-  batter: {
-    'All batters': 'all',
-    'Right handed': 'right handed',
-    'Left handed': 'left handed'
+  pitcher: {
+    'All pitchers': 'all',
+    'Right handed': 'RHP',
+    'Left handed': 'LHP'
   },
   count: {
     'Any count': 'all',
-    'Ahead in count': 'ahwad',
-    'Behind in count': 'behind',
-    '0-0': '0-0',
-    '0-2': '0-2',
-    '3-0': '3-0'
+    'First pitches': 'first_pitch',
+    'Close to BB': 'close_to_BB',
+    '2 strikes': 'strike2',
+    Other: 'other'
+  },
+  type: {
+    'All pitches': 'all',
+    Fastballs: 'Fastball',
+    Breaking: 'Breaking',
+    Offspeed: 'Offspeed'
   },
   zone: {
     'Any zone': 'all',
-    'In zone': 'in zone',
-    'Out zone': 'out zone',
-    Heart: 'heart',
-    Edge: 'edge',
-    'Chase&Waste': 'waste',
     Low: 'low',
     High: 'high',
     Outside: 'outside',
@@ -57,6 +57,152 @@ const FIELD_NAMES = {
     Line: 'line',
     Grounds: 'gruond'
   }
+};
+
+const SpeedGroupItem = ({ pitchClass }) => {
+  const { r, g, b } = pitchClass;
+
+  const [sliderCoords, setSliderCoords] = useState({ x1: 0, x2: 100 });
+
+  const sliderRef = useRef();
+  const sliderNameRef = useRef();
+  const mouseDownXCoordRef = useRef();
+  const mouseDownStateRef = useRef();
+  const mouseClickTimeRef = useRef(null);
+
+  function handleMouseMove(e) {
+    const slider = sliderRef.current;
+    const parent = slider.parentElement;
+
+    const sliderWidth = slider.getBoundingClientRect().width;
+    const fixedX =
+      sliderNameRef.current === 'left-slider' ? e.clientX - sliderWidth / 2 : e.clientX + sliderWidth / 2;
+
+    let currentCoord =
+      fixedX <= parent.getBoundingClientRect().left
+        ? 0
+        : fixedX > parent.getBoundingClientRect().right
+        ? parent.getBoundingClientRect().width
+        : fixedX - parent.getBoundingClientRect().left;
+
+    const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+
+    if (sliderNameRef.current === 'left-slider') {
+      setSliderCoords({
+        ...sliderCoords,
+        x1: sliderCoords.x2 - 30 > currentCoordPercents ? currentCoordPercents : sliderCoords.x2 - 30,
+        changedCoord: 'x1'
+      });
+
+      return;
+    }
+    if (sliderNameRef.current === 'right-slider') {
+      setSliderCoords({
+        ...sliderCoords,
+        x2: sliderCoords.x1 + 30 < currentCoordPercents ? currentCoordPercents : sliderCoords.x1 + 30,
+        changedCoord: 'x2'
+      });
+
+      return;
+    }
+  }
+
+  const handleMouseUp = e => {
+    // sliderRef.current.parentElement.style.cursor = 'default';
+    // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab';
+
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+
+    const mouseClickDelta = Date.now() - mouseClickTimeRef.current;
+    if (mouseClickDelta < 140) {
+      const slider = sliderRef.current;
+      const parent = slider.parentElement;
+
+      let currentCoord =
+        e.clientX <= parent.getBoundingClientRect().left
+          ? 0
+          : e.clientX > parent.getBoundingClientRect().right
+          ? parent.getBoundingClientRect().width
+          : e.clientX - parent.getBoundingClientRect().left;
+
+      const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+
+      // dispatch(setSeekValue(seekToValue));
+      // dispatch(setVideoCurrentTime(seekToValue));
+    }
+  };
+
+  const handleMouseDown = e => {
+    mouseClickTimeRef.current = Date.now();
+
+    sliderRef.current = e.target;
+    sliderNameRef.current = e.target.attributes.name.value;
+    mouseDownXCoordRef.current = e.clientX;
+    mouseDownStateRef.current = JSON.parse(JSON.stringify(sliderCoords));
+
+    // sliderRef.current.parentElement.style.cursor = 'e-resize';
+    // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize';
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const minMph = 45;
+  const maxMph = 90;
+  const minMaxDelta = maxMph - minMph;
+  const x1SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
+  const x2SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
+	const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2
+  return (
+    <div className={cl.speedGroupItem}>
+      <p className={cl.classTitle}>{pitchClass.title}</p>
+      <div className={cl.barWrapper} style={{ backgroundColor: `rgba(${r},${g},${b},0.6)` }}>
+        <div
+          className={cl.leftSlider}
+          style={{ backgroundColor: `rgb(${r},${g},${b})`, left: `${sliderCoords.x1}%` }}
+          name='left-slider'
+          onMouseDown={handleMouseDown}
+          onDragStart={e => e.preventDefault()}></div>
+        <div
+          className={cl.rightSlider}
+          style={{ backgroundColor: `rgb(${r},${g},${b})`, right: `${100 - sliderCoords.x2}%` }}
+          name='right-slider'
+          onMouseDown={handleMouseDown}
+          onDragStart={e => e.preventDefault()}></div>
+        <span className={cl.minSpeedTitle}>Min: {minMph} mph</span>
+        <span className={cl.maxSpeedTitle}>Max: {maxMph} mph</span>
+        <span className={cl.x1SpeedTitle} style={{ left: `${sliderCoords.x1}%` }}>
+          {x1SpeedValue} mph
+        </span>
+        <span className={cl.x2SpeedTitle} style={{ right: `${x2SliderRightCoord}%` }}>
+          {x2SpeedValue} mph
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const SpeedGroup = () => {
+  // const { name, absValue, absValueTotal, relValue, staticText } = data;
+  // const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
+
+  // const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
+
+  const pitchClassesArr = [
+    { title: 'Fastballs', r: 217, g: 43, b: 51, bgColor: '#D92B33' },
+    { title: 'Breaking', r: 36, g: 168, b: 215, bgColor: '#24A8D7' },
+    { title: 'Offspeed', r: 141, g: 181, b: 142, bgColor: '#8DB58E' }
+  ];
+
+  return (
+    <div>
+      <p className={cl.title}>Pitch speed</p>
+      {pitchClassesArr.map((pitchClass, i) => (
+        <SpeedGroupItem key={'pitch-class-' + i} pitchClass={pitchClass} />
+      ))}
+    </div>
+  );
 };
 
 const GroupItem = ({ data, groupName, handleFilterClick, currentFilterValues }) => {
@@ -102,12 +248,18 @@ const Group = ({
   filteredTeamName,
   filteredPlayerFullName
 }) => {
-  const { title, groupName, staticText, items } = groupData;
+  const { title, groupName, items } = groupData;
 
-  const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
-  const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
+  const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
 
-  const filteredData = useFilterGroupData(data, currentFilterValues, groupName, teamName, playerFullName);
+  const filteredData = useFilterBatterGroupData(
+    data,
+    currentFilterValues,
+    groupName,
+    teamName,
+    playerFullName
+  );
 
   const total =
     groupName === 'swing' || groupName === 'contact'
@@ -122,13 +274,28 @@ const Group = ({
                 group[FIELD_NAMES[groupName]['Line']] ||
                 group[FIELD_NAMES[groupName]['Grounds']]
           )
+      : groupName === 'type'
+      ? filteredData.map(pitch => pitch.pitch_info)
       : filteredData.map(pitch => pitch[groupName]);
 
   const totalLength = total.length;
 
   const modifiedGroupData = items.map(({ name, staticText }) => {
     const paramName = FIELD_NAMES[groupName][name];
-    const absValue = paramName !== 'all' ? total.filter(group => group[paramName]).length : totalLength;
+
+    const getAbsValue = () => {
+      if (paramName === 'all') return totalLength;
+
+      if (groupName === 'type') {
+        const { pitch_classes: pitchClasses } = data.preview;
+        console.log(total);
+        return total.filter(({ pitch_type: pitchType }) => paramName === pitchClasses[pitchType]).length;
+      }
+
+      return total.filter(group => group[paramName]).length;
+    };
+
+    const absValue = getAbsValue();
 
     return {
       name,
@@ -182,12 +349,12 @@ const TextGroup = ({ setTextGroupFilter }) => {
         />
       </div>
       <div className={cl.textGroupItem}>
-        <p>Batter</p>
+        <p>Pitcher</p>
         <FilterField
-          placeholder='Search of batter'
+          placeholder='Search of pitcher'
           style={{ width: '82%' }}
           handleChange={value => {
-            setTextGroupFilter(prev => ({ ...prev, batter: value }));
+            setTextGroupFilter(prev => ({ ...prev, pitcher: value }));
           }}
         />
       </div>
@@ -195,59 +362,57 @@ const TextGroup = ({ setTextGroupFilter }) => {
   );
 };
 
-const CustomGroup = ({
-  data,
-  currentFilterValues,
-  handleFilterClick,
-  handleTeamNameChange,
-  handlePlayerNameChange
-}) => {
+const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
   const againstFilteredData =
     data.pitches_all?.filter(
-      pitch =>
-        (currentFilterValues.count === 'all' ? true : pitch.count[currentFilterValues.count]) &&
-        (currentFilterValues.zone === 'all' ? true : pitch.zone[currentFilterValues.zone]) &&
-        (currentFilterValues.result === 'all' ? true : pitch.result[currentFilterValues.result]) &&
-        (currentFilterValues.swing === 'all' ? true : pitch.result[currentFilterValues.swing]) &&
-        (currentFilterValues.contact === 'all' ? true : pitch.result[currentFilterValues.contact])
+      batt =>
+        (currentFilterValues.count === 'all' ? true : batt.count[currentFilterValues.count]) &&
+        (currentFilterValues.zone === 'all' ? true : batt.zone[currentFilterValues.zone]) &&
+        (currentFilterValues.result === 'all' ? true : batt.result[currentFilterValues.result]) &&
+        (currentFilterValues.swing === 'all' ? true : batt.result[currentFilterValues.swing]) &&
+        (currentFilterValues.contact === 'all' ? true : batt.result[currentFilterValues.contact])
     ) || [];
 
-  const totalBatters = againstFilteredData.reduce((sum, cur) => {
-    const existBatterIndex = sum.findIndex(batter => batter.h_id === cur.batter.h_id);
-    existBatterIndex === -1 && sum.push(cur.batter);
+  const totalPitchers = againstFilteredData.reduce((sum, cur) => {
+    const existPitcherIndex = sum.findIndex(pitcher => pitcher.h_id === cur.pitcher.h_id);
+    existPitcherIndex === -1 && sum.push(cur.pitcher);
 
     return sum;
   }, []);
 
-  const leftHandedBatters = totalBatters.filter(batter => batter['left handed']);
-  const rightHandedBattersLength = totalBatters.length - leftHandedBatters.length;
+  const leftHandedPitchers = totalPitchers.filter(pitcher => pitcher.LHP);
+  const rightHandedPitchersLength = totalPitchers.length - leftHandedPitchers.length;
 
   const rightHandedRelValue =
-    totalBatters.length > 0 ? +((rightHandedBattersLength * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+    totalPitchers.length > 0
+      ? +((rightHandedPitchersLength * 100) / totalPitchers.length).toFixed(1)
+      : 0 ?? '-';
   const leftHandedRelValue =
-    totalBatters.length > 0 ? +((leftHandedBatters.length * 100) / totalBatters.length).toFixed(1) : 0 ?? '-';
+    totalPitchers.length > 0
+      ? +((leftHandedPitchers.length * 100) / totalPitchers.length).toFixed(1)
+      : 0 ?? '-';
 
   const customGroupData = {
     title: 'Against who',
     items: [
       {
-        name: 'All batters',
-        absValue: totalBatters.length,
-        absValueTotal: totalBatters.length,
+        name: 'All pitchers',
+        absValue: totalPitchers.length,
+        absValueTotal: totalPitchers.length,
         relValue: 100,
         staticText: 'players'
       },
       {
         name: 'Right handed',
-        absValue: rightHandedBattersLength,
-        absValueTotal: totalBatters.length,
+        absValue: rightHandedPitchersLength,
+        absValueTotal: totalPitchers.length,
         relValue: rightHandedRelValue,
         staticText: 'players'
       },
       {
         name: 'Left handed',
-        absValue: leftHandedBatters.length,
-        absValueTotal: totalBatters.length,
+        absValue: leftHandedPitchers.length,
+        absValueTotal: totalPitchers.length,
         relValue: leftHandedRelValue,
         staticText: 'players'
       }
@@ -262,7 +427,7 @@ const CustomGroup = ({
         <GroupItem
           key={i}
           data={item}
-          groupName='batter'
+          groupName='pitcher'
           handleFilterClick={handleFilterClick}
           currentFilterValues={currentFilterValues}
         />
@@ -291,23 +456,37 @@ const LeftColumnOptions = ({
           name: 'Any count',
           staticText: 'pitches'
         },
-        { name: 'Ahead in count', staticText: 'pitches' },
-        { name: 'Behind in count', staticText: 'pitches' },
-        { name: '0-0', staticText: 'pitches' },
-        { name: '0-2', staticText: 'pitches' },
-        { name: '3-0', staticText: 'pitches' }
+        { name: 'First pitches', staticText: 'pitches' },
+        { name: 'Close to BB', staticText: 'pitches' },
+        { name: '2 strikes', staticText: 'pitches' },
+        { name: 'Other', staticText: 'pitches' }
       ]
     },
     {
-      title: 'Zone',
+      title: 'Pitch type',
+      groupName: 'type',
+      items: [
+        { name: 'All pitches', staticText: 'pitches' },
+        { name: 'Fastballs', staticText: 'pitches' },
+        { name: 'Breaking', staticText: 'pitches' },
+        { name: 'Offspeed', staticText: 'pitches' }
+      ]
+    },
+    {
+      title: 'Pitch speed',
+      groupName: 'speed',
+      items: [
+        { name: 'All pitches', staticText: 'pitches' },
+        { name: 'Fastballs', staticText: 'pitches' },
+        { name: 'Breaking', staticText: 'pitches' },
+        { name: 'Offspeed', staticText: 'pitches' }
+      ]
+    },
+    {
+      title: 'Pitch zone',
       groupName: 'zone',
       items: [
         { name: 'Any zone', staticText: 'pitches' },
-        { name: 'In zone', staticText: 'pitches' },
-        { name: 'Out zone', staticText: 'pitches' },
-        { name: 'Heart', staticText: 'pitches' },
-        { name: 'Edge', staticText: 'pitches' },
-        { name: 'Chase&Waste', staticText: 'pitches' },
         { name: 'Low', staticText: 'pitches' },
         { name: 'High', staticText: 'pitches' },
         { name: 'Outside', staticText: 'pitches' },
@@ -345,6 +524,7 @@ const LeftColumnOptions = ({
       ]
     }
   ];
+
   return (
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>Dataset filter</h3>
@@ -358,17 +538,20 @@ const LeftColumnOptions = ({
           handleTeamNameChange={handleTeamNameChange}
           handlePlayerNameChange={handlePlayerNameChange}
         />
-        {groupsArr.map((group, i) => (
-          <Group
-            key={i}
-            data={data}
-            groupData={group}
-            currentFilterValues={currentFilterValues}
-            handleFilterClick={handleFilterClick}
-            filteredTeamName={filteredTeamName}
-            filteredPlayerFullName={filteredPlayerFullName}
-          />
-        ))}
+        {groupsArr.map((group, i) => {
+          if (group.groupName === 'speed') return <SpeedGroup key={i} />;
+          return (
+            <Group
+              key={i}
+              data={data}
+              groupData={group}
+              currentFilterValues={currentFilterValues}
+              handleFilterClick={handleFilterClick}
+              filteredTeamName={filteredTeamName}
+              filteredPlayerFullName={filteredPlayerFullName}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -388,7 +571,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterFakeGraphsData(data, currentFilterValues, teamName, playerFullName);
+  const filteredData = useFilterBatterGroupData(data, currentFilterValues, teamName, playerFullName);
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
@@ -468,56 +651,56 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   // ! delete after testing
 
-  let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
+  // let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
 
-  twinFilteredData = twinFilteredData.map(pitch =>
-    pitch.coordinates.zone_y === 0
-      ? {
-          ...pitch,
-          coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
-        }
-      : pitch
-  );
+  // twinFilteredData = twinFilteredData.map(pitch =>
+  //   pitch.coordinates.zone_y === 0
+  //     ? {
+  //         ...pitch,
+  //         coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
+  //       }
+  //     : pitch
+  // );
 
-  for (let i = 0; i < 100; i++) {
-    const pitch = {
-      pitch_info: { pitch_type: 1 },
-      coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
-      result: {
-        swing: 0,
-        take: 1,
-        miss: 0,
-        contact: 0,
-        'base hit & hard hit': 0,
-        'soft hit': 0,
-        fly: 0,
-        line: 0,
-        gruond: 0
-      },
-      zone: {
-        'in zone': 0,
-        'out zone': 1,
-        heart: 0,
-        edge: 0,
-        waste: 1,
-        low: 1,
-        high: 0,
-        outside: 0,
-        inside: 0
-      }
-    };
+  // for (let i = 0; i < 100; i++) {
+  //   const pitch = {
+  //     pitch_info: { pitch_type: 1 },
+  //     coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
+  //     result: {
+  //       swing: 0,
+  //       take: 1,
+  //       miss: 0,
+  //       contact: 0,
+  //       'base hit & hard hit': 0,
+  //       'soft hit': 0,
+  //       fly: 0,
+  //       line: 0,
+  //       gruond: 0
+  //     },
+  //     zone: {
+  //       'in zone': 0,
+  //       'out zone': 1,
+  //       heart: 0,
+  //       edge: 0,
+  //       waste: 1,
+  //       low: 1,
+  //       high: 0,
+  //       outside: 0,
+  //       inside: 0
+  //     }
+  //   };
 
-    twinFilteredData.push(pitch);
-  }
+  //   twinFilteredData.push(pitch);
+  // }
 
-  const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
+  // const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
 
-  const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
+  // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
 
   return (
     <div className={cl.rightColumnWrapper}>
-      <GraphsBlock defaultOption='All Pitches'>
+      {/* <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -580,148 +763,25 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             </div>
           </>
         )}
+      </GraphsBlock> */}
+
+      <GraphsBlock defaultOption='' noSelector>
+        <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
+        <HitsAnglesGraphs data={filteredData} />
       </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Season' defaultOption2={pitchTypes}>
-        {(currentOption, setCurrentOption, currentOption2, setCurrentOption2) => (
-          <>
-            <GraphsHeader
-              optionsArr={['Season', 'Month', 'Game']}
-              // optionsArr2={{ 'All Pitches': null, ...relValuesData }}
-              availableOptions={Object.keys(arsenalRelValuesData)}
-              title={null}
-              subTitle={`${playerName} ${playerSurname} time dynamic`}
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              currentOption2={currentOption2}
-              setCurrentOption2={setCurrentOption2}
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Pitches'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Pitch, %'
-              graphType='PitchesRel'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Speed, mph'
-              graphType='Speed'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Spin, rpm'
-              graphType='Spin'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Vertical break, sm'
-              graphType='VerticalBreak'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Horizontal break, sm'
-              graphType='HorizontalBreak'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='In zone'
-              graphType='InZone'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Out zone'
-              graphType='OutZone'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Inside'
-              graphType='Inside'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Outside'
-              graphType='Outside'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Low'
-              graphType='Low'
-            />
-            <ArsenalGraph
-              filteredData={arsenalAddedData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='High'
-              graphType='High'
-            />
-          </>
-        )}
-      </GraphsTimeDynamicBlock>
-      <GraphsBlock defaultOption=''>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
-            <HitsAnglesGraphs data={filteredData} />
-          </>
-        )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption=''>
-        {(currentOption, setCurrentOption) => (
-          <>
-            {/* <GraphsHeader
-              title=''
-              subTitle={`Hits from ${playerName} ${playerSurname}`}
-              noSelector
-            /> */}
-            <PitchesTrajectories data={filteredData} />
-          </>
-        )}
+      <GraphsBlock defaultOption='' noSelector>
+        <PitchesTrajectories data={filteredData} />
       </GraphsBlock>
     </div>
   );
 };
 
-const FilteredGraphs = ({ pitchesData }) => {
+const FilteredGraphs = ({ battingData }) => {
   // const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
-    batter: 'all',
+    pitcher: 'all',
     count: 'all',
+    type: 'all',
     zone: 'all',
     result: 'all',
     swing: 'all',
@@ -730,7 +790,7 @@ const FilteredGraphs = ({ pitchesData }) => {
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
-  const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', batter: '' });
+  const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', pitcher: '' });
 
   const filteredData = useMemo(() => {
     function checkFieldIdentity(comparedFields, fieldFilter, exactComparing = true) {
@@ -759,20 +819,19 @@ const FilteredGraphs = ({ pitchesData }) => {
       }, true);
     }
 
-    const { pitches_all: pitchesAll } = pitchesData;
+    const { pitches_all: pitchesAll } = battingData;
 
-    const newPitchesAll = pitchesAll.filter(({ batter, pitch_info: pitchInfo }) => {
-      const { team: teamFilter, game: gameFilter, batter: batterFilter } = textGroupFilter;
-
+    const newPitchesAll = pitchesAll.filter(({ pitcher, pitch_info: pitchInfo }) => {
+      const { team: teamFilter, game: gameFilter, pitcher: pitcherFilter } = textGroupFilter;
       return (
-        checkFieldIdentity([batter.team_name], teamFilter) &&
+        checkFieldIdentity([pitcher.team_name], teamFilter) &&
         checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
-        checkFieldIdentity([batter['batter name'], batter['batter surname']], batterFilter)
+        checkFieldIdentity([pitcher['pitcher name'], pitcher['pitcher surname']], pitcherFilter)
       );
     });
 
-    return { preview: pitchesData.preview, pitches_all: newPitchesAll };
-  }, [textGroupFilter, pitchesData]);
+    return { preview: battingData.preview, pitches_all: newPitchesAll };
+  }, [textGroupFilter, battingData]);
 
   // const generateFakeData = () => {
   //   const totalPitches = getRndValue(10, 20);
@@ -930,6 +989,8 @@ const FilteredGraphs = ({ pitchesData }) => {
   const handlePlayerNameChange = name => {
     setFilteredPlayerFullName(name);
   };
+
+  console.log(filteredData);
 
   return (
     <div className={cl.filteredGraphsWrapper}>

@@ -4,7 +4,7 @@ import cl from './HitsAnglesGraph.module.scss';
 
 const PARAMS = {
   GRAPH_WIDTH: 307,
-  GRAPH_HEIGHT: 423,
+  GRAPH_HEIGHT: 300,
   LINE_WIDTH: 179,
   ZERO_X: 98.45,
   ZERO_Y: 230.35,
@@ -31,25 +31,9 @@ const RadialTitles = ({ minMaxValue, title }) => {
   const xCoord = PARAMS.ZERO_X - 4;
   return (
     <>
-      {/* Center value */}
-      {/* <text x={xCoord} y={PARAMS.ZERO_Y - 1} className={cl.leftValues} textAnchor='end'>
-        {min}
-      </text> */}
-
       {/* Top values */}
       {titles.map((value, i) => {
         const yCoord = PARAMS.ZERO_Y - 20 - i * 22.5;
-        const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
-
-        return (
-          <text key={i} x={xCoord} y={yCoord} className={cl.leftValues} textAnchor='end'>
-            {filteredValue}
-          </text>
-        );
-      })}
-      {/* Bottom values */}
-      {titles.map((value, i) => {
-        const yCoord = PARAMS.ZERO_Y + 20 + i * 22.5;
         const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
 
         return (
@@ -108,9 +92,9 @@ const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
 
   return (
     <svg
-      width='307'
-      height='423'
-      viewBox='0 0 307 423'
+      width={PARAMS.GRAPH_WIDTH}
+      height={PARAMS.GRAPH_HEIGHT}
+      viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       fill='none'
       className={cl.graph}
       xmlns='http://www.w3.org/2000/svg'>

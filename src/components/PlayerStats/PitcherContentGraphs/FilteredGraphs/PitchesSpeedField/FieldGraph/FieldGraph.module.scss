@@ -81,6 +81,19 @@
 	pointer-events: none;
 }
 
+.showingGroup {
+	animation: showing .3s forwards;
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes growRadius {
   from {
     r: 0;

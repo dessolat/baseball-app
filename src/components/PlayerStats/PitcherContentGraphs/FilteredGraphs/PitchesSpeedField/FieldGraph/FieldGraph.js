@@ -3,28 +3,17 @@ import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import cl from './FieldGraph.module.scss';
 import { getPitchColorByName } from 'utils';
+import Tooltip from './Tooltip';
 
 const PARAMS = {
   GRAPH_WIDTH: 455,
   GRAPH_HEIGHT: 330,
-  // GRAPH_HEIGHT: 326,
-  // GRAPH_WIDTH: 467,
-  // GRAPH_HEIGHT: 354.14,
   VERTICAL_COLUMNS_NUM: 12,
   HORIZONTAL_ROWS_NUM: 6
 };
 
-const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
-  // const [radius, setRadius] = useState(1);
-
-  // useEffect(() => {
-  //   setRadius(1);
-
-  //   setTimeout(() => {
-  //     setRadius(8);
-  //   }, 300);
-  // }, [coords]);
-  const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
+const Dots = ({ arrData, pitchTypes, coords, linesCoords, setHoveredDot }) => {
+  const { xCoordRelCoef, zeroXCoord } = coords;
   const { yZeroBreakCoef, zeroYBreakLine } = linesCoords;
 
   const handleDotClick = (gameId, momentId) => () => {
@@ -36,25 +25,31 @@ const Dots = ({ arrData, pitchTypes, coords, linesCoords }) => {
         const { break: breakCoords, pitch_info: pitchInfo } = pitch;
         const { break_x: x, break_y: y } = breakCoords;
         const { pitch_type: pitchType, game_id: gameId, mom_id: momentId } = pitchInfo;
-        // const { coordinates, pitch_info: pitchInfo } = pitch;
-        // const { zone_x: x, zone_y: y } = coordinates;
 
         const xCoord = zeroXCoord + x * xCoordRelCoef;
         const yCoord = y === 0 ? zeroYBreakLine : zeroYBreakLine + y * 100 * yZeroBreakCoef;
-        // const xCoord = zeroXCoord + x * xCoordRelCoef;
-        // const yCoord = y === 0 ? zeroYCoord : zeroYCoord - y * yCoordRelCoef + yCoordAbsCoef;
         return (
           <circle
             key={i}
             // key={`${i}-x-${x}-y-${y}`}
             cx={xCoord}
             cy={yCoord}
-            // r={radius}
             stroke='black'
             strokeWidth='.5'
             fill={getPitchColorByName(pitchTypes[pitchType])}
             className={cl.animatedDot}
             onClick={handleDotClick(gameId, momentId)}
+            onPointerOver={() =>
+              setHoveredDot(prev => ({
+                ...prev,
+                spinX: x * 100,
+                spinY: y * -100,
+                visible: true,
+                coords: [xCoord, yCoord],
+                pitchType: pitchTypes[pitchType]
+              }))
+            }
+            onPointerOut={() => setHoveredDot(prev => ({ ...prev, visible: false }))}
           />
         );
       })}
@@ -76,12 +71,6 @@ const EllipsedDots = ({
   return (
     <>
       {Object.entries(avgCoords).map(([pitchType, data], i) => {
-        // const { break: breakCoords, pitch_info: pitchInfo } = pitch;
-        // const { coordinates, pitch_info: pitchInfo } = pitch;
-        // const { break_x: x, break_y: y } = breakCoords;
-        // const { zone_x: x, zone_y: y } = coordinates;
-        // const { pitch_type: pitchType } = pitchInfo;
-
         const xCoord = zeroXCoord + data.avgBreakX * xCoordRelCoef;
         const yCoord =
           data.avgBreakY === 0 ? zeroYBreakLine : zeroYBreakLine + data.avgBreakY * 100 * yZeroBreakCoef;
@@ -106,10 +95,6 @@ const EllipsedDots = ({
         );
         const sumDiffBreaksAvg = { x: sumDiffBreaks.x / data.count, y: sumDiffBreaks.y / data.count };
         const skoBreaks = { x: Math.sqrt(sumDiffBreaksAvg.x), y: Math.sqrt(sumDiffBreaksAvg.y) };
-
-        // 		const sumDiffSpeeds = speeds.reduce((sum, curSpeed) => sum + (curSpeed - avgSpeed) ** 2, 0);
-        // const sumDiffSpeedsAvg = sumDiffSpeeds / count;
-        // const skoSpeed = Math.sqrt(sumDiffSpeedsAvg);
         return (
           <Fragment key={i}>
             <circle
@@ -131,17 +116,6 @@ const EllipsedDots = ({
               fill={circleColor}
               fillOpacity={opacityValue}
             />
-            {/* <circle
-              // key={`${i}-x-${x}-y-${y}`}
-              cx={xCoord}
-              cy={yCoord}
-              // r='15'
-              stroke={circleColor}
-              strokeWidth='2'
-              fill={circleColor}
-              fillOpacity={opacityValue}
-              className={cl.animatedEllipse}
-            /> */}
           </Fragment>
         );
       })}
@@ -149,7 +123,16 @@ const EllipsedDots = ({
   );
 };
 
-const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, linesCoords }) => {
+const Frames = ({
+  avgCoords,
+  arrData,
+  preview,
+  isDots,
+  relValuesData,
+  coords,
+  linesCoords,
+  setHoveredDot
+}) => {
   const { zone, pitch_types: pitchTypes } = preview;
   const {
     y_strike_down: yStrikeDown,
@@ -161,8 +144,6 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
 
   let totalPitches = arrData.length;
   const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
-
-  // xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord
 
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
@@ -209,7 +190,15 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       />
 
       {/* Dots */}
-      {isDots && <Dots arrData={arrData} pitchTypes={pitchTypes} coords={coords} linesCoords={linesCoords} />}
+      {isDots && (
+        <Dots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={coords}
+          linesCoords={linesCoords}
+          setHoveredDot={setHoveredDot}
+        />
+      )}
       {/* Ellipsed Dots */}
       {!isDots && (
         <EllipsedDots
@@ -224,8 +213,6 @@ const Frames = ({ avgCoords, arrData, preview, isDots, relValuesData, coords, li
       )}
 
       {/* Dashed frame */}
-      {/* <line x1={dashedFrameX} y1={0} x2={dashedFrameX} y2={PARAMS.GRAPH_HEIGHT} stroke='red' strokeWidth='1' />
-      <line x1={dashedFrameX + dashedFrameWidth} y1={0} x2={dashedFrameX + dashedFrameWidth} y2={PARAMS.GRAPH_HEIGHT} stroke='red' strokeWidth='1' /> */}
       <rect
         x={dashedFrameX}
         y={dashedFrameY}
@@ -257,14 +244,7 @@ const VerticalGridLines = ({ linesCoords }) => {
   return (
     <>
       {/* Center Line */}
-      <line
-        x1={centerLineX}
-        y1={0}
-        x2={centerLineX}
-        y2={graphHeight}
-        stroke='#ACACAC'
-        // strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
-      />
+      <line x1={centerLineX} y1={0} x2={centerLineX} y2={graphHeight} stroke='#ACACAC' />
       <text x={centerLineX - 5} y={graphHeight - 7} className={cl.bottomTextTitle}>
         0
       </text>
@@ -318,52 +298,17 @@ const VerticalGridLines = ({ linesCoords }) => {
           </Fragment>
         );
       })}
-
-      {/* Old lines */}
-      {/* {new Array(columnsNumber + 1).fill(null).map((_, i, arr) => {
-        const colText = +(i * valuePerColumn + leftBorderValue).toFixed(0);
-
-        return (
-          <Fragment key={'vert-right-' + i}>
-            <line
-              x1={columnWidth * i}
-              y1={0}
-              x2={columnWidth * i}
-              y2={graphHeight}
-              stroke='red'
-              strokeDasharray={Math.floor(arr.length / 2) !== i ? '4 2' : null}
-            />
-            {i !== 0 && (
-              <text x={columnWidth * i - 5} y={graphHeight - 7} stroke='red' strokeWidth='.5' className={cl.bottomTextTitle}>
-                {colText}
-              </text>
-            )}
-          </Fragment>
-        );
-      })} */}
     </>
   );
 };
 
-const HorizontalGridLines = ({ coords, linesCoords }) => {
+const HorizontalGridLines = ({ linesCoords }) => {
   const { GRAPH_WIDTH: graphWidth, GRAPH_HEIGHT: graphHeight, HORIZONTAL_ROWS_NUM: rowsNumber } = PARAMS;
   const rowHeight = 30;
   // const rowHeight = graphHeight / rowsNumber;
 
-  const { zeroXCoord } = coords;
+  const { topBorderValue, bottomBorderValue } = linesCoords;
 
-  const {
-    topFieldLine,
-    minMaxAvgBreak,
-    avgDelta,
-    centerYFieldLine,
-    bottomYFieldLine,
-    bottomYFieldValue,
-    topBorderValue,
-    bottomBorderValue
-  } = linesCoords;
-
-  // const valuePerRow = (bottomBorderValue - topBorderValue) / rowsNumber;
   const centerLineY = graphHeight / 2;
   const centerLineValue = Math.round((bottomBorderValue + topBorderValue) / 2);
   const yCoordPerLine = (graphHeight / 2 / ((bottomBorderValue - topBorderValue) / 2)) * rowHeight;
@@ -425,29 +370,8 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
         );
       })}
 
-      {/* Old lines */}
-      {/* {new Array(rowsNumber + 1).fill(null).map((_, i, arr) => {
-        const rowText = Math.floor(topBorderValue + i * valuePerRow);
-
-        return (
-          <Fragment key={'hor-' + i}>
-            <line
-              x1={0}
-              y1={rowHeight * i}
-              x2={graphWidth}
-              y2={rowHeight * i}
-              stroke='#ACACAC'
-              strokeDasharray='4 2'
-            />
-            <text x='4' y={rowHeight * i + 15} className={cl.leftTextTitle}>
-              {rowText}
-            </text>
-          </Fragment>
-        );
-      })} */}
-
       {/* top Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={topFieldLine}
         x2={zeroXCoord + 57}
@@ -458,10 +382,10 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='140' y={topFieldLine + 4} className={cl.leftTextTitle}>
         Top {Math.floor(minMaxAvgBreak.maxY * 100)}
-      </text>
+      </text> */}
 
       {/* center Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={centerYFieldLine}
         x2={zeroXCoord + 57}
@@ -472,10 +396,10 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='90' y={centerYFieldLine + 4} className={cl.leftTextTitle}>
         Center {Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100)}
-      </text>
+      </text> */}
 
       {/* bottom Y field line */}
-      <line
+      {/* <line
         x1={zeroXCoord - 57}
         y1={bottomYFieldLine}
         x2={zeroXCoord + 57}
@@ -486,7 +410,7 @@ const HorizontalGridLines = ({ coords, linesCoords }) => {
       />
       <text x='90' y={bottomYFieldLine + 4} className={cl.leftTextTitle}>
         Bottom {bottomYFieldValue}
-      </text>
+      </text> */}
     </>
   );
 };
@@ -500,9 +424,8 @@ const FieldGraph = ({
   setCurrentOption
 }) => {
   const [isChecked, setChecked] = useState(false);
-  const [coordsAltered, setCoordsAltered] = useState(true);
-  const [isAbsCoef, setIsAbsCoef] = useState(false);
   const [isGraphVisible, setGraphVisibility] = useState(false);
+  const [hoveredDot, setHoveredDot] = useState({ visible: false, spinX: 0, spinY: 0, coords: [0, 0] });
 
   const graphRef = useRef();
 
@@ -545,18 +468,11 @@ const FieldGraph = ({
   const { zone } = preview;
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.88;
-  // const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8345;
   const yCoordRelCoef = 160;
-  // const yCoordRelCoef = 213;
-  // const yCoordRelCoef = coordsAltered ? 213 : 340;
-  // const yCoordRelCoef = 340;
   const yCoordAbsCoef = 0;
-  // const yCoordAbsCoef = isAbsCoef ? 75 : 0;
-  // const yCoordAbsCoef = 75;
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.5;
   const xCoordRelCoef = 160;
-  // const xCoordRelCoef = coordsAltered ? 160 : 248;
-  // const xCoordRelCoef = 248;
+
   const coords = { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord };
 
   const avgCoords = filteredData.reduce((sum, { pitch_info: pitchInfo, coordinates, break: breakValues }) => {
@@ -613,7 +529,10 @@ const FieldGraph = ({
   const centerFieldValue = Math.floor((minMaxAvgBreak.minY + avgDelta.y / 2) * 100);
   const bottomYFieldValue = Math.floor(minMaxAvgBreak.minY * 100);
 
-  const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
+  const valuesCoef = 1.6;
+  // const valuesCoef = ((avgDelta.y / 2) * yCoordRelCoef) / ((avgDelta.y / 2) * 100);
+
+  // console.log(valuesCoef);
 
   const topBorderValue = centerFieldValue + centerYFieldLine / valuesCoef;
   const bottomBorderValue = centerFieldValue - (PARAMS.GRAPH_HEIGHT - centerYFieldLine) / valuesCoef;
@@ -623,7 +542,6 @@ const FieldGraph = ({
   const rightBorderValue = (halfGraphWidth / xCoordRelCoef) * 100;
 
   const yZeroBreakCoef = PARAMS.GRAPH_HEIGHT / (bottomBorderValue - topBorderValue);
-  // console.log(yZeroCoef);
   const zeroYBreakLine = -topBorderValue * yZeroBreakCoef;
 
   const linesCoords = {
@@ -648,17 +566,6 @@ const FieldGraph = ({
           xmlns='http://www.w3.org/2000/svg'
           preserveAspectRatio='none'
           ref={graphRef}>
-          {/* zero Y line */}
-          {/* <line x1={0} y1={zeroYCoord} x2={PARAMS.GRAPH_WIDTH} y2={zeroYCoord} stroke='red' strokeWidth='1' /> */}
-          {/* zero X line */}
-          {/* <line
-            x1={zeroXCoord}
-            y1={0}
-            x2={zeroXCoord}
-            y2={PARAMS.GRAPH_HEIGHT}
-            stroke='red'
-            strokeWidth='2'
-          /> */}
           {isGraphVisible && (
             <>
               <Frames
@@ -669,9 +576,15 @@ const FieldGraph = ({
                 relValuesData={relValuesData}
                 coords={coords}
                 linesCoords={linesCoords}
+                setHoveredDot={setHoveredDot}
               />
-              <VerticalGridLines linesCoords={linesCoords} />
-              <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+              {filteredData.length > 0 && (
+                <>
+                  <VerticalGridLines linesCoords={linesCoords} />
+                  <HorizontalGridLines coords={coords} linesCoords={linesCoords} />
+                </>
+              )}
+              {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} />}
             </>
           )}
         </svg>
@@ -684,33 +597,6 @@ const FieldGraph = ({
           Gravity
           <SimpleToggler checked={isChecked} onChange={handleTogglerChange} />
         </OptionsToggler>
-        {/* <div
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: '50%',
-            display: 'flex',
-            flexDirection: 'column',
-            boxShadow: '1px 1px 3px 0px grey',
-            overflow: 'hidden',
-            borderTopLeftRadius: '5px',
-            borderBottomLeftRadius: '5px'
-          }}>
-          <button
-            onClick={() => setCoordsAltered(prev => !prev)}
-            style={{ padding: 5, backgroundColor: coordsAltered ? 'white' : 'lightgray' }}>
-            Toggle rel coef
-          </button>
-          <button
-            onClick={() => setIsAbsCoef(prev => !prev)}
-            style={{
-              borderTop: '1px solid gray',
-              padding: 5,
-              backgroundColor: isAbsCoef ? 'white' : 'lightgray'
-            }}>
-            Toggle abs coef
-          </button>
-        </div> */}
       </div>
       {/* Bottom wrapper title */}
       <p className={cl.bottomWrapperTitle}>Horizontal break, cm</p>

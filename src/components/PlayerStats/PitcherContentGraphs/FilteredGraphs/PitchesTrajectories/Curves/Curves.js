@@ -1,6 +1,8 @@
 import { useState, memo } from 'react';
 import { getRndValue } from 'utils';
 import Curve from './Curve';
+import ThreeTextCtx from 'context/ThreeTextCtx';
+
 // import CurveTexture from 'images/blue_ball_curve.jpg';
 // import { TextureLoader } from 'three';
 
@@ -12,7 +14,7 @@ const Curves = ({ hitsData }) => {
     return sum;
   }, 0);
 
-  const [curveCount, setCurveCount] = useState(maxLength);
+  const [curveCount] = useState(maxLength);
 
   const isRenderCurves = curveCount > 1;
   // 240 - 359
@@ -25,7 +27,7 @@ const Curves = ({ hitsData }) => {
     return result;
   }, defaultMinMaxDistance);
   return (
-    <>
+    <ThreeTextCtx>
       {isRenderCurves &&
         hitsData.map((hit, i) => {
           const { data_3d: data3D } = hit.hit_info;
@@ -43,7 +45,7 @@ const Curves = ({ hitsData }) => {
             />
           );
         })}
-    </>
+    </ThreeTextCtx>
   );
 };
 

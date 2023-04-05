@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Suspense, Fragment } from 'react';
+import React, { useRef, useEffect, Suspense, Fragment } from 'react';
 import cl from './Video.module.scss';
 import YouTube from 'react-youtube';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { openFullscreen } from 'utils';
 import VideoControls from '../VideoControls/VideoControls';
 import SidePanel from './SidePanel';
 import BottomPanel from './BottomPanel';
-import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 // import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 // import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 // import ComfortaaFont from 'fonts/Comfortaa_Regular.json';

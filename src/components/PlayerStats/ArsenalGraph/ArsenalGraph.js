@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { getPitchColorByName } from 'utils';
 import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
-import Dots from './Dots';
+// import Dots from './Dots';
 import HorizontalLinesAndNumbers from './HorizontalLinesAndNumbers';
 
 const PARAMS = {
@@ -16,7 +16,7 @@ const PARAMS = {
   TOP_PADDING: 30
 };
 
-const HoveringLines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
+const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
   const minValue = +leftValues[0];
   const totalColumns = Object.keys(summary).length;
@@ -35,21 +35,21 @@ const HoveringLines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier }) => {
   }, defaultTotalValues);
   return (
     <>
-      {Object.entries(totalValues).map(([type, values], i) => {
+      {Object.entries(totalValues).map(([_, values], i) => {
         const startPointX = columnStartX;
         const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
-        let pathDest = `M${startPointX},${startPointY}`;
-        values
-          .slice(1)
-          .forEach(
-            (value, j, arr) =>
-              (pathDest +=
-                value === 0
-                  ? ''
-                  : `${arr[j - 1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
-                      rowsStartY - (value - minValue) * yScaleMultiplier
-                    }`)
-          );
+
+        const pathDest = values.reduce((pathSum, value, j, arr) => {
+          if (j === 0) return pathSum;
+
+          pathSum += !value
+            ? ''
+            : `${!arr[j - 1] ? 'M' : 'L'}${columnStartX + columnStepX * j},${
+                rowsStartY - (value - minValue) * yScaleMultiplier
+              }`;
+          return pathSum;
+        }, `M${startPointX},${startPointY}`);
+
         const pathClasses = classNames(cl.hoveringLine, {
           [cl.hoveringLine1]: i === 0,
           [cl.hoveringLine2]: i === 1,
@@ -95,18 +95,16 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
         const startPointX = columnStartX;
         const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
 
-        let pathDest = `M${startPointX},${startPointY}`;
-        values
-          .slice(1)
-          .forEach(
-            (value, j, arr) =>
-              (pathDest +=
-                value === 0
-                  ? ''
-                  : `${arr[j - 1] === 0 ? 'M' : 'L'}${columnStartX + columnStepX * (j + 1)},${
-                      rowsStartY - (value - minValue) * yScaleMultiplier
-                    }`)
-          );
+        const pathDest = values.reduce((pathSum, value, j, arr) => {
+          if (j === 0) return pathSum;
+
+          pathSum += !value
+            ? ''
+            : `${!arr[j - 1] ? 'M' : 'L'}${columnStartX + columnStepX * j},${
+                rowsStartY - (value - minValue) * yScaleMultiplier
+              }`;
+          return pathSum;
+        }, `M${startPointX},${startPointY}`);
 
         const pathClasses = classNames(cl.graphPath, {
           [cl.graphPath1]: i === 0,
@@ -116,61 +114,34 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           [cl.graphPath5]: i === 4,
           [cl.graphPath6]: i === 5
         });
-        // const textClasses = classNames(cl.graphNumber, {
-        //   [cl.graphNumber1]: i === 0,
-        //   [cl.graphNumber2]: i === 1,
-        //   [cl.graphNumber3]: i === 2,
-        //   [cl.graphNumber4]: i === 3,
-        //   [cl.graphNumber5]: i === 4,
-        //   [cl.graphNumber6]: i === 5
-        // });
 
         const isPath = values.some(value => value !== 0);
         return (
           <Fragment key={type + '-' + currentTimeInterval}>
             {isPath && (
-              <>
-                <path
-                  d={pathDest}
-                  fill='none'
-                  stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-                  strokeWidth='2'
-                  className={pathClasses}
-                />
-                <circle
-                  cx={startPointX}
-                  cy={startPointY}
-                  r='3'
-                  fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-                  className={pathClasses}
-                />
-                {/* <text
-                  x={startPointX}
-                  y={startPointY - 10}
-                  className={textClasses}>
-                  {values[0]}
-                </text> */}
-              </>
+              <path
+                d={pathDest}
+                fill='none'
+                stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                strokeWidth='2'
+                className={pathClasses}
+              />
             )}
-            {values.slice(1).map(
-              (value, j) =>
-                value !== 0 ? (
+            {values.map((value, j) => {
+              if (value)
+                return (
                   <circle
                     key={type + '-' + j}
-                    cx={columnStartX + columnStepX * (j + 1)}
+                    cx={columnStartX + columnStepX * j}
                     cy={rowsStartY - (value - minValue) * yScaleMultiplier}
                     r='3'
                     fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
                     className={pathClasses}
                   />
-                ) : (
-                  <Fragment key={i + '-' + j}></Fragment>
-                )
+                );
 
-              // value !== 0 ? 'L' : 'M'}${columnStartX + columnStepX * (j + 1)},${
-              //   rowsStartY - (value - minValue) * yScaleMultiplier
-              // }`)
-            )}
+              return <Fragment key={i + '-' + j}></Fragment>;
+            })}
           </Fragment>
         );
       })}
@@ -191,11 +162,11 @@ const ArsenalGraph = ({
   const graphRef = useRef();
 
   useEffect(() => {
-		let options = {
-			root: null,
-			rootMargin: "200px 0px",
-			threshold: 0,
-		};
+    let options = {
+      root: null,
+      rootMargin: '200px 0px',
+      threshold: 0
+    };
 
     let observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -422,7 +393,6 @@ const ArsenalGraph = ({
 
         return sum;
       }, {});
-
       const result = {};
 
       for (let pitchType in verticalBreakSumByType) {
@@ -600,31 +570,6 @@ const ArsenalGraph = ({
           />
         </>
       )}
-
-      {/* Dots */}
-      {/* <Dots
-        PARAMS={PARAMS}
-        leftMarks={leftMarks}
-        pitchTypes={pitchTypes}
-        yScaleMultiplier={yScaleMultiplier}
-      /> */}
-
-      {/* Graph lines rendering */}
-      {/* {dimensionsArr.map((dimension, i) => {
-        const { coords, color } = dimension;
-        let linePath = `M${PARAMS.ZERO_COORDS.X + coords[0][0] * xScaleMultiplier} ${
-          PARAMS.ZERO_COORDS.Y - coords[0][1] * yScaleMultiplier
-        }`;
-        coords
-          .slice(1)
-          .forEach(
-            coord =>
-              (linePath += `L${PARAMS.ZERO_COORDS.X + coord[0] * xScaleMultiplier} ${
-                PARAMS.ZERO_COORDS.Y - coord[1] * yScaleMultiplier
-              }`)
-          );
-        return <path key={i} d={linePath} stroke={color} fill='none' style={{ transition: 'all .3s' }} />;
-      })} */}
     </svg>
   );
 };

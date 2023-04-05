@@ -17,6 +17,7 @@ const PlayerStats = () => {
   const currentYear = useSelector(state => state.shared.currentYear);
   const [playerYears, setPlayerYears] = useState(currentYear);
   const [pitchesData, setPitchesData] = useState(null);
+  const [battingData, setBattingData] = useState(null);
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const { tableType: playerTableMode, playerStatsData } = useSelector(state => state.playerStats);
@@ -37,6 +38,9 @@ const PlayerStats = () => {
   const { fetchData: fetchPitches, cancelToken: pitchesCancelToken } = useFetch(
     `http://baseball-gametrack.ru/api/pitcher_metrix?id=${playerId}&year=${urlPlayerYears}`
   );
+  const { fetchData: fetchBatting, cancelToken: battingCancelToken } = useFetch(
+    `http://baseball-gametrack.ru/api/batting_metrix?id=${playerId}&year=${urlPlayerYears}`
+  );
 
   useEffect(
     () => () => {
@@ -44,6 +48,7 @@ const PlayerStats = () => {
       dispatch(setCurrentTeam(null));
       statsCancelToken.current.cancel(null);
       pitchesCancelToken.current.cancel(null);
+      battingCancelToken.current.cancel(null);
     },
     // eslint-disable-next-line
     []
@@ -79,13 +84,15 @@ const PlayerStats = () => {
 
     // eslint-disable-next-line
   }, [playerId]);
-	
+
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetchPitches();
+        const pitchesResponse = await fetchPitches();
+        const battingResponse = await fetchBatting();
 
-        setPitchesData(response.data);
+        setPitchesData(pitchesResponse.data);
+        setBattingData(battingResponse.data);
       } catch ({ message }) {
         console.warn(message);
       }
@@ -139,7 +146,7 @@ const PlayerStats = () => {
       ) : (
         <PlayerYearsContext.Provider value={{ playerYears, setPlayerYears, calculateTeamsArray }}>
           <Header />
-          <Content pitchesData={pitchesData} />
+          <Content pitchesData={pitchesData} battingData={battingData} />
         </PlayerYearsContext.Provider>
       )}
     </>

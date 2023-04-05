@@ -1,6 +1,7 @@
 import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
-import { getPitchColorByName, getRndValue } from 'utils';
+import { getPitchColorByName } from 'utils';
+import Tooltip from './Tooltip';
 // import h337 from 'heatmap.js';
 
 const PARAMS = {
@@ -9,7 +10,7 @@ const PARAMS = {
   SIDE_PADDING: 30
 };
 
-const Dots = ({ arrData, pitchTypes, coords }) => {
+const Dots = ({ arrData, pitchTypes, coords, setHoveredDot }) => {
   // const [radius, setRadius] = useState(1);
 
   // useEffect(() => {
@@ -19,13 +20,15 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   //     setRadius(8);
   //   }, 300);
   // }, [coords]);
-
+  const handleDotClick = (gameId, momentId) => () => {
+    window.open(`/game/${gameId}?card=${momentId}&tab=pitching`, '_blank');
+  };
   return (
     <>
       {arrData.map((pitch, i) => {
         const { coordinates, pitch_info: pitchInfo } = pitch;
         const { zone_x: x, zone_y: y } = coordinates;
-        const { pitch_type: pitchType } = pitchInfo;
+        const { pitch_type: pitchType, game_id: gameId, mom_id: momentId, speed } = pitchInfo;
 
         const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
 
@@ -42,6 +45,17 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
             strokeWidth='.5'
             fill={getPitchColorByName(pitchTypes[pitchType])}
             className={cl.animated}
+            onClick={handleDotClick(gameId, momentId)}
+            onPointerOver={() =>
+              setHoveredDot(prev => ({
+                ...prev,
+                speed: speed * 2.24,
+                visible: true,
+                coords: [xCoord, yCoord],
+                pitchType: pitchTypes[pitchType]
+              }))
+            }
+            onPointerOut={() => setHoveredDot(prev => ({ ...prev, visible: false }))}
           />
         );
       })}
@@ -49,7 +63,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   );
 };
 
-const HeatAreas = ({ arrData, pitchTypes, coords }) => {
+const HeatAreas = ({ arrData, coords }) => {
   const { zeroXCoord, zeroYCoord, xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef } = coords;
   const heatRowsCount = 35;
   const heatColsCount = 32;
@@ -237,7 +251,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
   );
 };
 
-const Frames = ({ top, title1, filteredData, selectedPitchType, preview, currentOption }) => {
+const Frames = ({ top, title1, filteredData, selectedPitchType, preview, currentOption, setHoveredDot }) => {
   const { zone, pitch_types: pitchTypes } = preview;
 
   const {
@@ -292,6 +306,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='transparent'
+        className={cl.eventsNone}
       />
 
       {/* Outer frame */}
@@ -303,6 +318,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='#EAEAEA'
+        className={cl.eventsNone}
       />
 
       {/* Inner frame */}
@@ -312,6 +328,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
         width={dashedFrameWidth - shadowBorder * xCoordRelCoef * 2}
         height={dashedFrameHeight - shadowBorder * yCoordRelCoef * 2}
         fill='#B6C6D6'
+        className={cl.eventsNone}
       />
 
       {/* Dots */}
@@ -320,6 +337,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
           arrData={arrData}
           pitchTypes={pitchTypes}
           coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+          setHoveredDot={setHoveredDot}
         />
       )}
 
@@ -347,6 +365,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
         strokeWidth='2'
         strokeDasharray='8 2'
         fill='transparent'
+        className={cl.eventsNone}
       />
 
       {/* Title */}
@@ -429,7 +448,6 @@ const Column = ({ right, center, coef, data, reverse = false }) => {
             stroke='#B6DBD4'
             strokeWidth='2'
             fill={legendCircleFill}
-            className={cl.animated}
           />
           {isLegendText && (
             <text x={valueXCoord - 56} y={percentsYCoord + 42} className={cl.valueText} textAnchor='start'>
@@ -606,7 +624,9 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
   );
 };
 
-const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOption }) => {
+const LeftChart = ({ filteredData, selectedPitchType, preview, currentOption }) => {
+  const [hoveredDot, setHoveredDot] = useState({ visible: false, speed: 0, coords: [0, 0] });
+
   const mainTitle = selectedPitchType ?? 'All pitches';
 
   return (
@@ -618,6 +638,7 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOpti
         selectedPitchType={selectedPitchType}
         preview={preview}
         currentOption={currentOption}
+        setHoveredDot={setHoveredDot}
       />
       <PercentsGraph
         left={PARAMS.SIDE_PADDING + 179 + 45}
@@ -626,6 +647,7 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOpti
         selectedPitchType={selectedPitchType}
         preview={preview}
       />
+      {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} isType={!selectedPitchType}/>}
     </>
   );
 };
