@@ -62,9 +62,6 @@ const FIELD_NAMES = {
 const SpeedGroupItem = ({ pitchClass }) => {
   const { r, g, b } = pitchClass;
 
-  // const [leftSliderRel, setLeftSliderRel] = useState(0);
-  // const [rightSliderRel, setRightSliderRel] = useState(100);
-
   const [sliderCoords, setSliderCoords] = useState({ x1: 0, x2: 100 });
 
   const sliderRef = useRef();
@@ -108,62 +105,6 @@ const SpeedGroupItem = ({ pitchClass }) => {
 
       return;
     }
-    // if (sliderNameRef.current === 'red-line') {
-    //   const secondsTotal = SECONDS_SRC[currentTab].timeEnd - SECONDS_SRC[currentTab].timeStart;
-    //   const seekToValue = SECONDS_SRC[currentTab].timeStart + (secondsTotal * currentCoordPercents) / 100;
-
-    //   const leftSliderTime = SECONDS_SRC[currentTab].timeStart + (secondsTotal * sliderCoords.x1) / 100;
-    //   // const secondsTotal =
-    //   //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-    //   // const seekToValue =
-    //   //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * currentCoordPercents) / 100;
-
-    //   // const leftSliderTime =
-    //   //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal * sliderCoords.x1) / 100;
-
-    //   const seekToTime = seekToValue <= leftSliderTime ? leftSliderTime : seekToValue;
-
-    //   dispatch(setSeekValue(seekToTime));
-    //   dispatch(setVideoCurrentTime(seekToTime));
-
-    //   return;
-    // }
-
-    // if (sliderNameRef.current === 'drag-area') {
-    //   const slider = sliderRef.current;
-    //   const parent = slider.parentElement;
-
-    //   const percentRatio = parent.getBoundingClientRect().width / 100;
-    //   const pixelsDelta = e.clientX - mouseDownXCoordRef.current;
-    //   const percentsDelta = +(pixelsDelta / percentRatio).toFixed(4);
-
-    //   const getCoords = () => {
-    //     let tempX1 = sliderCoords.x1;
-    //     let tempX2 = sliderCoords.x2;
-
-    //     if (mouseDownStateRef.current.x1 + percentsDelta < 0) {
-    //       tempX1 = 0;
-    //       tempX2 = mouseDownStateRef.current.x2 - mouseDownStateRef.current.x1;
-
-    //       return { x1: tempX1, x2: tempX2 };
-    //     }
-
-    //     if (mouseDownStateRef.current.x2 + percentsDelta > 100) {
-    //       tempX1 = mouseDownStateRef.current.x1 + (100 - mouseDownStateRef.current.x2);
-    //       tempX2 = 100;
-
-    //       return { x1: tempX1, x2: tempX2 };
-    //     }
-
-    //     return {
-    //       x1: mouseDownStateRef.current.x1 + percentsDelta,
-    //       x2: mouseDownStateRef.current.x2 + percentsDelta
-    //     };
-    //   };
-
-    //   dispatch(setSliderCoords(getCoords()));
-    //   return;
-    // }
   }
 
   const handleMouseUp = e => {
