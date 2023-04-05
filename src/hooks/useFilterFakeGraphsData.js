@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const batterGroupsArr = ['pitcher', 'count', 'zone', 'result', 'swing', 'contact'];
+const batterGroupsArr = ['pitcher', 'count', 'type', 'zone', 'result', 'swing', 'contact'];
 
 export const useFilterBatterGroupData = (
   data,
@@ -13,7 +13,7 @@ export const useFilterBatterGroupData = (
     () =>
       data.pitches_all?.filter(pitch => {
         const { pitcher } = pitch;
-        const { pitcher: curPitcher } = currentFilterValues;
+        const { pitcher: curPitcher, type: pitchType } = currentFilterValues;
 
         return batterGroupsArr.every(group => {
           if (currentFilterValues[group] === 'all') return true;
@@ -22,6 +22,8 @@ export const useFilterBatterGroupData = (
 
           if (group === 'pitcher' && curPitcher === 'pitcher')
             return `${pitcher['pitcher name']} ${pitcher['pitcher surname']}`.includes(pitcherFullName);
+
+					if (group === 'type') return data.preview.pitch_classes[pitch.pitch_info.pitch_type] === pitchType
 
           const tempGroupName = group === 'swing' || group === 'contact' ? 'result' : group;
           return pitch[tempGroupName][currentFilterValues[group]] || group === groupName;
