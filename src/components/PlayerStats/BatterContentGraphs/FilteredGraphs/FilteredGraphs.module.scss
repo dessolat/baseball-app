@@ -141,11 +141,28 @@
     height: 100%;
     width: 1.125rem;
     cursor: grab;
+    transition: scale 0.3s;
+
+    &:hover {
+      scale: 1.2;
+    }
 
     &:active {
       cursor: grabbing;
     }
   }
+
+  .leftSlider:hover ~ .x1SpeedTitle,
+  .rightSlider:hover ~ .x2SpeedTitle {
+    scale: 1.2;
+  }
+	
+	.leftSlider:hover ~ .x1SpeedTitle {
+		translate: -25% 25%;
+	}
+	.rightSlider:hover ~ .x2SpeedTitle {
+		translate: 25% 25%;
+	}
 
   .x1SpeedTitle,
   .x2SpeedTitle {
@@ -153,6 +170,7 @@
     position: absolute;
     bottom: -0.82rem;
     user-select: none;
+    transition: scale 0.3s, translate 0.3s;
   }
 
   .x1SpeedTitle {
