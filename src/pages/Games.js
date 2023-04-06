@@ -23,12 +23,9 @@ const Games = () => {
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
 
-  const games = useSelector(state => state.games.games);
   // const leagues = useSelector(state => state.games.leagues);
-  const currentLeague = useSelector(state => state.games.currentLeague);
-  const mobileTableMode = useSelector(state => state.games.mobileTableMode);
-  const currentGameType = useSelector(state => state.shared.currentGameType);
-  const currentYear = useSelector(state => state.shared.currentYear);
+  const { games, currentLeague, mobileTableMode } = useSelector(state => state.games);
+  const { currentGameType, currentYear } = useSelector(state => state.shared);
   // const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
 

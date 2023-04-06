@@ -10,6 +10,7 @@ import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
 import { StatsLoadingContext } from 'context';
+import { setCurrentYear } from 'redux/sharedReducer';
 
 const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(true);
@@ -18,8 +19,7 @@ const Stats = () => {
   const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
 
-  const statsData = useSelector(state => state.stats.statsData);
-  const statsTableMode = useSelector(state => state.stats.tableMode);
+  const { statsData, tableMode: statsTableMode } = useSelector(state => state.stats);
   const currentYear = useSelector(state => state.shared.currentYear);
   const dispatch = useDispatch();
 
@@ -33,6 +33,13 @@ const Stats = () => {
   }, [statsTableMode]);
 
   useEffect(() => {
+		// ! 2023 err handle (temp) !
+    if (currentYear === 2023) {
+      dispatch(setCurrentYear(2022));
+			return
+    }
+		// !
+
     const refactorData = leagues => {
       const result = leagues.reduce((sum, league) => {
         const resultLeague = {};
