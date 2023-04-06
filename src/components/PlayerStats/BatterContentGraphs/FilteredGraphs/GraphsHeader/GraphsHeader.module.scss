@@ -9,6 +9,7 @@
 		color: #1a4c96;
 		font: 700 1.125rem var(--font-nunito);
 		text-align: center;
+		user-select: none;
 	
 		@media screen and (orientation: landscape) and (max-height: 950px) {
 			line-height: .8;
