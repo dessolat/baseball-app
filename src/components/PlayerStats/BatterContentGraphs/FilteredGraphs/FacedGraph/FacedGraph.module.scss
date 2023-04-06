@@ -2,3 +2,15 @@
 	aspect-ratio: 940 / 365;
 	background-color: white;
 }
+
+.leftTitle,.bottomTitle {
+	font: 700 .875rem var(--font-nunito);
+	fill: black;
+	user-select: none;
+}
+
+.leftTitle {
+  text-anchor: start;
+  transform-box: fill-box;
+  transform: rotateZ(270deg);
+}
