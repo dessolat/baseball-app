@@ -7,7 +7,7 @@ import GraphsHeader from './GraphsHeader/GraphsHeader';
 // import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState, useMemo, useRef } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
-import { useFilterBatterGroupData } from 'hooks/useFilterFakeGraphsData';
+import { useFilterBatterGroupData } from 'hooks/useFilterGraphsData';
 import { useSelector } from 'react-redux';
 // import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';

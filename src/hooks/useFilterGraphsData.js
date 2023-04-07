@@ -16,17 +16,19 @@ export const useFilterBatterGroupData = (
         const { pitcher: curPitcher, type: pitchType } = currentFilterValues;
 
         return batterGroupsArr.every(group => {
-          if (currentFilterValues[group] === 'all') return true;
+          if (currentFilterValues[group] === 'all' || group === groupName) return true;
 
           if (group === 'pitcher' && curPitcher === 'team') return pitcher.team_name.includes(teamName);
 
           if (group === 'pitcher' && curPitcher === 'pitcher')
             return `${pitcher['pitcher name']} ${pitcher['pitcher surname']}`.includes(pitcherFullName);
 
-					if (group === 'type') return data.preview.pitch_classes[pitch.pitch_info.pitch_type] === pitchType
+          if (group === 'type') return data.preview.pitch_classes[pitch.pitch_info.pitch_type] === pitchType;
+          
+					const tempGroupName =
+            group === 'swing' || group === 'contact' ? 'result' : group === 'type' ? 'pitch_info' : group;
 
-          const tempGroupName = group === 'swing' || group === 'contact' ? 'result' : group;
-          return pitch[tempGroupName][currentFilterValues[group]] || group === groupName;
+          return pitch[tempGroupName][currentFilterValues[group]];
         });
       }) || [],
     [data, currentFilterValues, groupName, teamName, pitcherFullName]
