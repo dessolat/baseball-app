@@ -107,6 +107,7 @@
   > .classTitle {
     font: 300 0.875rem / 1.2 var(--font-nunito);
     user-select: none;
+		transition: opacity .3s;
 
     @media screen and (orientation: landscape) and (max-height: 950px) {
       font: 300 0.875rem / 1.1 var(--font-nunito);
@@ -116,6 +117,7 @@
   > .barWrapper {
     width: 67%;
     position: relative;
+		transition: opacity .3s;
   }
 
   .minSpeedTitle,
