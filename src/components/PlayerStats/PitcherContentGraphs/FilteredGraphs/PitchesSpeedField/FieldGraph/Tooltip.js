@@ -9,9 +9,9 @@ const Tooltip = ({ hoveredDot }) => {
   return (
     <g className={showingGroup}>
       <rect
-        x={hoveredDotXCoord - 51}
+        x={hoveredDotXCoord - 60}
         y={hoveredDotYCoord - 50}
-        width={102}
+        width={118}
         height={35}
         stroke='grey'
         strokeWidth='.5'
@@ -22,7 +22,7 @@ const Tooltip = ({ hoveredDot }) => {
         {hoveredDot.pitchType}
       </text>
       <text x={hoveredDotXCoord} y={hoveredDotYCoord - 19} textAnchor='middle'>
-        x: {spinValueX} y: {spinValueY}
+        dx: {spinValueX} dy: {spinValueY}
       </text>
     </g>
   );
