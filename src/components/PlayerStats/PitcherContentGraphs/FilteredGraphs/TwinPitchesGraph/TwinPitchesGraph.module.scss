@@ -27,6 +27,7 @@
 }
 
 .title,
+.subTitle,
 .valueText,
 .percentValue {
   text-anchor: middle;
@@ -34,6 +35,10 @@
 
 .title {
   font: 700 0.875rem var(--font-nunito);
+}
+
+.subTitle {
+  font: 400 0.75rem var(--font-nunito);
 }
 
 .percentTitle,
