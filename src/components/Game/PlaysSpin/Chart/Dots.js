@@ -35,7 +35,7 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
       : hoveredDot.coords[0] < 28
       ? hoveredDot.coords[0] + 57
       : hoveredDot.coords[0];
-  const hoveredDotYCoord = hoveredDot.coords[1] <= 42 ? hoveredDot.coords[1] + 60 : hoveredDot.coords[1];
+  const hoveredDotYCoord = hoveredDot.coords[1] <= 58 ? hoveredDot.coords[1] + 72 : hoveredDot.coords[1] - 16;
   return (
     <>
       {chartData.map(dot => {
@@ -69,10 +69,10 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
       {hoveredDot.visible && (
         <g className={showingGroup}>
           <rect
-            x={hoveredDotXCoord - 41}
+            x={hoveredDotXCoord - 37}
             y={hoveredDotYCoord - 42}
-            width={82}
-            height={33}
+            width={74}
+            height={48}
             stroke='grey'
             strokeWidth='.5'
             fill='white'
@@ -82,7 +82,10 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
             {hoveredDot.pitchType}
           </text>
           <text x={hoveredDotXCoord} y={hoveredDotYCoord - 13} className={graphTooltip} textAnchor='middle'>
-            x: {spinValueX} y: {spinValueY}
+            dx: {spinValueX}
+          </text>
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord +2} className={graphTooltip} textAnchor='middle'>
+            dy: {spinValueY}
           </text>
         </g>
       )}
