@@ -5,7 +5,7 @@ import GraphsBlock from './GraphsBlock';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 // import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 // import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterBatterGroupData } from 'hooks/useFilterGraphsData';
 import { useSelector } from 'react-redux';
@@ -60,8 +60,9 @@ const FIELD_NAMES = {
   }
 };
 
-const SpeedGroupItem = ({ pitchClass }) => {
-  const { r, g, b } = pitchClass;
+const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true }) => {
+  const [pitchClassName, pitchClassValue] = pitchClass;
+  const { title, r, g, b, speeds } = pitchClassValue;
 
   const [sliderCoords, setSliderCoords] = useState({ x1: 0, x2: 100 });
 
@@ -70,6 +71,78 @@ const SpeedGroupItem = ({ pitchClass }) => {
   const mouseDownXCoordRef = useRef();
   const mouseDownStateRef = useRef();
   const mouseClickTimeRef = useRef(null);
+  const sliderCoordsTimer = useRef();
+  // const curMinMaxValues = useRef(null);
+
+  const minMaxMph = useMemo(() => {
+    const minMax = speeds.reduce((minMax, curSpeed, i) => {
+      if (curSpeed > minMax.max || i === 0) minMax.max = curSpeed;
+      if (curSpeed < minMax.min || i === 0) minMax.min = curSpeed;
+
+      return minMax;
+    }, {});
+
+    minMax.min = Math.floor(minMax.min);
+    minMax.max = Math.ceil(minMax.max);
+
+    return minMax;
+  }, [speeds]);
+
+  const minMaxDelta = minMaxMph.max - minMaxMph.min;
+
+  useEffect(() => {
+    clearTimeout(sliderCoordsTimer.current);
+
+    // const minMaxMph = speeds.reduce((minMax, curSpeed, i) => {
+    //   if (curSpeed > minMax.max || i === 0) minMax.max = curSpeed;
+    //   if (curSpeed < minMax.min || i === 0) minMax.min = curSpeed;
+
+    //   return minMax;
+    // }, {});
+
+    // minMaxMph.min = Math.floor(minMaxMph.min);
+    // minMaxMph.max = Math.ceil(minMaxMph.max);
+
+    sliderCoordsTimer.current = setTimeout(() => {
+      const minSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
+      const maxSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
+
+      handleFilterChange(pitchClassName, { min: minSpeed, max: maxSpeed });
+      // curMinMaxValues.current = { min: minMaxMph.min, max: minMaxMph.max };
+    }, 250);
+
+    return () => {
+      clearTimeout(sliderCoordsTimer.current);
+    };
+  }, [sliderCoords]);
+
+  // useEffect(() => {
+  //   if (curMinMaxValues.current === null) return;
+
+  //   const minMaxMph = speeds.reduce((minMax, curSpeed, i) => {
+  //     if (curSpeed > minMax.max || i === 0) minMax.max = curSpeed;
+  //     if (curSpeed < minMax.min || i === 0) minMax.min = curSpeed;
+
+  //     return minMax;
+  //   }, {});
+
+  //   minMaxMph.min = Math.floor(minMaxMph.min);
+  //   minMaxMph.max = Math.ceil(minMaxMph.max);
+
+  // 	console.log('here');
+
+  //   const minMaxDelta = minMaxMph.max - minMaxMph.min;
+
+  //   const curMinDelta = curMinMaxValues.current.min - minMaxMph.min;
+
+  //   const x1Rel = curMinDelta < 0 ? 0 : (100 * curMinDelta) / minMaxDelta;
+
+  //   setSliderCoords(prev => ({ ...prev, x1: x1Rel }));
+
+  //   // const x1SpeedValue = minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1;
+  //   // const x2SpeedValue = minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2;
+  //   // const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2;
+  // }, [speeds]);
 
   function handleMouseMove(e) {
     const slider = sliderRef.current;
@@ -108,30 +181,30 @@ const SpeedGroupItem = ({ pitchClass }) => {
     }
   }
 
-  const handleMouseUp = e => {
+  const handleMouseUp = () => {
     // sliderRef.current.parentElement.style.cursor = 'default';
     // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'grab';
 
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
 
-    const mouseClickDelta = Date.now() - mouseClickTimeRef.current;
-    if (mouseClickDelta < 140) {
-      const slider = sliderRef.current;
-      const parent = slider.parentElement;
+    // const mouseClickDelta = Date.now() - mouseClickTimeRef.current;
+    // if (mouseClickDelta < 140) {
+    //   const slider = sliderRef.current;
+    //   const parent = slider.parentElement;
 
-      let currentCoord =
-        e.clientX <= parent.getBoundingClientRect().left
-          ? 0
-          : e.clientX > parent.getBoundingClientRect().right
-          ? parent.getBoundingClientRect().width
-          : e.clientX - parent.getBoundingClientRect().left;
+    //   let currentCoord =
+    //     e.clientX <= parent.getBoundingClientRect().left
+    //       ? 0
+    //       : e.clientX > parent.getBoundingClientRect().right
+    //       ? parent.getBoundingClientRect().width
+    //       : e.clientX - parent.getBoundingClientRect().left;
 
-      const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
+    //   const currentCoordPercents = +((currentCoord * 100) / parent.getBoundingClientRect().width).toFixed(4);
 
-      // dispatch(setSeekValue(seekToValue));
-      // dispatch(setVideoCurrentTime(seekToValue));
-    }
+    // dispatch(setSeekValue(seekToValue));
+    // dispatch(setVideoCurrentTime(seekToValue));
+    // }
   };
 
   const handleMouseDown = e => {
@@ -149,58 +222,95 @@ const SpeedGroupItem = ({ pitchClass }) => {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const minMph = 45;
-  const maxMph = 90;
-  const minMaxDelta = maxMph - minMph;
-  const x1SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
-  const x2SpeedValue = (minMph + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
-	const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2
+  const x1SpeedValue = (minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
+  const x2SpeedValue = (minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
+  const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2;
   return (
     <div className={cl.speedGroupItem}>
-      <p className={cl.classTitle}>{pitchClass.title}</p>
-      <div className={cl.barWrapper} style={{ backgroundColor: `rgba(${r},${g},${b},0.6)` }}>
-        <div
-          className={cl.leftSlider}
-          style={{ backgroundColor: `rgb(${r},${g},${b})`, left: `${sliderCoords.x1}%` }}
-          name='left-slider'
-          onMouseDown={handleMouseDown}
-          onDragStart={e => e.preventDefault()}></div>
-        <div
-          className={cl.rightSlider}
-          style={{ backgroundColor: `rgb(${r},${g},${b})`, right: `${100 - sliderCoords.x2}%` }}
-          name='right-slider'
-          onMouseDown={handleMouseDown}
-          onDragStart={e => e.preventDefault()}></div>
-        <span className={cl.minSpeedTitle}>Min: {minMph} mph</span>
-        <span className={cl.maxSpeedTitle}>Max: {maxMph} mph</span>
-        <span className={cl.x1SpeedTitle} style={{ left: `${sliderCoords.x1}%` }}>
-          {x1SpeedValue} mph
-        </span>
-        <span className={cl.x2SpeedTitle} style={{ right: `${x2SliderRightCoord}%` }}>
-          {x2SpeedValue} mph
-        </span>
+      <p className={cl.classTitle} style={{ opacity: isActive ? 1 : 0.5 }}>
+        {title}
+      </p>
+      <div
+        className={cl.barWrapper}
+        style={{ backgroundColor: `rgba(${r},${g},${b},0.6)`, opacity: isActive ? 1 : 0.5 }}>
+        {isActive && (
+          <>
+            <div
+              className={cl.leftSlider}
+              style={{ backgroundColor: `rgb(${r},${g},${b})`, left: `${sliderCoords.x1}%` }}
+              name='left-slider'
+              onMouseDown={handleMouseDown}
+              onDragStart={e => e.preventDefault()}></div>
+            <div
+              className={cl.rightSlider}
+              style={{ backgroundColor: `rgb(${r},${g},${b})`, right: `${100 - sliderCoords.x2}%` }}
+              name='right-slider'
+              onMouseDown={handleMouseDown}
+              onDragStart={e => e.preventDefault()}></div>
+            <span className={cl.x1SpeedTitle} style={{ left: `${sliderCoords.x1}%` }}>
+              {x1SpeedValue} mph
+            </span>
+            <span className={cl.x2SpeedTitle} style={{ right: `${x2SliderRightCoord}%` }}>
+              {x2SpeedValue} mph
+            </span>
+          </>
+        )}
+        <span className={cl.minSpeedTitle}>Min: {isActive ? minMaxMph.min : '-'} mph</span>
+        <span className={cl.maxSpeedTitle}>Max: {isActive ? minMaxMph.max : '-'} mph</span>
       </div>
     </div>
   );
 };
 
-const SpeedGroup = () => {
+const SpeedGroup = ({
+  data,
+  groupData,
+  currentFilterValues,
+  handleFilterChange,
+  filteredTeamName,
+  filteredPlayerFullName
+}) => {
   // const { name, absValue, absValueTotal, relValue, staticText } = data;
   // const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
 
   // const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
 
-  const pitchClassesArr = [
-    { title: 'Fastballs', r: 217, g: 43, b: 51, bgColor: '#D92B33' },
-    { title: 'Breaking', r: 36, g: 168, b: 215, bgColor: '#24A8D7' },
-    { title: 'Offspeed', r: 141, g: 181, b: 142, bgColor: '#8DB58E' }
-  ];
+  const { groupName } = groupData;
+
+  const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
+  const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
+
+  const filteredData = useFilterBatterGroupData(data, currentFilterValues, 'speed', teamName, playerFullName);
+
+  const pitchClasses = data.preview.pitch_classes;
+
+  // Summary speeds by pitchClass
+  const summary = filteredData.reduce(
+    (sum, cur) => {
+      const formattedSpeed = Math.round(cur.pitch_info.speed * 2.24 * 100) / 100;
+      const pitchClass = pitchClasses[cur.pitch_info.pitch_type];
+
+      sum[pitchClass].speeds.push(formattedSpeed);
+
+      return sum;
+    },
+    {
+      Fastball: { title: 'Fastballs', r: 217, g: 43, b: 51, speeds: [] },
+      Breaking: { title: 'Breaking', r: 36, g: 168, b: 215, speeds: [] },
+      Offspeed: { title: 'Offspeed', r: 141, g: 181, b: 142, speeds: [] }
+    }
+  );
 
   return (
     <div>
       <p className={cl.title}>Pitch speed</p>
-      {pitchClassesArr.map((pitchClass, i) => (
-        <SpeedGroupItem key={'pitch-class-' + i} pitchClass={pitchClass} />
+      {Object.entries(summary).map((pitchClass, i) => (
+        <SpeedGroupItem
+          key={'pitch-class-' + i}
+          pitchClass={pitchClass}
+          handleFilterChange={handleFilterChange}
+          isActive={pitchClass[1].speeds.length > 0}
+        />
       ))}
     </div>
   );
@@ -250,7 +360,7 @@ const Group = ({
   filteredPlayerFullName
 }) => {
   const { title, groupName, items } = groupData;
-
+  console.log(groupData);
   const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
 
@@ -289,7 +399,7 @@ const Group = ({
 
       if (groupName === 'type') {
         const { pitch_classes: pitchClasses } = data.preview;
-        console.log(total);
+
         return total.filter(({ pitch_type: pitchType }) => paramName === pitchClasses[pitchType]).length;
       }
 
@@ -440,6 +550,7 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
 const LeftColumnOptions = ({
   data = {},
   handleFilterClick,
+  handleSpeedFilterChange,
   currentFilterValues,
   filteredTeamName,
   filteredPlayerFullName,
@@ -477,10 +588,9 @@ const LeftColumnOptions = ({
       title: 'Pitch speed',
       groupName: 'speed',
       items: [
-        { name: 'All pitches', staticText: 'pitches' },
-        { name: 'Fastballs', staticText: 'pitches' },
-        { name: 'Breaking', staticText: 'pitches' },
-        { name: 'Offspeed', staticText: 'pitches' }
+        { title: 'Fastballs', r: 217, g: 43, b: 51, bgColor: '#D92B33' },
+        { title: 'Breaking', r: 36, g: 168, b: 215, bgColor: '#24A8D7' },
+        { title: 'Offspeed', r: 141, g: 181, b: 142, bgColor: '#8DB58E' }
       ]
     },
     {
@@ -540,7 +650,18 @@ const LeftColumnOptions = ({
           handlePlayerNameChange={handlePlayerNameChange}
         />
         {groupsArr.map((group, i) => {
-          if (group.groupName === 'speed') return <SpeedGroup key={i} />;
+          if (group.groupName === 'speed')
+            return (
+              <SpeedGroup
+                key={i}
+                data={data}
+                groupData={group}
+                currentFilterValues={currentFilterValues}
+                handleFilterChange={handleSpeedFilterChange}
+                filteredTeamName={filteredTeamName}
+                filteredPlayerFullName={filteredPlayerFullName}
+              />
+            );
           return (
             <Group
               key={i}
@@ -563,7 +684,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   const { pitch_types: pitchTypes } = preview;
 
   // ! Remove after testing
-  const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
+  // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
   // !
 
   const { name: playerName, surname: playerSurname } = useSelector(
@@ -572,83 +693,84 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  const filteredData = useFilterBatterGroupData(data, currentFilterValues, teamName, playerFullName);
-
+  // const filteredData = []
+  const filteredData = useFilterBatterGroupData(data, currentFilterValues, 'all', teamName, playerFullName);
+console.log(filteredData);
   // Count and speed values
-  const relValuesData = filteredData.reduce((sum, pitch) => {
-    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-    const pitchType = pitchTypes[pitch_type];
+  // const relValuesData = filteredData.reduce((sum, pitch) => {
+  //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+  //   const pitchType = pitchTypes[pitch_type];
 
-    if (sum[pitchType] !== undefined) {
-      sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed * 2.24);
-      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+  //   if (sum[pitchType] !== undefined) {
+  //     sum[pitchType].count += 1;
+  //     sum[pitchType].speeds.push(speed * 2.24);
+  //     sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
-      return sum;
-    }
+  //     return sum;
+  //   }
 
-    sum[pitchType] = {
-      count: 1,
-      speeds: [speed * 2.24],
-      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
-    };
+  //   sum[pitchType] = {
+  //     count: 1,
+  //     speeds: [speed * 2.24],
+  //     pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+  //   };
 
-    return sum;
-  }, {});
+  //   return sum;
+  // }, {});
 
   //! Delete after testing
-  const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
+  // const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
 
-  for (let i = 0; i < 1500; i++) {
-    let month = getRndValue(6, 10);
-    month = month < 10 ? `0${month}` : month;
-    let day = getRndValue(5, 6);
-    day = day < 10 ? `0${day}` : day;
-    const year = getRndValue(2019, 2023);
+  // for (let i = 0; i < 1500; i++) {
+  //   let month = getRndValue(6, 10);
+  //   month = month < 10 ? `0${month}` : month;
+  //   let day = getRndValue(5, 6);
+  //   day = day < 10 ? `0${day}` : day;
+  //   const year = getRndValue(2019, 2023);
 
-    const date = `${year}-${month}-${day}`;
+  //   const date = `${year}-${month}-${day}`;
 
-    const pitch_type = getRndValue(0, pitchTypes.length - 1);
-    const speed = getRndValue(11, 14);
-    const spin = getRndValue(200, 2000);
-    const break_y = getRndValue(1200, 2900) / -1000;
-    const break_x = (getRndValue(0, 1000) - 500) / 1000;
-    const inZone = getRndValue(0, 1);
-    const outZone = 1 - inZone;
-    const inside = getRndValue(0, 1);
-    const outside = 1 - inside;
-    const low = getRndValue(0, 1);
-    const high = 1 - low;
+  //   const pitch_type = getRndValue(0, pitchTypes.length - 1);
+  //   const speed = getRndValue(11, 14);
+  //   const spin = getRndValue(200, 2000);
+  //   const break_y = getRndValue(1200, 2900) / -1000;
+  //   const break_x = (getRndValue(0, 1000) - 500) / 1000;
+  //   const inZone = getRndValue(0, 1);
+  //   const outZone = 1 - inZone;
+  //   const inside = getRndValue(0, 1);
+  //   const outside = 1 - inside;
+  //   const low = getRndValue(0, 1);
+  //   const high = 1 - low;
 
-    const newPitch = {
-      pitch_info: { pitch_type, date, speed },
-      break: { spin, break_y, break_x },
-      zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
-    };
+  //   const newPitch = {
+  //     pitch_info: { pitch_type, date, speed },
+  //     break: { spin, break_y, break_x },
+  //     zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
+  //   };
 
-    arsenalAddedData.push(newPitch);
-  }
+  //   arsenalAddedData.push(newPitch);
+  // }
 
-  const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
-    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-    const pitchType = pitchTypes[pitch_type];
+  // const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
+  //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+  //   const pitchType = pitchTypes[pitch_type];
 
-    if (sum[pitchType] !== undefined) {
-      sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed * 2.23741);
-      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+  //   if (sum[pitchType] !== undefined) {
+  //     sum[pitchType].count += 1;
+  //     sum[pitchType].speeds.push(speed * 2.23741);
+  //     sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
-      return sum;
-    }
+  //     return sum;
+  //   }
 
-    sum[pitchType] = {
-      count: 1,
-      speeds: [speed],
-      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
-    };
+  //   sum[pitchType] = {
+  //     count: 1,
+  //     speeds: [speed],
+  //     pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+  //   };
 
-    return sum;
-  }, {});
+  //   return sum;
+  // }, {});
 
   // ! delete after testing
 
@@ -767,8 +889,12 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
       </GraphsBlock> */}
 
       <GraphsBlock defaultOption='' noSelector>
-        <GraphsHeader title='Machine vision statistics' subTitle={`${playerName} ${playerSurname} Pitches batter faced`} noSelector />
-				<FacedGraph />
+        <GraphsHeader
+          title='Machine vision statistics'
+          subTitle={`${playerName} ${playerSurname} Pitches batter faced`}
+          noSelector
+        />
+        <FacedGraph data={filteredData} />
       </GraphsBlock>
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
@@ -787,11 +913,18 @@ const FilteredGraphs = ({ battingData }) => {
     pitcher: 'all',
     count: 'all',
     type: 'all',
+    speed: {
+      Fastball: { min: 0, max: 10000 },
+      Breaking: { min: 0, max: 10000 },
+      Offspeed: { min: 0, max: 10000 }
+    },
     zone: 'all',
     result: 'all',
     swing: 'all',
     contact: 'all'
   });
+
+  console.log(currentFilterValues);
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
@@ -838,154 +971,20 @@ const FilteredGraphs = ({ battingData }) => {
     return { preview: battingData.preview, pitches_all: newPitchesAll };
   }, [textGroupFilter, battingData]);
 
-  // const generateFakeData = () => {
-  //   const totalPitches = getRndValue(10, 20);
-  //   // const totalPitches = getRndValue(300, 500);
-
-  //   const pitchesAll = [],
-  //     battersSet = new Set(),
-  //     batterIds = [];
-  //   let batterNames = 0,
-  //     batterSurnames = 0;
-
-  //   for (let i = 0; i < totalPitches; i++) {
-  //     // count
-  //     const count0_0 = getRndValue(0, 1);
-  //     const count0_2 = !count0_0 ? getRndValue(0, 1) : 0;
-  //     const count3_0 = !count0_0 && !count0_2 ? 1 : 0;
-  //     const ahwad = getRndValue(0, 1);
-  //     const behind = 1 - ahwad;
-
-  //     // zone
-  //     const inZone = getRndValue(0, 1);
-
-  //     const heart = getRndValue(0, 1);
-  //     const edge = !heart ? getRndValue(0, 1) : 0;
-  //     const waste = !heart && !edge ? 1 : 0;
-
-  //     const low = getRndValue(0, 1);
-  //     const inside = getRndValue(0, 1);
-
-  //     // result
-  //     const result = {
-  //       fly: 0,
-  //       line: 0,
-  //       miss: 0,
-  //       take: 0,
-  //       swing: 0,
-  //       ground: 0,
-  //       contact: 0,
-  //       'soft hit': 0,
-  //       'base hit & hard hit': 0
-  //     };
-
-  //     const resultLength = Object.keys(result).length;
-  //     const resultParam = Object.keys(result)[getRndValue(0, resultLength - 1)];
-  //     result[resultParam] = 1;
-
-  //     const newBatterId = getRndValue(0, totalPitches - 1);
-  //     const batterExistIndex = batterIds.findIndex(batter => batter.batter_id === newBatterId);
-
-  //     let batter;
-
-  //     if (batterExistIndex === -1) {
-  //       const leftHandedValue = getRndValue(0, 1);
-
-  //       batterNames++;
-  //       batterSurnames++;
-
-  //       const batterName = 'Name' + batterNames;
-  //       const batterSurname = 'Surname' + batterSurnames;
-
-  //       batter = {
-  //         'left handed': leftHandedValue,
-  //         'right handed': 1 - leftHandedValue,
-  //         batter_id: newBatterId,
-  //         team_name: 'Team' + getRndValue(1, 3),
-  //         'batter name': batterName,
-  //         'batter surname': batterSurname
-  //       };
-
-  //       batterIds.push(batter);
-  //     }
-
-  //     if (batterExistIndex !== -1) {
-  //       batter = batterIds[batterExistIndex];
-  //     }
-
-  //     // Pitch graph coords calculation
-  //     const dotsRectXCoord = 30 + 15;
-  //     const dotsRectYCoord = 40 + 22;
-  //     const dotsRectWidth = 149;
-  //     const dotsRectHeight = 195;
-
-  //     const xCoridorStart = Math.random() * (dotsRectWidth - 69);
-  //     const yCoridorStart = Math.random() * (dotsRectHeight - 55);
-
-  //     const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
-  //     const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
-
-  //     const pitchGraphCoords = { x, y };
-  //     //
-
-  //     const tempPitchType = getRndValue(0, pitchTypes.length - 1);
-
-  //     const tempPitch = {
-  //       pitch_info: {
-  //         pitch_type: tempPitchType,
-  //         pitch_name: pitchTypes[tempPitchType],
-  //         speed: getRndValue(25, 80),
-  //         pitchGraphCoords
-  //       },
-  //       batter,
-  //       count: {
-  //         '0-0': count0_0,
-  //         '0-2': count0_2,
-  //         '3-0': count3_0,
-  //         ahwad,
-  //         behind
-  //       },
-  //       zone: {
-  //         'in zone': inZone,
-  //         'out zone': 1 - inZone,
-  //         heart,
-  //         edge,
-  //         waste,
-  //         low,
-  //         high: 1 - low,
-  //         inside,
-  //         outside: 1 - inside
-  //       },
-  //       result
-  //     };
-
-  //     battersSet.add(tempPitch.batter.batter_id);
-
-  //     pitchesAll.push(tempPitch);
-  //   }
-
-  //   const result = {
-  //     preview: {
-  //       pitch_types: pitchTypes,
-  //       n_pitch_types: pitchTypes.length,
-  //       total_pitches: totalPitches,
-  //       total_batters: Array.from(battersSet).length
-  //     },
-  //     pitches_all: pitchesAll
-  //   };
-
-  //   return result;
-  // };
-
-  // const handleFakeDataClick = () => {
-  //   const data = generateFakeData();
-  //   setFakeData(data);
-  //   console.clear();
-  //   console.log(data);
-  // };
-
   function handleFilterClick(groupName, value) {
     setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
+  }
+  function handleSpeedFilterChange(pitchClassName, value) {
+    let { min: mSValueMin, max: mSValueMax } = value;
+    mSValueMin /= 2.24;
+    mSValueMax /= 2.24;
+
+    setCurrentFilterValues(prev => ({
+      ...prev,
+      speed: { ...prev.speed, [pitchClassName]: { min: mSValueMin, max: mSValueMax } }
+    }));
+
+    // setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
   }
 
   const handleTeamNameChange = name => {
@@ -995,14 +994,13 @@ const FilteredGraphs = ({ battingData }) => {
     setFilteredPlayerFullName(name);
   };
 
-  console.log(filteredData);
-
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
         // handleFakeDataClick={handleFakeDataClick}
         data={filteredData}
         handleFilterClick={handleFilterClick}
+        handleSpeedFilterChange={handleSpeedFilterChange}
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
         filteredPlayerFullName={filteredPlayerFullName}

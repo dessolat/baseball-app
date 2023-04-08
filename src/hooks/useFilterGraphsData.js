@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const batterGroupsArr = ['pitcher', 'count', 'type', 'zone', 'result', 'swing', 'contact'];
+const batterGroupsArr = ['pitcher', 'count', 'type', 'speed', 'zone', 'result', 'swing', 'contact'];
 
 export const useFilterBatterGroupData = (
   data,
@@ -13,9 +13,10 @@ export const useFilterBatterGroupData = (
     () =>
       data.pitches_all?.filter(pitch => {
         const { pitcher } = pitch;
-        const { pitcher: curPitcher, type: pitchType } = currentFilterValues;
+        const { pitcher: curPitcher, type: pitchType, speed } = currentFilterValues;
 
         return batterGroupsArr.every(group => {
+					
           if (currentFilterValues[group] === 'all' || group === groupName) return true;
 
           if (group === 'pitcher' && curPitcher === 'team') return pitcher.team_name.includes(teamName);
@@ -24,8 +25,14 @@ export const useFilterBatterGroupData = (
             return `${pitcher['pitcher name']} ${pitcher['pitcher surname']}`.includes(pitcherFullName);
 
           if (group === 'type') return data.preview.pitch_classes[pitch.pitch_info.pitch_type] === pitchType;
-          
-					const tempGroupName =
+
+					if (group === 'speed') {
+						const pitchClassName = data.preview.pitch_classes[pitch.pitch_info.pitch_type]
+						const curPitchSpeed = pitch.pitch_info.speed
+
+						return curPitchSpeed >= speed[pitchClassName].min && curPitchSpeed <= speed[pitchClassName].max
+					}
+          const tempGroupName =
             group === 'swing' || group === 'contact' ? 'result' : group === 'type' ? 'pitch_info' : group;
 
           return pitch[tempGroupName][currentFilterValues[group]];
