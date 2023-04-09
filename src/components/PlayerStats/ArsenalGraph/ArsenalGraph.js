@@ -114,6 +114,14 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           [cl.graphPath5]: i === 4,
           [cl.graphPath6]: i === 5
         });
+        const graphNumberClasses = classNames(cl.graphNumber, {
+          [cl.graphNumber1]: i === 0,
+          [cl.graphNumber2]: i === 1,
+          [cl.graphNumber3]: i === 2,
+          [cl.graphNumber4]: i === 3,
+          [cl.graphNumber5]: i === 4,
+          [cl.graphNumber6]: i === 5
+        });
 
         const isPath = values.some(value => value !== 0);
         return (
@@ -128,17 +136,26 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
               />
             )}
             {values.map((value, j) => {
-              if (value)
+              if (value) {
+                const valueText = currentTimeInterval !== 'Game' ?  +(value * 100).toFixed(0) / 100 : Math.round(value);
                 return (
-                  <circle
-                    key={type + '-' + j}
-                    cx={columnStartX + columnStepX * j}
-                    cy={rowsStartY - (value - minValue) * yScaleMultiplier}
-                    r='3'
-                    fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-                    className={pathClasses}
-                  />
+                  <Fragment key={type + '-' + j}>
+                    <circle
+                      cx={columnStartX + columnStepX * j}
+                      cy={rowsStartY - (value - minValue) * yScaleMultiplier}
+                      r='3'
+                      fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                      className={pathClasses}
+                    />
+                    <text
+                      x={columnStartX + columnStepX * j}
+                      y={rowsStartY - (value - minValue) * yScaleMultiplier - 15}
+                      className={graphNumberClasses}>
+                      {valueText}
+                    </text>
+                  </Fragment>
                 );
+              }
 
               return <Fragment key={i + '-' + j}></Fragment>;
             })}
