@@ -6,7 +6,7 @@ import ThreeTextCtx from 'context/ThreeTextCtx';
 // import CurveTexture from 'images/blue_ball_curve.jpg';
 // import { TextureLoader } from 'three';
 
-const Curves = ({ hitsData }) => {
+const Curves = ({ hitsData, handlePointerOver, handlePointerOut }) => {
   const maxLength = hitsData.reduce((sum, hit) => {
     const curLength = hit.hit_info.data_3d.length;
     if (curLength > sum) sum = curLength;
@@ -41,6 +41,8 @@ const Curves = ({ hitsData }) => {
               hit={hit}
               curveCount={curCurveCount}
               minMaxDistance={minMaxDistance}
+							handlePointerOver={handlePointerOver}
+							handlePointerOut={handlePointerOut}
               // curveTextureBlue={curveTextureBlue}
             />
           );

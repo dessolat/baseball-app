@@ -1,7 +1,9 @@
 import { memo, useRef, useState, useEffect, useContext } from 'react';
-import { useFrame, extend } from '@react-three/fiber';
+import { useFrame 
+	// extend
+ } from '@react-three/fiber';
 import { HSVtoRGB } from 'utils';
-import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+// import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 import { ctx } from 'context/ThreeTextCtx';
 
 // const TouchPoints = ({ data3D, coef, curveCount }) => (
@@ -18,137 +20,143 @@ import { ctx } from 'context/ThreeTextCtx';
 //   </>
 // );
 
-const CurvePath = memo(({ hit, coef, setDrawPoints, minMaxDistance }) => {
-  const { data_3d: data3D, distance, angle, 'exit velocity': speed } = hit.hit_info;
-  const { game_id: gameId, mom_id: momentId } = hit.pitch_info;
+const CurvePath = memo(
+  ({ hit, coef, setDrawPoints, minMaxDistance, handlePointerOver, handlePointerOut }) => {
+    const { data_3d: data3D, distance, angle, 'exit velocity': speed } = hit.hit_info;
+    const { game_id: gameId, mom_id: momentId } = hit.pitch_info;
 
-  const [hovered, setHovered] = useState(false);
-  // const [tubeRadius, setTubeRadius] = useState(3);
+    // const [tubeRadius, setTubeRadius] = useState(3);
 
-  const tubeRef = useRef(null);
-  const textRef = useRef(null);
+    const tubeRef = useRef(null);
+    // const textRef = useRef(null);
 
-  const { TextGeometry, Vector3, CatmullRomCurve3, FontLoader, FrontSide } = useContext(ctx);
+    const {
+      // TextGeometry,
+      Vector3,
+      CatmullRomCurve3,
+      // FontLoader,
+      FrontSide
+    } = useContext(ctx);
 
-  extend({ TextGeometry });
+    // extend({ TextGeometry });
 
-  useEffect(() => {
-    if (tubeRef.current === null) return;
+    // useEffect(() => {
+    //   if (tubeRef.current === null) return;
 
-    document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  }, [hovered]);
+    //   document.body.style.cursor = hovered ? 'pointer' : 'auto';
+    // }, [hovered]);
 
-  const cashedStepTotal = useRef(0);
+    const cashedStepTotal = useRef(0);
 
-  let stepTotalRef = cashedStepTotal.current;
-  useEffect(() => {
-    setDrawPoints(false);
+    let stepTotalRef = cashedStepTotal.current;
+    useEffect(() => {
+      setDrawPoints(false);
 
-    stepTotalRef = 0;
-    cashedStepTotal.current = 0;
-  }, [data3D]);
+      stepTotalRef = 0;
+      cashedStepTotal.current = 0;
+    }, [data3D]);
 
-  // useEffect(() => {
-  //   if (!hovered) {
-  //     setTubeRadius(3);
-  //     return;
-  //   }
+    // useEffect(() => {
+    //   if (!hovered) {
+    //     setTubeRadius(3);
+    //     return;
+    //   }
 
-  //   setTubeRadius(prev => prev + 0.1);
-  // }, [hovered]);
+    //   setTubeRadius(prev => prev + 0.1);
+    // }, [hovered]);
 
-  // useEffect(() => {
-  //   if (!hovered) {
-  //     setTubeRadius(3);
-  //     return;
-  //   }
-  //   if (tubeRadius <= 3 || tubeRadius >= 5) return;
+    // useEffect(() => {
+    //   if (!hovered) {
+    //     setTubeRadius(3);
+    //     return;
+    //   }
+    //   if (tubeRadius <= 3 || tubeRadius >= 5) return;
 
-  //   setTubeRadius(prev => prev + 0.1);
-  // }, [tubeRadius, hovered]);
+    //   setTubeRadius(prev => prev + 0.1);
+    // }, [tubeRadius, hovered]);
 
-  const points = data3D.reduce((sum, coord) => {
-    const newCoord = new Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 167);
+    const points = data3D.reduce((sum, coord) => {
+      const newCoord = new Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 167);
 
-    sum.push(newCoord);
-    return sum;
-  }, []);
+      sum.push(newCoord);
+      return sum;
+    }, []);
 
-  const curveCoords = new CatmullRomCurve3(points);
+    const curveCoords = new CatmullRomCurve3(points);
 
-  useFrame(({ camera }) => {
-    if (textRef.current) {
-      textRef.current.quaternion.copy(camera.quaternion);
-      textRef.current.geometry.center();
-    }
+    useFrame(({ camera }) => {
+      // if (textRef.current) {
+      //   textRef.current.quaternion.copy(camera.quaternion);
+      //   textRef.current.geometry.center();
+      // }
 
+      // if (hovered) tubeRef.current
 
-		// if (hovered) tubeRef.current
+      if (stepTotalRef > 30510) return;
+      if (stepTotalRef > 30110) {
+        setDrawPoints(true);
+        cashedStepTotal.current = stepTotalRef;
+        return;
+      }
+      stepTotalRef += 400;
+      tubeRef.current.setDrawRange(0, stepTotalRef);
+    });
 
-    if (stepTotalRef > 30510) return;
-    if (stepTotalRef > 30110) {
-      setDrawPoints(true);
-      cashedStepTotal.current = stepTotalRef;
-      return;
-    }
-    stepTotalRef += 400;
-    tubeRef.current.setDrawRange(0, stepTotalRef);
-  });
+    const colorsMin = 0.65;
+    const colorsMax = 1;
+    const colorsDelta = colorsMax - colorsMin;
 
-  const colorsMin = 0.65;
-  const colorsMax = 1;
-  const colorsDelta = colorsMax - colorsMin;
+    const distanceDelta = distance - minMaxDistance.min;
+    const distanceRel = distanceDelta / (minMaxDistance.max - minMaxDistance.min);
 
-  const distanceDelta = distance - minMaxDistance.min;
-  const distanceRel = distanceDelta / (minMaxDistance.max - minMaxDistance.min);
+    const resultColorRel = colorsMin + colorsDelta * distanceRel;
 
-  const resultColorRel = colorsMin + colorsDelta * distanceRel;
+    const meshColor = HSVtoRGB(resultColorRel, 1, 1);
 
-  const meshColor = HSVtoRGB(resultColorRel, 1, 1);
+    const handleMeshClick = () => {
+      window.open(`/game/${gameId}?card=${momentId}&tab=hitting`, '_blank');
+    };
 
-  const handleMeshClick = () => {
-    window.open(`/game/${gameId}?card=${momentId}&tab=hitting`, '_blank');
-  };
+    // const font = new FontLoader().parse(ComfortaaFont);
+    // const textCoords = data3D[Math.floor(data3D.length / 2)];
 
-  const font = new FontLoader().parse(ComfortaaFont);
-  const textCoords = data3D[Math.floor(data3D.length / 2)];
-
-  const distanceText = `Angle: ${String(Math.round(angle))}° Speed: ${String(Math.round(speed))} mph 
+    const distanceText = `Angle: ${String(Math.round(angle))}° Speed: ${String(Math.round(speed))} mph 
 Distance: ${String(Math.round(distance))} m.`;
-  return (
-    <>
-      <mesh
-        position={[-70, 0, 220]}
-        castShadow
-        onClick={handleMeshClick}
-        onPointerOver={() => {
-          if (cashedStepTotal.current < 30110) return;
-          setHovered(true);
-        }}
-        onPointerOut={() => {
-          if (cashedStepTotal.current < 30110) return;
-          setHovered(false);
-        }}>
-        <tubeGeometry
-          args={[curveCoords, 500, 3, 10, false]}
-          // drawRange={{ start: 0, count: 200 }}
-          ref={tubeRef}
-        />
-        <meshPhongMaterial color={meshColor} side={FrontSide} />
-      </mesh>
-      {hovered && (
+    return (
+      <>
+        <mesh
+          position={[-70, 0, 220]}
+          castShadow
+          onClick={handleMeshClick}
+          onPointerOver={() => {
+            if (cashedStepTotal.current < 30110) return;
+            handlePointerOver(distanceText);
+          }}
+          onPointerOut={() => {
+            if (cashedStepTotal.current < 30110) return;
+            handlePointerOut(distanceText);
+          }}>
+          <tubeGeometry
+            args={[curveCoords, 500, 3, 10, false]}
+            // drawRange={{ start: 0, count: 200 }}
+            ref={tubeRef}
+          />
+          <meshPhongMaterial color={meshColor} side={FrontSide} />
+        </mesh>
+        {/* {hovered && (
         <mesh
           position={[textCoords[0] * coef - 390, textCoords[2] * coef + 100, textCoords[1] * -coef + 450]}
           ref={textRef}>
           <textGeometry args={[distanceText, { font, size: 22, height: 2 }]} />
           <meshBasicMaterial color='blue' toneMapped={false} />
         </mesh>
-      )}
-    </>
-  );
-});
+      )} */}
+      </>
+    );
+  }
+);
 
-const Curve = ({ hit, curveCount, minMaxDistance }) => {
+const Curve = ({ hit, curveCount, minMaxDistance, handlePointerOver, handlePointerOut }) => {
   const [drawPoints, setDrawPoints] = useState(false);
   const coef = 925 / 90;
 
@@ -160,6 +168,8 @@ const Curve = ({ hit, curveCount, minMaxDistance }) => {
         curveCount={curveCount}
         setDrawPoints={setDrawPoints}
         minMaxDistance={minMaxDistance}
+        handlePointerOver={handlePointerOver}
+        handlePointerOut={handlePointerOut}
       />
       {/* {drawPoints && <TouchPoints data3D={data3D} coef={coef} curveCount={curveCount} />} */}
     </>
