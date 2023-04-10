@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
-import { getPitchColorByName, getRndValue } from 'utils';
+import { getPitchColorByName } from 'utils';
 // import h337 from 'heatmap.js';
 
 const PARAMS = {
@@ -10,16 +10,6 @@ const PARAMS = {
 };
 
 const Dots = ({ arrData, pitchTypes, coords }) => {
-  // const [radius, setRadius] = useState(1);
-
-  // useEffect(() => {
-  //   setRadius(1);
-
-  //   setTimeout(() => {
-  //     setRadius(8);
-  //   }, 300);
-  // }, [coords]);
-
   return (
     <>
       {arrData.map((pitch, i) => {
@@ -101,7 +91,6 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
     return sum;
   }, []);
 
-  console.log(points);
   const maxRadius = 25;
   return (
     <>

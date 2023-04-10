@@ -565,7 +565,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                   currentOption={currentOption}
                 />
               ))}
-              <button
+              {/* <button
                 style={{
                   position: 'absolute',
                   right: '30px',
@@ -576,7 +576,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                 }}
                 onClick={twinFakeBallsHandler}>
                 {`${isFakeTwinBalls ? 'Remove' : 'Add'} balls`}
-              </button>
+              </button> */}
             </div>
           </>
         )}
