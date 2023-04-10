@@ -117,7 +117,7 @@ const CurvePath = memo(
     // const font = new FontLoader().parse(ComfortaaFont);
     // const textCoords = data3D[Math.floor(data3D.length / 2)];
 
-    const distanceText = `Angle: ${String(Math.round(angle))}° Speed: ${String(Math.round(speed))} mph 
+    const distanceText = `Angle: ${String(Math.round(angle))}° Velocity: ${String(Math.round(speed))} mph 
 Distance: ${String(Math.round(distance))} m.`;
     return (
       <>
