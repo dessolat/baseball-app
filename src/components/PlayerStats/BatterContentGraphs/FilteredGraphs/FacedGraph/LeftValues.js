@@ -1,14 +1,6 @@
 import { leftValue } from './FacedGraph.module.scss';
 
-const LeftValues = ({ summary, PARAMS }) => {
-  const maxCount = Object.values(summary).reduce((max, col) => {
-    Object.values(col).forEach(value => {
-      if (value > max) max = value;
-    });
-
-    return max;
-  }, 0);
-
+const LeftValues = ({ maxCount, PARAMS }) => {
   const valuesDelta = maxCount / PARAMS.ROWS_NUMBER;
   const graphDelta = PARAMS.GRAPH_HEIGHT / PARAMS.ROWS_NUMBER;
 

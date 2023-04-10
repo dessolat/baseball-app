@@ -1,5 +1,6 @@
 import BottomValues from './BottomValues';
 import cl from './FacedGraph.module.scss';
+import Graph from './Graph';
 import LeftValues from './LeftValues';
 import StaticLayout from './StaticLayout';
 
@@ -30,6 +31,10 @@ const FacedGraph = ({ data, preview }) => {
   minMaxSpeed.min *= 2.24;
   minMaxSpeed.max *= 2.24;
 
+	// Left and right speed corridor correction
+	minMaxSpeed.min -= 10
+	minMaxSpeed.max += 10
+
   const summary = data.reduce((sum, { pitch_info: { speed, pitch_type: pitchType } }) => {
     const colNumber = Math.floor(speed * 2.24) - Math.floor(minMaxSpeed.min);
     if (sum[colNumber] === undefined) {
@@ -49,6 +54,13 @@ const FacedGraph = ({ data, preview }) => {
     return sum;
   }, {});
 
+  const maxCount = Object.values(summary).reduce((max, col) => {
+    Object.values(col).forEach(value => {
+      if (value > max) max = value;
+    });
+
+    return max;
+  }, 0);
   console.log(summary);
   return (
     <svg
@@ -64,7 +76,10 @@ const FacedGraph = ({ data, preview }) => {
       <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />
 
       {/* Left values */}
-      <LeftValues summary={summary} PARAMS={PARAMS} />
+      <LeftValues maxCount={maxCount} PARAMS={PARAMS} />
+
+      {/* Graph */}
+      <Graph summary={summary} PARAMS={PARAMS} minMaxSpeed={minMaxSpeed} maxCount={maxCount} />
     </svg>
   );
 };

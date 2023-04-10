@@ -30,3 +30,7 @@
 .leftValue {
   text-anchor: end;
 }
+
+.graphColumn {
+  transition: y .3s, height .3s;
+}
