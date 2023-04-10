@@ -1,5 +1,5 @@
 .graph {
-  aspect-ratio: 307 / 423;
+  aspect-ratio: 307 / 450;
   height: auto;
   background-color: white;
 }
@@ -12,6 +12,12 @@
 .leftValues {
   font: 400 0.875rem / 1.8 var(--font-nunito);
 	fill: black;
+}
+
+.footerText {
+	font: 400 0.75rem / 1.5 var(--font-nunito);
+	fill: black;
+	text-anchor: middle;
 }
 
 .animated {
