@@ -154,6 +154,16 @@ export const getPitchСlassColorByName = name =>
     Offspeed: '#c6dac7'
     // Offspeed: '#8DB58E'
   }[name]);
+	
+export const getPitchСlassPrimaryColorByName = name =>
+  ({
+    // Fastball: '#ec9599',
+    Fastball: '#D92B33',
+    // Breaking: '#92d4eb',
+    Breaking: '#24A8D7',
+    // Offspeed: '#c6dac7'
+    Offspeed: '#8DB58E'
+  }[name]);
 
 export const MONTHS = [
   'January',

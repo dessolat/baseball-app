@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import { graphColumn } from './FacedGraph.module.scss';
-import { getPitchСlassColorByName } from 'utils';
+import { getPitchСlassColorByName, getPitchСlassPrimaryColorByName } from 'utils';
 
 const Graph = ({ summary, PARAMS, minMaxSpeed, maxCount }) => {
   const minMaxSpeedDelta = Math.ceil(minMaxSpeed.max) - Math.floor(minMaxSpeed.min);
-  const colWidth = PARAMS.GRAPH_WIDTH / minMaxSpeedDelta * 2;
+  const colWidth = (PARAMS.GRAPH_WIDTH / minMaxSpeedDelta) * 2;
   const heightPerHit = PARAMS.GRAPH_HEIGHT / maxCount;
 
   return (
@@ -19,15 +19,24 @@ const Graph = ({ summary, PARAMS, minMaxSpeed, maxCount }) => {
               const yCoord = PARAMS.PADDING_TOP + PARAMS.GRAPH_HEIGHT - colHeight;
 
               return (
-                <rect
-                  key={`${i}-${j}`}
-                  x={xCoord}
-                  y={yCoord}
-                  width={colWidth}
-                  height={colHeight}
-                  fill={getPitchСlassColorByName(type)}
-                  className={graphColumn}
-                />
+                <Fragment key={`${i}-${j}`}>
+                  <rect
+                    x={xCoord}
+                    y={yCoord}
+                    width={colWidth}
+                    height={colHeight}
+                    fill={getPitchСlassColorByName(type)}
+                    className={graphColumn}
+                  />
+                  <rect
+                    x={xCoord}
+                    y={yCoord}
+                    width={colWidth}
+                    height='18'
+                    fill={getPitchСlassPrimaryColorByName(type)}
+                    className={graphColumn}
+                  />
+                </Fragment>
               );
             })}
         </Fragment>
