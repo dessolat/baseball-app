@@ -4,7 +4,7 @@ import { getPitchСlassColorByName } from 'utils';
 
 const Graph = ({ summary, PARAMS, minMaxSpeed, maxCount }) => {
   const minMaxSpeedDelta = Math.ceil(minMaxSpeed.max) - Math.floor(minMaxSpeed.min);
-  const colWidth = PARAMS.GRAPH_WIDTH / minMaxSpeedDelta;
+  const colWidth = PARAMS.GRAPH_WIDTH / minMaxSpeedDelta * 2;
   const heightPerHit = PARAMS.GRAPH_HEIGHT / maxCount;
 
   return (

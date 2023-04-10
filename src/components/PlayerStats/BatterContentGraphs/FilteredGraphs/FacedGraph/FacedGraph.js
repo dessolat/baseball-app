@@ -16,10 +16,7 @@ const PARAMS = {
 };
 
 const FacedGraph = ({ data, preview }) => {
-  console.log(data);
-  console.log(preview);
-
-  const { pitch_types: pitchTypes, pitch_classes: pitchClasses } = preview;
+  const { pitch_classes: pitchClasses } = preview;
 
   const minMaxSpeed = data.reduce((sum, { pitch_info: { speed } }) => {
     if (sum.min === undefined || speed < sum.min) sum.min = speed;
@@ -31,12 +28,12 @@ const FacedGraph = ({ data, preview }) => {
   minMaxSpeed.min *= 2.24;
   minMaxSpeed.max *= 2.24;
 
-	// Left and right speed corridor correction
-	minMaxSpeed.min -= 10
-	minMaxSpeed.max += 10
+  // Left and right speed corridor correction
+  minMaxSpeed.min -= 14;
+  minMaxSpeed.max += 14;
 
   const summary = data.reduce((sum, { pitch_info: { speed, pitch_type: pitchType } }) => {
-    const colNumber = Math.floor(speed * 2.24) - Math.floor(minMaxSpeed.min);
+    const colNumber = Math.floor((Math.floor(speed * 2.24) - Math.floor(minMaxSpeed.min)) / 2);
     if (sum[colNumber] === undefined) {
       sum[colNumber] = { [pitchClasses[pitchType]]: 1 };
 
@@ -61,7 +58,6 @@ const FacedGraph = ({ data, preview }) => {
 
     return max;
   }, 0);
-  console.log(summary);
   return (
     <svg
       viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
@@ -73,7 +69,7 @@ const FacedGraph = ({ data, preview }) => {
       <StaticLayout PARAMS={PARAMS} />
 
       {/* Bottom values */}
-      <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />
+      {maxCount > 0 && <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />}
 
       {/* Left values */}
       <LeftValues maxCount={maxCount} PARAMS={PARAMS} />
