@@ -1,5 +1,6 @@
 import BottomValues from './BottomValues';
 import cl from './FacedGraph.module.scss';
+import LeftValues from './LeftValues';
 import StaticLayout from './StaticLayout';
 
 const PARAMS = {
@@ -19,16 +20,36 @@ const FacedGraph = ({ data, preview }) => {
 
   const { pitch_types: pitchTypes, pitch_classes: pitchClasses } = preview;
 
-  const summary = data.reduce((sum, { pitch_info: { speed } }) => {
+  const minMaxSpeed = data.reduce((sum, { pitch_info: { speed } }) => {
     if (sum.min === undefined || speed < sum.min) sum.min = speed;
     if (sum.max === undefined || speed > sum.max) sum.max = speed;
 
     return sum;
   }, {});
 
-  summary.min *= 2.24;
-  summary.max *= 2.24;
+  minMaxSpeed.min *= 2.24;
+  minMaxSpeed.max *= 2.24;
 
+  const summary = data.reduce((sum, { pitch_info: { speed, pitch_type: pitchType } }) => {
+    const colNumber = Math.floor(speed * 2.24) - Math.floor(minMaxSpeed.min);
+    if (sum[colNumber] === undefined) {
+      sum[colNumber] = { [pitchClasses[pitchType]]: 1 };
+
+      return sum;
+    }
+
+    if (sum[colNumber][pitchClasses[pitchType]] === undefined) {
+      sum[colNumber][pitchClasses[pitchType]] = 1;
+
+      return sum;
+    }
+
+    sum[colNumber][pitchClasses[pitchType]]++;
+
+    return sum;
+  }, {});
+
+  console.log(summary);
   return (
     <svg
       viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
@@ -40,7 +61,10 @@ const FacedGraph = ({ data, preview }) => {
       <StaticLayout PARAMS={PARAMS} />
 
       {/* Bottom values */}
-      <BottomValues summary={summary} PARAMS={PARAMS} />
+      <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />
+
+      {/* Left values */}
+      <LeftValues summary={summary} PARAMS={PARAMS} />
     </svg>
   );
 };

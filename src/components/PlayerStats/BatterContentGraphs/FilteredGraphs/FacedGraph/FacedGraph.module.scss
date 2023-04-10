@@ -1,12 +1,13 @@
 .graph {
-	aspect-ratio: 940 / 365;
-	background-color: white;
+  aspect-ratio: 940 / 365;
+  background-color: white;
 }
 
-.leftTitle,.bottomTitle {
-	font: 700 .875rem var(--font-nunito);
-	fill: black;
-	user-select: none;
+.leftTitle,
+.bottomTitle {
+  font: 700 0.875rem var(--font-nunito);
+  fill: black;
+  user-select: none;
 }
 
 .leftTitle {
@@ -15,9 +16,17 @@
   transform: rotateZ(270deg);
 }
 
+.bottomValue,
+.leftValue {
+  font: 300 0.875rem var(--font-nunito);
+  fill: black;
+  user-select: none;
+}
+
 .bottomValue {
-	font: 300 .875rem var(--font-nunito);
-	fill: black;
-	user-select: none;
-	text-anchor: middle;
+  text-anchor: middle;
+}
+
+.leftValue {
+  text-anchor: end;
 }

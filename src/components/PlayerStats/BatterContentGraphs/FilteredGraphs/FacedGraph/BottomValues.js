@@ -1,12 +1,12 @@
 import { bottomValue } from './FacedGraph.module.scss';
 
-const BottomValues = ({ summary, PARAMS }) => {
-  const valuesDelta = (Math.ceil(summary.max) - Math.floor(summary.min)) / PARAMS.COLS_NUMBER;
+const BottomValues = ({ minMaxSpeed, PARAMS }) => {
+  const valuesDelta = (Math.ceil(minMaxSpeed.max) - Math.floor(minMaxSpeed.min)) / PARAMS.COLS_NUMBER;
   const graphDelta = PARAMS.GRAPH_WIDTH / PARAMS.COLS_NUMBER;
-  console.log(summary);
+
   const valuesArr = [];
   for (let i = 0; i <= PARAMS.COLS_NUMBER; i++) {
-    valuesArr.push(Math.round((Math.floor(summary.min) + valuesDelta * i) * 10) / 10);
+    valuesArr.push(Math.round((Math.floor(minMaxSpeed.min) + valuesDelta * i) * 10) / 10);
   }
 
   const yCoord = PARAMS.PADDING_TOP + PARAMS.GRAPH_HEIGHT + 20;
