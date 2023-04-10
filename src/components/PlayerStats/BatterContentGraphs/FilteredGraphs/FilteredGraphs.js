@@ -689,7 +689,6 @@ const LeftColumnOptions = ({
 
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
   const { preview } = data;
-  const { pitch_types: pitchTypes } = preview;
 
   // ! Remove after testing
   // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
@@ -899,10 +898,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader
           title='Machine vision statistics'
-          subTitle={`${playerName} ${playerSurname} Pitches batter faced`}
+          subTitle={`${playerName} ${playerSurname} pitches batter faced`}
           noSelector
         />
-        <FacedGraph data={filteredData} />
+        <FacedGraph data={filteredData} preview={preview} />
       </GraphsBlock>
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
@@ -931,7 +930,6 @@ const FilteredGraphs = ({ battingData }) => {
     swing: 'all',
     contact: 'all'
   });
-
 
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');

@@ -14,3 +14,10 @@
   transform-box: fill-box;
   transform: rotateZ(270deg);
 }
+
+.bottomValue {
+	font: 300 .875rem var(--font-nunito);
+	fill: black;
+	user-select: none;
+	text-anchor: middle;
+}
