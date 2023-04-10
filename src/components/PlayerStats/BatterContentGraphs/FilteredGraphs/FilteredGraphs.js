@@ -60,7 +60,7 @@ const FIELD_NAMES = {
   }
 };
 
-const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true }) => {
+const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true, JSONspeeds }) => {
   const [pitchClassName, pitchClassValue] = pitchClass;
   const { title, r, g, b, speeds } = pitchClassValue;
 
@@ -115,6 +115,13 @@ const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true }) => 
       clearTimeout(sliderCoordsTimer.current);
     };
   }, [sliderCoords]);
+
+  useEffect(() => {
+    const minSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
+    const maxSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
+
+    handleFilterChange(pitchClassName, { min: minSpeed, max: maxSpeed });
+  }, [JSONspeeds]);
 
   // useEffect(() => {
   //   if (curMinMaxValues.current === null) return;
@@ -310,6 +317,7 @@ const SpeedGroup = ({
           pitchClass={pitchClass}
           handleFilterChange={handleFilterChange}
           isActive={pitchClass[1].speeds.length > 0}
+          JSONspeeds={JSON.stringify(pitchClass[1].speeds)}
         />
       ))}
     </div>
@@ -360,7 +368,7 @@ const Group = ({
   filteredPlayerFullName
 }) => {
   const { title, groupName, items } = groupData;
-  console.log(groupData);
+
   const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.pitcher === 'pitcher' ? filteredPlayerFullName : null;
 
@@ -695,7 +703,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
   // const filteredData = []
   const filteredData = useFilterBatterGroupData(data, currentFilterValues, 'all', teamName, playerFullName);
-console.log(filteredData);
+
   // Count and speed values
   // const relValuesData = filteredData.reduce((sum, pitch) => {
   //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
@@ -924,7 +932,7 @@ const FilteredGraphs = ({ battingData }) => {
     contact: 'all'
   });
 
-  console.log(currentFilterValues);
+
   const [filteredTeamName, setFilteredTeamName] = useState('');
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
@@ -997,7 +1005,6 @@ const FilteredGraphs = ({ battingData }) => {
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
-        // handleFakeDataClick={handleFakeDataClick}
         data={filteredData}
         handleFilterClick={handleFilterClick}
         handleSpeedFilterChange={handleSpeedFilterChange}
