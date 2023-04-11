@@ -17,7 +17,8 @@
 }
 
 .bottomValue,
-.leftValue {
+.leftValue,
+.footerValue {
   font: 300 0.875rem var(--font-nunito);
   fill: black;
   user-select: none;
@@ -31,6 +32,10 @@
   text-anchor: end;
 }
 
+.footerValue {
+  text-anchor: start;
+}
+
 .graphColumn {
-  transition: y .3s, height .3s, fill .3s;
+  transition: y 0.3s, height 0.3s, fill 0.3s;
 }

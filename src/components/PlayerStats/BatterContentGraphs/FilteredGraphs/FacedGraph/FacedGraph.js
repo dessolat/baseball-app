@@ -1,5 +1,6 @@
 import BottomValues from './BottomValues';
 import cl from './FacedGraph.module.scss';
+import Footer from './Footer';
 import Graph from './Graph';
 import LeftValues from './LeftValues';
 import StaticLayout from './StaticLayout';
@@ -13,6 +14,12 @@ const PARAMS = {
   PADDING_TOP: 27,
   ROWS_NUMBER: 4,
   COLS_NUMBER: 12
+};
+
+const PITCH_CLASSES_PRIORITY = {
+  Fastball: 3,
+  Breaking: 2,
+  Offspeed: 1
 };
 
 const FacedGraph = ({ data, preview }) => {
@@ -32,7 +39,11 @@ const FacedGraph = ({ data, preview }) => {
   minMaxSpeed.min -= 14;
   minMaxSpeed.max += 14;
 
+  let totalClasses = [];
+
   const summary = data.reduce((sum, { pitch_info: { speed, pitch_type: pitchType } }) => {
+    totalClasses.push(pitchClasses[pitchType]);
+
     const colNumber = Math.floor((Math.floor(speed * 2.24) - Math.floor(minMaxSpeed.min)) / 2);
     if (sum[colNumber] === undefined) {
       sum[colNumber] = { [pitchClasses[pitchType]]: 1 };
@@ -50,6 +61,10 @@ const FacedGraph = ({ data, preview }) => {
 
     return sum;
   }, {});
+
+  totalClasses = Array.from(new Set(totalClasses)).sort((a, b) =>
+    PITCH_CLASSES_PRIORITY[a] > PITCH_CLASSES_PRIORITY[b] ? -1 : 1
+  );
 
   const maxCount = Object.values(summary).reduce((max, col) => {
     Object.values(col).forEach(value => {
@@ -76,6 +91,9 @@ const FacedGraph = ({ data, preview }) => {
 
       {/* Graph */}
       <Graph summary={summary} PARAMS={PARAMS} minMaxSpeed={minMaxSpeed} maxCount={maxCount} />
+
+      {/* Footer */}
+      <Footer totalClasses={totalClasses} PARAMS={PARAMS} />
     </svg>
   );
 };
