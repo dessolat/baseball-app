@@ -24,8 +24,6 @@ const Footer = ({ totalClasses, PARAMS, data, pitchClasses }) => {
 
 		return minMax
   }, {});
-
-	console.log(minMaxSum);
   return (
     <>
       {totalClasses.map((classTitle, i) => {
