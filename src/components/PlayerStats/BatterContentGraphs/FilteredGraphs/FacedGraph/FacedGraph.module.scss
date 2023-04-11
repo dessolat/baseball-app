@@ -17,23 +17,25 @@
 }
 
 .bottomValue,
-.leftValue,
-.footerValue {
+.leftValue {
   font: 300 0.875rem var(--font-nunito);
   fill: black;
   user-select: none;
 }
 
 .bottomValue {
-  text-anchor: middle;
+	text-anchor: middle;
 }
 
 .leftValue {
-  text-anchor: end;
+	text-anchor: end;
 }
 
 .footerValue {
+	font: 300 0.75rem var(--font-nunito);
   text-anchor: start;
+	fill: black;
+  user-select: none;
 }
 
 .graphColumn {

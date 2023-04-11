@@ -93,7 +93,7 @@ const FacedGraph = ({ data, preview }) => {
       <Graph summary={summary} PARAMS={PARAMS} minMaxSpeed={minMaxSpeed} maxCount={maxCount} />
 
       {/* Footer */}
-      <Footer totalClasses={totalClasses} PARAMS={PARAMS} />
+      <Footer totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} />
     </svg>
   );
 };
