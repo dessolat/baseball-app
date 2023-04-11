@@ -460,7 +460,7 @@ const TextGroup = ({ setTextGroupFilter }) => {
       <div className={cl.textGroupItem}>
         <p>Game</p>
         <FilterField
-          placeholder='Search of game'
+          placeholder='Search of game (DD/MM Team)'
           style={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, game: value }));
@@ -915,7 +915,6 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 };
 
 const FilteredGraphs = ({ battingData }) => {
-  // const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
     pitcher: 'all',
     count: 'all',
@@ -963,13 +962,42 @@ const FilteredGraphs = ({ battingData }) => {
       }, true);
     }
 
+    function gameDataCheck(gameFilter, { date }, { team_name: teamName }) {
+			if (gameFilter === '') return true
+
+      const filteredWords = gameFilter.split(' ');
+
+      return filteredWords.reduce((result, word) => {
+				if (result === false) return result
+
+        const regex = /([0-3][0-9]\/[0-1][0-9])/;
+        const matchedRegex = word.match(regex);
+        if (matchedRegex) {
+          const day = matchedRegex[0].slice(0, 2);
+          const month = matchedRegex[0].slice(3, 5);
+          
+					const dateDay = date.slice(8,10)
+					const dateMonth = date.slice(5,7)
+					
+					if (day !== dateDay || month !== dateMonth) return false
+					return true
+        }
+
+				if (word === '') return result
+
+        return teamName.toLowerCase() === word.toLowerCase();
+      }, true);
+    }
+
     const { pitches_all: pitchesAll } = battingData;
 
     const newPitchesAll = pitchesAll.filter(({ pitcher, pitch_info: pitchInfo }) => {
       const { team: teamFilter, game: gameFilter, pitcher: pitcherFilter } = textGroupFilter;
+
       return (
         checkFieldIdentity([pitcher.team_name], teamFilter) &&
-        checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
+        gameDataCheck(gameFilter, pitchInfo, pitcher) &&
+        // checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
         checkFieldIdentity([pitcher['pitcher name'], pitcher['pitcher surname']], pitcherFilter)
       );
     });
