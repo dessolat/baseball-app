@@ -180,7 +180,7 @@ const TextGroup = ({ setTextGroupFilter }) => {
       <div className={cl.textGroupItem}>
         <p>Game</p>
         <FilterField
-          placeholder='Search of game'
+          placeholder='Search of game (DD/MM Team)'
           style={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, game: value }));
@@ -759,6 +759,33 @@ const FilteredGraphs = ({ pitchesData }) => {
       }, true);
     }
 
+		function gameDataCheck(gameFilter, { date }, { team_name: teamName }) {
+			if (gameFilter === '') return true
+
+      const filteredWords = gameFilter.split(' ');
+
+      return filteredWords.reduce((result, word) => {
+				if (result === false) return result
+
+        const regex = /([0-3][0-9]\/[0-1][0-9])/;
+        const matchedRegex = word.match(regex);
+        if (matchedRegex) {
+          const day = matchedRegex[0].slice(0, 2);
+          const month = matchedRegex[0].slice(3, 5);
+          
+					const dateDay = date.slice(8,10)
+					const dateMonth = date.slice(5,7)
+					
+					if (day !== dateDay || month !== dateMonth) return false
+					return true
+        }
+
+				if (word === '') return result
+
+        return teamName.toLowerCase() === word.toLowerCase();
+      }, true);
+    }
+
     const { pitches_all: pitchesAll } = pitchesData;
 
     const newPitchesAll = pitchesAll.filter(({ batter, pitch_info: pitchInfo }) => {
@@ -766,7 +793,8 @@ const FilteredGraphs = ({ pitchesData }) => {
 
       return (
         checkFieldIdentity([batter.team_name], teamFilter) &&
-        checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
+        gameDataCheck(gameFilter, pitchInfo, batter) &&
+        // checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
         checkFieldIdentity([batter['batter name'], batter['batter surname']], batterFilter)
       );
     });
