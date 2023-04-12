@@ -468,53 +468,54 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   // ! delete after testing
 
-  let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
+  // let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
 
-  twinFilteredData = twinFilteredData.map(pitch =>
-    pitch.coordinates.zone_y === 0
-      ? {
-          ...pitch,
-          coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
-        }
-      : pitch
-  );
+  // twinFilteredData = twinFilteredData.map(pitch =>
+  //   pitch.coordinates.zone_y === 0
+  //     ? {
+  //         ...pitch,
+  //         coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
+  //       }
+  //     : pitch
+  // );
 
-  for (let i = 0; i < 100; i++) {
-    const pitch = {
-      pitch_info: { pitch_type: 1 },
-      coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
-      result: {
-        swing: 0,
-        take: 1,
-        miss: 0,
-        contact: 0,
-        'base hit & hard hit': 0,
-        'soft hit': 0,
-        fly: 0,
-        line: 0,
-        gruond: 0
-      },
-      zone: {
-        'in zone': 0,
-        'out zone': 1,
-        heart: 0,
-        edge: 0,
-        waste: 1,
-        low: 1,
-        high: 0,
-        outside: 0,
-        inside: 0
-      }
-    };
+  // for (let i = 0; i < 100; i++) {
+  //   const pitch = {
+  //     pitch_info: { pitch_type: 1 },
+  //     coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
+  //     result: {
+  //       swing: 0,
+  //       take: 1,
+  //       miss: 0,
+  //       contact: 0,
+  //       'base hit & hard hit': 0,
+  //       'soft hit': 0,
+  //       fly: 0,
+  //       line: 0,
+  //       gruond: 0
+  //     },
+  //     zone: {
+  //       'in zone': 0,
+  //       'out zone': 1,
+  //       heart: 0,
+  //       edge: 0,
+  //       waste: 1,
+  //       low: 1,
+  //       high: 0,
+  //       outside: 0,
+  //       inside: 0
+  //     }
+  //   };
 
-    twinFilteredData.push(pitch);
-  }
+  //   twinFilteredData.push(pitch);
+  // }
 
-  const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
+  // const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
+  const twinData = filteredData;
 
-  const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
+  // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
-
+  console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -555,16 +556,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                 currentOption={currentOption}
               />
 
-              {Object.entries(relValuesData).map((entry, index) => (
-                <TwinPitchesGraph
-                  key={index}
-                  data={relValuesData}
-                  filteredData={twinData}
-                  selectedPitchType={entry[0]}
-                  preview={preview}
-                  currentOption={currentOption}
-                />
-              ))}
+              {Object.entries(relValuesData)
+                .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
+                .map((entry, index) => (
+                  <TwinPitchesGraph
+                    key={index}
+                    data={relValuesData}
+                    filteredData={twinData}
+                    selectedPitchType={entry[0]}
+                    preview={preview}
+                    currentOption={currentOption}
+                  />
+                ))}
               {/* <button
                 style={{
                   position: 'absolute',
@@ -759,28 +762,28 @@ const FilteredGraphs = ({ pitchesData }) => {
       }, true);
     }
 
-		function gameDataCheck(gameFilter, { date }, { team_name: teamName }) {
-			if (gameFilter === '') return true
+    function gameDataCheck(gameFilter, { date }, { team_name: teamName }) {
+      if (gameFilter === '') return true;
 
       const filteredWords = gameFilter.split(' ');
 
       return filteredWords.reduce((result, word) => {
-				if (result === false) return result
+        if (result === false) return result;
 
         const regex = /([0-3][0-9]\/[0-1][0-9])/;
         const matchedRegex = word.match(regex);
         if (matchedRegex) {
           const day = matchedRegex[0].slice(0, 2);
           const month = matchedRegex[0].slice(3, 5);
-          
-					const dateDay = date.slice(8,10)
-					const dateMonth = date.slice(5,7)
-					
-					if (day !== dateDay || month !== dateMonth) return false
-					return true
+
+          const dateDay = date.slice(8, 10);
+          const dateMonth = date.slice(5, 7);
+
+          if (day !== dateDay || month !== dateMonth) return false;
+          return true;
         }
 
-				if (word === '') return result
+        if (word === '') return result;
 
         return teamName.toLowerCase() === word.toLowerCase();
       }, true);
