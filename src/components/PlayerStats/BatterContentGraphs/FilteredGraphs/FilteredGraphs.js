@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import FacedGraph from './FacedGraph/FacedGraph';
+import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -292,21 +293,23 @@ const SpeedGroup = ({
   const pitchClasses = data.preview.pitch_classes;
 
   // Summary speeds by pitchClass
-  const summary = filteredData.reduce(
-    (sum, cur) => {
-      const formattedSpeed = Math.round(cur.pitch_info.speed * 2.24 * 100) / 100;
-      const pitchClass = pitchClasses[cur.pitch_info.pitch_type];
+  const summary = filteredData
+    .filter(cur => pitchClasses[cur.pitch_info.pitch_type] !== '')
+    .reduce(
+      (sum, cur) => {
+        const formattedSpeed = Math.round(cur.pitch_info.speed * 2.24 * 100) / 100;
+        const pitchClass = pitchClasses[cur.pitch_info.pitch_type];
 
-      sum[pitchClass].speeds.push(formattedSpeed);
+        sum[pitchClass].speeds.push(formattedSpeed);
 
-      return sum;
-    },
-    {
-      Fastball: { title: 'Fastballs', r: 217, g: 43, b: 51, speeds: [] },
-      Breaking: { title: 'Breaking', r: 36, g: 168, b: 215, speeds: [] },
-      Offspeed: { title: 'Offspeed', r: 141, g: 181, b: 142, speeds: [] }
-    }
-  );
+        return sum;
+      },
+      {
+        Fastball: { title: 'Fastballs', r: 217, g: 43, b: 51, speeds: [] },
+        Breaking: { title: 'Breaking', r: 36, g: 168, b: 215, speeds: [] },
+        Offspeed: { title: 'Offspeed', r: 141, g: 181, b: 142, speeds: [] }
+      }
+    );
 
   return (
     <div>
@@ -910,6 +913,72 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
       <GraphsBlock defaultOption='' noSelector>
         <PitchesTrajectories data={filteredData} />
       </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches'>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader
+              optionsArr={['All Pitches', 'Contours']}
+              title={null}
+              subTitle={`${playerName} ${playerSurname} pitches by zone`}
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+            />
+            <div className={cl.twinGraphsWrapper}>
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								title='Fastball'
+								subTitle1='Swing'
+								subTitle2='Take'
+              />
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								subTitle1='Miss & soft hit'
+								subTitle2='Base hit & Hard hit'
+              />
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								title='Breaking'
+								subTitle1='Swing'
+								subTitle2='Take'
+              />
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								subTitle1='Miss & soft hit'
+								subTitle2='Base hit & Hard hit'
+              />
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								title='Offspeed'
+								subTitle1='Swing'
+								subTitle2='Take'
+              />
+              <TwinPitchesGraph
+                data={{}}
+                filteredData={[]}
+                preview={preview}
+                currentOption={currentOption}
+								subTitle1='Miss & soft hit'
+								subTitle2='Base hit & Hard hit'
+              />
+            </div>
+          </>
+        )}
+      </GraphsBlock>
     </div>
   );
 };
@@ -920,6 +989,7 @@ const FilteredGraphs = ({ battingData }) => {
     count: 'all',
     type: 'all',
     speed: {
+      '': { min: 0, max: 10000 },
       Fastball: { min: 0, max: 10000 },
       Breaking: { min: 0, max: 10000 },
       Offspeed: { min: 0, max: 10000 }
@@ -963,27 +1033,27 @@ const FilteredGraphs = ({ battingData }) => {
     }
 
     function gameDataCheck(gameFilter, { date }, { team_name: teamName }) {
-			if (gameFilter === '') return true
+      if (gameFilter === '') return true;
 
       const filteredWords = gameFilter.split(' ');
 
       return filteredWords.reduce((result, word) => {
-				if (result === false) return result
+        if (result === false) return result;
 
         const regex = /([0-3][0-9]\/[0-1][0-9])/;
         const matchedRegex = word.match(regex);
         if (matchedRegex) {
           const day = matchedRegex[0].slice(0, 2);
           const month = matchedRegex[0].slice(3, 5);
-          
-					const dateDay = date.slice(8,10)
-					const dateMonth = date.slice(5,7)
-					
-					if (day !== dateDay || month !== dateMonth) return false
-					return true
+
+          const dateDay = date.slice(8, 10);
+          const dateMonth = date.slice(5, 7);
+
+          if (day !== dateDay || month !== dateMonth) return false;
+          return true;
         }
 
-				if (word === '') return result
+        if (word === '') return result;
 
         return teamName.toLowerCase() === word.toLowerCase();
       }, true);
