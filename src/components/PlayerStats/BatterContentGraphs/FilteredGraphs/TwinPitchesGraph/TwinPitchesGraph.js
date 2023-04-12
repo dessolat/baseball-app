@@ -1,10 +1,10 @@
 import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchColorByName } from 'utils';
-// import h337 from 'heatmap.js';
 
 const PARAMS = {
-  GRAPH_WIDTH: 463,
+  GRAPH_WIDTH: 713,
+  // GRAPH_WIDTH: 463,
   GRAPH_HEIGHT: 388,
   SIDE_PADDING: 30
 };
@@ -245,13 +245,11 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
 
   const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8615;
   const yCoordRelCoef = 179;
-  // const yCoordRelCoef = 340;
   const yCoordAbsCoef = 0;
-  // const yCoordAbsCoef = 75;
 
-  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
+  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.1718;
+  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
   const xCoordRelCoef = 179;
-  // const xCoordRelCoef = 248;
 
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
@@ -275,6 +273,124 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
       {/* Wrapper frame */}
       <rect
         x='14'
+        y='14'
+        width='217'
+        height={PARAMS.GRAPH_HEIGHT - 14 - 33}
+        stroke='#B6DBD4'
+        strokeWidth='2'
+        fill='transparent'
+      />
+
+      {/* Outer frame */}
+      <rect
+        x={dashedFrameX - shadowBorder * xCoordRelCoef}
+        y={dashedFrameY - shadowBorder * yCoordRelCoef}
+        width={dashedFrameWidth + shadowBorder * xCoordRelCoef * 2}
+        height={dashedFrameHeight + shadowBorder * yCoordRelCoef * 2}
+        stroke='#B6DBD4'
+        strokeWidth='2'
+        fill='#EAEAEA'
+      />
+
+      {/* Inner frame */}
+      <rect
+        x={dashedFrameX + shadowBorder * xCoordRelCoef}
+        y={dashedFrameY + shadowBorder * yCoordRelCoef}
+        width={dashedFrameWidth - shadowBorder * xCoordRelCoef * 2}
+        height={dashedFrameHeight - shadowBorder * yCoordRelCoef * 2}
+        fill='#B6C6D6'
+      />
+
+      {/* Dots */}
+      {isDots && (
+        <Dots
+          arrData={arrData}
+          pitchTypes={pitchTypes}
+          coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+        />
+      )}
+
+      {/* Heat areas */}
+      {!isDots && (
+        <>
+          <filter id='goo'>
+            <feGaussianBlur stdDeviation='2' />
+          </filter>
+          <HeatAreas
+            arrData={arrData}
+            pitchTypes={pitchTypes}
+            coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
+          />
+        </>
+      )}
+
+      {/* Dashed frame */}
+      <rect
+        x={dashedFrameX}
+        y={dashedFrameY}
+        width={dashedFrameWidth}
+        height={dashedFrameHeight}
+        stroke='#1A4C96'
+        strokeWidth='2'
+        strokeDasharray='8 2'
+        fill='transparent'
+      />
+
+      {/* Title */}
+      <text x={zeroXCoord} y={top - 5} className={cl.title}>
+        {`${title1} (${totalPitches})`}
+      </text>
+    </>
+  );
+};
+const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, preview, currentOption }) => {
+  const { zone, pitch_types: pitchTypes } = preview;
+
+  const {
+    y_strike_down: yStrikeDown,
+    x_strike_up: yStrikeUp,
+    x_strike_left: xStrikeLeft,
+    x_strike_right: xStrikeRight,
+    shadow_border: shadowBorder
+  } = zone;
+
+  const arrData = selectedPitchType
+    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
+    : filteredData;
+
+  let totalPitches = arrData.length;
+
+  const zeroYCoord = PARAMS.GRAPH_HEIGHT * 0.8615;
+  const yCoordRelCoef = 179;
+  const yCoordAbsCoef = 0;
+
+  const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.82819;
+  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.7;
+  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
+  const xCoordRelCoef = 179;
+  PARAMS.GRAPH_WIDTH - 14 - 217;
+  // Dashed frame params
+  const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
+  const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
+  const dashedFrameY = zeroYCoord - yStrikeUp * yCoordRelCoef + yCoordAbsCoef;
+  const dashedFrameHeight = zeroYCoord - yStrikeDown * yCoordRelCoef + yCoordAbsCoef - dashedFrameY;
+
+  const isDots = currentOption === 'All Pitches';
+  return (
+    <>
+      {/* Center X line */}
+      {/* <line x1={0} y1={zeroYCoord} x2={PARAMS.GRAPH_WIDTH} y2={zeroYCoord} stroke='red' /> */}
+      {/* Center Y line */}
+      {/* <line x1={zeroXCoord} y1={0} x2={zeroXCoord} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+      {/* Left Dashed Line */}
+      {/* <line x1={dashedFrameX} y1={0} x2={dashedFrameX} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+      {/* Right Dashed Line */}
+      {/* <line x1={dashedFrameX + dashedFrameWidth} y1={0} x2={dashedFrameX + dashedFrameWidth} y2={PARAMS.GRAPH_HEIGHT} stroke='red' /> */}
+
+      {/* Frames */}
+      {/* Wrapper frame */}
+      <rect
+        x={PARAMS.GRAPH_WIDTH - 14 - 217}
         y='14'
         width='217'
         height={PARAMS.GRAPH_HEIGHT - 14 - 33}
@@ -595,14 +711,22 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
   );
 };
 
-const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOption }) => {
+const LeftChart = ({
+  data,
+  filteredData,
+  selectedPitchType,
+  preview,
+  currentOption,
+  subTitle1,
+  subTitle2
+}) => {
   const mainTitle = selectedPitchType ?? 'All pitches';
 
   return (
     <>
       <Frames
         top={40}
-        title1={mainTitle}
+        title1={subTitle1}
         filteredData={filteredData}
         selectedPitchType={selectedPitchType}
         preview={preview}
@@ -615,11 +739,29 @@ const LeftChart = ({ data, filteredData, selectedPitchType, preview, currentOpti
         selectedPitchType={selectedPitchType}
         preview={preview}
       />
+      <RightFrames
+        top={40}
+        left={PARAMS.SIDE_PADDING + 179 + 45 + 228}
+        title1={subTitle2}
+        filteredData={filteredData}
+        selectedPitchType={selectedPitchType}
+        preview={preview}
+        currentOption={currentOption}
+      />
     </>
   );
 };
 
-const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, preview, currentOption }) => {
+const TwinPitchesGraph = ({
+  data,
+  filteredData,
+  selectedPitchType = null,
+  preview,
+  currentOption,
+  title,
+  subTitle1,
+  subTitle2
+}) => {
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
   const wrapperRef = useRef();
@@ -650,54 +792,8 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
     };
   }, []);
 
-  useEffect(() => {
-    // const heatmapInstance = h337.create({
-    //   // only container is required, the rest will be defaults
-    //   // container: document.getElementById('root')
-    //   container: wrapperRef.current
-    // });
-    // const zeroYCoord = wrapperRef.current.clientHeight * 0.85;
-    // const yCoordAbsCoef = wrapperRef.current.clientHeight / 5.173333;
-    // const zeroXCoord = wrapperRef.current.clientWidth * 0.2645;
-    // console.log(dotsCoords);
-    // console.log(maxValue);
-    // let len = arrData.length;
-    // while (len--) {
-    //   const val = Math.floor(Math.random() * 100);
-    //   max = Math.max(max, val);
-    //   const point = {
-    //     // x: zeroXCoord,
-    //     y: zeroYCoord,
-    //     x: Math.floor(Math.random() * width),
-    //     // y: Math.floor(Math.random() * height),
-    //     value: val
-    //   };
-    //   points.push(point);
-    // }
-    // heatmap data format
-    // const dataValues = {
-    //   min: 1,
-    //   max: 5,
-    //   // data: [
-    //   //   { x: 40, y: 50, value: 1 },
-    //   //   { x: 80.5, y: 50.4, value: 1 },
-    //   //   { x: 90, y: 50.3, value: 1 },
-    //   //   { x: 200, y: 150, value: 3 },
-    //   //   { x: 150, y: 50, value: 10 }
-    //   // ]
-    //   data: points
-    // };
-    // console.log(data);
-    // if you have a set of datapoints always use setData instead of addData
-    // for data initialization
-    // heatmapInstance.setData(dataValues);
-    // heatmapInstance.repaint();
-    // heatmapInstanceRef.current.setData(data);
-    // heatmapInstanceRef.current.repaint();
-  }, [filteredData]);
-
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} style={{ position: 'relative' }}>
       <svg
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
@@ -711,9 +807,26 @@ const TwinPitchesGraph = ({ data, filteredData, selectedPitchType = null, previe
             selectedPitchType={selectedPitchType}
             preview={preview}
             currentOption={currentOption}
+            subTitle1={subTitle1}
+            subTitle2={subTitle2}
           />
         )}
       </svg>
+      {title && (
+        <div
+          style={{
+            position: 'absolute',
+            left: '-7rem',
+            top: 30,
+            width: '7rem',
+            height: '1rem',
+            lineHeight: 1,
+            textAlign: 'center',
+            fontWeight: 700
+          }}>
+          {title}
+        </div>
+      )}
     </div>
   );
 };
