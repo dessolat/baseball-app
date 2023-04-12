@@ -368,7 +368,7 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
   // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.7;
   // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
   const xCoordRelCoef = 179;
-  PARAMS.GRAPH_WIDTH - 14 - 217;
+  // PARAMS.GRAPH_WIDTH - 14 - 217;
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
   const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
