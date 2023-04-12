@@ -231,3 +231,13 @@
 .leftArrowWrapper {
   left: 20px;
 }
+
+.tooltip {
+	position: absolute;
+	right: 2%;
+	top: 3rem;
+	padding: 1rem;
+	background-color: white;
+	border-radius: 5px;
+	border: 1px solid lightgray;
+}

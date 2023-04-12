@@ -50,14 +50,7 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
           return pathSum;
         }, `M${startPointX},${startPointY}`);
 
-        const pathClasses = classNames(cl.hoveringLine, {
-          [cl.hoveringLine1]: i === 0,
-          [cl.hoveringLine2]: i === 1,
-          [cl.hoveringLine3]: i === 2,
-          [cl.hoveringLine4]: i === 3,
-          [cl.hoveringLine5]: i === 4,
-          [cl.hoveringLine6]: i === 5
-        });
+        const pathClasses = classNames(cl.hoveringLine, cl[`hoveringLine${i + 1}`]);
         return (
           <path
             key={i}
@@ -106,14 +99,8 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
           return pathSum;
         }, `M${startPointX},${startPointY}`);
 
-        const pathClasses = classNames(cl.graphPath, {
-          [cl.graphPath1]: i === 0,
-          [cl.graphPath2]: i === 1,
-          [cl.graphPath3]: i === 2,
-          [cl.graphPath4]: i === 3,
-          [cl.graphPath5]: i === 4,
-          [cl.graphPath6]: i === 5
-        });
+        const pathClasses = classNames(cl.graphPath, cl[`graphPath${i + 1}`]);
+        const graphNumberClasses = classNames(cl.graphNumber, cl[`graphNumber${i + 1}`]);
 
         const isPath = values.some(value => value !== 0);
         return (
@@ -128,17 +115,27 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
               />
             )}
             {values.map((value, j) => {
-              if (value)
+              if (value) {
+                const valueText =
+                  currentTimeInterval !== 'Game' ? +(value * 100).toFixed(0) / 100 : Math.round(value);
                 return (
-                  <circle
-                    key={type + '-' + j}
-                    cx={columnStartX + columnStepX * j}
-                    cy={rowsStartY - (value - minValue) * yScaleMultiplier}
-                    r='3'
-                    fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
-                    className={pathClasses}
-                  />
+                  <Fragment key={type + '-' + j}>
+                    <circle
+                      cx={columnStartX + columnStepX * j}
+                      cy={rowsStartY - (value - minValue) * yScaleMultiplier}
+                      r='3'
+                      fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                      className={pathClasses}
+                    />
+                    <text
+                      x={columnStartX + columnStepX * j}
+                      y={rowsStartY - (value - minValue) * yScaleMultiplier - 15}
+                      className={graphNumberClasses}>
+                      {valueText}
+                    </text>
+                  </Fragment>
                 );
+              }
 
               return <Fragment key={i + '-' + j}></Fragment>;
             })}

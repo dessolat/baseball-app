@@ -1,10 +1,11 @@
 import { degToRad } from 'three/src/math/MathUtils';
 import BgLayout from './BgLayout';
 import cl from './HitsAnglesGraph.module.scss';
+import Footer from './Footer';
 
 const PARAMS = {
   GRAPH_WIDTH: 307,
-  GRAPH_HEIGHT: 423,
+  GRAPH_HEIGHT: 450,
   LINE_WIDTH: 179,
   ZERO_X: 98.45,
   ZERO_Y: 230.35,
@@ -95,7 +96,14 @@ const Segments = ({ angleValues, dataField, minMaxValue }) => (
   </>
 );
 
-const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
+const HitsAnglesGraph = ({
+  title,
+  angleValues,
+  dataField,
+  isFooter = true,
+  footerField = '',
+  footerUnits = ''
+}) => {
   const minMaxValue = angleValues.reduce(
     (sum, value) => {
       if (value[dataField] > sum.max) sum.max = value[dataField];
@@ -108,9 +116,9 @@ const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
 
   return (
     <svg
-      width='307'
-      height='423'
-      viewBox='0 0 307 423'
+      width={PARAMS.GRAPH_WIDTH}
+      height={PARAMS.GRAPH_HEIGHT}
+      viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
       fill='none'
       className={cl.graph}
       xmlns='http://www.w3.org/2000/svg'>
@@ -124,6 +132,16 @@ const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
 
       {/* Segments */}
       <Segments angleValues={angleValues} dataField={dataField} minMaxValue={minMaxValue} />
+
+      {/* Footer */}
+      {isFooter && (
+        <Footer
+          PARAMS={PARAMS}
+          angleValues={angleValues}
+          footerField={footerField}
+          footerUnits={footerUnits}
+        />
+      )}
     </svg>
   );
 };

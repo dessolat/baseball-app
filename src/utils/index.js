@@ -137,12 +137,32 @@ export const getRndValue = (min, max) => Math.floor(Math.random() * (max - min +
 
 export const getPitchColorByName = name =>
   ({
-    'Fastball': '#CE9587',
-    'Curveball': '#CBC8E5',
+    Fastball: '#CE9587',
+    Curveball: '#CBC8E5',
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
     Submarine: '#B08194',
     'All Pitches': '#1A4C96'
+  }[name]);
+
+export const getPitchСlassColorByName = name =>
+  ({
+    Fastball: '#ec9599',
+    // Fastball: '#D92B33',
+    Breaking: '#92d4eb',
+    // Breaking: '#24A8D7',
+    Offspeed: '#c6dac7'
+    // Offspeed: '#8DB58E'
+  }[name]);
+	
+export const getPitchСlassPrimaryColorByName = name =>
+  ({
+    // Fastball: '#ec9599',
+    Fastball: '#D92B33',
+    // Breaking: '#92d4eb',
+    Breaking: '#24A8D7',
+    // Offspeed: '#c6dac7'
+    Offspeed: '#8DB58E'
   }[name]);
 
 export const MONTHS = [

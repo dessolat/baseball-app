@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchColorByName } from 'utils';
 import Tooltip from './Tooltip';
+import SubTitle from './SubTitle';
 // import h337 from 'heatmap.js';
 
 const PARAMS = {
@@ -372,6 +373,9 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
       <text x={zeroXCoord} y={top - 5} className={cl.title}>
         {`${title1} (${totalPitches})`}
       </text>
+
+      {/* Subtitle */}
+      <SubTitle zeroXCoord={zeroXCoord} top={top} arrData={arrData} />
     </>
   );
 };
@@ -647,7 +651,7 @@ const LeftChart = ({ filteredData, selectedPitchType, preview, currentOption }) 
         selectedPitchType={selectedPitchType}
         preview={preview}
       />
-      {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} isType={!selectedPitchType}/>}
+      {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} isType={!selectedPitchType} />}
     </>
   );
 };

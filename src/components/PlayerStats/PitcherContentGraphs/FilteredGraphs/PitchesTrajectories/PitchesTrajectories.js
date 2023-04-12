@@ -8,6 +8,7 @@ import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 // import ArrowDown from 'components/UI/icons/ArrowDown';
 import Curves from './Curves/Curves';
+import Tooltip from './Tooltip';
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
@@ -33,8 +34,10 @@ const PitchesTrajectories = ({ data }) => {
   const [isAutoRotate, setAutoRotate] = useState(true);
   const [zoomCoef, setZoomCoef] = useState(1);
   const [isGraphVisible, setGraphVisibility] = useState(false);
+  const [hovered, setHovered] = useState({ isHovered: false, text: '' });
 
   const graphRef = useRef();
+  const pointerTimeout = useRef(null);
 
   useEffect(() => {
     let options = {
@@ -80,7 +83,25 @@ const PitchesTrajectories = ({ data }) => {
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
   const hitsData = data.filter(({ hit_info }) => hit_info.data_3d !== null);
-	const isCurves = hitsData.length > 0
+  const isCurves = hitsData.length > 0;
+
+  const handlePointerOverCurve = text => {
+    clearTimeout(pointerTimeout.current);
+
+    setHovered({ isHovered: true, text });
+
+    document.body.style.cursor = 'pointer';
+  };
+
+  const handlePointerOutCurve = text => {
+    clearTimeout(pointerTimeout.current);
+
+    pointerTimeout.current = setTimeout(() => {
+      setHovered({ isHovered: false, text });
+    }, 4000);
+
+    document.body.style.cursor = 'auto';
+  };
   return (
     <div className={cl.fieldWrapper} ref={wrapperRef}>
       <Canvas
@@ -96,7 +117,13 @@ const PitchesTrajectories = ({ data }) => {
               <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
             </mesh>
 
-            {isCurves && <Curves hitsData={hitsData} />}
+            {isCurves && (
+              <Curves
+                hitsData={hitsData}
+                handlePointerOver={handlePointerOverCurve}
+                handlePointerOut={handlePointerOutCurve}
+              />
+            )}
 
             <directionalLight
               position={[0, 400, 0]}
@@ -129,6 +156,8 @@ const PitchesTrajectories = ({ data }) => {
         handleAutoRotateClick={handleAutoRotateClick}
         handleResetClick={handleResetClick}
       />
+
+      {hovered.isHovered && <Tooltip text={hovered.text} />}
     </div>
   );
 };

@@ -26,9 +26,21 @@ const HitsAnglesGraphs = ({ data }) => {
       sumAngleObj.hitsCount++;
 
       sumAngleObj.sumVelocity += exitVelocity;
+      if (sumAngleObj.minVelocity === undefined || exitVelocity < sumAngleObj.minVelocity) {
+        sumAngleObj.minVelocity = exitVelocity;
+      }
+      if (sumAngleObj.maxVelocity === undefined || exitVelocity > sumAngleObj.maxVelocity) {
+        sumAngleObj.maxVelocity = exitVelocity;
+      }
       sumAngleObj.avgVelocity = sumAngleObj.sumVelocity / sumAngleObj.hitsCount;
 
       sumAngleObj.sumDistance += distance;
+      if (sumAngleObj.minDistance === undefined || distance < sumAngleObj.minDistance) {
+        sumAngleObj.minDistance = distance;
+      }
+      if (sumAngleObj.maxDistance === undefined || distance > sumAngleObj.maxDistance) {
+        sumAngleObj.maxDistance = distance;
+      }
       sumAngleObj.avgDistance = sumAngleObj.sumDistance / sumAngleObj.hitsCount;
 
       return sum;
@@ -38,13 +50,26 @@ const HitsAnglesGraphs = ({ data }) => {
 
   return (
     <div className={cl.wrapper}>
-      <HitsAnglesGraph title='Hits by angle, hits' angleValues={angleValues} dataField='hitsCount' />
+      <HitsAnglesGraph
+        title='Hits by angle, hits'
+        angleValues={angleValues}
+        dataField='hitsCount'
+        isFooter={false}
+      />
       <HitsAnglesGraph
         title='Exit velocity by angle, mph'
         angleValues={angleValues}
         dataField='avgVelocity'
+        footerField='Velocity'
+				footerUnits='mph'
       />
-      <HitsAnglesGraph title='Distance by angle, m' angleValues={angleValues} dataField='avgDistance' />
+      <HitsAnglesGraph
+        title='Distance by angle, m'
+        angleValues={angleValues}
+        dataField='avgDistance'
+        footerField='Distance'
+				footerUnits='m'
+      />
     </div>
   );
 };

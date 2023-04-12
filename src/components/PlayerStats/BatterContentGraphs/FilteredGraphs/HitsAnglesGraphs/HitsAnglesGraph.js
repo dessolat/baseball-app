@@ -1,10 +1,11 @@
 import { degToRad } from 'three/src/math/MathUtils';
 import BgLayout from './BgLayout';
 import cl from './HitsAnglesGraph.module.scss';
+import Footer from './Footer';
 
 const PARAMS = {
   GRAPH_WIDTH: 307,
-  GRAPH_HEIGHT: 300,
+  GRAPH_HEIGHT: 450,
   LINE_WIDTH: 179,
   ZERO_X: 98.45,
   ZERO_Y: 230.35,
@@ -34,6 +35,17 @@ const RadialTitles = ({ minMaxValue, title }) => {
       {/* Top values */}
       {titles.map((value, i) => {
         const yCoord = PARAMS.ZERO_Y - 20 - i * 22.5;
+        const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
+
+        return (
+          <text key={i} x={xCoord} y={yCoord} className={cl.leftValues} textAnchor='end'>
+            {filteredValue}
+          </text>
+        );
+      })}
+      {/* Bottom values */}
+      {titles.map((value, i) => {
+        const yCoord = PARAMS.ZERO_Y + 20 + i * 22.5;
         const filteredValue = title !== 'Hits by angle, hits' ? value : (value * 10) % 10 ? '' : +value;
 
         return (
@@ -79,7 +91,7 @@ const Segments = ({ angleValues, dataField, minMaxValue }) => (
   </>
 );
 
-const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
+const HitsAnglesGraph = ({ title, angleValues, dataField, isFooter = true, footerField, footerUnits }) => {
   const minMaxValue = angleValues.reduce(
     (sum, value) => {
       if (value[dataField] > sum.max) sum.max = value[dataField];
@@ -108,6 +120,16 @@ const HitsAnglesGraph = ({ title, angleValues, dataField }) => {
 
       {/* Segments */}
       <Segments angleValues={angleValues} dataField={dataField} minMaxValue={minMaxValue} />
+
+      {/* Footer */}
+      {isFooter && (
+        <Footer
+          PARAMS={PARAMS}
+          angleValues={angleValues}
+          footerField={footerField}
+          footerUnits={footerUnits}
+        />
+      )}
     </svg>
   );
 };
