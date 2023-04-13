@@ -19,6 +19,7 @@ const defaultState = {
   pitchState: 'Field',
   errorMsg: null,
   playerCardFilter: '',
+  playerCardFilterBy: 'batter',
   videoPlaybackRate: 1,
   videoState: null,
   preferredVideoState: 2,
@@ -34,9 +35,9 @@ const defaultState = {
   isRedLineDragging: false,
   timelineWidth: 825,
   fullTimelineWidth: 825,
-	focus: 'list',
-	isVideoEffects: true,
-	listScrollTop: false
+  focus: 'list',
+  isVideoEffects: true,
+  listScrollTop: false
 };
 
 const SET_FULL_DATA = 'SET_FULL_DATA';
@@ -59,6 +60,7 @@ const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const RESET_DATA = 'RESET_DATA';
 const SET_ERROR_MSG = 'SET_ERROR_MSG';
 const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
+const TOGGLE_PLAYER_CARD_FILTER_BY = 'TOGGLE_PLAYER_CARD_FILTER_BY';
 const SET_VIDEO_PLAYBACK_RATE = 'SET_VIDEO_PLAYBACK_RATE';
 const SET_VIDEO_STATE = 'SET_VIDEO_STATE';
 const SET_PREFERRED_VIDEO_STATE = 'SET_PREFERRED_VIDEO_STATE';
@@ -120,6 +122,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, errorMsg: action.payload };
     case SET_PLAYER_CARD_FILTER:
       return { ...state, playerCardFilter: action.payload };
+    case TOGGLE_PLAYER_CARD_FILTER_BY:
+      return { ...state, playerCardFilterBy: state.playerCardFilterBy === 'pitcher' ? 'batter' : 'pitcher' };
     case SET_VIDEO_PLAYBACK_RATE:
       return { ...state, videoPlaybackRate: action.payload };
     case SET_VIDEO_STATE:
@@ -181,6 +185,7 @@ export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const resetData = () => ({ type: RESET_DATA });
 export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
 export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
+export const togglePlayerCardFilterBy = () => ({ type: TOGGLE_PLAYER_CARD_FILTER_BY });
 export const setVideoPlaybackRate = payload => ({ type: SET_VIDEO_PLAYBACK_RATE, payload });
 export const setVideoState = payload => ({ type: SET_VIDEO_STATE, payload });
 export const setPreferredVideoState = payload => ({ type: SET_PREFERRED_VIDEO_STATE, payload });
