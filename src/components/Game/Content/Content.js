@@ -222,23 +222,25 @@ const Content = ({ currentTab }) => {
 
     //Set current card on pause playbackMode
     if (playbackMode === 'pause') {
-      const newCurrentCard = filteredCards.filter(
+      console.log(currentCard);
+      console.log(filteredCards);
+      const newCurrentCard = filteredCards.find(
         card =>
           card.inning_number === currentCard.inning_number &&
           card.who_id === currentCard.who_id &&
           card.moments[0].inner.id === currentCard.moments[0].inner.id
-      )[0];
-
-      dispatch(
-        setCurrentCard(
-          { ...newCurrentCard, customMoment: currentCard.customMoment } || filteredCards.slice(-1)[0]
-        )
       );
+
+      if (newCurrentCard) {
+        dispatch(setCurrentCard({ ...newCurrentCard, customMoment: currentCard.customMoment }));
+        return;
+      }
+
+      dispatch(setCurrentCard(filteredCards.slice(-1)[0]));
+      return;
     }
 
-    playbackMode === 'playOnline' &&
-      // setCurrentCard({ ...filteredCards.slice(-1)[0], row_number: filteredCards.length - 1 });
-      dispatch(setCurrentCard({ ...filteredCards.slice(-1)[0] }));
+    playbackMode === 'playOnline' && dispatch(setCurrentCard(filteredCards.slice(-1)[0]));
     // eslint-disable-next-line
   }, [filteredCards]);
 
@@ -260,7 +262,7 @@ const Content = ({ currentTab }) => {
   useEffect(() => {
     if (Object.keys(currentCard).length === 0) return;
 
-    const cardId = currentCard.customMoment || currentCard.moments && currentCard.moments[0].inner.id;
+    const cardId = currentCard.customMoment || (currentCard.moments && currentCard.moments[0].inner.id);
     setSearchParam('card', cardId);
 
     dispatch(setInningNumber(currentCard.inning_number || 1));
@@ -273,11 +275,12 @@ const Content = ({ currentTab }) => {
 
     if (currentCard.customMoment) {
       const newMoment = currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment);
-
       dispatch(setCurrentMoment(newMoment));
     }
 
     if (!currentCard.customMoment) {
+      console.log('without custom', currentCard.toFirstMoment);
+      console.log(currentCard);
       currentCard.toFirstMoment
         ? dispatch(setCurrentMoment(newMoments[0] || {}))
         : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
