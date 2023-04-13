@@ -8,8 +8,6 @@ import {
   setInningNumber,
   setCurrentCard,
   setFilteredCards,
-  // setPlaybackMode,
-  // setImagesData,
   setCurrentMoment,
   setIsFilteredPlayer,
   setMoments
@@ -26,21 +24,22 @@ import classNames from 'classnames';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
-  const innings = useSelector(state => state.game.innings);
-  const situationFilter = useSelector(state => state.game.situationFilter);
-  const currentCard = useSelector(state => state.game.currentCard);
-  const filteredCards = useSelector(state => state.game.filteredCards);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  // const playersInfo = useSelector(state => state.game.playersInfo);
-  const errorMsg = useSelector(state => state.game.errorMsg);
-  const gameId = useSelector(state => state.game.gameId);
-  const isVideo = useSelector(state => state.game.isVideo);
-  const playerCardFilter = useSelector(state => state.game.playerCardFilter);
+  const {
+    innings,
+    situationFilter,
+    currentCard,
+    filteredCards,
+    playbackMode,
+    errorMsg,
+    gameId,
+    isVideo,
+    playerCardFilter,
+    playerCardFilterBy
+  } = useSelector(state => state.game);
   const dispatch = useDispatch();
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
   const scrollToRef = useRef(false);
-  // const queriesRef = useRef([]);
   const beforeAfterRef = useRef({});
 
   useEffect(() => {
@@ -200,7 +199,7 @@ const Content = ({ currentTab }) => {
       dispatch(setCurrentCard(lastCard));
     }
     // eslint-disable-next-line
-  }, [situationFilter, playerCardFilter]);
+  }, [situationFilter, playerCardFilter, playerCardFilterBy]);
 
   useEffect(() => {
     if (filteredCards.length === 0) {
@@ -320,18 +319,24 @@ const Content = ({ currentTab }) => {
     playerCardFilter === '' && dispatch(setIsFilteredPlayer(true));
 
     if (playerCardFilter !== '') {
-      const tempFilteredCards = filteredCards.filter(card => {
-        const whoWordsArr = card.who.split(' ');
+      function getWordsEquality(searchText) {
+        const searchedWordsArr = searchText.split(' ');
 
         return filterArr.reduce((sum, filterWord) => {
           if (
-            !whoWordsArr.find(
+            !searchedWordsArr.find(
               whoWord => whoWord.slice(0, filterWord.length).toLowerCase() === filterWord.toLowerCase()
             )
           )
             sum = false;
           return sum;
         }, true);
+      }
+
+      const tempFilteredCards = filteredCards.filter(({ who, moments }) => {
+        if (playerCardFilterBy === 'batter') return getWordsEquality(who);
+
+        return moments.some(({ pitcher: { pitches_name: pitcherName } }) => getWordsEquality(pitcherName));
       });
 
       if (tempFilteredCards.length > 0) {
