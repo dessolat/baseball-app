@@ -36,7 +36,7 @@ const defaultState = {
   timelineWidth: 825,
   fullTimelineWidth: 825,
   focus: 'list',
-  isVideoEffects: true,
+  isVideoEffects: false,
   listScrollTop: false
 };
 
