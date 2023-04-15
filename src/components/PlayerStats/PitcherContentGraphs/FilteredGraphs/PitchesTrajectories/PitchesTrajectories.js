@@ -42,7 +42,8 @@ const PitchesTrajectories = ({ data }) => {
   useEffect(() => {
     let options = {
       root: null,
-      rootMargin: '300px 0px',
+      rootMargin: '-300px 0px',
+      // rootMargin: '300px 0px',
       threshold: 0
     };
 
@@ -110,45 +111,43 @@ const PitchesTrajectories = ({ data }) => {
         camera={{ position: [350, 1000, 1500], far: 3000, zoom: 0.45 * zoomCoef }}
         shadows={true}
         orthographic={true}>
-        {isGraphVisible && (
-          <Suspense fallback={null}>
-            <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
-              <planeGeometry args={[1280, 1090]} />
-              <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
-            </mesh>
+        <Suspense fallback={null}>
+          <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
+            <planeGeometry args={[1280, 1090]} />
+            <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
+          </mesh>
 
-            {isCurves && (
-              <Curves
-                hitsData={hitsData}
-                handlePointerOver={handlePointerOverCurve}
-                handlePointerOut={handlePointerOutCurve}
-              />
-            )}
-
-            <directionalLight
-              position={[0, 400, 0]}
-              intensity={0.5}
-              castShadow
-              shadow-camera-left={-640}
-              shadow-camera-right={640}
-              shadow-camera-top={640}
-              shadow-camera-bottom={-640}
+          {isGraphVisible && isCurves && (
+            <Curves
+              hitsData={hitsData}
+              handlePointerOver={handlePointerOverCurve}
+              handlePointerOut={handlePointerOutCurve}
             />
-            <ambientLight intensity={0.5} />
+          )}
 
-            <OrbitControls
-              enableZoom={true}
-              autoRotate={isAutoRotate}
-              maxPolarAngle={Math.PI / 2.2}
-              minZoom={0.22}
-              maxZoom={3}
-              zoomSpeed={1.5}
-              enableDamping={false}
-              rotateSpeed={1.2}
-              ref={controlsRef}
-            />
-          </Suspense>
-        )}
+          <directionalLight
+            position={[0, 400, 0]}
+            intensity={0.5}
+            castShadow
+            shadow-camera-left={-640}
+            shadow-camera-right={640}
+            shadow-camera-top={640}
+            shadow-camera-bottom={-640}
+          />
+          <ambientLight intensity={0.5} />
+
+          <OrbitControls
+            enableZoom={true}
+            autoRotate={isAutoRotate}
+            maxPolarAngle={Math.PI / 2.2}
+            minZoom={0.22}
+            maxZoom={3}
+            zoomSpeed={1.5}
+            enableDamping={false}
+            rotateSpeed={1.2}
+            ref={controlsRef}
+          />
+        </Suspense>
       </Canvas>
 
       <OptionsBar
