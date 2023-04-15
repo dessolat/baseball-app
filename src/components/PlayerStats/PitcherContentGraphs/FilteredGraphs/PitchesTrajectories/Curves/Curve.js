@@ -1,7 +1,8 @@
 import { memo, useRef, useState, useEffect, useContext } from 'react';
-import { useFrame 
-	// extend
- } from '@react-three/fiber';
+import {
+  useFrame
+  // extend
+} from '@react-three/fiber';
 import { HSVtoRGB } from 'utils';
 // import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 import { ctx } from 'context/ThreeTextCtx';
@@ -25,7 +26,7 @@ const CurvePath = memo(
     const { data_3d: data3D, distance, angle, 'exit velocity': speed } = hit.hit_info;
     const { game_id: gameId, mom_id: momentId } = hit.pitch_info;
 
-    // const [tubeRadius, setTubeRadius] = useState(3);
+    const [pointerOver, setPointerOver] = useState(false);
 
     const tubeRef = useRef(null);
     // const textRef = useRef(null);
@@ -90,7 +91,9 @@ const CurvePath = memo(
       //   textRef.current.geometry.center();
       // }
 
-      // if (hovered) tubeRef.current
+      // if (pointerOver) {
+      //   tubeRef.current.attributes.args = [curveCoords, 500, 10, 10, false];
+      // }
 
       if (stepTotalRef > 30510) return;
       if (stepTotalRef > 30110) {
@@ -124,25 +127,31 @@ const CurvePath = memo(
 Distance: ${String(Math.round(distance))} m.`;
     return (
       <>
-        <mesh
-          position={[-70, 0, 220]}
-          castShadow
-          onClick={handleMeshClick}
-          onPointerOver={() => {
-            if (cashedStepTotal.current < 30110) return;
-            handlePointerOver(distanceText);
-          }}
-          onPointerOut={() => {
-            if (cashedStepTotal.current < 30110) return;
-            handlePointerOut(distanceText);
-          }}>
+        <mesh position={[-70, 0, 220]} castShadow>
           <tubeGeometry
-            args={[curveCoords, 500, 3, 10, false]}
+            args={[curveCoords, 500, !pointerOver ? 3 : 4, 10, false]}
             // drawRange={{ start: 0, count: 200 }}
             ref={tubeRef}
           />
           <meshPhongMaterial color={meshColor} side={FrontSide} />
         </mesh>
+        <mesh
+          position={[-70, 0, 220]}
+          onClick={handleMeshClick}
+          onPointerOver={() => {
+            if (cashedStepTotal.current < 30110) return;
+            handlePointerOver(distanceText);
+            setPointerOver(true);
+          }}
+          onPointerOut={() => {
+            if (cashedStepTotal.current < 30110) return;
+            handlePointerOut(distanceText);
+            setPointerOver(false);
+          }}>
+          <tubeGeometry args={[curveCoords, 500, 12, 10, false]} />
+          <meshPhongMaterial transparent opacity='0' />
+        </mesh>
+
         {/* {hovered && (
         <mesh
           position={[textCoords[0] * coef - 390, textCoords[2] * coef + 100, textCoords[1] * -coef + 450]}

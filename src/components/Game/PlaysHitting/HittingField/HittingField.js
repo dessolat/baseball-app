@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
+import React, { Suspense, useMemo, useState, useRef, useLayoutEffect, memo } from 'react';
 import cl from './HittingField.module.scss';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
@@ -50,17 +50,11 @@ const Curve = ({
 }) => {
   const { data_3d: data } = moment?.metering?.hit;
 
-  const [hovered, setHovered] = useState(false);
+  const [pointerOver, setPointerOver] = useState(false);
 
   const cashedStepTotal = useRef(0);
   const tubeRef = useRef(null);
   const textRef = useRef(null);
-
-  useEffect(() => {
-    if (tubeRef.current === null) return;
-
-    document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  }, [hovered]);
 
   let stepTotalRef = cashedStepTotal.current;
 
@@ -71,14 +65,12 @@ const Curve = ({
     cashedStepTotal.current = 0;
   }, [data]);
 
-  const points = data
-    // .slice(0, curveCount)
-    .reduce((sum, coord) => {
-      const newCoord = new THREE.Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217);
+  const points = data.reduce((sum, coord) => {
+    const newCoord = new THREE.Vector3(coord[0] * coef - 320, coord[2] * coef, coord[1] * -coef + 217);
 
-      sum.push(newCoord);
-      return sum;
-    }, []);
+    sum.push(newCoord);
+    return sum;
+  }, []);
 
   const curveCoords = new CatmullRomCurve3(points);
 
@@ -114,24 +106,25 @@ const Curve = ({
 Distance: ${String(Math.round(moment.metering.hit.distance))} m.`;
   return (
     <>
+      <mesh position={[-70, 0, 220]} castShadow>
+        <tubeGeometry args={[curveCoords, 70, !pointerOver ? 3 : 4, 50, false]} ref={tubeRef} />
+        <meshPhongMaterial color={isCurrentTube ? 'blue' : '#0099E6'} side={FrontSide} />
+      </mesh>
       <mesh
         position={[-70, 0, 220]}
-        castShadow
         onClick={handleMeshClick}
         onPointerOver={() => {
           if (cashedStepTotal.current < 30110) return;
           handlePointerOver(distanceText);
+          setPointerOver(true);
         }}
         onPointerOut={() => {
           if (cashedStepTotal.current < 30110) return;
           handlePointerOut(distanceText);
+          setPointerOver(false);
         }}>
-        <tubeGeometry args={[curveCoords, 70, 4, 50, false]} ref={tubeRef} />
-        <meshPhongMaterial
-          color={isCurrentTube ? 'blue' : '#0099E6'}
-          // map={textureRef}
-          side={FrontSide}
-        />
+        <tubeGeometry args={[curveCoords, 70, 12, 50, false]} />
+        <meshPhongMaterial transparent opacity='0' />
       </mesh>
       {/* {hovered && (
         <mesh
@@ -221,7 +214,7 @@ const HittingField = () => {
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
   const controlsRef = useRef();
-	const pointerTimeout = useRef(null);
+  const pointerTimeout = useRef(null);
 
   // useLayoutEffect(() => {
   //   if (isCameraView) return;
