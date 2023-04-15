@@ -2,19 +2,20 @@ import TotalInfo from './Groups/TotalInfo';
 import CommonGroup from './Groups/CommonGroup';
 import CountsDistribution from './Groups/CountsDistribution';
 
-const BannerColumns = ({parentObj}) => {
+const BannerColumns = ({ parentObj }) => {
+  console.log(parentObj);
   const GROUPS_PARAMS = {
-    BatterAppearance: [
+    PlateAppearance: [
       { par1: 'SO', par2: null },
       { par1: 'BB', par2: 'HBP' },
       { par1: 'H', par2: null },
-      { par1: 'PO', par2: 'FC' },
+      { par1: 'PO', par2: null },
       { par1: 'E', par2: null }
     ],
     OutsDistribution: [
-      { par1: 'SO', par2: null },
       { par1: 'FO', par2: null },
-      { par1: 'GO', par2: 'FC' }
+      { par1: 'GO', par2: null },
+      { par1: 'FC', par2: null }
     ],
     PitchesZoneDistribution: [
       { par1: 'Balls', par2: null },
@@ -30,6 +31,7 @@ const BannerColumns = ({parentObj}) => {
     ],
     HitsDistribution: [
       { par1: 'Hits', par2: null },
+      { par1: null, par2: null },
       { par1: 'Fly', par2: null },
       { par1: 'Line', par2: null },
       { par1: 'Grounds', par2: null }
@@ -42,31 +44,31 @@ const BannerColumns = ({parentObj}) => {
         <TotalInfo data={parentObj} />
         <CommonGroup
           data={parentObj}
-          param='BatterAppearance'
-          title='Batter appearance results'
-          itemsArr={GROUPS_PARAMS.BatterAppearance}
-          staticTitle='Batters'
+          param='PlateAppearance'
+          title='Plate appearance results'
+          itemsArr={GROUPS_PARAMS.PlateAppearance}
+          staticTitle='PA'
         />
         <CommonGroup
           data={parentObj}
           param='OutsDistribution'
           title='Outs distribution'
           itemsArr={GROUPS_PARAMS.OutsDistribution}
-          staticTitle='Putouts'
+          staticTitle='PA'
         />
       </div>
       <div>
         <CommonGroup
           data={parentObj}
           param='PitchesZoneDistribution'
-          title='Pitches zone distribution'
+          title='Pitches distribution'
           itemsArr={GROUPS_PARAMS.PitchesZoneDistribution}
           staticTitle='Pitches'
         />
         <CommonGroup
           data={parentObj}
           param='PitchesSwingDistribution'
-          title='Pitches swing distribution'
+          title='Swings by pitches distribution'
           itemsArr={GROUPS_PARAMS.PitchesSwingDistribution}
           staticTitle='Pitches'
         />

@@ -18,9 +18,11 @@ const TotalInfoItem = ({ item, parent }) => {
 };
 
 const TotalInfo = ({ data }) => {
+	console.log(data);
   const itemsArr = [
-    { par1: 'IP', par2: 'G' },
-    { par1: 'Pitches', par2: 'Batters' },
+    { par1: 'PA', par2: 'G' },
+    { par1: 'Pitches', par2: 'PA' },
+    { par1: 'PA', par2: 'Pitches' },
     { par1: 'RHB', par2: 'LHB' }
   ];
   return (

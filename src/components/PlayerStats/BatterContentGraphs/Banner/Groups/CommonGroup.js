@@ -7,8 +7,15 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
 
   const valueCoef = useContext(AnimationContext);
 
-  const modifiedStaticTitle = par1 === 'GO' && par2 === 'FC' ? 'Outs' : staticTitle;
+  if (par1 === null && par2 === null)
+    return (
+      <div className={cl.groupItem} style={{ background: 'unset' }}>
+         
+      </div>
+    );
 
+  const modifiedStaticTitle = par1 === 'GO' && par2 === 'FC' ? 'Outs' : staticTitle;
+  
   const {
     abs: absValue,
     abs_rel: absRelValue,
@@ -16,6 +23,10 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
   } = par2 !== null ? parent[`${par1}/${par2}`] : parent[par1];
 
   let title = par2 !== null ? `${par1} & ${par2}` : par1;
+
+	if (par1 === 'Take') title = 'Not Swing'
+	if (par1 === 'Hits') title = 'Base Hits'
+
   title += ` (${absValue} / ${absRelValue} ${modifiedStaticTitle})`;
 
   const formattedValue = value !== '–' ? value : '—';
