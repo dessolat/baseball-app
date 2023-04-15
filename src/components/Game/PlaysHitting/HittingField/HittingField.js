@@ -100,7 +100,7 @@ const Curve = ({
   // const font = new FontLoader().parse(ComfortaaFont);
   // const textCoords = data[Math.floor(data.length / 2)];
 
-  const distanceText = `Angle: ${String(Math.round(moment.metering.hit.angle))}° Speed: ${String(
+  const distanceText = `Angle: ${String(Math.round(moment.metering.hit.angle))}° Velocity: ${String(
     Math.round(moment.metering.hit.start_speed)
   )} mph 
 Distance: ${String(Math.round(moment.metering.hit.distance))} m.`;
