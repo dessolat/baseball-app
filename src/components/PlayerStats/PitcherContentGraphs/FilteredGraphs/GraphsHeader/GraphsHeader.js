@@ -13,6 +13,8 @@ const GraphsHeader = ({
   setCurrentOption,
   currentOption2 = null,
   setCurrentOption2 = null,
+  currentOption3 = null,
+  setCurrentOption3 = null,
   noSelector = false,
   graphsArrow = false,
   ...props
@@ -40,6 +42,10 @@ const GraphsHeader = ({
     );
   };
 
+  const handleArrowClick = () => {
+    setCurrentOption3(prev => (prev === 'opened' ? 'closed' : 'opened'));
+  };
+
   const titleClasses = classNames(cl.title, {
     [cl.highTitle]: currentOption2 !== null
   });
@@ -47,7 +53,13 @@ const GraphsHeader = ({
     <div className={cl.graphsHeader} {...props}>
       <h3 className={cl.header}>{title}</h3>
       <p className={titleClasses}>{subTitle}</p>
-      {graphsArrow && <UpDownArrow style={{ height: '25%' }} up={true} />}
+      {graphsArrow && (
+        <UpDownArrow
+          style={{ height: '25%' }}
+          up={currentOption3 === 'opened'}
+          handleClick={handleArrowClick}
+        />
+      )}
       {!noSelector && (
         <OptionsToggler
           style={optionsTogglerStyles}

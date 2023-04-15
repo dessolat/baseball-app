@@ -9,8 +9,8 @@
   font: 700 1.125rem var(--font-nunito);
   text-align: center;
 
-	@media screen and (orientation: landscape) and (max-height: 950px) {
-    line-height: .8;
+  @media screen and (orientation: landscape) and (max-height: 950px) {
+    line-height: 0.8;
   }
 }
 
@@ -37,9 +37,9 @@
   display: flex;
   flex-direction: column;
 
-	@media screen and (orientation: landscape) and (max-height: 950px) {
-		padding-top: 6.125px;
-	}
+  @media screen and (orientation: landscape) and (max-height: 950px) {
+    padding-top: 6.125px;
+  }
 
   > .header {
     padding-left: 0.4rem;
@@ -78,7 +78,7 @@
   font: 300 0.875rem / 1.2 var(--font-nunito);
 
   + .textGroupItem {
-    margin-top: 0.30rem;
+    margin-top: 0.3rem;
 
     @media screen and (orientation: landscape) and (max-height: 950px) {
       margin-top: 0.13rem;
@@ -94,7 +94,7 @@
   position: relative;
 
   + .groupItem {
-    margin-top: 0.30rem;
+    margin-top: 0.3rem;
 
     @media screen and (orientation: landscape) and (max-height: 950px) {
       margin-top: 0.13rem;
@@ -193,6 +193,7 @@
 
 .graphsBlock {
   line-height: 0;
+	transition: max-height .6s ease-in-out;
 
   > * + * {
     margin-top: 5px;

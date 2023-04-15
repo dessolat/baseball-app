@@ -566,8 +566,15 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes}>
-        {(currentOption, setCurrentOption, currentOption2, setCurrentOption2) => (
+      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+        {(
+          currentOption,
+          setCurrentOption,
+          currentOption2,
+          setCurrentOption2,
+          currentOption3,
+          setCurrentOption3
+        ) => (
           <>
             <GraphsHeader
               optionsArr={['Season', 'Month', 'Game']}
@@ -578,8 +585,11 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               setCurrentOption={setCurrentOption}
               currentOption2={currentOption2}
               setCurrentOption2={setCurrentOption2}
-							graphsArrow
+              currentOption3={currentOption3}
+              setCurrentOption3={setCurrentOption3}
+              graphsArrow
             />
+
             <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
