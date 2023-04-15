@@ -25,12 +25,12 @@ const Footer = ({
 
   minMaxAvgValues.avg = minMaxAvgValues.sumValues / minMaxAvgValues.sumHits;
 
-  const minValue = `${Math.round(minMaxAvgValues.min * 10) / 10} ${footerUnits}`;
+  // const minValue = `${Math.round(minMaxAvgValues.min * 10) / 10} ${footerUnits}`;
   const avgValue = `${Math.round(minMaxAvgValues.avg * 10) / 10} ${footerUnits}`;
   const maxValue = `${Math.round(minMaxAvgValues.max * 10) / 10} ${footerUnits}`;
   return (
     <text x={graphWidth / 2} y={graphHeight - 8} className={footerText}>
-      MIN: {minValue} AVG: {avgValue} MAX: {maxValue}
+      AVG: {avgValue} MAX: {maxValue}
     </text>
   );
 };
