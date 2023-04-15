@@ -145,6 +145,7 @@ export const getPitchColorByName = name =>
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
     Submarine: '#B08194',
+		Subfastball: '#B18FA1',
     'All Pitches': '#1A4C96'
   }[name]);
 
