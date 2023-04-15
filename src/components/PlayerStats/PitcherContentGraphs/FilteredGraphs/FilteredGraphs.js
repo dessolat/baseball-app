@@ -1,5 +1,5 @@
 import cl from './FilteredGraphs.module.scss';
-import FilterField from 'components/UI/TextField/FilterField/FilterField';
+import FilterField from 'components/UI/dropdown/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
@@ -164,37 +164,75 @@ const Group = ({
   );
 };
 
-const TextGroup = ({ setTextGroupFilter }) => {
+const TextGroup = ({ setTextGroupFilter, data }) => {
+  function getSortedArr(set) {
+    return Array.from(set).sort((a, b) => (a > b ? 1 : -1));
+  }
+ 
+  const uniqueValues = useMemo(() => {
+    const defaultValues = { teams: new Set(), games: new Set(), batters: new Set() };
+    const tempData = data.reduce((sum, cur) => {
+      const { team_name: teamName, 'batter name': batterName, 'batter surname': batterSurname } = cur.batter;
+      const { date } = cur.pitch_info;
+
+      sum.teams.add(teamName);
+      sum.games.add(`${date.slice(8, 10)}/${date.slice(5, 7)} ${teamName}`);
+      sum.batters.add(`${batterName} ${batterSurname}`);
+
+      return sum;
+    }, defaultValues);
+
+    tempData.teams = getSortedArr(tempData.teams);
+    tempData.games = getSortedArr(tempData.games);
+    tempData.batters = getSortedArr(tempData.batters);
+
+    return tempData;
+  }, [data]);
   return (
     <div className={cl.textGroup}>
       <div className={cl.textGroupItem}>
         <p>Team</p>
         <FilterField
           placeholder='Search of team'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, team: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, team: value }));
+          }}
+          listValues={uniqueValues.teams}
+					isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
         <p>Game</p>
         <FilterField
           placeholder='Search of game (DD/MM Team)'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, game: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, game: value }));
+          }}
+					listValues={uniqueValues.games}
+					isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
         <p>Batter</p>
         <FilterField
           placeholder='Search of batter'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, batter: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, batter: value }));
+          }}
+          listValues={uniqueValues.batters}
+					isAllOption
         />
       </div>
     </div>
@@ -272,6 +310,7 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
 };
 
 const LeftColumnOptions = ({
+  pitchesData = {},
   data = {},
   handleFilterClick,
   currentFilterValues,
@@ -349,7 +388,7 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>Dataset filter</h3>
       <div className={cl.body}>
-        <TextGroup setTextGroupFilter={setTextGroupFilter} />
+        <TextGroup setTextGroupFilter={setTextGroupFilter} data={pitchesData.pitches_all} />
 
         <CustomGroup
           data={data}
@@ -810,6 +849,7 @@ const FilteredGraphs = ({ pitchesData }) => {
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
         data={filteredData}
+        pitchesData={pitchesData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
