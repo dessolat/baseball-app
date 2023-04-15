@@ -566,7 +566,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Season' defaultOption2={pitchTypes}>
+      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes}>
         {(currentOption, setCurrentOption, currentOption2, setCurrentOption2) => (
           <>
             <GraphsHeader
