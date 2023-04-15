@@ -99,7 +99,10 @@ export const openFullscreen = element => {
   }
 };
 
-export const closeFullscreen = () => document.exitFullscreen();
+export const closeFullscreen = () => {
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement)
+    document.exitFullscreen();
+};
 
 export const isFullScreen = () => {
   const fullScreenElement =
@@ -154,7 +157,7 @@ export const getPitchСlassColorByName = name =>
     Offspeed: '#c6dac7'
     // Offspeed: '#8DB58E'
   }[name]);
-	
+
 export const getPitchСlassPrimaryColorByName = name =>
   ({
     // Fastball: '#ec9599',

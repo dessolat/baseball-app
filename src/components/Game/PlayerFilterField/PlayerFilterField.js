@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setPlayerCardFilter, togglePlayerCardFilterBy } from 'redux/gameReducer';
+import {
+  setPlayerCardFilter,
+  togglePlayerCardFilterBy,
+  setPlayerCardFilterFocused
+} from 'redux/gameReducer';
 import cl from './PlayerFilterField.module.scss';
 
 const PlayerFilterField = () => {
@@ -32,6 +36,8 @@ const PlayerFilterField = () => {
   const btnText = playerCardFilterBy === 'pitcher' ? 'P' : 'B';
 
   const handleBtnClick = () => dispatch(togglePlayerCardFilterBy());
+  const handleFieldFocus = () => dispatch(setPlayerCardFilterFocused(true));
+  const handleFieldBlur = () => dispatch(setPlayerCardFilterFocused(false));
   return (
     <>
       <button className={cl.btn} onClick={handleBtnClick}>
@@ -42,6 +48,8 @@ const PlayerFilterField = () => {
         value={filterValue}
         onChange={changeHandler}
         className={inputClasses}
+        onFocus={handleFieldFocus}
+        onBlur={handleFieldBlur}
       />
     </>
   );

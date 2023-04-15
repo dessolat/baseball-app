@@ -15,27 +15,14 @@ const Videos = () => {
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
 
-  const viewMode = useSelector(state => state.game.viewMode);
-  const isFullscreen = useSelector(state => state.game.isFullscreen);
-  const currentMoment = useSelector(state => state.game.currentMoment);
-  // const videoState = useSelector(state => state.game.videoState);
-
-  // useEffect(() => {
-  //   if (videoState !== 2) return;
-
-  //   clearTimeout(timerRef.current);
-  //   controlsWrapperRef.current.style.opacity = 1;
-  //   // eslint-disable-next-line
-  // }, [videoState]);
+  const { viewMode, isFullscreen, currentMoment, playerCardFilterFocused } = useSelector(state => state.game);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
   useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.code !== 'KeyF') return;
-      e.preventDefault();
-
-      e.code === 'KeyF' && (isFullscreen ? closeFullscreen() : openFullscreen(wrapperRef.current));
+    if (playerCardFilterFocused) {
+      document.removeEventListener('keydown', handleKeyDown);
+      return;
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -43,12 +30,19 @@ const Videos = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, playerCardFilterFocused]);
 
   const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
     [cl.videos4]: viewMode === 'mode-2' || viewMode === 'mode-3'
   });
+
+  function handleKeyDown(e) {
+    if (e.code !== 'KeyF') return;
+    e.preventDefault();
+
+    e.code === 'KeyF' && (isFullscreen ? closeFullscreen() : openFullscreen(wrapperRef.current));
+  }
 
   function handleMouseMove() {
     if (!currentMoment.video) return;
@@ -68,21 +62,13 @@ const Videos = () => {
   }
 
   return (
-    <>
-      <div className={cl.outerWrapper} ref={wrapperRef}>
-        {/* <div className={wrapperClasses} ref={ref}> */}
-        <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>
-          <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
-        </div>
-        <SidePanel />
-        <BottomPanel />
-        {/* <VideoEventsList /> */}
-        {/* <VideoControls ref={controlsWrapperRef} /> */}
+    <div className={cl.outerWrapper} ref={wrapperRef}>
+      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>
+        <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
       </div>
-      {/* <div className={cl.eventsWrapper}>
-        <PlaysEvents />
-      </div> */}
-    </>
+      <SidePanel />
+      <BottomPanel />
+    </div>
   );
 };
 
