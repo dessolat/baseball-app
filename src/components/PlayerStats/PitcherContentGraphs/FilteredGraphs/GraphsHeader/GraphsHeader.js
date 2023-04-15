@@ -2,10 +2,11 @@ import cl from './GraphsHeader.module.scss';
 import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler';
 import classNames from 'classnames';
 import TimeDynamicCheckbox from 'components/UI/checkboxes/TimeDynamicCheckbox/TimeDynamicCheckbox';
+import UpDownArrow from 'components/UI/buttons/UpDownArrow/UpDownArrow';
 
 const GraphsHeader = ({
   optionsArr,
-	availableOptions,
+  availableOptions,
   title,
   subTitle,
   currentOption,
@@ -13,6 +14,7 @@ const GraphsHeader = ({
   currentOption2 = null,
   setCurrentOption2 = null,
   noSelector = false,
+  graphsArrow = false,
   ...props
 }) => {
   const optionsTogglerStyles = {
@@ -45,20 +47,21 @@ const GraphsHeader = ({
     <div className={cl.graphsHeader} {...props}>
       <h3 className={cl.header}>{title}</h3>
       <p className={titleClasses}>{subTitle}</p>
+      {graphsArrow && <UpDownArrow style={{ height: '25%' }} up={true} />}
       {!noSelector && (
         <OptionsToggler
           style={optionsTogglerStyles}
           optionsArr={optionsArr}
           currentOption={currentOption}
           handleOptionClick={handleOptionClick}
-					noSort={currentOption2 !== null}
+          noSort={currentOption2 !== null}
         />
       )}
       {currentOption2 !== null && (
         <TimeDynamicCheckbox
           style={optionsToggler2Styles}
           optionsArr={currentOption2}
-					availableOptions={availableOptions}
+          availableOptions={availableOptions}
           handleOptionClick={handleOption2Click}
         />
       )}

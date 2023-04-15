@@ -578,6 +578,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               setCurrentOption={setCurrentOption}
               currentOption2={currentOption2}
               setCurrentOption2={setCurrentOption2}
+							graphsArrow
             />
             <ArsenalGraph
               filteredData={filteredData}
