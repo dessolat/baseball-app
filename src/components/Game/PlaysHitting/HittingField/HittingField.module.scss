@@ -98,3 +98,14 @@
   background: var(--side-color);
   color: white;
 }
+
+.tooltip {
+	position: absolute;
+	left: 1%;
+	bottom: 1%;
+	padding: .25rem;
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+	font-size: .75rem;
+}

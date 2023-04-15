@@ -1,10 +1,9 @@
 import React, { Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import cl from './HittingField.module.scss';
-import { Canvas, useFrame, extend } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
-// import CurveTexture from 'images/blue_ball_curve.jpg';
 import classNames from 'classnames';
 import * as THREE from 'three';
 import ArrowDown from 'components/UI/icons/ArrowDown';
@@ -13,11 +12,12 @@ import FieldIcon from 'images/field_icon.png';
 import CameraView from './CameraView';
 import { useSelector } from 'react-redux';
 import useSetMomentById from 'hooks/useSetMomentById';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+import Tooltip from './Tooltip';
+// import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+// import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+// import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
 
-extend({ TextGeometry });
+// extend({ TextGeometry });
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
@@ -39,7 +39,15 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
   );
 };
 
-const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) => {
+const Curve = ({
+  moment,
+  coef,
+  setDrawPoints,
+  currentMoment,
+  setMomentById,
+  handlePointerOver,
+  handlePointerOut
+}) => {
   const { data_3d: data } = moment?.metering?.hit;
 
   const [hovered, setHovered] = useState(false);
@@ -97,8 +105,8 @@ const Curve = ({ moment, coef, setDrawPoints, currentMoment, setMomentById }) =>
 
   const handleMeshClick = () => setMomentById(moment.inner.id);
 
-  const font = new FontLoader().parse(ComfortaaFont);
-  const textCoords = data[Math.floor(data.length / 2)];
+  // const font = new FontLoader().parse(ComfortaaFont);
+  // const textCoords = data[Math.floor(data.length / 2)];
 
   const distanceText = `Angle: ${String(Math.round(moment.metering.hit.angle))}° Speed: ${String(
     Math.round(moment.metering.hit.start_speed)
@@ -112,11 +120,11 @@ Distance: ${String(Math.round(moment.metering.hit.distance))} m.`;
         onClick={handleMeshClick}
         onPointerOver={() => {
           if (cashedStepTotal.current < 30110) return;
-          setHovered(true);
+          handlePointerOver(distanceText);
         }}
         onPointerOut={() => {
           if (cashedStepTotal.current < 30110) return;
-          setHovered(false);
+          handlePointerOut(distanceText);
         }}>
         <tubeGeometry args={[curveCoords, 70, 4, 50, false]} ref={tubeRef} />
         <meshPhongMaterial
@@ -125,63 +133,71 @@ Distance: ${String(Math.round(moment.metering.hit.distance))} m.`;
           side={FrontSide}
         />
       </mesh>
-      {hovered && (
+      {/* {hovered && (
         <mesh
           position={[textCoords[0] * coef - 390, textCoords[2] * coef + 77, textCoords[1] * -coef + 450]}
           ref={textRef}>
           <textGeometry args={[distanceText, { font, size: 22, height: 2 }]} />
           <meshBasicMaterial color='blue' toneMapped={false} />
         </mesh>
-      )}
+      )} */}
     </>
   );
 };
 
-const CurveAndPoints = memo(({ moment, coef, currentMoment, setMomentById }) => {
-  const [drawPoints, setDrawPoints] = useState(false);
-  const { data_3d: data3D } = moment?.metering?.hit;
+const CurveAndPoints = memo(
+  ({ moment, coef, currentMoment, setMomentById, handlePointerOver, handlePointerOut }) => {
+    const [drawPoints, setDrawPoints] = useState(false);
+    const { data_3d: data3D } = moment?.metering?.hit;
 
-  return (
-    <>
-      <Curve
-        moment={moment}
-        coef={coef}
-        setDrawPoints={setDrawPoints}
-        currentMoment={currentMoment}
-        setMomentById={setMomentById}
-      />
-      {drawPoints && <TouchPoints data={data3D} coef={coef} />}
-    </>
-  );
-}, propsComparison);
+    return (
+      <>
+        <Curve
+          moment={moment}
+          coef={coef}
+          setDrawPoints={setDrawPoints}
+          currentMoment={currentMoment}
+          setMomentById={setMomentById}
+          handlePointerOver={handlePointerOver}
+          handlePointerOut={handlePointerOut}
+        />
+        {drawPoints && <TouchPoints data={data3D} coef={coef} />}
+      </>
+    );
+  },
+  propsComparison
+);
 
 function propsComparison(prevProps, nextProps) {
   return JSON.stringify(prevProps) === JSON.stringify(nextProps);
 }
 
-const Curves = memo(({ batterMoments, coef, currentMoment, setMomentById }) => {
-  return (
-    <>
-      {batterMoments.map(moment => {
-        return (
-          <CurveAndPoints
-            key={moment.inner.id}
-            moment={moment}
-            coef={coef}
-            currentMoment={currentMoment}
-            setMomentById={setMomentById}
-          />
-        );
-        // return <CurveAndPoints key={'curve-points-' + i} data3D={data3D} coef={coef} />;
-      })}
-    </>
-  );
-}, propsComparison);
+const Curves = memo(
+  ({ batterMoments, coef, currentMoment, setMomentById, handlePointerOver, handlePointerOut }) => {
+    return (
+      <>
+        {batterMoments.map(moment => {
+          return (
+            <CurveAndPoints
+              key={moment.inner.id}
+              moment={moment}
+              coef={coef}
+              currentMoment={currentMoment}
+              setMomentById={setMomentById}
+              handlePointerOver={handlePointerOver}
+              handlePointerOut={handlePointerOut}
+            />
+          );
+        })}
+      </>
+    );
+  },
+  propsComparison
+);
 
 const TouchPoints = ({ data, coef }) => (
   <>
     {data
-      // .slice(0, curveCount)
       .filter(coords => coords[3] === 1)
       .map((coord, i) => (
         <mesh key={i} position={[coord[0] * coef - 320 - 70, coord[2] * coef, coord[1] * -coef + 217 + 220]}>
@@ -194,17 +210,18 @@ const TouchPoints = ({ data, coef }) => (
 
 const HittingField = () => {
   const [isAutoRotate, setAutoRotate] = useState(true);
-  // const [curveCount, setCurveCount] = useState(null);
   const [isCameraView, setCameraView] = useState(false);
+  const [hovered, setHovered] = useState({ isHovered: false, text: '' });
 
   const { innings, currentCard, currentMoment } = useSelector(state => state.game);
 
   const { hit } = currentMoment.metering || {};
-  const { data_3d, camera_2d: camera2D } = hit || 0;
+  const { camera_2d: camera2D } = hit || 0;
 
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
   const controlsRef = useRef();
+	const pointerTimeout = useRef(null);
 
   // useLayoutEffect(() => {
   //   if (isCameraView) return;
@@ -239,6 +256,24 @@ const HittingField = () => {
   const handleAutoRotateClick = () => setAutoRotate(prev => !prev);
   const handleResetClick = () => controlsRef.current.reset();
 
+  const handlePointerOverCurve = text => {
+    clearTimeout(pointerTimeout.current);
+
+    setHovered({ isHovered: true, text });
+
+    document.body.style.cursor = 'pointer';
+  };
+
+  const handlePointerOutCurve = text => {
+    clearTimeout(pointerTimeout.current);
+
+    pointerTimeout.current = setTimeout(() => {
+      setHovered({ isHovered: false, text });
+    }, 4000);
+
+    document.body.style.cursor = 'auto';
+  };
+
   // const font = new FontLoader().parse(ComfortaaFont)
 
   const coef = 925 / 90;
@@ -265,26 +300,15 @@ const HittingField = () => {
   const batterMoments = useMemo(
     () =>
       batterCards.reduce((sum, card) => {
-        card.moments
-          .filter(
-            moment => moment.metering?.hit?.data_3d
-            // && moment.inner.id !== currentMoment.inner?.id
-          )
-          .forEach(moment => sum.push(moment));
+        card.moments.filter(moment => moment.metering?.hit?.data_3d).forEach(moment => sum.push(moment));
 
         return sum;
       }, []),
-    [
-      batterCards
-      // , currentMoment
-    ]
+    [batterCards]
   );
 
   const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
 
-  // const isCurrentTrajectory =  !!data_3d;
-  const isOtherTrajectories = true;
-  // const isOtherTrajectories = curveCount > 1;
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
   const isBtnIcon = camera2D !== null;
 
@@ -305,17 +329,14 @@ const HittingField = () => {
                 <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
               </mesh>
 
-              {/* CurrentMoment trajectory */}
-              {/* {isCurrentTrajectory && <CurveAndPoints data3D={data_3d} coef={coef} />} */}
-              {/* {isCurrentTrajectory && <Curve data={data_3d} coef={coef} />}
-              {isCurrentTrajectory && <TouchPoints data={data_3d} coef={coef} />} */}
-
               {/* Other trajectories */}
               <Curves
                 batterMoments={batterMoments}
                 coef={coef}
                 currentMoment={currentMoment}
                 setMomentById={setMomentById}
+                handlePointerOver={handlePointerOverCurve}
+                handlePointerOut={handlePointerOutCurve}
               />
 
               <directionalLight
@@ -348,6 +369,7 @@ const HittingField = () => {
             handleAutoRotateClick={handleAutoRotateClick}
             handleResetClick={handleResetClick}
           />
+          {hovered.isHovered && <Tooltip text={hovered.text} />}
         </>
       )}
       {isCameraView && camera2D !== null && <CameraView camera2D={camera2D} />}
