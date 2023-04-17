@@ -4,6 +4,7 @@ import cl from './ArsenalGraph.module.scss';
 const HorizontalLinesAndNumbers = ({ PARAMS, marks, graphType }) => {
   const isLeftMarks = marks.some(value => !isNaN(value));
 
+	const marksDelta = marks[marks.length - 1] - marks[0]
   return (
     <>
       {marks.map((number, i) => {
@@ -21,7 +22,7 @@ const HorizontalLinesAndNumbers = ({ PARAMS, marks, graphType }) => {
               strokeDasharray='4 2'
             />
             {/* Left numbers */}
-            {isLeftMarks && (
+            {isLeftMarks && (marksDelta !== 0 ? true : i === 3) && (
               <text
                 x={PARAMS.LEFT_PADDING}
                 y={PARAMS.ZERO_COORDS.Y - PARAMS.HORIZONTAL_GRID_LINES_STEP * i + 5}

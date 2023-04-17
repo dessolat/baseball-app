@@ -67,6 +67,7 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
 };
 const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInterval = null }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
+  const leftValuesDelta = leftValues[leftValues.length - 1] - leftValues[0];
   const minValue = +leftValues[0];
   const totalColumns = Object.keys(summary).length;
   const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
@@ -122,7 +123,11 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
                   <Fragment key={type + '-' + j}>
                     <circle
                       cx={columnStartX + columnStepX * j}
-                      cy={rowsStartY - (value - minValue) * yScaleMultiplier}
+                      cy={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+                      }
                       r='3'
                       fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
                       className={pathClasses}
@@ -258,6 +263,20 @@ const ArsenalGraph = ({
 
         return sum;
       }, defaultSumByType);
+    }
+    function getSumByTypeAndBaseHardHits(pitches) {
+      console.log(pitches);
+
+      return pitches
+        .filter(({ result }) => result['base hit & hard hit'])
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
     }
     function getSumInZoneByType(pitches) {
       return pitches
@@ -429,7 +448,7 @@ const ArsenalGraph = ({
         const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
-          Pitches: sumByType,
+          Pitches: getSumByTypeAndBaseHardHits(pitches),
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
