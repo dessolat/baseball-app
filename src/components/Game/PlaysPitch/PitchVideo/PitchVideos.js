@@ -8,24 +8,25 @@ import {
   setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
-  setVideoPlaybackRate,
   setVideoState
 } from 'redux/gameReducer';
 
 const PitchVideos = () => {
   const { camera_info: cameraInfo } = useSelector(state => state.game.preview);
-  const videoState = useSelector(state => state.game.videoState);
-  const preferredVideoState = useSelector(state => state.game.preferredVideoState);
-  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
-  const currentMoment = useSelector(state => state.game.currentMoment);
-  const currentCard = useSelector(state => state.game.currentCard);
-  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
-  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  const filteredCards = useSelector(state => state.game.filteredCards);
-  const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const seekValue = useSelector(state => state.game.seekValue);
-  const videoPlaybackRate = useSelector(state => state.game.videoPlaybackRate);
+  const {
+    videoState,
+    preferredVideoState,
+    videoCurrentTime,
+    currentMoment,
+    currentCard,
+    timelineSliderCoords: sliderCoords,
+    videoLengthMode,
+    filteredCards,
+    isLastMomentMode,
+    playbackMode,
+    seekValue,
+    videoPlaybackRate
+  } = useSelector(state => state.game);
 
   const dispatch = useDispatch();
 
@@ -505,7 +506,7 @@ const PitchVideos = () => {
 
     // if (isAllReady && video1Ref.current.getCurrentTime() < )
 
-		const timeStartPitch = currentMoment?.metering?.pitch?.time_start_pitch_window;
+    const timeStartPitch = currentMoment?.metering?.pitch?.time_start_pitch_window;
     const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
     const seekToCurrentTime =
       videoCurrentTime > 0 && videoCurrentTime > timeStartPitch && videoCurrentTime < timeEndPitch;
@@ -658,29 +659,28 @@ const PitchVideos = () => {
   };
 
   return (
-    
-          <>
-            <PitchVideo
-              videoId={videoId1}
-              position='top-left'
-              handleOnReady={handleOnReady}
-              stateChangeHandler={stateChangeHandler}
-            />
-            <PitchVideo
-              videoId={videoId2}
-              position='top-right'
-              handleOnReady={handleOnReady}
-              stateChangeHandler={stateChangeHandler}
-            />
-            <PitchVideo
-              videoId={videoId3}
-              position='bottom'
-              handleOnReady={handleOnReady}
-              stateChangeHandler={stateChangeHandler}
-              setPlayPause={setPlayPause}
-            />
-          </>
-        
+    <>
+      <PitchVideo
+        videoId={videoId1}
+        position='top-left'
+        handleOnReady={handleOnReady}
+        stateChangeHandler={stateChangeHandler}
+      />
+      <PitchVideo
+        videoId={videoId2}
+        position='top-right'
+        handleOnReady={handleOnReady}
+        stateChangeHandler={stateChangeHandler}
+      />
+      <PitchVideo
+        videoId={videoId3}
+        position='bottom'
+        handleOnReady={handleOnReady}
+        stateChangeHandler={stateChangeHandler}
+        setPlayPause={setPlayPause}
+      />
+    </>
+
     // {/* <button
     //   style={{
     //     position: 'fixed',
