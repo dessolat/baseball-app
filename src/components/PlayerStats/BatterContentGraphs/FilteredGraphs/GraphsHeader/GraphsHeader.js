@@ -17,6 +17,7 @@ const GraphsHeader = ({
   setCurrentOption3 = null,
   noSelector = false,
   graphsArrow = false,
+	classColor = false,
   ...props
 }) => {
   const optionsTogglerStyles = {
@@ -75,6 +76,7 @@ const GraphsHeader = ({
           optionsArr={currentOption2}
           availableOptions={availableOptions}
           handleOptionClick={handleOption2Click}
+					classColor={classColor}
         />
       )}
     </div>
