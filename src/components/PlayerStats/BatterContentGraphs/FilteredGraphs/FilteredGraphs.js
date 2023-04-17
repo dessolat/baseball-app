@@ -14,6 +14,9 @@ import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import FacedGraph from './FacedGraph/FacedGraph';
 import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
+import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
+import { getPitchColorByName } from 'utils';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -735,6 +738,7 @@ const LeftColumnOptions = ({
 
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
   const { preview } = data;
+  const { pitch_types: pitchTypes } = preview;
 
   // ! Remove after testing
   // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
@@ -750,26 +754,26 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   const filteredData = useFilterBatterGroupData(data, currentFilterValues, 'all', teamName, playerFullName);
 
   // Count and speed values
-  // const relValuesData = filteredData.reduce((sum, pitch) => {
-  //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-  //   const pitchType = pitchTypes[pitch_type];
+  const relValuesData = filteredData.reduce((sum, pitch) => {
+    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+    const pitchType = pitchTypes[pitch_type];
 
-  //   if (sum[pitchType] !== undefined) {
-  //     sum[pitchType].count += 1;
-  //     sum[pitchType].speeds.push(speed * 2.24);
-  //     sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+    if (sum[pitchType] !== undefined) {
+      sum[pitchType].count += 1;
+      sum[pitchType].speeds.push(speed * 2.24);
+      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
-  //     return sum;
-  //   }
+      return sum;
+    }
 
-  //   sum[pitchType] = {
-  //     count: 1,
-  //     speeds: [speed * 2.24],
-  //     pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
-  //   };
+    sum[pitchType] = {
+      count: 1,
+      speeds: [speed * 2.24],
+      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+    };
 
-  //   return sum;
-  // }, {});
+    return sum;
+  }, {});
 
   //! Delete after testing
   // const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
@@ -1022,6 +1026,56 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
+			<GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+        {(
+          currentOption,
+          setCurrentOption,
+          currentOption2,
+          setCurrentOption2,
+          currentOption3,
+          setCurrentOption3
+        ) => (
+          <>
+            <GraphsHeader
+              optionsArr={['Season', 'Month', 'Game']}
+              availableOptions={Object.keys(relValuesData)}
+              title={null}
+              subTitle={`${playerName} ${playerSurname} time dynamic`}
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+              currentOption2={currentOption2}
+              setCurrentOption2={setCurrentOption2}
+              currentOption3={currentOption3}
+              setCurrentOption3={setCurrentOption3}
+              graphsArrow
+            />
+
+            <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Base hits & Hard hits vs PA'
+            />
+            <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Pitch, %'
+              graphType='PitchesRel'
+            />
+            <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchTypes={pitchTypes}
+              title='Speed, mph'
+              graphType='Speed'
+            />
+          </>
+        )}
+      </GraphsTimeDynamicBlock>
     </div>
   );
 };
