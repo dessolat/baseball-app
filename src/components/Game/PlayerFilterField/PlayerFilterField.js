@@ -39,7 +39,7 @@ const PlayerFilterField = () => {
   const handleFieldFocus = () => dispatch(setPlayerCardFilterFocused(true));
   const handleFieldBlur = () => dispatch(setPlayerCardFilterFocused(false));
   return (
-    <>
+    <div className={cl.filterFieldsWrapper}>
       <button className={cl.btn} onClick={handleBtnClick}>
         {btnText}
       </button>
@@ -51,7 +51,7 @@ const PlayerFilterField = () => {
         onFocus={handleFieldFocus}
         onBlur={handleFieldBlur}
       />
-    </>
+    </div>
   );
 };
 
