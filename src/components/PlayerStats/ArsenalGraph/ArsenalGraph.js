@@ -275,8 +275,6 @@ const ArsenalGraph = ({
       }, defaultSumByType);
     }
     function getSumByTypeAndBaseHardHits(pitches) {
-      console.log(pitches);
-
       return pitches
         .filter(({ result }) => result['base hit & hard hit'])
         .reduce((sum, { pitch_info }) => {
