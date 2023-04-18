@@ -5,7 +5,7 @@ import GraphsBlock from './GraphsBlock';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 // import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 // import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, Fragment } from 'react';
 // import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterBatterGroupData } from 'hooks/useFilterGraphsData';
 import { useSelector } from 'react-redux';
@@ -604,7 +604,7 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
 };
 
 const LeftColumnOptions = ({
-	battingData = {},
+  battingData = {},
   data = {},
   handleFilterClick,
   handleSpeedFilterChange,
@@ -738,7 +738,7 @@ const LeftColumnOptions = ({
 
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
   const { preview } = data;
-  const { pitch_types: pitchTypes } = preview;
+  const { pitch_types: pitchTypes, pitch_classes: pitchClasses } = preview;
 
   // ! Remove after testing
   // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
@@ -755,129 +755,26 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   // Count and speed values
   const relValuesData = filteredData.reduce((sum, pitch) => {
-    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-    const pitchType = pitchTypes[pitch_type];
+    const { pitch_type } = pitch.pitch_info;
 
-    if (sum[pitchType] !== undefined) {
-      sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed * 2.24);
-      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+    const pitchClass = pitchClasses[pitch_type];
+
+    if (sum[pitchClass] !== undefined) {
+      sum[pitchClass].count += 1;
+			sum[pitchClass].pitches.push(pitch)
 
       return sum;
     }
 
-    sum[pitchType] = {
+    sum[pitchClass] = {
       count: 1,
-      speeds: [speed * 2.24],
-      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+			pitches: [pitch]
     };
 
     return sum;
   }, {});
 
-  //! Delete after testing
-  // const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
-
-  // for (let i = 0; i < 1500; i++) {
-  //   let month = getRndValue(6, 10);
-  //   month = month < 10 ? `0${month}` : month;
-  //   let day = getRndValue(5, 6);
-  //   day = day < 10 ? `0${day}` : day;
-  //   const year = getRndValue(2019, 2023);
-
-  //   const date = `${year}-${month}-${day}`;
-
-  //   const pitch_type = getRndValue(0, pitchTypes.length - 1);
-  //   const speed = getRndValue(11, 14);
-  //   const spin = getRndValue(200, 2000);
-  //   const break_y = getRndValue(1200, 2900) / -1000;
-  //   const break_x = (getRndValue(0, 1000) - 500) / 1000;
-  //   const inZone = getRndValue(0, 1);
-  //   const outZone = 1 - inZone;
-  //   const inside = getRndValue(0, 1);
-  //   const outside = 1 - inside;
-  //   const low = getRndValue(0, 1);
-  //   const high = 1 - low;
-
-  //   const newPitch = {
-  //     pitch_info: { pitch_type, date, speed },
-  //     break: { spin, break_y, break_x },
-  //     zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
-  //   };
-
-  //   arsenalAddedData.push(newPitch);
-  // }
-
-  // const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
-  //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-  //   const pitchType = pitchTypes[pitch_type];
-
-  //   if (sum[pitchType] !== undefined) {
-  //     sum[pitchType].count += 1;
-  //     sum[pitchType].speeds.push(speed * 2.23741);
-  //     sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
-
-  //     return sum;
-  //   }
-
-  //   sum[pitchType] = {
-  //     count: 1,
-  //     speeds: [speed],
-  //     pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
-  //   };
-
-  //   return sum;
-  // }, {});
-
-  // ! delete after testing
-
-  // let twinFilteredData = JSON.parse(JSON.stringify(filteredData));
-
-  // twinFilteredData = twinFilteredData.map(pitch =>
-  //   pitch.coordinates.zone_y === 0
-  //     ? {
-  //         ...pitch,
-  //         coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 }
-  //       }
-  //     : pitch
-  // );
-
-  // for (let i = 0; i < 100; i++) {
-  //   const pitch = {
-  //     pitch_info: { pitch_type: 1 },
-  //     coordinates: { zone_x: getRndValue(-200, 200) / 1000, zone_y: getRndValue(520, 930) / 1000 },
-  //     result: {
-  //       swing: 0,
-  //       take: 1,
-  //       miss: 0,
-  //       contact: 0,
-  //       'base hit & hard hit': 0,
-  //       'soft hit': 0,
-  //       fly: 0,
-  //       line: 0,
-  //       gruond: 0
-  //     },
-  //     zone: {
-  //       'in zone': 0,
-  //       'out zone': 1,
-  //       heart: 0,
-  //       edge: 0,
-  //       waste: 1,
-  //       low: 1,
-  //       high: 0,
-  //       outside: 0,
-  //       inside: 0
-  //     }
-  //   };
-
-  //   twinFilteredData.push(pitch);
-  // }
-
-  // const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
-
-  // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
-  // !
-
+	console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       {/* <GraphsBlock defaultOption='All Pitches'>
@@ -971,62 +868,36 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               setCurrentOption={setCurrentOption}
             />
             <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                title='Fastball'
-                subTitle1='Swing'
-                subTitle2='Take'
-              />
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                subTitle1='Miss & soft hit'
-                subTitle2='Base hit & Hard hit'
-              />
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                title='Breaking'
-                subTitle1='Swing'
-                subTitle2='Take'
-              />
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                subTitle1='Miss & soft hit'
-                subTitle2='Base hit & Hard hit'
-              />
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                title='Offspeed'
-                subTitle1='Swing'
-                subTitle2='Take'
-              />
-              <TwinPitchesGraph
-                data={{}}
-                filteredData={[]}
-                preview={preview}
-                currentOption={currentOption}
-                subTitle1='Miss & soft hit'
-                subTitle2='Base hit & Hard hit'
-              />
+              {Object.entries(relValuesData)
+                .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
+                .map((entry, index) => (
+                  <Fragment key={index}>
+                    <TwinPitchesGraph
+                      data={relValuesData}
+                      filteredData={entry[1].pitches}
+                      preview={preview}
+                      currentOption={currentOption}
+											selectedPitchClass={entry[0]}
+                      title={entry[0]}
+                      subTitle1='Swing'
+                      subTitle2='Take'
+                    />
+                    <TwinPitchesGraph
+                      data={relValuesData}
+                      filteredData={entry[1].pitches}
+                      preview={preview}
+                      currentOption={currentOption}
+											selectedPitchClass={entry[0]}
+                      subTitle1='Miss & soft hit'
+                      subTitle2='Base hit & Hard hit'
+                    />
+                  </Fragment>
+                ))}
             </div>
           </>
         )}
       </GraphsBlock>
-			<GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchClasses} defaultOption3='opened'>
         {(
           currentOption,
           setCurrentOption,
@@ -1048,30 +919,34 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption3={currentOption3}
               setCurrentOption3={setCurrentOption3}
               graphsArrow
+							classColor
             />
 
             <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
+              pitchClasses={pitchClasses}
               title='Base hits & Hard hits vs PA'
+							classColor
             />
             <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
+              pitchClasses={pitchClasses}
               title='Pitch, %'
               graphType='PitchesRel'
+							classColor
             />
             <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
+              pitchClasses={pitchClasses}
               title='Speed, mph'
               graphType='Speed'
+							classColor
             />
           </>
         )}
@@ -1199,7 +1074,7 @@ const FilteredGraphs = ({ battingData }) => {
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
         data={filteredData}
-				battingData={battingData}
+        battingData={battingData}
         handleFilterClick={handleFilterClick}
         handleSpeedFilterChange={handleSpeedFilterChange}
         currentFilterValues={currentFilterValues}

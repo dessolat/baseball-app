@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
-import { getPitchColorByName } from 'utils';
+import { getPitchСlassColorByName } from 'utils';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
@@ -9,7 +9,7 @@ const PARAMS = {
   SIDE_PADDING: 30
 };
 
-const Dots = ({ arrData, pitchTypes, coords }) => {
+const Dots = ({ arrData, pitchClasses, coords }) => {
   return (
     <>
       {arrData.map((pitch, i) => {
@@ -24,13 +24,11 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
         return (
           <circle
             key={i}
-            // key={`${i}-x-${x}-y-${y}`}
             cx={xCoord}
             cy={yCoord}
-            // r={radius}
             stroke='black'
             strokeWidth='.5'
-            fill={getPitchColorByName(pitchTypes[pitchType])}
+            fill={getPitchСlassColorByName(pitchClasses[pitchType])}
             className={cl.animated}
           />
         );
@@ -39,7 +37,7 @@ const Dots = ({ arrData, pitchTypes, coords }) => {
   );
 };
 
-const HeatAreas = ({ arrData, pitchTypes, coords }) => {
+const HeatAreas = ({ arrData, coords }) => {
   const { zeroXCoord, zeroYCoord, xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef } = coords;
   const heatRowsCount = 35;
   const heatColsCount = 32;
@@ -50,7 +48,7 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
   let maxValue = 0;
 
   const dotsCoords = arrData.reduce((sum, pitch) => {
-    const { coordinates, pitch_info: pitchInfo } = pitch;
+    const { coordinates } = pitch;
     const { zone_x: x, zone_y: y } = coordinates;
 
     const xCoord = zeroXCoord + x * xCoordRelCoef;
@@ -68,9 +66,6 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
 
     return sum;
   }, []);
-
-  console.log(dotsCoords);
-  console.log(maxValue);
 
   const points = dotsCoords.reduce((sum, coords, i) => {
     if (coords === undefined) return sum;
@@ -226,8 +221,8 @@ const HeatAreas = ({ arrData, pitchTypes, coords }) => {
   );
 };
 
-const Frames = ({ top, title1, filteredData, selectedPitchType, preview, currentOption }) => {
-  const { zone, pitch_types: pitchTypes } = preview;
+const Frames = ({ top, title1, filteredData, preview, currentOption, selectedField }) => {
+  const { zone, pitch_classes: pitchClasses } = preview;
 
   const {
     y_strike_down: yStrikeDown,
@@ -237,9 +232,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
     shadow_border: shadowBorder
   } = zone;
 
-  const arrData = selectedPitchType
-    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
-    : filteredData;
+  const arrData = filteredData.filter(({ result }) => result[selectedField]);
 
   let totalPitches = arrData.length;
 
@@ -248,7 +241,6 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
   const yCoordAbsCoef = 0;
 
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.1718;
-  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
   const xCoordRelCoef = 179;
 
   // Dashed frame params
@@ -305,7 +297,8 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
       {isDots && (
         <Dots
           arrData={arrData}
-          pitchTypes={pitchTypes}
+          pitchClasses={pitchClasses}
+          selectedField={selectedField}
           coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
         />
       )}
@@ -318,7 +311,7 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
           </filter>
           <HeatAreas
             arrData={arrData}
-            pitchTypes={pitchTypes}
+            pitchClasses={pitchClasses}
             coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
           />
         </>
@@ -343,8 +336,8 @@ const Frames = ({ top, title1, filteredData, selectedPitchType, preview, current
     </>
   );
 };
-const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, preview, currentOption }) => {
-  const { zone, pitch_types: pitchTypes } = preview;
+const RightFrames = ({ top, title1, filteredData, selectedField, preview, currentOption }) => {
+  const { zone, pitch_classes: pitchClasses } = preview;
 
   const {
     y_strike_down: yStrikeDown,
@@ -354,9 +347,7 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
     shadow_border: shadowBorder
   } = zone;
 
-  const arrData = selectedPitchType
-    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
-    : filteredData;
+  const arrData = filteredData.filter(({ result }) => result[selectedField]);
 
   let totalPitches = arrData.length;
 
@@ -365,10 +356,9 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
   const yCoordAbsCoef = 0;
 
   const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.82819;
-  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.7;
-  // const zeroXCoord = PARAMS.GRAPH_WIDTH * 0.2645;
+
   const xCoordRelCoef = 179;
-  // PARAMS.GRAPH_WIDTH - 14 - 217;
+
   // Dashed frame params
   const dashedFrameX = zeroXCoord + xCoordRelCoef * xStrikeLeft;
   const dashedFrameWidth = zeroXCoord + xCoordRelCoef * xStrikeRight - dashedFrameX;
@@ -423,7 +413,7 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
       {isDots && (
         <Dots
           arrData={arrData}
-          pitchTypes={pitchTypes}
+          pitchClasses={pitchClasses}
           coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
         />
       )}
@@ -436,7 +426,7 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
           </filter>
           <HeatAreas
             arrData={arrData}
-            pitchTypes={pitchTypes}
+            pitchClasses={pitchClasses}
             coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
           />
         </>
@@ -462,7 +452,7 @@ const RightFrames = ({ top, left, title1, filteredData, selectedPitchType, previ
   );
 };
 
-const Column = ({ right, center, coef, data, reverse = false }) => {
+const Column = ({ right, center, coef, data, reverse = false, byPitchZone = false }) => {
   const { percents: srcPercents, footer } = data;
   const percents = isNaN(srcPercents) ? 0 : srcPercents;
 
@@ -521,7 +511,12 @@ const Column = ({ right, center, coef, data, reverse = false }) => {
         {value}
       </text> */}
       {/* Percents */}
-      <text x={valueXCoord} y={percentsYCoord} className={cl.percentValue} ref={percentValueRef}>
+      <text
+        x={valueXCoord}
+        y={percentsYCoord}
+        className={cl.percentValue}
+        ref={percentValueRef}
+        style={byPitchZone ? { fontSize: '0.75rem' } : null}>
         {percentsValue}%
       </text>
       {/* Footer */}
@@ -550,33 +545,35 @@ const Column = ({ right, center, coef, data, reverse = false }) => {
   );
 };
 
-const Columns = ({ right, center, values }) => {
+const Columns = ({ right, center, values, byPitchZone }) => {
   const columnHeight = 150 / 2;
   const coef = columnHeight / 100;
 
+  const rightCoef = !byPitchZone ? 42 : 32;
   return (
     <>
       {Object.entries(values).map((entry, i) => (
         <Column
           key={entry[0]}
-          right={right - 42 * (3 - entry[1].column)}
+          right={right - rightCoef * (3 - entry[1].column)}
           center={center}
           coef={coef}
           data={entry[1]}
           columnHeight={columnHeight}
           reverse={entry[1].reverse}
+          byPitchZone={byPitchZone}
         />
       ))}
     </>
   );
 };
 
-const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview }) => {
-  const { pitch_types: pitchTypes } = preview;
+const PercentsGraph = ({ left, center, filteredData, byPitchZone }) => {
+  // const { pitch_classes: pitchClasses } = preview;
 
-  const filteredPitches = selectedPitchType
-    ? filteredData.filter(pitch => pitchTypes[pitch.pitch_info.pitch_type] === selectedPitchType)
-    : filteredData;
+  const filteredPitches = !byPitchZone
+    ? filteredData.filter(({ result }) => result.swing || result.take)
+    : filteredData.filter(({ result }) => result['soft hit'] || result['base hit & hard hit']);
 
   const filteredPitchesCount = filteredPitches.length;
   const defaultCountByResult = {
@@ -588,7 +585,20 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
     takeChase: 0,
     totalHeart: 0,
     totalShadow: 0,
-    totalChase: 0
+    totalChase: 0,
+
+    softLow: 0,
+    softHigh: 0,
+    softOutside: 0,
+    softInside: 0,
+    hardLow: 0,
+    hardHigh: 0,
+    hardOutside: 0,
+    hardInside: 0,
+    totalLow: 0,
+    totalHigh: 0,
+    totalOutside: 0,
+    totalInside: 0
   };
 
   const pitchesCountByResult = filteredPitches.reduce((sum, pitch) => {
@@ -606,9 +616,26 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
       zone.waste && sum.takeChase++;
     }
 
+    if (result['soft hit']) {
+      zone.low && sum.softLow++;
+      zone.high && sum.softHigh++;
+      zone.outside && sum.softOutside++;
+      zone.inside && sum.softInside++;
+    }
+    if (result['base hit & hard hit']) {
+      zone.low && sum.hardLow++;
+      zone.high && sum.hardHigh++;
+      zone.outside && sum.hardOutside++;
+      zone.inside && sum.hardInside++;
+    }
+
     zone.heart && sum.totalHeart++;
     zone.edge && sum.totalShadow++;
     zone.waste && sum.totalChase++;
+    zone.low && sum.totalLow++;
+    zone.high && sum.totalHigh++;
+    zone.outside && sum.totalOutside++;
+    zone.inside && sum.totalInside++;
 
     return sum;
   }, defaultCountByResult);
@@ -622,75 +649,175 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
     takeHeart,
     totalChase,
     totalShadow,
-    totalHeart
+    totalHeart,
+
+    softLow,
+    softHigh,
+    softOutside,
+    softInside,
+    hardLow,
+    hardHigh,
+    hardOutside,
+    hardInside,
+    totalInside,
+    totalOutside,
+    totalHigh,
+    totalLow
   } = pitchesCountByResult;
 
-  const topRightPercents = Math.round((swingChase * 100) / (swingChase + takeChase));
-  const topCenterPercents = Math.round((swingShadow * 100) / (swingShadow + takeShadow));
-  const topLeftPercents = Math.round((swingHeart * 100) / (swingHeart + takeHeart));
+  let topRightPercents = 0;
+  let topCenterPercents = 0;
+  let topLeftPercents = 0;
+  let topRightCenterPercents = 0;
+  let topLeftCenterPercents = 0;
 
-  const topValues = {
-    topRight: {
-      percents: topRightPercents,
-      footer: null,
-      column: 3
-    },
-    bottomRight: {
-      percents: 100 - topRightPercents,
-      footer: null,
-      reverse: true,
-      column: 3
-    },
-    topCenter: {
-      percents: topCenterPercents,
-      footer: null,
-      column: 2
-    },
-    bottomCenter: {
-      percents: 100 - topCenterPercents,
-      footer: null,
-      reverse: true,
-      column: 2
-    },
-    topLeft: {
-      percents: topLeftPercents,
-      footer: null,
-      column: 1
-    },
-    bottomLeft: {
-      percents: 100 - topLeftPercents,
-      footer: null,
-      reverse: true,
-      column: 1
-    }
-  };
+  if (!byPitchZone) {
+    topRightPercents = Math.round((swingChase * 100) / (swingChase + takeChase));
+    topCenterPercents = Math.round((swingShadow * 100) / (swingShadow + takeShadow));
+    topLeftPercents = Math.round((swingHeart * 100) / (swingHeart + takeHeart));
+  }
 
-  const bottomValues = {
-    topRight: {
-      percents: (totalChase * 100) / filteredPitchesCount,
-      footer: 'Chase',
-      column: 3
-    },
-    topCenter: {
-      percents: (totalShadow * 100) / filteredPitchesCount,
-      footer: 'Shadow',
-      column: 2
-    },
-    topLeft: {
-      percents: (totalHeart * 100) / filteredPitchesCount,
-      footer: 'Heart',
-      column: 1
-    }
-  };
+  if (byPitchZone) {
+    topRightPercents = Math.round((softInside * 100) / (softInside + hardInside));
+    topRightCenterPercents = Math.round((softOutside * 100) / (softOutside + hardOutside));
+    topLeftCenterPercents = Math.round((softHigh * 100) / (softHigh + hardHigh));
+    topLeftPercents = Math.round((softLow * 100) / (softLow + hardLow));
+  }
 
+  const topValues = !byPitchZone
+    ? {
+        topRight: {
+          percents: topRightPercents,
+          footer: null,
+          column: 3
+        },
+        bottomRight: {
+          percents: 100 - topRightPercents,
+          footer: null,
+          reverse: true,
+          column: 3
+        },
+        topCenter: {
+          percents: topCenterPercents,
+          footer: null,
+          column: 2
+        },
+        bottomCenter: {
+          percents: 100 - topCenterPercents,
+          footer: null,
+          reverse: true,
+          column: 2
+        },
+        topLeft: {
+          percents: topLeftPercents,
+          footer: null,
+          column: 1
+        },
+        bottomLeft: {
+          percents: 100 - topLeftPercents,
+          footer: null,
+          reverse: true,
+          column: 1
+        }
+      }
+    : {
+        topRight: {
+          percents: topRightPercents,
+          footer: null,
+          column: 4
+        },
+        bottomRight: {
+          percents: 100 - topRightPercents,
+          footer: null,
+          reverse: true,
+          column: 4
+        },
+        topRightCenter: {
+          percents: topRightCenterPercents,
+          footer: null,
+          column: 3
+        },
+        bottomRightCenter: {
+          percents: 100 - topRightCenterPercents,
+          footer: null,
+          reverse: true,
+          column: 3
+        },
+        topLeftCenter: {
+          percents: topLeftCenterPercents,
+          footer: null,
+          column: 2
+        },
+        bottomLeftCenter: {
+          percents: 100 - topLeftCenterPercents,
+          footer: null,
+          reverse: true,
+          column: 2
+        },
+        topLeft: {
+          percents: topLeftPercents,
+          footer: null,
+          column: 1
+        },
+        bottomLeft: {
+          percents: 100 - topLeftPercents,
+          footer: null,
+          reverse: true,
+          column: 1
+        }
+      };
+  const bottomValues = !byPitchZone
+    ? {
+        topRight: {
+          percents: (totalChase * 100) / filteredPitchesCount,
+          footer: 'Chase',
+          column: 3
+        },
+        topCenter: {
+          percents: (totalShadow * 100) / filteredPitchesCount,
+          footer: 'Shadow',
+          column: 2
+        },
+        topLeft: {
+          percents: (totalHeart * 100) / filteredPitchesCount,
+          footer: 'Heart',
+          column: 1
+        }
+      }
+    : {
+        right: {
+          percents: (totalInside * 100) / filteredPitchesCount,
+          footer: 'Inside',
+          column: 4
+        },
+        rightCenter: {
+          percents: (totalOutside * 100) / filteredPitchesCount,
+          footer: 'Outside',
+          column: 3
+        },
+        leftCenter: {
+          percents: (totalHigh * 100) / filteredPitchesCount,
+          footer: 'High',
+          column: 2
+        },
+        left: {
+          percents: (totalLow * 100) / filteredPitchesCount,
+          footer: 'Low',
+          column: 1
+        }
+      };
+  console.log(totalInside, totalOutside, totalHigh, totalLow, filteredPitchesCount);
+  console.log(bottomValues);
+
+  const lineLength = !byPitchZone ? left + 167 : left + 199;
   return (
     <>
       {/* Top line titles */}
       <text x={left} y={center - 5} className={cl.percentTitle}>
-        Swing
+        {!byPitchZone ? 'Swing' : 'Miss&soft'}
       </text>
       <text x={left} y={center + 15} className={cl.percentTitle}>
-        Take
+        {!byPitchZone ? 'Take' : 'Base&Hard'}
       </text>
       {/* Bottom line titles */}
       <text x={left} y={center + 170} className={cl.percentTitle}>
@@ -699,36 +826,34 @@ const PercentsGraph = ({ left, center, filteredData, selectedPitchType, preview 
       <text x={left} y={center + 185} className={cl.percentTitle}>
         by zone
       </text>
-      <Columns right={left + 167} center={center} values={topValues} />
+      <Columns right={left + 167} center={center} values={topValues} byPitchZone={byPitchZone} />
       {/* Bottom columns */}
-      <Columns right={left + 167} center={center + 190} values={bottomValues} />
+      <Columns right={left + 167} center={center + 190} values={bottomValues} byPitchZone={byPitchZone} />
 
       {/* Top line */}
-      <line x1={left} y1={center} x2={left + 167} y2={center} stroke='#ACACAC' />
+      <line x1={left} y1={center} x2={lineLength} y2={center} stroke='#ACACAC' />
       {/* Bottom line */}
-      <line x1={left} y1={center + 190} x2={left + 167} y2={center + 190} stroke='#ACACAC' />
+      <line x1={left} y1={center + 190} x2={lineLength} y2={center + 190} stroke='#ACACAC' />
     </>
   );
 };
 
 const LeftChart = ({
-  data,
   filteredData,
-  selectedPitchType,
+  selectedPitchClass,
   preview,
   currentOption,
   subTitle1,
-  subTitle2
+  subTitle2,
+  byPitchZone = false
 }) => {
-  const mainTitle = selectedPitchType ?? 'All pitches';
-
   return (
     <>
       <Frames
         top={40}
         title1={subTitle1}
         filteredData={filteredData}
-        selectedPitchType={selectedPitchType}
+        selectedField={!byPitchZone ? 'swing' : 'soft hit'}
         preview={preview}
         currentOption={currentOption}
       />
@@ -736,15 +861,14 @@ const LeftChart = ({
         left={PARAMS.SIDE_PADDING + 179 + 45}
         center={106}
         filteredData={filteredData}
-        selectedPitchType={selectedPitchType}
-        preview={preview}
+        byPitchZone={byPitchZone}
       />
       <RightFrames
         top={40}
         left={PARAMS.SIDE_PADDING + 179 + 45 + 228}
         title1={subTitle2}
         filteredData={filteredData}
-        selectedPitchType={selectedPitchType}
+        selectedField={!byPitchZone ? 'take' : 'base hit & hard hit'}
         preview={preview}
         currentOption={currentOption}
       />
@@ -753,12 +877,11 @@ const LeftChart = ({
 };
 
 const TwinPitchesGraph = ({
-  data,
   filteredData,
-  selectedPitchType = null,
   preview,
   currentOption,
-  title,
+  selectedPitchClass = null,
+  title = null,
   subTitle1,
   subTitle2
 }) => {
@@ -802,13 +925,13 @@ const TwinPitchesGraph = ({
         ref={graphRef}>
         {isGraphVisible && (
           <LeftChart
-            data={data}
             filteredData={filteredData}
-            selectedPitchType={selectedPitchType}
+            selectedPitchClass={selectedPitchClass}
             preview={preview}
             currentOption={currentOption}
             subTitle1={subTitle1}
             subTitle2={subTitle2}
+            byPitchZone={!title}
           />
         )}
       </svg>
