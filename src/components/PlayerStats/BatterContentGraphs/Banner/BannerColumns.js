@@ -3,7 +3,6 @@ import CommonGroup from './Groups/CommonGroup';
 import CountsDistribution from './Groups/CountsDistribution';
 
 const BannerColumns = ({ parentObj }) => {
-  console.log(parentObj);
   const GROUPS_PARAMS = {
     PlateAppearance: [
       { par1: 'SO', par2: null },
@@ -31,7 +30,7 @@ const BannerColumns = ({ parentObj }) => {
     ],
     HitsDistribution: [
       { par1: 'Hits', par2: null },
-      { par1: null, par2: null },
+      // { par1: null, par2: null },
       { par1: 'Fly', par2: null },
       { par1: 'Line', par2: null },
       { par1: 'Grounds', par2: null }
@@ -60,15 +59,8 @@ const BannerColumns = ({ parentObj }) => {
       <div>
         <CommonGroup
           data={parentObj}
-          param='PitchesZoneDistribution'
-          title='Pitches distribution'
-          itemsArr={GROUPS_PARAMS.PitchesZoneDistribution}
-          staticTitle='Pitches'
-        />
-        <CommonGroup
-          data={parentObj}
           param='PitchesSwingDistribution'
-          title='Swings by pitches distribution'
+          title='Pitches by swing distribution'
           itemsArr={GROUPS_PARAMS.PitchesSwingDistribution}
           staticTitle='Pitches'
         />
@@ -79,6 +71,13 @@ const BannerColumns = ({ parentObj }) => {
           itemsArr={GROUPS_PARAMS.BatterSwingResult}
           staticTitle='Swings'
         />
+        {/* <CommonGroup
+          data={parentObj}
+          param='PitchesZoneDistribution'
+          title='Pitches by swing distribution'
+          itemsArr={GROUPS_PARAMS.PitchesZoneDistribution}
+          staticTitle='Pitches'
+        /> */}
         <CommonGroup
           data={parentObj}
           param='HitsDistribution'

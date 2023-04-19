@@ -24,7 +24,8 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
 
   let title = par2 !== null ? `${par1} & ${par2}` : par1;
 
-	if (par1 === 'Take') title = 'Not Swing'
+	if (par1 === 'Swing') title = 'Swings'
+	if (par1 === 'Take') title = 'Takes'
 	if (par1 === 'Hits') title = 'Base Hits'
 
   title += ` (${absValue} / ${absRelValue} ${modifiedStaticTitle})`;

@@ -16,6 +16,7 @@ const Banner = () => {
   const { currentLeague } = useSelector(state => state.games);
 
   const { total, total_annual, teams, leagues } = statsData.batting_banner;
+	console.log(statsData.batting_banner);
 
   useEffect(() => {
     let observer = new IntersectionObserver(entries => {
