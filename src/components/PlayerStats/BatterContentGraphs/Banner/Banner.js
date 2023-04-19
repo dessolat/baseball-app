@@ -1,5 +1,5 @@
 import { AnimationContext, PlayerYearsContext } from 'context';
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext, memo } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './Banner.module.scss';
 import BannerColumns from './BannerColumns';
@@ -15,7 +15,8 @@ const Banner = () => {
   const { playerStatsData: statsData, playerCurrentTeam: currentTeam } = useSelector(s => s.playerStats);
   const { currentLeague } = useSelector(state => state.games);
 
-  const { total, total_annual, teams, leagues } = statsData.pitcher_banner;
+  const { total, total_annual, teams, leagues } = statsData.batting_banner;
+	console.log(statsData.batting_banner);
 
   useEffect(() => {
     let observer = new IntersectionObserver(entries => {
@@ -98,4 +99,4 @@ const Banner = () => {
   ) : <></>;
 };
 
-export default Banner;
+export default memo(Banner);

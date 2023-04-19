@@ -1,5 +1,5 @@
 import cl from './FilteredGraphs.module.scss';
-import FilterField from 'components/UI/TextField/FilterField/FilterField';
+import FilterField from 'components/UI/dropdown/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
@@ -164,37 +164,75 @@ const Group = ({
   );
 };
 
-const TextGroup = ({ setTextGroupFilter }) => {
+const TextGroup = ({ setTextGroupFilter, data }) => {
+  function getSortedArr(set) {
+    return Array.from(set).sort((a, b) => (a > b ? 1 : -1));
+  }
+ 
+  const uniqueValues = useMemo(() => {
+    const defaultValues = { teams: new Set(), games: new Set(), batters: new Set() };
+    const tempData = data.reduce((sum, cur) => {
+      const { team_name: teamName, 'batter name': batterName, 'batter surname': batterSurname } = cur.batter;
+      const { date } = cur.pitch_info;
+
+      sum.teams.add(teamName);
+      sum.games.add(`${date.slice(8, 10)}/${date.slice(5, 7)} ${teamName}`);
+      sum.batters.add(`${batterName} ${batterSurname}`);
+
+      return sum;
+    }, defaultValues);
+
+    tempData.teams = getSortedArr(tempData.teams);
+    tempData.games = getSortedArr(tempData.games);
+    tempData.batters = getSortedArr(tempData.batters);
+
+    return tempData;
+  }, [data]);
   return (
     <div className={cl.textGroup}>
       <div className={cl.textGroupItem}>
         <p>Team</p>
         <FilterField
           placeholder='Search of team'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, team: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, team: value }));
+          }}
+          listValues={uniqueValues.teams}
+					isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
         <p>Game</p>
         <FilterField
           placeholder='Search of game (DD/MM Team)'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, game: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, game: value }));
+          }}
+					listValues={uniqueValues.games}
+					isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
         <p>Batter</p>
         <FilterField
           placeholder='Search of batter'
-          style={{ width: '82%' }}
+          wrapperStyles={{ width: '82%' }}
           handleChange={value => {
             setTextGroupFilter(prev => ({ ...prev, batter: value }));
           }}
+          handleClick={value => {
+            setTextGroupFilter(prev => ({ ...prev, batter: value }));
+          }}
+          listValues={uniqueValues.batters}
+					isAllOption
         />
       </div>
     </div>
@@ -272,6 +310,7 @@ const CustomGroup = ({ data, currentFilterValues, handleFilterClick }) => {
 };
 
 const LeftColumnOptions = ({
+  pitchesData = {},
   data = {},
   handleFilterClick,
   currentFilterValues,
@@ -349,7 +388,7 @@ const LeftColumnOptions = ({
     <div className={cl.leftColumnWrapper}>
       <h3 className={cl.header}>Dataset filter</h3>
       <div className={cl.body}>
-        <TextGroup setTextGroupFilter={setTextGroupFilter} />
+        <TextGroup setTextGroupFilter={setTextGroupFilter} data={pitchesData.pitches_all} />
 
         <CustomGroup
           data={data}
@@ -377,10 +416,6 @@ const LeftColumnOptions = ({
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
   const { preview } = data;
   const { pitch_types: pitchTypes } = preview;
-
-  // ! Remove after testing
-  const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
-  // !
 
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
@@ -413,58 +448,58 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   }, {});
 
   //! Delete after testing
-  const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
+  // const arsenalAddedData = JSON.parse(JSON.stringify(filteredData));
 
-  for (let i = 0; i < 1500; i++) {
-    let month = getRndValue(6, 10);
-    month = month < 10 ? `0${month}` : month;
-    let day = getRndValue(5, 6);
-    day = day < 10 ? `0${day}` : day;
-    const year = getRndValue(2019, 2023);
+  // for (let i = 0; i < 1500; i++) {
+  //   let month = getRndValue(6, 10);
+  //   month = month < 10 ? `0${month}` : month;
+  //   let day = getRndValue(5, 6);
+  //   day = day < 10 ? `0${day}` : day;
+  //   const year = getRndValue(2019, 2023);
 
-    const date = `${year}-${month}-${day}`;
+  //   const date = `${year}-${month}-${day}`;
 
-    const pitch_type = getRndValue(0, pitchTypes.length - 1);
-    const speed = getRndValue(11, 14);
-    const spin = getRndValue(200, 2000);
-    const break_y = getRndValue(1200, 2900) / -1000;
-    const break_x = (getRndValue(0, 1000) - 500) / 1000;
-    const inZone = getRndValue(0, 1);
-    const outZone = 1 - inZone;
-    const inside = getRndValue(0, 1);
-    const outside = 1 - inside;
-    const low = getRndValue(0, 1);
-    const high = 1 - low;
+  //   const pitch_type = getRndValue(0, pitchTypes.length - 1);
+  //   const speed = getRndValue(11, 14);
+  //   const spin = getRndValue(200, 2000);
+  //   const break_y = getRndValue(1200, 2900) / -1000;
+  //   const break_x = (getRndValue(0, 1000) - 500) / 1000;
+  //   const inZone = getRndValue(0, 1);
+  //   const outZone = 1 - inZone;
+  //   const inside = getRndValue(0, 1);
+  //   const outside = 1 - inside;
+  //   const low = getRndValue(0, 1);
+  //   const high = 1 - low;
 
-    const newPitch = {
-      pitch_info: { pitch_type, date, speed },
-      break: { spin, break_y, break_x },
-      zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
-    };
+  //   const newPitch = {
+  //     pitch_info: { pitch_type, date, speed },
+  //     break: { spin, break_y, break_x },
+  //     zone: { 'in zone': inZone, 'out zone': outZone, inside, outside, low, high }
+  //   };
 
-    arsenalAddedData.push(newPitch);
-  }
+  //   arsenalAddedData.push(newPitch);
+  // }
 
-  const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
-    const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
-    const pitchType = pitchTypes[pitch_type];
+  // const arsenalRelValuesData = arsenalAddedData.reduce((sum, pitch) => {
+  //   const { speed, pitch_type, pitchGraphCoords } = pitch.pitch_info;
+  //   const pitchType = pitchTypes[pitch_type];
 
-    if (sum[pitchType] !== undefined) {
-      sum[pitchType].count += 1;
-      sum[pitchType].speeds.push(speed * 2.23741);
-      sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
+  //   if (sum[pitchType] !== undefined) {
+  //     sum[pitchType].count += 1;
+  //     sum[pitchType].speeds.push(speed * 2.23741);
+  //     sum[pitchType].pitchGraphCoords.push({ ...pitchGraphCoords, color: getPitchColorByName(pitchType) });
 
-      return sum;
-    }
+  //     return sum;
+  //   }
 
-    sum[pitchType] = {
-      count: 1,
-      speeds: [speed],
-      pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
-    };
+  //   sum[pitchType] = {
+  //     count: 1,
+  //     speeds: [speed],
+  //     pitchGraphCoords: [{ ...pitchGraphCoords, color: getPitchColorByName(pitchType) }]
+  //   };
 
-    return sum;
-  }, {});
+  //   return sum;
+  // }, {});
 
   // ! delete after testing
 
@@ -511,11 +546,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   // }
 
   // const twinData = isFakeTwinBalls ? twinFilteredData : filteredData;
-  const twinData = filteredData;
+  // const twinData = filteredData;
 
   // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
-  console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='All Pitches'>
@@ -546,12 +580,11 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               subTitle={`${playerName} ${playerSurname} pitches by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
             />
             <div className={cl.twinGraphsWrapper}>
               <TwinPitchesGraph
                 data={relValuesData}
-                filteredData={twinData}
+                filteredData={filteredData}
                 preview={preview}
                 currentOption={currentOption}
               />
@@ -562,51 +595,49 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                   <TwinPitchesGraph
                     key={index}
                     data={relValuesData}
-                    filteredData={twinData}
+                    filteredData={filteredData}
                     selectedPitchType={entry[0]}
                     preview={preview}
                     currentOption={currentOption}
                   />
                 ))}
-              {/* <button
-                style={{
-                  position: 'absolute',
-                  right: '30px',
-                  top: '20px',
-                  padding: '5px 10px',
-                  background: 'lightgray',
-                  borderRadius: '3px'
-                }}
-                onClick={twinFakeBallsHandler}>
-                {`${isFakeTwinBalls ? 'Remove' : 'Add'} balls`}
-              </button> */}
             </div>
           </>
         )}
       </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Season' defaultOption2={pitchTypes}>
-        {(currentOption, setCurrentOption, currentOption2, setCurrentOption2) => (
+      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+        {(
+          currentOption,
+          setCurrentOption,
+          currentOption2,
+          setCurrentOption2,
+          currentOption3,
+          setCurrentOption3
+        ) => (
           <>
             <GraphsHeader
               optionsArr={['Season', 'Month', 'Game']}
-              // optionsArr2={{ 'All Pitches': null, ...relValuesData }}
-              availableOptions={Object.keys(arsenalRelValuesData)}
+              availableOptions={Object.keys(relValuesData)}
               title={null}
               subTitle={`${playerName} ${playerSurname} time dynamic`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               currentOption2={currentOption2}
               setCurrentOption2={setCurrentOption2}
+              currentOption3={currentOption3}
+              setCurrentOption3={setCurrentOption3}
+              graphsArrow
             />
+
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
               title='Pitches'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -614,7 +645,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='PitchesRel'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -622,7 +653,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Speed'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -630,7 +661,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Spin'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -638,7 +669,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='VerticalBreak'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -646,7 +677,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='HorizontalBreak'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -654,7 +685,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='InZone'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -662,7 +693,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='OutZone'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -670,7 +701,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Inside'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -678,7 +709,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Outside'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -686,7 +717,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Low'
             />
             <ArsenalGraph
-              filteredData={arsenalAddedData}
+              filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
@@ -721,7 +752,6 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 };
 
 const FilteredGraphs = ({ pitchesData }) => {
-  // const [fakeData, setFakeData] = useState({});
   const [currentFilterValues, setCurrentFilterValues] = useState({
     batter: 'all',
     count: 'all',
@@ -797,159 +827,12 @@ const FilteredGraphs = ({ pitchesData }) => {
       return (
         checkFieldIdentity([batter.team_name], teamFilter) &&
         gameDataCheck(gameFilter, pitchInfo, batter) &&
-        // checkFieldIdentity([pitchInfo.game_id], gameFilter) &&
         checkFieldIdentity([batter['batter name'], batter['batter surname']], batterFilter)
       );
     });
 
     return { preview: pitchesData.preview, pitches_all: newPitchesAll };
   }, [textGroupFilter, pitchesData]);
-
-  // const generateFakeData = () => {
-  //   const totalPitches = getRndValue(10, 20);
-  //   // const totalPitches = getRndValue(300, 500);
-
-  //   const pitchesAll = [],
-  //     battersSet = new Set(),
-  //     batterIds = [];
-  //   let batterNames = 0,
-  //     batterSurnames = 0;
-
-  //   for (let i = 0; i < totalPitches; i++) {
-  //     // count
-  //     const count0_0 = getRndValue(0, 1);
-  //     const count0_2 = !count0_0 ? getRndValue(0, 1) : 0;
-  //     const count3_0 = !count0_0 && !count0_2 ? 1 : 0;
-  //     const ahwad = getRndValue(0, 1);
-  //     const behind = 1 - ahwad;
-
-  //     // zone
-  //     const inZone = getRndValue(0, 1);
-
-  //     const heart = getRndValue(0, 1);
-  //     const edge = !heart ? getRndValue(0, 1) : 0;
-  //     const waste = !heart && !edge ? 1 : 0;
-
-  //     const low = getRndValue(0, 1);
-  //     const inside = getRndValue(0, 1);
-
-  //     // result
-  //     const result = {
-  //       fly: 0,
-  //       line: 0,
-  //       miss: 0,
-  //       take: 0,
-  //       swing: 0,
-  //       ground: 0,
-  //       contact: 0,
-  //       'soft hit': 0,
-  //       'base hit & hard hit': 0
-  //     };
-
-  //     const resultLength = Object.keys(result).length;
-  //     const resultParam = Object.keys(result)[getRndValue(0, resultLength - 1)];
-  //     result[resultParam] = 1;
-
-  //     const newBatterId = getRndValue(0, totalPitches - 1);
-  //     const batterExistIndex = batterIds.findIndex(batter => batter.batter_id === newBatterId);
-
-  //     let batter;
-
-  //     if (batterExistIndex === -1) {
-  //       const leftHandedValue = getRndValue(0, 1);
-
-  //       batterNames++;
-  //       batterSurnames++;
-
-  //       const batterName = 'Name' + batterNames;
-  //       const batterSurname = 'Surname' + batterSurnames;
-
-  //       batter = {
-  //         'left handed': leftHandedValue,
-  //         'right handed': 1 - leftHandedValue,
-  //         batter_id: newBatterId,
-  //         team_name: 'Team' + getRndValue(1, 3),
-  //         'batter name': batterName,
-  //         'batter surname': batterSurname
-  //       };
-
-  //       batterIds.push(batter);
-  //     }
-
-  //     if (batterExistIndex !== -1) {
-  //       batter = batterIds[batterExistIndex];
-  //     }
-
-  //     // Pitch graph coords calculation
-  //     const dotsRectXCoord = 30 + 15;
-  //     const dotsRectYCoord = 40 + 22;
-  //     const dotsRectWidth = 149;
-  //     const dotsRectHeight = 195;
-
-  //     const xCoridorStart = Math.random() * (dotsRectWidth - 69);
-  //     const yCoridorStart = Math.random() * (dotsRectHeight - 55);
-
-  //     const x = dotsRectXCoord + xCoridorStart + Math.random() * 69;
-  //     const y = dotsRectYCoord + yCoridorStart + Math.random() * 55;
-
-  //     const pitchGraphCoords = { x, y };
-  //     //
-
-  //     const tempPitchType = getRndValue(0, pitchTypes.length - 1);
-
-  //     const tempPitch = {
-  //       pitch_info: {
-  //         pitch_type: tempPitchType,
-  //         pitch_name: pitchTypes[tempPitchType],
-  //         speed: getRndValue(25, 80),
-  //         pitchGraphCoords
-  //       },
-  //       batter,
-  //       count: {
-  //         '0-0': count0_0,
-  //         '0-2': count0_2,
-  //         '3-0': count3_0,
-  //         ahwad,
-  //         behind
-  //       },
-  //       zone: {
-  //         'in zone': inZone,
-  //         'out zone': 1 - inZone,
-  //         heart,
-  //         edge,
-  //         waste,
-  //         low,
-  //         high: 1 - low,
-  //         inside,
-  //         outside: 1 - inside
-  //       },
-  //       result
-  //     };
-
-  //     battersSet.add(tempPitch.batter.batter_id);
-
-  //     pitchesAll.push(tempPitch);
-  //   }
-
-  //   const result = {
-  //     preview: {
-  //       pitch_types: pitchTypes,
-  //       n_pitch_types: pitchTypes.length,
-  //       total_pitches: totalPitches,
-  //       total_batters: Array.from(battersSet).length
-  //     },
-  //     pitches_all: pitchesAll
-  //   };
-
-  //   return result;
-  // };
-
-  // const handleFakeDataClick = () => {
-  //   const data = generateFakeData();
-  //   setFakeData(data);
-  //   console.clear();
-  //   console.log(data);
-  // };
 
   function handleFilterClick(groupName, value) {
     setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
@@ -965,8 +848,8 @@ const FilteredGraphs = ({ pitchesData }) => {
   return (
     <div className={cl.filteredGraphsWrapper}>
       <LeftColumnOptions
-        // handleFakeDataClick={handleFakeDataClick}
         data={filteredData}
+        pitchesData={pitchesData}
         handleFilterClick={handleFilterClick}
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}

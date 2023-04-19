@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { getPitchColorByName } from 'utils';
+import { getPitchColorByName, getPitchСlassColorByName } from 'utils';
 import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
 // import Dots from './Dots';
@@ -65,8 +65,9 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
     </>
   );
 };
-const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInterval = null }) => {
+const Lines = ({ PARAMS, leftMarks, pitchTypes, pitchClasses, yScaleMultiplier, currentTimeInterval = null, classColor }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
+  const leftValuesDelta = leftValues[leftValues.length - 1] - leftValues[0];
   const minValue = +leftValues[0];
   const totalColumns = Object.keys(summary).length;
   const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
@@ -109,7 +110,11 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
               <path
                 d={pathDest}
                 fill='none'
-                stroke={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                stroke={
+                  !classColor
+                    ? getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')
+                    : getPitchСlassColorByName(type !== '-1' ? pitchClasses[type] : 'All Pitches')
+                }
                 strokeWidth='2'
                 className={pathClasses}
               />
@@ -122,9 +127,17 @@ const Lines = ({ PARAMS, leftMarks, pitchTypes, yScaleMultiplier, currentTimeInt
                   <Fragment key={type + '-' + j}>
                     <circle
                       cx={columnStartX + columnStepX * j}
-                      cy={rowsStartY - (value - minValue) * yScaleMultiplier}
+                      cy={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+                      }
                       r='3'
-                      fill={getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')}
+                      fill={
+                        !classColor
+                          ? getPitchColorByName(type !== '-1' ? pitchTypes[type] : 'All Pitches')
+                          : getPitchСlassColorByName(type !== '-1' ? pitchClasses[type] : 'All Pitches')
+                      }
                       className={pathClasses}
                     />
                     <text
@@ -150,9 +163,11 @@ const ArsenalGraph = ({
   filteredData,
   currentTimeInterval,
   currentPitchTypes,
-  pitchTypes,
+  pitchTypes = [],
+  pitchClasses = [],
   title,
-  graphType = 'Pitches'
+  graphType = 'Pitches',
+  classColor = false
 }) => {
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
@@ -258,6 +273,18 @@ const ArsenalGraph = ({
 
         return sum;
       }, defaultSumByType);
+    }
+    function getSumByTypeAndBaseHardHits(pitches) {
+      return pitches
+        .filter(({ result }) => result['base hit & hard hit'])
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
     }
     function getSumInZoneByType(pitches) {
       return pitches
@@ -429,7 +456,7 @@ const ArsenalGraph = ({
         const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
-          Pitches: sumByType,
+          Pitches: getSumByTypeAndBaseHardHits(pitches),
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
@@ -562,8 +589,10 @@ const ArsenalGraph = ({
             PARAMS={PARAMS}
             leftMarks={leftMarks}
             pitchTypes={pitchTypes}
+            pitchClasses={pitchClasses}
             yScaleMultiplier={yScaleMultiplier}
             currentTimeInterval={currentTimeInterval}
+            classColor={classColor}
           />
         </>
       )}

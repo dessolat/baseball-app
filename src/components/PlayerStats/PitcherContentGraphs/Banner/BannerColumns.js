@@ -66,7 +66,7 @@ const BannerColumns = ({parentObj}) => {
         <CommonGroup
           data={parentObj}
           param='PitchesSwingDistribution'
-          title='Pitches swing distribution'
+          title='Swings by pitches distribution'
           itemsArr={GROUPS_PARAMS.PitchesSwingDistribution}
           staticTitle='Pitches'
         />

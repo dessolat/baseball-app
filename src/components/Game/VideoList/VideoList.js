@@ -8,26 +8,27 @@ import {
   setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
-  setVideoPlaybackRate,
   setVideoState
 } from 'redux/gameReducer';
 import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
-  const isFullscreen = useSelector(state => state.game.isFullscreen);
-  const currentMoment = useSelector(state => state.game.currentMoment);
-  const currentCard = useSelector(state => state.game.currentCard);
-  const videoState = useSelector(state => state.game.videoState);
-  const preferredVideoState = useSelector(state => state.game.preferredVideoState);
-  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
-  const videoPlaybackRate = useSelector(state => state.game.videoPlaybackRate);
-  const seekValue = useSelector(state => state.game.seekValue);
-  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
-  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  const filteredCards = useSelector(state => state.game.filteredCards);
-  const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
-  const playbackMode = useSelector(state => state.game.playbackMode);
+  const {
+    isFullscreen,
+    currentMoment,
+    currentCard,
+    videoState,
+    preferredVideoState,
+    videoCurrentTime,
+    videoPlaybackRate,
+    seekValue,
+    timelineSliderCoords: sliderCoords,
+    videoLengthMode,
+    filteredCards,
+    isLastMomentMode,
+    playbackMode
+  } = useSelector(state => state.game);
 
   const dispatch = useDispatch();
 
@@ -115,22 +116,19 @@ const VideoList = ({ viewMode }, ref) => {
       const isBigDelta = deltaArr.some(
         (delta, i) => delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap
       );
-      // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
         video1Ref.current.pauseVideo();
         video2Ref.current?.pauseVideo();
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
-        // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+
         delta2 > deltaCaps[1] + deltaCap &&
           video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
         delta3 > deltaCaps[2] + deltaCap &&
           video3Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[2]), true);
         delta4 > deltaCaps[3] + deltaCap &&
           video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
-
-        // alreadySeekingRef.current = true
       }
 
       const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
@@ -177,7 +175,7 @@ const VideoList = ({ viewMode }, ref) => {
     clearTimeout(videoHandlingTimeoutRef.current);
     clearInterval(intervalRef.current);
 
-		const { video } = currentMoment;
+    const { video } = currentMoment;
 
     let secondsTotal, secondsFromRated;
 
@@ -195,7 +193,6 @@ const VideoList = ({ viewMode }, ref) => {
       return;
     }
 
-    // const isForcePlay = false;
     const isForcePlay = preferredVideoState === 1;
 
     video1Ref.current?.pauseVideo();
@@ -203,10 +200,8 @@ const VideoList = ({ viewMode }, ref) => {
     video3Ref.current?.pauseVideo();
     video4Ref.current?.pauseVideo();
 
-
     if (video) {
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -280,7 +275,6 @@ const VideoList = ({ viewMode }, ref) => {
         const time = video1Ref.current?.getCurrentTime();
 
         time && dispatch(setVideoCurrentTime(time + camDelta1));
-        // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
       },
       videoState === 1 ? 15 : 200
     );
@@ -326,24 +320,11 @@ const VideoList = ({ viewMode }, ref) => {
 
       const { video: nextVideo } = nextMoment;
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
-      //
       const getSliderCoords = video => {
-        // Old super short calc method
-        // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
-
-        // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
-        // const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
-
-        // const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
-        // const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
-
         return {
           x1: 0,
           x2: 0
-          // x1: videoLengthMode === 'Super Short' ? startSecondsPercent : 0,
-          // x2: videoLengthMode === 'Super Short' ? endSecondsPercent : 0
         };
       };
       //
@@ -410,7 +391,6 @@ const VideoList = ({ viewMode }, ref) => {
 
     const { video } = currentMoment;
     const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-    // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -443,7 +423,6 @@ const VideoList = ({ viewMode }, ref) => {
 
     intervalRef.current = setInterval(() => {
       if (video1Ref.current === null) return;
-      // if (Object.values(VIDEO_REFS).some(value => !value.current)) return;
 
       const currentTime = video1Ref.current.getCurrentTime() + camDelta1;
 
@@ -470,13 +449,6 @@ const VideoList = ({ viewMode }, ref) => {
 
   const seekVideos = sec => {
     // New synchronization method
-    // if (viewMode !== 'mode-1') {
-    //   video1Ref.current?.pauseVideo();
-    //   video2Ref.current?.pauseVideo();
-    //   video3Ref.current?.pauseVideo();
-    //   video4Ref.current?.pauseVideo();
-    // }
-    //
     alreadySeekingRef.current = false;
     video1Ref.current?.seekTo(sec - getCamDelta(modeNumber, 1), true);
     video2Ref.current?.seekTo(sec - getCamDelta(modeNumber, 2), true);
@@ -502,16 +474,6 @@ const VideoList = ({ viewMode }, ref) => {
 
   //Handle on funcs
 
-  // const VIDEO_NUMBERS =
-  //   viewMode.slice(-1) === '1'
-  //     ? { 1: video1Ref }
-  //     : {
-  //         1: video1Ref,
-  //         2: video2Ref,
-  //         3: video3Ref,
-  //         4: video4Ref
-  //       };
-
   const handleOnReady = (videoNumber, target) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
@@ -520,83 +482,13 @@ const VideoList = ({ viewMode }, ref) => {
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
-    target.setPlaybackRate(videoPlaybackRate)
-    // videoNumber === 1 && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
+    target.setPlaybackRate(videoPlaybackRate);
   };
 
   const stateChangeHandler = (videoNumber, target, stateValue) => {
     videoNumber === 1 && dispatch(setVideoState(stateValue));
 
     stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
-
-    // const video1 = video1Ref.current;
-    // const video2 = video2Ref.current;
-    // const video3 = video3Ref.current;
-    // const video4 = video4Ref.current;
-
-    // console.log(
-    //   'states:',
-    //   video1.getPlayerState(),
-    //   video2?.getPlayerState(),
-    //   video3?.getPlayerState(),
-    //   video4?.getPlayerState()
-    // );
-
-    // const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return (entryState === 3 || entryState === -1) && videoNumber !== entry[0];
-    // });
-
-    // const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return entryState === 2 && videoNumber !== entry[0];
-    // });
-
-    // console.log('isAllReady:', isAllReady);
-    // console.log('isAllPaused:', isAllPaused);
-
-    // const isAllReady = !Object.entries(VIDEO_NUMBERS).some(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return (entryState === 3 || entryState === -1) && videoNumber !== entry[0];
-    // });
-
-    // const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return entryState === 2 || entryState === 3 || videoNumber !== entry[0];
-    // });
-
-    // if (stateValue === 1) {
-    //   !isAllReady && target.pauseVideo();
-
-    //   if (isAllReady) {
-    //     if (preferredVideoState === 2) {
-    //       video1.pauseVideo();
-    //       video2?.pauseVideo();
-    //       video3?.pauseVideo();
-    //       video4?.pauseVideo();
-    //       return;
-    //     }
-
-    //     video1 && preferredVideoState === 1 && video1.playVideo();
-    //     video2 && preferredVideoState === 1 && video2.playVideo();
-    //     video3 && preferredVideoState === 1 && video3.playVideo();
-    //     video4 && preferredVideoState === 1 && video4.playVideo();
-    //   }
-    // }
-
-    // if (stateValue === 2) {
-    //   video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
-    //   video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
-    //   video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
-    //   video4 && video4.getPlayerState() === 1 && video4.pauseVideo();
-    // }
-
-    // if (stateValue === 3 && isAllPaused) {
-    //   video1 && preferredVideoState === 1 && video1.playVideo();
-    //   video2 && preferredVideoState === 1 && video2.playVideo();
-    //   video3 && preferredVideoState === 1 && video3.playVideo();
-    //   video4 && preferredVideoState === 1 && video4.playVideo();
-    // }
   };
 
   return (

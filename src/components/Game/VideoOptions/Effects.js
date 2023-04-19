@@ -5,15 +5,15 @@ import { setIsVideoEffects } from 'redux/gameReducer';
 import cl from './VideoOptions.module.scss';
 
 const Effects = () => {
-	const isVideoEffects = useSelector(state => state.game.isVideoEffects)
+  const { isVideoEffects } = useSelector(state => state.game);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const handleChange = e => dispatch(setIsVideoEffects(e.target.checked));
+  const handleChange = e => dispatch(setIsVideoEffects(e.target.checked));
   return (
     <div className={cl.effectsWrapper}>
       Effects
-      <SimpleToggler checked={isVideoEffects} onChange={handleChange} />
+      <SimpleToggler checked={isVideoEffects} onChange={handleChange} disabled />
     </div>
   );
 };

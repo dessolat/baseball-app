@@ -2,6 +2,21 @@ import { AnimationContext } from 'context';
 import { useContext } from 'react';
 import cl from '../Banner.module.scss';
 
+const SORT_PRIORITY = {
+  '0-0': 1,
+  '0-1': 2,
+  '1-1': 3,
+  '1-2': 4,
+  '1-0': 5,
+  '2-2': 6,
+  '0-2': 7,
+  '2-1': 8,
+  '3-2': 9,
+  '2-0': 10,
+  '3-1': 11,
+  '3-0': 12
+};
+
 const CountsDistributionItem = ({ item, staticTitle }) => {
   const [title, { abs: absValue, abs_rel: absRelValue, rel: value }] = item;
 
@@ -34,7 +49,7 @@ const CountsDistributionItem = ({ item, staticTitle }) => {
 
 const CountsDistribution = ({ data, staticTitle }) => {
   const sortedList = JSON.parse(JSON.stringify(Object.entries(data.CountsDistribution))).sort((a, b) =>
-    a > b ? 1 : -1
+    SORT_PRIORITY[a] > SORT_PRIORITY[b] ? -1 : 1
   );
 
   return (

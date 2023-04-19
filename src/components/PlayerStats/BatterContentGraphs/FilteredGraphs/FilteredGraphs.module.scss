@@ -291,6 +291,7 @@
 
 .graphsBlock {
   line-height: 0;
+	transition: max-height .6s ease-in-out;
 
   > * + * {
     margin-top: 5px;

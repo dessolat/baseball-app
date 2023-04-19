@@ -99,7 +99,10 @@ export const openFullscreen = element => {
   }
 };
 
-export const closeFullscreen = () => document.exitFullscreen();
+export const closeFullscreen = () => {
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement)
+    document.exitFullscreen();
+};
 
 export const isFullScreen = () => {
   const fullScreenElement =
@@ -142,6 +145,7 @@ export const getPitchColorByName = name =>
     Slider: '#EBE8B0',
     Undefined: '#9BCEA2',
     Submarine: '#B08194',
+		Subfastball: '#B18FA1',
     'All Pitches': '#1A4C96'
   }[name]);
 
@@ -151,10 +155,11 @@ export const getPitchСlassColorByName = name =>
     // Fastball: '#D92B33',
     Breaking: '#92d4eb',
     // Breaking: '#24A8D7',
-    Offspeed: '#c6dac7'
+    Offspeed: '#c6dac7',
+		'All Pitches': '#1A4C96'
     // Offspeed: '#8DB58E'
   }[name]);
-	
+
 export const getPitchСlassPrimaryColorByName = name =>
   ({
     // Fastball: '#ec9599',

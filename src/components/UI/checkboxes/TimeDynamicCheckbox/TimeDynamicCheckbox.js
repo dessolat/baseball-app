@@ -1,12 +1,13 @@
 import cl from './TimeDynamicCheckbox.module.scss';
 import classNames from 'classnames';
-import { getPitchColorByName } from 'utils';
+import { getPitchColorByName, getPitchСlassColorByName } from 'utils';
 
 const TimeDynamicCheckbox = ({
   optionsArr,
   availableOptions,
   handleOptionClick,
   vertical = false,
+  classColor = false,
   children,
   ...props
 }) => {
@@ -30,7 +31,11 @@ const TimeDynamicCheckbox = ({
           [cl.whiteColor]: option.name === 'All Pitches'
         });
 
-        const itemStyles = { backgroundColor: getPitchColorByName(option.name) };
+        const itemStyles = {
+          backgroundColor: !classColor
+            ? getPitchColorByName(option.name)
+            : getPitchСlassColorByName(option.name)
+        };
         return (
           <li key={i} className={optionClasses} onClick={handleOptionClick(option)} style={itemStyles}>
             {option.name}

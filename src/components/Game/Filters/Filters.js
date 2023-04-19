@@ -6,6 +6,7 @@ import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
+import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 
 const Filters = () => {
   const tab = getSearchParam('tab');
@@ -66,6 +67,7 @@ const Filters = () => {
   return (
     <section className={'container ' + cl.filtersContainer}>
       <div className={cl.filters}>
+				<PlayerFilterField />
         <div className={cl.situationsWrapper}>
           {renderScrollArrow(isLeftScroll)}
           <FiltersSituationsList ref={scrollRef} situations={situations} />

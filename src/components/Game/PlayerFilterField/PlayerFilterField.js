@@ -3,13 +3,17 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setPlayerCardFilter } from 'redux/gameReducer';
+import {
+  setPlayerCardFilter,
+  togglePlayerCardFilterBy,
+  setPlayerCardFilterFocused
+} from 'redux/gameReducer';
 import cl from './PlayerFilterField.module.scss';
 
 const PlayerFilterField = () => {
   const [filterValue, setFilterValue] = useState('');
 
-	const isFilteredPlayer = useSelector(state => state.game.isFilteredPlayer)
+  const { isFilteredPlayer, playerCardFilterBy } = useSelector(state => state.game);
 
   const dispatch = useDispatch();
 
@@ -26,15 +30,28 @@ const PlayerFilterField = () => {
   };
 
   const inputClasses = classNames([cl.filterPlayerField], {
-		[cl.noPlayerFiltered] : !isFilteredPlayer
-	});
+    [cl.noPlayerFiltered]: !isFilteredPlayer
+  });
+
+  const btnText = playerCardFilterBy === 'pitcher' ? 'P' : 'B';
+
+  const handleBtnClick = () => dispatch(togglePlayerCardFilterBy());
+  const handleFieldFocus = () => dispatch(setPlayerCardFilterFocused(true));
+  const handleFieldBlur = () => dispatch(setPlayerCardFilterFocused(false));
   return (
-    <input
-      placeholder='Search of player'
-      value={filterValue}
-      onChange={changeHandler}
-      className={inputClasses}
-    />
+    <div className={cl.filterFieldsWrapper}>
+      <button className={cl.btn} onClick={handleBtnClick}>
+        {btnText}
+      </button>
+      <input
+        placeholder='Search of player'
+        value={filterValue}
+        onChange={changeHandler}
+        className={inputClasses}
+        onFocus={handleFieldFocus}
+        onBlur={handleFieldBlur}
+      />
+    </div>
   );
 };
 
