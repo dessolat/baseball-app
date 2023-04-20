@@ -72,3 +72,14 @@
     }
   }
 }
+
+@keyframes popUp {
+  from {
+		translate: 0% -1%;
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
