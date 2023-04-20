@@ -552,7 +552,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
   // !
   return (
     <div className={cl.rightColumnWrapper}>
-      <GraphsBlock defaultOption='All Pitches'>
+      <GraphsBlock defaultOption='Types'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -561,7 +561,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               noSelector
             />
             <PitchesSpeedField
-              optionsArr={['All Pitches', 'Types']}
+              optionsArr={['Types', 'All Pitches']}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
               filteredData={filteredData}
