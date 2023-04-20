@@ -681,7 +681,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='In zone'
+              title='In zone, %'
               graphType='InZone'
             />
             <ArsenalGraph
@@ -689,7 +689,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Out zone'
+              title='Out zone, %'
               graphType='OutZone'
             />
             <ArsenalGraph
@@ -697,7 +697,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Inside'
+              title='Inside, %'
               graphType='Inside'
             />
             <ArsenalGraph
@@ -705,7 +705,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Outside'
+              title='Outside, %'
               graphType='Outside'
             />
             <ArsenalGraph
@@ -713,7 +713,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='Low'
+              title='Low, %'
               graphType='Low'
             />
             <ArsenalGraph
@@ -721,7 +721,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchTypes={pitchTypes}
-              title='High'
+              title='High, %'
               graphType='High'
             />
           </>
