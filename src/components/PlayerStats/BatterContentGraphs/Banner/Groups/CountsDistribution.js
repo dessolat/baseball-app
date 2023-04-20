@@ -54,7 +54,7 @@ const CountsDistribution = ({ data, staticTitle }) => {
 
   return (
     <div className={cl.group}>
-      <p className={cl.title}>Counts distribution</p>
+      <p className={cl.title}>Swings/Takes by count distribution</p>
       {sortedList.map((item, i) => (
         <CountsDistributionItem key={i} item={item} staticTitle={staticTitle} />
       ))}
