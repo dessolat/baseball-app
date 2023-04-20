@@ -65,7 +65,15 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
     </>
   );
 };
-const Lines = ({ PARAMS, leftMarks, pitchTypes, pitchClasses, yScaleMultiplier, currentTimeInterval = null, classColor }) => {
+const Lines = ({
+  PARAMS,
+  leftMarks,
+  pitchTypes,
+  pitchClasses,
+  yScaleMultiplier,
+  currentTimeInterval = null,
+  classColor
+}) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
   const leftValuesDelta = leftValues[leftValues.length - 1] - leftValues[0];
   const minValue = +leftValues[0];
@@ -172,6 +180,8 @@ const ArsenalGraph = ({
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
   const graphRef = useRef();
+
+  filteredData.forEach(pitch => console.log(pitch.pitch_info?.date));
 
   useEffect(() => {
     let options = {
@@ -456,7 +466,8 @@ const ArsenalGraph = ({
         const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
-          Pitches: getSumByTypeAndBaseHardHits(pitches),
+          Pitches: sumByType,
+          PitchesByType: getSumByTypeAndBaseHardHits(pitches),
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
