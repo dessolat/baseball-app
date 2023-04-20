@@ -26,14 +26,17 @@ const BannerColumns = ({ parentObj }) => {
     ],
     BatterSwingResult: [
       { par1: 'Miss', par2: null },
-      { par1: 'Contact', par2: null }
+      { par1: 'Fouls', par2: null },
+      { par1: 'Hits in play', par2: null }
+      // { par1: 'Contact', par2: null }
     ],
     HitsDistribution: [
       { par1: 'Hits', par2: null },
       // { par1: null, par2: null },
       { par1: 'Fly', par2: null },
       { par1: 'Line', par2: null },
-      { par1: 'Grounds', par2: null }
+      { par1: 'Grounds', par2: null },
+      { par1: 'Bunts', par2: null }
     ]
   };
 

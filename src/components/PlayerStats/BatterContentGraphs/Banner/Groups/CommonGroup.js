@@ -2,6 +2,15 @@ import { AnimationContext } from 'context';
 import { useContext } from 'react';
 import cl from '../Banner.module.scss';
 
+const PARAM_VOCABULARY = {
+  Swing: 'Swings',
+  Miss: 'Misses',
+  Take: 'Takes',
+  Hits: 'Base Hits',
+  Fly: 'Flyes',
+  Line: 'Lines'
+};
+
 const CommonGroupItem = ({ item, parent, staticTitle }) => {
   const { par1, par2 } = item;
 
@@ -15,20 +24,18 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
     );
 
   const modifiedStaticTitle = par1 === 'GO' && par2 === 'FC' ? 'Outs' : staticTitle;
-  
+
   const {
     abs: absValue,
     abs_rel: absRelValue,
     rel: value
-  } = par2 !== null ? parent[`${par1}/${par2}`] : parent[par1];
+  } = (par2 !== null ? parent[`${par1}/${par2}`] : parent[par1]) || {};
 
   let title = par2 !== null ? `${par1} & ${par2}` : par1;
 
-	if (par1 === 'Swing') title = 'Swings'
-	if (par1 === 'Take') title = 'Takes'
-	if (par1 === 'Hits') title = 'Base Hits'
+  title = PARAM_VOCABULARY[par1] ?? title;
 
-  title += ` (${absValue} / ${absRelValue} ${modifiedStaticTitle})`;
+  title += ` (${absValue ?? '-'} / ${absRelValue ?? '-'} ${modifiedStaticTitle})`;
 
   const formattedValue = value !== '–' ? value : '—';
 
@@ -36,7 +43,9 @@ const CommonGroupItem = ({ item, parent, staticTitle }) => {
 
   if (formattedValue !== '—') {
     animatedValue =
-      valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+      valueCoef < 1 && formattedValue !== 0
+        ? (formattedValue * valueCoef).toFixed(1)
+        : formattedValue ?? '- ';
     animatedValue += '%';
   }
 
