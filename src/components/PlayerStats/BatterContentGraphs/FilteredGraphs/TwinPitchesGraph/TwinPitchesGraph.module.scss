@@ -65,6 +65,10 @@
 	filter: blur(4px);
 }
 
+.eventsNone {
+  pointer-events: none;
+}
+
 @keyframes growRadius {
   from {
     r: 0;
