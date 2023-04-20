@@ -59,10 +59,19 @@
 .animated {
   transition: all 0.3s;
   animation: growRadius 0.3s forwards;
+	cursor: pointer;
+
+	&:hover {
+    animation: growRadiusMore 0.3s forwards;
+  }
 }
 
 .blur2 {
 	filter: blur(4px);
+}
+
+.eventsNone {
+  pointer-events: none;
 }
 
 @keyframes growRadius {
@@ -71,6 +80,15 @@
   }
   to {
     r: 8;
+  }
+}
+
+@keyframes growRadiusMore {
+  from {
+    r: 8;
+  }
+  to {
+    r: 12;
   }
 }
 

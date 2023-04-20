@@ -928,6 +928,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentPitchTypes={currentOption2}
               pitchClasses={pitchClasses}
               title='Base hits & Hard hits vs PA'
+							graphType='PitchesByType'
 							classColor
             />
             <ArsenalGraph
