@@ -11,12 +11,16 @@ const PARAMS = {
 };
 
 const Dots = ({ arrData, pitchClasses, coords, setHoveredDot }) => {
+  const handleDotClick = (gameId, momentId) => () => {
+    window.open(`/game/${gameId}?card=${momentId}&tab=pitching`, '_blank');
+  };
+
   return (
     <>
       {arrData.map((pitch, i) => {
         const { coordinates, pitch_info: pitchInfo } = pitch;
         const { zone_x: x, zone_y: y } = coordinates;
-        const { pitch_type: pitchType, speed } = pitchInfo;
+        const { pitch_type: pitchType, game_id: gameId, mom_id: momentId, speed } = pitchInfo;
 
         const { xCoordRelCoef, yCoordAbsCoef, yCoordRelCoef, zeroXCoord, zeroYCoord } = coords;
 
@@ -31,6 +35,7 @@ const Dots = ({ arrData, pitchClasses, coords, setHoveredDot }) => {
             strokeWidth='.5'
             fill={getPitchСlassColorByName(pitchClasses[pitchType])}
             className={cl.animated}
+            onClick={handleDotClick(gameId, momentId)}
             onPointerOver={() =>
               setHoveredDot(prev => ({
                 ...prev,
@@ -282,7 +287,7 @@ const Frames = ({ top, title1, filteredData, preview, currentOption, selectedFie
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='transparent'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Outer frame */}
@@ -294,7 +299,7 @@ const Frames = ({ top, title1, filteredData, preview, currentOption, selectedFie
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='#EAEAEA'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Inner frame */}
@@ -304,7 +309,7 @@ const Frames = ({ top, title1, filteredData, preview, currentOption, selectedFie
         width={dashedFrameWidth - shadowBorder * xCoordRelCoef * 2}
         height={dashedFrameHeight - shadowBorder * yCoordRelCoef * 2}
         fill='#B6C6D6'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Dots */}
@@ -342,7 +347,7 @@ const Frames = ({ top, title1, filteredData, preview, currentOption, selectedFie
         strokeWidth='2'
         strokeDasharray='8 2'
         fill='transparent'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Title */}
@@ -403,7 +408,7 @@ const RightFrames = ({ top, title1, filteredData, selectedField, preview, curren
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='transparent'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Outer frame */}
@@ -415,7 +420,7 @@ const RightFrames = ({ top, title1, filteredData, selectedField, preview, curren
         stroke='#B6DBD4'
         strokeWidth='2'
         fill='#EAEAEA'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Inner frame */}
@@ -425,7 +430,7 @@ const RightFrames = ({ top, title1, filteredData, selectedField, preview, curren
         width={dashedFrameWidth - shadowBorder * xCoordRelCoef * 2}
         height={dashedFrameHeight - shadowBorder * yCoordRelCoef * 2}
         fill='#B6C6D6'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Dots */}
@@ -434,7 +439,7 @@ const RightFrames = ({ top, title1, filteredData, selectedField, preview, curren
           arrData={arrData}
           pitchClasses={pitchClasses}
           coords={{ xCoordRelCoef, yCoordRelCoef, yCoordAbsCoef, zeroXCoord, zeroYCoord }}
-					setHoveredDot={setHoveredDot}
+          setHoveredDot={setHoveredDot}
         />
       )}
 
@@ -462,7 +467,7 @@ const RightFrames = ({ top, title1, filteredData, selectedField, preview, curren
         strokeWidth='2'
         strokeDasharray='8 2'
         fill='transparent'
-				className={cl.eventsNone}
+        className={cl.eventsNone}
       />
 
       {/* Title */}
@@ -550,7 +555,6 @@ const Column = ({ right, center, coef, data, reverse = false, byPitchZone = fals
             stroke='#B6DBD4'
             strokeWidth='2'
             fill={legendCircleFill}
-            className={cl.animated}
           />
           {isLegendText && (
             <text x={valueXCoord - 56} y={percentsYCoord + 42} className={cl.valueText} textAnchor='start'>
@@ -893,7 +897,7 @@ const LeftChart = ({
         selectedField={!byPitchZone ? 'take' : 'base hit & hard hit'}
         preview={preview}
         currentOption={currentOption}
-				setHoveredDot={setHoveredDot}
+        setHoveredDot={setHoveredDot}
       />
       {hoveredDot.visible && <Tooltip hoveredDot={hoveredDot} isType={!selectedPitchClass} />}
     </>
