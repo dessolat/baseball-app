@@ -15,6 +15,7 @@ import { setCurrentYear } from 'redux/sharedReducer';
 const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [loadedPercents, setLoadedPercents] = useState(null);
 
   const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
@@ -33,12 +34,12 @@ const Stats = () => {
   }, [statsTableMode]);
 
   useEffect(() => {
-		// ! 2023 err handle (temp) !
+    // ! 2023 err handle (temp) !
     if (currentYear === 2023) {
       dispatch(setCurrentYear(2022));
-			return
+      return;
     }
-		// !
+    // !
 
     const refactorData = leagues => {
       const result = leagues.reduce((sum, league) => {
@@ -76,7 +77,8 @@ const Stats = () => {
         setIsStatsLoading(true);
         const response = await axios.get(`http://baseball-gametrack.ru/api/stats/year-${currentYear}`, {
           cancelToken: cancelStatsTokenRef.current.token,
-          timeout: 10000
+          timeout: 10000,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
         setError('');
@@ -87,6 +89,7 @@ const Stats = () => {
         setError(err.message);
       } finally {
         setIsStatsLoading(false);
+        setLoadedPercents(null);
       }
     };
     fetchStats();
@@ -156,7 +159,7 @@ const Stats = () => {
       <Provider value={isStatsLoading}>
         <Header />
       </Provider>
-      {isStatsLoading ? <Loader styles={contentLoaderStyles} /> : <Content />}
+      {isStatsLoading ? <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} /> : <Content />}
     </>
   );
 };

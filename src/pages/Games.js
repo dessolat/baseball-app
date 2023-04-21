@@ -19,6 +19,7 @@ import { GamesLoadingContext } from 'context';
 const Games = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [loadedPercents, setLoadedPercents] = useState(null);
 
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
@@ -51,7 +52,8 @@ const Games = () => {
           `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
           {
             cancelToken: cancelTokenRef.current.token,
-            timeout: 10000
+            timeout: 10000,
+            onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
           }
         );
 
@@ -79,6 +81,7 @@ const Games = () => {
         setError(err.message);
       } finally {
         setIsLoading(false);
+        setLoadedPercents(null);
       }
     };
     fetchGamesData();
@@ -101,7 +104,8 @@ const Games = () => {
         setIsLoading(true);
         const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
           cancelToken: cancelTokenRef.current.token,
-          timeout: 10000
+          timeout: 10000,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
         setError('');
@@ -117,6 +121,7 @@ const Games = () => {
         setError(err.message);
       } finally {
         setIsLoading(false);
+        setLoadedPercents(null);
       }
     };
     fetchGamesData();
@@ -193,7 +198,11 @@ const Games = () => {
       <Provider value={isLoading}>
         <Header />
       </Provider>
-      {isLoading ? <Loader styles={contentLoaderStyles} /> : <Content games={games} />}
+      {isLoading ? (
+        <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} />
+      ) : (
+        <Content games={games} />
+      )}
     </>
   );
 };
