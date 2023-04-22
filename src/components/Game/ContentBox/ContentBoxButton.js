@@ -5,8 +5,8 @@ import { getShortName } from 'utils';
 import { setBoxActiveButton } from 'redux/gameReducer';
 
 const ContentBoxButton = ({ team }) => {
-  const preview = useSelector(state => state.game.preview);
-  const activeButton = useSelector(state => state.game.boxActiveButton);
+  const { preview, boxActiveButton: activeButton } = useSelector(state => state.game);
+
   const dispatch = useDispatch();
 
   const getClassName = name => (name === activeButton ? cl.active : null);
