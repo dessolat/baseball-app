@@ -2,10 +2,36 @@ import { useState } from 'react';
 import cl from './BattersTable.module.scss';
 import classNames from 'classnames';
 
+const TableHeader = ({ activeColumn, handleHeaderClick }) => {
+  const titlesArr = [
+    { text: 'Batter name', clName: 'name' },
+    { text: 'Hit number', clName: 'value' },
+    { text: 'Hit angle', clName: 'value' },
+    { text: 'Exit velocity', clName: 'value' },
+    { text: 'Distance', clName: 'value' }
+  ];
+
+  return (
+    <div className={cl.header}>
+      {titlesArr.map(({ text, clName }, i) => {
+        const cellClasses = classNames(cl[clName], {
+          [cl.active]: i + 1 === activeColumn
+        });
+
+        return (
+          <div key={`title-${i}-${text}`} className={cellClasses} onClick={handleHeaderClick(i + 1)}>
+            {text}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const TableCell = ({ colNumber, row, cell: { clName, value, ending }, activeColumn }) => {
   const cellClasses = classNames(cl[clName], {
-		[cl.active]: colNumber === activeColumn
-	});
+    [cl.active]: colNumber === activeColumn
+  });
 
   return (
     <div className={cellClasses}>
@@ -55,8 +81,11 @@ const BattersTable = () => {
     { name: 'SURNAME Name4', hitNumber: 1, angle: 10, velocity: 70, distance: 50 }
   ];
 
+  const handleHeaderClick = colNumber => () => setActiveColumn(colNumber);
+
   return (
     <div className={cl.wrapper}>
+      <TableHeader activeColumn={activeColumn} handleHeaderClick={handleHeaderClick} />
       {battersArr.map((row, i) => (
         <TableRow key={i} row={row} rowCells={rowCells} activeColumn={activeColumn} />
       ))}
