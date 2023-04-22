@@ -3,26 +3,35 @@
   background-color: white;
 }
 
-.row {
+.row,
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 4.0625rem;
 }
 
-.row {
-	line-height: 2.0625rem;
+.header {
+  font: 700 0.75rem / 1.1 var(--font-nunito);
+	cursor: pointer;
 
   > * {
+    padding: 1.5rem 0 0.625rem;
     text-align: center;
-		transition: background-color .3s;
+    transition: background-color 0.3s;
   }
 
   > .name {
-    flex: 0 1 340px;
+    padding: 1.5rem 1rem 0.625rem;
   }
+}
 
-  > .value {
-    flex: 0 1 70px;
+.row {
+  font: 300 0.875rem / 2.0625rem var(--font-nunito);
+
+  > * {
+    text-align: center;
+    transition: background-color 0.3s;
   }
 
   &:nth-child(2n) {
@@ -31,5 +40,15 @@
 }
 
 .active {
-	background: #E0F0FF;
+  background: #e0f0ff;
+}
+
+.name {
+  flex: 0 1 13.75rem;
+  text-align: left;
+  padding: 0 1rem;
+}
+
+.value {
+  flex: 0 1 5rem;
 }
