@@ -1,0 +1,35 @@
+.wrapper {
+  padding: 0 11.25rem;
+  background-color: white;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row {
+	line-height: 2.0625rem;
+
+  > * {
+    text-align: center;
+		transition: background-color .3s;
+  }
+
+  > .name {
+    flex: 0 1 340px;
+  }
+
+  > .value {
+    flex: 0 1 70px;
+  }
+
+  &:nth-child(2n) {
+    background-color: #eaeaea;
+  }
+}
+
+.active {
+	background: #E0F0FF;
+}
