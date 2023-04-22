@@ -1,8 +1,8 @@
 import React from 'react';
 import cl from './SortArrows.module.scss';
 
-const SortArrows = ({ direction = 'asc' }) => (
-  <span className={cl.wrapper}>
+const SortArrows = ({ direction = 'asc', ...props }) => (
+  <span className={cl.wrapper} {...props}>
     <svg width='8' height='13' viewBox='0 0 8 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
         d='M4.04272 0.595703V11.7334M3.8 12L7.48012 7.74575M4.2 12L0.880371 7.74575'
