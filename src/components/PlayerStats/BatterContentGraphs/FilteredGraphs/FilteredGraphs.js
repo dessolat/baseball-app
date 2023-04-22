@@ -845,13 +845,13 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader
           title='Machine vision statistics'
-          subTitle={`${playerName} ${playerSurname} pitches batter faced`}
+          subTitle={`${playerName} ${playerSurname} pitches faced`}
           noSelector
         />
         <FacedGraph data={filteredData} preview={preview} />
       </GraphsBlock>
       <GraphsBlock defaultOption='' noSelector>
-        <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
+        <GraphsHeader title='' subTitle={`${playerName} ${playerSurname} Hits`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
       </GraphsBlock>
       <GraphsBlock defaultOption='' noSelector>
@@ -863,7 +863,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <GraphsHeader
               optionsArr={['All Pitches', 'Contours']}
               title={null}
-              subTitle={`${playerName} ${playerSurname} pitches by zone`}
+              subTitle={`Pitches to ${playerName} ${playerSurname} by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
