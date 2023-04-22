@@ -1,26 +1,34 @@
 import { useState } from 'react';
 import cl from './BattersTable.module.scss';
 import classNames from 'classnames';
+import SortArrows from 'components/UI/icons/SortArrows/SortArrows';
 
 const TableHeader = ({ activeColumn, handleHeaderClick }) => {
   const titlesArr = [
-    { text: 'Batter name', clName: 'name' },
-    { text: 'Hit number', clName: 'value' },
-    { text: 'Hit angle', clName: 'value' },
-    { text: 'Exit velocity', clName: 'value' },
-    { text: 'Distance', clName: 'value' }
+    { text: 'Batter name', clName: 'name', sortField: 'name' },
+    { text: 'Hit number', clName: 'value', sortField: 'hitNumber' },
+    { text: 'Hit angle', clName: 'value', sortField: 'angle' },
+    { text: 'Exit velocity', clName: 'value', sortField: 'velocity' },
+    { text: 'Distance', clName: 'value', sortField: 'distance' }
   ];
 
   return (
     <div className={cl.header}>
-      {titlesArr.map(({ text, clName }, i) => {
-        const cellClasses = classNames(cl[clName], {
-          [cl.active]: i + 1 === activeColumn
-        });
+      {titlesArr.map(({ text, clName, sortField }, i) => {
+        const isActiveCell = sortField === activeColumn.sortField;
 
+        const cellClasses = classNames(cl[clName], cl.headerCell, {
+          [cl.active]: isActiveCell
+        });
         return (
-          <div key={`title-${i}-${text}`} className={cellClasses} onClick={handleHeaderClick(i + 1)}>
+          <div key={`title-${i}-${text}`} className={cellClasses} onClick={handleHeaderClick(sortField)}>
             {text}
+            {isActiveCell && (
+              <SortArrows
+                direction={activeColumn.dir}
+                style={{ position: 'absolute', left: '50%', top: '.3rem', translate: '-50%' }}
+              />
+            )}
           </div>
         );
       })}
@@ -28,9 +36,9 @@ const TableHeader = ({ activeColumn, handleHeaderClick }) => {
   );
 };
 
-const TableCell = ({ colNumber, row, cell: { clName, value, ending }, activeColumn }) => {
+const TableCell = ({ row, cell: { clName, value, ending }, activeColumn }) => {
   const cellClasses = classNames(cl[clName], {
-    [cl.active]: colNumber === activeColumn
+    [cl.active]: value === activeColumn.sortField
   });
 
   return (
@@ -58,7 +66,7 @@ const TableRow = ({ row, rowCells, activeColumn }) => {
 };
 
 const BattersTable = () => {
-  const [activeColumn, setActiveColumn] = useState(4);
+  const [activeColumn, setActiveColumn] = useState({ sortField: 'angle', dir: 'asc' });
 
   const rowCells = [
     { clName: 'name', value: 'name', ending: '' },
@@ -81,8 +89,16 @@ const BattersTable = () => {
     { name: 'SURNAME Name4', hitNumber: 1, angle: 10, velocity: 70, distance: 50 }
   ];
 
-  const handleHeaderClick = colNumber => () => setActiveColumn(colNumber);
+  const handleHeaderClick = sortField => () =>
+    setActiveColumn(prev => {
+      if (prev.sortField === sortField) return { ...prev, dir: prev.dir === 'asc' ? 'desc' : 'asc' };
+      return { ...prev, sortField };
+    });
 
+  battersArr.sort((a, b) => {
+    if (activeColumn.dir === 'asc') return a[activeColumn.sortField] > b[activeColumn.sortField] ? 1 : -1;
+    return a[activeColumn.sortField] > b[activeColumn.sortField] ? -1 : 1;
+  });
   return (
     <div className={cl.wrapper}>
       <TableHeader activeColumn={activeColumn} handleHeaderClick={handleHeaderClick} />
