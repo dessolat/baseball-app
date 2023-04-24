@@ -11,12 +11,12 @@ const ContentBoxButtons = () => {
       const parentElement = buttonsRef.current.parentElement;
 
       setButtonsTopPosition({
-        top: parentElement.getBoundingClientRect().top,
+        top: parentElement.getBoundingClientRect().top + document.documentElement.scrollTop,
         left: parentElement.getBoundingClientRect().left
       });
     }
 
-		handleWindowResize()
+    handleWindowResize();
 
     window.addEventListener('resize', handleWindowResize);
 
