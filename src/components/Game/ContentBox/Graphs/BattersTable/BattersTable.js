@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import cl from './BattersTable.module.scss';
 import classNames from 'classnames';
 import SortArrows from 'components/UI/icons/SortArrows/SortArrows';
@@ -109,4 +109,4 @@ const BattersTable = () => {
   );
 };
 
-export default BattersTable;
+export default memo(BattersTable);
