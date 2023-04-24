@@ -2,3 +2,9 @@
 	aspect-ratio: 1248 / 330;
 	background-color: white;
 }
+
+.leftValue {
+	text-anchor: end;
+	font: 300 0.875rem var(--font-nunito);
+  fill: black;
+}
