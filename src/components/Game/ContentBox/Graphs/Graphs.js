@@ -4,6 +4,7 @@ import GraphsHeader from './GraphsHeader/GraphsHeader';
 import { useSelector } from 'react-redux';
 import BattersTable from './BattersTable/BattersTable';
 import PitchersReleaseSpeeds from './PitchersReleaseSpeeds/PitchersReleaseSpeeds';
+import PitchersGraphRows from './PitchersGraphRows';
 
 const Graphs = () => {
   const { preview, boxActiveButton } = useSelector(s => s.game);
@@ -25,6 +26,7 @@ const Graphs = () => {
         <GraphsHeader subTitle={`${preview[boxActiveButton].name} pitchers Release speed, mph`} noSelector />
         <PitchersReleaseSpeeds />
       </GraphsBlock>
+      <PitchersGraphRows />
     </div>
   );
 };

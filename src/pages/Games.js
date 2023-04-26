@@ -77,8 +77,11 @@ const Games = () => {
         }
       } catch (err) {
         if (err.message === null) return;
-        console.log(err.message);
-        setError(err.message);
+        if (err.message.includes('timeout') && currentYear === 2023) {
+          dispatch(setCurrentYear(2022));
+        } else {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
         setLoadedPercents(null);
@@ -94,8 +97,19 @@ const Games = () => {
 
   useEffect(() => {
     if (firstMountRef.current === true) {
+      // if (currentYear === 2023) {
+      // 	cancelTokenRef.current.cancel(null);
+      // 	dispatch(setCurrentYear(2022));
+      // 	return;
+      // }
       return;
     }
+
+    // if (currentYear === 2023) {
+    // 	cancelTokenRef.current.cancel(null);
+    // 	dispatch(setCurrentYear(2022));
+    // 	return;
+    // }
 
     const fetchGamesData = async () => {
       cancelTokenRef.current = axios.CancelToken.source();
@@ -117,8 +131,13 @@ const Games = () => {
         }
       } catch (err) {
         if (err.message === null) return;
-        console.log(err.message);
-        setError(err.message);
+        if (err.message.includes('timeout') && currentYear === 2023) {
+          dispatch(setCurrentYear(2022));
+         
+        } else {
+
+					setError(err.message);
+				}
       } finally {
         setIsLoading(false);
         setLoadedPercents(null);
