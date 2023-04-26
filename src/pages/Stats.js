@@ -9,8 +9,8 @@ import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
-import { StatsLoadingContext } from 'context';
 import { setCurrentYear } from 'redux/sharedReducer';
+import StatsLoadingProvider from 'context/StatsLoadingContext';
 
 const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(true);
@@ -151,14 +151,13 @@ const Stats = () => {
     transform: 'translate(-50%,-50%)'
   };
 
-  const { Provider } = StatsLoadingContext;
-
   if (error !== '') return <ErrorLoader error={error} />;
   return (
     <>
-      <Provider value={isStatsLoading}>
+      <StatsLoadingProvider value={isStatsLoading}>
         <Header />
-      </Provider>
+      </StatsLoadingProvider>
+
       {isStatsLoading ? <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} /> : <Content />}
     </>
   );
