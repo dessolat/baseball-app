@@ -7,7 +7,8 @@ import {
   // addLeagueImage,
   resetTableFilters,
   setGamesAndLeagues,
-  setMobileTableMode
+  setMobileTableMode,
+  setSummaryYearsData
 } from 'redux/gamesReducer';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
@@ -25,7 +26,7 @@ const Games = () => {
   const firstMountRef = useRef(true);
 
   // const leagues = useSelector(state => state.games.leagues);
-  const { games, currentLeague, mobileTableMode } = useSelector(state => state.games);
+  const { games, currentLeague, mobileTableMode, summaryYearsData } = useSelector(state => state.games);
   const { currentGameType, currentYear } = useSelector(state => state.shared);
   // const leaguesImages = useSelector(state => state.games.leaguesImages);
   const dispatch = useDispatch();
@@ -48,30 +49,47 @@ const Games = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(
-          `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
-          {
-            cancelToken: cancelTokenRef.current.token,
-            timeout: 10000,
-            onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
-          }
-        );
+
+        const response = await axios.get(`http://baseball-gametrack.ru/api/main`, {
+          cancelToken: cancelTokenRef.current.token,
+          timeout: 10000,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+        });
+
+        // const response = await axios.get(
+        //   `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
+        //   {
+        //     cancelToken: cancelTokenRef.current.token,
+        //     timeout: 10000,
+        //     onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+        //   }
+        // );
 
         setError('');
-        dispatch(setGamesAndLeagues(response.data));
+        dispatch(setSummaryYearsData(response.data));
+        dispatch(setGamesAndLeagues(response.data[currentYear] ?? { games: [], leagues: [], players: null }));
 
         if (games === null) {
           console.log('dispatched after fetching');
           // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
         }
 
+        const curYear = +new Date().getFullYear();
+				const yearsArr = Object.keys(response.data);
+
         if (getSearchParam('year')) {
-          const yearsArr = getYears();
-          yearsArr.includes(+getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
+          // const yearsArr = getYears();
+          yearsArr.includes(getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
+        }
+
+        if (currentYear !== curYear && !yearsArr.includes(String(currentYear))) {
+          dispatch(setCurrentYear(curYear));
         }
 
         if (getSearchParam('league_id')) {
-          const tempLeague = response.data.leagues.find(league => league.id === +getSearchParam('league_id'));
+          const tempLeague = response.data[currentYear]?.leagues.find(
+            league => league.id === +getSearchParam('league_id')
+          );
           tempLeague && dispatch(setCurrentGameType(tempLeague.game_type));
           setTimeout(() => tempLeague && dispatch(setCurrentLeague(tempLeague)));
         }
@@ -105,49 +123,51 @@ const Games = () => {
       return;
     }
 
+    const yearData = summaryYearsData[currentYear] ?? { games: [], leagues: [], players: null };
+
+    dispatch(setGamesAndLeagues(yearData));
+
     // if (currentYear === 2023) {
     // 	cancelTokenRef.current.cancel(null);
     // 	dispatch(setCurrentYear(2022));
     // 	return;
     // }
 
-    const fetchGamesData = async () => {
-      cancelTokenRef.current = axios.CancelToken.source();
+    // const fetchGamesData = async () => {
+    //   cancelTokenRef.current = axios.CancelToken.source();
 
-      try {
-        setIsLoading(true);
-        const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
-          cancelToken: cancelTokenRef.current.token,
-          timeout: 10000,
-          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
-        });
+    //   try {
+    //     setIsLoading(true);
+    //     const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
+    //       cancelToken: cancelTokenRef.current.token,
+    //       timeout: 10000,
+    //       onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+    //     });
 
-        setError('');
-        dispatch(setGamesAndLeagues(response.data));
+    //     setError('');
+    //     dispatch(setGamesAndLeagues(response.data));
 
-        if (games === null) {
-          console.log('dispatched after fetching');
-          // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-        }
-      } catch (err) {
-        if (err.message === null) return;
-        if (err.message.includes('timeout') && currentYear === 2023) {
-          dispatch(setCurrentYear(2022));
-         
-        } else {
+    //     if (games === null) {
+    //       console.log('dispatched after fetching');
+    //       // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
+    //     }
+    //   } catch (err) {
+    //     if (err.message === null) return;
+    //     if (err.message.includes('timeout') && currentYear === 2023) {
+    //       dispatch(setCurrentYear(2022));
+    //     } else {
+    //       setError(err.message);
+    //     }
+    //   } finally {
+    //     setIsLoading(false);
+    //     setLoadedPercents(null);
+    //   }
+    // };
+    // fetchGamesData();
 
-					setError(err.message);
-				}
-      } finally {
-        setIsLoading(false);
-        setLoadedPercents(null);
-      }
-    };
-    fetchGamesData();
-
-    return () => {
-      cancelTokenRef.current.cancel(null);
-    };
+    // return () => {
+    //   cancelTokenRef.current.cancel(null);
+    // };
     // eslint-disable-next-line
   }, [currentYear]);
 

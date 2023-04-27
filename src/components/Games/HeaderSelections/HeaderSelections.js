@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import cl from './HeaderSelections.module.scss';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,16 +8,17 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 import ContentTableModeLinks from '../ContentTable/ContentTableModeLinks';
 import ContentTeam from '../ContentTable/ContentTeam';
 import ContentCalendars from '../ContentTable/ContentCalendars';
+import { GamesLoadingContext } from 'context';
 
 const HeaderSelections = () => {
-  const currentYear = useSelector(state => state.shared.currentYear);
-  const currentGameType = useSelector(state => state.shared.currentGameType);
-  const currentLeague = useSelector(state => state.games.currentLeague);
-  const games = useSelector(state => state.games.games);
+  const { currentYear, currentGameType } = useSelector(state => state.shared);
+  const { currentLeague, games, summaryYearsData } = useSelector(state => state.games);
 
   const dispatch = useDispatch();
 
   const firstMountRef = useRef(true);
+
+	const isLoading = useContext(GamesLoadingContext)
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -52,11 +53,21 @@ const HeaderSelections = () => {
     dispatch(setCurrentLeague({ id: -1, name: 'All' }));
   };
 
-	const yearsArr = getYears()
+  // const yearsArr = getYears();
+  const yearsArr = Object.keys(summaryYearsData)
+    .map(year => +year)
+    .reverse();
+
   return (
     <div className={cl.selections}>
       <div className={cl.years}>
-        <Dropdown title={currentYear} options={yearsArr} currentOption={currentYear} handleClick={handleClick} />
+        <Dropdown
+          title={currentYear}
+          options={yearsArr}
+          currentOption={currentYear}
+          handleClick={handleClick}
+					disabled={isLoading}
+        />
       </div>
       <ul className={cl.types}>
         <li className={getClassName('Baseball')} onClick={handleTypeClick('Baseball')}>
