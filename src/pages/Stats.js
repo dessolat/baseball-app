@@ -35,14 +35,16 @@ const Stats = () => {
 
   useEffect(() => {
     // ! 2023 err handle (temp) !
-    if (currentYear === 2023) {
-      dispatch(setCurrentYear(2022));
-      return;
-    }
+    // if (currentYear === 2023) {
+    //   dispatch(setCurrentYear(2022));
+    //   return;
+    // }
     // !
 
     const refactorData = leagues => {
-      const result = leagues.reduce((sum, league) => {
+			const modifiedLeagues = Array.isArray(leagues) ? leagues : []
+
+      const result = modifiedLeagues.reduce((sum, league) => {
         const resultLeague = {};
         resultLeague.id = league.id;
         resultLeague.title = league.title;
