@@ -71,6 +71,10 @@
   }
 }
 
+.disabled {
+	color: lightgray;
+}
+
 @keyframes popUp {
   from {
 		translate: 0% -1%;

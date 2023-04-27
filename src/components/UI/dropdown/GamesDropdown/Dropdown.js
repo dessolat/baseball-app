@@ -2,6 +2,7 @@ import ArrowDown from 'components/UI/icons/ArrowDown';
 import React, { useState, useEffect, useRef } from 'react';
 import { getShortName } from 'utils';
 import cl from './Dropdown.module.scss';
+import classNames from 'classnames';
 
 function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue) {
   return () => {
@@ -43,7 +44,8 @@ const Dropdown = ({
   itemTextStyles = null,
   titleStyles = null,
   shortNames = false,
-  searchField = false
+  searchField = false,
+  disabled = false
 }) => {
   const [listening, setListening] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +56,8 @@ const Dropdown = ({
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue));
 
   const handleTitleClick = () => {
+    if (disabled) return;
+
     setIsOpen(!isOpen);
   };
 
@@ -80,10 +84,14 @@ const Dropdown = ({
     });
   };
 
+  const titleClasses = classNames(cl.title, {
+    [cl.disabled]: disabled
+  });
+
   const filteredOptions = searchFieldValue === '' ? options : getFilteredOptions(options);
   return (
     <div ref={menuRef} className={cl.dropdownWrapper} style={wrapperStyles}>
-      <div className={cl.title} onClick={handleTitleClick} style={titleStyles}>
+      <div className={titleClasses} onClick={handleTitleClick} style={titleStyles} disabled={true}>
         {title}
         <div style={{ position: 'absolute', right: 3, top: 0 }}>
           <ArrowDown />
