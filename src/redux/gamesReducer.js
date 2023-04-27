@@ -1,4 +1,5 @@
 const defaultState = {
+	summaryYearsData: {},
   games: [],
   leagues: [],
   players: null,
@@ -12,6 +13,7 @@ const defaultState = {
   currentSwitchDropdownValue: { batting: 'AB', fielding: 'CH', running: 'SB', pitching: 'GS' }
 };
 
+const SET_SUMMARY_YEARS_DATA = 'SET_SUMMARY_YEARS_DATA';
 const SET_GAMES_AND_LEAGUES = 'SET_GAMES_AND_LEAGUES';
 const SET_CURRENT_GAMES_LEAGUE = 'SET_CURRENT_GAMES_LEAGUE';
 const SET_CURRENT_STADIUM = 'SET_CURRENT_STADIUM';
@@ -25,6 +27,8 @@ const RESET_TABLE_FILTERS = 'RESET_TABLE_FILTERS';
 
 export const gamesReducer = (state = defaultState, action) => {
   switch (action.type) {
+		case SET_SUMMARY_YEARS_DATA:
+			return { ...state, summaryYearsData: action.payload };
     case SET_GAMES_AND_LEAGUES:
       return {
         ...state,
@@ -61,6 +65,7 @@ export const gamesReducer = (state = defaultState, action) => {
   }
 };
 
+export const setSummaryYearsData = payload => ({ type: SET_SUMMARY_YEARS_DATA, payload });
 export const setGamesAndLeagues = payload => ({ type: SET_GAMES_AND_LEAGUES, payload });
 export const setCurrentLeague = payload => ({ type: SET_CURRENT_GAMES_LEAGUE, payload });
 export const setCurrentStadium = payload => ({ type: SET_CURRENT_STADIUM, payload });

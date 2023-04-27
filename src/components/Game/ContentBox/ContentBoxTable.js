@@ -72,22 +72,27 @@ const TABLES_INFO = {
 };
 
 const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
-	const orderedPlayersStats = JSON.parse(JSON.stringify(tableData.players_stats));
+  const orderedPlayersStats = JSON.parse(JSON.stringify(tableData));
+console.log(tableData);
+  // if (tableName === 'pitching') {
+  //   orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
 
-  if (tableName === 'pitching') {
-    orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
+  //   // tableData.pitchers_order.forEach((orderId, i) => {
+  //   tableData.pitchers
+  //     .map(pitcher => pitcher.id)
+  //     .forEach((orderId, i) => {
+  //       const player = orderedPlayersStats.find(curPlayer => {;
+  //         return curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined;
+  //       });
 
-    tableData.pitchers_order.forEach((orderId, i) => {
-      const player = orderedPlayersStats.find(
-        curPlayer => curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined
-      );
+  //       if (player !== undefined) {
+  //         player.takenBy = i + 1;
+  //       }
+  //     });
+  // }
 
-      if (player !== undefined) {
-        player.takenBy = i + 1;
-      }
-    });
-  }
-
+  console.log(tableData.pitchers.map(pitcher => pitcher.id));
+  console.log(orderedPlayersStats);
   return (
     <table className={cl.table + ' ' + tableClass}>
       <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />
@@ -95,14 +100,13 @@ const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) =
         TABLES_INFO={TABLES_INFO}
         tableName={tableName}
         toFixList={toFixList}
-				orderedPlayersStats={orderedPlayersStats}
+        orderedPlayersStats={orderedPlayersStats}
       />
       <ContentBoxTableFooter
         TABLES_INFO={TABLES_INFO}
         tableName={tableName}
         tableData={tableData}
-				orderedPlayersStats={orderedPlayersStats}
-
+        orderedPlayersStats={orderedPlayersStats.players_stats}
         toFixList={toFixList}
       />
     </table>

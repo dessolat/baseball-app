@@ -24,7 +24,7 @@ const Game = () => {
   const innings = useSelector(state => state.game.innings);
   const errorMsg = useSelector(state => state.game.errorMsg);
   const dispatch = useDispatch();
-  const [error, isLoading, cancelTokenRef, intervalRef, getFullData] = useGameFetch(
+  const [error, isLoading, cancelTokenRef, loadedPercents, intervalRef, getFullData] = useGameFetch(
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
 
@@ -99,7 +99,7 @@ const Game = () => {
       {errorMsg !== null && innings.length === 0 ? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
-        <Loader />
+        <Loader loadedPercents={loadedPercents} />
       ) : // <Skeleton />
       innings.length > 0 ? (
         <div>

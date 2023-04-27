@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
+  const [loadedPercents, setLoadedPercents] = useState(null);
   const [error, setError] = useState(null);
   const { innings } = useSelector(state => state.game);
   const intervalRef = useRef();
@@ -35,7 +36,10 @@ const useGameFetch = url => {
 
       try {
         firstTime && setIsLoading(true);
-        const resp = await axios.get(innerUrl, { cancelToken: cancelTokenRef.current.token });
+        const resp = await axios.get(innerUrl, {
+          cancelToken: cancelTokenRef.current.token,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+        });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
         dispatch(setErrorMsg(null));
         error && setError(null);
@@ -76,12 +80,13 @@ const useGameFetch = url => {
       } finally {
         if (firstTime) {
           setIsLoading(false);
+					setLoadedPercents(null)
           dispatch(setCurrentGameId(gameId));
         }
       }
     };
 
-  return [error, isLoading, cancelTokenRef, intervalRef, getFullData];
+  return [error, isLoading, cancelTokenRef, loadedPercents, intervalRef, getFullData];
 };
 
 export default useGameFetch;

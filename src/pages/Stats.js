@@ -9,12 +9,13 @@ import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
-import { StatsLoadingContext } from 'context';
 import { setCurrentYear } from 'redux/sharedReducer';
+import StatsLoadingProvider from 'context/StatsLoadingContext';
 
 const Stats = () => {
   const [isStatsLoading, setIsStatsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [loadedPercents, setLoadedPercents] = useState(null);
 
   const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
@@ -33,15 +34,17 @@ const Stats = () => {
   }, [statsTableMode]);
 
   useEffect(() => {
-		// ! 2023 err handle (temp) !
-    if (currentYear === 2023) {
-      dispatch(setCurrentYear(2022));
-			return
-    }
-		// !
+    // ! 2023 err handle (temp) !
+    // if (currentYear === 2023) {
+    //   dispatch(setCurrentYear(2022));
+    //   return;
+    // }
+    // !
 
     const refactorData = leagues => {
-      const result = leagues.reduce((sum, league) => {
+			const modifiedLeagues = Array.isArray(leagues) ? leagues : []
+
+      const result = modifiedLeagues.reduce((sum, league) => {
         const resultLeague = {};
         resultLeague.id = league.id;
         resultLeague.title = league.title;
@@ -76,7 +79,8 @@ const Stats = () => {
         setIsStatsLoading(true);
         const response = await axios.get(`http://baseball-gametrack.ru/api/stats/year-${currentYear}`, {
           cancelToken: cancelStatsTokenRef.current.token,
-          timeout: 10000
+          timeout: 10000,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
         setError('');
@@ -87,6 +91,7 @@ const Stats = () => {
         setError(err.message);
       } finally {
         setIsStatsLoading(false);
+        setLoadedPercents(null);
       }
     };
     fetchStats();
@@ -148,15 +153,14 @@ const Stats = () => {
     transform: 'translate(-50%,-50%)'
   };
 
-  const { Provider } = StatsLoadingContext;
-
   if (error !== '') return <ErrorLoader error={error} />;
   return (
     <>
-      <Provider value={isStatsLoading}>
+      <StatsLoadingProvider value={isStatsLoading}>
         <Header />
-      </Provider>
-      {isStatsLoading ? <Loader styles={contentLoaderStyles} /> : <Content />}
+      </StatsLoadingProvider>
+
+      {isStatsLoading ? <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} /> : <Content />}
     </>
   );
 };

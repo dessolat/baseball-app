@@ -12,11 +12,9 @@ const HeaderLeagues = () => {
   const leaguesRef = useRef();
   const firstMountRef = useRef(true);
 
-  const games = useSelector(state => state.games.games);
-  const currentGameType = useSelector(state => state.shared.currentGameType);
-  const currentYear = useSelector(state => state.shared.currentYear);
-  const leagues = useSelector(state => state.games.leagues);
-  const isMobile = useSelector(state => state.shared.isMobile);
+  const { games, leagues } = useSelector(state => state.games);
+  const { currentGameType, currentYear, isMobile } = useSelector(state => state.shared);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,15 +29,15 @@ const HeaderLeagues = () => {
     const ref = leaguesRef.current;
     ref.addEventListener('scroll', leaguesScrollDispatch);
 
-		setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-		setIsRightScroll(
-			leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
-		);
+    setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
 
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
@@ -71,7 +69,9 @@ const HeaderLeagues = () => {
     }
 
     setIsLeftScroll(leaguesRef.current.scrollLeft <= 0 ? false : true);
-    setIsRightScroll(leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
+    setIsRightScroll(
+      leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
+    );
     // setIsLeftScroll(currentScroll <= 0 ? false : true);
     // setIsRightScroll(currentScroll + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth);
     // eslint-disable-next-line

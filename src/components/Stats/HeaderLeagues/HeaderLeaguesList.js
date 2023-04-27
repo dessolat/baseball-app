@@ -1,12 +1,12 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import cl from './HeaderLeagues.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import HeaderLeaguesListItem from './HeaderLeaguesListItem';
-import { StatsLoadingContext } from 'context';
+import { useStatsLoadingCtx } from 'context/StatsLoadingContext';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
-	const isLoading = useContext(StatsLoadingContext)
+	const isLoading = useStatsLoadingCtx()
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);

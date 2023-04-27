@@ -1,0 +1,33 @@
+.graph {
+	aspect-ratio: 480 / 364;
+	// aspect-ratio: 480 / 364;
+	// aspect-ratio: 480 / 560;
+	// max-width: 480px;
+	// height: auto;
+	background-color: #fff;
+}
+
+.bottomNumber {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: middle;
+}
+
+.innerValue {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: end;
+}
+
+.innerText {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: start;
+}
+
+.rightTextTitle {
+	font: 400 .875rem 'Nunito', sans-serif;
+	text-anchor: middle;
+}
+
+.sideTitle {
+	font: 700 1.125rem 'Nunito', sans-serif;
+	text-anchor: middle;
+}
