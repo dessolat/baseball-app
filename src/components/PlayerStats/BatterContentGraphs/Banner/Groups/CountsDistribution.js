@@ -55,7 +55,7 @@ const CountsDistributionItem = ({ item, staticTitle }) => {
 
   const { formattedValue: valueLeft, animatedValue: animatedValueLeft } = getValues(swings, swings + takes);
   const { formattedValue: valueRight } = getValues(takes, swings + takes);
-  const animatedValueRight = valueRight > 0 ? `${((100 - valueLeft) * valueCoef).toFixed(1)}%`  : 0;
+  const animatedValueRight = valueRight > 0 ? `${Number(((100 - valueLeft) * valueCoef).toFixed(1))}%`  : 0;
   return (
     <div className={itemClasses}>
       <div>{formattedTitle}</div>
