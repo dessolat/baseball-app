@@ -1,14 +1,20 @@
 import React from 'react';
 import ContentBoxTableFooterCell from './ContentBoxTableFooterCell';
 
-const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, orderedPlayersStats, toFixList }) => {
-  const footerStyles =
-    orderedPlayersStats.filter(player =>
-      tableName === 'pitching' ? player.takenBy : tableName === 'catching' ? player.is_catcher : true
-    ).length % 2
-      ? { backgroundColor: '#eaeaea' }
-      : {};
+const ContentBoxTableFooter = ({ TABLES_INFO, tableName, tableData, toFixList }) => {
+  const {
+    catchers,
+    pitchers,
+    total_stats: { batting }
+  } = tableData;
 
+  function getTableGroup() {
+    if (tableName === 'pitching') return pitchers;
+    if (tableName === 'catching') return catchers;
+    return batting;
+  }
+
+  const footerStyles = getTableGroup().length % 2 ? { backgroundColor: '#eaeaea' } : {};
   return (
     <tfoot>
       <tr style={footerStyles}>
