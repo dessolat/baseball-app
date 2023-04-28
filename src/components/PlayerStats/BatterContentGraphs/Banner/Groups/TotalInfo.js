@@ -3,8 +3,8 @@ import cl from '../Banner.module.scss';
 const TotalInfoItem = ({ item, parent }) => {
   const { par1, par2 } = item;
 
-  const par1Title = par1 === 'RHB' ? 'Right' : par1;
-  const par2Title = par2 === 'LHB' ? 'Left Handed Batters' : par2;
+  const par1Title = par1 === 'LHP' ? 'Left' : par1;
+  const par2Title = par2 === 'RHP' ? 'Right Handed Batters' : par2;
 
   const title = `${par1Title} / ${par2Title} (${parent[par1]} / ${parent[par2]})`;
   const value = parent[`${par1}/${par2}`];
@@ -18,12 +18,10 @@ const TotalInfoItem = ({ item, parent }) => {
 };
 
 const TotalInfo = ({ data }) => {
-	console.log(data);
   const itemsArr = [
     { par1: 'PA', par2: 'G' },
     { par1: 'Pitches', par2: 'PA' },
-    // { par1: 'PA', par2: 'Pitches' },
-    { par1: 'RHB', par2: 'LHB' }
+    { par1: 'LHP', par2: 'RHP' }
   ];
   return (
     <div className={cl.group}>

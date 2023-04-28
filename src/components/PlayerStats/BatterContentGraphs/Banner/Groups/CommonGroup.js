@@ -8,7 +8,8 @@ const PARAM_VOCABULARY = {
   Take: 'Takes',
   Hits: 'Base Hits',
   Fly: 'Flyes',
-  Line: 'Lines'
+  Line: 'Lines',
+	HitsInPlay: 'Hits In Play'
 };
 
 const CommonGroupItem = ({ item, parent, staticTitle }) => {

@@ -1,6 +1,7 @@
 import { AnimationContext } from 'context';
 import { useContext } from 'react';
 import cl from '../Banner.module.scss';
+import classNames from 'classnames';
 
 const SORT_PRIORITY = {
   '0-0': 1,
@@ -18,37 +19,72 @@ const SORT_PRIORITY = {
 };
 
 const CountsDistributionItem = ({ item, staticTitle }) => {
-  const [title, { abs: absValue, abs_rel: absRelValue, rel: value }] = item;
+  const [title, { swings, takes }] = item;
 
   const valueCoef = useContext(AnimationContext);
 
-  const formattedTitle = `${title} (${absValue} / ${absRelValue} ${staticTitle})`;
-  const formattedValue = value !== '–' ? value : '—';
+  function getValues(value, sum) {
+    const formattedValue = Number(((value * 100) / sum).toFixed(1));
 
-  let animatedValue = '—';
+    let animatedValue = '—';
 
-  if (formattedValue !== '—') {
-    animatedValue =
-      valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
-    animatedValue += '%';
+    if (formattedValue !== '—') {
+      animatedValue =
+        valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+      animatedValue += '%';
+    }
+
+    return { formattedValue, animatedValue };
   }
 
+  const formattedTitle = `${title} (${swings} / ${takes})`;
+
+  // const formattedValueLeft = Number(((swings * 100) / (swings + takes)).toFixed(1));
+
+  // let animatedValueLeft = '—';
+
+  // if (formattedValueLeft !== '—') {
+  //   animatedValueLeft =
+  //     valueCoef < 1 && formattedValueLeft !== 0
+  //       ? (formattedValueLeft * valueCoef).toFixed(1)
+  //       : formattedValueLeft;
+  //   animatedValueLeft += '%';
+  // }
+
+  const itemClasses = classNames(cl.groupItem, cl.countsGroupItem);
+
+  const { formattedValue: valueLeft, animatedValue: animatedValueLeft } = getValues(swings, swings + takes);
+  const { formattedValue: valueRight } = getValues(takes, swings + takes);
+  const animatedValueRight = valueRight > 0 ? `${((100 - valueLeft) * valueCoef).toFixed(1)}%`  : 0;
   return (
-    <div
-      className={cl.groupItem}
-      style={{
-        background: `linear-gradient(to left, hsla(${169 + 0.41 * formattedValue * valueCoef}, 30%, ${
-          88 - 0.15 * formattedValue * valueCoef
-        }%, 1) ${formattedValue * valueCoef}%, rgba(234, 234, 234, 0.4) 0)`
-      }}>
-      <p>{formattedTitle}</p>
-      <p>{animatedValue}</p>
+    <div className={itemClasses}>
+      <div>{formattedTitle}</div>
+      <div
+        style={{
+          background: `linear-gradient(to left, hsla(${169 + 0.41 * valueLeft * valueCoef}, 30%, ${
+            88 - 0.15 * valueLeft * valueCoef
+          }%, 1) ${valueLeft * valueCoef}%, transparent 0)`,
+          textAlign: 'right',
+          paddingRight: '.25rem',
+          borderRight: '1px solid lightgray'
+        }}>
+        {animatedValueLeft}
+      </div>
+      <div
+        style={{
+          background: `linear-gradient(to right, hsla(${169 + 0.41 * valueRight * valueCoef}, 30%, ${
+            88 - 0.15 * valueRight * valueCoef
+          }%, 1) ${valueRight * valueCoef}%, transparent 0)`,
+          paddingLeft: '.25rem'
+        }}>
+        {animatedValueRight}
+      </div>
     </div>
   );
 };
 
 const CountsDistribution = ({ data, staticTitle }) => {
-  const sortedList = JSON.parse(JSON.stringify(Object.entries(data.CountsDistribution))).sort((a, b) =>
+  const sortedList = Object.entries(data.CountsDistribution).sort((a, b) =>
     SORT_PRIORITY[a] > SORT_PRIORITY[b] ? -1 : 1
   );
 

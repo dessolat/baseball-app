@@ -16,23 +16,17 @@ const BannerColumns = ({ parentObj }) => {
       { par1: 'GO', par2: null },
       { par1: 'FC', par2: null }
     ],
-    PitchesZoneDistribution: [
-      { par1: 'Balls', par2: null },
-      { par1: 'Strikes', par2: null }
-    ],
-    PitchesSwingDistribution: [
+    PitchesBySwingDistribution: [
       { par1: 'Swing', par2: null },
       { par1: 'Take', par2: null }
     ],
     BatterSwingResult: [
-      { par1: 'Miss', par2: null },
+      { par1: 'Misses', par2: null },
       { par1: 'Fouls', par2: null },
-      { par1: 'Hits in play', par2: null }
-      // { par1: 'Contact', par2: null }
+      { par1: 'HitsInPlay', par2: null }
     ],
     HitsDistribution: [
       { par1: 'Hits', par2: null },
-      // { par1: null, par2: null },
       { par1: 'Fly', par2: null },
       { par1: 'Line', par2: null },
       { par1: 'Grounds', par2: null },
@@ -62,9 +56,9 @@ const BannerColumns = ({ parentObj }) => {
       <div>
         <CommonGroup
           data={parentObj}
-          param='PitchesSwingDistribution'
+          param='PitchesBySwingDistribution'
           title='Pitches by swing distribution'
-          itemsArr={GROUPS_PARAMS.PitchesSwingDistribution}
+          itemsArr={GROUPS_PARAMS.PitchesBySwingDistribution}
           staticTitle='Pitches'
         />
         <CommonGroup
@@ -74,13 +68,6 @@ const BannerColumns = ({ parentObj }) => {
           itemsArr={GROUPS_PARAMS.BatterSwingResult}
           staticTitle='Swings'
         />
-        {/* <CommonGroup
-          data={parentObj}
-          param='PitchesZoneDistribution'
-          title='Pitches by swing distribution'
-          itemsArr={GROUPS_PARAMS.PitchesZoneDistribution}
-          staticTitle='Pitches'
-        /> */}
         <CommonGroup
           data={parentObj}
           param='HitsDistribution'
