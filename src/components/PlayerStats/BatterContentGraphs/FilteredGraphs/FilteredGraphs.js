@@ -761,20 +761,19 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
     if (sum[pitchClass] !== undefined) {
       sum[pitchClass].count += 1;
-			sum[pitchClass].pitches.push(pitch)
+      sum[pitchClass].pitches.push(pitch);
 
       return sum;
     }
 
     sum[pitchClass] = {
       count: 1,
-			pitches: [pitch]
+      pitches: [pitch]
     };
 
     return sum;
   }, {});
 
-	console.log(relValuesData);
   return (
     <div className={cl.rightColumnWrapper}>
       {/* <GraphsBlock defaultOption='All Pitches'>
@@ -877,7 +876,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                       filteredData={entry[1].pitches}
                       preview={preview}
                       currentOption={currentOption}
-											selectedPitchClass={entry[0]}
+                      selectedPitchClass={entry[0]}
                       title={entry[0]}
                       subTitle1='Swing'
                       subTitle2='Take'
@@ -887,7 +886,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
                       filteredData={entry[1].pitches}
                       preview={preview}
                       currentOption={currentOption}
-											selectedPitchClass={entry[0]}
+                      selectedPitchClass={entry[0]}
                       subTitle1='Miss & soft hit'
                       subTitle2='Base hit & Hard hit'
                     />
@@ -897,7 +896,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchClasses} defaultOption3='opened'>
+      <GraphsTimeDynamicBlock
+        defaultOption='Game'
+        defaultOption2={Array.from(new Set(pitchClasses))}
+        defaultOption3='opened'>
         {(
           currentOption,
           setCurrentOption,
@@ -919,7 +921,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption3={currentOption3}
               setCurrentOption3={setCurrentOption3}
               graphsArrow
-							classColor
+              classColor
             />
 
             <ArsenalGraph
@@ -928,8 +930,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentPitchTypes={currentOption2}
               pitchClasses={pitchClasses}
               title='Base hits & Hard hits vs PA'
-							graphType='PitchesByType'
-							classColor
+              graphType='PitchesByType'
+              classColor
             />
             <ArsenalGraph
               filteredData={filteredData}
@@ -938,7 +940,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               pitchClasses={pitchClasses}
               title='Pitch, %'
               graphType='PitchesRel'
-							classColor
+              classColor
             />
             <ArsenalGraph
               filteredData={filteredData}
@@ -947,7 +949,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               pitchClasses={pitchClasses}
               title='Speed, mph'
               graphType='Speed'
-							classColor
+              classColor
             />
           </>
         )}
