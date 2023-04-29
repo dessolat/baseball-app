@@ -244,7 +244,19 @@ const ArsenalGraph = ({
     return [];
   }
   function getLeftMarks(bottomMarks) {
-    const graphsWithAllPitches = ['HardByType', 'SwingByType', 'TakeByType', 'SoftByType'];
+    const graphsWithAllPitches = [
+      'Pitches',
+      'InZone',
+      'OutZone',
+      'Inside',
+      'Outside',
+      'Low',
+      'High',
+      'HardByType',
+      'SwingByType',
+      'TakeByType',
+      'SoftByType'
+    ];
 
     const availablePitchTypes = currentPitchTypes
       .filter(
@@ -269,14 +281,25 @@ const ArsenalGraph = ({
         ({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur
       );
     }
-
+		function getPitchesByTime(cur, sliceTo) {
+      return filteredData.filter(({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur);
+    }
     function getDefaultSumByType() {
       return availablePitchTypes.reduce((sum, type) => {
         sum[type] = 0;
         return sum;
       }, {});
     }
+		function getSumByType(pitches, defaultSumByType) {
+      return pitches.reduce((sum, { pitch_info }) => {
+        const { pitch_type: pitchType } = pitch_info;
 
+        sum[pitchType]++;
+        availablePitchTypes.includes(-1) && sum['-1']++;
+
+        return sum;
+      }, defaultSumByType);
+    }
     function getParamByType(param, pitches) {
       return pitches
         .filter(({ result }) => result[param])
@@ -289,18 +312,216 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
     }
+		function convertToRel(total, pitches) {
+      return Object.entries(total).reduce((sum, entry) => {
+        sum[entry[0]] = (entry[1] * 100) / pitches.length;
 
+        return sum;
+      }, {});
+    }
+
+    function getPercentInZoneByType(pitches) {
+      const sumInZoneByType = pitches
+        .filter(({ zone }) => zone['in zone'])
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+      return convertToRel(sumInZoneByType, pitches);
+    }
+    function getPercentOutZoneByType(pitches) {
+      const sumOutZoneByType = pitches
+        .filter(({ zone }) => zone['out zone'])
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+      return convertToRel(sumOutZoneByType, pitches);
+    }
+
+    function getPercentInsideByType(pitches) {
+      const sumInsideByType = pitches
+        .filter(({ zone }) => zone.inside)
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+      return convertToRel(sumInsideByType, pitches);
+    }
+
+    function getPercentOutsideByType(pitches) {
+      const sumOutsideByType = pitches
+        .filter(({ zone }) => zone.outside)
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+      return convertToRel(sumOutsideByType, pitches);
+    }
+
+    function getPercentLowByType(pitches) {
+      const sumLowByType = pitches
+        .filter(({ zone }) => zone.low)
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+      return convertToRel(sumLowByType, pitches);
+    }
+		
+    function getPercentHighByType(pitches) {
+      const sumHighByType = pitches
+        .filter(({ zone }) => zone.high)
+        .reduce((sum, { pitch_info }) => {
+          const { pitch_type: pitchType } = pitch_info;
+
+          sum[pitchType]++;
+          availablePitchTypes.includes(-1) && sum['-1']++;
+
+          return sum;
+        }, getDefaultSumByType());
+
+				return convertToRel(sumHighByType, pitches)
+    }
+
+    function getRelSumByType(allPitchesByTime, sumByType) {
+      const relByType = {};
+
+      for (let key in sumByType) {
+        relByType[key] = (sumByType[key] * 100) / allPitchesByTime.length;
+      }
+
+      return relByType;
+    }
+    function getSpeedByType(pitches, sumByType) {
+      const speedsSumByType = pitches.reduce((sum, { pitch_info }) => {
+        const { pitch_type: pitchType, speed } = pitch_info;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += speed * 2.24;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in speedsSumByType) {
+        result[pitchType] = speedsSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
+    function getSpinByType(pitches, sumByType) {
+      const spinSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { spin } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += spin;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in spinSumByType) {
+        result[pitchType] = spinSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
+    function getVerticalBreakByType(pitches, sumByType) {
+      const verticalBreakSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { break_y } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += break_y * 100;
+
+        return sum;
+      }, {});
+      const result = {};
+
+      for (let pitchType in verticalBreakSumByType) {
+        result[pitchType] = verticalBreakSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
+    function getHorizontalBreakByType(pitches, sumByType) {
+      const horizontalBreakSumByType = pitches.reduce((sum, { pitch_info, break: breakValue }) => {
+        const { pitch_type: pitchType } = pitch_info;
+        const { break_x } = breakValue;
+
+        if (sum[pitchType] === undefined) sum[pitchType] = 0;
+
+        sum[pitchType] += break_x * 100;
+
+        return sum;
+      }, {});
+
+      const result = {};
+
+      for (let pitchType in horizontalBreakSumByType) {
+        result[pitchType] = horizontalBreakSumByType[pitchType] / sumByType[pitchType];
+      }
+
+      return result;
+    }
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
 
       return bottomMarks.reduce((totalSum, interval) => {
         const pitches = getFilteredPitches(interval, sliceTo);
+				const allPitchesByTime = getPitchesByTime(interval, sliceTo);
+        const defaultSumByType = getDefaultSumByType();
+        const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
+					Pitches: sumByType,
           HardByType: getParamByType('base hit & hard hit', pitches),
           SwingByType: getParamByType('swing', pitches),
           TakeByType: getParamByType('take', pitches),
-          SoftByType: getParamByType('soft hit', pitches)
+          SoftByType: getParamByType('soft hit', pitches),
+					PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
+          Speed: getSpeedByType(pitches, sumByType),
+          Spin: getSpinByType(pitches, sumByType),
+          VerticalBreak: getVerticalBreakByType(pitches, sumByType),
+          HorizontalBreak: getHorizontalBreakByType(pitches, sumByType),
+          InZone: getPercentInZoneByType(pitches),
+          OutZone: getPercentOutZoneByType(pitches),
+          Inside: getPercentInsideByType(pitches),
+          Outside: getPercentOutsideByType(pitches),
+          Low: getPercentLowByType(pitches),
+          High: getPercentHighByType(pitches)
         };
 
         const total = GRAPH_FUNCS[graphType];
