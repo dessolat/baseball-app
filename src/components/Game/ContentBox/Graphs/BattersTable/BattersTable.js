@@ -66,7 +66,7 @@ const TableRow = ({ row, rowCells, activeColumn }) => {
 };
 
 const BattersTable = () => {
-  const [activeColumn, setActiveColumn] = useState({ sortField: 'angle', dir: 'asc' });
+  const [activeColumn, setActiveColumn] = useState({ sortField: 'velocity', dir: 'desc' });
 
   const rowCells = [
     { clName: 'name', value: 'name', ending: '' },
