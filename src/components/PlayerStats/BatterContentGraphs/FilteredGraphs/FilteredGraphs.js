@@ -776,71 +776,6 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   return (
     <div className={cl.rightColumnWrapper}>
-      {/* <GraphsBlock defaultOption='All Pitches'>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              title='Machine vision statistics'
-              subTitle={`${playerName} ${playerSurname} pitches, their speed, movement and frequency`}
-              noSelector
-            />
-            <PitchesSpeedField
-              optionsArr={['All Pitches', 'Types']}
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              filteredData={filteredData}
-              preview={preview}
-              relValuesData={relValuesData}
-            />
-          </>
-        )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches'>
-        {(currentOption, setCurrentOption) => (
-          <>
-            <GraphsHeader
-              optionsArr={['All Pitches', 'Contours']}
-              title={null}
-              subTitle={`${playerName} ${playerSurname} pitches by zone`}
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              // style={{ padding: '.8rem 0' }}
-            />
-            <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph
-                data={relValuesData}
-                filteredData={twinData}
-                preview={preview}
-                currentOption={currentOption}
-              />
-
-              {Object.entries(relValuesData).map((entry, index) => (
-                <TwinPitchesGraph
-                  key={index}
-                  data={relValuesData}
-                  filteredData={twinData}
-                  selectedPitchType={entry[0]}
-                  preview={preview}
-                  currentOption={currentOption}
-                />
-              ))}
-              <button
-                style={{
-                  position: 'absolute',
-                  right: '30px',
-                  top: '20px',
-                  padding: '5px 10px',
-                  background: 'lightgray',
-                  borderRadius: '3px'
-                }}
-                onClick={twinFakeBallsHandler}>
-                {`${isFakeTwinBalls ? 'Remove' : 'Add'} balls`}
-              </button>
-            </div>
-          </>
-        )}
-      </GraphsBlock> */}
-
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader
           title='Machine vision statistics'
@@ -923,17 +858,43 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphsArrow
               classColor
             />
-
             <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
               pitchClasses={pitchClasses}
-              title='Base hits & Hard hits vs PA'
-              graphType='PitchesByType'
+              title='Swing'
+              graphType='SwingByType'
               classColor
             />
             <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchClasses={pitchClasses}
+              title='Take'
+              graphType='TakeByType'
+              classColor
+            />
+            <ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchClasses={pitchClasses}
+              title='Miss & soft hit'
+              graphType='SoftByType'
+              classColor
+            />
+						<ArsenalGraph
+              filteredData={filteredData}
+              currentTimeInterval={currentOption}
+              currentPitchTypes={currentOption2}
+              pitchClasses={pitchClasses}
+              title='Base hits & Hard hits vs PA'
+              graphType='HardByType'
+              classColor
+            />
+            {/* <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
@@ -950,7 +911,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               title='Speed, mph'
               graphType='Speed'
               classColor
-            />
+            /> */}
           </>
         )}
       </GraphsTimeDynamicBlock>
