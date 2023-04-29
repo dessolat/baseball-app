@@ -18,6 +18,7 @@ const PARAMS = {
 
 const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
+  const leftValuesDelta = leftValues[leftValues.length - 1] - leftValues[0];
   const minValue = +leftValues[0];
   const totalColumns = Object.keys(summary).length;
   const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
@@ -35,9 +36,12 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
   }, defaultTotalValues);
   return (
     <>
-      {Object.entries(totalValues).map(([_, values], i) => {
+      {Object.entries(totalValues).map(([type, values], i) => {
         const startPointX = columnStartX;
-        const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+        const startPointY =
+          leftValuesDelta !== 0
+            ? rowsStartY - (values[0] - minValue) * yScaleMultiplier
+            : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2;
 
         const pathDest = values.reduce((pathSum, value, j, arr) => {
           if (j === 0) return pathSum;
@@ -45,21 +49,46 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
           pathSum += !value
             ? ''
             : `${!arr[j - 1] ? 'M' : 'L'}${columnStartX + columnStepX * j},${
-                rowsStartY - (value - minValue) * yScaleMultiplier
+                leftValuesDelta !== 0
+                  ? rowsStartY - (value - minValue) * yScaleMultiplier
+                  : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
               }`;
           return pathSum;
         }, `M${startPointX},${startPointY}`);
 
         const pathClasses = classNames(cl.hoveringLine, cl[`hoveringLine${i + 1}`]);
         return (
-          <path
-            key={i}
-            d={pathDest}
-            fill='none'
-            stroke='transparent'
-            strokeWidth='12'
-            className={pathClasses}
-          />
+          <Fragment key={type + '-hover'}>
+            <path
+              key={i}
+              d={pathDest}
+              fill='none'
+              stroke='transparent'
+              strokeWidth='12'
+              className={pathClasses}
+            />
+            {values.map((value, j) => {
+              if (value) {
+                return (
+                  <Fragment key={type + '-' + j}>
+                    <circle
+                      cx={columnStartX + columnStepX * j}
+                      cy={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+                      }
+                      r='6'
+                      fill='transparent'
+                      className={pathClasses}
+                    />
+                  </Fragment>
+                );
+              }
+
+              return <Fragment key={i + '-' + j}></Fragment>;
+            })}
+          </Fragment>
         );
       })}
     </>
@@ -156,7 +185,15 @@ const Lines = ({
                     />
                     <text
                       x={columnStartX + columnStepX * j}
-                      y={rowsStartY - (value - minValue) * yScaleMultiplier - 15}
+                      y={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier - 15
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2 - 15
+                      }
+                      // leftValuesDelta !== 0
+                      // ? rowsStartY - (value - minValue) * yScaleMultiplier
+                      // : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+
                       className={graphNumberClasses}>
                       {valueText}
                     </text>
@@ -281,7 +318,7 @@ const ArsenalGraph = ({
         ({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur
       );
     }
-		function getPitchesByTime(cur, sliceTo) {
+    function getPitchesByTime(cur, sliceTo) {
       return filteredData.filter(({ pitch_info }) => pitch_info.date.slice(0, sliceTo) === cur);
     }
     function getDefaultSumByType() {
@@ -290,7 +327,7 @@ const ArsenalGraph = ({
         return sum;
       }, {});
     }
-		function getSumByType(pitches, defaultSumByType) {
+    function getSumByType(pitches, defaultSumByType) {
       return pitches.reduce((sum, { pitch_info }) => {
         const { pitch_type: pitchType } = pitch_info;
 
@@ -312,7 +349,7 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
     }
-		function convertToRel(total, pitches) {
+    function convertToRel(total, pitches) {
       return Object.entries(total).reduce((sum, entry) => {
         sum[entry[0]] = (entry[1] * 100) / pitches.length;
 
@@ -393,7 +430,7 @@ const ArsenalGraph = ({
 
       return convertToRel(sumLowByType, pitches);
     }
-		
+
     function getPercentHighByType(pitches) {
       const sumHighByType = pitches
         .filter(({ zone }) => zone.high)
@@ -406,7 +443,7 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
 
-				return convertToRel(sumHighByType, pitches)
+      return convertToRel(sumHighByType, pitches);
     }
 
     function getRelSumByType(allPitchesByTime, sumByType) {
@@ -501,17 +538,17 @@ const ArsenalGraph = ({
 
       return bottomMarks.reduce((totalSum, interval) => {
         const pitches = getFilteredPitches(interval, sliceTo);
-				const allPitchesByTime = getPitchesByTime(interval, sliceTo);
+        const allPitchesByTime = getPitchesByTime(interval, sliceTo);
         const defaultSumByType = getDefaultSumByType();
         const sumByType = getSumByType(pitches, defaultSumByType);
 
         const GRAPH_FUNCS = {
-					Pitches: sumByType,
+          Pitches: sumByType,
           HardByType: getParamByType('base hit & hard hit', pitches),
           SwingByType: getParamByType('swing', pitches),
           TakeByType: getParamByType('take', pitches),
           SoftByType: getParamByType('soft hit', pitches),
-					PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
+          PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
           VerticalBreak: getVerticalBreakByType(pitches, sumByType),
