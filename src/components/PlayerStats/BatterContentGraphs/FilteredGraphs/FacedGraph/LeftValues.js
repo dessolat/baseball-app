@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { leftValue } from './FacedGraph.module.scss';
 
 const LeftValues = ({ maxCount, PARAMS }) => {
@@ -17,13 +18,13 @@ const LeftValues = ({ maxCount, PARAMS }) => {
         const yCoord = PARAMS.PADDING_TOP + graphDelta * i + 5;
 
         return (
-          <>
+          <Fragment key={`left-value-${i}`}>
             {!(value % 1 || value === 0) && (
-              <text key={`left-value-${i}`} x={xCoord} y={yCoord} className={leftValue}>
+              <text x={xCoord} y={yCoord} className={leftValue}>
                 {value}
               </text>
             )}
-          </>
+          </Fragment>
         );
       })}
     </>
