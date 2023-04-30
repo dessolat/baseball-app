@@ -26,9 +26,9 @@ const Graphs = ({ graphsData }) => {
       </GraphsBlock>
       <GraphsBlock noSelector>
         <GraphsHeader subTitle={`${preview[boxActiveButton].name} pitchers Release speed, mph`} noSelector />
-        <PitchersReleaseSpeeds />
+        <PitchersReleaseSpeeds metrix={pitchersMetrix} />
       </GraphsBlock>
-      <PitchersGraphRows />
+      <PitchersGraphRows metrix={pitchersMetrix} />
     </div>
   );
 };

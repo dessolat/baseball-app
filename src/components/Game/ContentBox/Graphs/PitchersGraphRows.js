@@ -16,9 +16,9 @@ const PitchersGraphRow = () => (
   </GraphsBlock>
 );
 
-const PitchersGraphRows = () => {
+const PitchersGraphRows = ({ metrix }) => {
   const pitchersArr = new Array(4).fill('');
-	
+
   return (
     <>
       {pitchersArr.map((_, i) => (

@@ -85,9 +85,6 @@ const HeatAreas = ({ arrData, coords }) => {
     return sum;
   }, []);
 
-  console.log(dotsCoords);
-  console.log(maxValue);
-
   const points = dotsCoords.reduce((sum, coords, i) => {
     if (coords === undefined) return sum;
 
@@ -107,7 +104,6 @@ const HeatAreas = ({ arrData, coords }) => {
     return sum;
   }, []);
 
-  console.log(points);
   const maxRadius = 25;
   return (
     <>

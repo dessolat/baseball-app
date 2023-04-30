@@ -57,7 +57,7 @@ const ContentBox = () => {
 
   const tableData = boxData[activeButton];
   const graphsData = Object.values(boxGraphsData)[0] || {};
-console.log(graphsData);
+
   return (
     <>
       {isLoading ? (
