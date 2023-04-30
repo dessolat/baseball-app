@@ -14,7 +14,7 @@ const ContentBox = () => {
 
   const { gameId } = useParams();
 
-  const { boxActiveButton: activeButton, preview } = useSelector(state => state.game);
+  const { boxActiveButton: activeButton } = useSelector(state => state.game);
 
   const cancelTokenRef = useRef();
 
@@ -32,16 +32,15 @@ const ContentBox = () => {
           cancelToken: cancelTokenRef.current.token
         });
 
-        const newBoxData = response.data;
-        setBoxData(newBoxData);
-				
+        setBoxData(response.data);
+        setIsLoading(false);
+
         response = await axios.get(`http://baseball-gametrack.ru/api/game_metrix?game_id=${gameId}`, {
-					cancelToken: cancelTokenRef.current.token
+          cancelToken: cancelTokenRef.current.token
         });
-				
-				setBoxGraphsData(response.data);
-        // console.log(newBoxData);
-        // console.log(response.data);
+
+        setBoxGraphsData(response.data);
+        console.log(response.data);
       } catch (err) {
         err.message !== null && console.log(err.message);
       } finally {
@@ -57,7 +56,8 @@ const ContentBox = () => {
   }, []);
 
   const tableData = boxData[activeButton];
-	const graphsData = boxGraphsData
+  const graphsData = Object.values(boxGraphsData)[0] || {};
+console.log(graphsData);
   return (
     <>
       {isLoading ? (
@@ -66,7 +66,7 @@ const ContentBox = () => {
         <></>
       ) : (
         <>
-          <ContentBoxDesktop tableData={tableData} footer={footer} />
+          <ContentBoxDesktop tableData={tableData} footer={footer} graphsData={graphsData} />
           <ContentMobileBox tableData={tableData} footer={footer} />
         </>
       )}
