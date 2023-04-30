@@ -41,9 +41,10 @@ const TableCell = ({ row, cell: { clName, value, ending }, activeColumn }) => {
     [cl.active]: value === activeColumn.sortField
   });
 
+  const formattedValue = Math.round(row[value]);
   return (
     <div className={cellClasses}>
-      {row[value]}
+      {formattedValue}
       {ending}
     </div>
   );
@@ -65,7 +66,7 @@ const TableRow = ({ row, rowCells, activeColumn }) => {
   );
 };
 
-const BattersTable = () => {
+const BattersTable = ({ metrix }) => {
   const [activeColumn, setActiveColumn] = useState({ sortField: 'velocity', dir: 'desc' });
 
   const rowCells = [
@@ -76,18 +77,30 @@ const BattersTable = () => {
     { clName: 'value', value: 'distance', ending: ' m' }
   ];
 
-  const battersArr = [
-    { name: 'SURNAME Name1', hitNumber: 1, angle: 30, velocity: 80, distance: 90 },
-    { name: 'SURNAME Name1', hitNumber: 2, angle: 20, velocity: 60, distance: 70 },
-    { name: 'SURNAME Name1', hitNumber: 3, angle: 30, velocity: 40, distance: 90 },
-    { name: 'SURNAME Name2', hitNumber: 1, angle: 50, velocity: 50, distance: 50 },
-    { name: 'SURNAME Name2', hitNumber: 2, angle: 60, velocity: 80, distance: 40 },
-    { name: 'SURNAME Name2', hitNumber: 3, angle: 30, velocity: 70, distance: 70 },
-    { name: 'SURNAME Name3', hitNumber: 1, angle: 40, velocity: 30, distance: 90 },
-    { name: 'SURNAME Name3', hitNumber: 2, angle: 30, velocity: 60, distance: 30 },
-    { name: 'SURNAME Name3', hitNumber: 3, angle: 20, velocity: 30, distance: 10 },
-    { name: 'SURNAME Name4', hitNumber: 1, angle: 10, velocity: 70, distance: 50 }
-  ];
+  const battersArr = metrix.reduce((sum, { pitches_all, preview }) => {
+    pitches_all
+      .filter(({ hit_info }) => hit_info.angle)
+      .forEach(({ hit_info: { angle, 'exit velocity': velocity, distance } }, i) =>
+        sum.push({ name: preview.batter_id, hitNumber: i + 1, angle, velocity, distance })
+      );
+
+    return sum;
+  }, []);
+
+  // console.log(filteredMetrix);
+
+  // const battersArr = [
+  //   { name: 'SURNAME Name1', hitNumber: 1, angle: 30, velocity: 80, distance: 90 },
+  //   { name: 'SURNAME Name1', hitNumber: 2, angle: 20, velocity: 60, distance: 70 },
+  //   { name: 'SURNAME Name1', hitNumber: 3, angle: 30, velocity: 40, distance: 90 },
+  //   { name: 'SURNAME Name2', hitNumber: 1, angle: 50, velocity: 50, distance: 50 },
+  //   { name: 'SURNAME Name2', hitNumber: 2, angle: 60, velocity: 80, distance: 40 },
+  //   { name: 'SURNAME Name2', hitNumber: 3, angle: 30, velocity: 70, distance: 70 },
+  //   { name: 'SURNAME Name3', hitNumber: 1, angle: 40, velocity: 30, distance: 90 },
+  //   { name: 'SURNAME Name3', hitNumber: 2, angle: 30, velocity: 60, distance: 30 },
+  //   { name: 'SURNAME Name3', hitNumber: 3, angle: 20, velocity: 30, distance: 10 },
+  //   { name: 'SURNAME Name4', hitNumber: 1, angle: 10, velocity: 70, distance: 50 }
+  // ];
 
   const handleHeaderClick = sortField => () =>
     setActiveColumn(prev => {

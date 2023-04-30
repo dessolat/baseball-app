@@ -7,7 +7,7 @@ import PitchersReleaseSpeeds from './PitchersReleaseSpeeds/PitchersReleaseSpeeds
 import PitchersGraphRows from './PitchersGraphRows';
 
 const Graphs = ({ graphsData }) => {
-	const {batters_metrix: battersMetrix, pitchers_metrix: pitchersMetrix} = graphsData
+  const { batters_metrix: battersMetrix, pitchers_metrix: pitchersMetrix } = graphsData;
 
   const { preview, boxActiveButton } = useSelector(s => s.game);
 
@@ -22,7 +22,7 @@ const Graphs = ({ graphsData }) => {
         <PitchesTrajectories metrix={battersMetrix} />
       </GraphsBlock>
       <GraphsBlock noSelector style={{ lineHeight: 'unset' }}>
-        <BattersTable />
+        <BattersTable metrix={battersMetrix} />
       </GraphsBlock>
       <GraphsBlock noSelector>
         <GraphsHeader subTitle={`${preview[boxActiveButton].name} pitchers Release speed, mph`} noSelector />
