@@ -605,7 +605,7 @@ const TwinPitchesGraph = ({
   filteredData = [],
   selectedPitchType = null,
   preview = {},
-  currentOption,
+  currentOption = 'All Pitches',
   ...props
 }) => {
   const [isGraphVisible, setGraphVisibility] = useState(false);
