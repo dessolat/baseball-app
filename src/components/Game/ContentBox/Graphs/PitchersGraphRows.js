@@ -2,27 +2,25 @@ import GraphsBlock from './GraphsBlock';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
 import ThreeGraphsRow from './ThreeGraphsRow/ThreeGraphsRow';
 
-const PitchersGraphRow = () => (
+const PitchersGraphRow = ({ pitcher }) => (
   <GraphsBlock defaultOption='Types'>
     {(currentOption, setCurrentOption) => (
       <>
         <GraphsHeader
-          subTitle='Yuniel Lasaro Moralez Rodriges pitches by zone, speed, movement and frequency'
+          subTitle={`${pitcher.preview.pitcher_id} pitches by zone, speed, movement and frequency`}
           noSelector
         />
-        <ThreeGraphsRow currentOption={currentOption} setCurrentOption={setCurrentOption} />
+        <ThreeGraphsRow currentOption={currentOption} setCurrentOption={setCurrentOption} pitcher={pitcher} />
       </>
     )}
   </GraphsBlock>
 );
 
 const PitchersGraphRows = ({ metrix }) => {
-  const pitchersArr = new Array(4).fill('');
-
   return (
     <>
-      {pitchersArr.map((_, i) => (
-        <PitchersGraphRow key={i} />
+      {metrix.map((pitcher, i) => (
+        <PitchersGraphRow key={i} pitcher={pitcher} />
       ))}
     </>
   );
