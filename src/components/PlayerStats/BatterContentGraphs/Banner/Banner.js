@@ -7,18 +7,19 @@ import BannerColumns from './BannerColumns';
 const Banner = () => {
   const [valueCoef, setValueCoef] = useState(0);
 
-  const wrapperRef = useRef();
+  const wrapperRef = useRef(null);
   const firstMountRef = useRef(true);
 
-	const { playerYears } = useContext(PlayerYearsContext);
+  const { playerYears } = useContext(PlayerYearsContext);
 
   const { playerStatsData: statsData, playerCurrentTeam: currentTeam } = useSelector(s => s.playerStats);
   const { currentLeague } = useSelector(state => state.games);
 
   const { total, total_annual, teams, leagues } = statsData.batting_banner;
-	console.log(statsData.batting_banner);
 
   useEffect(() => {
+    if (wrapperRef.current === null) return;
+
     let observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const { isIntersecting } = entry;
@@ -32,28 +33,26 @@ const Banner = () => {
     });
     observer.observe(wrapperRef.current);
 
-    return () => {
-      observer.disconnect();
-    };
+    return observer.disconnect;
   }, []);
 
   useEffect(() => {
     if (valueCoef === 0) return;
 
-		const getTimeoutDelay = coef => {
-			if (coef < 0.5) return 9
-			if (coef < 0.75) return 6
-			return 3
-			// if (coef < 0.9) return 16
-			// if (coef < 0.95) return 32
-			// return 64
-		}
+    const getTimeoutDelay = coef => {
+      if (coef < 0.5) return 9;
+      if (coef < 0.75) return 6;
+      return 3;
+      // if (coef < 0.9) return 16
+      // if (coef < 0.95) return 32
+      // return 64
+    };
 
-		const getValueAddition = coef => {
-			if (coef < 0.5) return 0.03
-			if (coef < 0.75) return 0.02
-			return 0.01
-		}
+    const getValueAddition = coef => {
+      if (coef < 0.5) return 0.03;
+      if (coef < 0.75) return 0.02;
+      return 0.01;
+    };
 
     const timeout = setTimeout(() => {
       setValueCoef(prev => (prev < 1 ? prev + getValueAddition(valueCoef) : 1));
@@ -64,11 +63,11 @@ const Banner = () => {
     };
   }, [valueCoef]);
 
-	useEffect(() => {
-		if (firstMountRef.current === true) {
-			firstMountRef.current = false
-			return
-		}
+  useEffect(() => {
+    if (firstMountRef.current === true) {
+      firstMountRef.current = false;
+      return;
+    }
 
     setValueCoef(0);
 
@@ -77,7 +76,7 @@ const Banner = () => {
     }, 10);
   }, [playerYears, currentTeam, currentLeague.id]);
 
-	const getParentObj = () => {
+  const getParentObj = () => {
     if (playerYears === 'All years' && currentTeam === 'All teams') return total;
     if (playerYears === 'All years' && currentTeam !== 'All teams')
       return teams.find(team => team.name === currentTeam);
@@ -93,10 +92,12 @@ const Banner = () => {
   return parentObj ? (
     <AnimationContext.Provider value={valueCoef}>
       <div className={cl.bannerWrapper} ref={wrapperRef}>
-        <BannerColumns setAnimationCoef={setValueCoef} parentObj={parentObj}/>
+        <BannerColumns setAnimationCoef={setValueCoef} parentObj={parentObj} />
       </div>
     </AnimationContext.Provider>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 };
 
 export default memo(Banner);

@@ -1,6 +1,6 @@
 import cl from './PitchersReleaseSpeeds.module.scss';
 import HorizontalRows from './HorizontalRows';
-import { getRndValue } from 'utils';
+// import { getRndValue } from 'utils';
 import { memo } from 'react';
 import LeftValues from './LeftValues';
 import VerticalPitcherRowsAndTitles from './VerticalPitcherRowsAndTitles';
@@ -14,33 +14,51 @@ const PARAMS = {
   GRAPH_HEIGHT: 102,
   GRAPH_WIDTH: 1131,
   ROWS_NUMBER: 4,
-  MIN_MAX_VALUES_GAP: 5
+  MIN_MAX_VALUES_GAP: 1
 };
 
-const PitchersReleaseSpeeds = () => {
+const PitchersReleaseSpeeds = ({ metrix }) => {
   // Default data
-  const data = [
-    { pitcherName: 'SURNAME Name Pitcher 1', pitches: [] },
-    { pitcherName: 'SURNAME Name Pitcher 2', pitches: [] },
-    { pitcherName: 'SURNAME Name Pitcher 3', pitches: [] },
-    { pitcherName: 'SURNAME Name Pitcher 4', pitches: [] }
-  ];
+  const addedData = metrix.reduce((sum, { preview, pitches_all }) => {
+    const pitcherData = {};
+    pitcherData.pitcherName = preview.pitcher_id;
+    pitcherData.pitches = pitches_all.reduce(
+      (pitchesSum, { pitch_info: { pitch_type: pitchType, speed } }) => {
+        const pitch = { pitchType, speed };
+        pitchesSum.push(pitch);
 
-  // Data generation
-  const addedData = data.reduce((sum, pitcherData) => {
-    const pitchesCount = getRndValue(8, 25);
-
-    for (let i = 0; i < pitchesCount; i++) {
-      const pitchType = getRndValue(0, 3);
-      const speed = getRndValue(55, 90);
-
-      pitcherData.pitches.push({ speed, pitchType });
-    }
+        return pitchesSum;
+      },
+      []
+    );
 
     sum.push(pitcherData);
 
     return sum;
   }, []);
+
+  // const data = [
+  //   { pitcherName: 'SURNAME Name Pitcher 1', pitches: [] },
+  //   { pitcherName: 'SURNAME Name Pitcher 2', pitches: [] },
+  //   { pitcherName: 'SURNAME Name Pitcher 3', pitches: [] },
+  //   { pitcherName: 'SURNAME Name Pitcher 4', pitches: [] }
+  // ];
+
+  // Data generation
+  // const addedData = data.reduce((sum, pitcherData) => {
+  //   const pitchesCount = getRndValue(8, 25);
+
+  //   for (let i = 0; i < pitchesCount; i++) {
+  //     const pitchType = getRndValue(0, 3);
+  //     const speed = getRndValue(55, 90);
+
+  //     pitcherData.pitches.push({ speed, pitchType });
+  //   }
+
+  //   sum.push(pitcherData);
+
+  //   return sum;
+  // }, []);
 
   // Min & max values calculating
   const minMaxValues = addedData.reduce((sum, pitcherData) => {

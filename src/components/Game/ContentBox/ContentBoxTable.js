@@ -73,7 +73,6 @@ const TABLES_INFO = {
 
 const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
   const orderedPlayersStats = JSON.parse(JSON.stringify(tableData));
-console.log(tableData);
   // if (tableName === 'pitching') {
   //   orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
 
@@ -91,8 +90,6 @@ console.log(tableData);
   //     });
   // }
 
-  console.log(tableData.pitchers.map(pitcher => pitcher.id));
-  console.log(orderedPlayersStats);
   return (
     <table className={cl.table + ' ' + tableClass}>
       <ContentBoxTableHeader TABLES_INFO={TABLES_INFO} tableName={tableName} />

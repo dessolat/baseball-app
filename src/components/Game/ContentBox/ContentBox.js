@@ -10,10 +10,11 @@ import ContentBoxDesktop from './ContentBoxDesktop';
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [boxData, setBoxData] = useState({});
+  const [boxGraphsData, setBoxGraphsData] = useState({});
 
   const { gameId } = useParams();
 
-  const activeButton = useSelector(state => state.game.boxActiveButton);
+  const { boxActiveButton: activeButton } = useSelector(state => state.game);
 
   const cancelTokenRef = useRef();
 
@@ -27,10 +28,18 @@ const ContentBox = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://baseball-gametrack.ru/api/game_${gameId}/box`, {
+        let response = await axios.get(`http://baseball-gametrack.ru/api/game_${gameId}/box`, {
           cancelToken: cancelTokenRef.current.token
         });
+
         setBoxData(response.data);
+        setIsLoading(false);
+
+        response = await axios.get(`http://baseball-gametrack.ru/api/game_metrix?game_id=${gameId}`, {
+          cancelToken: cancelTokenRef.current.token
+        });
+
+        setBoxGraphsData(response.data);
       } catch (err) {
         err.message !== null && console.log(err.message);
       } finally {
@@ -46,6 +55,8 @@ const ContentBox = () => {
   }, []);
 
   const tableData = boxData[activeButton];
+  const graphsData = Object.values(boxGraphsData)[0] || {};
+
   return (
     <>
       {isLoading ? (
@@ -54,7 +65,7 @@ const ContentBox = () => {
         <></>
       ) : (
         <>
-          <ContentBoxDesktop tableData={tableData} footer={footer} />
+          <ContentBoxDesktop tableData={tableData} footer={footer} graphsData={graphsData} />
           <ContentMobileBox tableData={tableData} footer={footer} />
         </>
       )}

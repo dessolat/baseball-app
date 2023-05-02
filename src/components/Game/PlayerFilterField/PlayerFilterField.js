@@ -3,17 +3,14 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import {
-  setPlayerCardFilter,
-  togglePlayerCardFilterBy,
-  setPlayerCardFilterFocused
-} from 'redux/gameReducer';
+import { setPlayerCardFilter, togglePlayerCardFilterBy, setPlayerCardFilterFocused } from 'redux/gameReducer';
 import cl from './PlayerFilterField.module.scss';
 
 const PlayerFilterField = () => {
-  const [filterValue, setFilterValue] = useState('');
+  const { isFilteredPlayer, playerCardFilterBy, playerCardFilter } = useSelector(state => state.game);
 
-  const { isFilteredPlayer, playerCardFilterBy } = useSelector(state => state.game);
+  const [filterValue, setFilterValue] = useState(playerCardFilter);
+
 
   const dispatch = useDispatch();
 

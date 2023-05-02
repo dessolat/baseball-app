@@ -29,7 +29,15 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
   );
 };
 
-const PitchesTrajectories = ({ data }) => {
+const PitchesTrajectories = ({ metrix }) => {
+  const filteredMetrix = metrix.reduce((sum, { pitches_all: pitchesAll }) => {
+    pitchesAll
+      .filter(({ hit_info }) => hit_info.data_3d)
+      .forEach(hit => sum.push(hit));
+
+    return sum;
+  }, []);
+
   const [isAutoRotate, setAutoRotate] = useState(true);
   const [zoomCoef, setZoomCoef] = useState(1);
   const [isGraphVisible, setGraphVisibility] = useState(false);
@@ -62,8 +70,6 @@ const PitchesTrajectories = ({ data }) => {
     };
   }, []);
 
-  const { currentMoment } = useSelector(state => state.game);
-
   const controlsRef = useRef();
   const wrapperRef = useRef();
   const pointerTimeout = useRef(null);
@@ -81,8 +87,7 @@ const PitchesTrajectories = ({ data }) => {
 
   const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
-  const hitsData = data.filter(({ hit_info }) => hit_info.data_3d !== null);
-  const isCurves = hitsData.length > 0;
+  const isCurves = filteredMetrix.length > 0;
 
   const handlePointerOverCurve = text => {
     clearTimeout(pointerTimeout.current);
@@ -118,7 +123,7 @@ const PitchesTrajectories = ({ data }) => {
 
             {isCurves && (
               <Curves
-                hitsData={hitsData}
+                hitsData={filteredMetrix}
                 handlePointerOver={handlePointerOverCurve}
                 handlePointerOut={handlePointerOutCurve}
               />

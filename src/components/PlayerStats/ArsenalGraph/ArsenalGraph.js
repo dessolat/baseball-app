@@ -18,6 +18,7 @@ const PARAMS = {
 
 const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
   const { leftValues, summary, availablePitchTypes } = leftMarks;
+  const leftValuesDelta = leftValues[leftValues.length - 1] - leftValues[0];
   const minValue = +leftValues[0];
   const totalColumns = Object.keys(summary).length;
   const columnStepX = PARAMS.HORIZONTAL_GRID_LINES_WIDTH / (totalColumns + 1);
@@ -35,9 +36,12 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
   }, defaultTotalValues);
   return (
     <>
-      {Object.entries(totalValues).map(([_, values], i) => {
+      {Object.entries(totalValues).map(([type, values], i) => {
         const startPointX = columnStartX;
-        const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+        const startPointY =
+          leftValuesDelta !== 0
+            ? rowsStartY - (values[0] - minValue) * yScaleMultiplier
+            : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2;
 
         const pathDest = values.reduce((pathSum, value, j, arr) => {
           if (j === 0) return pathSum;
@@ -45,21 +49,46 @@ const HoveringLines = ({ PARAMS, leftMarks, yScaleMultiplier }) => {
           pathSum += !value
             ? ''
             : `${!arr[j - 1] ? 'M' : 'L'}${columnStartX + columnStepX * j},${
-                rowsStartY - (value - minValue) * yScaleMultiplier
+                leftValuesDelta !== 0
+                  ? rowsStartY - (value - minValue) * yScaleMultiplier
+                  : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
               }`;
           return pathSum;
         }, `M${startPointX},${startPointY}`);
 
         const pathClasses = classNames(cl.hoveringLine, cl[`hoveringLine${i + 1}`]);
         return (
-          <path
-            key={i}
-            d={pathDest}
-            fill='none'
-            stroke='transparent'
-            strokeWidth='12'
-            className={pathClasses}
-          />
+          <Fragment key={type + '-hover'}>
+            <path
+              key={i}
+              d={pathDest}
+              fill='none'
+              stroke='transparent'
+              strokeWidth='12'
+              className={pathClasses}
+            />
+            {values.map((value, j) => {
+              if (value) {
+                return (
+                  <Fragment key={type + '-' + j}>
+                    <circle
+                      cx={columnStartX + columnStepX * j}
+                      cy={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+                      }
+                      r='6'
+                      fill='transparent'
+                      className={pathClasses}
+                    />
+                  </Fragment>
+                );
+              }
+
+              return <Fragment key={i + '-' + j}></Fragment>;
+            })}
+          </Fragment>
         );
       })}
     </>
@@ -91,11 +120,15 @@ const Lines = ({
     sum[type] = values;
     return sum;
   }, defaultTotalValues);
+
   return (
     <>
       {Object.entries(totalValues).map(([type, values], i) => {
         const startPointX = columnStartX;
-        const startPointY = rowsStartY - (values[0] - minValue) * yScaleMultiplier;
+        const startPointY =
+          leftValuesDelta !== 0
+            ? rowsStartY - (values[0] - minValue) * yScaleMultiplier
+            : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2;
 
         const pathDest = values.reduce((pathSum, value, j, arr) => {
           if (j === 0) return pathSum;
@@ -103,7 +136,9 @@ const Lines = ({
           pathSum += !value
             ? ''
             : `${!arr[j - 1] ? 'M' : 'L'}${columnStartX + columnStepX * j},${
-                rowsStartY - (value - minValue) * yScaleMultiplier
+                leftValuesDelta !== 0
+                  ? rowsStartY - (value - minValue) * yScaleMultiplier
+                  : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
               }`;
           return pathSum;
         }, `M${startPointX},${startPointY}`);
@@ -150,7 +185,15 @@ const Lines = ({
                     />
                     <text
                       x={columnStartX + columnStepX * j}
-                      y={rowsStartY - (value - minValue) * yScaleMultiplier - 15}
+                      y={
+                        leftValuesDelta !== 0
+                          ? rowsStartY - (value - minValue) * yScaleMultiplier - 15
+                          : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2 - 15
+                      }
+                      // leftValuesDelta !== 0
+                      // ? rowsStartY - (value - minValue) * yScaleMultiplier
+                      // : PARAMS.HORIZONTAL_GRID_LINES_TOP + (PARAMS.GRAPH_LINES_HEIGHT / 5) * 2
+
                       className={graphNumberClasses}>
                       {valueText}
                     </text>
@@ -180,8 +223,6 @@ const ArsenalGraph = ({
   const [isGraphVisible, setGraphVisibility] = useState(false);
 
   const graphRef = useRef();
-
-  filteredData.forEach(pitch => console.log(pitch.pitch_info?.date));
 
   useEffect(() => {
     let options = {
@@ -240,7 +281,19 @@ const ArsenalGraph = ({
     return [];
   }
   function getLeftMarks(bottomMarks) {
-    const graphsWithAllPitches = ['Pitches', 'InZone', 'OutZone', 'Inside', 'Outside', 'Low', 'High'];
+    const graphsWithAllPitches = [
+      'Pitches',
+      'InZone',
+      'OutZone',
+      'Inside',
+      'Outside',
+      'Low',
+      'High',
+      'HardByType',
+      'SwingByType',
+      'TakeByType',
+      'SoftByType'
+    ];
 
     const availablePitchTypes = currentPitchTypes
       .filter(
@@ -284,9 +337,9 @@ const ArsenalGraph = ({
         return sum;
       }, defaultSumByType);
     }
-    function getSumByTypeAndBaseHardHits(pitches) {
+    function getParamByType(param, pitches) {
       return pitches
-        .filter(({ result }) => result['base hit & hard hit'])
+        .filter(({ result }) => result[param])
         .reduce((sum, { pitch_info }) => {
           const { pitch_type: pitchType } = pitch_info;
 
@@ -296,7 +349,6 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
     }
-
     function convertToRel(total, pitches) {
       return Object.entries(total).reduce((sum, entry) => {
         sum[entry[0]] = (entry[1] * 100) / pitches.length;
@@ -378,7 +430,7 @@ const ArsenalGraph = ({
 
       return convertToRel(sumLowByType, pitches);
     }
-		
+
     function getPercentHighByType(pitches) {
       const sumHighByType = pitches
         .filter(({ zone }) => zone.high)
@@ -391,7 +443,7 @@ const ArsenalGraph = ({
           return sum;
         }, getDefaultSumByType());
 
-				return convertToRel(sumHighByType, pitches)
+      return convertToRel(sumHighByType, pitches);
     }
 
     function getRelSumByType(allPitchesByTime, sumByType) {
@@ -481,7 +533,6 @@ const ArsenalGraph = ({
 
       return result;
     }
-
     function getSumByTimeInterval(sliceTo) {
       const defaultSumByInterval = getDefaultSumBy();
 
@@ -493,7 +544,10 @@ const ArsenalGraph = ({
 
         const GRAPH_FUNCS = {
           Pitches: sumByType,
-          PitchesByType: getSumByTypeAndBaseHardHits(pitches),
+          HardByType: getParamByType('base hit & hard hit', pitches),
+          SwingByType: getParamByType('swing', pitches),
+          TakeByType: getParamByType('take', pitches),
+          SoftByType: getParamByType('soft hit', pitches),
           PitchesRel: getRelSumByType(allPitchesByTime, sumByType),
           Speed: getSpeedByType(pitches, sumByType),
           Spin: getSpinByType(pitches, sumByType),
@@ -508,7 +562,6 @@ const ArsenalGraph = ({
         };
 
         const total = GRAPH_FUNCS[graphType];
-        // const sumByType = getSumByType(pitches, defaultSumByType);
 
         totalSum[interval] = total;
         return totalSum;

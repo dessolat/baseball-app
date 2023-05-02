@@ -3,21 +3,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getShortName } from 'utils';
 import cl from './Dropdown.module.scss';
 import classNames from 'classnames';
+import useComponentVisible from 'hooks/useComponentVisible';
 
-function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue) {
-  return () => {
-    if (listening) return;
-    if (!menuRef.current) return;
-    setListening(true);
-    [`click`, `touchstart`].forEach(type => {
-      document.addEventListener(type, evt => {
-        if (menuRef.current?.contains(evt.target)) return;
-        setIsOpen(false);
-        setSearchFieldValue('');
-      });
-    });
-  };
-}
+// function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue) {
+//   return () => {
+//     if (listening) return;
+//     if (!menuRef.current) return;
+//     setListening(true);
+//     [`click`, `touchstart`].forEach(type => {
+//       document.addEventListener(type, evt => {
+//         if (menuRef.current?.contains(evt.target)) return;
+//         setIsOpen(false);
+//         setSearchFieldValue('');
+//       });
+//     });
+//   };
+// }
 
 const SearchField = ({ value, setValue }) => {
   const handleSearchFieldChange = e => {
@@ -47,13 +48,18 @@ const Dropdown = ({
   searchField = false,
   disabled = false
 }) => {
-  const [listening, setListening] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  // const [listening, setListening] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [searchFieldValue, setSearchFieldValue] = useState('');
 
-  const menuRef = useRef(null);
+  // const menuRef = useRef(null);
   // eslint-disable-next-line
-  useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue));
+  // useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue));
+  const {
+    ref: menuRef,
+    isComponentVisible: isOpen,
+    setIsComponentVisible: setIsOpen
+  } = useComponentVisible(false, setSearchFieldValue);
 
   const handleTitleClick = () => {
     if (disabled) return;
@@ -64,7 +70,7 @@ const Dropdown = ({
   const handleOptionClick = option => () => {
     handleClick(option);
     setIsOpen(false);
-    setSearchFieldValue('');
+    // setSearchFieldValue('');
   };
 
   const getFilteredOptions = options => {

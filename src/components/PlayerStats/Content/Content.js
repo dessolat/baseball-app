@@ -129,7 +129,7 @@ const Content = ({ pitchesData, battingData }) => {
     tableType === 'Batting' &&
     getSortedTableOptions().length !== 0 &&
     !isMobile &&
-    statsData.pitcher_banner.teams.length > 0;
+    statsData.batting_banner.teams.length > 0;
 
   const isPitcherGraphs =
     tableType === 'Pitching' &&
