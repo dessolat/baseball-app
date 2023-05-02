@@ -69,7 +69,7 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
 
     if (!sum.min || minSpeed < sum.min) sum.min = minSpeed;
     if (!sum.max || maxSpeed > sum.max) sum.max = maxSpeed;
-    console.log(sum);
+
     return sum;
   }, {});
 

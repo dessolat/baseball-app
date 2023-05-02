@@ -40,7 +40,6 @@ const ContentBox = () => {
         });
 
         setBoxGraphsData(response.data);
-        console.log(response.data);
       } catch (err) {
         err.message !== null && console.log(err.message);
       } finally {
