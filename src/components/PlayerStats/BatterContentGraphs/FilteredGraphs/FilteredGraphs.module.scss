@@ -92,6 +92,13 @@
       margin-top: 0.13rem;
     }
   }
+
+  @media screen and (orientation: landscape) and (max-height: 950px) {
+    > div > input {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
 }
 
 .speedGroupItem {
@@ -107,7 +114,7 @@
   > .classTitle {
     font: 300 0.875rem / 1.2 var(--font-nunito);
     user-select: none;
-		transition: opacity .3s;
+    transition: opacity 0.3s;
 
     @media screen and (orientation: landscape) and (max-height: 950px) {
       font: 300 0.875rem / 1.1 var(--font-nunito);
@@ -117,7 +124,7 @@
   > .barWrapper {
     width: 67%;
     position: relative;
-		transition: opacity .3s;
+    transition: opacity 0.3s;
   }
 
   .minSpeedTitle,
@@ -158,13 +165,13 @@
   .rightSlider:hover ~ .x2SpeedTitle {
     scale: 1.2;
   }
-	
-	.leftSlider:hover ~ .x1SpeedTitle {
-		translate: -25% 25%;
-	}
-	.rightSlider:hover ~ .x2SpeedTitle {
-		translate: 25% 25%;
-	}
+
+  .leftSlider:hover ~ .x1SpeedTitle {
+    translate: -25% 25%;
+  }
+  .rightSlider:hover ~ .x2SpeedTitle {
+    translate: 25% 25%;
+  }
 
   .x1SpeedTitle,
   .x2SpeedTitle {
@@ -261,7 +268,7 @@
   user-select: none;
 
   @media screen and (orientation: landscape) and (max-height: 950px) {
-    font: 300 0.875rem / 0.9 var(--font-nunito);
+    font: 300 0.82rem / 0.88 var(--font-nunito);
   }
 
   > p {
@@ -291,7 +298,7 @@
 
 .graphsBlock {
   line-height: 0;
-	transition: max-height .6s ease-in-out;
+  transition: max-height 0.6s ease-in-out;
 
   > * + * {
     margin-top: 5px;
@@ -304,7 +311,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-	padding: 0 7.8125rem;
+  padding: 0 7.8125rem;
 
   > div {
     width: 100%;
