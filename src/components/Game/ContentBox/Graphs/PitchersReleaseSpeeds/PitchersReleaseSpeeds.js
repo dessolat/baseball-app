@@ -21,10 +21,10 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
   // Default data
   const addedData = metrix.reduce((sum, { preview, pitches_all }) => {
     const pitcherData = {};
-    pitcherData.pitcherName = preview.pitcher_id;
+    pitcherData.pitcherName = `${preview.pitcher_name} ${preview.pitcher_surname}`;
     pitcherData.pitches = pitches_all.reduce(
       (pitchesSum, { pitch_info: { pitch_type: pitchType, speed } }) => {
-        const pitch = { pitchType, speed };
+        const pitch = { pitchType, speed: speed * 2.24 };
         pitchesSum.push(pitch);
 
         return pitchesSum;
