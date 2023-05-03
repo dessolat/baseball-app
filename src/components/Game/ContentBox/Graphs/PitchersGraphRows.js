@@ -7,7 +7,7 @@ const PitchersGraphRow = ({ pitcher }) => (
     {(currentOption, setCurrentOption) => (
       <>
         <GraphsHeader
-          subTitle={`${pitcher.preview.pitcher_id} pitches by zone, speed, movement and frequency`}
+          subTitle={`${pitcher.preview.pitcher_name} ${pitcher.preview.pitcher_surname} pitches by zone, speed, movement and frequency`}
           noSelector
         />
         <ThreeGraphsRow currentOption={currentOption} setCurrentOption={setCurrentOption} pitcher={pitcher} />

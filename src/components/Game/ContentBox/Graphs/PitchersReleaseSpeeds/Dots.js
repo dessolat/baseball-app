@@ -1,8 +1,6 @@
 import { Fragment } from 'react';
 import { getPitchColorByName } from 'utils';
 
-const PITCH_TYPES = ['Fastball', 'Curveball', 'Slider', 'Submarine'];
-
 const Dots = ({ PARAMS, linesArr, minMaxValues, pitchDeltaWidth }) => {
   const minMaxSpeedDelta = minMaxValues.max - minMaxValues.min;
   const heightPerValue = PARAMS.GRAPH_HEIGHT / minMaxSpeedDelta;
@@ -11,6 +9,7 @@ const Dots = ({ PARAMS, linesArr, minMaxValues, pitchDeltaWidth }) => {
   return (
     <>
       {linesArr.map((pitcherData, i) => {
+        const { pitchTypes } = pitcherData;
         return (
           <Fragment key={`dots-${i}`}>
             {pitcherData.pitches.map((pitch, j, arr) => {
@@ -26,7 +25,7 @@ const Dots = ({ PARAMS, linesArr, minMaxValues, pitchDeltaWidth }) => {
                   r='8'
                   stroke='black'
                   strokeWidth='.5'
-                  fill={getPitchColorByName(PITCH_TYPES[pitch.pitchType])}
+                  fill={getPitchColorByName(pitchTypes[pitch.pitchType])}
                 />
               );
             })}

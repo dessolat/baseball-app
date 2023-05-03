@@ -143,7 +143,7 @@ export const getPitchColorByName = name =>
     Fastball: '#CE9587',
     Curveball: '#CBC8E5',
     Slider: '#EBE8B0',
-    Undefined: '#9BCEA2',
+    Changeup: '#9BCEA2',
     Submarine: '#B08194',
 		Subfastball: '#B18FA1',
     'All Pitches': '#1A4C96'

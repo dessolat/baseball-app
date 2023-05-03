@@ -8,12 +8,12 @@ const LeftValues = ({ PARAMS, minMaxValues }) => {
   const leftValues = [];
   for (let i = 0; i < PARAMS.ROWS_NUMBER; i++) {
     if (i === 0) {
-      leftValues.push(minMaxValues.max);
+      leftValues.push(Math.round(minMaxValues.max));
       continue;
     }
 
     if (i === PARAMS.ROWS_NUMBER - 1) {
-      leftValues.push(minMaxValues.min);
+      leftValues.push(Math.round(minMaxValues.min));
       continue;
     }
 

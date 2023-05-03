@@ -9,17 +9,17 @@ const VerticalPitcherRowsAndTitles = ({ PARAMS, linesArr, totalPitchesCount, pit
 
         // Top Y coord calc
         let topYCoord = 0;
-        if (i === 0 || lineData.count / totalPitchesCount >= 0.18) topYCoord = PARAMS.TOP_PADDING - 45;
+        if (i === 0 || lineData.count / totalPitchesCount >= 0.14) topYCoord = PARAMS.TOP_PADDING - 45;
         if (
           i !== 0 &&
-          lineData.count / totalPitchesCount < 0.18 &&
-          arr[i - 1].count / totalPitchesCount >= 0.18
+          lineData.count / totalPitchesCount < 0.14 &&
+          arr[i - 1].count / totalPitchesCount >= 0.14
         )
           topYCoord = PARAMS.TOP_PADDING - 70;
         if (
           i !== 0 &&
-          lineData.count / totalPitchesCount < 0.18 &&
-          arr[i - 1].count / totalPitchesCount < 0.18
+          lineData.count / totalPitchesCount < 0.14 &&
+          arr[i - 1].count / totalPitchesCount < 0.14
         )
           topYCoord = PARAMS.TOP_PADDING - 95;
         return (

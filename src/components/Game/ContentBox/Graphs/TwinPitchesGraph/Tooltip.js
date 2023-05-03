@@ -6,7 +6,7 @@ const Tooltip = ({ hoveredDot, isType = true }) => {
   const hoveredDotXCoord =
     hoveredDot.coords[0] <= 75
       ? hoveredDot.coords[0] + 80
-      : hoveredDot.coords[0] <= 315
+      : hoveredDot.coords[0] <= 220
       ? hoveredDot.coords[0]
       : hoveredDot.coords[0] - 65;
   const hoveredDotYCoord = hoveredDot.coords[1] > 50 ? hoveredDot.coords[1] : hoveredDot.coords[1] + 75;

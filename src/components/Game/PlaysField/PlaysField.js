@@ -11,6 +11,8 @@ const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
   // const [count, setCount] = useState(0);
   const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
+  const [isGrid, setIsGrid] = useState(true);
+  const [isBalls, setIsBalls] = useState(true);
 
   const pitchState = useSelector(state => state.game.pitchState);
   const dispatch = useDispatch();
@@ -22,22 +24,18 @@ const PlaysField = ({ currentMoment }) => {
     const resizeHandler = () => {
       timeoutRef.current !== null && clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        const yScale = parent.current.clientHeight / 330;
+
         setCoeff({
           x: parent.current.clientWidth / 1920,
-          y: (parent.current.clientHeight + 90 * yScale) / 1080,
-          yScale
+          y: parent.current.clientHeight / 1080
         });
         timeoutRef.current = null;
       }, 100);
     };
 
-    // const timeout = setTimeout(() => setCount(prev => prev + 1), 150);
-    const yScale = parent.current.clientHeight / 330;
     setCoeff({
       x: parent.current.clientWidth / 1920,
-      y: (parent.current.clientHeight + 90 * yScale) / 1080,
-      yScale
+      y: parent.current.clientHeight / 1080
     });
     window.addEventListener('resize', resizeHandler);
 
@@ -92,13 +90,44 @@ const PlaysField = ({ currentMoment }) => {
   return (
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
-        <img className={cl.grid} src={gridImg} alt='grid' />
-        <PlaysFieldBalls coords={coords} coeff={coeff} currentMoment={currentMoment}/>
+        {isGrid && <img className={cl.grid} src={gridImg} alt='grid' />}
+        {isBalls && <PlaysFieldBalls coords={coords} coeff={coeff} currentMoment={currentMoment} />}
         <Arrow
           direction='right'
           onClick={handleArrowClick}
           style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
         />
+        <button
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '-0.2rem',
+            translate: '-50% 0',
+            borderRadius: '5px',
+            backgroundColor: 'lightgray',
+						width: 80,
+						height: 20
+          }}
+          className={cl.larger}
+          onClick={() => setIsGrid(prev => !prev)}>
+          Grid on/off
+        </button>
+        <button
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '1.5rem',
+            translate: '-50% 0',
+            borderRadius: '5px',
+            backgroundColor: 'lightgray',
+						display: 'flex',
+						width: 80,
+						height: 20
+          }}
+          className={cl.larger}
+          onClick={() => setIsBalls(prev => !prev)}>
+          Balls on/off
+        </button>
       </div>
       <div className={cl.strikeBallWrapper} style={{ color: STRIKE_BALL_COLORS[strikeBallValue] }}>
         {strikeBallValue}

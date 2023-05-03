@@ -1,10 +1,10 @@
 import cl from './PitchersReleaseSpeeds.module.scss';
 import HorizontalRows from './HorizontalRows';
-// import { getRndValue } from 'utils';
 import { memo } from 'react';
 import LeftValues from './LeftValues';
 import VerticalPitcherRowsAndTitles from './VerticalPitcherRowsAndTitles';
 import Dots from './Dots';
+import Legend from './Legend/Legend';
 
 const PARAMS = {
   WRAPPER_WIDTH: 1248,
@@ -21,44 +21,23 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
   // Default data
   const addedData = metrix.reduce((sum, { preview, pitches_all }) => {
     const pitcherData = {};
-    pitcherData.pitcherName = preview.pitcher_id;
+    pitcherData.pitcherName = `${preview.pitcher_name} ${preview.pitcher_surname}`;
     pitcherData.pitches = pitches_all.reduce(
       (pitchesSum, { pitch_info: { pitch_type: pitchType, speed } }) => {
-        const pitch = { pitchType, speed };
+        const pitch = { pitchType, speed: speed * 2.24 };
         pitchesSum.push(pitch);
 
         return pitchesSum;
       },
       []
     );
+		pitcherData.pitchTypes = preview.pitch_types
 
     sum.push(pitcherData);
 
     return sum;
   }, []);
 
-  // const data = [
-  //   { pitcherName: 'SURNAME Name Pitcher 1', pitches: [] },
-  //   { pitcherName: 'SURNAME Name Pitcher 2', pitches: [] },
-  //   { pitcherName: 'SURNAME Name Pitcher 3', pitches: [] },
-  //   { pitcherName: 'SURNAME Name Pitcher 4', pitches: [] }
-  // ];
-
-  // Data generation
-  // const addedData = data.reduce((sum, pitcherData) => {
-  //   const pitchesCount = getRndValue(8, 25);
-
-  //   for (let i = 0; i < pitchesCount; i++) {
-  //     const pitchType = getRndValue(0, 3);
-  //     const speed = getRndValue(55, 90);
-
-  //     pitcherData.pitches.push({ speed, pitchType });
-  //   }
-
-  //   sum.push(pitcherData);
-
-  //   return sum;
-  // }, []);
 
   // Min & max values calculating
   const minMaxValues = addedData.reduce((sum, pitcherData) => {
@@ -82,7 +61,8 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
       pitcherName: pitcherData.pitcherName,
       count: pitcherData.pitches.length,
       accum: (sum[i - 1]?.accum ?? 0) + pitcherData.pitches.length,
-      pitches: pitcherData.pitches
+      pitches: pitcherData.pitches,
+			pitchTypes: pitcherData.pitchTypes
     };
 
     sum.push(lineData);
@@ -91,28 +71,35 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
 
   const totalPitchesCount = addedData.reduce((sum, pitcherData) => sum + pitcherData.pitches.length, 0);
   const pitchDeltaWidth = PARAMS.GRAPH_WIDTH / totalPitchesCount;
+
+  const legendPitchTypes = Array.from(
+    new Set(metrix.map(pitcher => pitcher.preview.pitch_types).reduce((sum, arr) => sum.concat(arr), []))
+  );
   return (
-    <svg
-      viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
-      width='100%'
-      fill='none'
-      className={cl.graph}
-      xmlns='http://www.w3.org/2000/svg'>
-      <HorizontalRows PARAMS={PARAMS} />
-      <LeftValues PARAMS={PARAMS} minMaxValues={minMaxValues} />
-      <VerticalPitcherRowsAndTitles
-        PARAMS={PARAMS}
-        linesArr={linesArr}
-        totalPitchesCount={totalPitchesCount}
-        pitchDeltaWidth={pitchDeltaWidth}
-      />
-      <Dots
-        PARAMS={PARAMS}
-        linesArr={linesArr}
-        minMaxValues={minMaxValues}
-        pitchDeltaWidth={pitchDeltaWidth}
-      />
-    </svg>
+    <div className={cl.wrapper}>
+      <svg
+        viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
+        width='100%'
+        fill='none'
+        className={cl.graph}
+        xmlns='http://www.w3.org/2000/svg'>
+        <HorizontalRows PARAMS={PARAMS} />
+        <LeftValues PARAMS={PARAMS} minMaxValues={minMaxValues} />
+        <VerticalPitcherRowsAndTitles
+          PARAMS={PARAMS}
+          linesArr={linesArr}
+          totalPitchesCount={totalPitchesCount}
+          pitchDeltaWidth={pitchDeltaWidth}
+        />
+        <Dots
+          PARAMS={PARAMS}
+          linesArr={linesArr}
+          minMaxValues={minMaxValues}
+          pitchDeltaWidth={pitchDeltaWidth}
+        />
+      </svg>
+			<Legend legendData={legendPitchTypes} />
+    </div>
   );
 };
 
