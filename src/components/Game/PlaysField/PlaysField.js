@@ -10,7 +10,7 @@ import classNames from 'classnames';
 const PlaysField = ({ currentMoment }) => {
   const [coords, setCoords] = useState([]);
   // const [count, setCount] = useState(0);
-  const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
+  // const [coeff, setCoeff] = useState({ x: 1, y: 1, yScale: 1 });
   const [isGrid, setIsGrid] = useState(true);
   const [isBalls, setIsBalls] = useState(true);
 
@@ -18,32 +18,32 @@ const PlaysField = ({ currentMoment }) => {
   const dispatch = useDispatch();
 
   const parent = useRef(null);
-  const timeoutRef = useRef(null);
+  // const timeoutRef = useRef(null);
 
-  useEffect(() => {
-    const resizeHandler = () => {
-      timeoutRef.current !== null && clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
+  // useEffect(() => {
+  //   const resizeHandler = () => {
+  //     timeoutRef.current !== null && clearTimeout(timeoutRef.current);
+  //     timeoutRef.current = setTimeout(() => {
 
-        setCoeff({
-          x: parent.current.clientWidth / 1920,
-          y: parent.current.clientHeight / 1080
-        });
-        timeoutRef.current = null;
-      }, 100);
-    };
+  //       setCoeff({
+  //         x: parent.current.clientWidth / 1920,
+  //         y: parent.current.clientHeight / 1080
+  //       });
+  //       timeoutRef.current = null;
+  //     }, 100);
+  //   };
 
-    setCoeff({
-      x: parent.current.clientWidth / 1920,
-      y: parent.current.clientHeight / 1080
-    });
-    window.addEventListener('resize', resizeHandler);
+  //   setCoeff({
+  //     x: parent.current.clientWidth / 1920,
+  //     y: parent.current.clientHeight / 1080
+  //   });
+  //   window.addEventListener('resize', resizeHandler);
 
-    return () => {
-      window.removeEventListener('resize', resizeHandler);
-      // clearTimeout(timeout);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', resizeHandler);
+  //     // clearTimeout(timeout);
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   if (count === 0) return;
@@ -91,7 +91,7 @@ const PlaysField = ({ currentMoment }) => {
     <div className={wrapperClasses}>
       <div className={cl.field} ref={parent}>
         {isGrid && <img className={cl.grid} src={gridImg} alt='grid' />}
-        {isBalls && <PlaysFieldBalls coords={coords} coeff={coeff} currentMoment={currentMoment} />}
+        {isBalls && <PlaysFieldBalls coords={coords} currentMoment={currentMoment} />}
         <Arrow
           direction='right'
           onClick={handleArrowClick}
