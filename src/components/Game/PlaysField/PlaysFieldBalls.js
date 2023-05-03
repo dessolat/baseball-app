@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PlaysFieldBall from './PlaysFieldBall';
 
-const PlaysFieldBalls = ({ coords, coeff, currentMoment }) => {
+const PlaysFieldBalls = ({ coords, currentMoment }) => {
   const [pauseBallsCount, setPauseBallsCount] = useState(0);
 
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
@@ -62,7 +62,7 @@ const PlaysFieldBalls = ({ coords, coeff, currentMoment }) => {
           coords
             .slice(0, count)
             .map((coord, i) => (
-              <PlaysFieldBall key={i} coord={coord} index={i} coeff={coeff} coordsLength={coords.length} />
+              <PlaysFieldBall key={i} coord={coord} index={i} coordsLength={coords.length} />
             )),
         [count, coords]
       )}
