@@ -55,7 +55,7 @@ const CountsDistributionItem = ({ item, staticTitle }) => {
 
   const { formattedValue: valueLeft, animatedValue: animatedValueLeft } = getValues(swings, swings + takes);
   const { formattedValue: valueRight } = getValues(takes, swings + takes);
-  const animatedValueRight = valueRight > 0 ? `${Number(((100 - valueLeft) * valueCoef).toFixed(1))}%`  : 0;
+  const animatedValueRight = valueRight > 0 ? `${Number(((100 - valueLeft) * valueCoef).toFixed(1))}%` : 0;
   return (
     <div className={itemClasses}>
       <div>{formattedTitle}</div>
@@ -91,9 +91,11 @@ const CountsDistribution = ({ data, staticTitle }) => {
   return (
     <div className={cl.group}>
       <p className={cl.title}>Swings/Takes by count distribution</p>
-      {sortedList.map((item, i) => (
-        <CountsDistributionItem key={i} item={item} staticTitle={staticTitle} />
-      ))}
+      {sortedList
+        .filter(([_, { swings, takes }]) => swings > 0 || takes > 0)
+        .map((item, i) => (
+          <CountsDistributionItem key={i} item={item} staticTitle={staticTitle} />
+        ))}
     </div>
   );
 };
