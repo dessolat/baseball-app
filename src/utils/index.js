@@ -140,11 +140,12 @@ export const getRndValue = (min, max) => Math.floor(Math.random() * (max - min +
 
 export const getPitchColorByName = name =>
   ({
+    Undefined: '#BF9E56',
     Fastball: '#CE9587',
     Curveball: '#CBC8E5',
     Slider: '#EBE8B0',
     Changeup: '#9BCEA2',
-    Submarine: '#B08194',
+    Subslider: '#B08194',
 		Subfastball: '#B18FA1',
     'All Pitches': '#1A4C96'
   }[name]);
@@ -152,12 +153,9 @@ export const getPitchColorByName = name =>
 export const getPitchСlassColorByName = name =>
   ({
     Fastball: '#ec9599',
-    // Fastball: '#D92B33',
     Breaking: '#92d4eb',
-    // Breaking: '#24A8D7',
     Offspeed: '#c6dac7',
 		'All Pitches': '#1A4C96'
-    // Offspeed: '#8DB58E'
   }[name]);
 
 export const getPitchСlassPrimaryColorByName = name =>
