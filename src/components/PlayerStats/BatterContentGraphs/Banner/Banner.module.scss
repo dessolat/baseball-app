@@ -29,12 +29,26 @@
 }
 
 .countsGroupItem {
-	padding-right: 0;
-	padding-top: 0;
+  padding-right: 0;
+  padding-top: 0;
 
   > div {
     flex: 1;
-		padding-top: 2px;
+    padding-top: 2px;
+  }
+}
+
+.lhpRhpGroupItem {
+  padding-right: 0;
+  padding-top: 0;
+
+  > div {
+    padding-top: 2px;
+		flex: 1;
+  }
+
+  > div:first-child {
+		flex: 6;
   }
 }
 

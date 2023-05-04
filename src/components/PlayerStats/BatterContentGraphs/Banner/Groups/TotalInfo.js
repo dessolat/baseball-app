@@ -1,14 +1,68 @@
+import classNames from 'classnames';
 import cl from '../Banner.module.scss';
+import { useContext } from 'react';
+import { AnimationContext } from 'context';
 
 const TotalInfoItem = ({ item, parent }) => {
   const { par1, par2 } = item;
+
+  const valueCoef = useContext(AnimationContext);
 
   const par1Title = par1 === 'LHP' ? 'Left' : par1;
   const par2Title = par2 === 'RHP' ? 'Right Handed Pitchers' : par2;
 
   const title = `${par1Title} / ${par2Title} (${parent[par1]} / ${parent[par2]})`;
   const value = parent[`${par1}/${par2}`];
-	const formattedValue = value !== '–' ? value : '—'
+  const formattedValue = value !== '–' ? value : '—';
+
+  if (par1 === 'LHP') {
+    const itemClasses = classNames(cl.groupItem, cl.lhpRhpGroupItem);
+
+		function getValues(value, sum) {
+			const formattedValue = Number(((value * 100) / sum).toFixed(1));
+	
+			let animatedValue = '—';
+	
+			if (formattedValue !== '—') {
+				animatedValue =
+					valueCoef < 1 && formattedValue !== 0 ? (formattedValue * valueCoef).toFixed(1) : formattedValue;
+				animatedValue += '%';
+			}
+	
+			return { formattedValue, animatedValue };
+		}
+
+    const { formattedValue: valueLeft, animatedValue: animatedValueLeft } = getValues(parent[par1], parent[par1] + parent[par2]);
+    const { formattedValue: valueRight } = getValues(parent[par2], parent[par1] + parent[par2]);
+		const animatedValueRight = valueRight > 0 ? `${Number(((100 - valueLeft) * valueCoef).toFixed(1))}%` : '0%';
+
+    return (
+      <div className={itemClasses}>
+        <div>{title}</div>
+        <div
+          style={{
+            background: `linear-gradient(to left, hsla(${169 + 0.41 * valueLeft * valueCoef}, 30%, ${
+              88 - 0.15 * valueLeft * valueCoef
+            }%, 1) ${valueLeft * valueCoef}%, transparent 0)`,
+            textAlign: 'right',
+            paddingRight: '.25rem',
+            borderRight: '1px solid lightgray'
+          }}>
+          {animatedValueLeft}
+        </div>
+        <div
+          style={{
+            background: `linear-gradient(to right, hsla(${169 + 0.41 * valueRight * valueCoef}, 30%, ${
+              88 - 0.15 * valueRight * valueCoef
+            }%, 1) ${valueRight * valueCoef}%, transparent 0)`,
+            paddingLeft: '.25rem'
+          }}>
+          {animatedValueRight}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={cl.groupItem}>
       <p>{title}</p>
@@ -33,4 +87,4 @@ const TotalInfo = ({ data }) => {
   );
 };
 
-export default TotalInfo
+export default TotalInfo;

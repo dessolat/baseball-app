@@ -18,7 +18,7 @@ const SORT_PRIORITY = {
   '3-0': 12
 };
 
-const CountsDistributionItem = ({ item, staticTitle }) => {
+const CountsDistributionItem = ({ item }) => {
   const [title, { swings, takes }] = item;
 
   const valueCoef = useContext(AnimationContext);
@@ -38,18 +38,6 @@ const CountsDistributionItem = ({ item, staticTitle }) => {
   }
 
   const formattedTitle = `${title} (${swings} / ${takes})`;
-
-  // const formattedValueLeft = Number(((swings * 100) / (swings + takes)).toFixed(1));
-
-  // let animatedValueLeft = '—';
-
-  // if (formattedValueLeft !== '—') {
-  //   animatedValueLeft =
-  //     valueCoef < 1 && formattedValueLeft !== 0
-  //       ? (formattedValueLeft * valueCoef).toFixed(1)
-  //       : formattedValueLeft;
-  //   animatedValueLeft += '%';
-  // }
 
   const itemClasses = classNames(cl.groupItem, cl.countsGroupItem);
 

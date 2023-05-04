@@ -1,8 +1,8 @@
 .bannerWrapper {
-	margin-top: 5px;
+  margin-top: 5px;
   padding: 2.4375rem;
   display: flex;
-	column-gap: 2.5625rem;
+  column-gap: 2.5625rem;
   background-color: #fff;
 
   > div {
@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   font: 300 0.875rem / 1.6 var(--font-nunito);
-  background: rgba(#eaeaea, .4);
+  background: rgba(#eaeaea, 0.4);
 
   + .groupItem {
     margin-top: 0.6875rem;
@@ -32,4 +32,18 @@
   padding: 0 0.5625rem;
   font: 700 0.875rem / 1.8 var(--font-nunito);
   text-transform: capitalize;
+}
+
+.rhbLhbGroupItem {
+  padding-right: 0;
+  padding-top: 0;
+
+  > div {
+    padding-top: 2px;
+    flex: 1;
+  }
+
+  > div:first-child {
+    flex: 6;
+  }
 }
