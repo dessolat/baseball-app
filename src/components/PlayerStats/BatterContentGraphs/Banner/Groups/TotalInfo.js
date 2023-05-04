@@ -4,7 +4,7 @@ const TotalInfoItem = ({ item, parent }) => {
   const { par1, par2 } = item;
 
   const par1Title = par1 === 'LHP' ? 'Left' : par1;
-  const par2Title = par2 === 'RHP' ? 'Right Handed Batters' : par2;
+  const par2Title = par2 === 'RHP' ? 'Right Handed Pitchers' : par2;
 
   const title = `${par1Title} / ${par2Title} (${parent[par1]} / ${parent[par2]})`;
   const value = parent[`${par1}/${par2}`];
