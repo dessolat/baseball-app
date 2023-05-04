@@ -50,7 +50,7 @@ const BannerColumns = ({ parentObj }) => {
           param='OutsDistribution'
           title='Outs distribution'
           itemsArr={GROUPS_PARAMS.OutsDistribution}
-          staticTitle='PA'
+          staticTitle='Outs'
         />
       </div>
       <div>

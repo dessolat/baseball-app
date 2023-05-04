@@ -43,9 +43,6 @@ const Banner = () => {
       if (coef < 0.5) return 9;
       if (coef < 0.75) return 6;
       return 3;
-      // if (coef < 0.9) return 16
-      // if (coef < 0.95) return 32
-      // return 64
     };
 
     const getValueAddition = coef => {
