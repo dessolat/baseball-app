@@ -204,16 +204,3 @@
     display: none;
   }
 }
-
-.larger {
-  transition: scale 0.12s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transform-origin: center;
-	line-height: 20px;
-
-  &:hover {
-    scale: 1.1;
-  }
-}
