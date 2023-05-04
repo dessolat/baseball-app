@@ -146,7 +146,7 @@ export const getPitchColorByName = name =>
     Slider: '#EBE8B0',
     Changeup: '#9BCEA2',
     Subslider: '#B08194',
-		Subfastball: '#B18FA1',
+    Subfastball: '#B18FA1',
     'All Pitches': '#1A4C96'
   }[name]);
 
@@ -155,7 +155,8 @@ export const getPitchСlassColorByName = name =>
     Fastball: '#ec9599',
     Breaking: '#92d4eb',
     Offspeed: '#c6dac7',
-		'All Pitches': '#1A4C96'
+    '': '#BF9E56',
+    'All Pitches': '#1A4C96'
   }[name]);
 
 export const getPitchСlassPrimaryColorByName = name =>
