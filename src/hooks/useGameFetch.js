@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { setCurrentGameId, setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -8,7 +8,8 @@ const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPercents, setLoadedPercents] = useState(null);
   const [error, setError] = useState(null);
-  const { innings } = useSelector(state => state.game);
+  const innings = useSelector(state => state.game.innings, shallowEqual);
+
   const intervalRef = useRef();
   const dataRef = useRef(0);
   const cancelTokenRef = useRef();

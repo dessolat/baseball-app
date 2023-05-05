@@ -1,10 +1,7 @@
-// import useCurrentEvents from 'hooks/useCurrentEvents';
 import React, { useRef, useEffect } from 'react';
-// import PlaysEvents from '../PlaysEvents/PlaysEvents';
 import cl from './Videos.module.scss';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
-// import VideoEventsList from '../VideoEventsList/VideoEventsList';
 import VideoList from '../VideoList/VideoList';
 import { closeFullscreen, openFullscreen } from 'utils';
 import SidePanel from './SidePanel';
@@ -15,7 +12,10 @@ const Videos = () => {
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
 
-  const { viewMode, isFullscreen, currentMoment, playerCardFilterFocused } = useSelector(state => state.game);
+  const viewMode = useSelector(s => s.game.viewMode);
+  const isFullscreen = useSelector(s => s.game.isFullscreen);
+  const currentMoment = useSelector(s => s.game.currentMoment);
+  const playerCardFilterFocused = useSelector(s => s.game.playerCardFilterFocused);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 

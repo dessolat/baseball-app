@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import axios from 'axios';
 import {
   setSituations,
@@ -24,19 +24,20 @@ import classNames from 'classnames';
 
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
-  const {
-    innings,
-    situationFilter,
-    currentCard,
-    filteredCards,
-    playbackMode,
-    errorMsg,
-    gameId,
-    isVideo,
-    playerCardFilter,
-    playerCardFilterBy
-  } = useSelector(state => state.game);
+
+	const innings = useSelector(s => s.game.innings, shallowEqual)
+	const situationFilter = useSelector(s => s.game.situationFilter)
+	const currentCard = useSelector(s => s.game.currentCard, shallowEqual)
+	const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual)
+	const playbackMode = useSelector(s => s.game.playbackMode)
+	const errorMsg = useSelector(s => s.game.errorMsg, shallowEqual)
+	const gameId = useSelector(s => s.game.currentGameId, shallowEqual)
+	const isVideo = useSelector(s => s.game.isVideo)
+	const playerCardFilter = useSelector(s => s.game.playerCardFilter)
+	const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy)
+
   const dispatch = useDispatch();
+
   const situationsChildRef = useRef();
   const gameIdRef = useRef(0); //Delete later
   const scrollToRef = useRef(false);
@@ -221,8 +222,6 @@ const Content = ({ currentTab }) => {
 
     //Set current card on pause playbackMode
     if (playbackMode === 'pause') {
-      console.log(currentCard);
-      console.log(filteredCards);
       const newCurrentCard = filteredCards.find(
         card =>
           card.inning_number === currentCard.inning_number &&

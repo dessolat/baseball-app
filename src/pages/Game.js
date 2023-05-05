@@ -2,31 +2,35 @@ import React, { useState, useEffect } from 'react';
 import Header from 'components/Game/Header/Header';
 import Filters from 'components/Game/Filters/Filters';
 import Content from 'components/Game/Content/Content';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
-// import GameIdForm from 'components/Game/GameIdForm/GameIdForm';
 import { resetData, setCurrentTab as setCurrentSubTab, setIsFullscreen } from 'redux/gameReducer';
 import { useParams } from 'react-router-dom';
-// import axios from 'axios';
 import { getSearchParam, setSearchParam } from 'utils';
 import { setMobileWidth } from 'redux/sharedReducer';
-// import Skeleton from 'components/Game/Skeleton/Skeleton';
 
 const Game = () => {
   const tab = getSearchParam('tab');
   const defaultTab = ['box', 'videos', 'pitch', 'hitting', 'running', 'plays'].includes(tab) ? tab : 'pitch';
-  // const defaultTab = ['box', 'plays', 'videos'].includes(tab) ? tab : 'plays';
+
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const { gameId } = useParams();
-  // const navigate = useNavigate();
-  const innings = useSelector(state => state.game.innings);
-  const errorMsg = useSelector(state => state.game.errorMsg);
+
+
+  const innings = useSelector(state => state.game.innings, shallowEqual);
+  
+
+  const errorMsg = useSelector(state => state.game.errorMsg, shallowEqual);
+
   const dispatch = useDispatch();
   const [error, isLoading, cancelTokenRef, loadedPercents, intervalRef, getFullData] = useGameFetch(
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
+
+	
+	console.log(cancelTokenRef);
 
   useEffect(() => {
     // axios
@@ -96,12 +100,16 @@ const Game = () => {
   const isFilters = currentTab !== 'box';
   return (
     <>
-      {errorMsg !== null && innings.length === 0 ? (
+      {errorMsg !== null 
+			&& innings.length === 0 
+			? (
         <ErrorLoader error={error} />
       ) : isLoading ? (
         <Loader loadedPercents={loadedPercents} />
-      ) : // <Skeleton />
-      innings.length > 0 ? (
+      ) : 
+			innings.length > 0 
+			// false
+			? (
         <div>
           <Header currentTab={currentTab} handleTabClick={handleTabClick} />
           {isFilters && <Filters />}

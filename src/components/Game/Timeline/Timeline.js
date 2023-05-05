@@ -1,7 +1,7 @@
 import TimelineEventChanger from 'components/UI/buttons/TimelineEventChanger/TimelineEventChanger';
 import useGameFocus from 'hooks/useGameFocus';
 import React, { useRef, useEffect, useLayoutEffect, Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
   setSeekValue,
@@ -15,8 +15,8 @@ import cl from './Timeline.module.scss';
 
 const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = false }) => {
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  const sliderCoords = useSelector(state => state.game.timelineSliderCoords);
-  const currentMoment = useSelector(state => state.game.currentMoment);
+  const sliderCoords = useSelector(state => state.game.timelineSliderCoords, shallowEqual);
+  const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const focus = useSelector(state => state.game.focus);

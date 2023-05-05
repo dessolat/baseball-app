@@ -14,21 +14,19 @@ import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
-  const {
-    isFullscreen,
-    currentMoment,
-    currentCard,
-    videoState,
-    preferredVideoState,
-    videoCurrentTime,
-    videoPlaybackRate,
-    seekValue,
-    timelineSliderCoords: sliderCoords,
-    videoLengthMode,
-    filteredCards,
-    isLastMomentMode,
-    playbackMode
-  } = useSelector(state => state.game);
+
+  const currentMoment = useSelector(s => s.game.currentMoment);
+  const currentCard = useSelector(s => s.game.currentCard);
+  const videoState = useSelector(s => s.game.videoState);
+  const preferredVideoState = useSelector(s => s.game.preferredVideoState);
+  const videoCurrentTime = useSelector(s => s.game.videoCurrentTime);
+  const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate);
+  const seekValue = useSelector(s => s.game.seekValue);
+  const sliderCoords = useSelector(s => s.game.timelineSliderCoords);
+  const videoLengthMode = useSelector(s => s.game.videoLengthMode);
+  const filteredCards = useSelector(s => s.game.filteredCards);
+  const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
+  const playbackMode = useSelector(s => s.game.playbackMode);
 
   const dispatch = useDispatch();
 
@@ -105,7 +103,7 @@ const VideoList = ({ viewMode }, ref) => {
       const delta4 = Math.abs(video1Time - video4Time);
 
       const deltaArr = [delta1, delta2, delta3, delta4];
-      console.log(deltaArr);
+
       const deltaCap = 0.08;
       const deltaCaps = [
         getCamDelta(modeNumber, 1),
@@ -131,10 +129,10 @@ const VideoList = ({ viewMode }, ref) => {
           video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
       }
 
-      const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
-        const entryState = entry[1].current?.getPlayerState();
-        return entryState === 2;
-      });
+      // const isAllPaused = Object.entries(VIDEO_NUMBERS).every(entry => {
+      //   const entryState = entry[1].current?.getPlayerState();
+      //   return entryState === 2;
+      // });
 
       const isAllReady = Object.entries(VIDEO_NUMBERS).every(entry => {
         const entryState = entry[1].current?.getPlayerState();

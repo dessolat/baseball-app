@@ -1,26 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { setPlayerStatsData, setPlayerCurrentTeam as setCurrentTeam } from 'redux/playerStatsReducer';
+import { setTableMode } from 'redux/statsReducer';
 import { useParams } from 'react-router-dom';
 import Header from 'components/PlayerStats/Header/Header';
 import Content from 'components/PlayerStats/Content/Content';
+import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { setTableMode } from 'redux/statsReducer';
 import { PlayerYearsContext } from 'context';
 import useFetch from 'hooks/useFetch';
 
 const PlayerStats = () => {
   const { playerId } = useParams();
 
-  const currentYear = useSelector(state => state.shared.currentYear);
+  const currentYear = useSelector(s => s.shared.currentYear);
+
   const [playerYears, setPlayerYears] = useState(currentYear);
   const [pitchesData, setPitchesData] = useState(null);
   const [battingData, setBattingData] = useState(null);
 
-  const currentLeague = useSelector(state => state.games.currentLeague);
-  const { tableType: playerTableMode, playerStatsData } = useSelector(state => state.playerStats);
+  const currentLeague = useSelector(s => s.games.currentLeague);
+  const playerTableMode = useSelector(s => s.playerStats.tableType);
+  const playerStatsData = useSelector(s => s.playerStats.playerStatsData);
 
   const dispatch = useDispatch();
 
@@ -135,21 +137,21 @@ const PlayerStats = () => {
       : [];
   }
 
+  // Fetch error handling
+  if (statsError !== '') return <ErrorLoader error={statsError} />;
+
+  // Stats loader
+  if (isStatsLoading) return <Loader />;
+
+  // Empty stats render
+  if (Object.keys(playerStatsData).length === 0) return <></>;
+
+  // Main render
   return (
-    <>
-      {statsError !== '' ? (
-        <ErrorLoader error={statsError} />
-      ) : isStatsLoading ? (
-        <Loader />
-      ) : Object.keys(playerStatsData).length === 0 ? (
-        <></>
-      ) : (
-        <PlayerYearsContext.Provider value={{ playerYears, setPlayerYears, calculateTeamsArray }}>
-          <Header />
-          <Content pitchesData={pitchesData} battingData={battingData} />
-        </PlayerYearsContext.Provider>
-      )}
-    </>
+    <PlayerYearsContext.Provider value={{ playerYears, setPlayerYears, calculateTeamsArray }}>
+      <Header />
+      <Content pitchesData={pitchesData} battingData={battingData} />
+    </PlayerYearsContext.Provider>
   );
 };
 
