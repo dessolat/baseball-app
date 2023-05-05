@@ -1,24 +1,35 @@
-import React, { useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import YouTube from 'react-youtube';
 import cl from './HittingField.module.scss';
+import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import getYouTubeID from 'get-youtube-id';
 
-const CameraView = ({ camera2D }) => {
-  const videoRef = useRef(null);
+const CameraView = ({ camera2D, handleOnReady, isVisible = true }) => {
+  const preview = useSelector(s => s.game.preview);
+
+  const { camera_info: cameraInfo } = preview;
+
+  const { ip_cam_link: ipCamLink } = cameraInfo;
+
+	const videoId = getYouTubeID(ipCamLink) || null
 
   const onReady = ({ target }) => {
-    videoRef.current = target;
+    handleOnReady(target);
   };
 
+  const videoClasses = classNames(cl.cameraView, {
+    [cl.hidden]: !isVisible
+  });
   return (
     <YouTube
-      videoId={'WCjLd7QAJq8'}
+      videoId={videoId}
       // videoId={videoId}
       onReady={onReady}
       // onStateChange={onStateChange}
       // onPlaybackRateChange={onPlaybackRateChange}
       // onPlaybackQualityChange={playbackQualityHandle}
-      containerClassName={cl.cameraView}
+      containerClassName={videoClasses}
       opts={{
         width: '100%',
         height: '100%',

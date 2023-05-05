@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useEffect } from 'react';
 import cl from '../PlaysHitting.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
 import getYouTubeID from 'get-youtube-id';
 import {
@@ -13,26 +13,26 @@ import {
 } from 'redux/gameReducer';
 import HittingVideo from './HittingVideo';
 
-const HittingVideos = () => {
+const HittingVideos = (props, ref) => {
   const wrapperRef = useRef();
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
 
-  const {
-    preview: { camera_info: cameraInfo },
-    videoState,
-    preferredVideoState,
-    videoCurrentTime,
-    currentMoment,
-    currentCard,
-    timelineSliderCoords: sliderCoords,
-    videoLengthMode,
-    filteredCards,
-    isLastMomentMode,
-    playbackMode,
-    seekValue,
-    videoPlaybackRate
-  } = useSelector(state => state.game);
+  const preview = useSelector(state => state.game.preview);
+  const { camera_info: cameraInfo } = preview;
+
+	const videoState = useSelector(s => s.game.videoState)
+	const preferredVideoState = useSelector(s => s.game.preferredVideoState)
+	const videoCurrentTime = useSelector(s => s.game.videoCurrentTime)
+	const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual)
+	const currentCard = useSelector(s => s.game.currentCard, shallowEqual)
+	const sliderCoords = useSelector(s => s.game.timelineSliderCoords, shallowEqual)
+	const videoLengthMode = useSelector(s => s.game.videoLengthMode)
+	const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual)
+	const isLastMomentMode = useSelector(s => s.game.isLastMomentMode)
+	const playbackMode = useSelector(s => s.game.playbackMode)
+	const seekValue = useSelector(s => s.game.seekValue)
+	const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate)
 
   const dispatch = useDispatch();
 
@@ -59,7 +59,8 @@ const HittingVideos = () => {
     'top-left': video1Ref,
     'top-right': video2Ref,
     'bottom-left': video3Ref,
-    'bottom-right': video4Ref
+    'bottom-right': video4Ref,
+    'field-video': ref
   };
 
   const getVideoNumByPos = {
@@ -92,7 +93,8 @@ const HittingVideos = () => {
     : {};
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
-
+  console.log(preview);
+  console.log(currentMoment);
   useEffect(() => {
     clearInterval(allTimesIntervalRef.current);
 
@@ -107,18 +109,20 @@ const HittingVideos = () => {
       const video2Time = video2Ref.current?.getCurrentTime();
       const video3Time = video3Ref.current?.getCurrentTime();
       const video4Time = video4Ref.current?.getCurrentTime();
+      const fieldVideoTime = ref.current?.getCurrentTime();
 
-      if (!video1Time || !video2Time || !video3Time || !video4Time) return;
+      if (!video1Time || !video2Time || !video3Time || !video4Time || !fieldVideoTime) return;
 
       const delta1 = 0;
       const delta2 = Math.abs(video1Time - video2Time);
       const delta3 = Math.abs(video1Time - video3Time);
       const delta4 = Math.abs(video1Time - video4Time);
+      const delta5 = Math.abs(video1Time - fieldVideoTime);
 
-      const deltaArr = [delta1, delta2, delta3, delta4];
+      const deltaArr = [delta1, delta2, delta3, delta4, delta5];
 
       const deltaCap = 0.08;
-      const deltaCaps = [getCamDelta(1), getCamDelta(2), getCamDelta(3), getCamDelta(4)];
+      const deltaCaps = [getCamDelta(1), getCamDelta(2), getCamDelta(3), getCamDelta(4), 0];
       const isBigDelta = deltaArr.some(
         (delta, i) =>
           delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap ||
@@ -130,6 +134,7 @@ const HittingVideos = () => {
         video2Ref.current?.pauseVideo();
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
+        ref.current?.pauseVideo();
         // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
         (delta2 > Math.abs(deltaCaps[0] - deltaCaps[1]) + deltaCap ||
           delta2 < Math.abs(deltaCaps[0] - deltaCaps[1]) - deltaCap) &&
@@ -140,6 +145,9 @@ const HittingVideos = () => {
         (delta4 > Math.abs(deltaCaps[0] - deltaCaps[3]) + deltaCap ||
           delta4 < Math.abs(deltaCaps[0] - deltaCaps[3]) - deltaCap) &&
           video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
+        (delta5 > Math.abs(deltaCaps[0] - deltaCaps[4]) + deltaCap ||
+          delta5 < Math.abs(deltaCaps[0] - deltaCaps[4]) - deltaCap) &&
+          ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[4]), true);
 
         // alreadySeekingRef.current = true
       }
@@ -157,6 +165,7 @@ const HittingVideos = () => {
         video2Ref.current?.playVideo();
         video3Ref.current?.playVideo();
         video4Ref.current?.playVideo();
+        ref.current?.playVideo();
 
         syncTimeoutRef.current = false;
         alreadySeekingRef.current = false;
@@ -184,6 +193,7 @@ const HittingVideos = () => {
     video2Ref.current.pauseVideo();
     video3Ref.current.pauseVideo();
     video4Ref.current.pauseVideo();
+    ref.current.pauseVideo();
 
     const { video } = currentMoment;
 
@@ -197,6 +207,7 @@ const HittingVideos = () => {
       video2Ref.current.seekTo(secondsFromRated - getCamDelta(2), true);
       video3Ref.current.seekTo(secondsFromRated - getCamDelta(3), true);
       video4Ref.current.seekTo(secondsFromRated - getCamDelta(4), true);
+      ref.current.seekTo(secondsFromRated - 0, true);
 
       prevBatterPositionRef.current = currentMoment.metering?.pitch?.batter_position;
       // Object.values(VIDEO_REFS).forEach((value, i) => {
@@ -387,7 +398,7 @@ const HittingVideos = () => {
     }
 
     if (currentCard.moments.length === 0 || !currentCard.moments[0].video) {
-      Object.values(VIDEO_REFS).forEach(value => value.current.pauseVideo());
+      Object.values(VIDEO_REFS).forEach(value => value.current?.pauseVideo());
       return;
     }
 
@@ -437,10 +448,11 @@ const HittingVideos = () => {
     VIDEO_REFS['top-right'].current?.setPlaybackRate(value);
     VIDEO_REFS['bottom-left'].current?.setPlaybackRate(value);
     VIDEO_REFS['bottom-right'].current?.setPlaybackRate(value);
+    VIDEO_REFS['field-video'].current?.setPlaybackRate(value);
   }
 
   const seekVideos = sec => {
-    Object.values(VIDEO_REFS).forEach((value, i) => value.current.seekTo(sec - getCamDelta(i + 1), true));
+    Object.values(VIDEO_REFS).forEach((value, i) => value.current?.seekTo(sec - getCamDelta(i + 1), true));
   };
 
   function setPlayPause(state) {
@@ -449,6 +461,7 @@ const HittingVideos = () => {
       video2Ref.current?.playVideo();
       video3Ref.current?.playVideo();
       video4Ref.current?.playVideo();
+      ref.current?.playVideo();
 
       return;
     }
@@ -457,6 +470,7 @@ const HittingVideos = () => {
     video2Ref.current?.pauseVideo();
     video3Ref.current?.pauseVideo();
     video4Ref.current?.pauseVideo();
+    ref.current?.pauseVideo();
   }
 
   //Handle on funcs
@@ -508,15 +522,16 @@ const HittingVideos = () => {
     //   return entryState === 2 || entryState === 3 || position !== entry[0];
     // });
 
-    const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
-      const entryState = entry[1].current?.getPlayerState();
-      return entryState === 5 || position !== entry[0];
-    });
+    // const isAllQued = Object.entries(VIDEO_REFS).every(entry => {
+    //   const entryState = entry[1].current?.getPlayerState();
+    //   return entryState === 5 || position !== entry[0];
+    // });
 
     const video1 = video1Ref.current;
     const video2 = video2Ref.current;
     const video3 = video3Ref.current;
     const video4 = video4Ref.current;
+    const video5 = ref.current;
 
     // if (stateValue === 1) {
     //   !isAllReady && target.pauseVideo();
@@ -568,6 +583,7 @@ const HittingVideos = () => {
       video2?.playVideo();
       video3?.playVideo();
       video4?.playVideo();
+      video5?.playVideo();
     }
   };
 

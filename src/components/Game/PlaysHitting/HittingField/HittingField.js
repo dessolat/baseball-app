@@ -10,7 +10,7 @@ import ArrowDown from 'components/UI/icons/ArrowDown';
 import CameraIcon from 'images/video_camera_icon.png';
 import FieldIcon from 'images/field_icon.png';
 import CameraView from './CameraView';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import useSetMomentById from 'hooks/useSetMomentById';
 import Tooltip from './Tooltip';
 // import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
@@ -201,12 +201,14 @@ const TouchPoints = ({ data, coef }) => (
   </>
 );
 
-const HittingField = () => {
+const HittingField = ({ handleOnReady }) => {
   const [isAutoRotate, setAutoRotate] = useState(true);
   const [isCameraView, setCameraView] = useState(false);
   const [hovered, setHovered] = useState({ isHovered: false, text: '' });
 
-  const { innings, currentCard, currentMoment } = useSelector(state => state.game);
+	const innings = useSelector(state => state.game.innings, shallowEqual);
+	const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
+	const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
 
   const { hit } = currentMoment.metering || {};
   const { camera_2d: camera2D } = hit || 0;
@@ -303,7 +305,7 @@ const HittingField = () => {
   const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
 
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
-  const isBtnIcon = camera2D !== null;
+  const isBtnIcon = camera2D !== null && currentMoment.video;
 
   const setMomentById = useSetMomentById();
   return (
@@ -365,7 +367,12 @@ const HittingField = () => {
           {hovered.isHovered && <Tooltip text={hovered.text} />}
         </>
       )}
-      {isCameraView && camera2D !== null && <CameraView camera2D={camera2D} />}
+      <CameraView
+        camera2D={camera2D}
+        handleOnReady={handleOnReady}
+        isVisible={isCameraView && camera2D !== null && currentMoment.video}
+      />
+      {/* {isCameraView && camera2D !== null && <CameraView camera2D={camera2D} handleOnReady={handleOnReady} />} */}
       {isBtnIcon && (
         <button className={cl.cameraSwitchBtn} onClick={cameraSwitchBtnHandler}>
           <img src={btnIcon} alt='camera' />
