@@ -1,11 +1,10 @@
-import { AnimationContext } from 'context';
-import { useContext } from 'react';
 import cl from '../Banner.module.scss';
+import { usePlayerStatsAnimationCtx } from 'context/PlayerStatsAnimationContext/PlayerStatsAnimationContext';
 
 const CommonGroupItem = ({ item, parent, staticTitle }) => {
   const { par1, par2 } = item;
 
-  const valueCoef = useContext(AnimationContext);
+  const valueCoef = usePlayerStatsAnimationCtx();
 
   const modifiedStaticTitle = par1 === 'GO' && par2 === 'FC' ? 'Outs' : staticTitle;
 

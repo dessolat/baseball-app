@@ -1,6 +1,5 @@
-import { AnimationContext } from 'context';
-import { useContext } from 'react';
 import cl from '../Banner.module.scss';
+import { usePlayerStatsAnimationCtx } from 'context/PlayerStatsAnimationContext/PlayerStatsAnimationContext';
 
 const PARAM_VOCABULARY = {
   Swing: 'Swings',
@@ -15,7 +14,7 @@ const PARAM_VOCABULARY = {
 const CommonGroupItem = ({ item, parent, staticTitle }) => {
   const { par1, par2 } = item;
 
-  const valueCoef = useContext(AnimationContext);
+	const valueCoef = usePlayerStatsAnimationCtx();
 
   if (par1 === null && par2 === null)
     return (

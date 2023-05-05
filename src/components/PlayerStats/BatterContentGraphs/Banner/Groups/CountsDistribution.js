@@ -1,7 +1,6 @@
-import { AnimationContext } from 'context';
-import { useContext } from 'react';
 import cl from '../Banner.module.scss';
 import classNames from 'classnames';
+import { usePlayerStatsAnimationCtx } from 'context/PlayerStatsAnimationContext/PlayerStatsAnimationContext';
 
 const SORT_PRIORITY = {
   '0-0': 1,
@@ -21,7 +20,7 @@ const SORT_PRIORITY = {
 const CountsDistributionItem = ({ item }) => {
   const [title, { swings, takes }] = item;
 
-  const valueCoef = useContext(AnimationContext);
+  const valueCoef = usePlayerStatsAnimationCtx();
 
   function getValues(value, sum) {
     const formattedValue = Number(((value * 100) / sum).toFixed(1));

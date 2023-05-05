@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import cl from '../Banner.module.scss';
-import { useContext } from 'react';
-import { AnimationContext } from 'context';
+import { usePlayerStatsAnimationCtx } from 'context/PlayerStatsAnimationContext/PlayerStatsAnimationContext';
 
 const TotalInfoItem = ({ item, parent }) => {
   const { par1, par2 } = item;
 
-  const valueCoef = useContext(AnimationContext);
+	const valueCoef = usePlayerStatsAnimationCtx();
 
   const par1Title = par1 === 'LHP' ? 'Left' : par1;
   const par2Title = par2 === 'RHP' ? 'Right Handed Pitchers' : par2;
