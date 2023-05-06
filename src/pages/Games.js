@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   // addLeagueImage,
   resetTableFilters,
@@ -13,7 +13,7 @@ import {
 import { setCurrentLeague } from 'redux/gamesReducer';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { getSearchParam, getYears, setSearchParam } from 'utils';
+import { getSearchParam, setSearchParam } from 'utils';
 import { setCurrentGameType, setCurrentYear } from 'redux/sharedReducer';
 import { GamesLoadingContext } from 'context';
 
@@ -25,10 +25,14 @@ const Games = () => {
   const cancelTokenRef = useRef();
   const firstMountRef = useRef(true);
 
-  // const leagues = useSelector(state => state.games.leagues);
-  const { games, currentLeague, mobileTableMode, summaryYearsData } = useSelector(state => state.games);
-  const { currentGameType, currentYear } = useSelector(state => state.shared);
-  // const leaguesImages = useSelector(state => state.games.leaguesImages);
+  const games = useSelector(state => state.games.games, shallowEqual);
+  const currentLeague = useSelector(state => state.games.currentLeague, shallowEqual);
+  const mobileTableMode = useSelector(state => state.games.mobileTableMode);
+  const summaryYearsData = useSelector(state => state.games.summaryYearsData, shallowEqual);
+
+  const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentYear = useSelector(state => state.shared.currentYear);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,15 +60,6 @@ const Games = () => {
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
-        // const response = await axios.get(
-        //   `http://baseball-gametrack.ru/api/main/year-${getSearchParam('year') || currentYear}`,
-        //   {
-        //     cancelToken: cancelTokenRef.current.token,
-        //     timeout: 10000,
-        //     onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
-        //   }
-        // );
-
         setError('');
         dispatch(setSummaryYearsData(response.data));
         dispatch(setGamesAndLeagues(response.data[currentYear] ?? { games: [], leagues: [], players: null }));
@@ -75,10 +70,9 @@ const Games = () => {
         }
 
         const curYear = +new Date().getFullYear();
-				const yearsArr = Object.keys(response.data);
+        const yearsArr = Object.keys(response.data);
 
         if (getSearchParam('year')) {
-          // const yearsArr = getYears();
           yearsArr.includes(getSearchParam('year')) && dispatch(setCurrentYear(+getSearchParam('year')));
         }
 
@@ -114,24 +108,11 @@ const Games = () => {
   }, []);
 
   useEffect(() => {
-    if (firstMountRef.current === true) {
-      // if (currentYear === 2023) {
-      // 	cancelTokenRef.current.cancel(null);
-      // 	dispatch(setCurrentYear(2022));
-      // 	return;
-      // }
-      return;
-    }
+    if (firstMountRef.current === true) return;
 
     const yearData = summaryYearsData[currentYear] ?? { games: [], leagues: [], players: null };
 
     dispatch(setGamesAndLeagues(yearData));
-
-    // if (currentYear === 2023) {
-    // 	cancelTokenRef.current.cancel(null);
-    // 	dispatch(setCurrentYear(2022));
-    // 	return;
-    // }
 
     // const fetchGamesData = async () => {
     //   cancelTokenRef.current = axios.CancelToken.source();
