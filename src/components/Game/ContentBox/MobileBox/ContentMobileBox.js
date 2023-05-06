@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ContentBoxFooter from '../ContentBoxFooter/ContentBoxFooter';
+import ContentBoxFooter from '../../ContentBoxFooter/ContentBoxFooter';
 import cl from './ContentMobileBox.module.scss';
 import MobileBoxHeader from './MobileBoxHeader';
 import MobileBoxTable from './MobileBoxTable';

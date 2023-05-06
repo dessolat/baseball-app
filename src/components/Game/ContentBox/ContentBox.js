@@ -4,7 +4,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ContentMobileBox from './ContentMobileBox';
+import ContentMobileBox from './MobileBox/ContentMobileBox';
 import ContentBoxDesktop from './ContentBoxDesktop';
 
 const ContentBox = () => {
@@ -14,7 +14,7 @@ const ContentBox = () => {
 
   const { gameId } = useParams();
 
-  const { boxActiveButton: activeButton } = useSelector(state => state.game);
+  const activeButton = useSelector(state => state.game.boxActiveButton);
 
   const cancelTokenRef = useRef();
 

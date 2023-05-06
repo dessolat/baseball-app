@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import cl from './ContentMobileBox.module.scss';
+import MobileBoxTableHeader from './MobileBoxTableHeader';
 
 const TABLES_INFO = {
   Batting: {
@@ -54,7 +55,7 @@ const TABLES_INFO = {
       { name: 'SO', isWider: false },
       { name: 'WP', isWider: false },
       { name: 'BK', isWider: false },
-      { name: 'ERA', isWider: true },
+      { name: 'ERA', isWider: false, isWidest: true },
       { name: 'NP', isWider: false },
       { name: 'NS', isWider: false },
       { name: 'NB', isWider: false }
@@ -101,127 +102,131 @@ const MobileBoxTable = ({ currentMode, tableData }) => {
 
   let rowDelta = 0;
 
-  const orderedPlayersStats = JSON.parse(JSON.stringify(tableData.players_stats.slice()));
+  let orderedPlayersStats;
 
-  if (currentMode === 'Pitching') {
-    orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
+  const { players_stats, pitchers, catchers } = tableData;
 
-    tableData.pitchers_order.forEach((orderId, i) => {
-      const player = orderedPlayersStats.find(
-        curPlayer => curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined
-      );
+  if (currentMode !== 'Pitching' && currentMode !== 'Catching') orderedPlayersStats = players_stats.slice();
 
-      if (player !== undefined) {
-        player.takenBy = i + 1;
-      }
-    });
-  }
+  if (currentMode === 'Pitching') orderedPlayersStats = pitchers.slice();
+  if (currentMode === 'Catching') orderedPlayersStats = catchers.slice();
 
+  const isPitcherOrCatcher = ['Pitching', 'Catching'].includes(currentMode);
+
+  const getValue = (title, player) => {
+    const tableMode = currentMode.toLowerCase();
+
+    if (player.id === -1) return ' ';
+    if (title.name === 'POS') return player.content.positions.join('/');
+
+    if (!isPitcherOrCatcher) {
+      if (player.content.stats[tableMode][title.name] === 'INF') return 'INF';
+
+      if (['AVG', 'SLG', 'OBP', 'OPS'].includes(title.name))
+        return Number(player.content.stats.batting[title.name]).toFixed(3);
+
+      if (title.name === 'SB_pr') return Number(player.content.stats.running.SB_pr).toFixed(3);
+
+      if (title.name === 'FLD') return Number(player.content.stats.fielding.FLD).toFixed(3);
+
+      return player.content.stats[tableMode][title.name];
+    }
+
+    if (currentMode === 'Pitching') {
+      if (player.pitching[title.name] === 'INF') return 'INF';
+      if (title.name === 'ERA') return Number(player.pitching.ERA).toFixed(3);
+
+      return player.pitching[title.name];
+    }
+
+    if (currentMode === 'Catching') {
+      if (player.catching[title.name] === 'INF') return 'INF';
+
+      return player.catching[title.name];
+    }
+
+    return ' ';
+  };
   return (
     <div className={cl.mobileWrapper}>
-      <div className={cl.fullHeader}>
-        <div className={cl.leftHeader}>
-          <div></div>
-          <div></div>
-        </div>
-        <div className={cl.rightHeader} ref={headerScroll}>
-          {getTableHeaders()}
-        </div>
-      </div>
+      <MobileBoxTableHeader getTableHeaders={getTableHeaders} ref={headerScroll} />
       <div className={cl.sides}>
         <div className={cl.leftRows}>
-          {orderedPlayersStats
-            .filter(player =>
-              currentMode === 'Pitching'
-                ? player.takenBy
-                : currentMode === 'Catching'
-                ? player.is_catcher
-                : true
-            )
-            .sort((a, b) => (currentMode === 'Pitching' ? (a.takenBy > b.takenBy ? 1 : -1) : 0))
-            .map((player, i) => {
-              if (player.is_substituted && BATTING_TITLES.includes(currentMode)) rowDelta++;
+          {orderedPlayersStats.map((player, i) => {
+            if (player.is_substituted && BATTING_TITLES.includes(currentMode)) rowDelta++;
 
-              return (
-                <div key={i} className={cl.tableRow}>
-                  {currentMode !== 'Pitching' && currentMode !== 'Catching' && (
-                    <div>
-                      {(player.is_substituted && BATTING_TITLES.includes(currentMode)) ||
-                      !BATTING_TITLES.includes(currentMode)
-                        ? ' '
-                        : i + 1 - rowDelta}
-                    </div>
-                  )}
-                  <div
-                    style={
-                      player.is_substituted && BATTING_TITLES.includes(currentMode)
-                        ? { paddingLeft: '2.5rem' }
-                        : !BATTING_TITLES.includes(currentMode)
-                        ? { flex: '0 0 192px', paddingLeft: '10px' }
-                        : null
-                    }
-                    className={cl.playerName}>
-                    <Link to={`/stats/player/${player.id}`}>{player.content.name}</Link>
+            const playerLinkName = isPitcherOrCatcher ? player.name : player.content.name;
+            return (
+              <div key={i} className={cl.tableRow}>
+                {currentMode !== 'Pitching' && currentMode !== 'Catching' && (
+                  <div>
+                    {(player.is_substituted && BATTING_TITLES.includes(currentMode)) ||
+                    !BATTING_TITLES.includes(currentMode)
+                      ? ' '
+                      : i + 1 - rowDelta}
                   </div>
+                )}
+                <div
+                  style={
+                    player.is_substituted && BATTING_TITLES.includes(currentMode)
+                      ? { paddingLeft: '2.5rem' }
+                      : !BATTING_TITLES.includes(currentMode)
+                      ? { flex: '0 0 192px', paddingLeft: '10px' }
+                      : null
+                  }
+                  className={cl.playerName}>
+                  <Link to={`/stats/player/${player.id}`}>{playerLinkName}</Link>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
           <div className={cl.tableRow + ' ' + cl.footerRow}>TOTALS</div>
         </div>
         <div
           className={cl.rightRows}
           onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
           ref={rowsRef}>
-          {orderedPlayersStats
-            .filter(player =>
-              currentMode === 'Pitching'
-                ? player.takenBy
-                : currentMode === 'Catching'
-                ? player.is_catcher
-                : true
-            )
-            .sort((a, b) => (currentMode === 'Pitching' ? (a.takenBy > b.takenBy ? 1 : -1) : 0))
-            .map((player, i) => {
-              return (
-                <div
-                  key={i}
-                  className={cl.tableRow}
-                  style={{
-                    width: isScrollable ? 'fit-content' : '100%'
-                  }}>
-                  {TABLES_INFO[currentMode].headers.map((title, i) => {
-                    const value =
-                      player.id === -1
-                        ? ' '
-                        : title.name === 'POS'
-                        ? player.content.positions.join('/')
-                        : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
-                        ? player.content.stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
-                        : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
-                        ? player.content.stats.fielding[title.name]
-                        : title.isWider
-                        ? player.content.stats[
-                            BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                          ][title.name] === 'Infinity'
-                          ? 'INF'
-                          : Number(
-                              player.content.stats[
-                                BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                              ][title.name]
-                            ).toFixed(3)
-                        : player.content.stats[
-                            BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
-                          ][title.name];
+          {orderedPlayersStats.map((player, i) => {
+            return (
+              <div
+                key={i}
+                className={cl.tableRow}
+                style={{
+                  width: isScrollable ? 'fit-content' : '100%'
+                }}>
+                {TABLES_INFO[currentMode].headers.map((title, i) => {
+                  const value = getValue(title, player);
+                  // player.id === -1
+                  //   ? ' '
+                  //   : title.name === 'POS'
+                  //   ? player.content.positions.join('/')
+                  //   : ['SB', 'CS', 'SB_pr', 'LOB', 'PB'].includes(title.name)
+                  //   ? player.content.stats[currentMode === 'Running' ? 'running' : 'catching'][title.name]
+                  //   : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title.name)
+                  //   ? player.content.stats.fielding[title.name]
+                  //   : title.isWider
+                  //   ? player.content.stats[
+                  //       BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                  //     ][title.name] === 'Infinity'
+                  //     ? 'INF'
+                  //     : Number(
+                  //         player.content.stats[
+                  //           BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                  //         ][title.name]
+                  //       ).toFixed(3)
+                  //   : player.content.stats[
+                  //       BATTING_TITLES.includes(currentMode) ? 'batting' : currentMode.toLowerCase()
+                  //     ][title.name];
 
-                    return (
-                      <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
-                        {Number(value) !== -1 ? value : '—'}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                  return (
+                    <div key={i} className={title.isWider ? cl.wider : title.isWidest ? cl.widest : null}>
+                      {Number(value) !== -1 ? value : '—'}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
           <div
             className={cl.tableRow + ' ' + cl.footerRow}
             style={{
