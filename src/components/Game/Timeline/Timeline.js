@@ -548,6 +548,8 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
               </Fragment>
             ))}
             <use href={`#red-border-line${forFullscreen ? '-full' : ''}`} />
+            <use href={`#red-border-line-white-text${forFullscreen ? '-full' : ''}`} />
+            <use href={`#red-border-line-text${forFullscreen ? '-full' : ''}`} />
             <use href={`#left-border-line${forFullscreen ? '-full' : ''}`} />
             <use href={`#right-border-line${forFullscreen ? '-full' : ''}`} />
           </>
