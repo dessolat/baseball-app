@@ -86,6 +86,7 @@ const SwitchTable = () => {
     return [];
   }, [league, tableMode, dropdownValue]);
 
+  const isToFixed = ['AVG', 'SLG', 'OBP', 'OPS', 'ERA', '%SB', 'FLD%'].includes(dropdownValue[tableMode]);
   return (
     <div className={cl.switchWrapper}>
       <div className={cl.header}>
@@ -126,17 +127,17 @@ const SwitchTable = () => {
                   <>
                     /
                     <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                      {getShortName(team.name, arr.length > 1 ? 3 : 7)}
+                      {getShortName(team.name, arr.length > 1 ? 3 : 6)}
                     </Link>
                   </>
                 );
               return (
                 <Link key={i} to={`/games/team/${currentGameType.toLowerCase()}/${team.name}`}>
-                  {getShortName(team.name, arr.length > 1 ? 3 : 7)}
+                  {getShortName(team.name, arr.length > 1 ? 3 : 6)}
                 </Link>
               );
             });
-
+						
             return (
               <div key={row.id} className={cl.tableRow}>
                 <div className={cl.underlineHover}>
@@ -146,7 +147,15 @@ const SwitchTable = () => {
                 </div>
                 <div>
                   <div>{teams}</div>
-                  <div>{row[REPLACES[dropdownValue[tableMode]]] || row[dropdownValue[tableMode]]}</div>
+                  <div>
+                    {REPLACES[dropdownValue[tableMode]]
+                      ? !isToFixed
+                        ? row[REPLACES[dropdownValue[tableMode]]]
+                        : row[REPLACES[dropdownValue[tableMode]]].toFixed(3)
+                      : !isToFixed
+                      ? row[dropdownValue[tableMode]]
+                      : row[dropdownValue[tableMode]].toFixed(3)}
+                  </div>
                 </div>
               </div>
             );
