@@ -1,17 +1,21 @@
 import NoDataMessage from 'components/NoDataMessage/NoDataMessage';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cl from './ContentTable.module.scss';
 import ContentTableHeader from './ContentTableHeader';
 import ContentTableList from './ContentTableList';
 import ContentTableSubHeader from './ContentTableSubHeader';
 
 const ContentTable = ({ games }) => {
-  const { currentStadium, currentLeague, currentHome, currentGuests, mobileTableMode } = useSelector(
-    state => state.games
-  );
-  const { currentGameType, currentDate, isMobile } = useSelector(state => state.shared);
-  const dispatch = useDispatch();
+  const currentStadium = useSelector(s => s.games.currentStadium);
+  const currentLeague = useSelector(s => s.games.currentLeague);
+  const currentHome = useSelector(s => s.games.currentHome);
+  const currentGuests = useSelector(s => s.games.currentGuests);
+  const mobileTableMode = useSelector(s => s.games.mobileTableMode);
+
+  const currentGameType = useSelector(s => s.shared.currentGameType);
+  const currentDate = useSelector(s => s.shared.currentDate);
+  const isMobile = useSelector(s => s.shared.isMobile);
 
   const scrollItemRef = useRef(null);
 
@@ -20,9 +24,15 @@ const ContentTable = ({ games }) => {
 
     setTimeout(() => {
       if (!scrollItemRef.current) return;
+
+      if (isMobile) {
+        scrollItemRef.current.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.scrollTop =
+          scrollItemRef.current.offsetTop;
+        return;
+      }
       scrollItemRef.current.parentNode.scrollTop = scrollItemRef.current.offsetTop;
     }, 100);
-  }, [currentDate, currentLeague]);
+  }, [currentDate, currentLeague, isMobile]);
 
   //Games filtering
   let filteredData = useMemo(() => {
