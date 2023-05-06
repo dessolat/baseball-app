@@ -41,7 +41,7 @@
 .sideChart {
   fill: #fff;
   background-color: #fff;
-	min-width: 1.6rem;
+  min-width: 1.6rem;
 }
 
 .leftTitle,
@@ -61,11 +61,17 @@
 }
 
 .verticalLineText,
-.redLineText {
+.redLineText,
+.whiteLineText {
   font: 400 0.55rem var(--font-nunito);
   stroke-width: 0.7;
   user-select: none;
   letter-spacing: 0.5px;
+}
+
+.whiteLineText {
+	stroke: white;
+  stroke-width: 5;
 }
 
 .eventRect,

@@ -23,9 +23,12 @@ const DraggableArea = (
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
 
   const redLineTotalSecs = videoCurrentTime - (SECONDS_SRC[currentTab].timeStart ?? 0);
+	console.log(redLineTotalSecs);
   const redLineMins = Math.floor(redLineTotalSecs / 60);
-  const redLineSecs = (redLineTotalSecs - redLineMins * 60).toFixed(0);
-  const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs}`;
+	const rawSecs = redLineTotalSecs - redLineMins * 60
+  const redLineSecs = Math.floor(rawSecs);
+	const redLineMSecs = String((rawSecs - redLineSecs).toFixed(3)).slice(2)
+  const redLineTime = `${redLineMins}:${redLineSecs.length === 1 ? 0 : ''}${redLineSecs},${redLineMSecs}`;
 
   const redLinePercent = (redLineTotalSecs * 100) / totalSeconds;
 
@@ -74,6 +77,14 @@ const DraggableArea = (
       <text
         x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25}
         y='49'
+        id={`red-border-line-white-text${forFullscreen ? '-full' : ''}`}
+        className={cl.whiteLineText}>
+        {redLineTime}
+      </text>
+      <text
+        x={redLinePercent < 96 ? redLineRelative + 5 : redLineRelative - 25}
+        y='49'
+        id={`red-border-line-text${forFullscreen ? '-full' : ''}`}
         className={cl.redLineText}>
         {redLineTime}
       </text>
