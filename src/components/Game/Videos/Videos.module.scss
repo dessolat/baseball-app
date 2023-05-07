@@ -317,11 +317,21 @@
 
   > button > svg > path {
     transition: fill 0.3s, opacity 0.3s;
+
+    @media screen and (max-width: 800px),
+      screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      transition: unset;
+    }
   }
 
   > button:hover > svg > path {
     fill: var(--side-color);
     opacity: 1;
+
+    @media screen and (max-width: 800px),
+      screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      fill: #d9d9d9;
+    }
   }
 
   > button,
