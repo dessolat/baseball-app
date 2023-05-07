@@ -48,7 +48,6 @@
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     height: auto;
-    // aspect-ratio: unset;
     border-top: unset;
     height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
     width: 100%;
@@ -70,9 +69,7 @@
 
 .grid {
   position: absolute;
-  // left: 50%;
-  // transform: translateX(-50%);
-  z-index: 10;
+  z-index: 1;
   left: calc(796 * 100% / 1920);
   top: calc(254 * 100% / 1080);
   width: calc(295 * 100% / 1920);
@@ -85,7 +82,7 @@
   border-radius: 50%;
 
   &.onTop {
-    z-index: 11;
+    z-index: 1;
   }
 }
 
