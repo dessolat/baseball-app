@@ -17,6 +17,7 @@ import { getSearchParam, getShortName } from 'utils';
 import { setBoxActiveButton } from 'redux/gameReducer';
 import MobileHeaderEvents from './MobileHeaderEvents';
 import MobilePitcherFilters from '../Content/MobilePitcherFilters';
+import MobileFilters from './MobileFilters';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -188,9 +189,10 @@ const Header = ({ currentTab, handleTabClick }) => {
                 {getShortName(preview.owners.name, 14)}
               </button>
             </div>
-            <div className={cl.dateLocation}>
+            <MobileFilters />
+            {/* <div className={cl.dateLocation}>
               {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}
-            </div>
+            </div> */}
             <div className={cl.geoPitcherWrapper}>
               {getSearchParam('tab') !== 'box' && <MobilePitcherFilters />}
             </div>

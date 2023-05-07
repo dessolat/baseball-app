@@ -87,12 +87,6 @@
   }
 }
 
-.filtersWrapper {
-  width: 4.5rem;
-  margin-left: auto;
-  margin-right: 2rem;
-}
-
 .landscapeDisplayNone {
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
