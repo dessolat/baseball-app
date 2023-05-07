@@ -45,6 +45,7 @@ const Dropdown = ({
   itemStyles = null,
   itemTextStyles = null,
   titleStyles = null,
+	listWrapperStyles = null,
   shortNames = false,
   searchField = false,
   disabled = false
@@ -108,7 +109,7 @@ const Dropdown = ({
         </div>
       </div>
       {isOpen && (
-        <div className={cl.listWrapper}>
+        <div className={cl.listWrapper} style={listWrapperStyles}>
           <ul className={cl.list} style={listStyles}>
             {searchField && (
               <li className={cl.searchFieldWrapper}>

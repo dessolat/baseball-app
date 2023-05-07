@@ -37,6 +37,11 @@
   left: 0;
   width: 100%;
 	z-index: 10;
+
+	@media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    width: 75vw;
+  }
 }
 
 .list {
@@ -46,11 +51,6 @@
   animation: popUp 0.2s linear;
   max-height: 80vh;
   overflow: scroll;
-
-  @media screen and (max-width: 800px),
-    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    width: 75vw;
-  }
 
   &::-webkit-scrollbar {
     width: 0;
