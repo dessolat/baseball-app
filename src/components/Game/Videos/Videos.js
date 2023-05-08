@@ -16,6 +16,7 @@ const Videos = () => {
   const isFullscreen = useSelector(s => s.game.isFullscreen);
   const currentMoment = useSelector(s => s.game.currentMoment);
   const playerCardFilterFocused = useSelector(s => s.game.playerCardFilterFocused);
+  const preferredVideoState = useSelector(s => s.game.preferredVideoState);
 	
   const isMobile = useSelector(s => s.shared.isMobile);
 
@@ -62,7 +63,7 @@ const Videos = () => {
       }, 300);
     }, 500);
   }
-	
+
   function handleTouch() {
     if (!currentMoment.video || !isMobile) return;
 
@@ -76,8 +77,8 @@ const Videos = () => {
       controlsWrapperRef.current.lastChild.style.opacity = 0;
       timerRef.current = setTimeout(() => {
         controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
-      }, 300);
-    }, 500);
+      }, 100);
+    }, preferredVideoState === 1 ? 500 : 2500);
   }
 
   return (
