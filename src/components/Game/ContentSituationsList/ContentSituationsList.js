@@ -76,9 +76,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   return (
     <div className={cl.wrapper} onClick={useGameFocus('list')}>
       {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
-      <div className={cl.mobileOnlyFields} style={{ justifyContent: 'center', height: '19px' }}>
-        <PlayerFilterField />
-      </div>
+      
       <ul className={listClasses} ref={listRef} onScroll={scrollHandler}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem

@@ -18,6 +18,7 @@ import { setBoxActiveButton } from 'redux/gameReducer';
 import MobileHeaderEvents from './MobileHeaderEvents';
 import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 import MobileFilters from './MobileFilters';
+import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -188,6 +189,9 @@ const Header = ({ currentTab, handleTabClick }) => {
               <button className={ownersClasses.join(' ')} onClick={handleTeamClick('owners')}>
                 {getShortName(preview.owners.name, 14)}
               </button>
+            </div>
+            <div className={cl.mobileOnlyFields} style={{ justifyContent: 'center', height: '19px' }}>
+              <PlayerFilterField />
             </div>
             <MobileFilters />
             {/* <div className={cl.dateLocation}>
