@@ -1,5 +1,5 @@
 import ArrowDown from 'components/UI/icons/ArrowDown';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { getShortName } from 'utils';
 import cl from './Dropdown.module.scss';
 import classNames from 'classnames';

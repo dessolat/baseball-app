@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import cl from './MobileOptionsBar.module.scss';
-import OptionsBtn from './OptionsBtn';
+import OptionsDropdown from './OptionsDropdown';
 import ScoreInfo from './ScoreInfo';
 
 const MobileOptionsBar = () => {
@@ -9,7 +9,7 @@ const MobileOptionsBar = () => {
   return (
     <div className={optionsBarClasses}>
       <ScoreInfo />
-      <OptionsBtn />
+      <OptionsDropdown />
     </div>
   );
 };
