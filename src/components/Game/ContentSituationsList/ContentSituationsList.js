@@ -6,7 +6,7 @@ import { setCurrentCard, setListScrollTop } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
-import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
+// import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 import classNames from 'classnames';
 import useGameFocus from 'hooks/useGameFocus';
 

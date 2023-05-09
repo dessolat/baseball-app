@@ -36,6 +36,8 @@ const Content = ({ currentTab }) => {
   const playerCardFilter = useSelector(s => s.game.playerCardFilter);
   const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy);
 
+  const isMobile = useSelector(s => s.shared.isMobile);
+
   const dispatch = useDispatch();
 
   const situationsChildRef = useRef();
@@ -287,6 +289,14 @@ const Content = ({ currentTab }) => {
     dispatch(setMoments(newMoments));
 
     if (currentCard.manualClick || !situationsChildRef.current) return;
+
+    if (isMobile) {
+      document.documentElement.scrollTop =
+        situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 85;
+
+      return;
+    }
+
     situationsChildRef.current.parentNode.scrollTop =
       situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 200;
 
