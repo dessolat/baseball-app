@@ -29,9 +29,6 @@ const Game = () => {
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
 
-	
-	console.log(cancelTokenRef);
-
   useEffect(() => {
     // axios
     //   .get(`http://baseball-gametrack.ru/api/game_${gameId}`, {
