@@ -51,15 +51,17 @@
     height: calc(100vh - 30.63px - 112.5px - 100vw / 16 * 9 - 54px - 19px);
 
     &.listNoVideo {
-      height: calc(100vh - var(--desktop-nav-height) - 112.5px - 49px - 19px);
+      // height: calc(100vh - var(--desktop-nav-height) - 112.5px - 49px - 19px);
+			height: unset;
     }
 
     &.mobilePlaysListHeight {
-      height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 30px - 20px - 19px);
-      // height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 55px - 20px - 19px);
+      // height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 30px - 20px - 19px);
+			height: unset;
     }
     &.mobilePlaysListHeightVideo {
-      height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 50px - 19px);
+      // height: calc(100vh - var(--desktop-nav-height) - 112.5px - 100vw / 16 * 9 - 50px - 19px);
+			height: unset;
     }
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
