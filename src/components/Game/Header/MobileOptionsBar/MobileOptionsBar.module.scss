@@ -1,10 +1,9 @@
 .optionsBar {
   height: 27px;
   width: 100%;
-  padding: 0 13px;
+  padding: 0 5px 0 13px;
   border-bottom: 0.5px solid #cdcccc;
   line-height: 1;
-  display: flex;
   justify-content: space-between;
 }
 
@@ -12,7 +11,7 @@
   display: none;
 
   @media screen and (max-width: 800px) {
-    display: inline-block;
+    display: flex;
   }
 }
 
@@ -41,4 +40,11 @@
 .teamScore {
 	padding-top: 1px;
   font: 700 20px var(--font-comfortaa);
+}
+
+.optionsBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	aspect-ratio: 1;
 }

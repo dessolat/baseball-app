@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import cl from './MobileOptionsBar.module.scss';
 import { shallowEqual, useSelector } from 'react-redux';
+import OptionsBtn from './OptionsBtn';
 
 const MobileOptionsBar = () => {
   const preview = useSelector(s => s.game.preview, shallowEqual);
@@ -19,7 +20,7 @@ const MobileOptionsBar = () => {
           <span className={cl.teamScore}>{preview.owners.score}</span>
         </div>
       </div>
-      <div className={cl.options}></div>
+      <OptionsBtn />
     </div>
   );
 };
