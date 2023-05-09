@@ -110,11 +110,11 @@ const Game = () => {
 			innings.length > 0 
 			// false
 			? (
-        <div>
+        <>
           <Header currentTab={currentTab} handleTabClick={handleTabClick} />
           {isFilters && <Filters />}
           <Content currentTab={currentTab} />
-        </div>
+        </>
       ) : (
         <></>
       )}
