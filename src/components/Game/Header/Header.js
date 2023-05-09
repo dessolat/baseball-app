@@ -19,6 +19,7 @@ import MobileHeaderEvents from './MobileHeaderEvents';
 import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 import MobileFilters from './MobileFilters';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
+import classNames from 'classnames';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -110,16 +111,6 @@ const Header = ({ currentTab, handleTabClick }) => {
     animateScroll(e.currentTarget.name);
   };
 
-  const guestsClasses = [cl.guests];
-  const ownersClasses = [cl.owners];
-  currentTab === 'box'
-    ? boxActiveButton === 'guests'
-      ? guestsClasses.push(cl.active)
-      : ownersClasses.push(cl.active)
-    : currentCard.side === 'top'
-    ? guestsClasses.push(cl.active)
-    : ownersClasses.push(cl.active);
-
   const handleTeamClick = name => () => dispatch(setBoxActiveButton(name));
 
   const leftArrowGroup = isLeftScroll ? (
@@ -146,11 +137,6 @@ const Header = ({ currentTab, handleTabClick }) => {
     </>
   );
 
-  const defenceScoreClasses = [cl.teamScore, cl.defenceTeamScore];
-  const scoresWrapperClasses = [cl.scoresWrapper];
-  const teamTotalScoresWrapperClasses = [cl.teamTotalScoresWrapper];
-  (getSearchParam('tab') === 'box' || isVideo) && scoresWrapperClasses.push(cl.landscapeDisplayNone);
-  getSearchParam('tab') !== 'box' && teamTotalScoresWrapperClasses.push(cl.landscapeDisplayNone);
   const tabsArr = isVideo ? ['Box', 'Videos', 'Pitch', 'Hit', 'Run'] : ['Box', 'Plays'];
   // const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
 
@@ -160,6 +146,26 @@ const Header = ({ currentTab, handleTabClick }) => {
       : currentTab === 'running'
       ? 'Run'
       : currentTab[0].toUpperCase() + currentTab.slice(1);
+
+  // Classnames
+  const guestsClasses = classNames(cl.guests, {
+    [cl.active]:
+      (currentTab === 'box' && boxActiveButton === 'guests') ||
+      (currentTab !== 'box' && currentCard.side === 'top')
+  });
+  const ownersClasses = classNames(cl.owners, {
+    [cl.active]:
+      (currentTab === 'box' && boxActiveButton !== 'guests') ||
+      (currentTab !== 'box' && currentCard.side !== 'top')
+  });
+  const teamTotalScoresWrapperClasses = classNames(cl.teamTotalScoresWrapper, {
+    [cl.landscapeDisplayNone]: getSearchParam('tab') !== 'box'
+  });
+  const scoresWrapperClasses = classNames(cl.scoresWrapper, {
+    [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo
+  });
+  const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
+  const optionsBarClasses = classNames(cl.onlyPortraitMobile, cl.optionsBar);
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -177,8 +183,8 @@ const Header = ({ currentTab, handleTabClick }) => {
                 handleClick={handleTabClick}
               />
             </div>
-            <div className={teamTotalScoresWrapperClasses.join(' ')}>
-              <button className={guestsClasses.join(' ')} onClick={handleTeamClick('guests')}>
+            <div className={teamTotalScoresWrapperClasses}>
+              <button className={guestsClasses} onClick={handleTeamClick('guests')}>
                 {getShortName(preview.guests.name, 14)}
               </button>
               <div className={cl.scores}>
@@ -186,7 +192,7 @@ const Header = ({ currentTab, handleTabClick }) => {
                  - 
                 {preview.owners.score}
               </div>
-              <button className={ownersClasses.join(' ')} onClick={handleTeamClick('owners')}>
+              <button className={ownersClasses} onClick={handleTeamClick('owners')}>
                 {getShortName(preview.owners.name, 14)}
               </button>
             </div>
@@ -203,7 +209,8 @@ const Header = ({ currentTab, handleTabClick }) => {
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
-          <div className={scoresWrapperClasses.join(' ')}>
+          <div className={optionsBarClasses} />
+          <div className={scoresWrapperClasses}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>
               <div className={cl.arrowGroup}>{leftArrowGroup}</div>
@@ -213,7 +220,7 @@ const Header = ({ currentTab, handleTabClick }) => {
             <HeaderInfo innings={innings} />
             {!isVideo && <MobileHeaderEvents cl={cl} />}
           </div>
-          <h2 className={defenceScoreClasses.join(' ')}>{preview.owners.score}</h2>
+          <h2 className={defenceScoreClasses}>{preview.owners.score}</h2>
           <HeaderLogo teamName={preview.owners.name} side='right' images={imagesData} />
         </div>
       </div>
