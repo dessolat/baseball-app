@@ -20,6 +20,7 @@ import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 import MobileFilters from './MobileFilters';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 import classNames from 'classnames';
+import MobileOptionsBar from './MobileOptionsBar/MobileOptionsBar';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -165,7 +166,6 @@ const Header = ({ currentTab, handleTabClick }) => {
     [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo
   });
   const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
-  const optionsBarClasses = classNames(cl.onlyPortraitMobile, cl.optionsBar);
   return (
     <header className={cl.header}>
       <div className='container'>
@@ -209,7 +209,7 @@ const Header = ({ currentTab, handleTabClick }) => {
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
-          <div className={optionsBarClasses} />
+          <MobileOptionsBar />
           <div className={scoresWrapperClasses}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>

@@ -1,0 +1,44 @@
+.optionsBar {
+  height: 27px;
+  width: 100%;
+  padding: 0 13px;
+  border-bottom: 0.5px solid #cdcccc;
+  line-height: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.onlyPortraitMobile {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: inline-block;
+  }
+}
+
+.scoreInfo {
+  height: 100%;
+  display: flex;
+}
+
+.team {
+	display: flex;
+	align-items: center;
+
+  > span + span {
+    margin-left: 9px;
+  }
+
+  & + .team {
+    margin-left: 24px;
+  }
+}
+
+.teamName {
+  font: 400 14px var(--font-nunito);
+}
+
+.teamScore {
+	padding-top: 1px;
+  font: 700 20px var(--font-comfortaa);
+}
