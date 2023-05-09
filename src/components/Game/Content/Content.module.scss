@@ -40,7 +40,7 @@
 
 .contentNoVideo {
   display: grid;
-  grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);;
+  grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   // grid-template: 33rem / minmax(10rem, 75.06rem) 3.5rem;
   // grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   grid-template-areas: 'list moments';
@@ -62,6 +62,25 @@
 .landscapeDisplayNone {
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
+  }
+}
+
+.mobileDisplayNone {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
+}
+
+.mobilePitcherFiltersWrapper {
+	@media screen and (max-width: 800px) {
+		position: sticky;
+		top: calc(var(--desktop-nav-height) + 139.5px + 100vw / 16 * 9 + 45px);
+		z-index: 1;
+
+		&.noVideo {
+			top: calc(var(--desktop-nav-height) + 139.5px);
+		}
   }
 }
 

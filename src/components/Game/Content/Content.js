@@ -25,16 +25,16 @@ import classNames from 'classnames';
 const Content = ({ currentTab }) => {
   const [cards, setCards] = useState([]);
 
-	const innings = useSelector(s => s.game.innings, shallowEqual)
-	const situationFilter = useSelector(s => s.game.situationFilter)
-	const currentCard = useSelector(s => s.game.currentCard, shallowEqual)
-	const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual)
-	const playbackMode = useSelector(s => s.game.playbackMode)
-	const errorMsg = useSelector(s => s.game.errorMsg, shallowEqual)
-	const gameId = useSelector(s => s.game.currentGameId, shallowEqual)
-	const isVideo = useSelector(s => s.game.isVideo)
-	const playerCardFilter = useSelector(s => s.game.playerCardFilter)
-	const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy)
+  const innings = useSelector(s => s.game.innings, shallowEqual);
+  const situationFilter = useSelector(s => s.game.situationFilter);
+  const currentCard = useSelector(s => s.game.currentCard, shallowEqual);
+  const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
+  const playbackMode = useSelector(s => s.game.playbackMode);
+  const errorMsg = useSelector(s => s.game.errorMsg, shallowEqual);
+  const gameId = useSelector(s => s.game.currentGameId, shallowEqual);
+  const isVideo = useSelector(s => s.game.isVideo);
+  const playerCardFilter = useSelector(s => s.game.playerCardFilter);
+  const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy);
 
   const dispatch = useDispatch();
 
@@ -348,20 +348,27 @@ const Content = ({ currentTab }) => {
     return filteredCards;
   };
 
-  const contentClass = isVideo ? cl.content : cl.contentNoVideo;
-  const eventsClasses = classNames([cl.landscapeDisplayNone], { [cl.eventsArea]: !isVideo });
+  const contentClasses = classNames({
+    [cl.content]: isVideo,
+    [cl.contentNoVideo]: !isVideo
+  });
+  const eventsClasses = classNames([cl.mobileDisplayNone], { [cl.eventsArea]: !isVideo });
+  const mobilePitcherFiltersClasses = classNames(cl.landscapeDisplayNone, cl.mobilePitcherFiltersWrapper, {
+    [cl.noVideo]: !isVideo
+  });
   return (
     <>
       {currentTab !== 'box' ? (
         <section className='container' style={{ position: 'relative' }}>
-          <div className={contentClass}>
+          <div className={contentClasses}>
             {isVideo && <ContentGraphics currentTab={currentTab} isVideo={isVideo} />}
             <div className={eventsClasses}>
               <PlaysEvents />
             </div>
             {isVideo && <VideoOptions currentTab={currentTab} />}
             {isVideo && <Timeline currentTab={currentTab} />}
-            <div className={cl.landscapeDisplayNone}>
+
+            <div className={mobilePitcherFiltersClasses}>
               <MobilePitcherFilters />
             </div>
             <ContentSituationsList
