@@ -1,9 +1,10 @@
 import ArrowDown from 'components/UI/icons/ArrowDown';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { getShortName } from 'utils';
 import cl from './Dropdown.module.scss';
 import classNames from 'classnames';
 import useComponentVisible from 'hooks/useComponentVisible';
+import CrossClose from 'components/UI/buttons/CrossClose/CrossClose';
 
 // function listenForOutsideClicks(listening, setListening, menuRef, setIsOpen, setSearchFieldValue) {
 //   return () => {
@@ -44,6 +45,7 @@ const Dropdown = ({
   itemStyles = null,
   itemTextStyles = null,
   titleStyles = null,
+	listWrapperStyles = null,
   shortNames = false,
   searchField = false,
   disabled = false
@@ -70,7 +72,10 @@ const Dropdown = ({
   const handleOptionClick = option => () => {
     handleClick(option);
     setIsOpen(false);
-    // setSearchFieldValue('');
+  };
+
+  const handleCrossClick = () => {
+    setIsOpen(false);
   };
 
   const getFilteredOptions = options => {
@@ -104,22 +109,29 @@ const Dropdown = ({
         </div>
       </div>
       {isOpen && (
-        <ul className={cl.list} style={listStyles}>
-          {searchField && (
-            <li className={cl.searchFieldWrapper}>
-              <SearchField value={searchFieldValue} setValue={setSearchFieldValue} />
-            </li>
-          )}
-          {filteredOptions.map((option, i) => (
-            <li
-              key={i}
-              onClick={handleOptionClick(option)}
-              className={currentOption === option ? cl.active : null}
-              style={itemStyles}>
-              <span style={itemTextStyles}>{shortNames ? getShortName(option, shortNames) : option}</span>
-            </li>
-          ))}
-        </ul>
+        <div className={cl.listWrapper} style={listWrapperStyles}>
+          <ul className={cl.list} style={listStyles}>
+            {searchField && (
+              <li className={cl.searchFieldWrapper}>
+                <SearchField value={searchFieldValue} setValue={setSearchFieldValue} />
+              </li>
+            )}
+            {filteredOptions.map((option, i) => (
+              <li
+                key={i}
+                onClick={handleOptionClick(option)}
+                className={currentOption === option ? cl.active : null}
+                style={itemStyles}>
+                <span style={itemTextStyles}>{shortNames ? getShortName(option, shortNames) : option}</span>
+              </li>
+            ))}
+          </ul>
+          <CrossClose
+            handleCrossClick={handleCrossClick}
+            addedClass={cl.desktopDNone}
+            style={{ left: 10, top: 10 }}
+          />
+        </div>
       )}
     </div>
   );

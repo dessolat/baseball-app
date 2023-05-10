@@ -89,11 +89,11 @@ const Games = () => {
         }
       } catch (err) {
         if (err.message === null) return;
-        if (err.message.includes('timeout') && currentYear === 2023) {
-          dispatch(setCurrentYear(2022));
-        } else {
+        // if (err.message.includes('timeout') && currentYear === 2023) {
+        //   dispatch(setCurrentYear(2022));
+        // } else {
           setError(err.message);
-        }
+        // }
       } finally {
         setIsLoading(false);
         setLoadedPercents(null);

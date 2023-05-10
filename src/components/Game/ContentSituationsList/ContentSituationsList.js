@@ -6,7 +6,7 @@ import { setCurrentCard, setListScrollTop } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
-import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
+// import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 import classNames from 'classnames';
 import useGameFocus from 'hooks/useGameFocus';
 
@@ -76,9 +76,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   return (
     <div className={cl.wrapper} onClick={useGameFocus('list')}>
       {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
-      <div className={cl.mobileOnlyFields} style={{ justifyContent: 'center', height: '19px' }}>
-        <PlayerFilterField />
-      </div>
+      
       <ul className={listClasses} ref={listRef} onScroll={scrollHandler}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem

@@ -23,7 +23,7 @@ const DraggableArea = (
   const rightLineTime = `${rightLineMins}:${rightLineSecs.length === 1 ? 0 : ''}${rightLineSecs}`;
 
   const redLineTotalSecs = videoCurrentTime - (SECONDS_SRC[currentTab].timeStart ?? 0);
-	console.log(redLineTotalSecs);
+
   const redLineMins = Math.floor(redLineTotalSecs / 60);
 	const rawSecs = redLineTotalSecs - redLineMins * 60
   const redLineSecs = Math.floor(rawSecs);

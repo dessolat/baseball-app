@@ -16,6 +16,9 @@ const Videos = () => {
   const isFullscreen = useSelector(s => s.game.isFullscreen);
   const currentMoment = useSelector(s => s.game.currentMoment);
   const playerCardFilterFocused = useSelector(s => s.game.playerCardFilterFocused);
+  const preferredVideoState = useSelector(s => s.game.preferredVideoState);
+	
+  const isMobile = useSelector(s => s.shared.isMobile);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
@@ -45,7 +48,7 @@ const Videos = () => {
   }
 
   function handleMouseMove() {
-    if (!currentMoment.video) return;
+    if (!currentMoment.video || isMobile) return;
 
     clearTimeout(timerRef.current);
 
@@ -61,9 +64,26 @@ const Videos = () => {
     }, 500);
   }
 
+  function handleTouch() {
+    if (!currentMoment.video || !isMobile) return;
+
+    clearTimeout(timerRef.current);
+
+    controlsWrapperRef.current.lastChild.style.opacity = 1;
+    controlsWrapperRef.current.lastChild.style.visibility = 'visible';
+
+    timerRef.current = setTimeout(() => {
+      if (!controlsWrapperRef.current) return;
+      controlsWrapperRef.current.lastChild.style.opacity = 0;
+      timerRef.current = setTimeout(() => {
+        controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
+      }, 100);
+    }, preferredVideoState === 1 ? 500 : 2500);
+  }
+
   return (
     <div className={cl.outerWrapper} ref={wrapperRef}>
-      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove}>
+      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} onTouchStart={handleTouch}>
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
       </div>
       <SidePanel />

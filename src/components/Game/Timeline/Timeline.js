@@ -12,6 +12,7 @@ import {
 } from 'redux/gameReducer';
 import DraggableArea from './DraggableArea';
 import cl from './Timeline.module.scss';
+import classNames from 'classnames';
 
 const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = false }) => {
   const videoLengthMode = useSelector(state => state.game.videoLengthMode);
@@ -93,7 +94,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
 
   useLayoutEffect(() => {
     if (firstLoadRef.current === true) return;
-    
+
     if (!currentMoment.video) return;
 
     dispatch(setSliderCoords({ x1: 0, x2: 100 }));
@@ -120,7 +121,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     // eslint-disable-next-line
   }, [currentMoment]);
 
-	useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (firstLoadRef.current === true) {
       firstLoadRef.current = false;
       return;
@@ -456,9 +457,10 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     }
   }
 
+  const wrapperClasses = classNames(cl.wrapper, { [addedClass]: !!addedClass });
+  const rightEvtChangesClasses = classNames(cl.onlyMobile, cl.rightEvtChanger);
   return (
-    <div className={cl.wrapper + ' ' + addedClass} onClick={useGameFocus('timeline')}>
-      {/* <div className={cl.wrapper + ' ' + addedClass} style={isPreserve ? { width: '54.75rem' } : null}> */}
+    <div className={wrapperClasses} onClick={useGameFocus('timeline')}>
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
         <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />
@@ -526,7 +528,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
 
                   return (
                     <Fragment key={j}>
-                      <path d={path} fill={!(j % 2) ? color : secondaryColor} pointerEvents='none'/>
+                      <path d={path} fill={!(j % 2) ? color : secondaryColor} pointerEvents='none' />
 
                       {/* <rect
                       x={getRelativeX(timeStart)}
@@ -562,6 +564,9 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
           </text>
         )}
       </svg>
+      <div className={rightEvtChangesClasses}>
+        <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />
+      </div>
     </div>
   );
 };

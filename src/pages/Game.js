@@ -29,9 +29,6 @@ const Game = () => {
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
 
-	
-	console.log(cancelTokenRef);
-
   useEffect(() => {
     // axios
     //   .get(`http://baseball-gametrack.ru/api/game_${gameId}`, {
@@ -110,11 +107,11 @@ const Game = () => {
 			innings.length > 0 
 			// false
 			? (
-        <div>
+        <>
           <Header currentTab={currentTab} handleTabClick={handleTabClick} />
           {isFilters && <Filters />}
           <Content currentTab={currentTab} />
-        </div>
+        </>
       ) : (
         <></>
       )}
