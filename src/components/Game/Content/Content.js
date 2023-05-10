@@ -377,7 +377,6 @@ const Content = ({ currentTab }) => {
             </div>
             {isVideo && <VideoOptions currentTab={currentTab} />}
             {isVideo && <Timeline currentTab={currentTab} />}
-
             <div className={mobilePitcherFiltersClasses}>
               <MobilePitcherFilters />
             </div>
