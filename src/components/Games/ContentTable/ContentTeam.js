@@ -42,7 +42,9 @@ const ContentTeam = ({ games }) => {
   const leaguesImages = useSelector(state => state.games.leaguesImages);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
+
   const currentGameType = useSelector(state => state.shared.currentGameType);
+  const isMobile = useSelector(state => state.shared.isMobile);
 
   const dispatch = useDispatch();
 
@@ -97,7 +99,8 @@ const ContentTeam = ({ games }) => {
               options={teamOptions}
               currentOption={currentGuests}
               handleClick={handleGuestsDropdownClick}
-              listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+              listWrapperStyles={isMobile ? { left: '-30vw' } : null}
+              listStyles={{ left: !isMobile ? '-1rem' : '-10vh', width: 'calc(100% + 1rem)' }}
               searchField={true}
             />
           </div>
