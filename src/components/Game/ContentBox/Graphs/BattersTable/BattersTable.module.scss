@@ -54,6 +54,10 @@
 
 .active {
   background: #e0f0ff;
+	display: flex;
+	align-items: center;
+	align-self: stretch;
+	justify-content: center;
 }
 
 .name {
