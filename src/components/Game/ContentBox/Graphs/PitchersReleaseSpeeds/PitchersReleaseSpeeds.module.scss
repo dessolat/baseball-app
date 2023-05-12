@@ -12,3 +12,48 @@
 	font: 300 0.875rem var(--font-nunito);
   fill: black;
 }
+
+.dot {
+	cursor: pointer;
+	animation: growRadius .3s forwards;
+
+	&:hover {
+		animation: growRadiusMore .3s forwards;
+	}
+}
+
+.showingGroup {
+	animation: showing .3s forwards;
+}
+
+.plainText {
+  font: 400 1.07rem var(--font-nunito);
+	fill: black;
+}
+
+@keyframes growRadius {
+  from {
+    r: 0;
+  }
+  to {
+    r: 8;
+  }
+}
+
+@keyframes growRadiusMore {
+  from {
+    r: 8;
+  }
+  to {
+    r: 12;
+  }
+}
+
+@keyframes showing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
