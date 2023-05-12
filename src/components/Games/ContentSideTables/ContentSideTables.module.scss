@@ -1,5 +1,3 @@
-@import 'scss/vars.scss';
-
 .side {
   flex: 0 1 315px;
   padding: 2.23rem 1.35rem 1rem;
@@ -283,10 +281,6 @@
 
       &:first-child {
         max-width: 11.5rem;
-
-        // @media screen and (max-width: 800px) {
-        //   width: 16rem;
-        // }
       }
 
       &:nth-child(2) {
