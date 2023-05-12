@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React, { memo, Suspense, useMemo, useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import cl from './PitchesTrajectories.module.scss';
 import { Canvas } from '@react-three/fiber';
 import { FrontSide, TextureLoader } from 'three';

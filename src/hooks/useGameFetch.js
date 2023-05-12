@@ -16,6 +16,14 @@ const useGameFetch = url => {
 
   const { gameId } = useParams();
 
+  useEffect(
+    () => () => {
+      typeof cancelTokenRef.current != 'undefined' && cancelTokenRef.current.cancel(null);
+      clearTimeout(intervalRef.current);
+    },
+    []
+  );
+
   useEffect(() => {
     error && setError(null);
     // eslint-disable-next-line
@@ -81,13 +89,13 @@ const useGameFetch = url => {
       } finally {
         if (firstTime) {
           setIsLoading(false);
-					setLoadedPercents(null)
+          setLoadedPercents(null);
           dispatch(setCurrentGameId(gameId));
         }
       }
     };
 
-  return [error, isLoading, cancelTokenRef, loadedPercents, intervalRef, getFullData];
+  return [error, isLoading, loadedPercents, getFullData];
 };
 
 export default useGameFetch;
