@@ -26,7 +26,7 @@ const ContentTable = ({ games }) => {
       if (!scrollItemRef.current) return;
 
       if (isMobile) {
-        scrollItemRef.current.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.scrollTop =
+        document.documentElement.scrollTop =
           scrollItemRef.current.offsetTop;
         return;
       }

@@ -250,8 +250,8 @@
       // max-height: calc(100vh - var(--desktop-nav-height) - 132px - 39px);
     }
 		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-			// max-height: calc(100vh - 30.63px - 98px);
-			max-height: calc(100vh - var(--landscape-nav-height) - 96px);
+			max-height: unset;
+			// max-height: calc(100vh - var(--landscape-nav-height) - 96px);
 		}
 
     &::-webkit-scrollbar {
