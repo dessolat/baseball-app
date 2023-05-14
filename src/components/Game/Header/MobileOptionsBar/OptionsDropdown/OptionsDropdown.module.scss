@@ -99,11 +99,17 @@
   > .speedValues {
     line-height: 1;
 
-    > div {
+    > .speedOption {
       display: inline-block;
       font-size: 14px;
       text-align: center;
       line-height: 1;
+      padding: 0 5px;
+			border-bottom: 2px solid transparent;
+			
+			&.active {
+				border-bottom: 2px solid var(--side-color);
+			}
 
       & + div {
         margin-left: 40px;
