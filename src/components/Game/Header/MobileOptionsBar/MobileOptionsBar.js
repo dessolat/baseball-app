@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import cl from './MobileOptionsBar.module.scss';
-import OptionsDropdown from './OptionsDropdown';
+import OptionsDropdown from './OptionsDropdown/OptionsDropdown';
 import ScoreInfo from './ScoreInfo';
 import { useSelector } from 'react-redux';
 

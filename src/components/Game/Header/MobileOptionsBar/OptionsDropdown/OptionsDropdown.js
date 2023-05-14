@@ -1,12 +1,10 @@
 import BtnImg from 'icons/options_button_icon.svg';
-import cl from './MobileOptionsBar.module.scss';
+import cl from './OptionsDropdown.module.scss';
 import useComponentVisible from 'hooks/useComponentVisible';
 import CrossClose from 'components/UI/buttons/CrossClose/CrossClose';
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
-import FirstLastMoment from 'components/UI/buttons/FirstLastMoment/FirstLastMoment';
-import ForwardRepeat from 'components/UI/buttons/ForwardRepeat/ForwardRepeat';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleIsMobileScoreboard, toggleIsMobileTimeline } from 'redux/sharedReducer';
+import ComponentsTogglers from './ComponentsTogglers';
+import PlayModesTogglers from './PlayModesTogglers';
 
 const OptionsDropdown = () => {
   const {
@@ -14,11 +12,6 @@ const OptionsDropdown = () => {
     isComponentVisible: isOpen,
     setIsComponentVisible: setIsOpen
   } = useComponentVisible(false);
-
-	const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard)
-	const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline)
-
-	const dispatch = useDispatch()
 
   const handleBtnClick = () => setIsOpen(prev => !prev);
   const handleCrossClick = () => setIsOpen(false);
@@ -29,33 +22,8 @@ const OptionsDropdown = () => {
       </button>
       {isOpen && (
         <div className={cl.optionsPanel}>
-          <div className={cl.componentsTogglers}>
-            <div className={cl.row}>
-              <span className={cl.title}>Scoreboard</span>
-              <SimpleToggler checked={isMobileScoreboard} onChange={() => dispatch(toggleIsMobileScoreboard())} />
-            </div>
-            <div className={cl.row}>
-              <span className={cl.title}>Timeline</span>
-              <SimpleToggler checked={isMobileTimeline} onChange={() => dispatch(toggleIsMobileTimeline())} />
-            </div>
-          </div>
-          <div className={cl.playModesTogglers}>
-            <div className={cl.buttonWrapper}>
-              <ForwardRepeat
-                playbackMode='play'
-                style={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  flexGap: 5
-                }}
-              />
-            </div>
-            <div className={cl.buttonWrapper}>
-              <FirstLastMoment isLastMomentMode={false} />
-            </div>
-          </div>
+          <ComponentsTogglers />
+          <PlayModesTogglers />
           <div className={cl.speedSelectors}>
             <div className={cl.playbackSpeed}>
               <p>Speed</p>
