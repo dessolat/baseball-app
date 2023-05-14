@@ -129,7 +129,7 @@ const Dropdown = ({
           <CrossClose
             handleCrossClick={handleCrossClick}
             addedClass={cl.desktopDNone}
-            style={{ left: 10, top: 10 }}
+            style={{ left: 0, top: 0, padding: '10px', backgroundColor: 'white' }}
           />
         </div>
       )}
