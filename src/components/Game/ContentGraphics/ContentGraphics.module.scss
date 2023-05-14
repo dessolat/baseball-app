@@ -3,7 +3,7 @@
 
   @media screen and (max-width: 800px) {
     position: sticky;
-		top: calc(var(--desktop-nav-height) + 139.5px);
+		top: calc(var(--desktop-nav-height) + 56px + var(--top-shift));
 		z-index: 1;
 		aspect-ratio: 16 / 9;
 		background-color: white;

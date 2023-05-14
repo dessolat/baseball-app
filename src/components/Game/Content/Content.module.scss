@@ -67,7 +67,7 @@
 .mobilePitcherFiltersWrapper {
   @media screen and (max-width: 800px) {
     position: sticky;
-    top: calc(var(--desktop-nav-height) + 139.5px + 100vw / 16 * 9 + 45px);
+    top: calc(var(--desktop-nav-height) + 57px + 100vw / 16 * 9 + var(--top-shift));
     z-index: 1;
 		border-top: 0.5px solid #cdcccc;
     border-bottom: 0.5px solid #cdcccc;

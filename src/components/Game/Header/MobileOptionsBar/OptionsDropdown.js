@@ -5,6 +5,8 @@ import CrossClose from 'components/UI/buttons/CrossClose/CrossClose';
 import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import FirstLastMoment from 'components/UI/buttons/FirstLastMoment/FirstLastMoment';
 import ForwardRepeat from 'components/UI/buttons/ForwardRepeat/ForwardRepeat';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleIsMobileScoreboard, toggleIsMobileTimeline } from 'redux/sharedReducer';
 
 const OptionsDropdown = () => {
   const {
@@ -12,6 +14,11 @@ const OptionsDropdown = () => {
     isComponentVisible: isOpen,
     setIsComponentVisible: setIsOpen
   } = useComponentVisible(false);
+
+	const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard)
+	const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline)
+
+	const dispatch = useDispatch()
 
   const handleBtnClick = () => setIsOpen(prev => !prev);
   const handleCrossClick = () => setIsOpen(false);
@@ -25,11 +32,11 @@ const OptionsDropdown = () => {
           <div className={cl.componentsTogglers}>
             <div className={cl.row}>
               <span className={cl.title}>Scoreboard</span>
-              <SimpleToggler checked={false} onChange={() => {}} />
+              <SimpleToggler checked={isMobileScoreboard} onChange={() => dispatch(toggleIsMobileScoreboard())} />
             </div>
             <div className={cl.row}>
               <span className={cl.title}>Timeline</span>
-              <SimpleToggler checked={false} onChange={() => {}} />
+              <SimpleToggler checked={isMobileTimeline} onChange={() => dispatch(toggleIsMobileTimeline())} />
             </div>
           </div>
           <div className={cl.playModesTogglers}>

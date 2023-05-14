@@ -6,11 +6,11 @@
   display: flex;
 
   @media screen and (max-width: 800px) {
-		padding-top: 0;
-		height: 45px;
-		position: sticky;
-		top: calc(var(--desktop-nav-height) + 139.5px + 100vw / 16 * 9);
-		z-index: 1;
+    padding-top: 0;
+    height: 45px;
+    position: sticky;
+    top: calc(var(--desktop-nav-height) + 57px + var(--top-shift) + 100vw / 16 * 9);
+    z-index: 1;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
@@ -24,11 +24,11 @@
   margin-right: 0.375rem;
   display: flex;
 
-	@media screen and (max-width: 800px) {
-		width: 34px;
-		margin-right: 0;
-		display: inline-block;
-	}
+  @media screen and (max-width: 800px) {
+    width: 34px;
+    margin-right: 0;
+    display: inline-block;
+  }
 
   > button {
     position: relative;
@@ -39,11 +39,11 @@
       border-left: 0.5px solid #dfdfdf;
     }
 
-		@media screen and (max-width: 800px) {
-			&:last-child {
-				display: none;
-			}
-		}
+    @media screen and (max-width: 800px) {
+      &:last-child {
+        display: none;
+      }
+    }
   }
 }
 
@@ -59,7 +59,7 @@
   background-color: #fff;
   min-width: 1.6rem;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: none;
   }
 }
@@ -90,7 +90,7 @@
 }
 
 .whiteLineText {
-	stroke: white;
+  stroke: white;
   stroke-width: 5;
 }
 
@@ -133,16 +133,24 @@
 }
 
 .onlyMobile {
-	display: none;
+  display: none;
 
-  @media screen and (max-width: 800px), screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: inline-block;
   }
 }
 
 .rightEvtChanger {
-	height: 45px;
-	flex: 0 1 33px;
-	padding: 3px 3px 0;
-	background-color: white;
+  height: 45px;
+  flex: 0 1 33px;
+  padding: 3px 3px 0;
+  background-color: white;
+}
+
+.mobileDisplayNone {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }

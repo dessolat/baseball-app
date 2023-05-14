@@ -34,6 +34,8 @@ const Header = ({ currentTab, handleTabClick }) => {
   const boxActiveButton = useSelector(state => state.game.boxActiveButton);
   const currentCard = useSelector(state => state.game.currentCard);
 
+  const isMobileScoreboard = useSelector(state => state.shared.isMobileScoreboard);
+
   const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
@@ -163,7 +165,8 @@ const Header = ({ currentTab, handleTabClick }) => {
     [cl.landscapeDisplayNone]: getSearchParam('tab') !== 'box'
   });
   const scoresWrapperClasses = classNames(cl.scoresWrapper, {
-    [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo
+    [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo,
+		[cl.mobileDisplayNone]: !isMobileScoreboard && isVideo
   });
   const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
   return (
