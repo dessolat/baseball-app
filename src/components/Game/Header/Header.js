@@ -169,8 +169,11 @@ const Header = ({ currentTab, handleTabClick }) => {
 		[cl.mobileDisplayNone]: !isMobileScoreboard && isVideo
   });
   const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
+	const wrapperClasses = classNames(cl.header, {
+		[cl.landscapeDisplayNone]: currentTab === 'videos'
+	})
   return (
-    <header className={cl.header}>
+    <header className={wrapperClasses}>
       <div className='container'>
         <div className={cl.headerContent}>
           <div className={cl.geo}>

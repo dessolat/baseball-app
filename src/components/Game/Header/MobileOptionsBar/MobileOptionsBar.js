@@ -4,10 +4,12 @@ import OptionsDropdown from './OptionsDropdown/OptionsDropdown';
 import ScoreInfo from './ScoreInfo';
 import { useSelector } from 'react-redux';
 
-const MobileOptionsBar = () => {
+const MobileOptionsBar = ({portrait = true, landscape = false}) => {
   const isVideo = useSelector(s => s.game.isVideo);
 
-  const optionsBarClasses = classNames(cl.onlyPortraitMobile, cl.optionsBar, {
+  const optionsBarClasses = classNames(cl.optionsBar, {
+		[cl.onlyPortraitMobile]: portrait,
+		[cl.onlyLandscapeMobile]: landscape,
     [cl.noVideo]: !isVideo
   });
   return (

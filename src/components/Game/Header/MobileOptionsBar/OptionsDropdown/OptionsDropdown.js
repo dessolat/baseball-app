@@ -7,7 +7,7 @@ import ComponentsTogglers from './ComponentsTogglers';
 import PlayModesTogglers from './PlayModesTogglers';
 import SpeedSelectors from './SpeedSelectors';
 
-const OptionsDropdown = () => {
+const OptionsDropdown = ({ panelStyles = null }) => {
   const {
     ref: menuRef,
     isComponentVisible: isOpen,
@@ -22,10 +22,12 @@ const OptionsDropdown = () => {
         <img src={BtnImg} alt='options' />
       </button>
       {isOpen && (
-        <div className={cl.optionsPanel}>
+        <div className={cl.optionsPanel} style={panelStyles}>
           <ComponentsTogglers />
-          <PlayModesTogglers />
-          <SpeedSelectors />
+          <div className={cl.landscapeWrapper}>
+            <PlayModesTogglers />
+            <SpeedSelectors />
+          </div>
           <div className={cl.effectsToggler}>
             <div className={cl.row}>
               <span className={cl.title}>Effects</span>

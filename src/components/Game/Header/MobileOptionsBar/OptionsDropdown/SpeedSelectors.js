@@ -41,7 +41,7 @@ const SpeedSelectors = () => {
   return (
     <div className={cl.speedSelectors}>
       <div className={cl.playbackSpeed}>
-        <p>Speed</p>
+        <p className={cl.title}>Speed</p>
         <div className={cl.speedValues}>
           {speedsArr.map((speed, i) => (
             <SpeedOption key={i} speed={speed} handleOptionClick={handleSpeedOptionClick} />

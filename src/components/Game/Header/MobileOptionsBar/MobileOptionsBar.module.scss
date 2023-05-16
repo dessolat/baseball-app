@@ -22,6 +22,14 @@
   }
 }
 
+.onlyLandscapeMobile {
+  display: none;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+  }
+}
+
 .scoreInfo {
   height: 100%;
   display: flex;
