@@ -11,6 +11,7 @@ import OptionsDropdown from '../Header/MobileOptionsBar/OptionsDropdown/OptionsD
 
 const ContentGraphics = ({ currentTab, isVideo }) => {
   const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
+  const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline);
 
   const renderTab = () => {
     switch (currentTab) {
@@ -31,6 +32,9 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
     [cl.portraitDisplayNone]: currentTab !== 'videos',
     [cl.displayNone]: currentTab === 'videos'
   });
+  const optionsClasses = classNames(cl.onlyMobileLandscape, {
+    [cl.withMobileTimeline]: isMobileTimeline
+  });
   return (
     <div className={graphicsClasses} onClick={useGameFocus('timeline')} style={{ '--top-shift': topShift }}>
       {isVideo && (
@@ -39,7 +43,7 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
         </div>
       )}
       {renderTab()}
-      <div className={cl.onlyMobileLandscape}>
+      <div className={optionsClasses}>
         <OptionsDropdown panelStyles={{ right: 'unset', left: '100%', top: 0 }} />
         <PlaysEvents />
       </div>

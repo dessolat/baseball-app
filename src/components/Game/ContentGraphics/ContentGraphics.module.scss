@@ -98,13 +98,16 @@
 
     > div:first-child {
       aspect-ratio: 1;
+			flex-shrink: 0;
     }
 
     > div:last-child {
       height: 100% !important;
+			overflow: hidden;
 
       > ul {
         background-color: unset;
+				overflow-y: scroll;
       }
     }
 
@@ -113,12 +116,16 @@
       flex-direction: column;
 
       > li {
-        flex: 0 1 42px;
+        flex: 0 0 42px;
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
     }
+
+		&.withMobileTimeline {
+			height: calc(100vh - 46px);
+		}
   }
 }
 
