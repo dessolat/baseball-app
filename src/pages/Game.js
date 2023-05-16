@@ -7,7 +7,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import useGameFetch from 'hooks/useGameFetch';
 import { resetData, setCurrentTab as setCurrentSubTab, setIsFullscreen } from 'redux/gameReducer';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { getSearchParam, setSearchParam } from 'utils';
 import { setMobileWidth } from 'redux/sharedReducer';
 
@@ -17,18 +17,20 @@ const Game = () => {
 
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const { gameId } = useParams();
+  const [searchParams] = useSearchParams();
 
   const innings = useSelector(state => state.game.innings, shallowEqual);
   const errorMsg = useSelector(state => state.game.errorMsg, shallowEqual);
 
   const dispatch = useDispatch();
-	
+
   const [error, isLoading, loadedPercents, getFullData] = useGameFetch(
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
 
   useEffect(() => {
     dispatch(getFullData(true));
+    dispatch(setCurrentSubTab(searchParams.get('tab')));
 
     const resizeHandle = () => {
       dispatch(setMobileWidth(window.innerWidth));
@@ -46,6 +48,7 @@ const Game = () => {
       window.removeEventListener('resize', resizeHandle);
       window.matchMedia('(display-mode: fullscreen)').removeEventListener('change', toggleFullscreen);
     };
+
     // eslint-disable-next-line
   }, []);
 
