@@ -23,21 +23,20 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
     const pitcherData = {};
     pitcherData.pitcherName = `${preview.pitcher_name} ${preview.pitcher_surname}`;
     pitcherData.pitches = pitches_all.reduce(
-      (pitchesSum, { pitch_info: { pitch_type: pitchType, speed } }) => {
-        const pitch = { pitchType, speed: speed * 2.24 };
+      (pitchesSum, { pitch_info: { pitch_type: pitchType, speed, mom_id, game_id } }) => {
+        const pitch = { pitchType, speed: speed * 2.24, mom_id, game_id };
         pitchesSum.push(pitch);
 
         return pitchesSum;
       },
       []
     );
-		pitcherData.pitchTypes = preview.pitch_types
+    pitcherData.pitchTypes = preview.pitch_types;
 
     sum.push(pitcherData);
 
     return sum;
   }, []);
-
 
   // Min & max values calculating
   const minMaxValues = addedData.reduce((sum, pitcherData) => {
@@ -62,7 +61,7 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
       count: pitcherData.pitches.length,
       accum: (sum[i - 1]?.accum ?? 0) + pitcherData.pitches.length,
       pitches: pitcherData.pitches,
-			pitchTypes: pitcherData.pitchTypes
+      pitchTypes: pitcherData.pitchTypes
     };
 
     sum.push(lineData);
@@ -98,7 +97,7 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
           pitchDeltaWidth={pitchDeltaWidth}
         />
       </svg>
-			<Legend legendData={legendPitchTypes} />
+      <Legend legendData={legendPitchTypes} />
     </div>
   );
 };

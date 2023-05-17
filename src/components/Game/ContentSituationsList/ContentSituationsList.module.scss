@@ -1,11 +1,8 @@
-@import 'scss/vars.scss';
-
 .wrapper {
   position: relative;
   grid-area: list;
 
   @media screen and (max-width: 800px) {
-    // padding-top: 19px;
     background: #f4f5f7;
 
     > .controls {
@@ -13,7 +10,6 @@
     }
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    // padding-top: 19px;
     background: #f4f5f7;
 
     > .controls {
@@ -32,13 +28,6 @@
   &:hover {
     opacity: 1;
   }
-
-  // @media screen and (max-width: 800px) {
-  // 	display: none;
-  // }
-  // @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-  // 	display: none;
-  // }
 }
 
 .list {
@@ -181,5 +170,11 @@
     display: flex;
     justify-content: 'center';
     height: 19px;
+  }
+}
+
+.landscapeDisplayNone {
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
   }
 }

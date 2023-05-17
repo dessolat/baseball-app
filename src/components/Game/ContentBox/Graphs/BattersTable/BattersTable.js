@@ -50,9 +50,9 @@ const TableCell = ({ row, cell: { clName, value, ending }, activeColumn }) => {
   );
 };
 
-const TableRow = ({ row, rowCells, activeColumn }) => {
+const TableRow = ({ row, rowCells, activeColumn, handleRowClick }) => {
   return (
-    <div className={cl.row}>
+    <div className={cl.row} onClick={handleRowClick(row.game_id, row.mom_id)}>
       {rowCells.map((cell, i) => (
         <TableCell
           key={`cell-${i}-${cell.value}`}
@@ -78,21 +78,25 @@ const BattersTable = ({ metrix }) => {
   ];
 
   const battersArr = metrix.reduce((sum, { pitches_all, preview }) => {
+    console.log(pitches_all);
     pitches_all
       .filter(({ hit_info }) => hit_info.angle)
-      .forEach(({ hit_info: { angle, 'exit velocity': velocity, distance } }, i) =>
-        sum.push({
-          name: `${preview.batter_name} ${preview.batter_surname}`,
-          hitNumber: i + 1,
-          angle,
-          velocity,
-          distance
-        })
+      .forEach(
+        ({ hit_info: { angle, 'exit velocity': velocity, distance }, pitch_info: { game_id, mom_id } }, i) =>
+          sum.push({
+            name: `${preview.batter_name} ${preview.batter_surname}`,
+            hitNumber: i + 1,
+            angle,
+            velocity,
+            distance,
+            game_id,
+            mom_id
+          })
       );
 
     return sum;
   }, []);
-	
+
   const handleHeaderClick = sortField => () =>
     setActiveColumn(prev => {
       if (prev.sortField === sortField) return { ...prev, dir: prev.dir === 'asc' ? 'desc' : 'asc' };
@@ -103,11 +107,23 @@ const BattersTable = ({ metrix }) => {
     if (activeColumn.dir === 'asc') return a[activeColumn.sortField] > b[activeColumn.sortField] ? 1 : -1;
     return a[activeColumn.sortField] > b[activeColumn.sortField] ? -1 : 1;
   });
+
+  const handleRowClick = (gameId, momentId) => () => {
+    window.open(`/game/${gameId}?card=${momentId}&tab=hitting`, '_blank');
+  };
+
+  console.log(battersArr);
   return (
     <div className={cl.wrapper}>
       <TableHeader activeColumn={activeColumn} handleHeaderClick={handleHeaderClick} />
       {battersArr.map((row, i) => (
-        <TableRow key={i} row={row} rowCells={rowCells} activeColumn={activeColumn} />
+        <TableRow
+          key={i}
+          row={row}
+          rowCells={rowCells}
+          activeColumn={activeColumn}
+          handleRowClick={handleRowClick}
+        />
       ))}
     </div>
   );

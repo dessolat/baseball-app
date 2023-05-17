@@ -1,4 +1,3 @@
-@import 'scss/vars.scss';
 @import 'scss/animations.scss';
 
 .box {
@@ -19,10 +18,7 @@
 
 .buttons {
 	position: fixed;
-  // position: absolute;
-  // left: 0;
 	z-index: 10;
-  // top: 6.3rem;
   width: 2rem;
 
   > span {

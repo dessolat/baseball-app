@@ -13,7 +13,9 @@ const defaultState = {
   mobileWidth: 0,
   isMobile: false,
   currentGameType: 'Baseball',
-	mobileOrientation: 0
+	mobileOrientation: 0,
+	isMobileScoreboard: true,
+  isMobileTimeline: true
 	// allYearsLeagues: {}
 };
 
@@ -26,6 +28,8 @@ const SET_IS_MOBILE = 'SET_IS_MOBILE';
 const SET_CURRENT_GAME_TYPE = 'SET_CURRENT_GAME_TYPE';
 const SET_MOBILE_ORIENTATION = 'SET_MOBILE_ORIENTATION';
 // const SET_ALL_YEARS_LEAGUES = 'SET_ALL_YEARS_LEAGUES';
+const TOGGLE_IS_MOBILE_SCOREBOARD = 'TOGGLE_IS_MOBILE_SCOREBOARD';
+const TOGGLE_IS_MOBILE_TIMELINE = 'TOGGLE_IS_MOBILE_TIMELINE';
 
 export const sharedReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -47,6 +51,10 @@ export const sharedReducer = (state = defaultState, action) => {
       return { ...state, mobileOrientation: action.payload };
     // case SET_ALL_YEARS_LEAGUES:
     //   return { ...state, allYearsLeagues: {...state.allYearsLeagues, [action.payload.year]: action.payload.data} };
+		case TOGGLE_IS_MOBILE_SCOREBOARD:
+      return { ...state, isMobileScoreboard: !state.isMobileScoreboard };
+    case TOGGLE_IS_MOBILE_TIMELINE:
+      return { ...state, isMobileTimeline: !state.isMobileTimeline };
     default:
       return state;
   }
@@ -61,3 +69,5 @@ export const setIsMobile = payload => ({ type: SET_IS_MOBILE, payload });
 export const setCurrentGameType = payload => ({ type: SET_CURRENT_GAME_TYPE, payload });
 export const setMobileOrientation = payload => ({ type: SET_MOBILE_ORIENTATION, payload });
 // export const setAllYearsLeagues = payload => ({ type: SET_ALL_YEARS_LEAGUES, payload });
+export const toggleIsMobileScoreboard = () => ({ type: TOGGLE_IS_MOBILE_SCOREBOARD });
+export const toggleIsMobileTimeline = () => ({ type: TOGGLE_IS_MOBILE_TIMELINE });

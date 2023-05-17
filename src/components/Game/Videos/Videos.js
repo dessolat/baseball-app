@@ -35,10 +35,7 @@ const Videos = () => {
     };
   }, [isFullscreen, playerCardFilterFocused]);
 
-  const wrapperClasses = classNames(cl.wrapper, {
-    [cl.videos1]: viewMode === 'mode-1',
-    [cl.videos4]: viewMode === 'mode-2' || viewMode === 'mode-3'
-  });
+  
 
   function handleKeyDown(e) {
     if (e.code !== 'KeyF') return;
@@ -81,8 +78,13 @@ const Videos = () => {
     }, preferredVideoState === 1 ? 500 : 2500);
   }
 
+	const outerWrapperClasses = classNames(cl.outerWrapper, cl.mobileLandscapeVideo)
+	const wrapperClasses = classNames(cl.wrapper, {
+    [cl.videos1]: viewMode === 'mode-1',
+    [cl.videos4]: viewMode === 'mode-2' || viewMode === 'mode-3'
+  });
   return (
-    <div className={cl.outerWrapper} ref={wrapperRef}>
+    <div className={outerWrapperClasses} ref={wrapperRef}>
       <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} onTouchStart={handleTouch}>
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
       </div>

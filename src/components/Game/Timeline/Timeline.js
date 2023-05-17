@@ -22,7 +22,10 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const focus = useSelector(state => state.game.focus);
   const chartWidth = useSelector(state => state.game[forFullscreen ? 'fullTimelineWidth' : 'timelineWidth']);
+
   const mobileWidth = useSelector(state => state.shared.mobileWidth);
+  const isMobileTimeline = useSelector(state => state.shared.isMobileTimeline);
+	const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard)
 
   const dispatch = useDispatch();
 
@@ -457,10 +460,15 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     }
   }
 
-  const wrapperClasses = classNames(cl.wrapper, { [addedClass]: !!addedClass });
+	const topShift = isMobileScoreboard ? '83.5px' : '0px';
+
+  const wrapperClasses = classNames(cl.wrapper, {
+    [addedClass]: !!addedClass,
+    [cl.mobileDisplayNone]: !isMobileTimeline
+  });
   const rightEvtChangesClasses = classNames(cl.onlyMobile, cl.rightEvtChanger);
   return (
-    <div className={wrapperClasses} onClick={useGameFocus('timeline')}>
+    <div className={wrapperClasses} onClick={useGameFocus('timeline')} style={{'--top-shift': topShift}}>
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
         <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />

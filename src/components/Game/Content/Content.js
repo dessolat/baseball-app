@@ -36,6 +36,9 @@ const Content = ({ currentTab }) => {
   const playerCardFilter = useSelector(s => s.game.playerCardFilter);
   const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy);
 
+  const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
+  const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline);
+
   const isMobile = useSelector(s => s.shared.isMobile);
 
   const dispatch = useDispatch();
@@ -164,10 +167,13 @@ const Content = ({ currentTab }) => {
       dispatch(setCurrentCard(newCurCard));
     }
 
-    playbackMode === 'playOnline' &&
-      (newFilteredCards.length !== 0
-        ? dispatch(setCurrentCard({ ...newFilteredCards.slice(-1)[0] }))
-        : dispatch(setCurrentCard({})));
+    if (currentCard?.moments) {
+      filteredCards[filteredCards.length - 1]?.moments[0].inner.id === currentCard?.moments[0].inner.id &&
+        // playbackMode === 'playOnline' &&
+        (newFilteredCards.length !== 0
+          ? dispatch(setCurrentCard({ ...newFilteredCards[newFilteredCards.length - 1] }))
+          : dispatch(setCurrentCard({})));
+    }
 
     dispatch(setSituations(newSituations));
     // eslint-disable-next-line
@@ -358,6 +364,11 @@ const Content = ({ currentTab }) => {
     return filteredCards;
   };
 
+  let topShift = 0;
+  if (isMobileScoreboard) topShift += 83.5;
+  if (isMobileTimeline) topShift += 45;
+  topShift += 'px';
+
   const contentClasses = classNames({
     [cl.content]: isVideo,
     [cl.contentNoVideo]: !isVideo
@@ -377,7 +388,7 @@ const Content = ({ currentTab }) => {
             </div>
             {isVideo && <VideoOptions currentTab={currentTab} />}
             {isVideo && <Timeline currentTab={currentTab} />}
-            <div className={mobilePitcherFiltersClasses}>
+            <div className={mobilePitcherFiltersClasses} style={{ '--top-shift': topShift }}>
               <MobilePitcherFilters />
             </div>
             <ContentSituationsList

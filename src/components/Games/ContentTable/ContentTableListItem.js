@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setCurrentTab } from 'redux/gameReducer';
 import { getShortName } from 'utils';
 
 const MONTHS = {
@@ -20,21 +21,34 @@ const MONTHS = {
 
 const WEEK_DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const ItemLinks = ({ game, linksClass }) => (
-  <div className={linksClass}>
-    <div>
-      {game.has_moments && (
-        <>
-          <Link to={`/game/${game.id}?tab=box`}>Box</Link>
-          <Link to={`/game/${game.id}?tab=${game.has_videos ? 'pitch' : 'plays'}`}>
-            {game.has_videos ? 'Pitch' : 'Plays'}
+const ItemLinks = ({ game, linksClass }) => {
+  const dispatch = useDispatch();
+
+  const handleLinkClick = tabTitle => () => dispatch(setCurrentTab(tabTitle));
+  return (
+    <div className={linksClass}>
+      <div>
+        {game.has_moments && (
+          <>
+            <Link to={`/game/${game.id}?tab=box`} onClick={handleLinkClick('box')}>
+              Box
+            </Link>
+            <Link
+              to={`/game/${game.id}?tab=${game.has_videos ? 'pitch' : 'plays'}`}
+              onClick={handleLinkClick(game.has_videos ? 'pitch' : 'plays')}>
+              {game.has_videos ? 'Pitch' : 'Plays'}
+            </Link>
+          </>
+        )}
+        {game.has_videos && (
+          <Link to={`/game/${game.id}?tab=videos`} onClick={handleLinkClick('videos')}>
+            Videos
           </Link>
-        </>
-      )}
-      {game.has_videos && <Link to={`/game/${game.id}?tab=videos`}>Videos</Link>}
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
   const leagues = useSelector(state => state.games.leagues);

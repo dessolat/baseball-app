@@ -1,0 +1,250 @@
+.dropdownWrapper {
+  height: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    height: unset;
+		aspect-ratio: unset;
+  }
+}
+
+.optionsDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.optionsPanel {
+  position: absolute;
+  top: 100%;
+  right: -5px;
+  width: 75vw;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  animation: popUp 0.2s linear;
+  -moz-animation: popUp 0.2s linear;
+  -webkit-animation: popUp 0.2s linear;
+  font: 400 24px var(--font-nunito);
+
+  > div + div {
+    border-top: 0.5px dashed #8a8a8a;
+  }
+}
+
+@keyframes popUp {
+  from {
+    transform: translateY(-1%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.landscapeWrapper {
+  > div + div {
+    border-top: 0.5px dashed #8a8a8a;
+
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      border-top: unset;
+      border-left: 0.5px dashed #8a8a8a;
+    }
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.componentsTogglers,
+.effectsToggler {
+  padding: 20px 15px 30px 80px;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+  }
+
+  > .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & + .row {
+      margin-top: 10px;
+
+      @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+        margin-top: unset;
+        margin-left: 50px;
+      }
+    }
+
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      > span + label {
+        margin-left: 30px;
+      }
+    }
+
+    > label {
+      margin-top: 4px;
+      transform: scale(1.2);
+    }
+  }
+}
+
+.effectsToggler {
+  padding: 15px 15px 19px 77px;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
+}
+
+.playModesTogglers {
+  padding: 11px 0;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 0 10px;
+  }
+
+  > .buttonWrapper {
+    border: 0.8px dashed #8a8a8a;
+    border-radius: 6px;
+    width: 58px;
+    padding: 7px 18px;
+    display: flex;
+    justify-content: center;
+
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      padding: 3px 15px;
+
+      &:first-child > button {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+
+        > svg:first-child {
+          width: 100%;
+          aspect-ratio: 17 / 15;
+          height: auto;
+
+          & + svg {
+            width: 100%;
+            aspect-ratio: 21 / 23;
+            height: auto;
+          }
+        }
+      }
+    }
+
+    > button > svg:last-child {
+      margin-left: unset;
+    }
+
+    & + .buttonWrapper {
+      margin-left: 25px;
+      padding: 6px 12px;
+
+      @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+        > button {
+          rotate: unset;
+          width: unset;
+          height: unset;
+          margin-left: unset;
+        }
+      }
+    }
+  }
+}
+
+.speedSelectors {
+  padding: 0 10px 16px;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    width: 100%;
+  }
+}
+
+.playbackSpeed {
+  padding: 5px 0 15px 70px;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    padding: 0;
+  }
+
+  > .speedValues {
+    line-height: 1;
+		margin-top: 5px;
+		margin-left: -6px;
+
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      margin-left: -4px;
+    }
+
+    > .speedOption {
+      display: inline-block;
+      font-size: 24px;
+      text-align: center;
+      line-height: 1;
+      padding: 0 5px;
+      border-bottom: 2px solid transparent;
+
+      @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+        font-size: 16px;
+      }
+
+      &.active {
+        border-bottom: 2px solid var(--side-color);
+      }
+
+      & + div {
+        margin-left: 40px;
+      }
+    }
+  }
+}
+
+.timeIntervalTogglers {
+  border: 0.8px dashed #8a8a8a;
+  border-radius: 6px;
+  padding: 6px 29px;
+
+  > .row {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    > input {
+      accent-color: var(--side-color);
+    }
+  }
+}
+
+.onlyMobilePortrait {
+	display: flex !important;
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: none !important;
+	}
+}
+
+.onlyMobileLandscape {
+	display: none !important;
+	
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		display: flex !important;
+	}
+}

@@ -6,7 +6,6 @@ import { setCurrentCard, setListScrollTop } from 'redux/gameReducer';
 import useArrowNavigate from 'hooks/useArrowNavigate';
 import ContentControls from '../ContentControls/ContentControls';
 import MobileLandscapeTabs from './MobileLandscapeTabs';
-// import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 import classNames from 'classnames';
 import useGameFocus from 'hooks/useGameFocus';
 
@@ -21,7 +20,6 @@ const ControlsWrapper = forwardRef(({}, ref) => {
 });
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
-  // const playbackMode = useSelector(state => state.game.playbackMode);
   const activeCardList = useSelector(state => state.game.activeCardList);
   const dispatch = useDispatch();
   const handleKeyDown = useArrowNavigate(filteredCards, currentCard);
@@ -63,6 +61,9 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     }, 100);
   };
 
+	const wrapperClasses = classNames(cl.wrapper, {
+		[cl.landscapeDisplayNone]: currentTab === 'videos'
+	})
   const classes = classNames(cl.blueDiv, {
     [cl.wider]: activeCardList === 'cards',
     [cl.taller]: activeCardList !== 'cards'
@@ -74,7 +75,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     [cl.mobilePlaysListHeightVideo]: isVideo && currentTab === 'videos'
   });
   return (
-    <div className={cl.wrapper} onClick={useGameFocus('list')}>
+    <div className={wrapperClasses} onClick={useGameFocus('list')}>
       {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
       
       <ul className={listClasses} ref={listRef} onScroll={scrollHandler}>
