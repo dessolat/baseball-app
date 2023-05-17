@@ -28,6 +28,10 @@
         font: 300 0.875rem var(--font-nunito);
         padding-left: 1rem;
       }
+
+			@media print {
+				width: 6.5rem !important;
+			}
     }
   }
 

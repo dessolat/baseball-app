@@ -16,6 +16,9 @@
 		padding-left: .5rem;
 		width: 5.5rem;
 	}
+	@media print {
+	width: 4rem;
+	}
 }
 
 .guests {
