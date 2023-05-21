@@ -17,7 +17,7 @@ const Videos = () => {
   const currentMoment = useSelector(s => s.game.currentMoment);
   const playerCardFilterFocused = useSelector(s => s.game.playerCardFilterFocused);
   const preferredVideoState = useSelector(s => s.game.preferredVideoState);
-	
+
   const isMobile = useSelector(s => s.shared.isMobile);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
@@ -34,8 +34,6 @@ const Videos = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isFullscreen, playerCardFilterFocused]);
-
-  
 
   function handleKeyDown(e) {
     if (e.code !== 'KeyF') return;
@@ -69,24 +67,34 @@ const Videos = () => {
     controlsWrapperRef.current.lastChild.style.opacity = 1;
     controlsWrapperRef.current.lastChild.style.visibility = 'visible';
 
-    timerRef.current = setTimeout(() => {
-      if (!controlsWrapperRef.current) return;
-      controlsWrapperRef.current.lastChild.style.opacity = 0;
-      timerRef.current = setTimeout(() => {
-        controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
-      }, 100);
-    }, preferredVideoState === 1 ? 500 : 2500);
+    timerRef.current = setTimeout(
+      () => {
+        if (!controlsWrapperRef.current) return;
+        controlsWrapperRef.current.lastChild.style.opacity = 0;
+        timerRef.current = setTimeout(() => {
+          controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
+        }, 100);
+      },
+      preferredVideoState === 1 ? 500 : 2500
+    );
   }
 
-	const outerWrapperClasses = classNames(cl.outerWrapper, cl.mobileLandscapeVideo)
-	const wrapperClasses = classNames(cl.wrapper, {
+  
+
+  const outerWrapperClasses = classNames(cl.outerWrapper, cl.mobileLandscapeVideo);
+  const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
     [cl.videos4]: viewMode === 'mode-2' || viewMode === 'mode-3'
   });
   return (
     <div className={outerWrapperClasses} ref={wrapperRef}>
-      <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} onTouchStart={handleTouch}>
+      <div
+        className={wrapperClasses}
+        onMouseMove={handleMouseMove}
+        onClick={handleMouseMove}
+        onTouchStart={handleTouch}>
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
+        
       </div>
       <SidePanel />
       <BottomPanel />

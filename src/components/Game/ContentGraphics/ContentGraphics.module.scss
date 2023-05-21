@@ -7,13 +7,15 @@
     z-index: 1;
     aspect-ratio: 16 / 9;
     background-color: white;
+		overflow: hidden;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    position: relative;
+		position: relative;
     border-right: 1px solid #cdcccc;
     width: 385px;
     top: unset;
     background-color: black;
+		overflow: hidden;
   }
 }
 
