@@ -392,8 +392,8 @@ const PitchVideos = () => {
         // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
-      console.log('%cSet', 'color: red');
-      dispatch(setPlaybackMode('pause'));
+
+      // dispatch(setPlaybackMode('pause'));
     }
   }
 

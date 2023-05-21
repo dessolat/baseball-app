@@ -33,8 +33,9 @@ const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props },
 
   const handleScrollDownClick = () => {
     ref.current.scrollTop = ref.current.scrollHeight;
-		
+
 		dispatch(setCurrentCard(filteredCards[filteredCards.length - 1]))
+		dispatch(setPlaybackMode('play'))
   };
   return (
     <div className={cl.controls} {...props}>

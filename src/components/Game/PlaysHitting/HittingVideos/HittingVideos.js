@@ -381,7 +381,7 @@ const HittingVideos = (props, ref) => {
         return;
       }
 
-      dispatch(setPlaybackMode('pause'));
+      // dispatch(setPlaybackMode('pause'));
     }
   }
 

@@ -359,7 +359,7 @@ const VideoList = ({ viewMode }, ref) => {
 
         return;
       }
-      dispatch(setPlaybackMode('pause'));
+      // dispatch(setPlaybackMode('pause'));
     }
   }
 
