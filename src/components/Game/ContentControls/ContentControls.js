@@ -2,14 +2,16 @@ import React from 'react';
 import cl from './ContentControls.module.scss';
 import PlayOnline from 'components/UI/buttons/PlayOnline/PlayOnline';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLastMomentMode, setPlaybackMode } from 'redux/gameReducer';
+import { setCurrentCard, setIsLastMomentMode, setPlaybackMode } from 'redux/gameReducer';
 import ForwardRepeat from 'components/UI/buttons/ForwardRepeat/ForwardRepeat';
 import FirstLastMoment from 'components/UI/buttons/FirstLastMoment/FirstLastMoment';
 import { forwardRef } from 'react';
 
 const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props }, ref) => {
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
+  const playbackMode = useSelector(s => s.game.playbackMode);
+  const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
+	const filteredCards = useSelector(s => s.game.filteredCards)
+
   const dispatch = useDispatch();
 
   const playbackModeClick = e => {
@@ -30,8 +32,10 @@ const ContentControls = ({ noPlayPause = false, isPlayOnline = true, ...props },
   };
 
   const handleScrollDownClick = () => {
-		ref.current.scrollTop = ref.current.scrollHeight
-	};
+    ref.current.scrollTop = ref.current.scrollHeight;
+		
+		dispatch(setCurrentCard(filteredCards[filteredCards.length - 1]))
+  };
   return (
     <div className={cl.controls} {...props}>
       {!noPlayPause && (
