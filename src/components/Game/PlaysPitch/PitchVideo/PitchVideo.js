@@ -2,9 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import cl from './PitchVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
+import { setPitchState } from 'redux/gameReducer';
 
 const POS_OPTIONS = {
   'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
@@ -18,6 +19,9 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   // eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
   const currentMoment = useSelector(state => state.game.currentMoment);
+  const pitchState = useSelector(state => state.game.pitchState);
+
+  const dispatch = useDispatch();
 
   const videoWrapperRef = useRef(null);
   const timerRef = useRef();
@@ -35,7 +39,8 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   const videoClasses = classNames(cl.video, {
     [cl.topLeftVideo]: position === 'top-left',
     [cl.topRightVideo]: position === 'top-right',
-    [cl.bottomVideo]: position === 'bottom'
+    [cl.bottomVideo]: position === 'bottom',
+    [cl.dnone]: pitchState !== 'Videos'
   });
 
   const xCoef =
@@ -64,6 +69,13 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
       }, 300);
     }, 500);
+  }
+
+  function handleLeftArrowClick() {
+    dispatch(setPitchState('Field'));
+  }
+  function handleRightArrowClick() {
+    dispatch(setPitchState('SpeedSpinInfo'));
   }
 
   const isVideoControls = currentMoment.video && position === 'bottom';
@@ -105,7 +117,13 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         />
       </div>
       {isVideoControls && (
-        <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
+        <VideoControls
+          setPlayPause={setPlayPause}
+          fullscreenAvailable={false}
+          handleLeftArrowClick={handleLeftArrowClick}
+          handleRightArrowClick={handleRightArrowClick}
+          ref={controlsWrapperRef}
+        />
       )}
       {/* <div
         style={{

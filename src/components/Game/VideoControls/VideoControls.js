@@ -11,7 +11,7 @@ import { setPreferredVideoState, setSeekValue, setViewMode } from 'redux/gameRed
 import useGameFocus from 'hooks/useGameFocus';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 
-const MobileCameraArrows = () => {
+const MobileArrows = ({ handleLeftArrowClick, handleRightArrowClick }) => {
   const viewMode = useSelector(s => s.game.viewMode);
 
   const dispatch = useDispatch();
@@ -29,13 +29,13 @@ const MobileCameraArrows = () => {
     dispatch(setSeekValue(null));
   };
 
-  const isLeftArrow = viewMode[viewMode.length - 1] !== '1';
-  const isRightArrow = viewMode[viewMode.length - 1] !== '3';
+  const isLeftArrow = handleLeftArrowClick || viewMode[viewMode.length - 1] !== '1';
+  const isRightArrow = handleRightArrowClick || viewMode[viewMode.length - 1] !== '3';
   return (
     <>
       {isLeftArrow && (
         <Arrow
-          onClick={handlePrevModeClick}
+          onClick={handleLeftArrowClick || handlePrevModeClick}
           addedClass={cl.onlyMobile}
           direction='left'
           style={{
@@ -49,7 +49,7 @@ const MobileCameraArrows = () => {
       )}
       {isRightArrow && (
         <Arrow
-          onClick={handleNextModeClick}
+          onClick={handleRightArrowClick || handleNextModeClick}
           addedClass={cl.onlyMobile}
           direction='right'
           style={{
@@ -65,7 +65,10 @@ const MobileCameraArrows = () => {
   );
 };
 
-const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
+const VideoControls = (
+  { setPlayPause, fullscreenAvailable = true, handleLeftArrowClick = null, handleRightArrowClick = null },
+  ref
+) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
   const setGameFocus = useGameFocus('timeline');
@@ -200,7 +203,10 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
             </button>
           )}
         </div>
-        <MobileCameraArrows />
+        <MobileArrows
+          handleLeftArrowClick={handleLeftArrowClick}
+          handleRightArrowClick={handleRightArrowClick}
+        />
       </div>
     </div>
   );
