@@ -30,28 +30,42 @@
 }
 
 .pitch {
-	gap: 5.5px;
+  gap: 5.5px;
   // grid-template: 9.3125rem  2.75rem  1fr /  8.5625rem    1fr      10.875rem 10.875rem;
-  grid-template: 9.3125rem  2.75rem  18.4rem /  8.5625rem    1fr      10.875rem 10.875rem;
+  grid-template: 9.3125rem 2.75rem 18.4rem / 8.5625rem 1fr 10.875rem 10.875rem;
   // grid-template: 9.5rem 21.61328125rem / minmax(429.1px, 500px) minmax(248.4px, 467px);
   grid-template-areas:
     'spin spd top-left-video top-right-video'
     'values field top-left-video top-right-video'
     'values field bottom-video bottom-video';
+
+  // 	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  // 		display: none;
+  // 	}
+
+  &.videosGrid {
+    @media screen and (max-width: 800px) {
+      display: grid;
+      gap: 2px;
+      grid-template: .8fr 1.2fr / 1fr 1fr;
+      grid-template-areas:
+        'top-left-video top-right-video'
+        'bottom-video bottom-video';
+    }
+  }
 }
 
 .hitting {
-  grid-template: 15.3575rem 5rem 10rem  /  1fr     31.09rem;
+  grid-template: 15.3575rem 5rem 10rem / 1fr 31.09rem;
   // grid-template: 15.5rem 5rem 9.84rem  /  1fr     32.375rem;
-	gap: 6px;
+  gap: 6px;
   // grid-template: 31.11328125rem / minmax(415px, 577px) minmax(262.5px, 390px);
   // grid-template: 30.125rem / minmax(415px, 577px) minmax(262.5px, 390px);
-  grid-template-areas: 
-	'field videos'
-	'stats videos'
-	'graph videos'
-	;
-	overflow: hidden;
+  grid-template-areas:
+    'field videos'
+    'stats videos'
+    'graph videos';
+  overflow: hidden;
   // grid-template-areas: 'bat stats';
   // grid-template-areas:
   //   'events bat stats'

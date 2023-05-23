@@ -25,7 +25,8 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
   const topShift = isMobileScoreboard ? '83.5px' : '0px';
 
   const graphicsClasses = classNames(cl.graphics, {
-    [cl.mobileLandscapeVideo]: currentTab === 'videos'
+    [cl.mobileLandscapeVideo]: currentTab === 'videos',
+		[cl.videoTab]: currentTab === 'videos'
   });
 
   const scoresClasses = classNames({

@@ -5,7 +5,7 @@
     position: sticky;
     top: calc(var(--desktop-nav-height) + 56px + var(--top-shift));
     z-index: 1;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 19;
     background-color: white;
 		overflow: hidden;
   }
@@ -15,8 +15,14 @@
     width: 385px;
     top: unset;
     background-color: black;
-		overflow: hidden;
+		overflow: unset;
   }
+
+	&.videoTab {
+		@media screen and (max-width: 800px) {
+			aspect-ratio: 16 / 9;
+		}
+	}
 }
 
 .mobileLandscapeVideo {

@@ -18,6 +18,8 @@ const Plays = ({ isVideo }) => {
   // const [moments, setMoments] = useState([]);
   // const currentCard = useSelector(state => state.game.currentCard);
   const currentTab = useSelector(state => state.game.currentTab);
+  const pitchState = useSelector(state => state.game.pitchState);
+
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -49,7 +51,8 @@ const Plays = ({ isVideo }) => {
 			[cl.playsNoVideo]: !isVideo,
 			[cl.hitting]: isVideo && currentTab === 'hitting',
 			[cl.running]: isVideo && currentTab === 'running',
-			[cl.pitch]: isVideo && currentTab !== 'hitting' && currentTab !== 'running'
+			[cl.pitch]: isVideo && currentTab !== 'hitting' && currentTab !== 'running',
+			[cl.videosGrid]: pitchState === 'Videos'
 		});
   return (
     <div className={playsClasses}>

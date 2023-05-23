@@ -13,10 +13,11 @@ const STRIKE_BALL_COLORS = {
 };
 
 const PlaysField = ({ currentMoment }) => {
-  const { pitchState } = useSelector(state => state.game);
+  const pitchState = useSelector(state => state.game.pitchState);
+
   const dispatch = useDispatch();
 
-  const handleArrowClick = () => dispatch(setPitchState('Stats'));
+  const handleArrowClick = () => dispatch(setPitchState('Videos'));
 
   const wrapperClasses = classNames({
     [cl.outerWrapper]: pitchState === 'Field',
@@ -32,12 +33,12 @@ const PlaysField = ({ currentMoment }) => {
       <div className={cl.field}>
         <img className={cl.grid} src={gridImg} alt='grid' />
         <PlaysFieldBalls coords={ballsCoords} currentMoment={currentMoment} />
-        <Arrow
-          direction='right'
-          onClick={handleArrowClick}
-          style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
-        />
       </div>
+      <Arrow
+        direction='right'
+        onClick={handleArrowClick}
+        style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
+      />
       {isStrikeBallValue && (
         <div className={cl.strikeBallWrapper} style={{ color: STRIKE_BALL_COLORS[strikeBallValue] }}>
           {strikeBallValue}
