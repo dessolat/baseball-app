@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cl from './PitchValues.module.scss';
+import classNames from 'classnames';
 
 const PitchValues = () => {
-  const currentMoment = useSelector(state => state.game.currentMoment);
+  const currentMoment = useSelector(s => s.game.currentMoment);
+  const pitchState = useSelector(s => s.game.pitchState);
 
   const {
     offset_x,
@@ -25,12 +27,17 @@ const PitchValues = () => {
   const releaseHeightValue = releaseHeight?.toFixed(1) ?? '';
   const releaseSideValue = releaseSide?.toFixed(1) ?? '';
 
+  const wrapperClasses = classNames(cl.pitchValues, {
+    [cl.dnone]: pitchState !== 'SpeedSpinInfo'
+  });
   return (
-    <div className={cl.pitchValues}>
-      <p className={cl.subHeader}>Release speed /</p>
-      <p className={cl.subHeader}>Plate point speed</p>
-      <p className={cl.releaseValue}>{releaseValue} mph /</p>
-      <p className={cl.regularValue}>{platePointValue} mph</p>
+    <div className={wrapperClasses}>
+      <div>
+        <p className={cl.subHeader}>Release speed /</p>
+        <p className={cl.subHeader}>Plate point speed</p>
+        <p className={cl.releaseValue}>{releaseValue} mph /</p>
+        <p className={cl.regularValue}>{platePointValue} mph</p>
+      </div>
 
       <div className={cl.spinInfo}>
         <div>
@@ -47,10 +54,12 @@ const PitchValues = () => {
         </div>
       </div>
 
-      <p className={cl.subHeader}>Release height</p>
-      <p className={cl.regularValue}>{releaseHeightValue} m</p>
-      <p className={cl.subHeader}>Release side</p>
-      <p className={cl.regularValue}>{releaseSideValue} m</p>
+      <div>
+        <p className={cl.subHeader}>Release height</p>
+        <p className={cl.regularValue}>{releaseHeightValue} m</p>
+        <p className={cl.subHeader}>Release side</p>
+        <p className={cl.regularValue}>{releaseSideValue} m</p>
+      </div>
     </div>
   );
 };

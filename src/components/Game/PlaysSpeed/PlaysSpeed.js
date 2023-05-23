@@ -78,10 +78,8 @@ const PlaysSpeed = ({ currentMoment }) => {
     setCurrentDot(currentDotParams);
   }, [currentCard, innings, currentMoment]);
 
-  const handleArrowClick = () => dispatch(setPitchState('Field'));
-
   const wrapperClasses = classNames(cl.speed, {
-    [cl.dnone]: pitchState === 'Field'
+    [cl.dnone]: pitchState !== 'SpeedSpinInfo'
   });
 
   // Pitch types array for Legend comp
@@ -98,9 +96,6 @@ const PlaysSpeed = ({ currentMoment }) => {
           <Legend legendData={pitchTypesArr} />
         </>
       )}
-      <div className={cl.arrowWrapper}>
-        <Arrow onClick={handleArrowClick} />
-      </div>
     </div>
   );
 };

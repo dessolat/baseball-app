@@ -30,19 +30,35 @@
   }
 
   @media screen and (max-width: 800px) {
-    margin-left: 0;
+    text-align: center;
+    // margin-left: 0;
     padding: 0 10px;
     justify-content: space-between;
-    aspect-ratio: 16 / 4;
+    // aspect-ratio: 16 / 4;
+
+    aspect-ratio: 375 / 149;
+    height: 35.27%;
+    // aspect-ratio: 16 / 5;
+
+    // > svg {
+    //   width: 93%;
+    //   height: 86%;
+    // }
 
     > * {
       flex: unset;
 
       &:first-child {
-        height: auto;
-        width: calc(100vw / 16 * 3);
+        aspect-ratio: 1;
+        margin: 0 auto;
+        height: 95%;
       }
     }
+
+		> div {
+			display: inline-block;
+			height: unset !important;
+		}
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     margin-left: 0;
@@ -83,13 +99,13 @@
 }
 
 .graphTooltip {
-	fill: black;
-	stroke: black;
+  fill: black;
+  stroke: black;
   stroke-width: 0.5px;
   font-family: var(--font-nunito);
-	font-size: .875rem;
-	font-smooth: none;
-	font-weight: 300;
+  font-size: 0.875rem;
+  font-smooth: none;
+  font-weight: 300;
 }
 
 .dnone {
@@ -132,9 +148,27 @@
   }
 }
 
+.arrowWrapper {
+  display: none;
+  position: absolute;
+  transform: scale(2.4);
+	top: 40%;
+  left: 20px;
+  opacity: 0.5;
+  z-index: 1;
+
+  @media screen and (max-width: 800px) {
+    display: inline-block !important;
+
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: inline-block !important;
+  }
+}
+
 .currentDotLine {
-	stroke: #ACACAC;
-	stroke-width: 1;
+  stroke: #acacac;
+  stroke-width: 1;
 }
 
 .dot {
@@ -155,7 +189,7 @@
 }
 
 .showingGroup {
-	animation: showing .3s forwards;
+  animation: showing 0.3s forwards;
 }
 
 @keyframes growRadius {
