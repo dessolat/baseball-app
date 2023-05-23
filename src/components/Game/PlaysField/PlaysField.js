@@ -2,9 +2,7 @@ import React from 'react';
 import cl from './PlaysField.module.scss';
 import gridImg from 'images/grid.png';
 import PlaysFieldBalls from './PlaysFieldBalls';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPitchState } from 'redux/gameReducer';
-import Arrow from 'components/UI/buttons/Arrow/Arrow';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 const STRIKE_BALL_COLORS = {
@@ -14,10 +12,6 @@ const STRIKE_BALL_COLORS = {
 
 const PlaysField = ({ currentMoment }) => {
   const pitchState = useSelector(state => state.game.pitchState);
-
-  const dispatch = useDispatch();
-
-  const handleArrowClick = () => dispatch(setPitchState('Videos'));
 
   const wrapperClasses = classNames({
     [cl.outerWrapper]: pitchState === 'Field',
@@ -34,11 +28,6 @@ const PlaysField = ({ currentMoment }) => {
         <img className={cl.grid} src={gridImg} alt='grid' />
         <PlaysFieldBalls coords={ballsCoords} currentMoment={currentMoment} />
       </div>
-      <Arrow
-        direction='right'
-        onClick={handleArrowClick}
-        style={{ position: 'absolute', transform: 'scale(2.4)', top: '50%', right: '20px', opacity: 0.5 }}
-      />
       {isStrikeBallValue && (
         <div className={cl.strikeBallWrapper} style={{ color: STRIKE_BALL_COLORS[strikeBallValue] }}>
           {strikeBallValue}

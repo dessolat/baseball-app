@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import cl from './PitchVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
 import { useDispatch, useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
-import { setPitchState } from 'redux/gameReducer';
 
 const POS_OPTIONS = {
   'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
@@ -20,8 +19,6 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   const fullWidth = useSelector(state => state.shared.mobileWidth);
   const currentMoment = useSelector(state => state.game.currentMoment);
   const pitchState = useSelector(state => state.game.pitchState);
-
-  const dispatch = useDispatch();
 
   const videoWrapperRef = useRef(null);
   const timerRef = useRef();
@@ -71,13 +68,6 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
     }, 500);
   }
 
-  function handleLeftArrowClick() {
-    dispatch(setPitchState('Field'));
-  }
-  function handleRightArrowClick() {
-    dispatch(setPitchState('SpeedSpinInfo'));
-  }
-
   const isVideoControls = currentMoment.video && position === 'bottom';
   const isInvisWrapper = position !== 'bottom';
   return (
@@ -120,8 +110,6 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         <VideoControls
           setPlayPause={setPlayPause}
           fullscreenAvailable={false}
-          handleLeftArrowClick={handleLeftArrowClick}
-          handleRightArrowClick={handleRightArrowClick}
           ref={controlsWrapperRef}
         />
       )}

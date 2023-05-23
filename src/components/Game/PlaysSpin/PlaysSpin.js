@@ -1,10 +1,8 @@
 import classNames from 'classnames';
 import React, { useState, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import cl from './PlaysSpin.module.scss';
 import PlaysSpinChart from './PlaysSpinChart';
-import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import { setPitchState } from 'redux/gameReducer';
 
 const PlaysSpin = ({ pitch }) => {
   const [chartData, setChartData] = useState([]);
@@ -14,8 +12,6 @@ const PlaysSpin = ({ pitch }) => {
   const currentCard = useSelector(state => state.game.currentCard);
   const innings = useSelector(state => state.game.innings);
   const currentMoment = useSelector(state => state.game.currentMoment);
-
-	const dispatch = useDispatch()
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0) {
@@ -75,17 +71,12 @@ const PlaysSpin = ({ pitch }) => {
     setCurrentDot(currentDotParams);
   }, [currentCard, innings, currentMoment]);
 
-  const handleArrowClick = () => dispatch(setPitchState('Videos'));
-
   const wrapperClasses = classNames(cl.spin, {
     [cl.dnone]: pitchState !== 'SpeedSpinInfo'
   });
   return (
     <div className={wrapperClasses}>
       <PlaysSpinChart chartData={chartData} currentDot={currentDot} />
-			<div className={cl.arrowWrapper}>
-        <Arrow onClick={handleArrowClick} />
-      </div>
     </div>
   );
 };

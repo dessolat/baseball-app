@@ -6,8 +6,9 @@ import PlaysContent from '../PlaysContent/PlaysContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
 // import { setSearchParam } from 'utils';
-import { setCurrentTab } from 'redux/gameReducer';
+import { setCurrentTab, setPitchState } from 'redux/gameReducer';
 import classNames from 'classnames';
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import { setPitchState } from 'redux/gameReducer';
 // import MobilePitcherFilters from '../Content/MobilePitcherFilters';
 
@@ -42,18 +43,32 @@ const Plays = ({ isVideo }) => {
   // }, [currentCard]);
 
   // const handleTabClick = e => {
-		//   setSearchParam('ptab', e.target.name);
-		//   dispatch(setCurrentTab(e.target.name));
-		//   dispatch(setPitchState('Field'))
-		// };
-		
-		const playsClasses = classNames(cl.plays, {
-			[cl.playsNoVideo]: !isVideo,
-			[cl.hitting]: isVideo && currentTab === 'hitting',
-			[cl.running]: isVideo && currentTab === 'running',
-			[cl.pitch]: isVideo && currentTab !== 'hitting' && currentTab !== 'running',
-			[cl.videosGrid]: pitchState === 'Videos'
-		});
+  //   setSearchParam('ptab', e.target.name);
+  //   dispatch(setCurrentTab(e.target.name));
+  //   dispatch(setPitchState('Field'))
+  // };
+
+  const handleLeftArrowClick = () => {
+    const prevState = pitchState === 'SpeedSpinInfo' ? 'Videos' : 'Field';
+
+    dispatch(setPitchState(prevState));
+  };
+  const handleRightArrowClick = () => {
+    const nextState = pitchState === 'Field' ? 'Videos' : 'SpeedSpinInfo';
+
+    dispatch(setPitchState(nextState));
+  };
+
+  const isLeftArrow = pitchState !== 'Field';
+  const isRightArrow = pitchState !== 'SpeedSpinInfo';
+
+  const playsClasses = classNames(cl.plays, {
+    [cl.playsNoVideo]: !isVideo,
+    [cl.hitting]: isVideo && currentTab === 'hitting',
+    [cl.running]: isVideo && currentTab === 'running',
+    [cl.pitch]: isVideo && currentTab !== 'hitting' && currentTab !== 'running',
+    [cl.videosGrid]: pitchState === 'Videos'
+  });
   return (
     <div className={playsClasses}>
       {isVideo && (
@@ -63,6 +78,17 @@ const Plays = ({ isVideo }) => {
           </div> */}
           {/* <PlaysFooter currentTab={currentTab} handleClick={handleTabClick} /> */}
           <PlaysContent currentTab={currentTab} />
+
+          {isLeftArrow && (
+            <div className={cl.arrowWrapper + ' ' + cl.leftArrow}>
+              <Arrow direction='left' onClick={handleLeftArrowClick} />
+            </div>
+          )}
+          {isRightArrow && (
+            <div className={cl.arrowWrapper + ' ' + cl.rightArrow}>
+              <Arrow direction='right' onClick={handleRightArrowClick} />
+            </div>
+          )}
         </>
       )}
       {/* <div className={cl.landscapeDisplayNone}>

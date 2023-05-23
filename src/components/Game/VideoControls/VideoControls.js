@@ -11,7 +11,7 @@ import { setPreferredVideoState, setSeekValue, setViewMode } from 'redux/gameRed
 import useGameFocus from 'hooks/useGameFocus';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 
-const MobileArrows = ({ handleLeftArrowClick, handleRightArrowClick }) => {
+const MobileArrows = () => {
   const viewMode = useSelector(s => s.game.viewMode);
 
   const dispatch = useDispatch();
@@ -29,13 +29,13 @@ const MobileArrows = ({ handleLeftArrowClick, handleRightArrowClick }) => {
     dispatch(setSeekValue(null));
   };
 
-  const isLeftArrow = handleLeftArrowClick || viewMode[viewMode.length - 1] !== '1';
-  const isRightArrow = handleRightArrowClick || viewMode[viewMode.length - 1] !== '3';
+  const isLeftArrow = viewMode[viewMode.length - 1] !== '1';
+  const isRightArrow = viewMode[viewMode.length - 1] !== '3';
   return (
     <>
       {isLeftArrow && (
         <Arrow
-          onClick={handleLeftArrowClick || handlePrevModeClick}
+          onClick={handlePrevModeClick}
           addedClass={cl.onlyMobile}
           direction='left'
           style={{
@@ -49,7 +49,7 @@ const MobileArrows = ({ handleLeftArrowClick, handleRightArrowClick }) => {
       )}
       {isRightArrow && (
         <Arrow
-          onClick={handleRightArrowClick || handleNextModeClick}
+          onClick={handleNextModeClick}
           addedClass={cl.onlyMobile}
           direction='right'
           style={{
@@ -65,10 +65,7 @@ const MobileArrows = ({ handleLeftArrowClick, handleRightArrowClick }) => {
   );
 };
 
-const VideoControls = (
-  { setPlayPause, fullscreenAvailable = true, handleLeftArrowClick = null, handleRightArrowClick = null },
-  ref
-) => {
+const VideoControls = ({ setPlayPause, fullscreenAvailable = true, currentTab = null }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
   const setGameFocus = useGameFocus('timeline');
@@ -203,10 +200,7 @@ const VideoControls = (
             </button>
           )}
         </div>
-        <MobileArrows
-          handleLeftArrowClick={handleLeftArrowClick}
-          handleRightArrowClick={handleRightArrowClick}
-        />
+        {currentTab === 'videos' && <MobileArrows />}
       </div>
     </div>
   );
