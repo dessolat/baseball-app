@@ -460,7 +460,9 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     }
   }
 
-	const topShift = isMobileScoreboard ? '83.5px' : '0px';
+	let topShift = isMobileScoreboard ? 83.5 : 0;
+	if (currentTab !== 'videos') topShift += document.documentElement.clientWidth / 16 * 10
+	topShift += 'px'
 
   const wrapperClasses = classNames(cl.wrapper, {
     [addedClass]: !!addedClass,
