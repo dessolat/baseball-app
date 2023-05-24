@@ -21,11 +21,27 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
   const focus = useSelector(state => state.game.focus);
-  const chartWidth = useSelector(state => state.game[forFullscreen ? 'fullTimelineWidth' : 'timelineWidth']);
 
   const mobileWidth = useSelector(state => state.shared.mobileWidth);
+  const isMobile = useSelector(state => state.shared.isMobile);
   const isMobileTimeline = useSelector(state => state.shared.isMobileTimeline);
-	const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard)
+  const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
+
+  const fullTimelineWidth = useSelector(s => s.game.fullTimelineWidth);
+  const timelineWidth = useSelector(s => s.game.timelineWidth);
+
+	const chartWidth = (isMobile && document.documentElement.clientWidth > document.documentElement.clientHeight) ||
+	forFullscreen ? fullTimelineWidth : timelineWidth
+
+  // const chartWidth = useSelector(
+  //   state =>
+  //     state.game[
+  //       (isMobile && document.documentElement.clientWidth > document.documentElement.clientHeight) ||
+  //       forFullscreen
+  //         ? 'fullTimelineWidth'
+  //         : 'timelineWidth'
+  //     ]
+  // );
 
   const dispatch = useDispatch();
 
@@ -460,15 +476,18 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
     }
   }
 
-	const topShift = isMobileScoreboard ? '83.5px' : '0px';
+  let topShift = isMobileScoreboard ? 83.5 : 0;
+  if (currentTab !== 'videos') topShift += (document.documentElement.clientWidth / 16) * 10;
+  topShift += 'px';
 
   const wrapperClasses = classNames(cl.wrapper, {
     [addedClass]: !!addedClass,
-    [cl.mobileDisplayNone]: !isMobileTimeline
+    [cl.mobileDisplayNone]: !isMobileTimeline,
+    [cl.mobileLandscapeDNone]: currentTab !== 'videos'
   });
   const rightEvtChangesClasses = classNames(cl.onlyMobile, cl.rightEvtChanger);
   return (
-    <div className={wrapperClasses} onClick={useGameFocus('timeline')} style={{'--top-shift': topShift}}>
+    <div className={wrapperClasses} onClick={useGameFocus('timeline')} style={{ '--top-shift': topShift }}>
       <div className={cl.eventsBtnsWrapper}>
         <TimelineEventChanger handleClick={handleTimelineEvtChanger} />
         <TimelineEventChanger direction='right' handleClick={handleTimelineEvtChanger} />

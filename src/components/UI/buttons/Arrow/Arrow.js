@@ -1,8 +1,11 @@
 import React from 'react';
 import cl from './Arrow.module.scss';
 
-const Arrow = ({ direction = 'left', fillColor = '#D1D1D1', ...props }) => (
-  <button className={cl.arrowBtn} name={direction === 'left' ? 'scroll-left' : 'scroll-right'} {...props}>
+const Arrow = ({ direction = 'left', fillColor = '#D1D1D1', addedClass = null, ...props }) => (
+  <button
+    className={cl.arrowBtn + ' ' + addedClass}
+    name={direction === 'left' ? 'scroll-left' : 'scroll-right'}
+    {...props}>
     {direction === 'left' ? (
       <svg
         className={cl.arrowImg}

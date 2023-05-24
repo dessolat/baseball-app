@@ -7,10 +7,65 @@ import PauseBtn from 'components/UI/icons/VideoControlsBtns/PauseBtn/PauseBtn';
 import FullscreenBtn from 'components/UI/icons/VideoControlsBtns/FullscreenBtn/FullscreenBtn';
 import { closeFullscreen, openFullscreen } from 'utils';
 import { useDispatch } from 'react-redux';
-import { setPreferredVideoState } from 'redux/gameReducer';
+import { setPreferredVideoState, setSeekValue, setViewMode } from 'redux/gameReducer';
 import useGameFocus from 'hooks/useGameFocus';
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 
-const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
+const MobileArrows = () => {
+  const viewMode = useSelector(s => s.game.viewMode);
+
+  const dispatch = useDispatch();
+
+  const handlePrevModeClick = () => {
+    const curViewModeNumber = +viewMode[viewMode.length - 1];
+
+    dispatch(setViewMode(`mode-${curViewModeNumber - 1}`));
+    dispatch(setSeekValue(null));
+  };
+  const handleNextModeClick = () => {
+    const curViewModeNumber = +viewMode[viewMode.length - 1];
+
+    dispatch(setViewMode(`mode-${curViewModeNumber + 1}`));
+    dispatch(setSeekValue(null));
+  };
+
+  const isLeftArrow = viewMode[viewMode.length - 1] !== '1';
+  const isRightArrow = viewMode[viewMode.length - 1] !== '3';
+  return (
+    <>
+      {isLeftArrow && (
+        <Arrow
+          onClick={handlePrevModeClick}
+          addedClass={cl.onlyMobile}
+          direction='left'
+          style={{
+            position: 'absolute',
+            left: '-85%',
+            top: '50%',
+            transform: 'translateY(-50%) scale(2.2)',
+            opacity: 0.7
+          }}
+        />
+      )}
+      {isRightArrow && (
+        <Arrow
+          onClick={handleNextModeClick}
+          addedClass={cl.onlyMobile}
+          direction='right'
+          style={{
+            position: 'absolute',
+            right: '-85%',
+            top: '50%',
+            transform: 'translateY(-50%) scale(2.2)',
+            opacity: 0.7
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+const VideoControls = ({ setPlayPause, fullscreenAvailable = true, currentTab = null }, ref) => {
   const [isSynchronization, setIsSynchronization] = useState(false);
 
   const setGameFocus = useGameFocus('timeline');
@@ -28,7 +83,7 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
   const previousTimeRef = useRef(0);
   const clickTimerRef = useRef();
 
-	const isFullscreenModeAvailable = fullscreenAvailable && !isMobile
+  const isFullscreenModeAvailable = fullscreenAvailable && !isMobile;
 
   useEffect(() => {
     const timeDelta = Date.now() - previousTimeRef.current;
@@ -145,6 +200,7 @@ const VideoControls = ({ setPlayPause, fullscreenAvailable = true }, ref) => {
             </button>
           )}
         </div>
+        {currentTab === 'videos' && <MobileArrows />}
       </div>
     </div>
   );

@@ -25,6 +25,7 @@ const Game = () => {
   const dispatch = useDispatch();
 
   const [error, isLoading, loadedPercents, getFullData] = useGameFetch(
+    // `http://localhost:3001/`
     `http://baseball-gametrack.ru/api/game_${gameId}`
   );
 

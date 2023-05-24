@@ -364,11 +364,14 @@ const Content = ({ currentTab }) => {
     return filteredCards;
   };
 
+  // Mobile pitcher filters top-shift calc
   let topShift = 0;
   if (isMobileScoreboard) topShift += 83.5;
   if (isMobileTimeline) topShift += 45;
+  if (currentTab !== 'videos') topShift += (document.documentElement.clientWidth / 16) * 10;
   topShift += 'px';
 
+  // Classnames
   const contentClasses = classNames({
     [cl.content]: isVideo,
     [cl.contentNoVideo]: !isVideo

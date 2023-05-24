@@ -72,7 +72,7 @@ const PlaysSpin = ({ pitch }) => {
   }, [currentCard, innings, currentMoment]);
 
   const wrapperClasses = classNames(cl.spin, {
-    [cl.dnone]: pitchState === 'Field'
+    [cl.dnone]: pitchState !== 'SpeedSpinInfo'
   });
   return (
     <div className={wrapperClasses}>

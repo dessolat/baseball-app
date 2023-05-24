@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import cl from './PitchVideo.module.scss';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
 
@@ -18,6 +18,7 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   // eslint-disable-next-line
   const fullWidth = useSelector(state => state.shared.mobileWidth);
   const currentMoment = useSelector(state => state.game.currentMoment);
+  const pitchState = useSelector(state => state.game.pitchState);
 
   const videoWrapperRef = useRef(null);
   const timerRef = useRef();
@@ -35,7 +36,8 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
   const videoClasses = classNames(cl.video, {
     [cl.topLeftVideo]: position === 'top-left',
     [cl.topRightVideo]: position === 'top-right',
-    [cl.bottomVideo]: position === 'bottom'
+    [cl.bottomVideo]: position === 'bottom',
+    [cl.dnone]: pitchState !== 'Videos'
   });
 
   const xCoef =
@@ -105,7 +107,11 @@ const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setP
         />
       </div>
       {isVideoControls && (
-        <VideoControls setPlayPause={setPlayPause} fullscreenAvailable={false} ref={controlsWrapperRef} />
+        <VideoControls
+          setPlayPause={setPlayPause}
+          fullscreenAvailable={false}
+          ref={controlsWrapperRef}
+        />
       )}
       {/* <div
         style={{

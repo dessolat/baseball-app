@@ -40,7 +40,7 @@ const PlaysRunning = () => {
         (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
         momentIndex === -1
       ) {
-        dispatch(setPlaybackMode('pause'));
+        // dispatch(setPlaybackMode('pause'));
         return;
       }
       if (momentIndex >= currentCard.moments.length - 1) {
@@ -73,7 +73,7 @@ const PlaysRunning = () => {
         (momentIndex >= currentCard.moments.length - 1 && cardIndex >= filteredCards.length - 1) ||
         momentIndex === -1
       ) {
-        dispatch(setPlaybackMode('pause'));
+        // dispatch(setPlaybackMode('pause'));
         return;
       }
       if (momentIndex >= currentCard.moments.length - 1) {

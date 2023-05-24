@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import getYouTubeID from 'get-youtube-id';
 import PitchVideo from './PitchVideo';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   setCurrentCard,
   setCurrentMoment,
-  setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
   setVideoState
@@ -13,20 +12,19 @@ import {
 
 const PitchVideos = () => {
   const { camera_info: cameraInfo } = useSelector(state => state.game.preview);
-  const {
-    videoState,
-    preferredVideoState,
-    videoCurrentTime,
-    currentMoment,
-    currentCard,
-    timelineSliderCoords: sliderCoords,
-    videoLengthMode,
-    filteredCards,
-    isLastMomentMode,
-    playbackMode,
-    seekValue,
-    videoPlaybackRate
-  } = useSelector(state => state.game);
+
+  const videoState = useSelector(s => s.game.videoState);
+  const preferredVideoState = useSelector(s => s.game.preferredVideoState);
+  const videoCurrentTime = useSelector(s => s.game.videoCurrentTime);
+  const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
+  const currentCard = useSelector(s => s.game.currentCard, shallowEqual);
+  const sliderCoords = useSelector(s => s.game.timelineSliderCoords);
+  const videoLengthMode = useSelector(s => s.game.videoLengthMode);
+  const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
+  const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
+  const playbackMode = useSelector(s => s.game.playbackMode);
+  const seekValue = useSelector(s => s.game.seekValue);
+  const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate);
 
   const dispatch = useDispatch();
 
@@ -392,8 +390,8 @@ const PitchVideos = () => {
         // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
         return;
       }
-      console.log('%cSet', 'color: red');
-      dispatch(setPlaybackMode('pause'));
+
+      // dispatch(setPlaybackMode('pause'));
     }
   }
 

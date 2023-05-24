@@ -359,7 +359,7 @@ const VideoList = ({ viewMode }, ref) => {
 
         return;
       }
-      dispatch(setPlaybackMode('pause'));
+      // dispatch(setPlaybackMode('pause'));
     }
   }
 
@@ -564,7 +564,7 @@ const VideoList = ({ viewMode }, ref) => {
           />
         </>
       )}
-      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} ref={ref} />}
+      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} currentTab='videos' ref={ref} />}
     </>
   );
 };
