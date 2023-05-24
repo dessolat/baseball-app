@@ -26,7 +26,7 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
 
   const graphicsClasses = classNames(cl.graphics, {
     [cl.mobileLandscapeVideo]: currentTab === 'videos',
-		[cl.videoTab]: currentTab === 'videos'
+    [cl.videoTab]: currentTab === 'videos'
   });
 
   const scoresClasses = classNames({
@@ -34,7 +34,8 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
     [cl.displayNone]: currentTab === 'videos'
   });
   const optionsClasses = classNames(cl.onlyMobileLandscape, {
-    [cl.withMobileTimeline]: isMobileTimeline
+    [cl.withMobileTimeline]: isMobileTimeline,
+		[cl.verticalEvents]: currentTab === 'videos'
   });
   return (
     <div className={graphicsClasses} onClick={useGameFocus('timeline')} style={{ '--top-shift': topShift }}>
@@ -45,7 +46,10 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
       )}
       {renderTab()}
       <div className={optionsClasses}>
-        <OptionsDropdown panelStyles={{ right: 'unset', left: '100%', top: 0 }} />
+        <OptionsDropdown
+          panelStyles={{ right: 'unset', left: '100%', top: 0 }}
+          mobileLandscapeVisible={currentTab === 'videos'}
+        />
         <PlaysEvents />
       </div>
     </div>

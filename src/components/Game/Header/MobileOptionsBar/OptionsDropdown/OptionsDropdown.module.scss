@@ -5,9 +5,16 @@
   justify-content: center;
   position: relative;
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     height: unset;
-		aspect-ratio: unset;
+    aspect-ratio: unset;
+    display: none;
+  }
+}
+
+.mobileLandscapeVisible {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex;
   }
 }
 
@@ -187,8 +194,8 @@
 
   > .speedValues {
     line-height: 1;
-		margin-top: 5px;
-		margin-left: -6px;
+    margin-top: 5px;
+    margin-left: -6px;
 
     @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
       margin-left: -4px;
@@ -234,17 +241,17 @@
 }
 
 .onlyMobilePortrait {
-	display: flex !important;
+  display: flex !important;
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: none !important;
-	}
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none !important;
+  }
 }
 
 .onlyMobileLandscape {
-	display: none !important;
-	
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: flex !important;
-	}
+  display: none !important;
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: flex !important;
+  }
 }

@@ -6,8 +6,9 @@ import SimpleToggler from 'components/UI/togglers/SimpleToggler/SimpleToggler';
 import ComponentsTogglers from './ComponentsTogglers';
 import PlayModesTogglers from './PlayModesTogglers';
 import SpeedSelectors from './SpeedSelectors';
+import classNames from 'classnames';
 
-const OptionsDropdown = ({ panelStyles = null }) => {
+const OptionsDropdown = ({ panelStyles = null, mobileLandscapeVisible = false }) => {
   const {
     ref: menuRef,
     isComponentVisible: isOpen,
@@ -16,8 +17,12 @@ const OptionsDropdown = ({ panelStyles = null }) => {
 
   const handleBtnClick = () => setIsOpen(prev => !prev);
   const handleCrossClick = () => setIsOpen(false);
+
+	const wrapperClasses = classNames(cl.dropdownWrapper, {
+		[cl.mobileLandscapeVisible]: mobileLandscapeVisible
+	})
   return (
-    <div className={cl.dropdownWrapper} ref={menuRef}>
+    <div className={wrapperClasses} ref={menuRef}>
       <button className={cl.optionsDropdown} onClick={handleBtnClick}>
         <img src={BtnImg} alt='options' />
       </button>
