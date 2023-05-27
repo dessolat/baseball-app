@@ -17,6 +17,7 @@ const defaultState = {
   boxActiveButton: 'guests',
   isVideo: false,
   pitchState: 'Field',
+  hitState: 'Field',
   errorMsg: null,
   playerCardFilter: '',
   playerCardFilterBy: 'batter',
@@ -58,6 +59,7 @@ const SET_ACTIVE_CARD_LIST = 'SET_ACTIVE_CARD_LIST';
 const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
 const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const SET_PITCH_STATE = 'SET_PITCH_STATE';
+const SET_HIT_STATE = 'SET_HIT_STATE';
 const RESET_DATA = 'RESET_DATA';
 const SET_ERROR_MSG = 'SET_ERROR_MSG';
 const SET_PLAYER_CARD_FILTER = 'SET_PLAYER_CARD_FILTER';
@@ -118,6 +120,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, isVideo: action.payload };
     case SET_PITCH_STATE:
       return { ...state, pitchState: action.payload };
+    case SET_HIT_STATE:
+      return { ...state, hitState: action.payload };
     case RESET_DATA:
       return defaultState;
     case SET_ERROR_MSG:
@@ -186,6 +190,7 @@ export const setActiveCardList = payload => ({ type: SET_ACTIVE_CARD_LIST, paylo
 export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, payload });
 export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
+export const setHitState = payload => ({ type: SET_HIT_STATE, payload });
 export const resetData = () => ({ type: RESET_DATA });
 export const setErrorMsg = payload => ({ type: SET_ERROR_MSG, payload });
 export const setPlayerCardFilter = payload => ({ type: SET_PLAYER_CARD_FILTER, payload });
