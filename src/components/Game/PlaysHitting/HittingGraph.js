@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSeekValue } from 'redux/gameReducer';
 import { getFixedNumber } from 'utils';
 import cl from './PlaysHitting.module.scss';
+import classNames from 'classnames';
 
 const Header = ({ maxSpeed, angle }) => {
   const maxSpeedValue = maxSpeed !== undefined ? `${getFixedNumber(maxSpeed, 1)} mph` : '—';
@@ -30,6 +31,8 @@ const Graph = ({ speeds, video, impactTime }) => {
   const [curveIndex, setCurveIndex] = useState(0);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
 
+  const isMobile = useSelector(state => state.shared.isMobile);
+
   const curveTimeoutRef = useRef();
   const svgRef = useRef();
 
@@ -37,9 +40,9 @@ const Graph = ({ speeds, video, impactTime }) => {
 
   const VIEWBOX_WIDTH = 327;
   const VIEWBOX_HEIGHT = 84;
-  const GRAPH_START_X = 33;
+  const GRAPH_START_X = !isMobile ? 33 : 23;
   const GRAPH_START_Y = 5;
-  const GRAPH_WIDTH = 294;
+  const GRAPH_WIDTH = !isMobile ? 294 : 304;
   const GRAPH_HEIGHT = 60;
 
   const minSpeed = speeds.slice(1).reduce((min, cur) => (cur[0] < min ? cur[0] : min), speeds[0][0]);
@@ -74,10 +77,10 @@ const Graph = ({ speeds, video, impactTime }) => {
   const curveCoords = speeds.map((coords, index, arr) => {
     const newXCoord = (coords[1] - arr[0][1]) * xCoef + GRAPH_START_X;
     const newYCoord = GRAPH_START_Y + 11 + 42 - (coords[0] - minSpeedRounded) * yCoef;
-		
+
     if (impactTime >= coords[1]) {
-			const nextXCoord = (arr[index + 2][1] - arr[0][1]) * xCoef + GRAPH_START_X;
-			const nextYCoord = GRAPH_START_Y + 11 + 42 - (arr[index + 2][0] - minSpeedRounded) * yCoef;
+      const nextXCoord = (arr[index + 2][1] - arr[0][1]) * xCoef + GRAPH_START_X;
+      const nextYCoord = GRAPH_START_Y + 11 + 42 - (arr[index + 2][0] - minSpeedRounded) * yCoef;
 
       impactDotCoords.x = nextXCoord;
       impactDotCoords.y = nextYCoord;
@@ -151,7 +154,7 @@ const Graph = ({ speeds, video, impactTime }) => {
 
     const clickTime = speeds[0][1] + totalHitTime * clickPathRel;
 
-		dispatch(setSeekValue(clickTime));
+    dispatch(setSeekValue(clickTime));
     // dispatch(setVideoCurrentTime(clickTime));
   };
   // !
@@ -252,6 +255,8 @@ const Graph = ({ speeds, video, impactTime }) => {
 };
 
 const HittingGraph = ({ currentMoment }) => {
+  const hitState = useSelector(s => s.game.hitState);
+
   const {
     max_speed: maxSpeed,
     attack_angle: angle,
@@ -259,8 +264,11 @@ const HittingGraph = ({ currentMoment }) => {
     impact_time: impactTime
   } = currentMoment?.metering?.bat || {};
 
+  const wrapperClasses = classNames(cl.graph, {
+    [cl.dnone]: hitState !== 'Field'
+  });
   return (
-    <div className={cl.graph}>
+    <div className={wrapperClasses}>
       <Header maxSpeed={maxSpeed} angle={angle} />
       {speeds && <Graph speeds={speeds} video={currentMoment?.video} impactTime={impactTime} />}
     </div>

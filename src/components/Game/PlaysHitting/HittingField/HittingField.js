@@ -209,6 +209,7 @@ const HittingField = ({ handleOnReady }) => {
 	const innings = useSelector(state => state.game.innings, shallowEqual);
 	const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
 	const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
+	const hitState = useSelector(state => state.game.hitState);
 
   const { hit } = currentMoment.metering || {};
   const { camera_2d: camera2D } = hit || 0;
@@ -308,8 +309,12 @@ const HittingField = ({ handleOnReady }) => {
   const isBtnIcon = camera2D !== null && currentMoment.video;
 
   const setMomentById = useSetMomentById();
+
+	const wrapperClasses = classNames(cl.field, {
+    [cl.dnone]: hitState !== 'Field'
+  });
   return (
-    <div className={cl.field}>
+    <div className={wrapperClasses}>
       {(!isCameraView || camera2D === null) && (
         <>
           <Canvas

@@ -7,6 +7,7 @@
 
   @media screen and (max-width: 800px) {
     border-top: 0.5px solid #cdcccc;
+		height: 50%;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     border-top: 0.5px solid #cdcccc;
@@ -115,4 +116,13 @@
 
 .hidden {
 	visibility: hidden;
+}
+
+.dnone {
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: none;
+  }
 }

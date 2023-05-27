@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import Arrow from 'components/UI/buttons/Arrow/Arrow';
+// import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { useState, useLayoutEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPitchState } from 'redux/gameReducer';
+import { shallowEqual, useSelector } from 'react-redux';
+// import { setPitchState } from 'redux/gameReducer';
 import Legend from './Legend/Legend';
 import cl from './PlaysSpeed.module.scss';
 import PlaysSpeedChart from './PlaysSpeedChart';
@@ -11,10 +11,10 @@ const PlaysSpeed = ({ currentMoment }) => {
   const [chartData, setChartData] = useState([]);
   const [currentDot, setCurrentDot] = useState({ type: null, speed: null });
   const ref = useRef(null);
-  const currentCard = useSelector(state => state.game.currentCard);
-  const innings = useSelector(state => state.game.innings);
+  const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
+  const innings = useSelector(state => state.game.innings, shallowEqual);
   const pitchState = useSelector(state => state.game.pitchState);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     if (Object.keys(currentCard).length === 0) {
