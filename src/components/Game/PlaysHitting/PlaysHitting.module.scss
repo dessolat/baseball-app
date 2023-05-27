@@ -12,9 +12,9 @@
   }
 
   @media screen and (max-width: 800px) {
-		height: 15.46%;
-		padding: 0 15px;
-		font-size: 14px;
+    height: 15.46%;
+    padding: 0 15px;
+    font-size: 14px;
     // padding: 0.5rem 0.74rem 0.2rem;
     // aspect-ratio: 16/9;
     // border-top: 0.5px solid #CDCCCC;
@@ -70,7 +70,7 @@
         @media screen and (max-width: 1080px) {
           flex: 1 25%;
         }
-				@media screen and (max-width: 800px) {
+        @media screen and (max-width: 800px) {
           flex: 1 43%;
         }
       }
@@ -148,9 +148,9 @@
   @media screen and (max-width: 800px) {
     // padding: 0.5rem 0.74rem 0.2rem;
     // aspect-ratio: 16/9;
-		padding: 8px 15px;
+    padding: 8px 15px;
     border-top: 0.5px solid #cdcccc;
-		height: 34.54%;
+    height: 34.54%;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     // padding: 0.5rem 0.74rem 0.2rem;
@@ -193,7 +193,7 @@
         @media screen and (max-width: 1080px) {
           flex: 1 75%;
         }
-				@media screen and (max-width: 800px) {
+        @media screen and (max-width: 800px) {
           flex: 1 57%;
         }
       }
@@ -207,7 +207,7 @@
         @media screen and (max-width: 1080px) {
           flex: 1 25%;
         }
-				@media screen and (max-width: 800px) {
+        @media screen and (max-width: 800px) {
           flex: 1 43%;
         }
       }
@@ -242,17 +242,17 @@
     font: 400 0.875rem var(--font-athiti);
   }
 
-	> svg {
-		cursor: pointer;
-	}
+  > svg {
+    cursor: pointer;
+  }
 }
 
 .impactDot {
-	transition: r .3s;
+  transition: r 0.3s;
 }
 
 .impactDotLine {
-	transition: stroke-width .3s;
+  transition: stroke-width 0.3s;
 }
 
 .videos {
@@ -269,9 +269,14 @@
     'bottom-left-video bottom-right-video';
   // grid-template: 15.5rem 15.5rem / 16rem 16rem;
   gap: 6px;
-
+	
   @media screen and (max-width: 800px) {
-    border-top: 0.5px solid #cdcccc;
+		border-top: 0.5px solid #cdcccc;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    grid-template-areas:
+		'top-left-video top-right-video'
+		'bottom-left-video bottom-right-video';
+		gap: 2px;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     border-top: 0.5px solid #cdcccc;

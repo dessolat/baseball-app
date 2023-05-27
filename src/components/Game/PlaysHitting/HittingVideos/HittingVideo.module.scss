@@ -5,7 +5,9 @@
   position: relative;
 
   @media screen and (max-width: 800px) {
-    display: none;
+    > div {
+			transform: scale(1.2);
+    }
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: none;
@@ -16,13 +18,13 @@
   grid-area: top-left-video;
 }
 .topRightVideo {
-  grid-area: top-right-video;
+	grid-area: top-right-video;
 }
 .bottomLeftVideo {
-  grid-area: bottom-left-video;
+	grid-area: bottom-left-video;
 }
 .bottomRightVideo {
-  grid-area: bottom-right-video;
+	grid-area: bottom-right-video;
 }
 
 .YTContainer {

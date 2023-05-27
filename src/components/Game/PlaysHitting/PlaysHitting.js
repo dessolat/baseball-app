@@ -32,6 +32,7 @@ const HittingFieldVideos = () => {
   return (
     <>
       <HittingField handleOnReady={handleOnReady} />
+      <HittingVideos ref={fieldVideoRef} />
       {/* {(mobileWidth > 1000 || hittingMode === 'Field') && <HittingField handleOnReady={handleOnReady} />} */}
       {/* {(mobileWidth > 1000 || hittingMode === 'Videos') && <HittingVideos ref={fieldVideoRef} />} */}
     </>
