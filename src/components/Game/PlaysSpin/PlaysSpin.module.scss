@@ -18,6 +18,10 @@
     color: var(--side-color);
   }
 
+	* {
+		user-select: none;
+	}
+
   > * {
     flex: 1 1 50%;
 
@@ -155,6 +159,7 @@
 
 .dot {
   animation: growRadius 0.3s forwards;
+	r: 4px;
 
   &:hover {
     cursor: pointer;
@@ -163,10 +168,12 @@
 }
 
 .currentDot {
+	r: 7px;
   animation: currentGrowRadius 0.3s forwards;
 }
 
 .currentDotWhite {
+	r: 9px;
   animation: currentWhiteGrowRadius 0.3s forwards;
 }
 
@@ -190,7 +197,6 @@
     r: 6;
   }
 }
-
 @keyframes currentGrowRadius {
   from {
     r: 4;
@@ -199,7 +205,6 @@
     r: 7;
   }
 }
-
 @keyframes currentWhiteGrowRadius {
   from {
     r: 5;
@@ -208,7 +213,6 @@
     r: 9;
   }
 }
-
 @keyframes showing {
   from {
     opacity: 0;

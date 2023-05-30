@@ -86,7 +86,12 @@
 }
 
 .dot {
-  animation: growRadius 0.3s forwards;
+	r: 4px;
+  animation: growRadius 0.3s;
+
+	@media screen and (max-width: 800px) {
+    r: 5px;
+  }
 
   &:hover {
     cursor: pointer;
@@ -95,10 +100,12 @@
 }
 
 .currentDot {
+	r: 7px;
   animation: currentGrowRadius 0.3s forwards;
 }
 
 .currentDotWhite {
+	r: 9px;
   animation: currentWhiteGrowRadius 0.3s forwards;
 }
 
