@@ -45,6 +45,10 @@
   padding-bottom: 0.7rem;
   transition: top var(--transition-speed);
 
+	@media screen and (max-width: 800px) {
+    top: 0;
+  }
+
   &:hover {
     top: 0;
 
@@ -60,6 +64,10 @@
     transform: translateX(-50%) scale(2, 1.5);
     opacity: 0.5;
     transition: opacity var(--transition-speed);
+
+		@media screen and (max-width: 800px) {
+			opacity: 0;
+		}
   }
 }
 
