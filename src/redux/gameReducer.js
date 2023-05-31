@@ -15,6 +15,7 @@ const defaultState = {
   currentGameId: null,
   activeCardList: 'cards',
   boxActiveButton: 'guests',
+	boxMode: 'Batting',
   isVideo: false,
   pitchState: 'Field',
   hitState: 'Field',
@@ -58,6 +59,7 @@ const SET_VIEW_MODE = 'SET_VIEW_MODE';
 const SET_CURRENT_GAME_ID = 'SET_CURRENT_GAME_ID';
 const SET_ACTIVE_CARD_LIST = 'SET_ACTIVE_CARD_LIST';
 const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
+const SET_BOX_MODE = 'SET_BOX_MODE';
 const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const SET_HIT_STATE = 'SET_HIT_STATE';
@@ -118,6 +120,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, activeCardList: action.payload };
     case SET_BOX_ACTIVE_BUTTON:
       return { ...state, boxActiveButton: action.payload };
+    case SET_BOX_MODE:
+      return { ...state, boxMode: action.payload };
     case SET_IS_VIDEO:
       return { ...state, isVideo: action.payload };
     case SET_PITCH_STATE:
@@ -192,6 +196,7 @@ export const setViewMode = payload => ({ type: SET_VIEW_MODE, payload });
 export const setCurrentGameId = payload => ({ type: SET_CURRENT_GAME_ID, payload });
 export const setActiveCardList = payload => ({ type: SET_ACTIVE_CARD_LIST, payload });
 export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, payload });
+export const setBoxMode = payload => ({ type: SET_BOX_MODE, payload });
 export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const setHitState = payload => ({ type: SET_HIT_STATE, payload });
