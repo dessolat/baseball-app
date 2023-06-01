@@ -7,11 +7,12 @@ import { setPlayerCardFilter, togglePlayerCardFilterBy, setPlayerCardFilterFocus
 import cl from './PlayerFilterField.module.scss';
 
 const PlayerFilterField = () => {
-  const { isFilteredPlayer, playerCardFilterBy, playerCardFilter } = useSelector(state => state.game);
+	const isFilteredPlayer = useSelector(s => s.game.isFilteredPlayer)
+	const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy)
+	const playerCardFilter = useSelector(s => s.game.playerCardFilter)
 
   const [filterValue, setFilterValue] = useState(playerCardFilter);
-
-
+	
   const dispatch = useDispatch();
 
   const filterTimeoutRef = useRef();
