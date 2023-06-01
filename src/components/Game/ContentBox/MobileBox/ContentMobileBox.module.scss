@@ -4,8 +4,8 @@
   @media screen and (max-width: 800px) {
     display: block;
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: block;
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: block;
   }
 }
 
@@ -28,12 +28,12 @@
     }
   }
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		justify-content: center;
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    justify-content: center;
 
-		> button + button {
-			margin-left: 1.5rem;
-		}
+    > button + button {
+      margin-left: 1.5rem;
+    }
   }
 }
 
@@ -41,10 +41,15 @@
   border-top: 0.5px solid #cdcccc;
   width: 100%;
   padding: 0;
-	height: calc(100vh - 30.63px - 112.5px - 26px);
+  height: calc(100vh - 30.63px - 112.5px - 26px);
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
+  @media screen and (max-width: 800px) {
+    height: unset;
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
+    height: unset;
   }
 }
 
@@ -104,7 +109,7 @@
 .sides {
   width: 100%;
   max-height: calc(100vh - 30.63px - 112.5px - 27px - 38.5px);
-	background-color: white;
+  background-color: white;
 
   overflow-y: scroll;
   display: flex;
@@ -113,8 +118,8 @@
     width: 0;
   }
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		max-height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    max-height: calc(100vh - var(--landscape-nav-height) - 29px - 26px - 38.5px);
   }
 }
 
@@ -163,11 +168,11 @@
       background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
 
-		&.footerRow {
-			font-weight: 700;
-			line-height: 38.5px;
-			padding-left: 10px;
-		}
+    &.footerRow {
+      font-weight: 700;
+      line-height: 38.5px;
+      padding-left: 10px;
+    }
   }
 }
 
@@ -202,9 +207,8 @@
       background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
 
-		&.footerRow > div {
-			font-weight: 700;
-
-		}
+    &.footerRow > div {
+      font-weight: 700;
+    }
   }
 }
