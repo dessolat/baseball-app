@@ -167,7 +167,7 @@ const Header = ({ currentTab, handleTabClick }) => {
   });
   const scoresWrapperClasses = classNames(cl.scoresWrapper, {
     [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo,
-    [cl.mobileDisplayNone]: !isMobileScoreboard && isVideo || currentTab === 'box'
+    [cl.mobileDisplayNone]: (!isMobileScoreboard && isVideo) || currentTab === 'box'
   });
   const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
   const wrapperClasses = classNames(cl.header, {
@@ -189,6 +189,7 @@ const Header = ({ currentTab, handleTabClick }) => {
                 currentOption={tabsCurrentOption}
                 handleClick={handleTabClick}
                 titleStyles={{ textAlign: 'left' }}
+                listWrapperStyles={{ marginLeft: -7 }}
               />
             </div>
             <div className={teamTotalScoresWrapperClasses}>

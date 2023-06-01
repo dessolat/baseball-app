@@ -25,7 +25,8 @@ const MobileBoxModes = () => {
         listWrapperStyles={{
           left: 'unset',
           right: 0,
-          maxHeight: '72vh'
+          maxHeight: '72vh',
+					marginRight: -7
         }}
         itemStyles={{ paddingLeft: '30%' }}
       />
