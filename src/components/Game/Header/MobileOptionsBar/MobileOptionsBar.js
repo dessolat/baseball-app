@@ -3,19 +3,24 @@ import cl from './MobileOptionsBar.module.scss';
 import OptionsDropdown from './OptionsDropdown/OptionsDropdown';
 import ScoreInfo from './ScoreInfo';
 import { useSelector } from 'react-redux';
+import InfoDropdown from './InfoDropdown/InfoDropdown';
 
-const MobileOptionsBar = ({portrait = true, landscape = false}) => {
+const MobileOptionsBar = ({ currentTab = null, portrait = true, landscape = false }) => {
   const isVideo = useSelector(s => s.game.isVideo);
 
   const optionsBarClasses = classNames(cl.optionsBar, {
-		[cl.onlyPortraitMobile]: portrait,
-		[cl.onlyLandscapeMobile]: landscape,
+    [cl.onlyPortraitMobile]: portrait,
+    [cl.onlyLandscapeMobile]: landscape,
     [cl.noVideo]: !isVideo
   });
+
+  const isOptions = isVideo && currentTab !== 'box';
+  const isInfo = isVideo && currentTab === 'box';
   return (
-    <div className={optionsBarClasses}>
+    <div className={optionsBarClasses} style={currentTab === 'box' ? {paddingRight: 10, borderBottom: '1px solid transparent'} : null}>
       <ScoreInfo />
-      {isVideo && <OptionsDropdown />}
+      {isOptions && <OptionsDropdown />}
+      {isInfo && <InfoDropdown />}
     </div>
   );
 };
