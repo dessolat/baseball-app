@@ -18,9 +18,9 @@ const OptionsDropdown = ({ panelStyles = null, mobileLandscapeVisible = false })
   const handleBtnClick = () => setIsOpen(prev => !prev);
   const handleCrossClick = () => setIsOpen(false);
 
-	const wrapperClasses = classNames(cl.dropdownWrapper, {
-		[cl.mobileLandscapeVisible]: mobileLandscapeVisible
-	})
+  const wrapperClasses = classNames(cl.dropdownWrapper, {
+    [cl.mobileLandscapeVisible]: mobileLandscapeVisible
+  });
   return (
     <div className={wrapperClasses} ref={menuRef}>
       <button className={cl.optionsDropdown} onClick={handleBtnClick}>
@@ -39,7 +39,10 @@ const OptionsDropdown = ({ panelStyles = null, mobileLandscapeVisible = false })
               <SimpleToggler checked={false} onChange={() => {}} />
             </div>
           </div>
-          <CrossClose handleCrossClick={handleCrossClick} style={{ left: 10, top: 10 }} />
+          <CrossClose
+            handleCrossClick={handleCrossClick}
+            style={{ left: 10, top: 10, width: 30, height: 30 }}
+          />
         </div>
       )}
     </div>

@@ -236,6 +236,8 @@ export function HSVtoRGB(h, s, v) {
       g = p;
       b = q;
       break;
+    default:
+      break;
   }
   return `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 }

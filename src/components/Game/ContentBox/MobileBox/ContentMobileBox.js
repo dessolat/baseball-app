@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ContentBoxFooter from '../../ContentBoxFooter/ContentBoxFooter';
 import cl from './ContentMobileBox.module.scss';
-import MobileBoxHeader from './MobileBoxHeader';
 import MobileBoxTable from './MobileBoxTable';
+import { useSelector } from 'react-redux';
 
 const ContentMobileBox = ({ tableData, footer }) => {
-  const [currentMode, setCurrentMode] = useState('Batting');
+  const currentMode = useSelector(s => s.game.boxMode);
 
+  const isTable = currentMode !== 'Info';
+  const isFooter = currentMode === 'Info';
   return (
     <div className={cl.mobileBox}>
-      <MobileBoxHeader currentMode={currentMode} setCurrentMode={setCurrentMode} />
-      {currentMode !== 'Info' ? (
-        <MobileBoxTable currentMode={currentMode} tableData={tableData} />
-      ) : (
-        <ContentBoxFooter footer={footer}/>
-      )}
+      {/* <MobileBoxHeader currentMode={currentMode} /> */}
+      {isTable && <MobileBoxTable currentMode={currentMode} tableData={tableData} />}
+      {isFooter && <ContentBoxFooter footer={footer} />}
     </div>
   );
 };

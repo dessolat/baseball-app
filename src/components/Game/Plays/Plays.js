@@ -6,7 +6,7 @@ import PlaysContent from '../PlaysContent/PlaysContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
 // import { setSearchParam } from 'utils';
-import { setCurrentTab, setPitchState } from 'redux/gameReducer';
+import { setCurrentTab, setHitState, setPitchState, setRunState } from 'redux/gameReducer';
 import classNames from 'classnames';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 // import { setPitchState } from 'redux/gameReducer';
@@ -20,6 +20,8 @@ const Plays = ({ isVideo }) => {
   // const currentCard = useSelector(state => state.game.currentCard);
   const currentTab = useSelector(state => state.game.currentTab);
   const pitchState = useSelector(state => state.game.pitchState);
+  const hitState = useSelector(state => state.game.hitState);
+  const runState = useSelector(state => state.game.runState);
 
   const dispatch = useDispatch();
 
@@ -49,18 +51,30 @@ const Plays = ({ isVideo }) => {
   // };
 
   const handleLeftArrowClick = () => {
-    const prevState = pitchState === 'SpeedSpinInfo' ? 'Videos' : 'Field';
-
-    dispatch(setPitchState(prevState));
+    if (currentTab === 'pitch') {
+      const prevState = pitchState === 'SpeedSpinInfo' ? 'Videos' : 'Field';
+      dispatch(setPitchState(prevState));
+    }
+    if (currentTab === 'hitting') dispatch(setHitState('Field'));
+    if (currentTab === 'running') dispatch(setRunState('Field'));
   };
   const handleRightArrowClick = () => {
-    const nextState = pitchState === 'Field' ? 'Videos' : 'SpeedSpinInfo';
-
-    dispatch(setPitchState(nextState));
+    if (currentTab === 'pitch') {
+      const nextState = pitchState === 'Field' ? 'Videos' : 'SpeedSpinInfo';
+      dispatch(setPitchState(nextState));
+    }
+    if (currentTab === 'hitting') dispatch(setHitState('Videos'));
+    if (currentTab === 'running') dispatch(setRunState('Info'));
   };
 
-  const isLeftArrow = pitchState !== 'Field';
-  const isRightArrow = pitchState !== 'SpeedSpinInfo';
+  const isLeftArrow =
+    (currentTab === 'pitch' && pitchState !== 'Field') ||
+    (currentTab === 'hitting' && hitState !== 'Field') ||
+    (currentTab === 'running' && runState !== 'Field');
+  const isRightArrow =
+    (currentTab === 'pitch' && pitchState !== 'SpeedSpinInfo') ||
+    (currentTab === 'hitting' && hitState !== 'Videos') ||
+    (currentTab === 'running' && runState !== 'Info');
 
   const playsClasses = classNames(cl.plays, {
     [cl.playsNoVideo]: !isVideo,

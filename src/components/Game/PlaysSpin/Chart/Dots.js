@@ -84,7 +84,7 @@ const Dots = ({ chartData, startX, startY, minMaxValues }) => {
           <text x={hoveredDotXCoord} y={hoveredDotYCoord - 13} className={graphTooltip} textAnchor='middle'>
             dx: {spinValueX}
           </text>
-          <text x={hoveredDotXCoord} y={hoveredDotYCoord +2} className={graphTooltip} textAnchor='middle'>
+          <text x={hoveredDotXCoord} y={hoveredDotYCoord + 2} className={graphTooltip} textAnchor='middle'>
             dy: {spinValueY}
           </text>
         </g>

@@ -28,13 +28,14 @@ const MobileFilters = () => {
         options={filteredSituations}
         currentOption={situationFilter}
         handleClick={handleClick}
-        wrapperStyles={{ paddingRight: '.5rem' }}
+        // wrapperStyles={{ paddingRight: '.5rem' }}
         listWrapperStyles={{
           left: 'unset',
           right: 0,
-          maxHeight: '72vh'
+          maxHeight: '72vh',
+					marginRight: -7
         }}
-				itemStyles={{paddingLeft: '30%'}}
+        itemStyles={{ paddingLeft: '30%' }}
       />
     </div>
   );

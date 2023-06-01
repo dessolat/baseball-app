@@ -9,7 +9,7 @@ import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
-import { setCurrentYear } from 'redux/sharedReducer';
+// import { setCurrentYear } from 'redux/sharedReducer';
 import StatsLoadingProvider from 'context/StatsLoadingContext';
 
 const Stats = () => {
@@ -20,8 +20,9 @@ const Stats = () => {
   const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
 
-  const { statsData, tableMode: statsTableMode } = useSelector(state => state.stats);
+  const statsTableMode  = useSelector(state => state.stats.tableMode);
   const currentYear = useSelector(state => state.shared.currentYear);
+	
   const dispatch = useDispatch();
 
   useEffect(() => () => cancelStatsTokenRef.current.cancel(null), []);
@@ -34,35 +35,35 @@ const Stats = () => {
   }, [statsTableMode]);
 
   useEffect(() => {
-    // ! 2023 err handle (temp) !
-    // if (currentYear === 2023) {
-    //   dispatch(setCurrentYear(2022));
-    //   return;
-    // }
-    // !
-
     const refactorData = leagues => {
-			const modifiedLeagues = Array.isArray(leagues) ? leagues : []
+      const modifiedLeagues = Array.isArray(leagues) ? leagues : [];
 
-      const result = modifiedLeagues.reduce((sum, league) => {
-        const resultLeague = {};
-        resultLeague.id = league.id;
-        resultLeague.title = league.title;
-        resultLeague.type = league.type;
-        resultLeague.players = {};
-        resultLeague.players.batting = league.players.batting;
-        resultLeague.players.pitching = league.players.pitching;
-        resultLeague.players['fielding / running'] = league.players.fielding.reduce((sum, player, index) => {
-          sum.push({ ...player, ...league.players.running[index] });
+      const result = modifiedLeagues.reduce((sum, { id, title, type, players, teams }) => {
+        const leaguePlayersFielding = players.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...players.running[index] });
           return sum;
         }, []);
-        resultLeague.teams = {};
-        resultLeague.teams.batting = league.teams.batting;
-        resultLeague.teams.pitching = league.teams.pitching;
-        resultLeague.teams['fielding / running'] = league.teams.fielding.reduce((sum, player, index) => {
-          sum.push({ ...player, ...league.teams.running[index] });
+
+        const leagueTeamsFielding = teams.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...teams.running[index] });
           return sum;
         }, []);
+
+        const resultLeague = {
+          id,
+          title,
+          type,
+          players: {
+            batting: players.batting,
+            pitching: players.pitching,
+            'fielding / running': leaguePlayersFielding
+          },
+          teams: {
+            batting: teams.batting,
+            pitching: teams.pitching,
+            'fielding / running': leagueTeamsFielding
+          }
+        };
 
         sum.push(resultLeague);
 

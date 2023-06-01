@@ -1,0 +1,9 @@
+.wrapper {
+  position: absolute;
+}
+
+.progress {
+  height: 100%;
+  background-color: lightgray;
+  transition: width 0.15s;
+}

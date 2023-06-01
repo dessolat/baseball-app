@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import React, { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import cl from './PlaysRunning.module.scss';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader, Vector3 } from 'three';
@@ -383,7 +383,8 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
   const [isAutoRotate, setAutoRotate] = useState(false);
   const [zoomCoef, setZoomCoef] = useState(1);
 
-  const currentMoment = useSelector(state => state.game.currentMoment);
+  const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
+  const runState = useSelector(state => state.game.runState);
   // const dispatch = useDispatch();
 
   const controlsRef = useRef();
@@ -406,8 +407,12 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
   const yStartPos = 388;
 
   const coef = 925 / 90;
+
+	const wrapperClasses = classNames(cl.fieldWrapper, {
+    [cl.dnone]: runState !== 'Field'
+  });
   return (
-    <div className={cl.fieldWrapper} ref={wrapperRef}>
+    <div className={wrapperClasses} ref={wrapperRef}>
       {/* <svg className={cl.field} viewBox='0 0 2560 2560' fill='none' preserveAspectRatio='none'> */}
       {/* {isBallPaths && <BallPaths field={field} />} */}
       {/* </svg> */}
@@ -464,9 +469,9 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
         handleAutoRotateClick={handleAutoRotateClick}
         handleResetClick={handleResetClick}
       />
-      <div className={cl.rightArrowWrapper}>
+      {/* <div className={cl.rightArrowWrapper}>
         <Arrow direction='right' onClick={() => setRunningMode('Info')} />
-      </div>
+      </div> */}
     </div>
   );
 };

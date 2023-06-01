@@ -6,19 +6,22 @@ import getYouTubeID from 'get-youtube-id';
 import {
   setCurrentCard,
   setCurrentMoment,
-  setPlaybackMode,
+  // setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
   setVideoState
 } from 'redux/gameReducer';
 import HittingVideo from './HittingVideo';
+import classNames from 'classnames';
 
 const HittingVideos = (props, ref) => {
   const wrapperRef = useRef();
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
 
-  const preview = useSelector(state => state.game.preview);
+  const preview = useSelector(state => state.game.preview, shallowEqual);
+  const hitState = useSelector(state => state.game.hitState);
+
   const { camera_info: cameraInfo } = preview;
 
 	const videoState = useSelector(s => s.game.videoState)
@@ -604,8 +607,11 @@ const HittingVideos = (props, ref) => {
     }, 500);
   }
 
+	const wrapperClasses = classNames(cl.videos, {
+    [cl.dnone]: hitState !== 'Videos'
+  });
   return (
-    <div className={cl.videos} onMouseMove={handleMouseMove} onClick={handleMouseMove} ref={wrapperRef}>
+    <div className={wrapperClasses} onMouseMove={handleMouseMove} onClick={handleMouseMove} ref={wrapperRef}>
       <HittingVideo
         videoId={videoId1}
         position='top-left'

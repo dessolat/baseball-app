@@ -3,18 +3,22 @@ import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContentMobileBox from './MobileBox/ContentMobileBox';
 import ContentBoxDesktop from './ContentBoxDesktop';
+import { setBoxData } from 'redux/gameReducer';
 
 const ContentBox = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [boxData, setBoxData] = useState({});
+  // const [boxData, setBoxData] = useState({});
   const [boxGraphsData, setBoxGraphsData] = useState({});
 
   const { gameId } = useParams();
 
+  const boxData = useSelector(state => state.game.boxData);
   const activeButton = useSelector(state => state.game.boxActiveButton);
+
+  const dispatch = useDispatch();
 
   const cancelTokenRef = useRef();
 
@@ -32,7 +36,7 @@ const ContentBox = () => {
           cancelToken: cancelTokenRef.current.token
         });
 
-        setBoxData(response.data);
+        dispatch(setBoxData(response.data));
         setIsLoading(false);
 
         response = await axios.get(`http://baseball-gametrack.ru/api/game_metrix?game_id=${gameId}`, {
@@ -56,18 +60,18 @@ const ContentBox = () => {
 
   const tableData = boxData[activeButton];
   const graphsData = boxGraphsData[activeButton] || {};
+
+  // Loader
+  if (isLoading) return <Loader />;
+
+  // Empty boxData render
+  if (Object.keys(boxData).length === 0) return <></>;
+
+	// Main render
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : Object.keys(boxData).length === 0 ? (
-        <></>
-      ) : (
-        <>
-          <ContentBoxDesktop tableData={tableData} footer={footer} graphsData={graphsData} />
-          <ContentMobileBox tableData={tableData} footer={footer} />
-        </>
-      )}
+      <ContentBoxDesktop tableData={tableData} footer={footer} graphsData={graphsData} />
+      <ContentMobileBox tableData={tableData} footer={footer} />
     </>
   );
 };

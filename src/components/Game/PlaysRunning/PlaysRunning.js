@@ -1,29 +1,26 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useRef, useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PlaysRunningField from './PlaysRunningField';
 import PlaysRunningInfo from './PlaysRunningInfo';
-import { setCurrentCard, setCurrentMoment, setPlaybackMode } from 'redux/gameReducer';
+import { setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
 
 const PlaysRunning = () => {
-  const [runningMode, setRunningMode] = useState('Field');
-
-  const currentMoment = useSelector(state => state.game.currentMoment);
-  const mobileWidth = useSelector(state => state.shared.mobileWidth);
-	const currentCard = useSelector(state => state.game.currentCard);
+  const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
+  const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
   const playbackMode = useSelector(state => state.game.playbackMode);
-  const filteredCards = useSelector(state => state.game.filteredCards);
+  const filteredCards = useSelector(state => state.game.filteredCards, shallowEqual);
   const isLastMomentMode = useSelector(state => state.game.isLastMomentMode);
 
-	const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-	const playRef = useRef();
+  const playRef = useRef();
 
   useEffect(() => () => clearTimeout(playRef.current), []);
 
   useEffect(() => {
     if (playbackMode === 'pause') return;
 
-		clearTimeout(playRef.current);
+    clearTimeout(playRef.current);
 
     const newMoments = [];
     currentCard.type !== 'Replacement'
@@ -44,7 +41,13 @@ const PlaysRunning = () => {
         return;
       }
       if (momentIndex >= currentCard.moments.length - 1) {
-        dispatch(setCurrentCard({ ...filteredCards[cardIndex + 1], toFirstMoment: !isLastMomentMode, manualMoment: true }));
+        dispatch(
+          setCurrentCard({
+            ...filteredCards[cardIndex + 1],
+            toFirstMoment: !isLastMomentMode,
+            manualMoment: true
+          })
+        );
         return;
       }
       dispatch(setCurrentMoment(newMoments[momentIndex + 1]));
@@ -86,10 +89,9 @@ const PlaysRunning = () => {
   }, [playbackMode]);
   return (
     <>
-      {(mobileWidth > 1000 || runningMode === 'Field') && (
-        <PlaysRunningField hit={currentMoment.metering?.hit} field={currentMoment.metering?.field} setRunningMode={setRunningMode} />
-      )}
-      {(mobileWidth > 1000 || runningMode === 'Info') && <PlaysRunningInfo setRunningMode={setRunningMode} />}
+      <PlaysRunningField hit={currentMoment.metering?.hit} field={currentMoment.metering?.field} />
+      <PlaysRunningInfo />
+      {/* {(mobileWidth > 1000 || runningMode === 'Info') && <PlaysRunningInfo setRunningMode={setRunningMode} />} */}
     </>
   );
 };
