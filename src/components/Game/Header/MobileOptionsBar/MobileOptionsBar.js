@@ -17,7 +17,7 @@ const MobileOptionsBar = ({ currentTab = null, portrait = true, landscape = fals
   const isOptions = isVideo && currentTab !== 'box';
   const isInfo = isVideo && currentTab === 'box';
   return (
-    <div className={optionsBarClasses} style={currentTab === 'box' ? {paddingRight: 10, borderBottom: '1px solid transparent'} : null}>
+    <div className={optionsBarClasses} style={currentTab === 'box' ? {paddingRight: 10, borderBottom: 'unset'} : null}>
       <ScoreInfo />
       {isOptions && <OptionsDropdown />}
       {isInfo && <InfoDropdown />}
