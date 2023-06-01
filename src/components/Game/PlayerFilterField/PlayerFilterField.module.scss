@@ -65,8 +65,8 @@
   padding-right: 25px;
   background: no-repeat white url('/images/player_filter_icon.png') right 6px bottom 50% / 15px;
   width: 183px;
-	// height: calc(1.5rem + 2px);
-	height: 100%;
+	height: calc(1.5rem + 2px);
+	// height: 100%;
 	
   @media screen and (max-width: 800px),
 	screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
