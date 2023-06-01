@@ -9,10 +9,12 @@ import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import VerticalScrollDivider from 'components/UI/dividers/VerticalScrollDivider/VerticalScrollDivider';
 import classNames from 'classnames';
+import ContentBoxFooter from 'components/Game/ContentBoxFooter/ContentBoxFooter';
 
 const InfoPanel = ({ panelStyles, setIsOpen }) => {
   const innings = useSelector(s => s.game.innings, shallowEqual);
   const preview = useSelector(s => s.game.preview, shallowEqual);
+  const { footer } = useSelector(s => s.game.boxData);
 
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
     useScrollHorizontally();
@@ -95,7 +97,7 @@ const InfoPanel = ({ panelStyles, setIsOpen }) => {
         </div>
         <HeaderInfo innings={innings} />
       </div>
-
+      <ContentBoxFooter footer={footer} />
       <CrossClose handleCrossClick={handleCrossClick} style={{ left: 10, top: 10, width: 30, height: 30 }} />
     </div>
   );
