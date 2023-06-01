@@ -56,7 +56,7 @@ const Games = () => {
 
         const response = await axios.get(`http://baseball-gametrack.ru/api/main`, {
           cancelToken: cancelTokenRef.current.token,
-          timeout: 10000,
+          // timeout: 10000,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
