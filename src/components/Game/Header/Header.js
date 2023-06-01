@@ -21,6 +21,7 @@ import MobileFilters from './MobileFilters';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
 import classNames from 'classnames';
 import MobileOptionsBar from './MobileOptionsBar/MobileOptionsBar';
+import MobileBoxModes from './MobileBoxModes';
 
 const Header = ({ currentTab, handleTabClick }) => {
   const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
@@ -166,12 +167,12 @@ const Header = ({ currentTab, handleTabClick }) => {
   });
   const scoresWrapperClasses = classNames(cl.scoresWrapper, {
     [cl.landscapeDisplayNone]: getSearchParam('tab') === 'box' || isVideo,
-		[cl.mobileDisplayNone]: !isMobileScoreboard && isVideo
+    [cl.mobileDisplayNone]: !isMobileScoreboard && isVideo || currentTab === 'box'
   });
   const defenceScoreClasses = classNames(cl.teamScore, cl.defenceTeamScore);
-	const wrapperClasses = classNames(cl.header, {
-		[cl.landscapeDisplayNone]: currentTab === 'videos'
-	})
+  const wrapperClasses = classNames(cl.header, {
+    [cl.landscapeDisplayNone]: currentTab === 'videos'
+  });
   return (
     <header className={wrapperClasses}>
       <div className='container'>
@@ -187,6 +188,7 @@ const Header = ({ currentTab, handleTabClick }) => {
                 options={tabsArr}
                 currentOption={tabsCurrentOption}
                 handleClick={handleTabClick}
+                titleStyles={{ textAlign: 'left' }}
               />
             </div>
             <div className={teamTotalScoresWrapperClasses}>
@@ -202,10 +204,11 @@ const Header = ({ currentTab, handleTabClick }) => {
                 {getShortName(preview.owners.name, 14)}
               </button>
             </div>
-            <div className={cl.mobileOnlyFields} style={{ justifyContent: 'center', height: '19px' }}>
+            <div className={cl.mobileOnlyFields} style={{ justifyContent: 'center' }}>
               <PlayerFilterField />
             </div>
-            <MobileFilters />
+            {currentTab !== 'box' && <MobileFilters />}
+            {currentTab === 'box' && <MobileBoxModes />}
             {/* <div className={cl.dateLocation}>
               {`${useFullDate(preview.game_date)} At MOSCOW (${preview.stadium_name.toUpperCase()})`}
             </div> */}
@@ -215,7 +218,7 @@ const Header = ({ currentTab, handleTabClick }) => {
           </div>
           <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
-          <MobileOptionsBar />
+          <MobileOptionsBar currentTab={currentTab} />
           <div className={scoresWrapperClasses}>
             <HeaderTeams names={[preview.guests.name, preview.owners.name]} currentTab={currentTab} />
             <div className={cl.scoresListWrapper}>
