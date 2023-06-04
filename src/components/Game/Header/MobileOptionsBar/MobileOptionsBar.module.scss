@@ -8,8 +8,8 @@
 
   &.noVideo {
 		@media screen and (max-width: 800px) {
-			padding: 0 13px;
-      display: block;
+			// padding: 0 13px;
+      // display: flex;
     }
   }
 }
@@ -65,6 +65,11 @@
 
 .teamName {
   font: 400 14px var(--font-nunito);
+	border-bottom: 2px solid transparent;
+
+	&.active {
+		border-bottom: 2px solid var(--side-color);
+	}
 }
 
 .teamScore {
