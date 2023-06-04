@@ -2,6 +2,10 @@
   padding: 0 11.25rem;
   background-color: white;
 	user-select: none;
+
+	@media screen and (max-width: 800px) {
+    padding: 0;
+  }
 }
 
 .row,
@@ -10,6 +14,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 4.0625rem;
+
+	@media screen and (max-width: 800px) {
+    padding: 0;
+  }
 }
 
 .header {
@@ -26,6 +34,10 @@
 
   > .name {
     padding: 1.5rem 1rem 0.625rem;
+
+		@media screen and (max-width: 800px) {
+			padding-left: 9px;
+		}
   }
 }
 
@@ -37,6 +49,10 @@
   font: 300 0.875rem / 2.0625rem var(--font-nunito);
 	cursor: pointer;
 	transition: background-color 0.1s;
+
+	@media screen and (max-width: 800px) {
+    line-height: 1.5rem;
+  }
 
   > * {
     text-align: center;
@@ -64,6 +80,13 @@
   flex: 0 1 13.75rem;
   text-align: left;
   padding: 0 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	@media screen and (max-width: 800px) {
+		padding: 0 9px;
+  }
 }
 
 .value {
