@@ -85,6 +85,8 @@ const InfoPanel = ({ panelStyles, setIsOpen }) => {
     </>
   );
 
+  const isFooter = footer !== '';
+
   const scoresWrapperClasses = classNames(cl.scoresWrapper);
   return (
     <div className={cl.infoPanel} style={panelStyles}>
@@ -97,7 +99,7 @@ const InfoPanel = ({ panelStyles, setIsOpen }) => {
         </div>
         <HeaderInfo innings={innings} />
       </div>
-      <ContentBoxFooter footer={footer} />
+      {isFooter && <ContentBoxFooter footer={footer} />}
       <CrossClose handleCrossClick={handleCrossClick} style={{ left: 10, top: 10, width: 30, height: 30 }} />
     </div>
   );
