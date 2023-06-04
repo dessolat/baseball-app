@@ -108,7 +108,7 @@
 
 .sides {
   width: 100%;
-  max-height: calc(100vh - 30.63px - 112.5px - 27px - 38.5px);
+  max-height: calc(100vh - var(--desktop-nav-height) - 56px - 38.5px);
   background-color: white;
 
   overflow-y: scroll;
