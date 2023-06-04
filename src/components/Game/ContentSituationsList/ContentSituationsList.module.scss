@@ -19,9 +19,9 @@
 }
 
 .controlsWrapper {
-  position: absolute;
-  right: 9px;
-  bottom: 10px;
+  position: fixed;
+  right: 4%;
+  bottom: 2.5%;
   opacity: 0.25;
   transition: opacity var(--transition-speed);
 
