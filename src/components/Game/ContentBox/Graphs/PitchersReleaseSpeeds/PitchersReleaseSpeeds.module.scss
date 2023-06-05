@@ -1,60 +1,60 @@
 .wrapper {
-	aspect-ratio: 1248 / 330;
-	position: relative;
-	
-	@media screen and (max-width: 800px) {
-		aspect-ratio: 416 / 330;
-		overflow-x: scroll;
+  aspect-ratio: 1248 / 330;
+  position: relative;
+
+  @media screen and (max-width: 800px) {
+    aspect-ratio: 416 / 330;
+    overflow-x: scroll;
   }
 }
 
 .graph {
-	background-color: white;
+  background-color: white;
 
-	@media screen and (max-width: 800px) {
-		width: 300%;
+  @media screen and (max-width: 800px) {
+    width: 300%;
   }
 }
 
 .leftValue {
-	text-anchor: end;
-	font: 300 0.875rem var(--font-nunito);
+  text-anchor: end;
+  font: 300 0.875rem var(--font-nunito);
   fill: black;
 }
 
 .dot {
-	cursor: pointer;
-	animation: growRadius .3s forwards;
+  cursor: pointer;
+  animation: growRadius 0.3s forwards;
 
-	&:hover {
-		animation: growRadiusMore .3s forwards;
-	}
+  &:hover {
+    animation: growRadiusMore 0.3s forwards;
+  }
 }
 
 .showingGroup {
-	animation: showing .3s forwards;
+  animation: showing 0.3s forwards;
 }
 
 .plainText {
   font: 400 1.07rem var(--font-nunito);
-	fill: black;
+  fill: black;
 }
 
 @keyframes growRadius {
   from {
-    r: 0;
+    r: 0px;
   }
   to {
-    r: 8;
+    r: 8px;
   }
 }
 
 @keyframes growRadiusMore {
   from {
-    r: 8;
+    r: 8px;
   }
   to {
-    r: 12;
+    r: 12px;
   }
 }
 
