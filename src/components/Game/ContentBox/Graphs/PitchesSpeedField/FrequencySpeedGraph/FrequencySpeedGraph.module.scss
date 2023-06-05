@@ -5,6 +5,10 @@
 	// max-width: 480px;
 	// height: auto;
 	background-color: #fff;
+
+	@media screen and (max-width: 800px) {
+    width: 100%;
+  }
 }
 
 .bottomNumber {

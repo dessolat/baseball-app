@@ -3,6 +3,10 @@
   padding: 0 0 2.3rem 1.9rem;
   background: white;
   position: relative;
+
+	@media screen and (max-width: 800px) {
+    width: 100%;
+  }
 }
 
 .bottomWrapperTitle,
@@ -96,25 +100,25 @@
 
 @keyframes growRadius {
   from {
-    r: 0;
+    r: 0px;
   }
   to {
-    r: 8;
+    r: 8px;
   }
 }
 @keyframes growRadiusMore {
   from {
-    r: 8;
+    r: 8px;
   }
   to {
-    r: 12;
+    r: 12px;
   }
 }
 @keyframes growRadiusEllipse {
   from {
-    r: 0;
+    r: 0px;
   }
   to {
-    r: 15;
+    r: 15px;
   }
 }

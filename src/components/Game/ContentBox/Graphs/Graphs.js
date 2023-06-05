@@ -25,7 +25,7 @@ const Graphs = ({ graphsData }) => {
         <GraphsHeader subTitle={`${teamName} pitchers Release speed, mph`} noSelector />
         <PitchersReleaseSpeeds metrix={pitchersMetrix} />
       </GraphsBlock>
-      {/* <PitchersGraphRows metrix={pitchersMetrix} /> */}
+      <PitchersGraphRows metrix={pitchersMetrix} />
     </div>
   );
 };
