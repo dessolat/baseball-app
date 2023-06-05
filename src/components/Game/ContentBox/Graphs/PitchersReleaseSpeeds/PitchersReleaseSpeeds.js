@@ -1,10 +1,12 @@
 import cl from './PitchersReleaseSpeeds.module.scss';
 import HorizontalRows from './HorizontalRows';
-import { memo } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import LeftValues from './LeftValues';
 import VerticalPitcherRowsAndTitles from './VerticalPitcherRowsAndTitles';
 import Dots from './Dots';
 import Legend from './Legend/Legend';
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
+import classNames from 'classnames';
 
 const PARAMS = {
   WRAPPER_WIDTH: 1248,
@@ -18,6 +20,28 @@ const PARAMS = {
 };
 
 const PitchersReleaseSpeeds = ({ metrix }) => {
+  const [isLeftArrow, setIsLeftArrow] = useState(false);
+  const [isRightArrow, setIsRightArrow] = useState(false);
+
+  const innerWrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (innerWrapperRef.current === null) return;
+
+    setIsLeftArrow(innerWrapperRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightArrow(
+      innerWrapperRef.current.scrollLeft + innerWrapperRef.current.clientWidth <
+        innerWrapperRef.current.scrollWidth
+        ? true
+        : false
+    );
+  }, []);
+
+  const horizontalScrollHandler = e => {
+    setIsLeftArrow(e.target.scrollLeft <= 0 ? false : true);
+    setIsRightArrow(e.target.scrollLeft + e.target.clientWidth < e.target.scrollWidth ? true : false);
+  };
+
   // Default data
   const addedData = metrix.reduce((sum, { preview, pitches_all }) => {
     const pitcherData = {};
@@ -74,30 +98,37 @@ const PitchersReleaseSpeeds = ({ metrix }) => {
   const legendPitchTypes = Array.from(
     new Set(metrix.map(pitcher => pitcher.preview.pitch_types).reduce((sum, arr) => sum.concat(arr), []))
   );
+
+  const leftArrowClasses = classNames(cl.arrowBtn, cl.leftArrowBtn);
+  const rightArrowClasses = classNames(cl.arrowBtn, cl.rightArrowBtn);
   return (
     <div className={cl.wrapper}>
-      <svg
-        viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
-        width='100%'
-        fill='none'
-        className={cl.graph}
-        xmlns='http://www.w3.org/2000/svg'>
-        <HorizontalRows PARAMS={PARAMS} />
-        <LeftValues PARAMS={PARAMS} minMaxValues={minMaxValues} />
-        <VerticalPitcherRowsAndTitles
-          PARAMS={PARAMS}
-          linesArr={linesArr}
-          totalPitchesCount={totalPitchesCount}
-          pitchDeltaWidth={pitchDeltaWidth}
-        />
-        <Dots
-          PARAMS={PARAMS}
-          linesArr={linesArr}
-          minMaxValues={minMaxValues}
-          pitchDeltaWidth={pitchDeltaWidth}
-        />
-      </svg>
+      {isLeftArrow && <Arrow direction='left' className={leftArrowClasses} />}
+      <div className={cl.innerWrapper} onScroll={horizontalScrollHandler} ref={innerWrapperRef}>
+        <svg
+          viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
+          width='100%'
+          fill='none'
+          className={cl.graph}
+          xmlns='http://www.w3.org/2000/svg'>
+          <HorizontalRows PARAMS={PARAMS} />
+          <LeftValues PARAMS={PARAMS} minMaxValues={minMaxValues} />
+          <VerticalPitcherRowsAndTitles
+            PARAMS={PARAMS}
+            linesArr={linesArr}
+            totalPitchesCount={totalPitchesCount}
+            pitchDeltaWidth={pitchDeltaWidth}
+          />
+          <Dots
+            PARAMS={PARAMS}
+            linesArr={linesArr}
+            minMaxValues={minMaxValues}
+            pitchDeltaWidth={pitchDeltaWidth}
+          />
+        </svg>
+      </div>
       <Legend legendData={legendPitchTypes} />
+      {isRightArrow && <Arrow direction='right' className={rightArrowClasses} />}
     </div>
   );
 };
