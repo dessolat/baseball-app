@@ -1,10 +1,22 @@
 .wrapper {
   padding: 0 11.25rem;
   background-color: white;
-	user-select: none;
+  user-select: none;
+  position: relative;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     padding: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      height: 100%;
+      left: calc(13.75rem - 4px);
+      width: 3px;
+      box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
+      clip-path: inset(0px -4px 0px 4px);
+    }
   }
 }
 
@@ -15,80 +27,101 @@
   align-items: center;
   padding: 0 4.0625rem;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     padding: 0;
   }
 }
 
 .header {
   font: 700 0.75rem / 1.1 var(--font-nunito);
-	color: #838383;
-	border-bottom: 0.5px solid #CDCCCC;
+  color: #838383;
+  border-bottom: 0.5px solid #cdcccc;
 
   > * {
     padding: 1.5rem 0 0.625rem;
     text-align: center;
     transition: background-color 0.3s;
-		cursor: pointer;
+    cursor: pointer;
   }
 
   > .name {
     padding: 1.5rem 1rem 0.625rem;
 
-		@media screen and (max-width: 800px) {
-			padding-left: 9px;
-		}
+    @media screen and (max-width: 800px) {
+      padding-left: 9px;
+      align-self: stretch;
+    }
   }
 }
 
 .headerCell {
-	position: relative;
+  position: relative;
 }
 
 .row {
   font: 300 0.875rem / 2.0625rem var(--font-nunito);
-	cursor: pointer;
-	transition: background-color 0.1s;
+  cursor: pointer;
+  transition: background-color 0.1s;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     line-height: 1.5rem;
+    font-size: 14px;
   }
 
   > * {
     text-align: center;
     transition: background-color 0.3s;
   }
-	
+
   &:nth-child(2n + 1) {
-		background-color: #eaeaea;
+    background-color: rgba($color: #eaeaea, $alpha: 0.4);
   }
 
-	&:hover {
-		background-color: #e0f0ff;
-	}
+  &:hover {
+    background-color: #e0f0ff;
+  }
 }
 
 .active {
   background: #e0f0ff;
-	display: flex;
-	align-items: center;
-	align-self: stretch;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
 }
 
 .name {
-  flex: 0 1 13.75rem;
+  flex: 0 0 13.75rem;
   text-align: left;
   padding: 0 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
 
-	@media screen and (max-width: 800px) {
-		padding: 0 9px;
+  @media screen and (max-width: 800px) {
+    padding: 0 9px;
   }
 }
 
 .value {
   flex: 0 1 5rem;
+
+  @media screen and (max-width: 800px) {
+    &:first-of-type {
+      flex: 0 1 5rem;
+    }
+    &:nth-of-type(2) {
+      flex: 0 1 3.5rem;
+    }
+    &:nth-of-type(3) {
+      flex: 0 1 3rem;
+    }
+    &:nth-of-type(4) {
+      flex: 0 1 4.5rem;
+    }
+    &:nth-of-type(5) {
+      flex: 0 1 4rem;
+    }
+  }
 }
