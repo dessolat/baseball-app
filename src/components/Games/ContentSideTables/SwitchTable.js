@@ -96,6 +96,7 @@ const SwitchTable = () => {
             options={['Batting', 'Fielding', 'Running', 'Pitching']}
             currentOption={tableModeValue}
             handleClick={handleTableModeClick}
+						listWrapperClass={cl.mobileTablemodeDropdownClass}
             listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
           />
         </div>
@@ -112,6 +113,7 @@ const SwitchTable = () => {
                 options={DROPDOWN_VALUES[tableMode]}
                 currentOption={dropdownValue[tableMode]}
                 handleClick={handleDropdownClick}
+								listWrapperClass={cl.mobileValueDropdownClass}
                 listStyles={{ left: '-4px', width: 'calc(100% + .5rem)', top: '80%', maxHeight: '30vh' }}
                 itemStyles={{ lineHeight: 0, padding: '.1rem .5rem' }}
                 itemTextStyles={{ lineHeight: 1.1, display: 'inline-block' }}

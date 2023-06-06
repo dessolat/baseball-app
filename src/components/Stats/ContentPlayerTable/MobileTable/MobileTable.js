@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import cl from '../ContentPlayerTable.module.scss';
 import { useSelector } from 'react-redux';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { Link } from 'react-router-dom';
@@ -9,11 +10,11 @@ const MobileTable = ({
   filteredStatsData,
   sortedTeamOptions,
   currentTeam,
-	handleFieldClick,
+  handleFieldClick,
   handleTeamClick,
   getTableHeaders,
-	getTableRows,
-	getSortedStatsData
+  getTableRows,
+  getSortedStatsData
 }) => {
   const [isScrollable, setIsScrollable] = useState(true);
 
@@ -68,6 +69,7 @@ const MobileTable = ({
                   currentOption={currentTeam}
                   handleClick={handleTeamClick}
                   wrapperStyles={{ position: 'initial' }}
+                  listWrapperClass={cl.mobileHeaderTeamDropdown}
                   listStyles={{
                     maxWidth: 125,
                     left: '125px',

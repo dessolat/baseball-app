@@ -177,3 +177,23 @@ a.active {
 		width: 254px;
   }
 }
+
+.mobileListTypesDropdown {
+	@media screen and (max-width: 800px) {
+    width: 190px;
+		left: unset;
+		right: 0;
+  }
+}
+
+.mobileTableModesDropdown {
+	@media screen and (max-width: 800px) {
+    width: 190px;
+		left: unset;
+		right: -6px;
+
+		> ul {
+			width: unset;
+		}
+  }
+}
