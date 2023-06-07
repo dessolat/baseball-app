@@ -748,6 +748,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     state => state.playerStats.playerStatsData
   );
 
+	const isMobile = useSelector(s => s.shared.isMobile)
+
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
   // const filteredData = []
@@ -784,14 +786,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         />
         <FacedGraph data={filteredData} preview={preview} />
       </GraphsBlock>
-      <GraphsBlock defaultOption='' noSelector>
+      {!isMobile && <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`${playerName} ${playerSurname} Hits`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
-      </GraphsBlock>
-      <GraphsBlock defaultOption='' noSelector>
+      </GraphsBlock>}
+      {!isMobile && <GraphsBlock defaultOption='' noSelector>
         <PitchesTrajectories data={filteredData} />
-      </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches'>
+      </GraphsBlock>}
+      {!isMobile && <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -830,8 +832,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             </div>
           </>
         )}
-      </GraphsBlock>
-      <GraphsTimeDynamicBlock
+      </GraphsBlock>}
+      {!isMobile && <GraphsTimeDynamicBlock
         defaultOption='Game'
         defaultOption2={Array.from(new Set(pitchClasses))}
         defaultOption3='opened'>
@@ -914,7 +916,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             /> */}
           </>
         )}
-      </GraphsTimeDynamicBlock>
+      </GraphsTimeDynamicBlock>}
     </div>
   );
 };

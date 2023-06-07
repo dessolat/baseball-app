@@ -5,6 +5,11 @@
   top: -1px;
 	z-index: 2;
 
+	@media screen and (max-width: 800px) {
+		z-index: 0;
+		top: calc(var(--desktop-nav-height) + 132px + 58px);
+  }
+
   > .header {
 		color: #1a4c96;
 		font: 700 1.125rem var(--font-nunito);
