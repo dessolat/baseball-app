@@ -246,6 +246,7 @@ const HeaderSelections = () => {
                 title={tableType}
                 options={getSortedTableOptions()}
                 currentOption={tableType}
+								listWrapperClass={cl.mobileTableModesDropdown}
                 handleClick={handleTableOptionClick}
               />
             ) : getSortedTableOptions().length === 1 ? (

@@ -67,11 +67,11 @@ const ContentBox = () => {
   // Empty boxData render
   if (Object.keys(boxData).length === 0) return <></>;
 
-	// Main render
+  // Main render
   return (
     <>
       <ContentBoxDesktop tableData={tableData} footer={footer} graphsData={graphsData} />
-      <ContentMobileBox tableData={tableData} footer={footer} />
+      <ContentMobileBox tableData={tableData} footer={footer} graphsData={graphsData} />
     </>
   );
 };

@@ -30,18 +30,24 @@
 					padding: 0 4px;
 					justify-content: center;
 
-					> *:last-child {
+					> .text {
 						display: none;
 					}
+					// > *:last-child {
+					// 	display: none;
+					// }
         }
         @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
           flex: 0 0 10%;
 					padding: 0 4px;
 					justify-content: center;
 
-					> *:last-child {
+					> .text {
 						display: none;
 					}
+					// > *:last-child {
+					// 	display: none;
+					// }
         }
       }
     }

@@ -2,7 +2,15 @@
   display: flex;
   justify-content: space-between;
 
+	@media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
+
   > * + * {
     margin-left: 6px;
+
+		@media screen and (max-width: 800px) {
+			margin-left: 0;
+		}
   }
 }

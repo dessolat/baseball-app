@@ -304,15 +304,12 @@
               justify-content: flex-end;
             }
           }
-
         }
       }
     }
   }
 
   > .tableBody {
-
-
     @media screen and (max-width: 800px) {
       max-height: calc(100vh - 30.63px - 132px - 36px - 6px - 21px - 35px);
     }
@@ -358,7 +355,6 @@
               @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
                 width: 4.5rem;
               }
-
             }
 
             &:nth-child(2) {
@@ -366,7 +362,6 @@
               text-align: center;
               padding-right: 0.4rem;
             }
-
           }
         }
       }
@@ -374,7 +369,21 @@
   }
 }
 
-
 .underlineHover > a:hover {
   border-bottom: 2px solid var(--side-color);
+}
+
+.mobileTablemodeDropdownClass {
+  @media screen and (max-width: 800px) {
+    width: 50vw;
+
+    > ul > li {
+      padding-left: 32%;
+    }
+  }
+}
+.mobileValueDropdownClass {
+  @media screen and (max-width: 800px) {
+    width: 50px;
+  }
 }

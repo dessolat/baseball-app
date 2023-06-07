@@ -1,9 +1,13 @@
+import Arrow from 'components/UI/buttons/Arrow/Arrow';
 import BottomValues from './BottomValues';
 import cl from './FacedGraph.module.scss';
 import Footer from './Footer';
 import Graph from './Graph';
 import LeftValues from './LeftValues';
 import StaticLayout from './StaticLayout';
+import classNames from 'classnames';
+import { useEffect, useRef, useState } from 'react';
+import MobileFooter from './MobileFooter';
 
 const PARAMS = {
   WRAPPER_WIDTH: 940,
@@ -24,6 +28,23 @@ const PITCH_CLASSES_PRIORITY = {
 
 const FacedGraph = ({ data, preview }) => {
   const { pitch_classes: pitchClasses } = preview;
+
+  const [isLeftArrow, setIsLeftArrow] = useState(false);
+  const [isRightArrow, setIsRightArrow] = useState(false);
+
+  const innerWrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (innerWrapperRef.current === null) return;
+
+    setIsLeftArrow(innerWrapperRef.current.scrollLeft <= 0 ? false : true);
+    setIsRightArrow(
+      innerWrapperRef.current.scrollLeft + innerWrapperRef.current.clientWidth <
+        innerWrapperRef.current.scrollWidth
+        ? true
+        : false
+    );
+  }, []);
 
   const minMaxSpeed = data.reduce((sum, { pitch_info: { speed } }) => {
     if (sum.min === undefined || speed < sum.min) sum.min = speed;
@@ -73,28 +94,44 @@ const FacedGraph = ({ data, preview }) => {
 
     return max;
   }, 0);
+
+  const horizontalScrollHandler = e => {
+    setIsLeftArrow(e.target.scrollLeft <= 0 ? false : true);
+    setIsRightArrow(e.target.scrollLeft + e.target.clientWidth < e.target.scrollWidth ? true : false);
+  };
+
+  const leftArrowClasses = classNames(cl.arrowBtn, cl.leftArrowBtn);
+  const rightArrowClasses = classNames(cl.arrowBtn, cl.rightArrowBtn);
   return (
-    <svg
-      viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
-      width='100%'
-      fill='none'
-      className={cl.graph}
-      xmlns='http://www.w3.org/2000/svg'>
-      {/* Layout */}
-      <StaticLayout PARAMS={PARAMS} />
+    <div className={cl.wrapper}>
+      {isLeftArrow && <Arrow direction='left' className={leftArrowClasses} />}
+      <div className={cl.innerWrapper} onScroll={horizontalScrollHandler} ref={innerWrapperRef}>
+        <svg
+          viewBox={`0 0 ${PARAMS.WRAPPER_WIDTH} ${PARAMS.WRAPPER_HEIGHT}`}
+          width='100%'
+          fill='none'
+          className={cl.graph}
+          xmlns='http://www.w3.org/2000/svg'>
+          {/* Layout */}
+          <StaticLayout PARAMS={PARAMS} />
 
-      {/* Bottom values */}
-      {maxCount > 0 && <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />}
+          {/* Bottom values */}
+          {maxCount > 0 && <BottomValues minMaxSpeed={minMaxSpeed} PARAMS={PARAMS} />}
 
-      {/* Left values */}
-      <LeftValues maxCount={maxCount} PARAMS={PARAMS} />
+          {/* Left values */}
+          <LeftValues maxCount={maxCount} PARAMS={PARAMS} />
 
-      {/* Graph */}
-      <Graph summary={summary} PARAMS={PARAMS} minMaxSpeed={minMaxSpeed} maxCount={maxCount} />
+          {/* Graph */}
+          <Graph summary={summary} PARAMS={PARAMS} minMaxSpeed={minMaxSpeed} maxCount={maxCount} />
 
-      {/* Footer */}
-      <Footer totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} />
-    </svg>
+          {/* Footer */}
+          <Footer totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} />
+        </svg>
+      </div>
+      {isRightArrow && <Arrow direction='right' className={rightArrowClasses} />}
+      {/* Mobile Footer */}
+      {/* <MobileFooter totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} /> */}
+    </div>
   );
 };
 

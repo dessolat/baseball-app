@@ -48,6 +48,7 @@ const HeaderSelections = () => {
             options={['Baseball', 'Softball']}
             currentOption={currentGameType}
             handleClick={handleGameTypeClick}
+						listWrapperClass={cl.mobileListTypesDropdown}
             listStyles={{ marginLeft: '-.75rem', width: '115%' }}
             itemStyles={{ padding: '.3rem 0', textAlign: 'center' }}
           />
@@ -65,6 +66,7 @@ const HeaderSelections = () => {
             options={TABLE_MODES}
             currentOption={tableMode}
             handleClick={handleModeClick}
+						listWrapperClass={cl.mobileTableModesDropdown}
             listStyles={{ marginLeft: '-.75rem', width: '115%' }}
             itemStyles={{ padding: '.3rem 0', textAlign: 'center' }}
           />

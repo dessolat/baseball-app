@@ -299,6 +299,11 @@
     width: 22.5%;
     // width: 6.5rem;
 		line-height: 1.65;
+
+		> div > div:last-child > ul > li:last-child > span {
+			display: inline-block;
+			line-height: 1.2;
+		}
   }
 }
 

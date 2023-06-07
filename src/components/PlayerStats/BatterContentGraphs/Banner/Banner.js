@@ -7,8 +7,9 @@ import PlayerStatsAnimationProvider from 'context/PlayerStatsAnimationContext/Pl
 const Banner = () => {
   const { playerYears } = useContext(PlayerYearsContext);
 
-  const { playerStatsData: statsData, playerCurrentTeam: currentTeam } = useSelector(s => s.playerStats);
-  const { currentLeague } = useSelector(state => state.games);
+  const statsData = useSelector(s => s.playerStats.playerStatsData);
+  const currentTeam = useSelector(s => s.playerStats.playerCurrentTeam);
+  const currentLeague = useSelector(state => state.games.currentLeague);
 
   const { total, total_annual, teams, leagues } = statsData.batting_banner;
 

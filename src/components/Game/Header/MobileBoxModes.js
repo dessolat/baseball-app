@@ -3,7 +3,7 @@ import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBoxMode } from 'redux/gameReducer';
 
-const BOX_MODES = ['Batting', 'Running', 'Fielding', 'Pitching', 'Catching'];
+const BOX_MODES = ['Batting', 'Running', 'Fielding', 'Pitching', 'Catching', 'Machine Vision Statistics'];
 
 const MobileBoxModes = () => {
   const boxMode = useSelector(s => s.game.boxMode);

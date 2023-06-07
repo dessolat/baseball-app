@@ -1,6 +1,14 @@
 .content {
   position: relative;
 
+	@media screen and (max-width: 800px) {
+    background: #E9EAEC;
+
+		> div:not(:first-child) + div {
+			margin-top: 6px;
+		}
+  }
+
   > * {
     position: relative;
   }
@@ -39,6 +47,10 @@
   background-color: #f4f5f7;
   border-top: 0.5px solid #cdcccc;
   padding: 7px;
+	position: sticky;
+	top: calc(var(--desktop-nav-height) + 132px);
+	z-index: 1;
+	border-bottom: 0.5px solid #cdcccc;
 
   .fullName {
     font-size: 14px;
