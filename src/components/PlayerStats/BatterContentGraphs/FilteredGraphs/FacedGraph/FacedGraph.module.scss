@@ -3,7 +3,7 @@
 	background-color: white;
 
 	@media screen and (max-width: 800px) {
-		aspect-ratio: 470 / 365;
+		aspect-ratio: 376 / 365;
 		overflow-x: scroll;
 		position: relative;
 	}
@@ -56,9 +56,9 @@
 }
 
 .footerWrapper {
-	// @media screen and (max-width: 800px) {
-	// 	display: none;
-	// }
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 }
 
 .mobileFooterWrapper {
@@ -66,9 +66,38 @@
 
 	@media screen and (max-width: 800px) {
 		display: block;
-		bottom: 0;
-		left: 0;
+		position: absolute;
+		bottom: 9%;
+		left: 13%;
 	}
+}
+
+.mobileFooterRow {
+	display: flex;
+	align-items: center;
+	font: 300 14px var(--font-nunito);
+	position: relative;
+	padding-left: 11px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 6px;
+		height: 6px;
+		background-color: var(--bg-color);
+	}
+
+	// > .rowIcon {
+	// 	width: 6px;
+	// 	height: 6px;
+	// }
+
+	// > div + div {
+	// 	margin-left: 6px;
+	// }
 }
 
 .footerValue {

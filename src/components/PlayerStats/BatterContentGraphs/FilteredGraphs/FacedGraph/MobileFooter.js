@@ -35,19 +35,20 @@ const MobileFooter = ({ totalClasses, PARAMS, data, pitchClasses }) => {
           const avgValue = Math.round((minMaxSum[classTitle].sum / minMaxSum[classTitle].count) * 2.24);
           const maxValue = Math.round(minMaxSum[classTitle].max * 2.24);
           return (
-            <Fragment key={i}>
-							<div style={{position: 'absolute', left: 30}}></div>
-              <rect
+            <div key={i} className={cl.mobileFooterRow} style={{'--bg-color': getPitchСlassPrimaryColorByName(classTitle)}}>{classTitle} (Min:{minValue}, Avg:{avgValue}, Max:{maxValue})
+							{/* <div className={cl.rowIcon} style={{backgroundColor: getPitchСlassPrimaryColorByName(classTitle)}}></div>
+							<div>{classTitle} (Min:{minValue}, Avg:{avgValue}, Max:{maxValue})</div> */}
+              {/* <rect
                 x={xCoord}
                 y={yCoord}
                 width='6'
                 height='6'
                 fill={getPitchСlassPrimaryColorByName(classTitle)}
-              />
-              <text x={xCoord + 10} y={yCoord + 7} className={footerValue}>
+              /> */}
+              {/* <text x={xCoord + 10} y={yCoord + 7} className={footerValue}>
                 {classTitle} (Min:{minValue}, Avg:{avgValue}, Max:{maxValue})
-              </text>
-            </Fragment>
+              </text> */}
+            </div>
           );
         })}
     </div>

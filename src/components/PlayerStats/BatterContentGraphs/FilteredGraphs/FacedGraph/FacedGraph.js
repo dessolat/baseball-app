@@ -130,7 +130,7 @@ const FacedGraph = ({ data, preview }) => {
       </div>
       {isRightArrow && <Arrow direction='right' className={rightArrowClasses} />}
       {/* Mobile Footer */}
-      {/* <MobileFooter totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} /> */}
+      <MobileFooter totalClasses={totalClasses} PARAMS={PARAMS} data={data} pitchClasses={pitchClasses} />
     </div>
   );
 };
