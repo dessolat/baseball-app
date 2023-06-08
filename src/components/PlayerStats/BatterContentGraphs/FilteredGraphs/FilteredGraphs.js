@@ -786,10 +786,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         />
         <FacedGraph data={filteredData} preview={preview} />
       </GraphsBlock>
-      {!isMobile && <GraphsBlock defaultOption='' noSelector>
+      <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`${playerName} ${playerSurname} Hits`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
-      </GraphsBlock>}
+      </GraphsBlock>
       {!isMobile && <GraphsBlock defaultOption='' noSelector>
         <PitchesTrajectories data={filteredData} />
       </GraphsBlock>}
