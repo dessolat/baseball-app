@@ -13,10 +13,9 @@ import { useSelector } from 'react-redux';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import FacedGraph from './FacedGraph/FacedGraph';
-import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
 import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
-import { getPitchColorByName } from 'utils';
+import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -738,7 +737,7 @@ const LeftColumnOptions = ({
 
 const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
   const { preview } = data;
-  const { pitch_types: pitchTypes, pitch_classes: pitchClasses } = preview;
+  const { pitch_classes: pitchClasses } = preview;
 
   // ! Remove after testing
   // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
@@ -748,7 +747,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     state => state.playerStats.playerStatsData
   );
 
-	const isMobile = useSelector(s => s.shared.isMobile)
+  const isMobile = useSelector(s => s.shared.isMobile);
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
@@ -790,10 +789,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         <GraphsHeader title='' subTitle={`${playerName} ${playerSurname} Hits`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
       </GraphsBlock>
-      {!isMobile && <GraphsBlock defaultOption='' noSelector>
+      <GraphsBlock defaultOption='' noSelector>
         <PitchesTrajectories data={filteredData} />
-      </GraphsBlock>}
-      {!isMobile && <GraphsBlock defaultOption='All Pitches'>
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -803,100 +802,80 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
-            <div className={cl.twinGraphsWrapper}>
-              {Object.entries(relValuesData)
-                .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
-                .map((entry, index) => (
-                  <Fragment key={index}>
-                    <TwinPitchesGraph
-                      data={relValuesData}
-                      filteredData={entry[1].pitches}
-                      preview={preview}
-                      currentOption={currentOption}
-                      selectedPitchClass={entry[0]}
-                      title={entry[0]}
-                      subTitle1='Swing'
-                      subTitle2='Take'
-                    />
-                    <TwinPitchesGraph
-                      data={relValuesData}
-                      filteredData={entry[1].pitches}
-                      preview={preview}
-                      currentOption={currentOption}
-                      selectedPitchClass={entry[0]}
-                      subTitle1='Miss & soft hit'
-                      subTitle2='Base hit & Hard hit'
-                    />
-                  </Fragment>
-                ))}
-            </div>
+            <TwinPitchesGraphs
+              relValuesData={relValuesData}
+              preview={preview}
+              currentOption={currentOption}
+            />
           </>
         )}
-      </GraphsBlock>}
-      {!isMobile && <GraphsTimeDynamicBlock
-        defaultOption='Game'
-        defaultOption2={Array.from(new Set(pitchClasses))}
-        defaultOption3='opened'>
-        {(
-          currentOption,
-          setCurrentOption,
-          currentOption2,
-          setCurrentOption2,
-          currentOption3,
-          setCurrentOption3
-        ) => (
-          <>
-            <GraphsHeader
-              optionsArr={['Season', 'Month', 'Game']}
-              availableOptions={Object.keys(relValuesData)}
-              title={null}
-              subTitle={`${playerName} ${playerSurname} time dynamic`}
-              currentOption={currentOption}
-              setCurrentOption={setCurrentOption}
-              currentOption2={currentOption2}
-              setCurrentOption2={setCurrentOption2}
-              currentOption3={currentOption3}
-              setCurrentOption3={setCurrentOption3}
-              graphsArrow
-              classColor
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Swing'
-              graphType='SwingByType'
-              classColor
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Take'
-              graphType='TakeByType'
-              classColor
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Miss & soft hit'
-              graphType='SoftByType'
-              classColor
-            />
-						<ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Base hits & Hard hits vs PA'
-              graphType='HardByType'
-              classColor
-            />
-            {/* <ArsenalGraph
+      </GraphsBlock>
+
+      {!isMobile && (
+        <GraphsTimeDynamicBlock
+          defaultOption='Game'
+          defaultOption2={Array.from(new Set(pitchClasses))}
+          defaultOption3='opened'>
+          {(
+            currentOption,
+            setCurrentOption,
+            currentOption2,
+            setCurrentOption2,
+            currentOption3,
+            setCurrentOption3
+          ) => (
+            <>
+              <GraphsHeader
+                optionsArr={['Season', 'Month', 'Game']}
+                availableOptions={Object.keys(relValuesData)}
+                title={null}
+                subTitle={`${playerName} ${playerSurname} time dynamic`}
+                currentOption={currentOption}
+                setCurrentOption={setCurrentOption}
+                currentOption2={currentOption2}
+                setCurrentOption2={setCurrentOption2}
+                currentOption3={currentOption3}
+                setCurrentOption3={setCurrentOption3}
+                graphsArrow
+                classColor
+              />
+              <ArsenalGraph
+                filteredData={filteredData}
+                currentTimeInterval={currentOption}
+                currentPitchTypes={currentOption2}
+                pitchClasses={pitchClasses}
+                title='Swing'
+                graphType='SwingByType'
+                classColor
+              />
+              <ArsenalGraph
+                filteredData={filteredData}
+                currentTimeInterval={currentOption}
+                currentPitchTypes={currentOption2}
+                pitchClasses={pitchClasses}
+                title='Take'
+                graphType='TakeByType'
+                classColor
+              />
+              <ArsenalGraph
+                filteredData={filteredData}
+                currentTimeInterval={currentOption}
+                currentPitchTypes={currentOption2}
+                pitchClasses={pitchClasses}
+                title='Miss & soft hit'
+                graphType='SoftByType'
+                classColor
+              />
+              <ArsenalGraph
+                filteredData={filteredData}
+                currentTimeInterval={currentOption}
+                currentPitchTypes={currentOption2}
+                pitchClasses={pitchClasses}
+                title='Base hits & Hard hits vs PA'
+                graphType='HardByType'
+                classColor
+              />
+              {/* <ArsenalGraph
               filteredData={filteredData}
               currentTimeInterval={currentOption}
               currentPitchTypes={currentOption2}
@@ -914,9 +893,10 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               graphType='Speed'
               classColor
             /> */}
-          </>
-        )}
-      </GraphsTimeDynamicBlock>}
+            </>
+          )}
+        </GraphsTimeDynamicBlock>
+      )}
     </div>
   );
 };
