@@ -3,6 +3,7 @@ import cl from './TwinPitchesGraph.module.scss';
 import { getPitchСlassColorByName } from 'utils';
 import Tooltip from './Tooltip';
 import useIntersection from 'hooks/useIntersection';
+import GraphTitle from './GraphTitle';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
@@ -936,21 +937,7 @@ const TwinPitchesGraph = ({
           />
         )}
       </svg>
-      {title && (
-        <div
-          style={{
-            position: 'absolute',
-            left: '-7rem',
-            top: 30,
-            width: '7rem',
-            height: '1rem',
-            lineHeight: 1,
-            textAlign: 'center',
-            fontWeight: 700
-          }}>
-          {title}
-        </div>
-      )}
+      {title && <GraphTitle title={title} />}
     </div>
   );
 };
