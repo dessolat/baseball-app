@@ -1,7 +1,8 @@
-import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
+import { useRef, useLayoutEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchСlassColorByName } from 'utils';
 import Tooltip from './Tooltip';
+import useIntersection from 'hooks/useIntersection';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
@@ -913,38 +914,10 @@ const TwinPitchesGraph = ({
   subTitle1,
   subTitle2
 }) => {
-  const [isGraphVisible, setGraphVisibility] = useState(false);
-
-  const wrapperRef = useRef();
-  const graphRef = useRef();
-
-  useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '300px 0px',
-      threshold: 0
-    };
-
-    let observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const { isIntersecting } = entry;
-
-        if (isIntersecting) {
-          setGraphVisibility(true);
-        } else {
-          setGraphVisibility(false);
-        }
-      });
-    }, options);
-    observer.observe(graphRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const [graphRef, isGraphVisible] = useIntersection();
 
   return (
-    <div ref={wrapperRef} style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }}>
       <svg
         viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
         xmlns='http://www.w3.org/2000/svg'
