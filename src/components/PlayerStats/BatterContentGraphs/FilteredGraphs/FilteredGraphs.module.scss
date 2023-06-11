@@ -38,7 +38,20 @@
   flex-direction: column;
 
   @media screen and (max-width: 800px) {
-    display: none;
+    // display: none;
+		width: 85vw;
+		position: fixed;
+		top: calc(var(--desktop-nav-height) + 200px);
+		left: 7.5vw;
+		padding: 0 7px;
+		max-height: calc(100vh - var(--desktop-nav-height) - 220px);
+		overflow-y: scroll;
+		z-index: 10;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
   }
 
   @media screen and (orientation: landscape) and (max-height: 950px) {
