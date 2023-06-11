@@ -21,6 +21,8 @@ const ControlsWrapper = forwardRef(({}, ref) => {
 
 const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, isVideo, currentTab }, ref) => {
   const activeCardList = useSelector(state => state.game.activeCardList);
+  const isMobile = useSelector(state => state.shared.isMobile);
+
   const dispatch = useDispatch();
   const handleKeyDown = useArrowNavigate(filteredCards, currentCard);
 
@@ -28,6 +30,19 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   const scrollTimeoutRef = useRef();
 
   useEffect(() => {
+		if (!isMobile) {
+			const timeout = setTimeout(() => {
+				const isListScroll =
+					(listRef.current.scrollTop === 0 && listRef.current.scrollHeight > listRef.current.clientHeight) ||
+					listRef.current.scrollTop > 0;
+				dispatch(setListScrollTop(isListScroll));
+			}, 400);
+	
+			return () => {
+				clearTimeout(timeout);
+			};
+		}
+
 		const scrollHandler = () => {
 			clearTimeout(scrollTimeoutRef.current);
 	
@@ -59,6 +74,15 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     dispatch(setCurrentCard({ ...player, manualClick: true }));
   };
 
+	const scrollHandler = e => {
+    clearTimeout(scrollTimeoutRef.current);
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      const isListScroll = e.target.scrollTop + e.target.clientHeight < e.target.scrollHeight;
+      dispatch(setListScrollTop(isListScroll));
+    }, 100);
+  };
+
 	const wrapperClasses = classNames(cl.wrapper, {
 		[cl.landscapeDisplayNone]: currentTab === 'videos'
 	})
@@ -76,7 +100,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     <div className={wrapperClasses} onClick={useGameFocus('list')}>
       {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
       
-      <ul className={listClasses} ref={listRef}>
+      <ul className={listClasses} ref={listRef} onScroll={scrollHandler}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem
             key={i}
