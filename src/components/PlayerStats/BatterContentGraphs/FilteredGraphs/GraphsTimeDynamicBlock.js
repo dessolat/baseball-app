@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { graphsBlock } from './FilteredGraphs.module.scss';
+import cl from './FilteredGraphs.module.scss';
+import classNames from 'classnames';
 
 const GraphsTimeDynamicBlock = ({ defaultOption, defaultOption2, defaultOption3, children, ...props }) => {
   const calculatedDefOptions2 = defaultOption2.reduce(
@@ -21,10 +22,13 @@ const GraphsTimeDynamicBlock = ({ defaultOption, defaultOption2, defaultOption3,
   const [currentOption2, setCurrentOption2] = useState(calculatedDefOptions2);
   const [currentOption3, setCurrentOption3] = useState(defaultOption3);
 
+  const wrapperClasses = classNames(cl.graphsBlock, cl.dynamicBlock, {
+    [cl.openedHeight]: currentOption3 === 'opened',
+    [cl.closedHeight]: currentOption3 !== 'opened'
+  });
   return (
     <div
-      className={graphsBlock}
-      style={{ overflowY: 'clip', maxHeight: currentOption3 === 'opened' ? '100%' : '4.2rem' }}
+      className={wrapperClasses}
       {...props}>
       {children(
         currentOption,

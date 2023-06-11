@@ -17,7 +17,8 @@ const GraphsHeader = ({
   setCurrentOption3 = null,
   noSelector = false,
   graphsArrow = false,
-	classColor = false,
+  classColor = false,
+  addedClass = null,
   ...props
 }) => {
   const optionsTogglerStyles = {
@@ -51,7 +52,7 @@ const GraphsHeader = ({
     [cl.highTitle]: currentOption2 !== null
   });
   return (
-    <div className={cl.graphsHeader} {...props}>
+    <div className={cl.graphsHeader + ' ' + addedClass} {...props}>
       <h3 className={cl.header}>{title}</h3>
       <p className={titleClasses}>{subTitle}</p>
       {graphsArrow && (
@@ -76,7 +77,7 @@ const GraphsHeader = ({
           optionsArr={currentOption2}
           availableOptions={availableOptions}
           handleOptionClick={handleOption2Click}
-					classColor={classColor}
+          classColor={classColor}
         />
       )}
     </div>

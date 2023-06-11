@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: column;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: none;
   }
 
@@ -294,7 +294,7 @@
   display: flex;
   flex-direction: column;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     width: 100%;
   }
 }
@@ -312,6 +312,22 @@
   }
 }
 
+.dynamicBlock {
+	overflow-y: clip;
+}
+
+.openedHeight {
+	max-height: 100%;
+}
+
+.closedHeight {
+	max-height: 4.2rem;
+
+	@media screen and (max-width: 800px) {
+    min-height: 100px;
+  }
+}
+
 .twinGraphsWrapper {
   line-height: 0;
   background-color: #fff;
@@ -320,7 +336,7 @@
   position: relative;
   padding: 0 7.8125rem;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     padding: 0;
   }
 
@@ -347,5 +363,30 @@
 
   &:hover {
     background-color: lightgreen;
+  }
+}
+
+.mobileHeight {
+  @media screen and (max-width: 800px) {
+    height: 100px;
+
+    > p {
+      line-height: 1.5;
+    }
+
+    > ul {
+      &:first-of-type {
+        left: 0.4375rem;
+        top: 50% !important;
+				line-height: 21px;
+				width: fit-content;
+      }
+      &:last-of-type {
+        left: 0.4375rem;
+        bottom: 20% !important;
+				line-height: 21px;
+				width: fit-content;
+      }
+    }
   }
 }

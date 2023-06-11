@@ -13,9 +13,10 @@ import { useSelector } from 'react-redux';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import FacedGraph from './FacedGraph/FacedGraph';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+// import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
+import ArsenalGraphs from './ArsenalGraphs';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -811,92 +812,43 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
         )}
       </GraphsBlock>
 
-      {!isMobile && (
-        <GraphsTimeDynamicBlock
-          defaultOption='Game'
-          defaultOption2={Array.from(new Set(pitchClasses))}
-          defaultOption3='opened'>
-          {(
-            currentOption,
-            setCurrentOption,
-            currentOption2,
-            setCurrentOption2,
-            currentOption3,
-            setCurrentOption3
-          ) => (
-            <>
-              <GraphsHeader
-                optionsArr={['Season', 'Month', 'Game']}
-                availableOptions={Object.keys(relValuesData)}
-                title={null}
-                subTitle={`${playerName} ${playerSurname} time dynamic`}
-                currentOption={currentOption}
-                setCurrentOption={setCurrentOption}
-                currentOption2={currentOption2}
-                setCurrentOption2={setCurrentOption2}
-                currentOption3={currentOption3}
-                setCurrentOption3={setCurrentOption3}
-                graphsArrow
-                classColor
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchClasses={pitchClasses}
-                title='Swing'
-                graphType='SwingByType'
-                classColor
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchClasses={pitchClasses}
-                title='Take'
-                graphType='TakeByType'
-                classColor
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchClasses={pitchClasses}
-                title='Miss & soft hit'
-                graphType='SoftByType'
-                classColor
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchClasses={pitchClasses}
-                title='Base hits & Hard hits vs PA'
-                graphType='HardByType'
-                classColor
-              />
-              {/* <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Pitch, %'
-              graphType='PitchesRel'
+      <GraphsTimeDynamicBlock
+        defaultOption='Game'
+        defaultOption2={Array.from(new Set(pitchClasses))}
+        defaultOption3='opened'>
+        {(
+          currentOption,
+          setCurrentOption,
+          currentOption2,
+          setCurrentOption2,
+          currentOption3,
+          setCurrentOption3
+        ) => (
+          <>
+            <GraphsHeader
+              optionsArr={['Season', 'Month', 'Game']}
+              availableOptions={Object.keys(relValuesData)}
+              title={null}
+              subTitle={`${playerName} ${playerSurname} time dynamic`}
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+              currentOption2={currentOption2}
+              setCurrentOption2={setCurrentOption2}
+              currentOption3={currentOption3}
+              setCurrentOption3={setCurrentOption3}
+              graphsArrow
               classColor
+							addedClass={cl.mobileHeight}
             />
-            <ArsenalGraph
+            <ArsenalGraphs
               filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
+              currentOption={currentOption}
+              currentOption2={currentOption2}
               pitchClasses={pitchClasses}
-              title='Speed, mph'
-              graphType='Speed'
-              classColor
-            /> */}
-            </>
-          )}
-        </GraphsTimeDynamicBlock>
-      )}
+            />
+          </>
+        )}
+      </GraphsTimeDynamicBlock>
     </div>
   );
 };
