@@ -320,6 +320,10 @@
   position: relative;
   padding: 0 7.8125rem;
 
+	@media screen and (max-width: 800px) {
+    padding: 0;
+  }
+
   > div {
     width: 100%;
 
