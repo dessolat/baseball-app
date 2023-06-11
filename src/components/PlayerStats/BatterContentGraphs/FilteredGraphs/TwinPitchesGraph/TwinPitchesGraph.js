@@ -4,6 +4,8 @@ import { getPitchСlassColorByName } from 'utils';
 import Tooltip from './Tooltip';
 import useIntersection from 'hooks/useIntersection';
 import GraphTitle from './GraphTitle';
+import MobileScrollingWrapper from 'components/PlayerStats/MobileScrollingWrapper/MobileScrollingWrapper';
+import classNames from 'classnames';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
@@ -917,28 +919,33 @@ const TwinPitchesGraph = ({
 }) => {
   const [graphRef, isGraphVisible] = useIntersection();
 
+	const graphWrapperClasses = classNames(cl.graphWrapper, {
+		[cl.pt2]: title
+	})
   return (
-    <div style={{ position: 'relative' }}>
-      <svg
-        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-        xmlns='http://www.w3.org/2000/svg'
-        className={cl.wrapper}
-        preserveAspectRatio='none'
-        ref={graphRef}>
-        {isGraphVisible && (
-          <LeftChart
-            filteredData={filteredData}
-            selectedPitchClass={selectedPitchClass}
-            preview={preview}
-            currentOption={currentOption}
-            subTitle1={subTitle1}
-            subTitle2={subTitle2}
-            byPitchZone={!title}
-          />
-        )}
-      </svg>
-      {title && <GraphTitle title={title} />}
-    </div>
+    <MobileScrollingWrapper>
+      <div className={graphWrapperClasses}>
+        <svg
+          viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+          xmlns='http://www.w3.org/2000/svg'
+          className={cl.wrapper}
+          preserveAspectRatio='none'
+          ref={graphRef}>
+          {isGraphVisible && (
+            <LeftChart
+              filteredData={filteredData}
+              selectedPitchClass={selectedPitchClass}
+              preview={preview}
+              currentOption={currentOption}
+              subTitle1={subTitle1}
+              subTitle2={subTitle2}
+              byPitchZone={!title}
+            />
+          )}
+        </svg>
+      </div>
+        {title && <GraphTitle title={title} />}
+    </MobileScrollingWrapper>
   );
 };
 
