@@ -3,12 +3,14 @@ import OptionsToggler from 'components/UI/togglers/OptionsToggler/OptionsToggler
 import classNames from 'classnames';
 import TimeDynamicCheckbox from 'components/UI/checkboxes/TimeDynamicCheckbox/TimeDynamicCheckbox';
 import UpDownArrow from 'components/UI/buttons/UpDownArrow/UpDownArrow';
+import ArrowDown from 'components/UI/icons/ArrowDown';
 
 const GraphsHeader = ({
   optionsArr,
   availableOptions,
   title,
   subTitle,
+  handleMobileDatasetFilterClick = null,
   currentOption,
   setCurrentOption,
   currentOption2 = null,
@@ -54,6 +56,11 @@ const GraphsHeader = ({
   return (
     <div className={cl.graphsHeader + ' ' + addedClass} {...props}>
       <h3 className={cl.header}>{title}</h3>
+      {handleMobileDatasetFilterClick && (
+        <button className={cl.datasetBtn} onClick={handleMobileDatasetFilterClick}>
+          Dataset filter <ArrowDown />
+        </button>
+      )}
       <p className={titleClasses}>{subTitle}</p>
       {graphsArrow && (
         <UpDownArrow
