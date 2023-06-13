@@ -421,6 +421,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     state => state.playerStats.playerStatsData
   );
 
+	const isMobile = useSelector(s => s.shared.isMobile)
+
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
   const filteredData = useFilterPitcherGroupData(data, currentFilterValues, teamName, playerFullName);
@@ -571,7 +573,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      <GraphsBlock defaultOption='All Pitches'>
+      {!isMobile && <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -604,8 +606,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             </div>
           </>
         )}
-      </GraphsBlock>
-      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+      </GraphsBlock>}
+      {!isMobile && <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
         {(
           currentOption,
           setCurrentOption,
@@ -726,16 +728,16 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             />
           </>
         )}
-      </GraphsTimeDynamicBlock>
-      <GraphsBlock defaultOption=''>
+      </GraphsTimeDynamicBlock>}
+      {!isMobile && <GraphsBlock defaultOption=''>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
             <HitsAnglesGraphs data={filteredData} />
           </>
         )}
-      </GraphsBlock>
-      <GraphsBlock defaultOption=''>
+      </GraphsBlock>}
+      {!isMobile && <GraphsBlock defaultOption=''>
         {(currentOption, setCurrentOption) => (
           <>
             {/* <GraphsHeader
@@ -746,7 +748,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <PitchesTrajectories data={filteredData} />
           </>
         )}
-      </GraphsBlock>
+      </GraphsBlock>}
     </div>
   );
 };
