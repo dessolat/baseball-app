@@ -35,10 +35,18 @@
 
 .title {
   font: 700 0.875rem var(--font-nunito);
+
+	@media screen and (max-width: 800px) {
+    font-size: 14px;
+  }
 }
 
 .subTitle {
   font: 400 0.75rem var(--font-nunito);
+
+	@media screen and (max-width: 800px) {
+    font-size: 13px;
+	}
 }
 
 .percentTitle,
@@ -46,6 +54,10 @@
   font: 300 0.875rem var(--font-nunito);
   transition: y 0.3s;
   pointer-events: none;
+
+	@media screen and (max-width: 800px) {
+    font-size: 14px;
+  }
 }
 
 .percentTitle {
@@ -58,6 +70,10 @@
 
 .valueText {
   font: 300 0.625rem var(--font-nunito);
+
+	@media screen and (max-width: 800px) {
+    font-size: 11px;
+  }
 }
 
 .eventsNone {
@@ -93,19 +109,19 @@
 
 @keyframes growRadius {
   from {
-    r: 0;
+    r: 0px;
   }
   to {
-    r: 8;
+    r: 8px;
   }
 }
 
 @keyframes growRadiusMore {
   from {
-    r: 8;
+    r: 8px;
   }
   to {
-    r: 12;
+    r: 12px;
   }
 }
 
