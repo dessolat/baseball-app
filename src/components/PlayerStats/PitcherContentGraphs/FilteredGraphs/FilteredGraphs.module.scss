@@ -222,6 +222,10 @@
   flex-wrap: wrap;
   position: relative;
 
+	@media screen and (max-width: 800px) {
+    display: block;
+  }
+
   > div {
     width: 50%;
 
