@@ -251,3 +251,28 @@
     background-color: lightgreen;
   }
 }
+
+.mobileHeight {
+  @media screen and (max-width: 800px) {
+    height: 100px;
+
+    > p {
+      line-height: 1.5;
+    }
+
+    > ul {
+      &:first-of-type {
+        left: 0.4375rem;
+        top: 50% !important;
+        line-height: 21px;
+        width: fit-content;
+      }
+      &:last-of-type {
+        left: 0.4375rem;
+        bottom: 20% !important;
+        line-height: 21px;
+        width: fit-content;
+      }
+    }
+  }
+}
