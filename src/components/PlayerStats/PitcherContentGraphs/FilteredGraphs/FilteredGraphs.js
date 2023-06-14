@@ -614,7 +614,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption3={currentOption3}
               setCurrentOption3={setCurrentOption3}
               graphsArrow
-							addedClass={cl.mobileHeight}
+              addedClass={cl.mobileHeight}
             />
             <ArsenalGraphs
               filteredData={filteredData}
@@ -625,16 +625,14 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsTimeDynamicBlock>
-      {!isMobile && (
-        <GraphsBlock defaultOption=''>
-          {(currentOption, setCurrentOption) => (
-            <>
-              <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
-              <HitsAnglesGraphs data={filteredData} />
-            </>
-          )}
-        </GraphsBlock>
-      )}
+      <GraphsBlock defaultOption=''>
+        {(currentOption, setCurrentOption) => (
+          <>
+            <GraphsHeader title='' subTitle={`Hits from ${playerName} ${playerSurname}`} noSelector />
+            <HitsAnglesGraphs data={filteredData} />
+          </>
+        )}
+      </GraphsBlock>
       {!isMobile && (
         <GraphsBlock defaultOption=''>
           {(currentOption, setCurrentOption) => (

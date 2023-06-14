@@ -18,6 +18,8 @@ const MainTitle = ({ title }) => (
   </text>
 );
 
+const MobileMainTitle = ({ title }) => <p className={cl.mobileTitle}>{title}</p>;
+
 const RadialTitles = ({ minMaxValue, title }) => {
   const { min, max } = minMaxValue;
 
@@ -115,34 +117,37 @@ const HitsAnglesGraph = ({
   );
 
   return (
-    <svg
-      width={PARAMS.GRAPH_WIDTH}
-      height={PARAMS.GRAPH_HEIGHT}
-      viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-      fill='none'
-      className={cl.graph}
-      xmlns='http://www.w3.org/2000/svg'>
-      <BgLayout />
+    <div className={cl.graphWrapper}>
+      <MobileMainTitle title={title} />
+      <svg
+        width={PARAMS.GRAPH_WIDTH}
+        height={PARAMS.GRAPH_HEIGHT}
+        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+        fill='none'
+        className={cl.graph}
+        xmlns='http://www.w3.org/2000/svg'>
+        <BgLayout />
 
-      {/* Title */}
-      <MainTitle title={title} />
+        {/* Title */}
+        <MainTitle title={title} />
 
-      {/* Radial Titles */}
-      <RadialTitles minMaxValue={minMaxValue} title={title} />
+        {/* Radial Titles */}
+        <RadialTitles minMaxValue={minMaxValue} title={title} />
 
-      {/* Segments */}
-      <Segments angleValues={angleValues} dataField={dataField} minMaxValue={minMaxValue} />
+        {/* Segments */}
+        <Segments angleValues={angleValues} dataField={dataField} minMaxValue={minMaxValue} />
 
-      {/* Footer */}
-      {isFooter && (
-        <Footer
-          PARAMS={PARAMS}
-          angleValues={angleValues}
-          footerField={footerField}
-          footerUnits={footerUnits}
-        />
-      )}
-    </svg>
+        {/* Footer */}
+        {isFooter && (
+          <Footer
+            PARAMS={PARAMS}
+            angleValues={angleValues}
+            footerField={footerField}
+            footerUnits={footerUnits}
+          />
+        )}
+      </svg>
+    </div>
   );
 };
 

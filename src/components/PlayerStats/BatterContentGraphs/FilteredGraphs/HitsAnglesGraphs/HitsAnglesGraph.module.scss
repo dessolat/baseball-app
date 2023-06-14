@@ -1,49 +1,51 @@
 .graphWrapper {
-	aspect-ratio: 307 / 450;
-	height: auto;
-	background-color: white;
-	width: 100%;
-	position: relative;
+  aspect-ratio: 307 / 450;
+  height: auto;
+  background-color: white;
+  width: 100%;
+  position: relative;
 
-	@media screen and (max-width: 800px) {
-		aspect-ratio: 390 / 450;
-		text-align: center;
+  @media screen and (max-width: 800px) {
+    aspect-ratio: 390 / 450;
+    text-align: center;
   }
 }
 
 .graph {
-	height: 100%;
-	width: 100%;
+  height: 100%;
+  width: 100%;
 
-	@media screen and (max-width: 800px) {
-		width: unset;
+  @media screen and (max-width: 800px) {
+    width: unset;
   }
 }
 
 .title,
-.leftValues {
+.leftValues,
+.footerText {
   fill: black;
   user-select: none;
 }
 
-.title, .mobileTitle {
-	font: 700 0.875rem / 1.8 var(--font-nunito);
+.title,
+.mobileTitle {
+  font: 700 0.875rem / 1.8 var(--font-nunito);
 }
 
 .title {
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: none;
   }
 }
 
 .mobileTitle {
-	display: none;
+  display: none;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: block;
-		position: absolute;
-		left: 7.875px;
-		top: 5px;
+    position: absolute;
+    left: 7.875px;
+    top: 5px;
   }
 }
 
@@ -52,9 +54,8 @@
 }
 
 .footerText {
-	font: 400 0.75rem / 1.5 var(--font-nunito);
-	fill: black;
-	text-anchor: middle;
+  font: 400 0.75rem / 1.5 var(--font-nunito);
+  text-anchor: middle;
 }
 
 .animated {
