@@ -38,6 +38,13 @@
   }
 }
 
+.mobileTwinTitleWidth > p:first-of-type {
+  @media screen and (max-width: 800px) {
+    max-width: 60%;
+    line-height: 1.2;
+  }
+}
+
 .leftColumnOuterWrapper {
   position: sticky;
   top: 0;
@@ -102,10 +109,10 @@
   > .header {
     padding-left: 0.4rem;
     position: relative;
-		
-		@media screen and (max-width: 800px) {
-			position: sticky;
-		}
+
+    @media screen and (max-width: 800px) {
+      position: sticky;
+    }
   }
 
   > .body {
@@ -450,7 +457,7 @@
 }
 
 .visible {
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     display: flex;
   }
 }

@@ -827,6 +827,7 @@ const RightColumnGraphs = ({
               subTitle={`Pitches to ${playerName} ${playerSurname} by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
+							addedClass={cl.mobileTwinTitleWidth}
             />
             <TwinPitchesGraphs
               relValuesData={relValuesData}
