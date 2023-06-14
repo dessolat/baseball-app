@@ -4,6 +4,8 @@
 	
 	@media screen and (max-width: 800px) {
 		overflow-x: scroll;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
 	}
 }
 
@@ -13,6 +15,7 @@
 
 	@media screen and (max-width: 800px) {
 		overflow-x: scroll;
+		overflow-y: hidden;
 		position: relative;
 	}
 }
