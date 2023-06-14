@@ -215,6 +215,22 @@
   }
 }
 
+.dynamicBlock {
+  overflow-y: clip;
+}
+
+.openedHeight {
+  max-height: 100%;
+}
+
+.closedHeight {
+  max-height: 4.2rem;
+
+  @media screen and (max-width: 800px) {
+    min-height: 100px;
+  }
+}
+
 .twinGraphsWrapper {
   line-height: 0;
   background-color: #fff;

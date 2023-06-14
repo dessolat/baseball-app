@@ -3,7 +3,6 @@ import FilterField from 'components/UI/dropdown/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState, useMemo } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterPitcherGroupData } from 'hooks/useFilterGraphsData';
