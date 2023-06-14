@@ -3,8 +3,16 @@
   display: flex;
   column-gap: 5px;
 
+	@media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
+
   > * {
     width: calc(50% - 2.5px);
+
+		@media screen and (max-width: 800px) {
+			width: 100%;
+		}
   }
 }
 
