@@ -633,20 +633,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
           </>
         )}
       </GraphsBlock>
-      {!isMobile && (
-        <GraphsBlock defaultOption=''>
-          {(currentOption, setCurrentOption) => (
-            <>
-              {/* <GraphsHeader
+      <GraphsBlock defaultOption=''>
+        {(currentOption, setCurrentOption) => (
+          <>
+            {/* <GraphsHeader
               title=''
               subTitle={`Hits from ${playerName} ${playerSurname}`}
               noSelector
             /> */}
-              <PitchesTrajectories data={filteredData} />
-            </>
-          )}
-        </GraphsBlock>
-      )}
+            <PitchesTrajectories data={filteredData} />
+          </>
+        )}
+      </GraphsBlock>
     </div>
   );
 };
