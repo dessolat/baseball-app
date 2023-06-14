@@ -12,6 +12,7 @@ import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
+import ArsenalGraphs from './ArsenalGraphs';
 
 const FIELD_NAMES = {
   batter: {
@@ -587,135 +588,44 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               relValuesData={relValuesData}
               preview={preview}
               currentOption={currentOption}
-							filteredData={filteredData}
+              filteredData={filteredData}
             />
           </>
         )}
       </GraphsBlock>
-      {!isMobile && (
-        <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
-          {(
-            currentOption,
-            setCurrentOption,
-            currentOption2,
-            setCurrentOption2,
-            currentOption3,
-            setCurrentOption3
-          ) => (
-            <>
-              <GraphsHeader
-                optionsArr={['Season', 'Month', 'Game']}
-                availableOptions={Object.keys(relValuesData)}
-                title={null}
-                subTitle={`${playerName} ${playerSurname} time dynamic`}
-                currentOption={currentOption}
-                setCurrentOption={setCurrentOption}
-                currentOption2={currentOption2}
-                setCurrentOption2={setCurrentOption2}
-                currentOption3={currentOption3}
-                setCurrentOption3={setCurrentOption3}
-                graphsArrow
-              />
-
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Pitches'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Pitch, %'
-                graphType='PitchesRel'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Speed, mph'
-                graphType='Speed'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Spin, rpm'
-                graphType='Spin'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Vertical break, sm'
-                graphType='VerticalBreak'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Horizontal break, sm'
-                graphType='HorizontalBreak'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='In zone, %'
-                graphType='InZone'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Out zone, %'
-                graphType='OutZone'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Inside, %'
-                graphType='Inside'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Outside, %'
-                graphType='Outside'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='Low, %'
-                graphType='Low'
-              />
-              <ArsenalGraph
-                filteredData={filteredData}
-                currentTimeInterval={currentOption}
-                currentPitchTypes={currentOption2}
-                pitchTypes={pitchTypes}
-                title='High, %'
-                graphType='High'
-              />
-            </>
-          )}
-        </GraphsTimeDynamicBlock>
-      )}
+      <GraphsTimeDynamicBlock defaultOption='Game' defaultOption2={pitchTypes} defaultOption3='opened'>
+        {(
+          currentOption,
+          setCurrentOption,
+          currentOption2,
+          setCurrentOption2,
+          currentOption3,
+          setCurrentOption3
+        ) => (
+          <>
+            <GraphsHeader
+              optionsArr={['Season', 'Month', 'Game']}
+              availableOptions={Object.keys(relValuesData)}
+              title={null}
+              subTitle={`${playerName} ${playerSurname} time dynamic`}
+              currentOption={currentOption}
+              setCurrentOption={setCurrentOption}
+              currentOption2={currentOption2}
+              setCurrentOption2={setCurrentOption2}
+              currentOption3={currentOption3}
+              setCurrentOption3={setCurrentOption3}
+              graphsArrow
+							addedClass={cl.mobileHeight}
+            />
+            <ArsenalGraphs
+              filteredData={filteredData}
+              currentOption={currentOption}
+              currentOption2={currentOption2}
+              pitchTypes={pitchTypes}
+            />
+          </>
+        )}
+      </GraphsTimeDynamicBlock>
       {!isMobile && (
         <GraphsBlock defaultOption=''>
           {(currentOption, setCurrentOption) => (
