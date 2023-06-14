@@ -1,21 +1,36 @@
-.graph {
+.wrapper {
   aspect-ratio: 1192 / 500;
+
+  @media screen and (max-width: 800px) {
+		aspect-ratio: 596 / 500;
+  }
+}
+
+.graph {
   height: auto;
   background-color: white;
+
+	@media screen and (max-width: 800px) {
+		width: 200%;
+	}
 }
 
 .bottomNumber,
 .leftNumber,
 .graphNumber {
   font: 400 0.875rem 'Nunito', sans-serif;
+
+	@media screen and (max-width: 800px) {
+		font-size: 16px;
+  }
 }
 
 .graphNumber {
-	display: none;
-	opacity: 0;
-	transition: all .3s;
-	text-anchor: middle;
-	pointer-events: none;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s;
+  text-anchor: middle;
+  pointer-events: none;
 }
 
 .bottomNumber {
@@ -31,6 +46,10 @@
 
 .sideTitle {
   font: 700 1.125rem 'Nunito', sans-serif;
+
+	@media screen and (max-width: 800px) {
+		font-size: 20px;
+  }
 }
 
 .hoveringLine {
@@ -54,7 +73,7 @@
 .hoveringLine5:hover ~ .graphNumber5,
 .hoveringLine6:hover ~ .graphNumber6 {
   display: inline;
-	opacity: 1;
+  opacity: 1;
 }
 
 .hoveringLine1:hover ~ *:not(.graphPath1):not(.graphNumber),

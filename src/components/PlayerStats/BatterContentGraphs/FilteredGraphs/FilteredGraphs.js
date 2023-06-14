@@ -13,10 +13,12 @@ import { useSelector } from 'react-redux';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import FacedGraph from './FacedGraph/FacedGraph';
-import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
+// import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
-import { getPitchColorByName } from 'utils';
+import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
+import ArsenalGraphs from './ArsenalGraphs';
+import CrossClose from 'components/UI/buttons/CrossClose/CrossClose';
+import classNames from 'classnames';
 
 const FIELD_NAMES = {
   pitcher: {
@@ -613,7 +615,9 @@ const LeftColumnOptions = ({
   filteredPlayerFullName,
   handleTeamNameChange,
   handlePlayerNameChange,
-  setTextGroupFilter
+  setTextGroupFilter,
+  isDatasetFilterVisible,
+  setDatasetFilterVisible
 }) => {
   const groupsArr = [
     {
@@ -693,52 +697,68 @@ const LeftColumnOptions = ({
     }
   ];
 
-  return (
-    <div className={cl.leftColumnWrapper}>
-      <h3 className={cl.header}>Dataset filter</h3>
-      <div className={cl.body}>
-        <TextGroup setTextGroupFilter={setTextGroupFilter} data={battingData.pitches_all} />
+  const handleCrossClick = () => {
+    setDatasetFilterVisible(false);
+  };
 
-        <CustomGroup
-          data={data}
-          currentFilterValues={currentFilterValues}
-          handleFilterClick={handleFilterClick}
-          handleTeamNameChange={handleTeamNameChange}
-          handlePlayerNameChange={handlePlayerNameChange}
-        />
-        {groupsArr.map((group, i) => {
-          if (group.groupName === 'speed')
+  const outerWrapperClasses = classNames(cl.leftColumnOuterWrapper, {
+    [cl.visible]: isDatasetFilterVisible
+  });
+  return (
+    <div className={outerWrapperClasses}>
+      <div className={cl.leftColumnWrapper}>
+        <h3 className={cl.header}>Dataset filter</h3>
+        <div className={cl.body}>
+          <TextGroup setTextGroupFilter={setTextGroupFilter} data={battingData.pitches_all} />
+
+          <CustomGroup
+            data={data}
+            currentFilterValues={currentFilterValues}
+            handleFilterClick={handleFilterClick}
+            handleTeamNameChange={handleTeamNameChange}
+            handlePlayerNameChange={handlePlayerNameChange}
+          />
+          {groupsArr.map((group, i) => {
+            if (group.groupName === 'speed')
+              return (
+                <SpeedGroup
+                  key={i}
+                  data={data}
+                  groupData={group}
+                  currentFilterValues={currentFilterValues}
+                  handleFilterChange={handleSpeedFilterChange}
+                  filteredTeamName={filteredTeamName}
+                  filteredPlayerFullName={filteredPlayerFullName}
+                />
+              );
             return (
-              <SpeedGroup
+              <Group
                 key={i}
                 data={data}
                 groupData={group}
                 currentFilterValues={currentFilterValues}
-                handleFilterChange={handleSpeedFilterChange}
+                handleFilterClick={handleFilterClick}
                 filteredTeamName={filteredTeamName}
                 filteredPlayerFullName={filteredPlayerFullName}
               />
             );
-          return (
-            <Group
-              key={i}
-              data={data}
-              groupData={group}
-              currentFilterValues={currentFilterValues}
-              handleFilterClick={handleFilterClick}
-              filteredTeamName={filteredTeamName}
-              filteredPlayerFullName={filteredPlayerFullName}
-            />
-          );
-        })}
+          })}
+        </div>
       </div>
+      <CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} />
     </div>
   );
 };
 
-const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
+const RightColumnGraphs = ({
+  currentFilterValues,
+  filteredTeamName,
+  filteredPlayerFullName,
+  data,
+  setDatasetFilterVisible
+}) => {
   const { preview } = data;
-  const { pitch_types: pitchTypes, pitch_classes: pitchClasses } = preview;
+  const { pitch_classes: pitchClasses } = preview;
 
   // ! Remove after testing
   // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
@@ -748,7 +768,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     state => state.playerStats.playerStatsData
   );
 
-	const isMobile = useSelector(s => s.shared.isMobile)
+  const isMobile = useSelector(s => s.shared.isMobile);
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
@@ -776,24 +796,29 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     return sum;
   }, {});
 
+  const handleMobileDatasetFilterClick = () => {
+    setDatasetFilterVisible(true);
+  };
+
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader
           title='Machine vision statistics'
           subTitle={`${playerName} ${playerSurname} pitches faced`}
+          handleMobileDatasetFilterClick={handleMobileDatasetFilterClick}
           noSelector
         />
         <FacedGraph data={filteredData} preview={preview} />
       </GraphsBlock>
-      {!isMobile && <GraphsBlock defaultOption='' noSelector>
+      <GraphsBlock defaultOption='' noSelector>
         <GraphsHeader title='' subTitle={`${playerName} ${playerSurname} Hits`} noSelector />
         <HitsAnglesGraphs data={filteredData} />
-      </GraphsBlock>}
-      {!isMobile && <GraphsBlock defaultOption='' noSelector>
+      </GraphsBlock>
+      <GraphsBlock defaultOption='' noSelector>
         <PitchesTrajectories data={filteredData} />
-      </GraphsBlock>}
-      {!isMobile && <GraphsBlock defaultOption='All Pitches'>
+      </GraphsBlock>
+      <GraphsBlock defaultOption='All Pitches'>
         {(currentOption, setCurrentOption) => (
           <>
             <GraphsHeader
@@ -802,38 +827,18 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               subTitle={`Pitches to ${playerName} ${playerSurname} by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
+							addedClass={cl.mobileTwinTitleWidth}
             />
-            <div className={cl.twinGraphsWrapper}>
-              {Object.entries(relValuesData)
-                .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
-                .map((entry, index) => (
-                  <Fragment key={index}>
-                    <TwinPitchesGraph
-                      data={relValuesData}
-                      filteredData={entry[1].pitches}
-                      preview={preview}
-                      currentOption={currentOption}
-                      selectedPitchClass={entry[0]}
-                      title={entry[0]}
-                      subTitle1='Swing'
-                      subTitle2='Take'
-                    />
-                    <TwinPitchesGraph
-                      data={relValuesData}
-                      filteredData={entry[1].pitches}
-                      preview={preview}
-                      currentOption={currentOption}
-                      selectedPitchClass={entry[0]}
-                      subTitle1='Miss & soft hit'
-                      subTitle2='Base hit & Hard hit'
-                    />
-                  </Fragment>
-                ))}
-            </div>
+            <TwinPitchesGraphs
+              relValuesData={relValuesData}
+              preview={preview}
+              currentOption={currentOption}
+            />
           </>
         )}
-      </GraphsBlock>}
-      {!isMobile && <GraphsTimeDynamicBlock
+      </GraphsBlock>
+
+      <GraphsTimeDynamicBlock
         defaultOption='Game'
         defaultOption2={Array.from(new Set(pitchClasses))}
         defaultOption3='opened'>
@@ -859,64 +864,17 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               setCurrentOption3={setCurrentOption3}
               graphsArrow
               classColor
+              addedClass={cl.mobileHeight}
             />
-            <ArsenalGraph
+            <ArsenalGraphs
               filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
+              currentOption={currentOption}
+              currentOption2={currentOption2}
               pitchClasses={pitchClasses}
-              title='Swing'
-              graphType='SwingByType'
-              classColor
             />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Take'
-              graphType='TakeByType'
-              classColor
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Miss & soft hit'
-              graphType='SoftByType'
-              classColor
-            />
-						<ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Base hits & Hard hits vs PA'
-              graphType='HardByType'
-              classColor
-            />
-            {/* <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Pitch, %'
-              graphType='PitchesRel'
-              classColor
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchClasses={pitchClasses}
-              title='Speed, mph'
-              graphType='Speed'
-              classColor
-            /> */}
           </>
         )}
-      </GraphsTimeDynamicBlock>}
+      </GraphsTimeDynamicBlock>
     </div>
   );
 };
@@ -942,6 +900,18 @@ const FilteredGraphs = ({ battingData }) => {
   const [filteredPlayerFullName, setFilteredPlayerFullName] = useState('');
 
   const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', pitcher: '' });
+
+  const [isDatasetFilterVisible, setDatasetFilterVisible] = useState(false);
+
+  useEffect(() => {
+    if (isDatasetFilterVisible) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      return;
+    }
+		
+		document.body.style = '';
+  }, [isDatasetFilterVisible]);
 
   const filteredData = useMemo(() => {
     function checkFieldIdentity(comparedFields, fieldFilter, exactComparing = true) {
@@ -1049,12 +1019,15 @@ const FilteredGraphs = ({ battingData }) => {
         handleTeamNameChange={handleTeamNameChange}
         handlePlayerNameChange={handlePlayerNameChange}
         setTextGroupFilter={setTextGroupFilter}
+        isDatasetFilterVisible={isDatasetFilterVisible}
+        setDatasetFilterVisible={setDatasetFilterVisible}
       />
       <RightColumnGraphs
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
         filteredPlayerFullName={filteredPlayerFullName}
         data={filteredData}
+        setDatasetFilterVisible={setDatasetFilterVisible}
       />
     </div>
   );

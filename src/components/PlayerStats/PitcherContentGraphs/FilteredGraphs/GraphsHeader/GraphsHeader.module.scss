@@ -5,10 +5,18 @@
   top: -1px;
 	z-index: 2;
 
+	@media screen and (max-width: 800px) {
+		top: calc(var(--desktop-nav-height) + 132px + 56px);
+  }
+
   > .header {
 		color: #1a4c96;
 		font: 700 1.125rem var(--font-nunito);
 		text-align: center;
+
+		@media screen and (max-width: 800px) {
+			font-size: 18px;
+		}
 	
 		@media screen and (orientation: landscape) and (max-height: 950px) {
 			line-height: .8;
@@ -19,8 +27,23 @@
 .title {
   padding: 0 0.5625rem;
   font: 700 0.875rem / 1.8 var(--font-nunito);
+
+	@media screen and (max-width: 800px) {
+		font-size: 14px;
+	}
 }
 
 .highTitle {
 	line-height: 3.8;
+}
+
+.datasetBtn {
+	display: none;
+
+	@media screen and (max-width: 800px) {
+		display: block;
+		margin: 0 auto;
+		font: 400 14px var(--font-nunito);
+		color: black;
+  }
 }

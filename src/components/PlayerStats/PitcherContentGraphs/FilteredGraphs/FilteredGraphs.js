@@ -3,8 +3,6 @@ import FilterField from 'components/UI/dropdown/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
-import TwinPitchesGraph from './TwinPitchesGraph/TwinPitchesGraph';
-import ArsenalGraph from 'components/PlayerStats/ArsenalGraph/ArsenalGraph';
 import { useState, useMemo } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterPitcherGroupData } from 'hooks/useFilterGraphsData';
@@ -12,6 +10,8 @@ import { useSelector } from 'react-redux';
 import GraphsTimeDynamicBlock from './GraphsTimeDynamicBlock';
 import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
+import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
+import ArsenalGraphs from './ArsenalGraphs';
 
 const FIELD_NAMES = {
   batter: {
@@ -168,7 +168,7 @@ const TextGroup = ({ setTextGroupFilter, data }) => {
   function getSortedArr(set) {
     return Array.from(set).sort((a, b) => (a > b ? 1 : -1));
   }
- 
+
   const uniqueValues = useMemo(() => {
     const defaultValues = { teams: new Set(), games: new Set(), batters: new Set() };
     const tempData = data.reduce((sum, cur) => {
@@ -202,7 +202,7 @@ const TextGroup = ({ setTextGroupFilter, data }) => {
             setTextGroupFilter(prev => ({ ...prev, team: value }));
           }}
           listValues={uniqueValues.teams}
-					isAllOption
+          isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
@@ -216,8 +216,8 @@ const TextGroup = ({ setTextGroupFilter, data }) => {
           handleClick={value => {
             setTextGroupFilter(prev => ({ ...prev, game: value }));
           }}
-					listValues={uniqueValues.games}
-					isAllOption
+          listValues={uniqueValues.games}
+          isAllOption
         />
       </div>
       <div className={cl.textGroupItem}>
@@ -232,7 +232,7 @@ const TextGroup = ({ setTextGroupFilter, data }) => {
             setTextGroupFilter(prev => ({ ...prev, batter: value }));
           }}
           listValues={uniqueValues.batters}
-					isAllOption
+          isAllOption
         />
       </div>
     </div>
@@ -421,6 +421,8 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
     state => state.playerStats.playerStatsData
   );
 
+  const isMobile = useSelector(s => s.shared.isMobile);
+
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
   const filteredData = useFilterPitcherGroupData(data, currentFilterValues, teamName, playerFullName);
@@ -581,27 +583,12 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
             />
-            <div className={cl.twinGraphsWrapper}>
-              <TwinPitchesGraph
-                data={relValuesData}
-                filteredData={filteredData}
-                preview={preview}
-                currentOption={currentOption}
-              />
-
-              {Object.entries(relValuesData)
-                .sort((a, b) => (a[1].count > b[1].count ? -1 : 1))
-                .map((entry, index) => (
-                  <TwinPitchesGraph
-                    key={index}
-                    data={relValuesData}
-                    filteredData={filteredData}
-                    selectedPitchType={entry[0]}
-                    preview={preview}
-                    currentOption={currentOption}
-                  />
-                ))}
-            </div>
+            <TwinPitchesGraphs
+              relValuesData={relValuesData}
+              preview={preview}
+              currentOption={currentOption}
+              filteredData={filteredData}
+            />
           </>
         )}
       </GraphsBlock>
@@ -627,102 +614,13 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
               currentOption3={currentOption3}
               setCurrentOption3={setCurrentOption3}
               graphsArrow
+              addedClass={cl.mobileHeight}
             />
-
-            <ArsenalGraph
+            <ArsenalGraphs
               filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
+              currentOption={currentOption}
+              currentOption2={currentOption2}
               pitchTypes={pitchTypes}
-              title='Pitches'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Pitch, %'
-              graphType='PitchesRel'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Speed, mph'
-              graphType='Speed'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Spin, rpm'
-              graphType='Spin'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Vertical break, sm'
-              graphType='VerticalBreak'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Horizontal break, sm'
-              graphType='HorizontalBreak'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='In zone, %'
-              graphType='InZone'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Out zone, %'
-              graphType='OutZone'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Inside, %'
-              graphType='Inside'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Outside, %'
-              graphType='Outside'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='Low, %'
-              graphType='Low'
-            />
-            <ArsenalGraph
-              filteredData={filteredData}
-              currentTimeInterval={currentOption}
-              currentPitchTypes={currentOption2}
-              pitchTypes={pitchTypes}
-              title='High, %'
-              graphType='High'
             />
           </>
         )}

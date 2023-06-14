@@ -9,6 +9,7 @@
 		box-shadow: none;
 		position: sticky;
     top: var(--desktop-nav-height);
+		z-index: 10;
 	}
 	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		box-shadow: none;

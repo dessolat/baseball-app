@@ -23,6 +23,10 @@
   font: 300 0.875rem / 1.6 var(--font-nunito);
   background: rgba(#eaeaea, 0.4);
 
+	@media screen and (max-width: 800px) {
+		font-size: 14px;
+	}
+
   + .groupItem {
     margin-top: 0.6875rem;
   }
@@ -32,6 +36,10 @@
   padding: 0 0.5625rem;
   font: 700 0.875rem / 1.8 var(--font-nunito);
   text-transform: capitalize;
+
+	@media screen and (max-width: 800px) {
+		font-size: 14px;
+	}
 }
 
 .rhbLhbGroupItem {

@@ -1,32 +1,36 @@
 .graph {
-	aspect-ratio: 480 / 364;
-	// aspect-ratio: 480 / 560;
-	// max-width: 480px;
-	// height: auto;
-	background-color: #fff;
+  aspect-ratio: 480 / 364;
+  // aspect-ratio: 480 / 560;
+  // max-width: 480px;
+  // height: auto;
+  background-color: #fff;
 }
 
-.bottomNumber {
-	font: 400 .875rem 'Nunito', sans-serif;
-	text-anchor: middle;
-}
-
-.innerValue {
-	font: 400 .875rem 'Nunito', sans-serif;
-	text-anchor: end;
-}
-
-.innerText {
-	font: 400 .875rem 'Nunito', sans-serif;
-	text-anchor: start;
-}
-
+.bottomNumber,
+.innerValue,
+.innerText,
 .rightTextTitle {
-	font: 400 .875rem 'Nunito', sans-serif;
-	text-anchor: middle;
+  font: 400 0.875rem 'Nunito', sans-serif;
+
+	@media screen and (max-width: 800px) {
+		font-size: 14px;
+	}
 }
 
 .sideTitle {
-	font: 700 1.125rem 'Nunito', sans-serif;
-	text-anchor: middle;
+  font: 700 1.125rem 'Nunito', sans-serif;
+}
+
+.bottomNumber,
+.rightTextTitle,
+.sideTitle {
+  text-anchor: middle;
+}
+
+.innerValue {
+  text-anchor: end;
+}
+
+.innerText {
+  text-anchor: start;
 }

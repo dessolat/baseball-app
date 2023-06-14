@@ -5,6 +5,7 @@ import cl from './ArsenalGraph.module.scss';
 import BottomMarks from './BottomMarks';
 // import Dots from './Dots';
 import HorizontalLinesAndNumbers from './HorizontalLinesAndNumbers';
+import MobileScrollingWrapper from '../MobileScrollingWrapper/MobileScrollingWrapper';
 
 const PARAMS = {
   HORIZONTAL_GRID_LINES_NUMBER: 5,
@@ -646,47 +647,53 @@ const ArsenalGraph = ({
   };
 
   return (
-    <svg viewBox='0 0 1192 500' xmlns='http://www.w3.org/2000/svg' className={cl.graph} ref={graphRef}>
-      {isGraphVisible && (
-        <>
-          {' '}
-          {/* Main layout rendering */}
-          {/* Top-left title */}
-          <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
-            {title}
-          </text>
-          {/* Horizontal center grid line */}
-          <line
-            x1={PARAMS.ZERO_COORDS.X}
-            y1={PARAMS.ZERO_COORDS.Y}
-            x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
-            y2={PARAMS.ZERO_COORDS.Y}
-            stroke='#ACACAC'
-          />
-          {/* Horizontal lines + left numbers rendering */}
-          <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} graphType={graphType} />
-          {/* Horizontal marks + numbers*/}
-          {/* Marks */}
-          <BottomMarks PARAMS={PARAMS} bottomMarks={bottomMarks} currentTimeInterval={currentTimeInterval} />
-          {/* Graph lines */}
-          <HoveringLines
-            PARAMS={PARAMS}
-            leftMarks={leftMarks}
-            pitchTypes={pitchTypes}
-            yScaleMultiplier={yScaleMultiplier}
-          />
-          <Lines
-            PARAMS={PARAMS}
-            leftMarks={leftMarks}
-            pitchTypes={pitchTypes}
-            pitchClasses={pitchClasses}
-            yScaleMultiplier={yScaleMultiplier}
-            currentTimeInterval={currentTimeInterval}
-            classColor={classColor}
-          />
-        </>
-      )}
-    </svg>
+    <MobileScrollingWrapper className={cl.wrapper}>
+      <svg viewBox='0 0 1192 500' xmlns='http://www.w3.org/2000/svg' className={cl.graph} ref={graphRef}>
+        {isGraphVisible && (
+          <>
+            {' '}
+            {/* Main layout rendering */}
+            {/* Top-left title */}
+            <text x={PARAMS.LEFT_PADDING} y={PARAMS.TOP_PADDING} className={cl.sideTitle}>
+              {title}
+            </text>
+            {/* Horizontal center grid line */}
+            <line
+              x1={PARAMS.ZERO_COORDS.X}
+              y1={PARAMS.ZERO_COORDS.Y}
+              x2={PARAMS.ZERO_COORDS.X + PARAMS.HORIZONTAL_GRID_LINES_WIDTH}
+              y2={PARAMS.ZERO_COORDS.Y}
+              stroke='#ACACAC'
+            />
+            {/* Horizontal lines + left numbers rendering */}
+            <HorizontalLinesAndNumbers PARAMS={PARAMS} marks={leftMarks.leftValues} graphType={graphType} />
+            {/* Horizontal marks + numbers*/}
+            {/* Marks */}
+            <BottomMarks
+              PARAMS={PARAMS}
+              bottomMarks={bottomMarks}
+              currentTimeInterval={currentTimeInterval}
+            />
+            {/* Graph lines */}
+            <HoveringLines
+              PARAMS={PARAMS}
+              leftMarks={leftMarks}
+              pitchTypes={pitchTypes}
+              yScaleMultiplier={yScaleMultiplier}
+            />
+            <Lines
+              PARAMS={PARAMS}
+              leftMarks={leftMarks}
+              pitchTypes={pitchTypes}
+              pitchClasses={pitchClasses}
+              yScaleMultiplier={yScaleMultiplier}
+              currentTimeInterval={currentTimeInterval}
+              classColor={classColor}
+            />
+          </>
+        )}
+      </svg>
+    </MobileScrollingWrapper>
   );
 };
 

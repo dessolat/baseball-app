@@ -1,7 +1,11 @@
-import { useRef, useLayoutEffect, useEffect, useState, Fragment } from 'react';
+import { useRef, useLayoutEffect, useState, Fragment } from 'react';
 import cl from './TwinPitchesGraph.module.scss';
 import { getPitchСlassColorByName } from 'utils';
 import Tooltip from './Tooltip';
+import useIntersection from 'hooks/useIntersection';
+import GraphTitle from './GraphTitle';
+import MobileScrollingWrapper from 'components/PlayerStats/MobileScrollingWrapper/MobileScrollingWrapper';
+import classNames from 'classnames';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
@@ -913,72 +917,35 @@ const TwinPitchesGraph = ({
   subTitle1,
   subTitle2
 }) => {
-  const [isGraphVisible, setGraphVisibility] = useState(false);
+  const [graphRef, isGraphVisible] = useIntersection();
 
-  const wrapperRef = useRef();
-  const graphRef = useRef();
-
-  useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '300px 0px',
-      threshold: 0
-    };
-
-    let observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const { isIntersecting } = entry;
-
-        if (isIntersecting) {
-          setGraphVisibility(true);
-        } else {
-          setGraphVisibility(false);
-        }
-      });
-    }, options);
-    observer.observe(graphRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
+	const graphWrapperClasses = classNames(cl.graphWrapper, {
+		[cl.pt2]: title
+	})
   return (
-    <div ref={wrapperRef} style={{ position: 'relative' }}>
-      <svg
-        viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
-        xmlns='http://www.w3.org/2000/svg'
-        className={cl.wrapper}
-        preserveAspectRatio='none'
-        ref={graphRef}>
-        {isGraphVisible && (
-          <LeftChart
-            filteredData={filteredData}
-            selectedPitchClass={selectedPitchClass}
-            preview={preview}
-            currentOption={currentOption}
-            subTitle1={subTitle1}
-            subTitle2={subTitle2}
-            byPitchZone={!title}
-          />
-        )}
-      </svg>
-      {title && (
-        <div
-          style={{
-            position: 'absolute',
-            left: '-7rem',
-            top: 30,
-            width: '7rem',
-            height: '1rem',
-            lineHeight: 1,
-            textAlign: 'center',
-            fontWeight: 700
-          }}>
-          {title}
-        </div>
-      )}
-    </div>
+    <MobileScrollingWrapper>
+      <div className={graphWrapperClasses}>
+        <svg
+          viewBox={`0 0 ${PARAMS.GRAPH_WIDTH} ${PARAMS.GRAPH_HEIGHT}`}
+          xmlns='http://www.w3.org/2000/svg'
+          className={cl.wrapper}
+          preserveAspectRatio='none'
+          ref={graphRef}>
+          {isGraphVisible && (
+            <LeftChart
+              filteredData={filteredData}
+              selectedPitchClass={selectedPitchClass}
+              preview={preview}
+              currentOption={currentOption}
+              subTitle1={subTitle1}
+              subTitle2={subTitle2}
+              byPitchZone={!title}
+            />
+          )}
+        </svg>
+      </div>
+        {title && <GraphTitle title={title} />}
+    </MobileScrollingWrapper>
   );
 };
 

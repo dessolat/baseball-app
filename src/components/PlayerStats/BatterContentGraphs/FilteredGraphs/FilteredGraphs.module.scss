@@ -9,6 +9,19 @@
   font: 700 1.125rem var(--font-nunito);
   text-align: center;
 
+  @media screen and (max-width: 800px) {
+    position: sticky;
+    top: 0;
+    height: 50px;
+    flex: 0 0 50px;
+    background-color: #fff;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 5px;
+  }
+
   @media screen and (orientation: landscape) and (max-height: 950px) {
     line-height: 0.8;
   }
@@ -25,20 +38,68 @@
   }
 }
 
+.mobileTwinTitleWidth > p:first-of-type {
+  @media screen and (max-width: 800px) {
+    max-width: 60%;
+    line-height: 1.2;
+  }
+}
+
+.leftColumnOuterWrapper {
+  position: sticky;
+  top: 0;
+  width: 25%;
+  max-height: 100vh;
+
+  @media screen and (max-width: 800px) {
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: rgba($color: #000000, $alpha: 0.1);
+  }
+}
+
+.leftColumnOuterWrapperCrossBtn {
+  display: none;
+
+  @media screen and (max-width: 800px) {
+    display: inline-block;
+    left: calc(7.5vw + 10px);
+    top: calc(7.5dvh + 10px);
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+  }
+}
+
 .leftColumnWrapper {
   background-color: #fff;
   // flex: 1;
-  width: 25%;
-  top: 0;
-  position: sticky;
   padding: 0.625rem 0 0.625rem 0.625rem;
   // align-self: flex-start;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
 
-	@media screen and (max-width: 800px) {
-    display: none;
+  @media screen and (max-width: 800px) {
+    // display: none;
+    width: 85vw;
+    // top: calc(var(--desktop-nav-height) + 200px);
+    // left: 7.5vw;
+    padding: 0 7px;
+    // padding-top: 20px;
+    max-height: 85dvh;
+    // max-height: calc(100vh - var(--desktop-nav-height) - 220px);
+    overflow-y: scroll;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
   @media screen and (orientation: landscape) and (max-height: 950px) {
@@ -48,6 +109,10 @@
   > .header {
     padding-left: 0.4rem;
     position: relative;
+
+    @media screen and (max-width: 800px) {
+      position: sticky;
+    }
   }
 
   > .body {
@@ -294,7 +359,7 @@
   display: flex;
   flex-direction: column;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     width: 100%;
   }
 }
@@ -312,6 +377,22 @@
   }
 }
 
+.dynamicBlock {
+  overflow-y: clip;
+}
+
+.openedHeight {
+  max-height: 100%;
+}
+
+.closedHeight {
+  max-height: 4.2rem;
+
+  @media screen and (max-width: 800px) {
+    min-height: 100px;
+  }
+}
+
 .twinGraphsWrapper {
   line-height: 0;
   background-color: #fff;
@@ -319,6 +400,10 @@
   flex-wrap: wrap;
   position: relative;
   padding: 0 7.8125rem;
+
+  @media screen and (max-width: 800px) {
+    padding: 0;
+  }
 
   > div {
     width: 100%;
@@ -343,5 +428,36 @@
 
   &:hover {
     background-color: lightgreen;
+  }
+}
+
+.mobileHeight {
+  @media screen and (max-width: 800px) {
+    height: 100px;
+
+    > p {
+      line-height: 1.5;
+    }
+
+    > ul {
+      &:first-of-type {
+        left: 0.4375rem;
+        top: 50% !important;
+        line-height: 21px;
+        width: fit-content;
+      }
+      &:last-of-type {
+        left: 0.4375rem;
+        bottom: 20% !important;
+        line-height: 21px;
+        width: fit-content;
+      }
+    }
+  }
+}
+
+.visible {
+  @media screen and (max-width: 800px) {
+    display: flex;
   }
 }

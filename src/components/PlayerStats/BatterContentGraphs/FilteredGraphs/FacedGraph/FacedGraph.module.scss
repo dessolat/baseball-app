@@ -1,21 +1,8 @@
 .wrapper {
 	aspect-ratio: 940 / 365;
-	background-color: white;
 
 	@media screen and (max-width: 800px) {
-		aspect-ratio: 470 / 365;
-		overflow-x: scroll;
-		position: relative;
-	}
-}
-
-.innerWrapper {
-	width: 100%;
-	height: 100%;
-
-	@media screen and (max-width: 800px) {
-		overflow-x: scroll;
-		position: relative;
+		aspect-ratio: 376 / 365;
 	}
 }
 
@@ -56,9 +43,9 @@
 }
 
 .footerWrapper {
-	// @media screen and (max-width: 800px) {
-	// 	display: none;
-	// }
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 }
 
 .mobileFooterWrapper {
@@ -66,9 +53,38 @@
 
 	@media screen and (max-width: 800px) {
 		display: block;
-		bottom: 0;
-		left: 0;
+		position: absolute;
+		bottom: 9%;
+		left: 13%;
 	}
+}
+
+.mobileFooterRow {
+	display: flex;
+	align-items: center;
+	font: 300 14px var(--font-nunito);
+	position: relative;
+	padding-left: 11px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 6px;
+		height: 6px;
+		background-color: var(--bg-color);
+	}
+
+	// > .rowIcon {
+	// 	width: 6px;
+	// 	height: 6px;
+	// }
+
+	// > div + div {
+	// 	margin-left: 6px;
+	// }
 }
 
 .footerValue {
@@ -80,25 +96,4 @@
 
 .graphColumn {
   transition: y 0.3s, height 0.3s, fill 0.3s;
-}
-
-.arrowBtn {
-	display: none;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%) scale(1.4);
-	z-index: 1;
-	opacity: .8;
-
-	@media screen and (max-width: 800px) {
-    display: inline-block;
-  }
-}
-
-.leftArrowBtn {
-	left: 8px;
-}
-
-.rightArrowBtn {
-	right: 8px;
 }
