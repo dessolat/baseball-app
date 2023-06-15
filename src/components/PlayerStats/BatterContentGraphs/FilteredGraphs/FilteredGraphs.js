@@ -707,7 +707,8 @@ const LeftColumnOptions = ({
   return (
     <div className={outerWrapperClasses}>
       <div className={cl.leftColumnWrapper}>
-        <h3 className={cl.header}>Dataset filter</h3>
+        <h3 className={cl.header}>Dataset filter
+				<CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} /></h3>
         <div className={cl.body}>
           <TextGroup setTextGroupFilter={setTextGroupFilter} data={battingData.pitches_all} />
 
@@ -743,9 +744,9 @@ const LeftColumnOptions = ({
               />
             );
           })}
+      
         </div>
       </div>
-      <CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} />
     </div>
   );
 };
