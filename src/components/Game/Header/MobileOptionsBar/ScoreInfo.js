@@ -6,6 +6,7 @@ import { setBoxActiveButton } from 'redux/gameReducer';
 const ScoreInfo = () => {
   const preview = useSelector(s => s.game.preview, shallowEqual);
   const isVideo = useSelector(s => s.game.isVideo);
+  const currentTab = useSelector(s => s.game.currentTab);
   const boxActiveButton = useSelector(s => s.game.boxActiveButton);
 
 	const dispatch = useDispatch()
@@ -13,7 +14,7 @@ const ScoreInfo = () => {
 	const handleTeamClick = teamSide => () => dispatch(setBoxActiveButton(teamSide))
 
 	const getTeamClasses = teamSide => classNames(cl.teamName, {
-		[cl.active]: teamSide === boxActiveButton
+		[cl.active]: teamSide === boxActiveButton && currentTab === 'box'
 	})
 
   const scoreWrapperClasses = classNames(cl.scoreInfo, {
