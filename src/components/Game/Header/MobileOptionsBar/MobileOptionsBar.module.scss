@@ -38,13 +38,13 @@
     justify-content: space-between;
 
     > .team:last-child {
-      flex-direction: row-reverse;
+      // flex-direction: row-reverse;
 
       > span:first-child {
-        margin-left: 9px;
+        // margin-left: 9px;
       }
       > span:last-child {
-        margin-left: 0;
+        // margin-left: 0;
       }
     }
   }
