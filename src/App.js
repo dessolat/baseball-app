@@ -36,10 +36,14 @@ const App = () => {
 
     dispatch(setIsMobile(IsMobileCard()));
 
-		if (!IsMobileCard()) return
+    // if (window.innerHeight > 768 && window.innerHeight < window.innerWidth)
+    //   document.documentElement.style.zoom = document.documentElement.clientHeight / 820;
+      // document.documentElement.style.zoom = window.innerHeight / 820;
 
-		const orientationChangeHandler = () => {
-			const mql = window.matchMedia("(orientation: portrait)");
+    if (!IsMobileCard()) return;
+
+    const orientationChangeHandler = () => {
+      const mql = window.matchMedia('(orientation: portrait)');
       dispatch(setMobileOrientation(mql.matches ? 90 : 0));
     };
 
@@ -48,7 +52,7 @@ const App = () => {
     return () => {
       window.removeEventListener('orientationchange', orientationChangeHandler);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const RouteAdapter = ({ children }) => {
