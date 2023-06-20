@@ -3,7 +3,7 @@ import FilterField from 'components/UI/dropdown/FilterField/FilterField';
 import GraphsBlock from './GraphsBlock';
 import PitchesSpeedField from './PitchesSpeedField/PitchesSpeedField';
 import GraphsHeader from './GraphsHeader/GraphsHeader';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { getPitchColorByName, getRndValue } from 'utils';
 import { useFilterPitcherGroupData } from 'hooks/useFilterGraphsData';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ import PitchesTrajectories from './PitchesTrajectories/PitchesTrajectories';
 import HitsAnglesGraphs from './HitsAnglesGraphs/HitsAnglesGraphs';
 import TwinPitchesGraphs from './TwinPitchesGraph/TwinPitchesGraphs';
 import ArsenalGraphs from './ArsenalGraphs';
+import classNames from 'classnames';
+import CrossClose from 'components/UI/buttons/CrossClose/CrossClose';
 
 const FIELD_NAMES = {
   batter: {
@@ -318,7 +320,9 @@ const LeftColumnOptions = ({
   filteredPlayerFullName,
   handleTeamNameChange,
   handlePlayerNameChange,
-  setTextGroupFilter
+  setTextGroupFilter,
+  isDatasetFilterVisible,
+  setDatasetFilterVisible
 }) => {
   const groupsArr = [
     {
@@ -384,36 +388,55 @@ const LeftColumnOptions = ({
       ]
     }
   ];
-  return (
-    <div className={cl.leftColumnWrapper}>
-      <h3 className={cl.header}>Dataset filter</h3>
-      <div className={cl.body}>
-        <TextGroup setTextGroupFilter={setTextGroupFilter} data={pitchesData.pitches_all} />
 
-        <CustomGroup
-          data={data}
-          currentFilterValues={currentFilterValues}
-          handleFilterClick={handleFilterClick}
-          handleTeamNameChange={handleTeamNameChange}
-          handlePlayerNameChange={handlePlayerNameChange}
-        />
-        {groupsArr.map((group, i) => (
-          <Group
-            key={i}
+  const handleCrossClick = () => {
+    setDatasetFilterVisible(false);
+  };
+
+  const outerWrapperClasses = classNames(cl.leftColumnOuterWrapper, {
+    [cl.visible]: isDatasetFilterVisible
+  });
+  return (
+    <div className={outerWrapperClasses}>
+      <div className={cl.leftColumnWrapper}>
+        <h3 className={cl.header}>
+          Dataset filter{' '}
+          <CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} />
+        </h3>
+        <div className={cl.body}>
+          <TextGroup setTextGroupFilter={setTextGroupFilter} data={pitchesData.pitches_all} />
+
+          <CustomGroup
             data={data}
-            groupData={group}
             currentFilterValues={currentFilterValues}
             handleFilterClick={handleFilterClick}
-            filteredTeamName={filteredTeamName}
-            filteredPlayerFullName={filteredPlayerFullName}
+            handleTeamNameChange={handleTeamNameChange}
+            handlePlayerNameChange={handlePlayerNameChange}
           />
-        ))}
+          {groupsArr.map((group, i) => (
+            <Group
+              key={i}
+              data={data}
+              groupData={group}
+              currentFilterValues={currentFilterValues}
+              handleFilterClick={handleFilterClick}
+              filteredTeamName={filteredTeamName}
+              filteredPlayerFullName={filteredPlayerFullName}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlayerFullName, data }) => {
+const RightColumnGraphs = ({
+  currentFilterValues,
+  filteredTeamName,
+  filteredPlayerFullName,
+  data,
+  setDatasetFilterVisible
+}) => {
   const { preview } = data;
   const { pitch_types: pitchTypes } = preview;
 
@@ -552,6 +575,11 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
 
   // const twinFakeBallsHandler = () => setFakeTwinBalls(prev => !prev);
   // !
+
+  const handleMobileDatasetFilterClick = () => {
+    setDatasetFilterVisible(true);
+  };
+
   return (
     <div className={cl.rightColumnWrapper}>
       <GraphsBlock defaultOption='Types'>
@@ -560,6 +588,7 @@ const RightColumnGraphs = ({ currentFilterValues, filteredTeamName, filteredPlay
             <GraphsHeader
               title='Machine vision statistics'
               subTitle={`${playerName} ${playerSurname} pitches, their speed, movement and frequency`}
+              handleMobileDatasetFilterClick={handleMobileDatasetFilterClick}
               noSelector
             />
             <PitchesSpeedField
@@ -663,6 +692,18 @@ const FilteredGraphs = ({ pitchesData }) => {
 
   const [textGroupFilter, setTextGroupFilter] = useState({ team: '', game: '', batter: '' });
 
+  const [isDatasetFilterVisible, setDatasetFilterVisible] = useState(false);
+
+	useEffect(() => {
+    if (isDatasetFilterVisible) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      return;
+    }
+		
+		document.body.style = '';
+  }, [isDatasetFilterVisible]);
+
   const filteredData = useMemo(() => {
     function checkFieldIdentity(comparedFields, fieldFilter, exactComparing = true) {
       if (fieldFilter === '') return true;
@@ -755,12 +796,15 @@ const FilteredGraphs = ({ pitchesData }) => {
         handleTeamNameChange={handleTeamNameChange}
         handlePlayerNameChange={handlePlayerNameChange}
         setTextGroupFilter={setTextGroupFilter}
+        isDatasetFilterVisible={isDatasetFilterVisible}
+        setDatasetFilterVisible={setDatasetFilterVisible}
       />
       <RightColumnGraphs
         currentFilterValues={currentFilterValues}
         filteredTeamName={filteredTeamName}
         filteredPlayerFullName={filteredPlayerFullName}
         data={filteredData}
+        setDatasetFilterVisible={setDatasetFilterVisible}
       />
     </div>
   );
