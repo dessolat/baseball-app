@@ -81,10 +81,13 @@ progress::-webkit-progress-bar {background: rgba(255, 255, 255, 0.3); border-rad
 progress { background: white; color: white  }
 
 .container {
-  max-width: 1650px;
+  max-width: 90vw;
   padding: 0 1rem;
   margin: 0 auto;
 
+  @media screen and (max-width: 1550px) {
+    max-width: 100vw;
+  }
   @media screen and (max-width: 800px) {
     padding: 0;
   }

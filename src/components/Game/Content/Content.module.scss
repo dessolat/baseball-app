@@ -2,14 +2,13 @@
 
 .content {
   display: grid;
-  grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(
-      22.625rem,
-      55.3125rem
-    );
+  // grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(
+  grid-template: 1fr 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(22.625rem, 1fr);
   grid-template-areas:
     'list events graphics'
     'list video-options graphics'
     'controls video-options timeline';
+  height: calc(100vh - 230px);
 
   @media screen and (max-width: 1600px) and (max-height: 740px) {
     grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 24.5rem) 3.375rem minmax(
@@ -25,11 +24,13 @@
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
+		height: unset;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: flex;
     flex-direction: row;
     position: relative;
+		height: unset;
   }
 }
 
