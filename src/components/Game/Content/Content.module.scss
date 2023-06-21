@@ -10,6 +10,10 @@
     'controls video-options timeline';
   height: calc(100vh - 230px);
 
+	@media screen and (min-width: 2300px) {
+    height: calc(50vh - 230px);
+  }
+
   @media screen and (max-width: 1600px) and (max-height: 740px) {
     grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 24.5rem) 3.375rem minmax(
         22.625rem,
