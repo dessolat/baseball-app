@@ -36,16 +36,20 @@
 
 .contentNoVideo {
   display: grid;
-  grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
+  grid-template: 100% / minmax(10rem, auto) minmax(9.735rem, 19.94rem);
+  // grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   grid-template-areas: 'list moments';
+	height: calc(100vh - 230px);
 
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
+		height: unset;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: flex;
     flex-direction: column;
+		height: unset;
   }
 }
 
