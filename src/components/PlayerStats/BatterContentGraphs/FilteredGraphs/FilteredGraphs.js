@@ -707,8 +707,10 @@ const LeftColumnOptions = ({
   return (
     <div className={outerWrapperClasses}>
       <div className={cl.leftColumnWrapper}>
-        <h3 className={cl.header}>Dataset filter
-				<CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} /></h3>
+        <h3 className={cl.header}>
+          Dataset filter
+          <CrossClose handleCrossClick={handleCrossClick} addedClass={cl.leftColumnOuterWrapperCrossBtn} />
+        </h3>
         <div className={cl.body}>
           <TextGroup setTextGroupFilter={setTextGroupFilter} data={battingData.pitches_all} />
 
@@ -744,7 +746,6 @@ const LeftColumnOptions = ({
               />
             );
           })}
-      
         </div>
       </div>
     </div>
@@ -828,7 +829,7 @@ const RightColumnGraphs = ({
               subTitle={`Pitches to ${playerName} ${playerSurname} by zone`}
               currentOption={currentOption}
               setCurrentOption={setCurrentOption}
-							addedClass={cl.mobileTwinTitleWidth}
+              addedClass={cl.mobileTwinTitleWidth}
             />
             <TwinPitchesGraphs
               relValuesData={relValuesData}
@@ -904,14 +905,16 @@ const FilteredGraphs = ({ battingData }) => {
 
   const [isDatasetFilterVisible, setDatasetFilterVisible] = useState(false);
 
+  useEffect(() => () => (document.body.style = ''), []);
+
   useEffect(() => {
     if (isDatasetFilterVisible) {
       document.body.style.overflow = 'hidden';
       document.body.style.touchAction = 'none';
       return;
     }
-		
-		document.body.style = '';
+
+    document.body.style = '';
   }, [isDatasetFilterVisible]);
 
   const filteredData = useMemo(() => {
