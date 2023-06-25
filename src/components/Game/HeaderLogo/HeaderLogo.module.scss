@@ -14,10 +14,20 @@
 
 .leftLogo,
 .leftLogoText {
-  margin-left: 3.125rem;
+  margin-left: auto;
+  // margin-left: 3.125rem;
 
   @media screen and (max-width: 1070px) {
     margin-left: 0.6rem;
+  }
+}
+
+.rightLogo,
+.rightLogoText {
+  margin-right: auto;
+
+  @media screen and (max-width: 1070px) {
+    margin-left: unset;
   }
 }
 
