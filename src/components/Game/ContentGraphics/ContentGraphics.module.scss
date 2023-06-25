@@ -1,6 +1,7 @@
 .graphics {
   grid-area: graphics;
-
+	aspect-ratio: 16/9;
+	width: 100%;
   @media screen and (max-width: 800px) {
     position: sticky;
     top: calc(var(--desktop-nav-height) + 56px + var(--top-shift));
