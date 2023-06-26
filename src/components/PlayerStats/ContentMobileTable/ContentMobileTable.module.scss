@@ -8,7 +8,8 @@
   }
 	
 	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px);
+		// height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px);
+    height: unset;
   }
 }
 
@@ -81,7 +82,7 @@
   }
 
 	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px - 38.5px);
+		// height: calc(100vh - var(--landscape-nav-height) - 80.5px - 57px - 38.5px);
 		max-height: unset;
   }
 
