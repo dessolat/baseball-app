@@ -38,13 +38,15 @@ const App = () => {
 
     // if (window.innerHeight > 768 && window.innerHeight < window.innerWidth)
     //   document.documentElement.style.zoom = document.documentElement.clientHeight / 820;
-      // document.documentElement.style.zoom = window.innerHeight / 820;
+    // document.documentElement.style.zoom = window.innerHeight / 820;
 
     if (!IsMobileCard()) return;
 
     const orientationChangeHandler = () => {
-      const mql = window.matchMedia('(orientation: portrait)');
-      dispatch(setMobileOrientation(mql.matches ? 90 : 0));
+      setTimeout(() => {
+        const mql = window.matchMedia('(orientation: portrait)');
+        dispatch(setMobileOrientation(mql.matches ? 90 : 0));
+      }, 200);
     };
 
     window.addEventListener('orientationchange', orientationChangeHandler);
