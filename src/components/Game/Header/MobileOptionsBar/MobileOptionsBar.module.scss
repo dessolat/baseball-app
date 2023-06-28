@@ -1,17 +1,10 @@
 .optionsBar {
   height: 27px;
   width: 100%;
-  padding: 0 5px 0 7px;
+  padding: 0 7px 0 7px;
   border-bottom: 0.5px solid #cdcccc;
   line-height: 1;
   justify-content: space-between;
-
-  &.noVideo {
-		@media screen and (max-width: 800px) {
-			// padding: 0 13px;
-      // display: flex;
-    }
-  }
 }
 
 .onlyPortraitMobile {
@@ -36,17 +29,6 @@
 
   &.noVideo {
     justify-content: space-between;
-
-    > .team:last-child {
-      // flex-direction: row-reverse;
-
-      > span:first-child {
-        // margin-left: 9px;
-      }
-      > span:last-child {
-        // margin-left: 0;
-      }
-    }
   }
 }
 

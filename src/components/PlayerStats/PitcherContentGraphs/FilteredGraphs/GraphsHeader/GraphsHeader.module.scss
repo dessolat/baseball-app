@@ -3,47 +3,58 @@
   padding: 0.4375rem 0;
   position: sticky;
   top: -1px;
-	z-index: 2;
+  z-index: 2;
 
-	@media screen and (max-width: 800px) {
-		top: calc(var(--desktop-nav-height) + 132px + 56px);
+  @media screen and (max-width: 800px) {
+    top: calc(var(--desktop-nav-height) + 132px + 56px);
+  }
+
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    top: calc(var(--desktop-nav-height) + 80.5px + 56px);
   }
 
   > .header {
-		color: #1a4c96;
-		font: 700 1.125rem var(--font-nunito);
-		text-align: center;
+    color: #1a4c96;
+    font: 700 1.125rem var(--font-nunito);
+    text-align: center;
 
-		@media screen and (max-width: 800px) {
-			font-size: 18px;
-		}
-	
-		@media screen and (orientation: landscape) and (max-height: 950px) {
-			line-height: .8;
-		}
-	}
+    @media screen and (max-width: 800px),
+      screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      font-size: 18px;
+    }
+
+    @media screen and (orientation: landscape) and (max-height: 950px) {
+      line-height: 0.8;
+    }
+  }
 }
 
 .title {
   padding: 0 0.5625rem;
   font: 700 0.875rem / 1.8 var(--font-nunito);
 
-	@media screen and (max-width: 800px) {
-		font-size: 14px;
-	}
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    font-size: 14px;
+  }
 }
 
 .highTitle {
-	line-height: 3.8;
+  line-height: 3.8;
 }
 
 .datasetBtn {
-	display: none;
+  display: none;
 
-	@media screen and (max-width: 800px) {
-		display: block;
-		margin: 0 auto;
-		font: 400 14px var(--font-nunito);
-		color: black;
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    display: block;
+    margin: 0 auto;
+    font: 400 14px var(--font-nunito);
+    color: black;
   }
+
+	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+		padding-top: 5px;
+	}
 }
