@@ -736,24 +736,26 @@ const Content = () => {
         ? -1
         : 1
     );
+
+  const contentTable =
+    statsType !== 'player' ? (
+      <ContentTeamTable
+        getTableHeaders={getTableHeaders}
+        getTableRows={getTableRows}
+        getSortedStatsData={getSortedStatsData}
+      />
+    ) : (
+      <ContentPlayerTable
+        getTableHeaders={getTableHeaders}
+        getTableRows={getTableRows}
+        getSortedStatsData={getSortedStatsData}
+      />
+    );
+		
   return (
     <section>
       <div className='container'>
-        <div className={cl.content}>
-          {statsType !== 'player' ? (
-            <ContentTeamTable
-              getTableHeaders={getTableHeaders}
-              getTableRows={getTableRows}
-              getSortedStatsData={getSortedStatsData}
-            />
-          ) : (
-            <ContentPlayerTable
-              getTableHeaders={getTableHeaders}
-              getTableRows={getTableRows}
-              getSortedStatsData={getSortedStatsData}
-            />
-          )}
-        </div>
+        <div className={cl.content}>{contentTable}</div>
       </div>
     </section>
   );

@@ -96,86 +96,86 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
+  // Mobile render
+  if (isMobile) {
+    return (
+      <MobileTable
+        cl={cl}
+        filteredStatsData={filteredStatsData}
+        sortedTeamOptions={sortedTeamOptions}
+        currentTeam={currentTeam}
+        handleTeamClick={handleTeamClick}
+        handleFieldClick={handleFieldClick}
+        getTableHeaders={getTableHeaders}
+        getTableRows={getTableRows}
+        getSortedStatsData={getSortedStatsData}
+      />
+    );
+  }
+
+  // Desktop render
   return (
-    <>
-      {isMobile ? (
-        <MobileTable
-          cl={cl}
-          filteredStatsData={filteredStatsData}
-          sortedTeamOptions={sortedTeamOptions}
-          currentTeam={currentTeam}
-          handleTeamClick={handleTeamClick}
-          handleFieldClick={handleFieldClick}
-          getTableHeaders={getTableHeaders}
-          getTableRows={getTableRows}
-          getSortedStatsData={getSortedStatsData}
-        />
-      ) : (
-        <div className={cl.wrapper}>
-          {filteredStatsData.length !== 0 || playerFilter === '' ? (
+    <div className={cl.wrapper}>
+      {filteredStatsData.length !== 0 || playerFilter === '' ? (
+        <div>
+          <div className={cl.tableHeader}>
+            <div></div>
             <div>
-              <div className={cl.tableHeader}>
-                <div></div>
-                <div>
-                  <Dropdown
-                    title={'Team'}
-                    options={sortedTeamOptions}
-                    currentOption={currentTeam}
-                    handleClick={handleTeamClick}
-                    listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-                    searchField={true}
-                  />
-                </div>
-                {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
-              </div>
-              <ul className={cl.rows}>
-                {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                  (row, index) => {
-                    return (
-                      <li key={index} className={cl.tableRow}>
-                        <div>
-                          <Link to={`/stats/player/${row.id}`}>
-                            {' '}
-                            <span className={cl.fullName}>
-                              {row.name} {row.surname}
-                            </span>
-                          </Link>
-                        </div>
-                        <div className={cl.teamNames}>
-                          <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
-                            {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
-                          </Link>
-                          {row.teams[1] && (
-                            <>
-                               /{' '}
-                              <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
-                                {getShortName(row.teams[1].name, 12)}
-                              </Link>
-                            </>
-                          )}
-                          {row.teams[2] && (
-                            <>
-                               /{' '}
-                              <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>
-                                {row.teams[2].name}
-                              </Link>
-                            </>
-                          )}
-                        </div>
-                        {getTableRows(row, cl, sortField[tableMode])}
-                      </li>
-                    );
-                  }
-                )}
-              </ul>
+              <Dropdown
+                title={'Team'}
+                options={sortedTeamOptions}
+                currentOption={currentTeam}
+                handleClick={handleTeamClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+                searchField={true}
+              />
             </div>
-          ) : (
-            <p className={cl.noPlayersFound}>No players found.</p>
-          )}
-          <ContentPlayerFilterField />
+            {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
+          </div>
+          <ul className={cl.rows}>
+            {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map((row, index) => {
+              return (
+                <li key={index} className={cl.tableRow}>
+                  <div>
+                    <Link to={`/stats/player/${row.id}`}>
+                      {' '}
+                      <span className={cl.fullName}>
+                        {row.name} {row.surname}
+                      </span>
+                    </Link>
+                  </div>
+                  <div className={cl.teamNames}>
+                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
+                      {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
+                    </Link>
+                    {row.teams[1] && (
+                      <>
+                         /{' '}
+                        <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[1].name}`}>
+                          {getShortName(row.teams[1].name, 12)}
+                        </Link>
+                      </>
+                    )}
+                    {row.teams[2] && (
+                      <>
+                         /{' '}
+                        <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[2].name}`}>
+                          {row.teams[2].name}
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                  {getTableRows(row, cl, sortField[tableMode])}
+                </li>
+              );
+            })}
+          </ul>
         </div>
+      ) : (
+        <p className={cl.noPlayersFound}>No players found.</p>
       )}
-    </>
+      <ContentPlayerFilterField />
+    </div>
   );
 };
 
