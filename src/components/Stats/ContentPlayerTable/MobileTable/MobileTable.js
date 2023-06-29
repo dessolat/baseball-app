@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cl from '../ContentPlayerTable.module.scss';
 import { useSelector } from 'react-redux';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
 import { Link } from 'react-router-dom';

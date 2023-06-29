@@ -1,5 +1,5 @@
 const defaultState = {
-  statsData: [],
+  statsData: {},
   tableMode: 'Batting',
   sortField: { Batting: 'G', 'Fielding / Running': 'G', Pitching: 'G' },
   sortDirection: 'desc',

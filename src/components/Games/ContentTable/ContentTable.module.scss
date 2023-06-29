@@ -207,7 +207,8 @@
       }
       &:nth-child(8) {
         // width: 12rem;
-				flex: 1 1 11.5rem;
+				// flex: 1 1 11.5rem;
+				flex: 0 1 17.5rem;
 
         @media screen and (max-width: 800px) {
           display: none;
@@ -239,7 +240,9 @@
   }
 
   .rows {
-    max-height: calc(55vh + 7px);
+    max-height: calc(100vh - 35px - 6.4rem - 1.3825rem - 4rem - 2rem - 30px);
+    // max-height: calc(70vh + 7px);
+    // max-height: calc(55vh + 7px);
     overflow-x: hidden;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -404,7 +407,8 @@
       }
       &:nth-child(8) {
         // width: 12rem;
-				flex: 1 1 11.5rem;
+				// flex: 1 1 11.5rem;
+				flex: 0 1 17.5rem;
 
         @media screen and (max-width: 800px) {
           display: none;

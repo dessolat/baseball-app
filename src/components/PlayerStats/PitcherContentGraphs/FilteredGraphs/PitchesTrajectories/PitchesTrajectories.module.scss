@@ -5,16 +5,9 @@
   background-color: white;
   position: relative;
 
-  @media screen and (max-width: 800px) {
-    aspect-ratio: 16/15;
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     text-align: center;
-    position: relative;
-  }
-  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    aspect-ratio: unset;
-    text-align: center;
-    position: relative;
-    height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
 }
 
@@ -59,7 +52,7 @@
     border-radius: 4px;
     line-height: 1.5;
     transition: background-color var(--transition-speed), color var(--transition-speed);
-		color: black;
+    color: black;
   }
 }
 

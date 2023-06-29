@@ -2,49 +2,69 @@
 
 .content {
   display: grid;
-  grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(
-      22.625rem,
-      55.3125rem
-    );
+  // grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 19.3125rem) 3.375rem minmax(
   grid-template-areas:
     'list events graphics'
     'list video-options graphics'
     'controls video-options timeline';
 
-  @media screen and (max-width: 1600px) and (max-height: 740px) {
-    grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 24.5rem) 3.375rem minmax(
-        22.625rem,
-        55.3125rem
-      );
-    grid-template-areas:
-      'list events graphics'
-      'list video-options graphics'
-      'controls video-options timeline';
-  }
+  grid-template-rows: min(
+      calc(100vh - 35px - 110px - 61.5px - 15px - 7.6875rem - 3.625rem),
+      calc((100vw - 2rem - 3.375rem - 300px) / 16 * 9 - 7.6875rem),
+      calc((1728px - 2rem - 3.375rem - 300px) / 16 * 9 - 7.6875rem)
+    ) 7.6875rem 3.625rem;
+		
+  grid-template-columns: 1fr 3.375rem min(
+      calc((100vh - 35px - 110px - 61.5px - 15px - 3.625rem) / 9 * 16),
+      calc(100% - 3.375rem - 300px)
+    );
+
+  // height: calc(100vh - 230px);
+
+  // @media screen and (min-width: 2300px) {
+  //   height: calc(50vh - 230px);
+  // }
+
+  // @media screen and (max-width: 1600px) and (max-height: 740px) {
+  //   grid-template: 23.42578125rem 7.6875rem 3.625rem / minmax(10rem, 24.5rem) 3.375rem minmax(
+  //       22.625rem,
+  //       55.3125rem
+  //     );
+  //   grid-template-areas:
+  //     'list events graphics'
+  //     'list video-options graphics'
+  //     'controls video-options timeline';
+  // }
 
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
+    height: unset;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: flex;
     flex-direction: row;
     position: relative;
+    height: unset;
   }
 }
 
 .contentNoVideo {
   display: grid;
-  grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
+  grid-template: 100% / minmax(10rem, auto) minmax(9.735rem, 19.94rem);
+  // grid-template: 33rem / minmax(10rem, 58.06rem) minmax(9.735rem, 19.94rem);
   grid-template-areas: 'list moments';
+  height: calc(100vh - 230px);
 
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
+    height: unset;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: flex;
     flex-direction: column;
+    height: unset;
   }
 }
 

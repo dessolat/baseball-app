@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const useScrollingArrows = () => {
-	const [isLeftArrow, setIsLeftArrow] = useState(false);
+  const [isLeftArrow, setIsLeftArrow] = useState(false);
   const [isRightArrow, setIsRightArrow] = useState(false);
 
   const innerWrapperRef = useRef(null);
+
+	const mobileOrientation = useSelector(s => s.shared.mobileOrientation)
 
   useEffect(() => {
     if (innerWrapperRef.current === null) return;
@@ -16,14 +19,14 @@ const useScrollingArrows = () => {
         ? true
         : false
     );
-  }, []);
+  }, [mobileOrientation]);
 
-	const horizontalScrollHandler = e => {
+  const horizontalScrollHandler = e => {
     setIsLeftArrow(e.target.scrollLeft <= 0 ? false : true);
     setIsRightArrow(e.target.scrollLeft + e.target.clientWidth < e.target.scrollWidth ? true : false);
   };
 
-	return [isLeftArrow, isRightArrow, innerWrapperRef, horizontalScrollHandler]
-}
+  return [isLeftArrow, isRightArrow, innerWrapperRef, horizontalScrollHandler];
+};
 
-export default useScrollingArrows
+export default useScrollingArrows;

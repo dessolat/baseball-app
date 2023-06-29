@@ -1,6 +1,5 @@
 .dropdownWrapper {
   height: 100%;
-  aspect-ratio: 1;
   display: flex;
   justify-content: flex-end;
   position: relative;
@@ -22,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-	column-gap: 2px;
+	column-gap: 5px;
 	font: 400 14px var(--font-nunito);
 	color: black;
 }
@@ -39,10 +38,6 @@
   -webkit-animation: popUp 0.2s linear;
   font: 400 24px var(--font-nunito);
 	padding: 55px 8px 8px 8px;
-
-  // > div + div {
-  //   border-top: 0.5px dashed #8a8a8a;
-  // }
 }
 
 @keyframes popUp {

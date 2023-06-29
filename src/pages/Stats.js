@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCurrentLeague } from 'redux/gamesReducer';
 import axios from 'axios';
 import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
-// import { setCurrentYear } from 'redux/sharedReducer';
 import StatsLoadingProvider from 'context/StatsLoadingContext';
 
 const Stats = () => {
@@ -20,9 +18,9 @@ const Stats = () => {
   const firstMountRef = useRef(true);
   const cancelStatsTokenRef = useRef();
 
-  const statsTableMode  = useSelector(state => state.stats.tableMode);
+  const statsTableMode = useSelector(state => state.stats.tableMode);
   const currentYear = useSelector(state => state.shared.currentYear);
-	
+
   const dispatch = useDispatch();
 
   useEffect(() => () => cancelStatsTokenRef.current.cancel(null), []);
@@ -35,42 +33,50 @@ const Stats = () => {
   }, [statsTableMode]);
 
   useEffect(() => {
-    const refactorData = leagues => {
-      const modifiedLeagues = Array.isArray(leagues) ? leagues : [];
+    const refactorData = leaguesByYears => {
+      return Object.entries(leaguesByYears).reduce(
+        (sumByYear, [curYear, leagues]) => {
+					const modifiedLeagues = Array.isArray(leagues) ? leagues : [];
 
-      const result = modifiedLeagues.reduce((sum, { id, title, type, players, teams }) => {
-        const leaguePlayersFielding = players.fielding.reduce((sum, player, index) => {
-          sum.push({ ...player, ...players.running[index] });
-          return sum;
-        }, []);
+					sumByYear[curYear] = modifiedLeagues.reduce((sum, { id, title, type, players, teams }) => {
+						const leaguePlayersFielding = players.fielding.reduce((sum, player, index) => {
+							sum.push({ ...player, ...players.running[index] });
+							return sum;
+						}, []);
+		
+						const leagueTeamsFielding = teams.fielding.reduce((sum, player, index) => {
+							sum.push({ ...player, ...teams.running[index] });
+							return sum;
+						}, []);
+		
+						const resultLeague = {
+							id,
+							title,
+							type,
+							players: {
+								batting: players.batting,
+								pitching: players.pitching,
+								'fielding / running': leaguePlayersFielding
+							},
+							teams: {
+								batting: teams.batting,
+								pitching: teams.pitching,
+								'fielding / running': leagueTeamsFielding
+							}
+						};
+		
+						sum.push(resultLeague);
+		
+						return sum;
+					}, []);
 
-        const leagueTeamsFielding = teams.fielding.reduce((sum, player, index) => {
-          sum.push({ ...player, ...teams.running[index] });
-          return sum;
-        }, []);
 
-        const resultLeague = {
-          id,
-          title,
-          type,
-          players: {
-            batting: players.batting,
-            pitching: players.pitching,
-            'fielding / running': leaguePlayersFielding
-          },
-          teams: {
-            batting: teams.batting,
-            pitching: teams.pitching,
-            'fielding / running': leagueTeamsFielding
-          }
-        };
 
-        sum.push(resultLeague);
+					return sumByYear
+				},
 
-        return sum;
-      }, []);
-
-      return result;
+        {}
+      );
     };
 
     const fetchStats = async () => {
@@ -78,9 +84,9 @@ const Stats = () => {
 
       try {
         setIsStatsLoading(true);
-        const response = await axios.get(`http://baseball-gametrack.ru/api/stats/year-${currentYear}`, {
+        const response = await axios.get(`http://baseball-gametrack.ru/api/stats`, {
           cancelToken: cancelStatsTokenRef.current.token,
-          timeout: 10000,
+          // timeout: 10000,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
@@ -102,9 +108,8 @@ const Stats = () => {
       return;
     }
 
-    dispatch(setCurrentLeague({ id: -1, name: 'All' }));
     // eslint-disable-next-line
-  }, [currentYear]);
+  }, []);
   // useEffect(() => {
   //   const fetchGamesData = async () => {
   //     cancelTokenRef.current = axios.CancelToken.source();
@@ -154,14 +159,27 @@ const Stats = () => {
     transform: 'translate(-50%,-50%)'
   };
 
+  // Error handling
   if (error !== '') return <ErrorLoader error={error} />;
+
+  // Loader
+  if (isStatsLoading)
+    return (
+      <>
+        {/* <StatsLoadingProvider value={isStatsLoading}>
+          <Header />
+        </StatsLoadingProvider> */}
+        <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} />
+      </>
+    );
+
+  // Content
   return (
     <>
       <StatsLoadingProvider value={isStatsLoading}>
         <Header />
       </StatsLoadingProvider>
-
-      {isStatsLoading ? <Loader styles={contentLoaderStyles} loadedPercents={loadedPercents} /> : <Content />}
+      <Content />
     </>
   );
 };
