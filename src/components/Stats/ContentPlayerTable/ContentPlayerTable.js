@@ -13,6 +13,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentYear = useSelector(state => state.shared.currentYear);
 
   const tableMode = useSelector(state => state.stats.tableMode);
   const sortField = useSelector(state => state.stats.sortField);
@@ -37,16 +38,15 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   let filteredStatsData = useMemo(
     () =>
       currentLeague.id !== -1
-        ? statsData.find(
+        ? statsData[currentYear]?.find(
             item =>
               (item.title === currentLeague.name || item.title === currentLeague.title) &&
               item.type === currentGameType
           )?.players[tableMode.toLowerCase()] || []
-        : statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.players[
-            tableMode.toLowerCase()
-          ] || [],
+        : statsData[currentYear]?.find(item => item.title === 'All leagues' && item.type === currentGameType)
+            ?.players[tableMode.toLowerCase()] || [],
 
-    [currentLeague, statsData, tableMode, currentGameType]
+    [currentLeague, statsData, tableMode, currentGameType, currentYear]
   );
 
   const teamOptions = useMemo(
@@ -62,7 +62,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
     [filteredStatsData]
   );
 
-	const sortedTeamOptions = useMemo(() => {
+  const sortedTeamOptions = useMemo(() => {
     const sortedTeamsArr = teamOptions.sort((a, b) => (a > b ? 1 : -1));
     sortedTeamsArr.unshift('All');
 
@@ -105,10 +105,10 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
           sortedTeamOptions={sortedTeamOptions}
           currentTeam={currentTeam}
           handleTeamClick={handleTeamClick}
-					handleFieldClick={handleFieldClick}
+          handleFieldClick={handleFieldClick}
           getTableHeaders={getTableHeaders}
-					getTableRows={getTableRows}
-					getSortedStatsData={getSortedStatsData}
+          getTableRows={getTableRows}
+          getSortedStatsData={getSortedStatsData}
         />
       ) : (
         <div className={cl.wrapper}>

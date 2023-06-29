@@ -15,6 +15,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const isMobile = useSelector(state => state.shared.isMobile);
   const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
+  const currentYear = useSelector(state => state.shared.currentYear);
 
   const dispatch = useDispatch();
 
@@ -50,27 +51,12 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
   const filteredStatsData =
     currentLeague.id !== -1
-      ? statsData.find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[
+      ? statsData[currentYear].find(item => item.title === currentLeague.name && item.type === currentGameType)?.teams[
           tableMode.toLowerCase()
         ] || []
-      : statsData.find(item => item.title === 'All leagues' && item.type === currentGameType)?.teams[
+      : statsData[currentYear].find(item => item.title === 'All leagues' && item.type === currentGameType)?.teams[
           tableMode.toLowerCase()
         ] || [];
-  // statsData
-  //     .filter(league => league.type === currentGameType)
-  //     .reduce((sum, league) => {
-  //       league.teams[tableMode.toLowerCase()].forEach(team => {
-  //         const teamIndex = sum.findIndex(sumTeam => sumTeam.name === team.name);
-
-  //         if (teamIndex !== -1) {
-  //           sum[teamIndex] = getObjectsSum(sum[teamIndex], team, ['name']);
-  //         } else {
-  //           sum.push(team);
-  //         }
-  //       });
-
-  //       return sum;
-  //     }, [])
 
   const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
   return (
