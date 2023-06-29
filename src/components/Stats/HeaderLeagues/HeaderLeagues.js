@@ -85,7 +85,7 @@ const HeaderLeagues = () => {
       leaguesRef.current.scrollLeft + leaguesRef.current.clientWidth < leaguesRef.current.scrollWidth
     );
     // eslint-disable-next-line
-  }, [statsData]);
+  }, [currentYear]);
 
   const scrollLeagues = e => {
     if (e.currentTarget.name === 'scroll-left') {
@@ -100,11 +100,11 @@ const HeaderLeagues = () => {
   };
 
   const leaguesArr = useMemo(() => {
-    const newLeagues = statsData.slice();
+    const newLeagues = statsData[currentYear] ? statsData[currentYear].slice() : [];
     newLeagues.unshift({ id: -1, title: 'All' });
     return newLeagues;
     // eslint-disable-next-line
-  }, [statsData]);
+  }, [statsData, currentYear]);
 
   return (
     <div className={cl.leaguesWrapper}>
