@@ -8,7 +8,6 @@ import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
-// import { setCurrentYear } from 'redux/sharedReducer';
 import StatsLoadingProvider from 'context/StatsLoadingContext';
 
 const Stats = () => {
