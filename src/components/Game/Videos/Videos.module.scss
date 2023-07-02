@@ -70,71 +70,26 @@
         // min-width: 400px;
       }
 
-      > .signs {
-        background: white;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0 0.6rem;
-
-        @media screen and (max-width: 1600px) {
-          gap: 0.3rem;
-          padding: 0 0.3rem;
-        }
-
-        > div:first-child {
-          align-items: center;
-          align-content: center;
-        }
-        > div:last-child {
-          min-width: 23px;
-        }
-      }
-
-      > .teamInfo {
-        background: white;
-        // width: 13.75rem;
-        padding: 0 4px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.875rem;
-        height: 100%;
-        position: relative;
-
-        > img {
-          margin-left: unset;
-          height: 100%;
-        }
-
-        @media screen and (max-width: 1600px) {
-          gap: 0.4rem;
-        }
-
-        > .scoreTitle,
-        h2 {
-          font: 700 3.125rem / 1.75 var(--font-comfortaa);
-          margin-top: 6px;
-
-          @media screen and (max-width: 1600px) {
-            font-size: 1.8rem;
-          }
-        }
-
-        > h2 {
-          width: unset;
-          margin-left: unset;
-          height: unset;
-        }
-
-        > .teamTitle {
-          font: 400 1.25rem var(--font-nunito);
-
-          @media screen and (max-width: 1600px) {
-            font-size: 0.8rem;
-          }
-        }
-      }
+			.currentCard {
+				background: white;
+				flex: 1;
+				overflow-y: scroll;
+				scroll-snap-type: y proximity;
+				padding:  2px 5px;
+				height: 100%;
+				
+				> div {
+					scroll-snap-align: center;
+					scroll-snap-stop: always;
+				}
+				
+				> div:first-child {
+					scroll-snap-align: end;
+				}
+				> div:last-child {
+					scroll-snap-align: start;
+				}
+			}
 
       .playersInfo {
         background: white;
@@ -190,15 +145,74 @@
       display: flex;
       flex-direction: column;
 
+			> div {
+				background: white;
+				margin-top: 6px;
+			}
+
       .events {
         flex: 1;
+      }
+
+			> .teamInfo {
+        padding: 6px 4px 0;
+        display: flex;
+				flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        // gap: 0.875rem;
+        // height: 100%;
+        position: relative;
+
+        > img {
+          margin-left: unset;
+					margin-right: unset;
+          // height: 100%;
+        }
+
+        @media screen and (max-width: 1600px) {
+          gap: 0.4rem;
+        }
+
+        > .scoreTitle,
+        h2 {
+          font: 700 3.125rem / 60px var(--font-comfortaa);
+
+          @media screen and (max-width: 1600px) {
+            font-size: 1.8rem;
+          }
+        }
+
+        > h2 {
+          width: unset;
+          margin-left: unset;
+          height: unset;
+        }
+
+        // > .teamTitle {
+        //   font: 400 1.25rem var(--font-nunito);
+
+        //   @media screen and (max-width: 1600px) {
+        //     font-size: 0.8rem;
+        //   }
+        // }
+      }
+
+			> .signs {
+        display: flex;
+				flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+				padding-top: .4rem;
+
+        @media screen and (max-width: 1600px) {
+          gap: 0.3rem;
+        }
       }
 
       .options {
         height: 11.0625rem;
         padding: 0 22px;
-        background: white;
-        margin-top: 6px;
 
         > div {
           padding: 0 0 5px;
