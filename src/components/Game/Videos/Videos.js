@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import VideoList from '../VideoList/VideoList';
 import { closeFullscreen, openFullscreen } from 'utils';
 import SidePanel from './SidePanel';
-import BottomPanel from './BottomPanel';
+import BottomPanel from './BottomPanel/BottomPanel';
 
 const Videos = () => {
   const wrapperRef = useRef();
