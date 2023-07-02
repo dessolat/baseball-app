@@ -24,6 +24,10 @@
   column-gap: 0.4375rem;
 }
 
+.topRight {
+	margin-top: -4px;
+}
+
 .portrait {
   width: 39px;
   height: 42px;
@@ -59,4 +63,9 @@
   align-items: flex-end;
   column-gap: 6px;
   line-height: 0;
+}
+
+.rects {
+	display: flex;
+	padding-top: 1px;
 }
