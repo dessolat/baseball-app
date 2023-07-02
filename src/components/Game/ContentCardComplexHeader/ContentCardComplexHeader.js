@@ -5,7 +5,7 @@ import ContentCardReplacement from '../ContentCardReplacement/ContentCardReplace
 import HeaderTop from './HeaderTop';
 import HeaderBottom from './HeaderBottom';
 
-const ContentCardComplexHeader = ({ player, sit }) => {
+const ContentCardComplexHeader = ({ player, sit, noCardTitle, noSigns, innerRects }) => {
   const eventsSummary = useMemo(
     () =>
       sit.icons.rect_text !== 'Replacement'
@@ -19,8 +19,23 @@ const ContentCardComplexHeader = ({ player, sit }) => {
 
   return (
     <div className={cl.header}>
-      <HeaderTop cl={cl} eventsSummary={eventsSummary} player={player} sit={sit} />
-      <HeaderBottom cl={cl} eventsSummary={eventsSummary} isRectText={isRectText} sit={sit} />
+      <HeaderTop
+        cl={cl}
+        eventsSummary={eventsSummary}
+        player={player}
+        sit={sit}
+        noCardTitle={noCardTitle}
+        innerRects={innerRects}
+      />
+      {!innerRects && (
+        <HeaderBottom
+          cl={cl}
+          eventsSummary={eventsSummary}
+          isRectText={isRectText}
+          sit={sit}
+          noSigns={noSigns}
+        />
+      )}
 
       {!isRectText && <ContentCardReplacement events={sit.events} />}
     </div>

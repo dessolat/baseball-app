@@ -5,10 +5,10 @@ import ContentCardSigns from '../ContentCardSigns/ContentCardSigns';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-const HeaderBottom = ({cl, eventsSummary, isRectText, sit}) => {
+const HeaderBottom = ({ cl, eventsSummary, isRectText, sit, noSigns }) => {
   const isVideo = useSelector(state => state.game.isVideo);
 
-	const isRectScore = sit.icons.score_own !== undefined;
+  const isRectScore = sit.icons.score_own !== undefined;
 
   const bottomClasses = classNames(cl.bottom, {
     [cl.noVideo]: !isVideo
@@ -20,7 +20,7 @@ const HeaderBottom = ({cl, eventsSummary, isRectText, sit}) => {
     <div className={bottomClasses} style={bottomStyles}>
       {isRectText && <RectText icons={sit.icons} />}
       {isRectScore && <RectScore icons={sit.icons} />}
-      <ContentCardSigns table={sit.table} />
+      {!noSigns && <ContentCardSigns table={sit.table} />}
     </div>
   );
 };
