@@ -22,7 +22,21 @@
   margin-left: auto;
 }
 
-.rects {
-	padding: 5px 0;
-	display: flex;
+.topRight {
+  margin-top: 0px;
+  flex: 1;
+
+  > .rects {
+		display: flex;
+		padding-top: 1px;
+
+		> div {
+			font-size: .5rem;
+			line-height: 1.2;
+		}
+
+    > * + * {
+      margin-left: 6px;
+    }
+  }
 }

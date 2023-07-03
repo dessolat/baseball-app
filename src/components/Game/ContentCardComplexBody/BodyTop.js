@@ -19,8 +19,11 @@ const BodyTop = ({ cl, sit, innerRects = false }) => {
 
   const cardText = eventsSummary.join('.') + '.';
   return (
-    <div>
-      <p className={cl.text} ref={ref}>
+    <div className={cl.topRight}>
+      <p
+        className={cl.text}
+        ref={ref}
+        style={innerRects ? { lineHeight: 0.85, paddingTop: 3, paddingBottom: 1 } : null}>
         {cardText}
       </p>
       {innerRects && (

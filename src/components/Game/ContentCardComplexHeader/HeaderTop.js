@@ -26,7 +26,7 @@ const HeaderTop = ({ cl, eventsSummary, player, sit, noCardTitle, innerRects }) 
       <div className={cl.portraitTextWrapper}>
         <ContentCardPortrait playerId={player.who_id} cl={cl} />
         <div className={cl.topRight}>
-          <p className={cl.text} ref={ref}>
+          <p className={cl.text} ref={ref} style={innerRects ? {lineHeight: .85, paddingBottom: 1} : null}>
             {cardText}
           </p>
           {innerRects && (
