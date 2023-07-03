@@ -79,15 +79,8 @@
 				height: 100%;
 				
 				> div {
-					scroll-snap-align: center;
-					scroll-snap-stop: always;
-				}
-				
-				> div:first-child {
-					scroll-snap-align: end;
-				}
-				> div:last-child {
 					scroll-snap-align: start;
+					scroll-snap-stop: always;
 				}
 			}
 
