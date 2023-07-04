@@ -9,7 +9,7 @@
 
 .filters {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   padding: calc(1.25rem - 9px) 0 .7rem 0;
 	gap: 8px;
@@ -24,6 +24,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+	margin-right: auto;
 	
 	> button {
 		margin-top: 2px;
