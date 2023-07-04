@@ -1,10 +1,10 @@
 import React from 'react';
-import cl from './Video.module.scss';
-import PlaysEvents from '../PlaysEvents/PlaysEvents';
-import VideoOptions from '../VideoOptions/VideoOptions';
+import cl from '../Videos.module.scss';
+import PlaysEvents from '../../PlaysEvents/PlaysEvents';
+import VideoOptions from '../../VideoOptions/VideoOptions';
 import { useSelector } from 'react-redux';
-import Signs from '../Videos/SidePanel/Signs';
-import TeamInfo from '../Videos/SidePanel/TeamInfo';
+import Signs from './Signs';
+import TeamInfo from './TeamInfo';
 
 const SidePanel = () => {
   const { guests, owners } = useSelector(state => state.game.preview);
@@ -17,7 +17,6 @@ const SidePanel = () => {
 
       <TeamInfo score={guests.score} side='guests'/>
       <TeamInfo score={owners.score} side='owners'/>
-
       <Signs />
 
       <div className={cl.options}>

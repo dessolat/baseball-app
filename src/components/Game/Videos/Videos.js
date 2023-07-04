@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import VideoList from '../VideoList/VideoList';
 import { closeFullscreen, openFullscreen } from 'utils';
-import SidePanel from './SidePanel';
+import SidePanel from './SidePanel/SidePanel';
 import BottomPanel from './BottomPanel/BottomPanel';
 
 const Videos = () => {
