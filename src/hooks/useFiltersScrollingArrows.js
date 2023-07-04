@@ -8,6 +8,7 @@ const useScrollingArrows = () => {
   const innerWrapperRef = useRef(null);
 
 	const situations = useSelector(s => s.game.situations)
+	const currentTab = useSelector(s => s.game.currentTab)
 	const mobileWidth = useSelector(s => s.shared.mobileWidth)
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const useScrollingArrows = () => {
         ? true
         : false
     );
-  }, [situations, mobileWidth]);
+  }, [situations, mobileWidth, currentTab]);
 
   const horizontalScrollHandler = e => {
     setIsLeftArrow(e.target.scrollLeft <= 0 ? false : true);
