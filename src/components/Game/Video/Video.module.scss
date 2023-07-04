@@ -55,72 +55,6 @@
         max-width: 55%;
       }
 
-      > .signs {
-        background: white;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0 0.6rem;
-
-        @media screen and (max-width: 1600px) {
-          gap: 0.3rem;
-          padding: 0 0.3rem;
-        }
-
-        > div:first-child {
-          align-items: center;
-          align-content: center;
-        }
-        > div:last-child {
-          min-width: 23px;
-        }
-      }
-
-      > .teamInfo {
-        background: white;
-        // width: 13.75rem;
-        padding: 0 4px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.875rem;
-        height: 100%;
-        position: relative;
-
-        > img {
-          margin-left: unset;
-          height: 100%;
-        }
-
-        @media screen and (max-width: 1600px) {
-          gap: 0.4rem;
-        }
-
-        > .scoreTitle,
-        h2 {
-          font: 700 3.125rem / 1.75 var(--font-comfortaa);
-          margin-top: 6px;
-
-          @media screen and (max-width: 1600px) {
-            font-size: 1.8rem;
-          }
-        }
-
-        > h2 {
-          width: unset;
-          margin-left: unset;
-          height: unset;
-        }
-
-        > .teamTitle {
-          font: 400 1.25rem var(--font-nunito);
-
-          @media screen and (max-width: 1600px) {
-            font-size: 0.8rem;
-          }
-        }
-      }
-
       .playersInfo {
         background: white;
         display: flex;
@@ -128,15 +62,31 @@
         justify-content: space-between;
         gap: 2rem;
         padding: 0.2rem 0.6rem;
-        flex: 1;
+        // flex: 1;
+				// width: 21rem;
+				flex: 0 0 21rem;
+
         @media screen and (max-width: 1600px) {
-          min-width: 13.5rem;
+          width: 16.5rem;
+					flex: 0 0 16.5rem;
           gap: 1rem;
+        }
+        @media screen and (max-width: 1152px) {
+          width: 15rem;
+					flex: 0 0 15rem;
+          gap: .2rem;
         }
 
         > .players {
-          width: 75%;
-          flex: 1 75%;
+          width: 78%;
+
+					@media screen and (max-width: 1600px) {
+						width: 88%;
+					}
+					@media screen and (max-width: 1152px) {
+						width: 83%;
+					}
+          // flex: 0 0 78%;
           > div {
             font: 400 1rem / 1 var(--font-nunito);
             white-space: nowrap;
@@ -160,12 +110,18 @@
           // align-self: flex-start;
           color: red;
           font: 700 1.25rem / 0.9 var(--font-athiti);
-          width: 20%;
+          width: 22%;
           @media screen and (max-width: 1600px) {
             // align-self: unset;
             // flex: 0;
+						width: 12%;
+
             font-size: 0.9rem;
           }
+					@media screen and (max-width: 1152px) {
+						width: 13%;
+					}
+					
         }
       }
     }
@@ -174,6 +130,11 @@
       display: flex;
       flex-direction: column;
 
+			> div {
+				background: white;
+				margin-top: 6px;
+			}
+
       .events {
         flex: 1;
       }
@@ -181,8 +142,6 @@
       .options {
         height: 11.0625rem;
         padding: 0 22px;
-        background: white;
-        margin-top: 6px;
 
         > div {
           padding: 0 0 5px;
