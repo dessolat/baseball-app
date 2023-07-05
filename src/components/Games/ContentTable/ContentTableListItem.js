@@ -96,6 +96,7 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
       </div>
       <ItemLinks game={game} linksClass={cl.links} />
       <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
+			<div>—</div>
       {currentLeague.id === -1 && <div>{leagues.find(league => league.id === game.league_id)?.name}</div>}
     </li>
   );
