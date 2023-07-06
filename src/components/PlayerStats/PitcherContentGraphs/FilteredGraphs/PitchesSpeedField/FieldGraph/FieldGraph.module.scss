@@ -4,7 +4,7 @@
   background: white;
   position: relative;
 
-	@media screen and (max-width: 800px) {
+	@media screen and (orientation: portrait) and (max-width: 800px) {
 		margin-top: 6px;
   }
 }

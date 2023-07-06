@@ -217,7 +217,7 @@ const Header = ({ currentTab, handleTabClick }) => {
               {getSearchParam('tab') !== 'box' && <MobilePitcherFilters />}
             </div>
           </div>
-          <HeaderLogo teamName={preview.guests.name} side='left' images={imagesData} />
+          <HeaderLogo side='guests' />
           <h2 className={cl.teamScore}>{preview.guests.score}</h2>
           <MobileOptionsBar currentTab={currentTab} />
           <div className={scoresWrapperClasses}>
@@ -231,7 +231,7 @@ const Header = ({ currentTab, handleTabClick }) => {
             {!isVideo && <MobileHeaderEvents cl={cl} />}
           </div>
           <h2 className={defenceScoreClasses}>{preview.owners.score}</h2>
-          <HeaderLogo teamName={preview.owners.name} side='right' images={imagesData} />
+          <HeaderLogo side='owners' />
         </div>
       </div>
     </header>

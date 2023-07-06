@@ -1,15 +1,12 @@
 import React from 'react';
-import cl from './Video.module.scss';
-import Timeline from '../Timeline/Timeline';
+import cl from '../Videos.module.scss';
+import Timeline from '../../Timeline/Timeline';
 import { useSelector } from 'react-redux';
-import CurrentCard from '../Videos/BottomPanel/CurrentCard';
+import CurrentCard from './CurrentCard';
 
 const BottomPanel = () => {
   const currentCard = useSelector(state => state.game.currentCard);
   const currentMoment = useSelector(state => state.game.currentMoment);
-
-  const situationsArr = [];
-  currentCard.moments?.forEach(moment => moment.icons?.rect_text && situationsArr.push(moment));
 
   const pitcherName = currentCard?.moments
     ?.slice(-1)[0]

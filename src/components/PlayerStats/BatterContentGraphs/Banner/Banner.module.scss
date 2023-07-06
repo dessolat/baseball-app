@@ -11,9 +11,10 @@
   font: 300 0.875rem / 1.6 var(--font-nunito);
   background: rgba(#eaeaea, 0.4);
 
-	@media screen and (max-width: 800px) {
-		font-size: 14px;
-	}
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    font-size: 14px;
+  }
 
   + .groupItem {
     margin-top: 0.6875rem;
@@ -36,11 +37,11 @@
 
   > div {
     padding-top: 2px;
-		flex: 1;
+    flex: 1;
   }
 
   > div:first-child {
-		flex: 6;
+    flex: 6;
   }
 }
 
@@ -49,7 +50,8 @@
   font: 700 0.875rem / 1.8 var(--font-nunito);
   text-transform: capitalize;
 
-	@media screen and (max-width: 800px) {
-		font-size: 14px;
-	}
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    font-size: 14px;
+  }
 }

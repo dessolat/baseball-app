@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './HeaderLogo.module.scss';
 
-const HeaderLogo = ({ teamName, side = 'left', images }) => {
+const HeaderLogo = ({ side = 'guests' }) => {
   const [isLoaded, setLoaded] = useState(false);
 
   const { guests, owners } = useSelector(state => state.game.preview);
@@ -10,12 +10,13 @@ const HeaderLogo = ({ teamName, side = 'left', images }) => {
   const imgStyles = !isLoaded ? { display: 'none' } : {};
   const pHolderStyles = isLoaded ? { display: 'none' } : {};
 	
-  const imgLogoUrl = side === 'left' ? guests.logo : owners.logo;
+  const imgLogoUrl = side === 'guests' ? guests.logo : owners.logo;
 	const imgSrc = `http://baseball-gametrack.ru/api/logo/${imgLogoUrl}`
 	
-	const textClass = side === 'left' ? cl.leftLogoText : cl.rightLogoText
-	const imgClass = side === 'left' ? cl.leftLogo : cl.rightLogo
+	const textClass = side === 'guests' ? cl.leftLogoText : cl.rightLogoText
+	const imgClass = side === 'guests' ? cl.leftLogo : cl.rightLogo
 	
+	const teamName = side === 'guests' ? guests.name : owners.name;
 	// ! Old img method
 
   // const leftClasses = images[teamName] ? cl.leftLogo : cl.leftLogoText;

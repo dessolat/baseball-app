@@ -11,10 +11,10 @@
     position: relative;
   }
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    aspect-ratio: unset;
+    aspect-ratio: 16/15;
     text-align: center;
     position: relative;
-    height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
+    // height: calc(100vh - 26px - 70px - 28px - var(--landscape-nav-height));
   }
 }
 

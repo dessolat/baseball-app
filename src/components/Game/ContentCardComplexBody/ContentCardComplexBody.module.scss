@@ -21,3 +21,22 @@
   column-gap: 6px;
   margin-left: auto;
 }
+
+.topRight {
+  margin-top: 0px;
+  flex: 1;
+
+  > .rects {
+		display: flex;
+		padding-top: 1px;
+
+		> div {
+			font-size: .5rem;
+			line-height: 1.2;
+		}
+
+    > * + * {
+      margin-left: 6px;
+    }
+  }
+}

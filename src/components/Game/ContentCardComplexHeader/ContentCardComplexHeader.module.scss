@@ -3,14 +3,14 @@
 
   > *:nth-child(3) {
     margin-top: 1rem;
-		position: relative;
+    position: relative;
 
     &::before {
       content: '';
       position: absolute;
       height: 1px;
       width: 12.8125rem;
-      top: -.25rem;
+      top: -0.25rem;
       left: 50%;
       transform: translateX(-50%);
       background-color: #000;
@@ -22,6 +22,22 @@
   margin-top: 2px;
   display: flex;
   column-gap: 0.4375rem;
+}
+
+.topRight {
+  margin-top: 0px;
+  flex: 1;
+
+  > .rects {
+		> div {
+			font-size: .5rem;
+			line-height: 1.2;
+		}
+
+    > * + * {
+      margin-left: 6px;
+    }
+  }
 }
 
 .portrait {
@@ -59,4 +75,9 @@
   align-items: flex-end;
   column-gap: 6px;
   line-height: 0;
+}
+
+.rects {
+  display: flex;
+  padding-top: 1px;
 }

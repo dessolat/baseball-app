@@ -54,6 +54,7 @@ const ContentTableSubHeader = ({ curLeagueId, games }) => {
       <div>Guests</div>
       <div> </div>
       <div>Inn</div>
+			<div>Status</div>
       {curLeagueId === -1 && <div>League</div>}
     </div>
   );

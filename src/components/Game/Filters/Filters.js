@@ -1,38 +1,41 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cl from './Filters.module.scss';
 import FiltersSituationsList from '../FiltersSituationsList/FiltersSituationsList';
 import FiltersViewModes from '../FiltersViewModes/FiltersViewModes';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import useScrollHorizontally from 'hooks/useScrollHorizontally';
+// import useScrollHorizontally from 'hooks/useScrollHorizontally';
 import { useSelector } from 'react-redux';
 import { getSearchParam } from 'utils';
 import PlayerFilterField from '../PlayerFilterField/PlayerFilterField';
+import useScrollingArrows from 'hooks/useFiltersScrollingArrows';
 
 const Filters = () => {
   const tab = getSearchParam('tab');
   const situations = useSelector(state => state.game.situations);
-  const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
-    useScrollHorizontally();
+  // const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
+  //   useScrollHorizontally();
 
-  useEffect(() => {
-    const ref = scrollRef.current;
-    setTimeout(scrollFixation, 300);
-    addListeners();
-    return () => {
-      removeListeners(ref);
-    };
-    // eslint-disable-next-line
-  }, []);
+  const [isLeftArrow, isRightArrow, innerWrapperRef, horizontalScrollHandler] = useScrollingArrows();
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollFixation();
-    }
-    // eslint-disable-next-line
-  }, [situations]);
+  // useEffect(() => {
+  //   const ref = scrollRef.current;
+  //   setTimeout(scrollFixation, 600);
+  //   addListeners();
+  //   return () => {
+  //     removeListeners(ref);
+  //   };
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // useEffect(() => {
+  //   if (scrollRef.current) {
+  //     scrollFixation();
+  //   }
+  //   // eslint-disable-next-line
+  // }, [situations]);
 
   const scrollHorizontally = e => {
-    const start = scrollRef.current.scrollLeft,
+    const start = innerWrapperRef.current.scrollLeft,
       change = 580,
       increment = 10;
     let currentTime = 0;
@@ -47,7 +50,7 @@ const Filters = () => {
     const animateScroll = function (name) {
       currentTime += increment;
       const val = Math.easeInOutQuad(currentTime, start, name === 'scroll-left' ? -change : change, 300);
-      scrollRef.current.scrollLeft = val;
+      innerWrapperRef.current.scrollLeft = val;
       if (currentTime < 300) {
         setTimeout(() => animateScroll(name), increment);
       }
@@ -67,11 +70,15 @@ const Filters = () => {
   return (
     <section className={'container ' + cl.filtersContainer}>
       <div className={cl.filters}>
-				<PlayerFilterField />
+        <PlayerFilterField />
         <div className={cl.situationsWrapper}>
-          {renderScrollArrow(isLeftScroll)}
-          <FiltersSituationsList ref={scrollRef} situations={situations} />
-          {renderScrollArrow(isRightScroll, 'right')}
+          {renderScrollArrow(isLeftArrow)}
+          <FiltersSituationsList
+            ref={innerWrapperRef}
+            situations={situations}
+            horizontalScrollHandler={horizontalScrollHandler}
+          />
+          {renderScrollArrow(isRightArrow, 'right')}
         </div>
         {tab === 'videos' && <FiltersViewModes />}
       </div>

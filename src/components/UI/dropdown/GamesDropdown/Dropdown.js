@@ -105,7 +105,7 @@ const Dropdown = ({
     <div ref={menuRef} className={cl.dropdownWrapper} style={wrapperStyles}>
       <div className={titleClasses} onClick={handleTitleClick} style={titleStyles} disabled={true}>
         {title}
-        <div style={{ position: 'absolute', right: 3, top: 0 }}>
+        <div style={{ position: 'absolute', right: 0, top: 0 }}>
           <ArrowDown />
         </div>
       </div>
