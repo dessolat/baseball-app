@@ -207,6 +207,7 @@
       }
       &:nth-child(8) {
         width: 6.5rem;
+				text-align: center;
       }
       &:nth-child(9) {
         // width: 12rem;
@@ -411,6 +412,7 @@
       }
 			&:nth-child(8) {
         width: 6.5rem;
+				text-align: center;
 				
         @media screen and (max-width: 800px) {
 					flex: 1 19%;
