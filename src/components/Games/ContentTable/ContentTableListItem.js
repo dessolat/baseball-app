@@ -63,10 +63,12 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
   const weekDay = ', ' + WEEK_DAYS[new Date(game.date).getDay()];
   const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] + weekDay : null;
 
-  const classes = [cl.tableRow];
-  isDate && classes.push(cl.withDate);
-  isActive && classes.push(cl.active);
-  currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
+  const gameStartFullTime = new Date(game.date + ' ' + game.start_time);
+  const completionClasses = classNames(cl.completionSign, {
+    [cl.completedGame]: game.is_completed,
+    [cl.scheduledGame]: !game.is_completed && gameStartFullTime > new Date(),
+    [cl.incompletedGame]: !game.is_completed && gameStartFullTime <= new Date()
+  });
   return (
     <li
       ref={isActive && isDate ? scrollItemRef : null}
@@ -96,7 +98,9 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
       </div>
       <ItemLinks game={game} linksClass={cl.links} />
       <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-			<div>—</div>
+      <div className={completionClasses}>
+        <Ellipse />
+      </div>
       {currentLeague.id === -1 && <div>{leagues.find(league => league.id === game.league_id)?.name}</div>}
     </li>
   );
