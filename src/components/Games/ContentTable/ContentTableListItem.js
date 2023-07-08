@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import Ellipse from 'components/UI/icons/Ellipse';
 import React, { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -64,16 +66,20 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
   const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] + weekDay : null;
 
   const gameStartFullTime = new Date(game.date + ' ' + game.start_time);
+
+  const tableRowClasses = classNames(cl.tableRow, {
+    [cl.withDate]: isDate,
+    [cl.active]: isActive,
+    [cl.paddingRightOne]: currentLeague.id !== -1
+  });
+
   const completionClasses = classNames(cl.completionSign, {
     [cl.completedGame]: game.is_completed,
     [cl.scheduledGame]: !game.is_completed && gameStartFullTime > new Date(),
     [cl.incompletedGame]: !game.is_completed && gameStartFullTime <= new Date()
   });
   return (
-    <li
-      ref={isActive && isDate ? scrollItemRef : null}
-      className={classes.join(' ')}
-      data-before={dataBefore}>
+    <li ref={isActive && isDate ? scrollItemRef : null} className={tableRowClasses} data-before={dataBefore}>
       <div>{game.start_time.slice(0, 5)}</div>
       <div className={cl.stadiumName}>
         {game.stadium_name}
