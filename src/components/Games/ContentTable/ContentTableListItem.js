@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import Ellipse from 'components/UI/icons/Ellipse';
 import React, { forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -63,15 +65,21 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
   const weekDay = ', ' + WEEK_DAYS[new Date(game.date).getDay()];
   const dataBefore = isDate ? game.date.slice(8, 10) + ' ' + MONTHS[game.date.slice(5, 7)] + weekDay : null;
 
-  const classes = [cl.tableRow];
-  isDate && classes.push(cl.withDate);
-  isActive && classes.push(cl.active);
-  currentLeague.id !== -1 && classes.push(cl.paddingRightOne);
+  const gameStartFullTime = new Date(game.date + ' ' + game.start_time);
+
+  const tableRowClasses = classNames(cl.tableRow, {
+    [cl.withDate]: isDate,
+    [cl.active]: isActive,
+    [cl.paddingRightOne]: currentLeague.id !== -1
+  });
+
+  const completionClasses = classNames(cl.completionSign, {
+    [cl.completedGame]: game.end_status,
+    [cl.scheduledGame]: !game.end_status && gameStartFullTime > new Date(),
+    [cl.incompletedGame]: !game.end_status && gameStartFullTime <= new Date()
+  });
   return (
-    <li
-      ref={isActive && isDate ? scrollItemRef : null}
-      className={classes.join(' ')}
-      data-before={dataBefore}>
+    <li ref={isActive && isDate ? scrollItemRef : null} className={tableRowClasses} data-before={dataBefore}>
       <div>{game.start_time.slice(0, 5)}</div>
       <div className={cl.stadiumName}>
         {game.stadium_name}
@@ -96,7 +104,10 @@ const ContentTableListItem = ({ game, index, arr, cl }, ref) => {
       </div>
       <ItemLinks game={game} linksClass={cl.links} />
       <div>{game.inn !== null ? `${game.inn} inn` : '—'} </div>
-			<div>—</div>
+      <div className={completionClasses}>
+        {game.end_status !== null ? game.end_status : (game.has_moments && gameStartFullTime <= new Date()) ? 'In progress' : ''}
+        {/* <Ellipse /> */}
+      </div>
       {currentLeague.id === -1 && <div>{leagues.find(league => league.id === game.league_id)?.name}</div>}
     </li>
   );
