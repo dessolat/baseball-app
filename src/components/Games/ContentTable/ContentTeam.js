@@ -1,4 +1,4 @@
-import React, { useMemo, useLayoutEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import cl from './ContentTable.module.scss';
 import LeagueImage from 'images/league_image.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,33 +13,19 @@ const Logo = () => {
 
   const imgUrl = `http://baseball-gametrack.ru/api/logo/${logoUrlPart}`;
 
-  // useLayoutEffect(() => {
-  //   setLoaded(false);
-  // }, [logoUrlPart]);
-
   const pHolderStyles = isLoaded && logoUrlPart ? { display: 'none' } : {};
   const imgStyles = !isLoaded || !logoUrlPart ? { display: 'none' } : { marginLeft: 'unset' };
   return (
     <>
       <img src={LeagueImage} alt='league-img' style={pHolderStyles} />
-      <img
-        // src={
-        //   leaguesImages[
-        //     currentLeague.id === undefined ? currentLeague.name || currentLeague.title : currentLeague.id
-        //   ] || LeagueImage
-        // }
-        src={imgUrl}
-        alt='league-img'
-        style={imgStyles}
-        onLoad={() => setLoaded(true)}
-      />
+      <img src={imgUrl} alt='league-img' style={imgStyles} onLoad={() => setLoaded(true)} />
     </>
   );
 };
 
 const ContentTeam = ({ games }) => {
   const currentLeague = useSelector(state => state.games.currentLeague);
-  const leaguesImages = useSelector(state => state.games.leaguesImages);
+  // const leaguesImages = useSelector(state => state.games.leaguesImages);
   const currentHome = useSelector(state => state.games.currentHome);
   const currentGuests = useSelector(state => state.games.currentGuests);
 
