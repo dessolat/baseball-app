@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { setCurrentGameId, setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
 import { shallowEqual, useSelector } from 'react-redux';
-import axios from 'axios';
+import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import { useParams } from 'react-router-dom';
 
 const useGameFetch = url => {
@@ -41,11 +41,11 @@ const useGameFetch = url => {
   const getFullData =
     (firstTime = false, innerUrl = url) =>
     async dispatch => {
-      cancelTokenRef.current = axios.CancelToken.source();
+      cancelTokenRef.current = axiosCancelToken.source();
 
       try {
         firstTime && setIsLoading(true);
-        const resp = await axios.get(innerUrl, {
+        const resp = await axiosInstance.get(innerUrl, {
           cancelToken: cancelTokenRef.current.token,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });

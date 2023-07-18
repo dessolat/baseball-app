@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { setSearchParam } from 'utils';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import axios from 'axios';
+import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ContentMobileBox from './MobileBox/ContentMobileBox';
@@ -28,18 +28,18 @@ const ContentBox = () => {
     setSearchParam('tab', 'box');
 
     const fetchBoxData = async () => {
-      cancelTokenRef.current = axios.CancelToken.source();
+      cancelTokenRef.current = axiosCancelToken.source();
 
       try {
         setIsLoading(true);
-        let response = await axios.get(`http://baseball-gametrack.ru/api/game_${gameId}/box`, {
+        let response = await axiosInstance.get(`/game_${gameId}/box`, {
           cancelToken: cancelTokenRef.current.token
         });
 
         dispatch(setBoxData(response.data));
         setIsLoading(false);
 
-        response = await axios.get(`http://baseball-gametrack.ru/api/game_metrix?game_id=${gameId}`, {
+        response = await axiosInstance.get(`/game_metrix?game_id=${gameId}`, {
           cancelToken: cancelTokenRef.current.token
         });
 

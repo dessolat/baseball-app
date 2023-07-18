@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -49,12 +50,12 @@ const Games = () => {
     getSearchParam('game_type') && dispatch(setCurrentGameType(getSearchParam('game_type')));
 
     const fetchGamesData = async () => {
-      cancelTokenRef.current = axios.CancelToken.source();
+      cancelTokenRef.current = axiosCancelToken.source();
 
       try {
         setIsLoading(true);
 
-        const response = await axios.get(`http://baseball-gametrack.ru/api/main`, {
+        const response = await axiosInstance.get(`/main`, {
           cancelToken: cancelTokenRef.current.token,
           // timeout: 10000,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
@@ -92,7 +93,7 @@ const Games = () => {
         // if (err.message.includes('timeout') && currentYear === 2023) {
         //   dispatch(setCurrentYear(2022));
         // } else {
-          setError(err.message);
+        setError(err.message);
         // }
       } finally {
         setIsLoading(false);

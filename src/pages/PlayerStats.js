@@ -33,15 +33,15 @@ const PlayerStats = () => {
     isLoading: isStatsLoading,
     error: statsError,
     cancelToken: statsCancelToken
-  } = useFetch(`http://baseball-gametrack.ru/api/player?id=${playerId}`);
+  } = useFetch(`/player?id=${playerId}`);
 
   const urlPlayerYears = playerYears !== 'All years' ? playerYears : -1;
 
   const { fetchData: fetchPitches, cancelToken: pitchesCancelToken } = useFetch(
-    `http://baseball-gametrack.ru/api/pitcher_metrix?id=${playerId}&year=${urlPlayerYears}`
+    `/pitcher_metrix?id=${playerId}&year=${urlPlayerYears}`
   );
   const { fetchData: fetchBatting, cancelToken: battingCancelToken } = useFetch(
-    `http://baseball-gametrack.ru/api/batting_metrix?id=${playerId}&year=${urlPlayerYears}`
+    `/batting_metrix?id=${playerId}&year=${urlPlayerYears}`
   );
 
   useEffect(
