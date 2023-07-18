@@ -5,7 +5,7 @@ const ContentCardPortrait = ({ playerId, cl, ...props }) => {
   const [isLoaded, setLoaded] = useState(false);
 
 	const pHolderStyles = isLoaded ? { display: 'none' } : {}
-	const imgStyles = !isLoaded ? { display: 'none' } : {}
+	// const imgStyles = !isLoaded ? { display: 'none' } : {}
   return (
     <div className={cl.portrait} {...props}>
       <img
