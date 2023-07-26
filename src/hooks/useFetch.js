@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { axiosInstance, axiosCancelToken } from 'axios-instance';
 
 const useFetch = url => {
@@ -6,6 +6,13 @@ const useFetch = url => {
   const [error, setError] = useState('');
 
   const cancelTokenRef = useRef();
+
+  useEffect(
+    () => () => {
+      cancelTokenRef.current?.cancel(null);
+    },
+    []
+  );
 
   async function fetchData() {
     cancelTokenRef.current = axiosCancelToken.source();
@@ -27,7 +34,7 @@ const useFetch = url => {
     }
   }
 
-  return { fetchData, isLoading, error, cancelToken: cancelTokenRef };
+  return { fetchData, isLoading, error };
 };
 
 export default useFetch;

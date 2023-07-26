@@ -31,26 +31,18 @@ const PlayerStats = () => {
   const {
     fetchData: fetchStats,
     isLoading: isStatsLoading,
-    error: statsError,
-    cancelToken: statsCancelToken
+    error: statsError
   } = useFetch(`/player?id=${playerId}`);
 
   const urlPlayerYears = playerYears !== 'All years' ? playerYears : -1;
 
-  const { fetchData: fetchPitches, cancelToken: pitchesCancelToken } = useFetch(
-    `/pitcher_metrix?id=${playerId}&year=${urlPlayerYears}`
-  );
-  const { fetchData: fetchBatting, cancelToken: battingCancelToken } = useFetch(
-    `/batting_metrix?id=${playerId}&year=${urlPlayerYears}`
-  );
+  const { fetchData: fetchPitches } = useFetch(`/pitcher_metrix?id=${playerId}&year=${urlPlayerYears}`);
+  const { fetchData: fetchBatting } = useFetch(`/batting_metrix?id=${playerId}&year=${urlPlayerYears}`);
 
   useEffect(
     () => () => {
       dispatch(setPlayerStatsData({}));
       dispatch(setCurrentTeam(null));
-      statsCancelToken.current.cancel(null);
-      pitchesCancelToken.current.cancel(null);
-      battingCancelToken.current.cancel(null);
     },
     // eslint-disable-next-line
     []
