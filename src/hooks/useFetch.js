@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import axios from 'axios';
+import { useState, useRef, useEffect } from 'react';
+import { axiosInstance, axiosCancelToken } from 'axios-instance';
 
 const useFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
@@ -7,12 +7,19 @@ const useFetch = url => {
 
   const cancelTokenRef = useRef();
 
+  useEffect(
+    () => () => {
+      cancelTokenRef.current?.cancel(null);
+    },
+    []
+  );
+
   async function fetchData() {
-    cancelTokenRef.current = axios.CancelToken.source();
+    cancelTokenRef.current = axiosCancelToken.source();
 
     try {
       setIsLoading(true);
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         cancelToken: cancelTokenRef.current.token,
         timeout: 10000
       });
@@ -21,13 +28,13 @@ const useFetch = url => {
       return response;
     } catch (err) {
       setError(err.message);
-      return err
+      return err;
     } finally {
       setIsLoading(false);
     }
   }
 
-  return { fetchData, isLoading, error, cancelToken: cancelTokenRef };
+  return { fetchData, isLoading, error };
 };
 
 export default useFetch;

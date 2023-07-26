@@ -32,6 +32,8 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   useEffect(() => {
 		if (!isMobile) {
 			const timeout = setTimeout(() => {
+				if (!listRef.current) return
+				
 				const isListScroll =
 					(listRef.current.scrollTop === 0 && listRef.current.scrollHeight > listRef.current.clientHeight) ||
 					listRef.current.scrollTop > 0;

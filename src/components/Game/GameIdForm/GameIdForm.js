@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cl from './GameIdForm.module.scss';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { axiosInstance } from 'axios-instance';
 import RoundLoader from '../../UI/loaders/RoundLoader/RoundLoader';
 
 const GameIdForm = ({ isLoading }) => {
@@ -14,7 +14,7 @@ const GameIdForm = ({ isLoading }) => {
   const testFetch = async id => {
     try {
       setIsURLChecking(true);
-      await axios.get(`http://baseball-gametrack.ru/api/game_${id}`, {
+      await axiosInstance.get(`/game_${id}`, {
         timeout: 5000
       });
       return true;

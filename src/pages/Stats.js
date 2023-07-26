@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
 import { setStatsData } from 'redux/statsReducer';
@@ -36,55 +36,53 @@ const Stats = () => {
     const refactorData = leaguesByYears => {
       return Object.entries(leaguesByYears).reduce(
         (sumByYear, [curYear, leagues]) => {
-					const modifiedLeagues = Array.isArray(leagues) ? leagues : [];
+          const modifiedLeagues = Array.isArray(leagues) ? leagues : [];
 
-					sumByYear[curYear] = modifiedLeagues.reduce((sum, { id, title, type, players, teams }) => {
-						const leaguePlayersFielding = players.fielding.reduce((sum, player, index) => {
-							sum.push({ ...player, ...players.running[index] });
-							return sum;
-						}, []);
-		
-						const leagueTeamsFielding = teams.fielding.reduce((sum, player, index) => {
-							sum.push({ ...player, ...teams.running[index] });
-							return sum;
-						}, []);
-		
-						const resultLeague = {
-							id,
-							title,
-							type,
-							players: {
-								batting: players.batting,
-								pitching: players.pitching,
-								'fielding / running': leaguePlayersFielding
-							},
-							teams: {
-								batting: teams.batting,
-								pitching: teams.pitching,
-								'fielding / running': leagueTeamsFielding
-							}
-						};
-		
-						sum.push(resultLeague);
-		
-						return sum;
-					}, []);
+          sumByYear[curYear] = modifiedLeagues.reduce((sum, { id, title, type, players, teams }) => {
+            const leaguePlayersFielding = players.fielding.reduce((sum, player, index) => {
+              sum.push({ ...player, ...players.running[index] });
+              return sum;
+            }, []);
 
+            const leagueTeamsFielding = teams.fielding.reduce((sum, player, index) => {
+              sum.push({ ...player, ...teams.running[index] });
+              return sum;
+            }, []);
 
+            const resultLeague = {
+              id,
+              title,
+              type,
+              players: {
+                batting: players.batting,
+                pitching: players.pitching,
+                'fielding / running': leaguePlayersFielding
+              },
+              teams: {
+                batting: teams.batting,
+                pitching: teams.pitching,
+                'fielding / running': leagueTeamsFielding
+              }
+            };
 
-					return sumByYear
-				},
+            sum.push(resultLeague);
+
+            return sum;
+          }, []);
+
+          return sumByYear;
+        },
 
         {}
       );
     };
 
     const fetchStats = async () => {
-      cancelStatsTokenRef.current = axios.CancelToken.source();
+      cancelStatsTokenRef.current = axiosCancelToken.source();
 
       try {
         setIsStatsLoading(true);
-        const response = await axios.get(`http://baseball-gametrack.ru/api/stats`, {
+        const response = await axiosInstance.get(`/stats`, {
           cancelToken: cancelStatsTokenRef.current.token,
           // timeout: 10000,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)

@@ -3,10 +3,10 @@ import ErrorLoader from 'components/UI/loaders/ErrorLoader/ErrorLoader';
 import Header from 'components/TeamGames/Header/Header';
 import Content from 'components/TeamGames/Content/Content';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { setTeamData } from 'redux/teamGamesReducer';
 import { useParams } from 'react-router-dom';
 import Loader from 'components/UI/loaders/Loader/Loader';
+import { axiosCancelToken, axiosInstance } from 'axios-instance';
 
 const TeamGames = () => {
   const [isTeamLoading, setIsTeamLoading] = useState(false);
@@ -23,11 +23,11 @@ const TeamGames = () => {
 
   useEffect(() => {
     const fetchGamesData = async () => {
-      cancelTeamTokenRef.current = axios.CancelToken.source();
+      cancelTeamTokenRef.current = axiosCancelToken.source();
 
       try {
         setIsTeamLoading(true);
-        const response = await axios.get(`http://baseball-gametrack.ru/api/${gameType}/team?team_name=${teamName}`, {
+        const response = await axiosInstance.get(`/${gameType}/team?team_name=${teamName}`, {
           cancelToken: cancelTeamTokenRef.current.token,
           timeout: 10000
         });

@@ -28,7 +28,7 @@ const Header = ({ currentTab, handleTabClick }) => {
     useScrollHorizontally();
   const innings = useSelector(state => state.game.innings);
   const preview = useSelector(state => state.game.preview);
-  const imagesData = useSelector(state => state.game.imagesData);
+  // const imagesData = useSelector(state => state.game.imagesData);
   const inningNumber = useSelector(state => state.game.inningNumber);
   const playbackMode = useSelector(state => state.game.playbackMode);
   const isVideo = useSelector(state => state.game.isVideo);

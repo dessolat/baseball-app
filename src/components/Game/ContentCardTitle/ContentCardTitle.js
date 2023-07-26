@@ -1,5 +1,6 @@
 import React from 'react';
 import cl from './ContentCardTitle.module.scss';
+import { Link } from 'react-router-dom';
 
 const ContentCardTitle = ({ player }) => {
   const { h, '2b': b2, '3b': b3, ab, hr, pa } = player;
@@ -18,7 +19,12 @@ const ContentCardTitle = ({ player }) => {
   };
 
   const stats = isStats ? getStats() : '';
-  return <p className={cl.playerName}>{`${player.hit_order}. ${player.who}. ${stats}`}</p>;
+
+  return (
+    <p className={cl.playerName}>
+      <Link to={`/stats/player/${player.who_id}`}>{`${player.hit_order}. ${player.who}. ${stats}`}</Link>
+    </p>
+  );
 };
 
 export default ContentCardTitle;
