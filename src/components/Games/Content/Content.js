@@ -1,4 +1,3 @@
-import React from 'react';
 import ContentSideTables from '../ContentSideTables/ContentSideTables';
 import ContentTable from '../ContentTable/ContentTable';
 import { useSelector } from 'react-redux';
