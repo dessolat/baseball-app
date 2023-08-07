@@ -1,4 +1,3 @@
-import React from 'react';
 import cl from './ContentSideTables.module.scss';
 import { useSelector } from 'react-redux';
 import PctTable from './PctTable';
@@ -16,10 +15,11 @@ const ContentSideTables = () => {
     [cl.addHeight]: mobileTableMode === 'Team tablo/Leader'
   });
 
+  const styles = !isTables
+    ? { height: isMobile ? 'auto' : '70vh' }
+    : { maxHeight: isMobile ? 'auto' : '75vh' };
   return (
-    <div
-      className={sideClasses}
-      style={!isTables ? { height: isMobile ? 'auto' : '70vh' } : { maxHeight: isMobile ? 'auto' : '75vh' }}>
+    <div className={sideClasses} style={styles}>
       {isTables && (
         <>
           {(!isMobile || mobileTableMode === 'Team tablo/Leader') && (
