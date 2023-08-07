@@ -1,9 +1,10 @@
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentDate } from 'redux/sharedReducer';
 import cl from './ContentCalendar.module.scss';
 import ContentCalendarList from './ContentCalendarList';
+import classNames from 'classnames';
 
 const ContentCalendar = ({ onChange, calendarScroll }) => {
   const ref = useRef();
@@ -160,18 +161,19 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
   };
 
   //Arrow classes handling
-  const leftArrowClasses = [cl.arrow];
-  const rightArrowClasses = [cl.arrow];
-  (availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)) &&
-    leftArrowClasses.push(cl.hidden);
-  (availableDates.length === 0 || availableDates.slice(-1)[0] === currentDate.toJSON().slice(0, 10)) &&
-    rightArrowClasses.push(cl.hidden);
+  const leftArrowClasses = classNames(cl.arrow, {
+    [cl.hidden]: availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)
+  });
+  const rightArrowClasses = classNames(cl.arrow, {
+    [cl.hidden]:
+      availableDates.length === 0 || availableDates.slice(-1)[0] === currentDate.toJSON().slice(0, 10)
+  });
   return (
     <div className={cl.calendar}>
       <Arrow
         onClick={handleArrowClick('left')}
         style={{ marginRight: isMobile ? 0 : '.3rem' }}
-        className={leftArrowClasses.join(' ')}
+        className={leftArrowClasses}
       />
       <ContentCalendarList
         currentDate={currentDate}
@@ -183,7 +185,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
         direction='right'
         onClick={handleArrowClick('right')}
         style={{ marginLeft: isMobile ? 0 : '.5rem' }}
-        className={rightArrowClasses.join(' ')}
+        className={rightArrowClasses}
       />
     </div>
   );
