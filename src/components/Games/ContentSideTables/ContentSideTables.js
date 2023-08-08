@@ -1,7 +1,7 @@
 import cl from './ContentSideTables.module.scss';
 import { useSelector } from 'react-redux';
-import PctTable from './PctTable';
-import SwitchTable from './SwitchTable';
+import PctTable from './PctTable/PctTable';
+import SwitchTable from './SwitchTable/SwitchTable';
 import classNames from 'classnames';
 
 const ContentSideTables = () => {
@@ -24,7 +24,7 @@ const ContentSideTables = () => {
         <>
           {(!isMobile || mobileTableMode === 'Team tablo/Leader') && (
             <>
-              <PctTable currentLeague={currentLeague} />
+              <PctTable />
               <SwitchTable />
             </>
           )}
