@@ -1,9 +1,10 @@
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import React, { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentDate } from 'redux/sharedReducer';
 import cl from './ContentCalendar.module.scss';
 import ContentCalendarList from './ContentCalendarList';
+import classNames from 'classnames';
 
 const ContentCalendar = ({ onChange, calendarScroll }) => {
   const ref = useRef();
@@ -23,7 +24,6 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
 
   useLayoutEffect(() => {
     ref.current.style.transition = 'none';
-
     ref.current.style.transform = `translate(${isMobile ? 43 : 0}px)`;
 
     setTimeout(() => {
@@ -95,7 +95,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     }
 
     !isDate ? dispatch(setCurrentDate(minDate)) : dispatch(setCurrentDate(new Date()));
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [currentLeague, currentYear, games, currentHome, currentGuests, currentStadium]);
 
   let availableDates = useMemo(() => {
@@ -116,11 +116,17 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
       );
     }
 
-    return currentHome !== 'All'
-      ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
-      : currentGuests !== 'All'
-      ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
-      : filteredGames;
+    if (currentHome !== 'All')
+      return filteredGames.filter(
+        game => game.owners_name === currentHome || game.guests_name === currentHome
+      );
+
+    if (currentGuests !== 'All')
+      return filteredGames.filter(
+        game => game.owners_name === currentGuests || game.guests_name === currentGuests
+      );
+
+    return filteredGames;
   }, [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]);
 
   availableDates = availableDates
@@ -141,7 +147,6 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     const targetDateIndex = availableDates.findIndex(availDate => availDate === date.toJSON().slice(0, 10));
 
     const daysDelta = targetDateIndex - currentDateIndex;
-    // const daysDelta = (date - currentDate) / 1000 / 60 / 60 / 24;
     ref.current.style.transform = `translate(${(isMobile ? 43 : 0) - (isMobile ? 43 : 60.5) * daysDelta}px)`;
     timeoutRef.current = setTimeout(() => {
       onChange(date);
@@ -154,24 +159,23 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
     );
     const targetDate = availableDates[currentDateIndex + (dir === 'right' ? 1 : -1)];
 
-    // const newDate = new Date(currentDate);
-    // newDate.setDate(newDate.getDate() + (dir === 'right' ? 1 : -1));
     targetDate && handleDateClick(new Date(targetDate))();
   };
 
   //Arrow classes handling
-  const leftArrowClasses = [cl.arrow];
-  const rightArrowClasses = [cl.arrow];
-  (availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)) &&
-    leftArrowClasses.push(cl.hidden);
-  (availableDates.length === 0 || availableDates.slice(-1)[0] === currentDate.toJSON().slice(0, 10)) &&
-    rightArrowClasses.push(cl.hidden);
+  const leftArrowClasses = classNames(cl.arrow, {
+    [cl.hidden]: availableDates.length === 0 || availableDates[0] === currentDate.toJSON().slice(0, 10)
+  });
+  const rightArrowClasses = classNames(cl.arrow, {
+    [cl.hidden]:
+      availableDates.length === 0 || availableDates.slice(-1)[0] === currentDate.toJSON().slice(0, 10)
+  });
   return (
     <div className={cl.calendar}>
       <Arrow
         onClick={handleArrowClick('left')}
         style={{ marginRight: isMobile ? 0 : '.3rem' }}
-        className={leftArrowClasses.join(' ')}
+        className={leftArrowClasses}
       />
       <ContentCalendarList
         currentDate={currentDate}
@@ -183,7 +187,7 @@ const ContentCalendar = ({ onChange, calendarScroll }) => {
         direction='right'
         onClick={handleArrowClick('right')}
         style={{ marginLeft: isMobile ? 0 : '.5rem' }}
-        className={rightArrowClasses.join(' ')}
+        className={rightArrowClasses}
       />
     </div>
   );

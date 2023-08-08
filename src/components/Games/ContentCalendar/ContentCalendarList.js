@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cl from './ContentCalendar.module.scss';
 import ContentCalendarListItem from './ContentCalendarListItem';
 
@@ -16,29 +16,18 @@ const ContentCalendarList = ({ currentDate, handleClick, availableDates }, ref) 
     dates.push(tempDate);
   }
 
-  // for (let i = 0; i < 15; i++) {
-  //   const tempDate = new Date(currentDate);
-  //   tempDate.setDate(tempDate.getDate() - 6 + i);
-  //   dates.push(tempDate);
-  // }
-
   return (
     <div className={cl.wrapper}>
       <ul className={cl.list} ref={ref}>
-        {dates.map((date, i) => (
-          <ContentCalendarListItem
-            key={i}
-            date={date}
-            handleClick={handleClick}
-            style={
-              date === null
-                ? { opacity: 0 }
-                : currentDate.toDateString() === date.toDateString()
-                ? { fontWeight: 'bold', color: 'black' }
-                : null
-            }
-          />
-        ))}
+        {dates.map((date, i) => {
+          const itemStyles =
+            date === null
+              ? { opacity: 0 }
+              : currentDate.toDateString() === date.toDateString()
+              ? { fontWeight: 'bold', color: 'black' }
+              : null;
+          return <ContentCalendarListItem key={i} date={date} handleClick={handleClick} style={itemStyles} />;
+        })}
       </ul>
     </div>
   );

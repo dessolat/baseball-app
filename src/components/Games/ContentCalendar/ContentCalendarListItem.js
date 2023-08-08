@@ -1,4 +1,3 @@
-import React from 'react';
 import cl from './ContentCalendar.module.scss';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

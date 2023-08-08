@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import CalendarImage from 'images/calendar.png';
 import Calendar from 'react-calendar';
 import './style.scss';
@@ -52,7 +52,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
       // (currentGuests !== 'All' ? game.guests_name === currentGuests : true)
     );
 
-		if (currentHome !== 'All' && currentGuests !== 'All') {
+    if (currentHome !== 'All' && currentGuests !== 'All') {
       return filteredGames.filter(
         game =>
           (game.owners_name === currentHome || game.owners_name === currentGuests) &&
@@ -60,11 +60,17 @@ const ContentGridCalendar = ({ value, onChange }) => {
       );
     }
 
-    return currentHome !== 'All'
-      ? filteredGames.filter(game => game.owners_name === currentHome || game.guests_name === currentHome)
-      : currentGuests !== 'All'
-      ? filteredGames.filter(game => game.owners_name === currentGuests || game.guests_name === currentGuests)
-      : filteredGames;
+    if (currentHome !== 'All')
+      return filteredGames.filter(
+        game => game.owners_name === currentHome || game.guests_name === currentHome
+      );
+
+    if (currentGuests !== 'All')
+      return filteredGames.filter(
+        game => game.owners_name === currentGuests || game.guests_name === currentGuests
+      );
+
+    return filteredGames;
   }, [games, currentLeague, currentGameType, currentStadium, currentHome, currentGuests]);
 
   return (
@@ -80,7 +86,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
           // minDate={new Date(2021, 1, 1)}
           // maxDate={new Date(2022, 9, 1)}
           showNeighboringMonth={false}
-          tileClassName={({ activeStartDate, date, view }) => {
+          tileClassName={({ _, date }) => {
             let tileDate = date;
             tileDate.setHours(0, tileDate.getTimezoneOffset() * -1, 0, 0);
 
@@ -90,7 +96,7 @@ const ContentGridCalendar = ({ value, onChange }) => {
                 : 'fontBold'
               : null;
           }}
-          tileDisabled={({ activeStartDate, date, view }) =>
+          tileDisabled={({ _, date }) =>
             !filteredData.some(game => {
               let tileDate = date;
               tileDate.setHours(0, tileDate.getTimezoneOffset() * -1, 0, 0);
