@@ -5,7 +5,7 @@ import cl from './Content.module.scss';
 const Content = () => {
   return (
     <div className={cl.wrapper}>
-      <iframe
+      {/* <iframe
         width='560'
         height='315'
         className={cl.youtubeFrame}
@@ -14,7 +14,7 @@ const Content = () => {
         title='YouTube video player'
         frameborder='0'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-        allowfullscreen></iframe>
+        allowfullscreen></iframe> */}
       <CanvasComp cl={cl} />
     </div>
   );
