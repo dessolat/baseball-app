@@ -8,7 +8,7 @@ import Loader from 'components/UI/loaders/Loader/Loader';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 // (async () => {
 
-const Model = lazy(() => import('./Car'));
+const Model = lazy(() => import('./Stadium'));
 // })();
 
 // (async () => {
@@ -25,7 +25,7 @@ const CanvasComp = ({ cl }) => {
     <>
       <Suspense fallback={<Loader />}>
         <Canvas
-          camera={{ position: [0, 12, 24], zoom: 10 }}
+          camera={{ position: [0, 12, 24], zoom: 1 }}
           style={{ position: 'absolute', left: 0, top: 0, pointerEvents: isEvents ? 'All' : 'none' }}>
           {/* <Galaxy count={count} isStars={isStars} isEvents={isEvents} /> */}
           <Model />
