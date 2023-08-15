@@ -5,7 +5,7 @@ import Buttons from './Buttons';
 import { useSelector } from 'react-redux';
 // import { Model } from './Car';
 import Loader from 'components/UI/loaders/Loader/Loader';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 // (async () => {
 
 const Model = lazy(() => import('./Stadium'));
@@ -17,8 +17,8 @@ const Model = lazy(() => import('./Stadium'));
 
 // const MyComponent = lazy(() => import('./MyComponent'))
 const CanvasComp = ({ cl }) => {
-  const count = useSelector(state => state.three.count);
-  const isStars = useSelector(state => state.three.isStars);
+  // const count = useSelector(state => state.three.count);
+  // const isStars = useSelector(state => state.three.isStars);
   const isEvents = useSelector(state => state.three.isEvents);
 
   return (
@@ -30,7 +30,7 @@ const CanvasComp = ({ cl }) => {
           {/* <Galaxy count={count} isStars={isStars} isEvents={isEvents} /> */}
           <Model />
           <ambientLight position={[0, 1.5, 0]} intensity={2} />
-          <directionalLight position={[10, 50, 0]} />
+          {/* <directionalLight position={[10, 50, 0]} /> */}
           <OrbitControls enableZoom={true} />
         </Canvas>
       </Suspense>
