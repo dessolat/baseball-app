@@ -28,7 +28,7 @@ const CanvasComp = ({ cl }) => {
           camera={{ position: [0, 12, 24], zoom: 1 }}
           style={{ position: 'absolute', left: 0, top: 0, pointerEvents: isEvents ? 'All' : 'none' }}>
           {/* <Galaxy count={count} isStars={isStars} isEvents={isEvents} /> */}
-          <Model />
+          {/* <Model /> */}
           <ambientLight position={[0, 1.5, 0]} intensity={2} />
           {/* <directionalLight position={[10, 50, 0]} /> */}
           <OrbitControls enableZoom={true} />

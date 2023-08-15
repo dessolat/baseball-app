@@ -10,7 +10,7 @@ Title: BMW Alpina B12 E38
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import Stadium from 'images/Stadium_SEA.glb'
+import Stadium from 'images/stadium-model.glb'
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(Stadium)
