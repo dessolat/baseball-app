@@ -20,6 +20,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
   const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
   const isFullscreen = useSelector(state => state.game.isFullscreen);
+  const isBroadcast = useSelector(state => state.game.isBroadcast);
   const focus = useSelector(state => state.game.focus);
 
   const mobileWidth = useSelector(state => state.shared.mobileWidth);
@@ -30,18 +31,11 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const fullTimelineWidth = useSelector(s => s.game.fullTimelineWidth);
   const timelineWidth = useSelector(s => s.game.timelineWidth);
 
-	const chartWidth = (isMobile && document.documentElement.clientWidth > document.documentElement.clientHeight) ||
-	forFullscreen ? fullTimelineWidth : timelineWidth
-
-  // const chartWidth = useSelector(
-  //   state =>
-  //     state.game[
-  //       (isMobile && document.documentElement.clientWidth > document.documentElement.clientHeight) ||
-  //       forFullscreen
-  //         ? 'fullTimelineWidth'
-  //         : 'timelineWidth'
-  //     ]
-  // );
+  const chartWidth =
+    (isMobile && document.documentElement.clientWidth > document.documentElement.clientHeight) ||
+    forFullscreen
+      ? fullTimelineWidth
+      : timelineWidth;
 
   const dispatch = useDispatch();
 
@@ -507,10 +501,10 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
         className={cl.chart}
         preserveAspectRatio='none'
         ref={chartRef}>
-        {LINES_NUMBER > 0 && (
+        {LINES_NUMBER > 0 &&  (
           <>
             {/* Draggable area */}
-            {totalSeconds > 0 && (
+            {totalSeconds > 0 &&(!isBroadcast || (isBroadcast && currentTab === 'videos')) && (
               <DraggableArea
                 x1={sliderCoords.x1}
                 x2={sliderCoords.x2}
