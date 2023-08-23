@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { setCurrentGameId, setErrorMsg, setFullData, setIsVideo, setPlayersInfo } from 'redux/gameReducer';
+import {
+  setCurrentGameId,
+  setErrorMsg,
+  setFullData,
+  setIsBroadcast,
+  setIsVideo,
+  setPlayersInfo,
+	setVideoLengthMode
+} from 'redux/gameReducer';
 import { shallowEqual, useSelector } from 'react-redux';
 import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import { useParams } from 'react-router-dom';
@@ -63,17 +71,20 @@ const useGameFetch = url => {
 
         if (firstTime) {
           //Concat players info from fetched data
+          const { guests, owners, has_measures, camera_info } = resp.data.preview;
+
           let newPlayersInfo = {};
-          newPlayersInfo = concatPlayersInfo(resp.data.preview.guests.players, newPlayersInfo);
-          newPlayersInfo = concatPlayersInfo(resp.data.preview.owners.players, newPlayersInfo);
+          newPlayersInfo = concatPlayersInfo(guests.players, newPlayersInfo);
+          newPlayersInfo = concatPlayersInfo(owners.players, newPlayersInfo);
 
           dispatch(setPlayersInfo(newPlayersInfo));
-          dispatch(
-            setIsVideo(
-              resp.data.preview.has_measures && resp.data.preview.camera_info?.left_main_link
-              // resp.data.innings[0]['top/guests'][0].moments[0].video !== null || gameId === '958' || gameId === '1258' ? true : false
-            )
-          );
+
+          const isVideoGame = (has_measures && camera_info?.left_main_link) || camera_info?.broadcast_link;
+          dispatch(setIsVideo(isVideoGame));
+
+          const isBroadcastGame = camera_info?.broadcast_link && !camera_info?.left_main_link;
+          dispatch(setIsBroadcast(isBroadcastGame));
+					if (isBroadcastGame) dispatch(setVideoLengthMode('Broadcast'))
         }
 
         dispatch(setFullData(resp.data));
