@@ -159,19 +159,11 @@ const PitchVideos = () => {
     const { video } = currentMoment;
 
     if (video) {
-      // Old method
-      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
-
       const secondsTotal = SECONDS_SRC.pitch.timeEnd - SECONDS_SRC.pitch.timeStart;
-      // const secondsTotal =
-      //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
 
       const secondsFromRated =
         SECONDS_SRC.pitch.timeStart +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
-      // const secondsFromRated =
-      //   video[`${videoLengthPrefix}_seconds_from`] +
-      //   (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
       Object.values(VIDEO_REFS).forEach((value, i) =>
         value.current?.seekTo(secondsFromRated - getCamDelta(i + 1), true)
@@ -185,29 +177,8 @@ const PitchVideos = () => {
       videoLengthMode === 'Super Short' ? 1500 : 30
     );
 
-    // setTimeout(() => {
-    //   videoHandling(false);
-    // }, 1000);
     // eslint-disable-next-line
   }, [currentMoment, sliderCoords]);
-
-  // useEffect(() => {
-  //   const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
-
-  //   if (!isAllReady) return;
-
-  //   video1Ref.current.pauseVideo();
-  //   video2Ref.current.pauseVideo();
-  //   video3Ref.current.pauseVideo();
-
-  //   setTimeout(() => {
-  //     video1Ref.current.playVideo();
-  //     video2Ref.current.playVideo();
-  //     video3Ref.current.playVideo();
-  //   }, 2000);
-
-  //   // eslint-disable-next-line
-  // }, [currentMoment]);
 
   useEffect(() => {
     const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
@@ -254,18 +225,6 @@ const PitchVideos = () => {
     // eslint-disable-next-line
   }, [videoPlaybackRate]);
 
-  // useEffect(() => {
-  //   const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
-  //   if (!isAllReady) return;
-
-  //   if (videoState === 1) {
-  //     video1Ref.current.playVideo();
-  //   }
-
-  //   if (videoState === 2) {
-  //     video1Ref.current.pauseVideo();
-  //   }
-  // }, [videoState]);
 
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
@@ -276,7 +235,6 @@ const PitchVideos = () => {
       () => {
         const time = VIDEO_REFS['top-left'].current?.getCurrentTime();
         time && dispatch(setVideoCurrentTime(time + camDelta1));
-        // (videoState === 1 || videoState === null) && time && dispatch(setVideoCurrentTime(time));
       },
       videoState === 1 ? 15 : 200
     );
@@ -302,9 +260,6 @@ const PitchVideos = () => {
   const videoId1 = getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
   const videoId2 = getYouTubeID(topRightLink) || null;
   const videoId3 = getYouTubeID(bottomLink) || null;
-  // const videoId1 = 'ZTsgKIKW8GE' || getYouTubeID(topLeftLink) || 'WCjLd7QAJq8';
-  // const videoId2 = 'ZTsgKIKW8GE' || getYouTubeID(topRightLink) || null;
-  // const videoId3 = 'ZTsgKIKW8GE' || getYouTubeID(bottomLink) || null;
 
   function toNextMomentOrCard() {
     const momentIndex = currentCard.moments.findIndex(moment => moment.inner.id === currentMoment.inner?.id);
@@ -318,10 +273,7 @@ const PitchVideos = () => {
 
       const { video: nextVideo } = nextMoment;
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-      // Old method
-      // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
-      //
       const getSliderCoords = video => {
         // Old super short calc method
         // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
@@ -353,13 +305,9 @@ const PitchVideos = () => {
       };
 
       const secondsTotal = NEXT_SECONDS_SRC.pitch.timeEnd - NEXT_SECONDS_SRC.pitch.timeStart;
-      // const secondsTotal =
-      //   nextVideo[`${videoLengthPrefix}_seconds_to`] - nextVideo[`${videoLengthPrefix}_seconds_from`];
 
       const secondsFromRated =
         NEXT_SECONDS_SRC.pitch.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
-      // const secondsFromRated =
-      //   nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x1;
 
       Object.values(VIDEO_REFS).forEach((value, i) =>
         value.current.seekTo(secondsFromRated - getCamDelta(i + 1), true)
@@ -367,8 +315,6 @@ const PitchVideos = () => {
 
       const secondsToRated =
         NEXT_SECONDS_SRC.pitch.timeStart + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
-      // const secondsToRated =
-      //   nextVideo[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * getSliderCoords(nextVideo).x2;
 
       endRef.current = secondsToRated;
     } else {
@@ -387,11 +333,10 @@ const PitchVideos = () => {
             manualClick: false
           })
         );
-        // dispatch(setCurrentCard({ ...filteredCards[cardIndex], manualMoment: !isLastMomentMode }));
+
         return;
       }
 
-      // dispatch(setPlaybackMode('pause'));
     }
   }
 
@@ -414,17 +359,9 @@ const PitchVideos = () => {
     }
 
     const { video } = currentMoment;
-    // const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
-    // Old method
-    // const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
 
     const secondsTotal = SECONDS_SRC.pitch.timeEnd - SECONDS_SRC.pitch.timeStart;
     const secondsFromRated = SECONDS_SRC.pitch.timeStart + (secondsTotal / 100) * sliderCoords.x1;
-    // const secondsTotal =
-    //   video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-
-    // const secondsFromRated =
-    //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
 
     const seekToTime = seekToCurrentTime ? videoCurrentTime : secondsFromRated;
 
@@ -435,14 +372,10 @@ const PitchVideos = () => {
 
     isForcePlay &&
       Object.values(VIDEO_REFS).forEach(value => {
-        // console.log(value.current?.getPlayerState());
-        // value.current?.getPlayerState() !== 1 &&
         value.current?.playVideo();
       });
 
     const secondsToRated = SECONDS_SRC.pitch.timeStart + (secondsTotal / 100) * sliderCoords.x2;
-    // const secondsToRated =
-    //   video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
 
     endRef.current = secondsToRated;
 
@@ -498,11 +431,6 @@ const PitchVideos = () => {
     VIDEO_REFS[position].current = target;
 
     const isForcePlay = preferredVideoState === 1;
-    // const seekToCurrentTime = videoCurrentTime > 0;
-
-    // const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
-
-    // if (isAllReady && video1Ref.current.getCurrentTime() < )
 
     const timeStartPitch = currentMoment?.metering?.pitch?.time_start_pitch_window;
     const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
@@ -510,150 +438,14 @@ const PitchVideos = () => {
       videoCurrentTime > 0 && videoCurrentTime > timeStartPitch && videoCurrentTime < timeEndPitch;
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
-    // videoHandling(true, isForcePlay, seekToCurrentTime);
-    // position === 'top-left' && videoHandling();
+
     target.setPlaybackRate(videoPlaybackRate);
-    // position === 'top-left' && dispatch(setVideoPlaybackRate(target.getPlaybackRate()));
-
-    // const isAllReady = !Object.values(VIDEO_REFS).some(value => value.current === null);
-
-    // target.setPlaybackRate(videoPlaybackRate);
-    // // target.seekTo(videoCurrentTime);
-
-    // if (!isAllReady || videoState === 2) {
-    //   // target.pauseVideo();
-    //   return;
-    // }
-
-    // if (videoState === null && isAllReady) {
-    //   const { video } = currentMoment;
-    //   const videoLengthPrefix = videoLengthMode === 'Full' ? 'full' : 'short';
-
-    //   const secondsTotal =
-    //     video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
-    //   const secondsFromRated =
-    //     video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x1;
-
-    //   dispatch(setVideoCurrentTime(secondsFromRated));
-
-    //   dispatch(setVideoState(1));
-
-    //   // videoHandling();
-    //   return;
-    // }
-
-    // if (videoState === 1) {
-    //   Object.entries(VIDEO_REFS).forEach(entry => entry[0] !== position && entry[1].current.playVideo());
-    //   videoHandling();
-    // }
   };
 
   const stateChangeHandler = (position, target, stateValue) => {
-    // console.log('position:', position, 'stateValue:', stateValue);
-
     position === 'top-left' && dispatch(setVideoState(stateValue));
 
     stateValue === 1 && preferredVideoState === 2 && target.pauseVideo();
-
-    // const isAllReady = !Object.entries(VIDEO_REFS).some(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return (entryState === 3 || entryState === -1) && position !== entry[0];
-    // });
-
-    // const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
-    //   const entryState = entry[1].current?.getPlayerState();
-    //   return entryState === 2 || entryState === 3 || position !== entry[0];
-    // });
-
-    // const video1 = video1Ref.current;
-    // const video2 = video2Ref.current;
-    // const video3 = video3Ref.current;
-
-    // if (stateValue === 1) {
-    //   !isAllReady && target.pauseVideo();
-
-    //   if (isAllReady) {
-    //     if (preferredVideoState === 2) {
-    //       video1.pauseVideo();
-    //       video2.pauseVideo();
-    //       video3.pauseVideo();
-    //       return;
-    //     }
-
-    //     video1 && preferredVideoState === 1 && video1.playVideo();
-    //     video2 && preferredVideoState === 1 && video2.playVideo();
-    //     video3 && preferredVideoState === 1 && video3.playVideo();
-    //   }
-    // }
-
-    // if (stateValue === 2) {
-    //   video1 && video1.getPlayerState() === 1 && video1.pauseVideo();
-    //   video2 && video2.getPlayerState() === 1 && video2.pauseVideo();
-    //   video3 && video3.getPlayerState() === 1 && video3.pauseVideo();
-    // }
-
-    // if (stateValue === 3 && isAllPaused) {
-    //   video1 && preferredVideoState === 1 && video1.playVideo();
-    //   video2 && preferredVideoState === 1 && video2.playVideo();
-    //   video3 && preferredVideoState === 1 && video3.playVideo();
-    // }
-
-    // if (value === 1 && videoState === null) {
-    //   target.pauseVideo();
-    //   return;
-    // }
-
-    // const isOtherBuffered = Object.entries(VIDEO_REFS).every(entry => {
-    //   const state = entry[1].current?.getPlayerState();
-    //   return state === 1 || state === 2 || entry[0] === position;
-    // });
-
-    // position === 'top-left' && dispatch(setVideoState(value));
-
-    // if (value === 1) {
-    //   if (!isOtherBuffered || videoState === 2) {
-    //     target.pauseVideo();
-
-    //     const anyPausedVideo = Object.entries(VIDEO_REFS).find(
-    //       entry => entry[1].current.getPlayerState() === 2 && entry[0] !== position
-    //     );
-    //     // console.log(anyPausedVideo, anyPausedVideo?.current.getCurrentTime());
-    //     if (anyPausedVideo) {
-    //       console.log('seeked');
-    //       target.seekTo(anyPausedVideo[1].current.getCurrentTime());
-    //       console.log([
-    //         VIDEO_REFS['top-left'].current.getCurrentTime(),
-    //         VIDEO_REFS['top-right'].current.getCurrentTime(),
-    //         VIDEO_REFS['bottom'].current.getCurrentTime()
-    //       ]);
-    //     }
-    //     return;
-    //   }
-
-    //   target.pauseVideo();
-    //   const anyPausedVideo = Object.entries(VIDEO_REFS).find(
-    //     entry => entry[1].current.getPlayerState() === 2 && entry[0] !== position
-    //   );
-    //   // console.log(anyPausedVideo, anyPausedVideo?.current.getCurrentTime());
-    //   if (anyPausedVideo) {
-    //     console.log('seeked');
-    //     target.seekTo(anyPausedVideo[1].current.getCurrentTime());
-    //     console.log([
-    //       VIDEO_REFS['top-left'].current.getCurrentTime(),
-    //       VIDEO_REFS['top-right'].current.getCurrentTime(),
-    //       VIDEO_REFS['bottom'].current.getCurrentTime()
-    //     ]);
-    //   }
-    //   // dispatch(setVideoState(1))
-
-    //   setTimeout(() => {
-    //     Object.values(VIDEO_REFS).forEach(
-    //       value => value.current.getPlayerState() !== 1 && value.current.playVideo()
-    //     );
-    //   }, 2000);
-    // }
-
-    // console.log('other buffered:', isOtherBuffered);
   };
 
   return (
