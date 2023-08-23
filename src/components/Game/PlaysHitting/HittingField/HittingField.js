@@ -206,10 +206,11 @@ const HittingField = ({ handleOnReady }) => {
   const [isCameraView, setCameraView] = useState(false);
   const [hovered, setHovered] = useState({ isHovered: false, text: '' });
 
-	const innings = useSelector(state => state.game.innings, shallowEqual);
-	const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
-	const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
-	const hitState = useSelector(state => state.game.hitState);
+  const innings = useSelector(state => state.game.innings, shallowEqual);
+  const currentCard = useSelector(state => state.game.currentCard, shallowEqual);
+  const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
+  const hitState = useSelector(state => state.game.hitState);
+  const isBroadcast = useSelector(state => state.game.isBroadcast);
 
   const { hit } = currentMoment.metering || {};
   const { camera_2d: camera2D } = hit || 0;
@@ -306,11 +307,11 @@ const HittingField = ({ handleOnReady }) => {
   const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
 
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
-  const isBtnIcon = camera2D !== null && currentMoment.video;
+  const isBtnIcon = camera2D !== null && currentMoment.video && !isBroadcast;
 
   const setMomentById = useSetMomentById();
 
-	const wrapperClasses = classNames(cl.field, {
+  const wrapperClasses = classNames(cl.field, {
     [cl.dnone]: hitState !== 'Field'
   });
   return (
@@ -372,11 +373,13 @@ const HittingField = ({ handleOnReady }) => {
           {hovered.isHovered && <Tooltip text={hovered.text} />}
         </>
       )}
-      <CameraView
-        camera2D={camera2D}
-        handleOnReady={handleOnReady}
-        isVisible={isCameraView && camera2D !== null && currentMoment.video}
-      />
+      {!isBroadcast && (
+        <CameraView
+          camera2D={camera2D}
+          handleOnReady={handleOnReady}
+          isVisible={isCameraView && camera2D !== null && currentMoment.video}
+        />
+      )}
       {/* {isCameraView && camera2D !== null && <CameraView camera2D={camera2D} handleOnReady={handleOnReady} />} */}
       {isBtnIcon && (
         <button className={cl.cameraSwitchBtn} onClick={cameraSwitchBtnHandler}>
