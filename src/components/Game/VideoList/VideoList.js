@@ -267,10 +267,9 @@ const VideoList = ({ viewMode }, ref) => {
     clearInterval(timeIntervalRef.current);
 
     const camDelta1 = getCamDelta(modeNumber, 1);
-
     timeIntervalRef.current = setInterval(
-      () => {
-        const time = video1Ref.current?.getCurrentTime();
+			() => {
+				const time = video1Ref.current?.getCurrentTime();
 
         time && dispatch(setVideoCurrentTime(time + camDelta1));
       },
@@ -287,6 +286,7 @@ const VideoList = ({ viewMode }, ref) => {
 
   const getCamLink = (modeNumber, index) =>
     cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
+
   function getCamDelta(modeNumber, videoNumber) {
     return cameraInfo[
       JSON.parse(cameraViews[modeNumber - 1]).cameras[videoNumber - 1].replace('link', 'time')
@@ -378,7 +378,9 @@ const VideoList = ({ viewMode }, ref) => {
       return;
     }
 
-    if (currentCard.moments.length === 0 || !currentCard.moments[0].video) {
+    if (currentCard.moments.length === 0 
+			// || !currentCard.moments[0].video
+			) {
       video1Ref.current?.pauseVideo();
       video2Ref.current?.pauseVideo();
       video3Ref.current?.pauseVideo();
