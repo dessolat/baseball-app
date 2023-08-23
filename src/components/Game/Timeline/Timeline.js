@@ -15,17 +15,19 @@ import cl from './Timeline.module.scss';
 import classNames from 'classnames';
 
 const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = false }) => {
-  const videoLengthMode = useSelector(state => state.game.videoLengthMode);
-  const sliderCoords = useSelector(state => state.game.timelineSliderCoords, shallowEqual);
-  const currentMoment = useSelector(state => state.game.currentMoment, shallowEqual);
-  const videoCurrentTime = useSelector(state => state.game.videoCurrentTime);
-  const isFullscreen = useSelector(state => state.game.isFullscreen);
-  const isBroadcast = useSelector(state => state.game.isBroadcast);
-  const focus = useSelector(state => state.game.focus);
+  const videoLengthMode = useSelector(s => s.game.videoLengthMode);
+  const sliderCoords = useSelector(s => s.game.timelineSliderCoords, shallowEqual);
+  const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
+  const videoCurrentTime = useSelector(s => s.game.videoCurrentTime);
+  const isFullscreen = useSelector(s => s.game.isFullscreen);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
+  const focus = useSelector(s => s.game.focus);
+  const preview = useSelector(s => s.game.preview);
+  const viewMode = useSelector(s => s.game.viewMode);
 
-  const mobileWidth = useSelector(state => state.shared.mobileWidth);
-  const isMobile = useSelector(state => state.shared.isMobile);
-  const isMobileTimeline = useSelector(state => state.shared.isMobileTimeline);
+  const mobileWidth = useSelector(s => s.shared.mobileWidth);
+  const isMobile = useSelector(s => s.shared.isMobile);
+  const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline);
   const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
 
   const fullTimelineWidth = useSelector(s => s.game.fullTimelineWidth);
@@ -48,7 +50,15 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
   const chartRef = useRef(null);
   const firstLoadRef = useRef(true);
 
-  const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+  const isFirstBroadcastedVideo =
+    currentTab === 'videos' &&
+    !isBroadcast &&
+    viewMode === 'mode-1' &&
+    JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link';
+
+  const videoLengthPrefix = isFirstBroadcastedVideo
+    ? 'broadcast'
+    : videoLengthMode.toLowerCase().replace(' ', '_');
 
   const SECONDS_SRC = currentMoment.video
     ? {
@@ -501,10 +511,10 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
         className={cl.chart}
         preserveAspectRatio='none'
         ref={chartRef}>
-        {LINES_NUMBER > 0 &&  (
+        {LINES_NUMBER > 0 && (
           <>
             {/* Draggable area */}
-            {totalSeconds > 0 &&(!isBroadcast || (isBroadcast && currentTab === 'videos')) && (
+            {totalSeconds > 0 && (!isBroadcast || (isBroadcast && currentTab === 'videos')) && (
               <DraggableArea
                 x1={sliderCoords.x1}
                 x2={sliderCoords.x2}

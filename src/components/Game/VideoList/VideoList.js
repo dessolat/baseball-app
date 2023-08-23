@@ -27,6 +27,7 @@ const VideoList = ({ viewMode }, ref) => {
   const filteredCards = useSelector(s => s.game.filteredCards);
   const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
   const playbackMode = useSelector(s => s.game.playbackMode);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
 
   const dispatch = useDispatch();
 
@@ -178,7 +179,12 @@ const VideoList = ({ viewMode }, ref) => {
     let secondsTotal, secondsFromRated;
 
     if (video) {
-      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      const videoLengthPrefix =
+        !isBroadcast &&
+        viewMode === 'mode-1' &&
+        JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+          ? 'broadcast'
+          : videoLengthMode.toLowerCase().replace(' ', '_');
 
       secondsTotal = video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
       secondsFromRated =
@@ -199,7 +205,12 @@ const VideoList = ({ viewMode }, ref) => {
     video4Ref.current?.pauseVideo();
 
     if (video) {
-      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      const videoLengthPrefix =
+        !isBroadcast &&
+        viewMode === 'mode-1' &&
+        JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+          ? 'broadcast'
+          : videoLengthMode.toLowerCase().replace(' ', '_');
 
       const secondsTotal =
         video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -268,8 +279,8 @@ const VideoList = ({ viewMode }, ref) => {
 
     const camDelta1 = getCamDelta(modeNumber, 1);
     timeIntervalRef.current = setInterval(
-			() => {
-				const time = video1Ref.current?.getCurrentTime();
+      () => {
+        const time = video1Ref.current?.getCurrentTime();
 
         time && dispatch(setVideoCurrentTime(time + camDelta1));
       },
@@ -317,7 +328,12 @@ const VideoList = ({ viewMode }, ref) => {
       if (!nextMoment.video) return;
 
       const { video: nextVideo } = nextMoment;
-      const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+      const videoLengthPrefix =
+        !isBroadcast &&
+        viewMode === 'mode-1' &&
+        JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+          ? 'broadcast'
+          : videoLengthMode.toLowerCase().replace(' ', '_');
 
       const getSliderCoords = video => {
         return {
@@ -378,9 +394,10 @@ const VideoList = ({ viewMode }, ref) => {
       return;
     }
 
-    if (currentCard.moments.length === 0 
-			// || !currentCard.moments[0].video
-			) {
+    if (
+      currentCard.moments.length === 0
+      // || !currentCard.moments[0].video
+    ) {
       video1Ref.current?.pauseVideo();
       video2Ref.current?.pauseVideo();
       video3Ref.current?.pauseVideo();
@@ -390,7 +407,12 @@ const VideoList = ({ viewMode }, ref) => {
     }
 
     const { video } = currentMoment;
-    const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
+    const videoLengthPrefix =
+      !isBroadcast &&
+      viewMode === 'mode-1' &&
+      JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+        ? 'broadcast'
+        : videoLengthMode.toLowerCase().replace(' ', '_');
 
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
@@ -478,7 +500,20 @@ const VideoList = ({ viewMode }, ref) => {
     VIDEO_NUMBERS[videoNumber].current = target;
 
     const isForcePlay = preferredVideoState === 1;
-    const seekToCurrentTime = videoCurrentTime > 0;
+
+    const videoLengthPrefix =
+      !isBroadcast &&
+      viewMode === 'mode-1' &&
+      JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+        ? 'broadcast'
+        : videoLengthMode.toLowerCase().replace(' ', '_');
+
+    const timeStartVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_from`];
+    const timeEndVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_to`];
+    // const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
+
+    const seekToCurrentTime =
+      videoCurrentTime > 0 && videoCurrentTime > timeStartVideo && videoCurrentTime < timeEndVideo;
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
