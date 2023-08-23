@@ -54,7 +54,7 @@ const Videos = () => {
       if (!controlsWrapperRef.current) return;
       controlsWrapperRef.current.lastChild.style.opacity = 0;
       timerRef.current = setTimeout(() => {
-        controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
+        if (controlsWrapperRef.current) controlsWrapperRef.current.lastChild.style.visibility = 'hidden';
       }, 300);
     }, 500);
   }
