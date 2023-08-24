@@ -61,7 +61,7 @@
 
 .portrait {
   margin-top: 4px;
-  width: 39px;
+  width: 42px;
   height: 42px;
   overflow: hidden;
   position: relative;
@@ -69,17 +69,18 @@
 
   > img {
     position: absolute;
-    top: -2px;
-    left: -100%;
-    transform: translateX(40%);
-    width: 65px;
+		width: 100%;
+    // top: -2px;
+    // left: -100%;
+    // transform: translateX(40%);
+    // width: 65px;
   }
 
   > img.default {
     top: 0;
-    left: 0;
-    width: 100%;
-    transform: none;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
   }
 }
 
