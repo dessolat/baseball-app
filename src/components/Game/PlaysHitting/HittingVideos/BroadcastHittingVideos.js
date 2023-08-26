@@ -6,7 +6,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setCurrentMoment } from 'redux/gameReducer';
 
 const BroadcastHittingVideos = () => {
-	const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
+  const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
   const currentCard = useSelector(s => s.game.currentCard, shallowEqual);
   const preferredVideoState = useSelector(s => s.game.preferredVideoState);
   const videoLengthMode = useSelector(s => s.game.videoLengthMode);
@@ -14,6 +14,7 @@ const BroadcastHittingVideos = () => {
   const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
   const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
   const playbackMode = useSelector(s => s.game.playbackMode);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
 
   const dispatch = useDispatch();
 
@@ -51,7 +52,7 @@ const BroadcastHittingVideos = () => {
 
   useEffect(() => {
     modeRef.current = playbackMode;
-		
+
     if (playbackMode === 'pause') {
       clearTimeout(nextMomentTimeoutRef.current);
       return;
@@ -97,7 +98,8 @@ const BroadcastHittingVideos = () => {
 
     if (
       !currentMoment.video ||
-      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from
+      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from ||
+      isBroadcast
     ) {
       if (modeRef.current !== 'pause') {
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);

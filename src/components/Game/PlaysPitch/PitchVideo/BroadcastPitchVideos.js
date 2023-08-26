@@ -13,6 +13,7 @@ const BroadcastPitchVideos = () => {
   const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
   const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
   const playbackMode = useSelector(s => s.game.playbackMode);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
 
   const dispatch = useDispatch();
 
@@ -50,7 +51,7 @@ const BroadcastPitchVideos = () => {
 
   useEffect(() => {
     modeRef.current = playbackMode;
-		
+
     if (playbackMode === 'pause') {
       clearTimeout(nextMomentTimeoutRef.current);
       return;
@@ -96,7 +97,8 @@ const BroadcastPitchVideos = () => {
 
     if (
       !currentMoment.video ||
-      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from
+      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from ||
+      isBroadcast
     ) {
       if (modeRef.current !== 'pause') {
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
