@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo, useState, useRef, useLayoutEffect, memo } from 'react';
+import React, { Suspense, useMemo, useState, useRef, useLayoutEffect, memo, lazy } from 'react';
 import cl from './HittingField.module.scss';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { CatmullRomCurve3, FrontSide, TextureLoader } from 'three';
@@ -16,6 +16,7 @@ import Tooltip from './Tooltip';
 // import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 // import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 // import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
+const Model = lazy(() => import('models/Stadium'));
 
 // extend({ TextGeometry });
 
@@ -325,10 +326,16 @@ const HittingField = ({ handleOnReady }) => {
             shadowMap
             orthographic={true}>
             <Suspense fallback={null}>
-              <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
+              {/* <mesh position={[0, 0, 50]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
                 <planeGeometry args={[1280, 1090]} />
                 <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
-              </mesh>
+              </mesh> */}
+              <Model
+                position={[-96, 105, 65]}
+                rotation={[0, -Math.PI / 9.5, 0]}
+                scale={[10.84, 10.84, 10.84]}
+                transparency={0.2}
+              />
 
               {/* Other trajectories */}
               <Curves
