@@ -202,7 +202,7 @@ const TouchPoints = ({ data, coef }) => (
   </>
 );
 
-const HittingField = ({ handleOnReady }) => {
+const HittingField = ({ handleOnReady, isInterruptedMoment }) => {
   const [isAutoRotate, setAutoRotate] = useState(true);
   const [isCameraView, setCameraView] = useState(false);
   const [hovered, setHovered] = useState({ isHovered: false, text: '' });
@@ -308,7 +308,7 @@ const HittingField = ({ handleOnReady }) => {
   const cameraSwitchBtnHandler = () => setCameraView(prev => !prev);
 
   const btnIcon = isCameraView ? FieldIcon : CameraIcon;
-  const isBtnIcon = camera2D !== null && currentMoment.video && !isBroadcast;
+  const isBtnIcon = camera2D !== null && currentMoment.video && !isBroadcast && !isInterruptedMoment;
 
   const setMomentById = useSetMomentById();
 
@@ -317,7 +317,7 @@ const HittingField = ({ handleOnReady }) => {
   });
   return (
     <div className={wrapperClasses}>
-      {(!isCameraView || camera2D === null) && (
+      {(!isCameraView || camera2D === null || isInterruptedMoment) && (
         <>
           <Canvas
             className={cl.canvas}
@@ -380,7 +380,7 @@ const HittingField = ({ handleOnReady }) => {
           {hovered.isHovered && <Tooltip text={hovered.text} />}
         </>
       )}
-      {!isBroadcast && (
+      {!isBroadcast && !isInterruptedMoment && (
         <CameraView
           camera2D={camera2D}
           handleOnReady={handleOnReady}

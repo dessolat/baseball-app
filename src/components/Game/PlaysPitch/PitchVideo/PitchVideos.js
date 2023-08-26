@@ -25,6 +25,7 @@ const PitchVideos = () => {
   const playbackMode = useSelector(s => s.game.playbackMode);
   const seekValue = useSelector(s => s.game.seekValue);
   const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate);
+  const preview = useSelector(s => s.game.preview);
 
   const dispatch = useDispatch();
 
@@ -269,7 +270,7 @@ const PitchVideos = () => {
 
       dispatch(setCurrentMoment(nextMoment));
 
-      if (!nextMoment.video) return;
+      if (!nextMoment.video || nextMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from) return;
 
       const { video: nextVideo } = nextMoment;
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
@@ -343,7 +344,7 @@ const PitchVideos = () => {
   const videoHandling = (doSeek = true, isForcePlay = true, seekToCurrentTime = false) => {
     clearInterval(intervalRef.current);
 
-    if (!currentMoment.video) {
+    if (!currentMoment.video || currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from) {
       Object.values(VIDEO_REFS).forEach(value => value.current?.pauseVideo());
 
       if (modeRef.current !== 'pause') {

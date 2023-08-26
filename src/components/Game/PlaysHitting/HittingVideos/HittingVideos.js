@@ -6,7 +6,6 @@ import getYouTubeID from 'get-youtube-id';
 import {
   setCurrentCard,
   setCurrentMoment,
-  // setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
   setVideoState
@@ -24,18 +23,18 @@ const HittingVideos = (props, ref) => {
 
   const { camera_info: cameraInfo } = preview;
 
-	const videoState = useSelector(s => s.game.videoState)
-	const preferredVideoState = useSelector(s => s.game.preferredVideoState)
-	const videoCurrentTime = useSelector(s => s.game.videoCurrentTime)
-	const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual)
-	const currentCard = useSelector(s => s.game.currentCard, shallowEqual)
-	const sliderCoords = useSelector(s => s.game.timelineSliderCoords, shallowEqual)
-	const videoLengthMode = useSelector(s => s.game.videoLengthMode)
-	const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual)
-	const isLastMomentMode = useSelector(s => s.game.isLastMomentMode)
-	const playbackMode = useSelector(s => s.game.playbackMode)
-	const seekValue = useSelector(s => s.game.seekValue)
-	const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate)
+  const videoState = useSelector(s => s.game.videoState);
+  const preferredVideoState = useSelector(s => s.game.preferredVideoState);
+  const videoCurrentTime = useSelector(s => s.game.videoCurrentTime);
+  const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
+  const currentCard = useSelector(s => s.game.currentCard, shallowEqual);
+  const sliderCoords = useSelector(s => s.game.timelineSliderCoords, shallowEqual);
+  const videoLengthMode = useSelector(s => s.game.videoLengthMode);
+  const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
+  const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
+  const playbackMode = useSelector(s => s.game.playbackMode);
+  const seekValue = useSelector(s => s.game.seekValue);
+  const videoPlaybackRate = useSelector(s => s.game.videoPlaybackRate);
 
   const dispatch = useDispatch();
 
@@ -96,8 +95,7 @@ const HittingVideos = (props, ref) => {
     : {};
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
-  console.log(preview);
-  console.log(currentMoment);
+
   useEffect(() => {
     clearInterval(allTimesIntervalRef.current);
 
@@ -126,11 +124,12 @@ const HittingVideos = (props, ref) => {
 
       const deltaCap = 0.08;
       const deltaCaps = [getCamDelta(1), getCamDelta(2), getCamDelta(3), getCamDelta(4), 0];
-      const isBigDelta = deltaArr.some(
-        (delta, i) =>
+      const isBigDelta = deltaArr.some((delta, i) => {
+        return (
           delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap ||
           delta < Math.abs(deltaCaps[0] - deltaCaps[i]) - deltaCap
-      );
+        );
+      });
 
       if (isBigDelta && !alreadySeekingRef.current) {
         video1Ref.current.pauseVideo();
@@ -607,7 +606,7 @@ const HittingVideos = (props, ref) => {
     }, 500);
   }
 
-	const wrapperClasses = classNames(cl.videos, {
+  const wrapperClasses = classNames(cl.videos, {
     [cl.dnone]: hitState !== 'Videos'
   });
   return (
