@@ -285,8 +285,6 @@ const Content = ({ currentTab }) => {
     }
 
     if (!currentCard.customMoment) {
-      console.log('without custom', currentCard.toFirstMoment);
-      console.log(currentCard);
       currentCard.toFirstMoment
         ? dispatch(setCurrentMoment(newMoments[0] || {}))
         : dispatch(setCurrentMoment(newMoments.slice(-1)[0] || {}));
