@@ -61,6 +61,13 @@ const VideoList = ({ viewMode }, ref) => {
           4: video4Ref
         };
 
+  useEffect(
+    () => () => {
+      clearInterval(intervalRef.current);
+    },
+    []
+  );
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
