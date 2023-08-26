@@ -129,11 +129,11 @@ const VideoList = ({ viewMode }, ref) => {
         video3Ref.current?.pauseVideo();
         video4Ref.current?.pauseVideo();
 
-        delta2 > deltaCaps[1] + deltaCap &&
+        delta2 > Math.abs(deltaCaps[0] - deltaCaps[1]) + deltaCap &&
           video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
-        delta3 > deltaCaps[2] + deltaCap &&
+        delta3 > Math.abs(deltaCaps[0] - deltaCaps[2]) + deltaCap &&
           video3Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[2]), true);
-        delta4 > deltaCaps[3] + deltaCap &&
+        delta4 > Math.abs(deltaCaps[0] - deltaCaps[3]) + deltaCap &&
           video4Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[3]), true);
       }
 
