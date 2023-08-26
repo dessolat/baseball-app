@@ -5,16 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentCard,
   setCurrentMoment,
-  setPlaybackMode,
   setSeekValue,
   setVideoCurrentTime,
-  setVideoState
+  setVideoState,
+  setViewMode
 } from 'redux/gameReducer';
 import VideoControls from '../VideoControls/VideoControls';
 
 const VideoList = ({ viewMode }, ref) => {
   const preview = useSelector(state => state.game.preview);
-
   const currentMoment = useSelector(s => s.game.currentMoment);
   const currentCard = useSelector(s => s.game.currentCard);
   const videoState = useSelector(s => s.game.videoState);
@@ -44,6 +43,7 @@ const VideoList = ({ viewMode }, ref) => {
   const videoHandlingTimeoutRef = useRef();
   const playTimeoutRef = useRef();
   const alreadySeekingRef = useRef(false);
+  const isPrevMomentInterrupted = useRef(false);
 
   // New synchronization method
   const allTimesIntervalRef = useRef();
@@ -69,6 +69,26 @@ const VideoList = ({ viewMode }, ref) => {
   );
 
   useEffect(() => {
+    const isInterruptedMoment =
+      !!preview.camera_info.broadcast_link_add_moment_from &&
+      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from;
+
+    if (
+      ((isPrevMomentInterrupted.current === false && isInterruptedMoment) ||
+        (isPrevMomentInterrupted.current === true && !isInterruptedMoment)) &&
+      viewMode === 'mode-1'
+    ) {
+      isPrevMomentInterrupted.current = isInterruptedMoment;
+
+      setTimeout(() => {
+        dispatch(setViewMode('mode-2'));
+
+        setTimeout(() => {
+          dispatch(setViewMode('mode-1'));
+        }, 10);
+      }, 10);
+    }
+
     function handleKeyDown(e) {
       if (e.code !== 'Space' || video1Ref.current === null || !currentMoment.video) return;
       e.preventDefault();
@@ -302,8 +322,17 @@ const VideoList = ({ viewMode }, ref) => {
 
   const { camera_info: cameraInfo, camera_views: cameraViews } = preview;
 
-  const getCamLink = (modeNumber, index) =>
-    cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
+  const getCamLink = (modeNumber, index) => {
+    const isInterruptedMoment =
+      !!preview.camera_info.broadcast_link_add_moment_from &&
+      currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from;
+
+    console.log(modeNumber, isInterruptedMoment);
+		
+    if (modeNumber === 1 && isInterruptedMoment) return cameraInfo.broadcast_link_add;
+
+    return cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
+  };
 
   function getCamDelta(modeNumber, videoNumber) {
     return cameraInfo[
@@ -509,7 +538,7 @@ const VideoList = ({ viewMode }, ref) => {
     const isForcePlay = preferredVideoState === 1;
 
     let seekToCurrentTime = videoCurrentTime > 0;
-		
+
     if (currentMoment?.video) {
       const videoLengthPrefix =
         !isBroadcast &&
