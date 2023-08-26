@@ -2,14 +2,14 @@ import classNames from 'classnames';
 import React, { memo, Suspense, useMemo, useState, useRef, useEffect, lazy } from 'react';
 import cl from './PitchesTrajectories.module.scss';
 import { Canvas } from '@react-three/fiber';
-import { FrontSide, TextureLoader } from 'three';
+import { TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 import Curves from './Curves/Curves';
 import Tooltip from './Tooltip';
 import Loader from 'components/UI/loaders/Loader/Loader';
 
-const Model = lazy(() => import('./Stadium'));
+const Model = lazy(() => import('models/Stadium'));
 
 const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) => {
   const rotateBtnClass = classNames({
