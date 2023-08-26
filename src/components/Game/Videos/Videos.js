@@ -7,7 +7,7 @@ import { closeFullscreen, openFullscreen } from 'utils';
 import SidePanel from './SidePanel/SidePanel';
 import BottomPanel from './BottomPanel/BottomPanel';
 
-const Videos = () => {
+const Videos = ({ currentTab }) => {
   const wrapperRef = useRef();
   const timerRef = useRef();
   const controlsWrapperRef = useRef();
@@ -79,8 +79,6 @@ const Videos = () => {
     );
   }
 
-  
-
   const outerWrapperClasses = classNames(cl.outerWrapper, cl.mobileLandscapeVideo);
   const wrapperClasses = classNames(cl.wrapper, {
     [cl.videos1]: viewMode === 'mode-1',
@@ -94,9 +92,8 @@ const Videos = () => {
         onClick={handleMouseMove}
         onTouchStart={handleTouch}>
         <VideoList viewMode={viewMode} ref={controlsWrapperRef} />
-        
       </div>
-      <SidePanel />
+      <SidePanel currentTab={currentTab} />
       <BottomPanel />
     </div>
   );

@@ -16,7 +16,7 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
   const renderTab = () => {
     switch (currentTab) {
       case 'videos':
-        return isVideo ? <Videos /> : <Plays isVideo={isVideo} />;
+        return isVideo ? <Videos currentTab={currentTab} /> : <Plays isVideo={isVideo} />;
       default:
         return <Plays isVideo={isVideo} />;
     }
@@ -35,7 +35,7 @@ const ContentGraphics = ({ currentTab, isVideo }) => {
   });
   const optionsClasses = classNames(cl.onlyMobileLandscape, {
     [cl.withMobileTimeline]: isMobileTimeline,
-		[cl.verticalEvents]: currentTab === 'videos'
+    [cl.verticalEvents]: currentTab === 'videos'
   });
   return (
     <div className={graphicsClasses} onClick={useGameFocus('timeline')} style={{ '--top-shift': topShift }}>

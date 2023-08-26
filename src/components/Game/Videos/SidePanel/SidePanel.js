@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import Signs from './Signs';
 import TeamInfo from './TeamInfo';
 
-const SidePanel = () => {
+const SidePanel = ({ currentTab }) => {
   const { guests, owners } = useSelector(state => state.game.preview);
 
   return (
@@ -15,12 +15,12 @@ const SidePanel = () => {
         <PlaysEvents />
       </div>
 
-      <TeamInfo score={guests.score} side='guests'/>
-      <TeamInfo score={owners.score} side='owners'/>
+      <TeamInfo score={guests.score} side='guests' />
+      <TeamInfo score={owners.score} side='owners' />
       <Signs />
 
       <div className={cl.options}>
-        <VideoOptions />
+        <VideoOptions currentTab={currentTab} />
       </div>
     </div>
   );
