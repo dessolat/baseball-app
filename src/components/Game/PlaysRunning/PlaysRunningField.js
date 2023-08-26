@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Arrow from 'components/UI/buttons/Arrow/Arrow';
-import React, { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, lazy } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import cl from './PlaysRunning.module.scss';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
@@ -15,6 +15,8 @@ import { getFieldColor } from 'utils';
 import CurveTexture from 'images/blue_ball_curve.jpg';
 
 extend({ TextGeometry });
+
+const Model = lazy(() => import('models/Stadium'));
 
 // const BallPaths = ({ field }) => {
 //   const ballPaths = field.reduce((sum, { data_2d: data2d }) => {
@@ -295,11 +297,11 @@ Distance: ${String(Math.round(distance))} m.`,
 const CurvePath = ({ hit, coef, curveCount }) => {
   const { data_3d } = hit || {};
 
-	const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
-	const tubeRef = useRef(null);
+  const tubeRef = useRef(null);
 
-	useEffect(() => {
+  useEffect(() => {
     if (tubeRef.current === null) return;
 
     document.body.style.cursor = hovered ? 'pointer' : 'auto';
@@ -326,7 +328,7 @@ const CurvePath = ({ hit, coef, curveCount }) => {
         onPointerOut={() => {
           setHovered(false);
         }}>
-        <tubeGeometry args={[curveCoords, 70, 3, 50, false]} ref={tubeRef}/>
+        <tubeGeometry args={[curveCoords, 70, 3, 50, false]} ref={tubeRef} />
         <meshPhongMaterial map={textureRef} side={FrontSide} />
       </mesh>
       {hovered && <ToolTip hit={hit} coef={coef} />}
@@ -408,7 +410,7 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
 
   const coef = 925 / 90;
 
-	const wrapperClasses = classNames(cl.fieldWrapper, {
+  const wrapperClasses = classNames(cl.fieldWrapper, {
     [cl.dnone]: runState !== 'Field'
   });
   return (
@@ -418,14 +420,22 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
       {/* </svg> */}
       <Canvas
         className={cl.canvas}
-        camera={{ position: [0, 1000, 0], far: 3000, zoom: 0.45 * zoomCoef }}
+        camera={{ position: [0, 1000, 700], far: 3000, zoom: 0.52 * zoomCoef }}
         shadows={true}
         orthographic={true}>
         <Suspense fallback={null}>
-          <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
+          {/* <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow={true}>
             <planeGeometry args={[1280, 1090]} />
             <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
-          </mesh>
+          </mesh> */}
+
+          <Model
+            position={[-102, 105, 30]}
+            rotation={[0, -Math.PI / 9.5, 0]}
+            scale={[10.628, 10.628, 10.628]}
+            transparency={0.2}
+          />
+
           {field && (
             <Lines
               field={field}
