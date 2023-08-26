@@ -6,7 +6,7 @@ import cl from './PlaysEvents.module.scss';
 const PlaysEventsItem = ({ moment, currentMoment, handleClick, isVideo }, ref) => {
   const { icons, inner, metering, table } = moment;
 
-  const isActive = inner.id === currentMoment.inner?.id;
+  const isActive = inner.id === currentMoment?.inner?.id;
   const classes = isActive ? cl.active : '';
   const refValue = isActive ? ref : null;
 
