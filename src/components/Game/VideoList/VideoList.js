@@ -508,19 +508,23 @@ const VideoList = ({ viewMode }, ref) => {
 
     const isForcePlay = preferredVideoState === 1;
 
-    const videoLengthPrefix =
-      !isBroadcast &&
-      viewMode === 'mode-1' &&
-      JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
-        ? 'broadcast'
-        : videoLengthMode.toLowerCase().replace(' ', '_');
+    let seekToCurrentTime = videoCurrentTime > 0;
+		
+    if (currentMoment?.video) {
+      const videoLengthPrefix =
+        !isBroadcast &&
+        viewMode === 'mode-1' &&
+        JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
+          ? 'broadcast'
+          : videoLengthMode.toLowerCase().replace(' ', '_');
 
-    const timeStartVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_from`];
-    const timeEndVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_to`];
-    // const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
+      const timeStartVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_from`];
+      const timeEndVideo = currentMoment?.video[`${videoLengthPrefix}_seconds_to`];
+      // const timeEndPitch = currentMoment?.metering?.pitch?.time_end_pitch_window;
 
-    const seekToCurrentTime =
-      videoCurrentTime > 0 && videoCurrentTime > timeStartVideo && videoCurrentTime < timeEndVideo;
+      seekToCurrentTime =
+        videoCurrentTime > 0 && videoCurrentTime > timeStartVideo && videoCurrentTime < timeEndVideo;
+    }
 
     videoHandling(true, isForcePlay, seekToCurrentTime);
 
