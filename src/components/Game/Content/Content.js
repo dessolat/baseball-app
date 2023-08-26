@@ -237,8 +237,10 @@ const Content = ({ currentTab }) => {
           card.moments[0].inner.id === currentCard.moments[0].inner.id
       );
 
-      if (newCurrentCard) {
-        dispatch(setCurrentCard({ ...newCurrentCard, customMoment: currentCard.customMoment }));
+      if (newCurrentCard ) {
+        // dispatch(setCurrentCard({ ...newCurrentCard, customMoment: 
+				// 	currentCard.customMoment
+				//  }));
         return;
       }
 
