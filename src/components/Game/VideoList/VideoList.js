@@ -38,6 +38,8 @@ const VideoList = ({ viewMode }, ref) => {
   const timeIntervalRef = useRef(null);
   const intervalRef = useRef(null);
   const modeRef = useRef('play');
+
+  const startRef = useRef(null);
   const endRef = useRef(null);
   const nextMomentTimeoutRef = useRef();
   const videoHandlingTimeoutRef = useRef();
@@ -326,9 +328,7 @@ const VideoList = ({ viewMode }, ref) => {
     const isInterruptedMoment =
       !!preview.camera_info.broadcast_link_add_moment_from &&
       currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from;
-
-    console.log(modeNumber, isInterruptedMoment);
-		
+	
     if (modeNumber === 1 && isInterruptedMoment) return cameraInfo.broadcast_link_add;
 
     return cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
@@ -449,7 +449,6 @@ const VideoList = ({ viewMode }, ref) => {
       JSON.parse(preview.camera_views[0]).cameras[0] === 'broadcast_link'
         ? 'broadcast'
         : videoLengthMode.toLowerCase().replace(' ', '_');
-
     const secondsTotal =
       video[`${videoLengthPrefix}_seconds_to`] - video[`${videoLengthPrefix}_seconds_from`];
 
@@ -475,6 +474,7 @@ const VideoList = ({ viewMode }, ref) => {
     const secondsToRated =
       video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
 
+		startRef.current = secondsFromRated
     endRef.current = secondsToRated;
 
     const camDelta1 = getCamDelta(modeNumber, 1);
@@ -483,6 +483,12 @@ const VideoList = ({ viewMode }, ref) => {
       if (video1Ref.current === null) return;
 
       const currentTime = video1Ref.current.getCurrentTime() + camDelta1;
+
+			if (currentTime < startRef.current && viewMode === 'mode-1') {
+				video1Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 1), true);
+				console.log('seeking video1 to: ',seekToTime - getCamDelta(modeNumber, 1), '...');
+				return
+			}
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {
