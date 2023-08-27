@@ -7,9 +7,12 @@ import NoVideoScreen from 'components/Game/Video/NoVideoScreen';
 import VideoControls from 'components/Game/VideoControls/VideoControls';
 
 const POS_OPTIONS = {
-  'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
-  'top-right': { x: -0.505, y: -0.205, delta: 0.14 },
-  bottom: { x: -0.27, y: -0.07, delta: 0.42 }
+  'top-left': { x: -0.34, y: -0.22, delta: 0.14 },
+  // 'top-left': { x: -0.34, y: -0.2, delta: 0.14 },
+  'top-right': { x: -0.505, y: -0.225, delta: 0.14 },
+  // 'top-right': { x: -0.505, y: -0.205, delta: 0.14 },
+  bottom: { x: -0.27, y: -0.14, delta: 0.42 }
+  // bottom: { x: -0.27, y: -0.07, delta: 0.42 }
 };
 
 const PitchVideo = ({ videoId, position, handleOnReady, stateChangeHandler, setPlayPause = null }) => {
