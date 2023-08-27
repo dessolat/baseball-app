@@ -102,7 +102,7 @@ const PitchVideos = () => {
         video1Ref.current.pauseVideo();
         video2Ref.current?.pauseVideo();
         video3Ref.current?.pauseVideo();
-        // delta1 > deltaCaps[1] + deltaCap && video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
+
         (delta2 > Math.abs(deltaCaps[0] - deltaCaps[1]) + deltaCap ||
           delta2 < Math.abs(deltaCaps[0] - deltaCaps[1]) - deltaCap) &&
           video2Ref.current?.seekTo(video1Time + (deltaCaps[0] - deltaCaps[1]), true);
@@ -276,15 +276,6 @@ const PitchVideos = () => {
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
 
       const getSliderCoords = video => {
-        // Old super short calc method
-        // const totalSeconds = video.short_seconds_to - video.short_seconds_from;
-
-        // const startSecondsDelta = video.super_short_seconds_from - video.short_seconds_from;
-        // const startSecondsPercent = (startSecondsDelta * 100) / totalSeconds;
-
-        // const endSecondsDelta = video.super_short_seconds_to - video.short_seconds_from;
-        // const endSecondsPercent = (endSecondsDelta * 100) / totalSeconds;
-
         return {
           x1: 0,
           x2: 0
@@ -471,23 +462,6 @@ const PitchVideos = () => {
         setPlayPause={setPlayPause}
       />
     </>
-
-    // {/* <button
-    //   style={{
-    //     position: 'fixed',
-    //     left: '70%',
-    //     bottom: '15%',
-    //     background: 'lightgreen',
-    //     padding: '3px 7px'
-    //   }}
-    //   onClick={() => setPlayPause('play')}>
-    //   Play
-    // </button>
-    // <button
-    //   style={{ position: 'fixed', left: '73%', bottom: '15%', background: 'lightpink', padding: '3px 7px' }}
-    //   onClick={() => setPlayPause('pause')}>
-    //   Pause
-    // </button> */}
   );
 };
 
