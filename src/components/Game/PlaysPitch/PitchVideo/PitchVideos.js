@@ -96,7 +96,6 @@ const PitchVideos = () => {
           delta > Math.abs(deltaCaps[0] - deltaCaps[i]) + deltaCap ||
           delta < Math.abs(deltaCaps[0] - deltaCaps[i]) - deltaCap
       );
-      // const isBigDelta = deltaArr.some(delta => delta > deltaCap);
 
       if (isBigDelta && !alreadySeekingRef.current) {
         video1Ref.current.pauseVideo();
@@ -113,27 +112,39 @@ const PitchVideos = () => {
         // alreadySeekingRef.current = true
       }
 
-      const isAllPaused = Object.entries(VIDEO_REFS).every(entry => {
-        const entryState = entry[1].current?.getPlayerState();
-        return entryState === 2;
-      });
 
-      const isAllReady = Object.entries(VIDEO_REFS).every(entry => {
+
+      const isAllReady = Object.entries(VIDEO_REFS).every((entry, i) => {
         const entryState = entry[1].current?.getPlayerState();
+        console.log('index', i, 'state', entryState);
         return entryState === -1 || entryState === 2;
       });
 
-      if (isAllReady && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
+      const isTwoReadyOneBuffer = Object.values(VIDEO_REFS).reduce((sum, cur, i) => {
+        const valueState = cur.current?.getPlayerState();
+
+				sum[valueState]++
+
+				return sum
+			}, {
+        '-1': 0,
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+      });
+
+      if ((isAllReady || (isTwoReadyOneBuffer[2] === 2 && isTwoReadyOneBuffer[3] === 1)) && !isBigDelta && preferredVideoState === 1 && !syncTimeoutRef.current) {
         syncTimeoutRef.current = true;
 
-        // playTimeoutRef.current = setTimeout(() => {
         video1Ref.current.playVideo();
         video2Ref.current?.playVideo();
         video3Ref.current?.playVideo();
 
         syncTimeoutRef.current = false;
         alreadySeekingRef.current = false;
-        // }, 20);
       }
     }, 90);
 
@@ -226,7 +237,6 @@ const PitchVideos = () => {
     // eslint-disable-next-line
   }, [videoPlaybackRate]);
 
-
   useEffect(() => {
     clearInterval(timeIntervalRef.current);
 
@@ -270,7 +280,8 @@ const PitchVideos = () => {
 
       dispatch(setCurrentMoment(nextMoment));
 
-      if (!nextMoment.video || nextMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from) return;
+      if (!nextMoment.video || nextMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from)
+        return;
 
       const { video: nextVideo } = nextMoment;
       const videoLengthPrefix = videoLengthMode.toLowerCase().replace(' ', '_');
@@ -328,16 +339,18 @@ const PitchVideos = () => {
 
         return;
       }
-
     }
   }
 
   const videoHandling = (doSeek = true, isForcePlay = true, seekToCurrentTime = false) => {
     clearInterval(intervalRef.current);
 
-    if (!currentMoment.video || currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from) {
+    if (
+      !currentMoment.video ||
+      (preview.camera_info.broadcast_link_add_moment_from &&
+        currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from)
+    ) {
       Object.values(VIDEO_REFS).forEach(value => value.current?.pauseVideo());
-
       if (modeRef.current !== 'pause') {
         nextMomentTimeoutRef.current = setTimeout(toNextMomentOrCard, 3000);
       }
