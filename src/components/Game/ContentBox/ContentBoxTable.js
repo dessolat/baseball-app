@@ -73,22 +73,6 @@ const TABLES_INFO = {
 
 const ContentBoxTable = ({ tableData, tableClass, tableName, toFixList = [] }) => {
   const orderedPlayersStats = JSON.parse(JSON.stringify(tableData));
-  // if (tableName === 'pitching') {
-  //   orderedPlayersStats.sort((a, b) => (a.order > b.order ? 1 : -1));
-
-  //   // tableData.pitchers_order.forEach((orderId, i) => {
-  //   tableData.pitchers
-  //     .map(pitcher => pitcher.id)
-  //     .forEach((orderId, i) => {
-  //       const player = orderedPlayersStats.find(curPlayer => {;
-  //         return curPlayer.id === orderId && curPlayer.is_pitcher && curPlayer.takenBy === undefined;
-  //       });
-
-  //       if (player !== undefined) {
-  //         player.takenBy = i + 1;
-  //       }
-  //     });
-  // }
 
   return (
     <table className={cl.table + ' ' + tableClass}>

@@ -29,9 +29,7 @@ const ContentBoxButtons = () => {
     <div
       className={buttons}
       style={{ top: `calc(${buttonsTopPosition.top}px + 6.3rem)`, left: `${buttonsTopPosition.left}px` }}
-      ref={buttonsRef}
-      // style={{top: `calc(6.3rem + ${buttonsTopPosition}px)`}}
-    >
+      ref={buttonsRef}>
       <ContentBoxButton team={'guests'} />
       <ContentBoxButton team={'owners'} />
     </div>

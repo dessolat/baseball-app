@@ -1,10 +1,6 @@
 import React from 'react';
 
 const ContentBoxTableBodyCell = ({ title, toFixList, player, tableName }) => {
-  // console.log(title);
-  // console.log(player);
-  // console.log(tableName);
-
   const getValue = () => {
     if (player.id === -1) return ' ';
     if (title === 'POS') return player.content.positions.join('/');
@@ -38,23 +34,6 @@ const ContentBoxTableBodyCell = ({ title, toFixList, player, tableName }) => {
 
     return ' ';
   };
-
-  // const value =
-  //   player.id === -1
-  //     ? ' '
-  //     : title === 'POS'
-  //     ? player.content.positions.join('/')
-  //     : ['SB', 'CS', 'PB'].includes(title)
-  //     ? player[title]
-  //     : ['SB_pr', 'LOB'].includes(title)
-  //     ? player.content.stats[tableName === 'batting' ? 'running' : 'catching'][title]
-  //     : ['CH', 'PO', 'A', 'E', 'DP', 'FLD'].includes(title)
-  //     ? player.content.stats.fielding[title]
-  //     : toFixList.includes(title)
-  //     ? player.content.stats[tableName][title] === 'Infinity'
-  //       ? 'INF'
-  //       : Number(player.content.stats[tableName][title]).toFixed(3)
-  //     : player.content.stats[tableName][title];
 
   const cellStyle = toFixList.includes(title) ? { width: '3rem' } : null;
   const value = getValue();
