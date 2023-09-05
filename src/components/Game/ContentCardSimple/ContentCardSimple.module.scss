@@ -9,16 +9,21 @@
 	height: 42px;
 	overflow: hidden;
 	position: relative;
-	border-radius: 5px;
+	// border-radius: 5px;
 	
 	> img {
 		position: absolute;
-		width: 100%;
-		// inset: 0;
-		// top: -2px;
-		// left: -100%;
-		// transform: translateX(40%);
-		// width: 65px;
+		height: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+
+		// width: 100%;
+    // top: -2px;
+    // left: -100%;
+    // transform: translateX(40%);
+		// left: -50%;
+		// transform: translateX(50%);
+    // width: 65px;
 	}
 
 	> img.default {
