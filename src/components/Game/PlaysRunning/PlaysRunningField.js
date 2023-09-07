@@ -4,7 +4,7 @@ import { memo, Suspense, useMemo, useState, useRef, useEffect, useLayoutEffect, 
 import { shallowEqual, useSelector } from 'react-redux';
 import cl from './PlaysRunning.module.scss';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { CatmullRomCurve3, FrontSide, TextureLoader, Vector3 } from 'three';
+import { CatmullRomCurve3, FrontSide, RectAreaLight, TextureLoader, Vector3 } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
 import ArrowDown from 'components/UI/icons/ArrowDown';
@@ -429,8 +429,14 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
             <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
           </mesh> */}
 
-          <Model
+          {/* <Model
             position={[-102, 105, 30]}
+            rotation={[0, -Math.PI / 9.5, 0]}
+            scale={[10.628, 10.628, 10.628]}
+            transparency={0.2}
+          /> */}
+          <Model
+            position={[-273, 72, 345]}
             rotation={[0, -Math.PI / 9.5, 0]}
             scale={[10.628, 10.628, 10.628]}
             transparency={0.2}
@@ -451,18 +457,21 @@ const PlaysRunningField = ({ hit, field, setRunningMode }) => {
           {/* <spotLight position={[0, 499.9, 0]} intensity={0.4} castShadow={true} /> */}
           <directionalLight
             position={[0, 400, 0]}
-            intensity={0.5}
+            intensity={1}
             castShadow
             shadow-camera-left={-640}
             shadow-camera-right={640}
             shadow-camera-top={640}
             shadow-camera-bottom={-640}
           />
-          <ambientLight intensity={0.5} />
+
+					{/* <rectAreaLight position={[500, 300, 1400]} width={3000} height={3000} castShadow/> */}
+          <ambientLight intensity={0.7} />
 
           <OrbitControls
             enableZoom={true}
             autoRotate={isAutoRotate}
+						minPolarAngle={Math.PI / 10}
             maxPolarAngle={Math.PI / 2.2}
             minZoom={0.22}
             maxZoom={3}

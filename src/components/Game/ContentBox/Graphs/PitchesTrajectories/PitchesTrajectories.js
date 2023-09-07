@@ -122,7 +122,14 @@ const PitchesTrajectories = ({ metrix }) => {
                 <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={FrontSide} />
               </mesh> */}
 
-              <Model position={[-102,105,30]} rotation={[0, -Math.PI / 9.5, 0]} scale={[10.628,10.628,10.628]} transparency={.2}/>
+              {/* <Model position={[-102,105,30]} rotation={[0, -Math.PI / 9.5, 0]} scale={[11.6318767738,11.6318767738,11.6318767738]} transparency={.2}/> */}
+              <Model
+                position={[-273, 72, 345]}
+                rotation={[0, -Math.PI / 9.5, 0]}
+                scale={[10.628, 10.628, 10.628]}
+                transparency={0.2}
+              />
+              {/* <Model position={[-102,105,30]} rotation={[0, -Math.PI / 9.5, 0]} scale={[10.628,10.628,10.628]} transparency={.2}/> */}
 
               {isCurves && (
                 <Curves
@@ -134,18 +141,20 @@ const PitchesTrajectories = ({ metrix }) => {
 
               <directionalLight
                 position={[0, 400, 0]}
-                intensity={0.5}
+                intensity={1}
                 castShadow
                 shadow-camera-left={-640}
                 shadow-camera-right={640}
                 shadow-camera-top={640}
                 shadow-camera-bottom={-640}
               />
-              <ambientLight intensity={0.5} />
+
+              <ambientLight intensity={0.7} />
 
               <OrbitControls
                 enableZoom={true}
                 autoRotate={isAutoRotate}
+								minPolarAngle={Math.PI / 10}
                 maxPolarAngle={Math.PI / 2.2}
                 minZoom={0.22}
                 maxZoom={3}

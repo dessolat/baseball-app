@@ -330,8 +330,14 @@ const HittingField = ({ handleOnReady, isInterruptedMoment }) => {
                 <planeGeometry args={[1280, 1090]} />
                 <meshStandardMaterial map={textureRef} toneMapped={false} shadowSide={THREE.DoubleSide} />
               </mesh> */}
-              <Model
+              {/* <Model
                 position={[-96, 105, 65]}
+                rotation={[0, -Math.PI / 9.5, 0]}
+                scale={[10.84, 10.84, 10.84]}
+                transparency={0.2}
+              /> */}
+              <Model
+                position={[-270, 72, 385]}
                 rotation={[0, -Math.PI / 9.5, 0]}
                 scale={[10.84, 10.84, 10.84]}
                 transparency={0.2}
@@ -349,18 +355,19 @@ const HittingField = ({ handleOnReady, isInterruptedMoment }) => {
 
               <directionalLight
                 position={[0, 400, 0]}
-                intensity={0.5}
+                intensity={1}
                 castShadow
                 shadow-camera-left={-640}
                 shadow-camera-right={640}
                 shadow-camera-top={640}
                 shadow-camera-bottom={-640}
               />
-              <ambientLight intensity={0.5} />
+              <ambientLight intensity={0.7} />
 
               <OrbitControls
                 enableZoom={true}
                 autoRotate={isAutoRotate}
+                minPolarAngle={Math.PI / 10}
                 maxPolarAngle={Math.PI / 2.2}
                 minZoom={0.22}
                 maxZoom={3}
