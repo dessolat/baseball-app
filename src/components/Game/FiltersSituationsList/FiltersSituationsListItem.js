@@ -5,8 +5,8 @@ import { setPlaybackMode, setSituationFilter } from 'redux/gameReducer';
 import { capitalizeFirstLetter } from 'utils';
 
 const FiltersSituationsListItem = ({ situation }) => {
-  const situationFilter = useSelector(state => state.game.situationFilter);
-  const playbackMode = useSelector(state => state.game.playbackMode);
+  const situationFilter = useSelector(s => s.game.situationFilter);
+  const playbackMode = useSelector(s => s.game.playbackMode);
   const dispatch = useDispatch();
   const spanClass = situationFilter === situation.name ? cl.active : '';
 	const buttonClass = situation.count <= 1 ? cl.hidden : ''

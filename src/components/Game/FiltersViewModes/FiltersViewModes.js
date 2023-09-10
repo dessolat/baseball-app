@@ -8,8 +8,8 @@ import ModalCameraSelector from '../ModalCameraSelector/ModalCameraSelector';
 const FiltersViewModes = () => {
   const activeNumberRef = useRef(1);
 
-  const viewMode = useSelector(state => state.game.viewMode);
-  const isCameraSelector = useSelector(state => state.game.isCameraSelector);
+  const viewMode = useSelector(s => s.game.viewMode);
+  const isCameraSelector = useSelector(s => s.game.isCameraSelector);
 
   const dispatch = useDispatch();
 
