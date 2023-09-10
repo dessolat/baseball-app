@@ -4,6 +4,7 @@ import BallsStrikes from 'components/UI/icons/BallsStrikes/BallsStrikes';
 import Bases from 'components/UI/icons/Bases/Bases';
 import Outs from 'components/UI/icons/Outs/Outs';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 
 const ContentCardComplexFooter = ({ lastMoment, noSigns }) => {
   const isVideo = useSelector(state => state.game.isVideo);
@@ -15,18 +16,21 @@ const ContentCardComplexFooter = ({ lastMoment, noSigns }) => {
 
   const cardText = eventsSummary.join('.') + '.';
 
-  const wrapperClasses = [cl.rectanglesEllipsesWrapper];
-  !isVideo && wrapperClasses.push(cl.noVideo);
+  const wrapperClasses = classNames(cl.rectanglesEllipsesWrapper, {
+    [cl.noVideo]: !isVideo
+  });
   return (
     <div className={cl.footer}>
       <p className={cl.text}>{cardText}</p>
-      {!noSigns && <div className={wrapperClasses.join(' ')}>
-        <div className={cl.ellipses}>
-          <Outs outs={outs} />
-          <BallsStrikes balls={balls} strikes={strikes} />
+      {!noSigns && (
+        <div className={wrapperClasses}>
+          <div className={cl.ellipses}>
+            <Outs outs={outs} />
+            <BallsStrikes balls={balls} strikes={strikes} />
+          </div>
+          <Bases r1={r1} r2={r2} r3={r3} />
         </div>
-        <Bases r1={r1} r2={r2} r3={r3} />
-      </div>}
+      )}
     </div>
   );
 };
