@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import cl from './Header.module.scss';
-// import axios from 'axios';
 import HeaderTabs from '../HeaderTabs/HeaderTabs';
 import HeaderScoresList from '../HeaderScoresList/HeaderScoresList';
 import HeaderInfo from '../HeaderInfo/HeaderInfo';
@@ -38,8 +37,6 @@ const Header = ({ currentTab, handleTabClick }) => {
   const isMobileScoreboard = useSelector(state => state.shared.isMobileScoreboard);
 
   const dispatch = useDispatch();
-
-  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const fetchImage = async (teamName, url) => {
@@ -142,7 +139,6 @@ const Header = ({ currentTab, handleTabClick }) => {
   );
 
   const tabsArr = isVideo ? ['Box', 'Videos', 'Pitch', 'Hit', 'Run'] : ['Box', 'Plays'];
-  // const tabsArr = isVideo ? ['Box', 'Plays', 'Videos'] : ['Box', 'Plays'];
 
   const tabsCurrentOption =
     currentTab === 'hitting'
