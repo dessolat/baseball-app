@@ -1,43 +1,27 @@
 .controls {
   display: flex;
-	align-self: flex-end;
+  align-self: flex-end;
 
-	> button + button {
-		border-left: 0.5px solid #DFDFDF;
-	}
-	
-  @media screen and (max-width: 800px) {
-		align-self: unset;
-		align-items: center;
-		
+  > button + button {
+    border-left: 0.5px solid #dfdfdf;
+  }
+
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    align-self: unset;
+    align-items: center;
+
     > * + * {
-			margin-left: 5px;
+      margin-left: 5px;
     }
 
-		> button:first-child {
-			margin-right: 5px;
-		}
-		
-		> button + button {
-			border-left: unset;
-			border-bottom: 0.5px solid #DFDFDF;
-		}
+    > button:first-child {
+      margin-right: 5px;
+    }
+
+    > button + button {
+      border-left: unset;
+      border-bottom: 0.5px solid #dfdfdf;
+    }
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		align-self: unset;
-		align-items: center;
-		
-		> * + * {
-			margin-left: 5px;
-		}
-		
-		> button:first-child {
-			margin-right: 5px;
-		}
-		
-		> button + button {
-			border-left: unset;
-			border-bottom: 0.5px solid #DFDFDF;
-		}
-	}
 }
