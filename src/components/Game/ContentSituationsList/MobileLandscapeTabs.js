@@ -6,7 +6,7 @@ import { setCurrentTab, setPitchState } from 'redux/gameReducer';
 import { useSelector } from 'react-redux';
 
 const MobileLandscapeTabs = ({ cl }) => {
-  const currentTab = useSelector(state => state.game.currentTab);
+  const currentTab = useSelector(s => s.game.currentTab);
 
   const dispatch = useDispatch();
 
