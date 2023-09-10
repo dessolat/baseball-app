@@ -4,7 +4,6 @@ import ContentCardTitle from '../ContentCardTitle/ContentCardTitle';
 import RectText from 'components/UI/icons/Rects/RectText';
 import RectScore from 'components/UI/icons/Rects/RectScore';
 // import PortraitImg from 'images/portrait.png';
-// import { useSelector } from 'react-redux';
 // import classNames from 'classnames';
 
 const HeaderTop = ({ cl, eventsSummary, player, sit, noCardTitle, innerRects }) => {
