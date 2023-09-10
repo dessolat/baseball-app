@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPlaybackMode, setSituationFilter } from 'redux/gameReducer';
 
 const MobileFilters = () => {
-  const situations = useSelector(state => state.game.situations);
-  const playbackMode = useSelector(state => state.game.playbackMode);
-  const situationFilter = useSelector(state => state.game.situationFilter);
+  const situations = useSelector(s => s.game.situations);
+  const playbackMode = useSelector(s => s.game.playbackMode);
+  const situationFilter = useSelector(s => s.game.situationFilter);
 
   const dispatch = useDispatch();
 
@@ -28,7 +28,6 @@ const MobileFilters = () => {
         options={filteredSituations}
         currentOption={situationFilter}
         handleClick={handleClick}
-        // wrapperStyles={{ paddingRight: '.5rem' }}
         listWrapperStyles={{
           left: 'unset',
           right: 0,
