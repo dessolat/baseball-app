@@ -11,7 +11,8 @@ const ContentPitcher = () => {
   const { balls_count: ballsCount, strikes_count: strikesCount } =
     (moments.length > 0 ? moments.slice(-1)[0].pitcher : currentCard.moments?.slice(-1)[0].pitcher) || '';
 
-  const { pitches_name: pitcherName, pitcher_id: pitcherId } = currentCard.moments?.slice(-1)[0]?.pitcher || {};
+  const { pitches_name: pitcherName, pitcher_id: pitcherId } =
+    currentCard.moments?.slice(-1)[0]?.pitcher || {};
 
   const isPitcher = currentCard.moments;
 
@@ -27,12 +28,10 @@ const ContentPitcher = () => {
       <p className={cl.playerName}>
         Total:{' '}
         {isPitcher && (
-          <>
-            <span>
-              {ballsCount + strikesCount} ({ballsCount} ball{ballsEnding}, {strikesCount} strike
-              {strikesEnding})
-            </span>
-          </>
+          <span>
+            {ballsCount + strikesCount} ({ballsCount} ball{ballsEnding}, {strikesCount} strike
+            {strikesEnding})
+          </span>
         )}
       </p>
     </div>
