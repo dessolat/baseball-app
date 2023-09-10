@@ -111,7 +111,6 @@
     screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: block;
     width: 22.5%;
-    // width: 5rem;
     text-align: center;
     line-height: 1.65;
   }
@@ -286,7 +285,6 @@
     screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: inline-block;
     width: 22.5%;
-    // width: 4rem;
     line-height: 1.65;
   }
 }
@@ -298,7 +296,6 @@
     screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: inline-block;
     width: 22.5%;
-    // width: 6.5rem;
     line-height: 1.65;
 
     > div > div:last-child > ul > li:last-child > span {
