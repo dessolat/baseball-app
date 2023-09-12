@@ -14,7 +14,8 @@ const FiltersViewModes = () => {
   const dispatch = useDispatch();
 
   const handleModeClick = e => {
-    if (e.currentTarget.name === viewMode) {
+		if (e.currentTarget.name === viewMode) {
+			return
       dispatch(setIsCameraSelector(true));
 			return
     }
