@@ -1,38 +1,30 @@
 .headerTabs {
-	display: flex;
+  display: flex;
   font-size: 0.875rem;
   line-height: 1rem;
-	margin-top: auto;
-	// position: absolute;
-	// left: 0;
-	// bottom: 3px;
-  // margin-bottom: 1px;
+  margin-top: auto;
 
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px),
+    print {
     display: none;
   }
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		display: none;
-  }
-	@media print {
-		display: none;
-	}
 
   > li + li {
     margin-left: 1rem;
-		
-		@media screen and (max-width: 1150px) {
-			margin-left: .7rem;
-		}
-		@media screen and (max-width: 1070px) {
-			margin-left: .3rem;
-		}
+
+    @media screen and (max-width: 1150px) {
+      margin-left: 0.7rem;
+    }
+    @media screen and (max-width: 1070px) {
+      margin-left: 0.3rem;
+    }
   }
 
   button {
-		font: inherit;
+    font: inherit;
     border-bottom: 2px solid transparent;
-    padding-bottom: .25rem;
+    padding-bottom: 0.25rem;
     transition: border-bottom var(--transition-speed);
 
     &:hover,
