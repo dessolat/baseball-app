@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentCard, setPlaybackMode } from 'redux/gameReducer';
 import cl from './HeaderScoresList.module.scss';
 import HeaderScoresListItem from './HeaderScoresListItem';
+import classNames from 'classnames';
 
 const HeaderScoresList = forwardRef(({ innings, currentTab }, ref) => {
   const inningNumber = useSelector(state => state.game.inningNumber);
@@ -31,15 +32,13 @@ const HeaderScoresList = forwardRef(({ innings, currentTab }, ref) => {
       maxInnings={maxInnings}
       cl={cl}
       handleClick={handleClick}
-			currentTab={currentTab}
+      currentTab={currentTab}
     />
   ));
 
-	const classes = [cl.scoresTable]
-	currentTab === 'box' && classes.push(cl.inActiveList)
-
+  const listClasses = classNames(cl.scoresTable, { [cl.inActiveList]: currentTab === 'box' });
   return (
-    <ul ref={ref} className={classes.join(' ')}>
+    <ul ref={ref} className={listClasses}>
       {renderedInnings}
     </ul>
   );
