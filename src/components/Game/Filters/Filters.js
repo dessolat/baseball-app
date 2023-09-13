@@ -11,8 +11,9 @@ import useScrollingArrows from 'hooks/useFiltersScrollingArrows';
 
 const Filters = () => {
   const tab = getSearchParam('tab');
-  const situations = useSelector(state => state.game.situations);
-  const isBroadcast = useSelector(state => state.game.isBroadcast);
+  const situations = useSelector(s => s.game.situations);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
+  const isVideo = useSelector(s => s.game.isVideo);
 
   // const [scrollRef, isLeftScroll, isRightScroll, addListeners, removeListeners, scrollFixation] =
   //   useScrollHorizontally();
@@ -82,7 +83,7 @@ const Filters = () => {
           />
           {renderScrollArrow(isRightArrow, 'right')}
         </div>
-        {tab === 'videos' && !isBroadcast && <FiltersViewModes />}
+        {tab === 'videos' && !isBroadcast && isVideo && <FiltersViewModes />}
       </div>
     </section>
   );
