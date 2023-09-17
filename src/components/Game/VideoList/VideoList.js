@@ -486,7 +486,7 @@ const VideoList = ({ viewMode }, ref) => {
 
 			if (currentTime < startRef.current && viewMode === 'mode-1') {
 				video1Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 1), true);
-				console.log('seeking video1 to: ',seekToTime - getCamDelta(modeNumber, 1), '...');
+				// console.log('seeking video1 to: ',seekToTime - getCamDelta(modeNumber, 1), '...');
 				return
 			}
 
