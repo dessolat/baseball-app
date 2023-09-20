@@ -281,6 +281,7 @@ const Content = ({ currentTab }) => {
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
 
+		//Set current moment
     if (currentCard.customMoment) {
       const newMoment = currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment);
       dispatch(setCurrentMoment(newMoment));
@@ -294,8 +295,10 @@ const Content = ({ currentTab }) => {
 
     dispatch(setMoments(newMoments));
 
+		// No smooth scroll on manual card click
     if (currentCard.manualClick || !situationsChildRef.current) return;
 
+		// Smooth scrolling
     if (isMobile) {
       document.documentElement.scrollTop =
         situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 85;
