@@ -383,6 +383,15 @@ const Content = ({ currentTab }) => {
   const mobilePitcherFiltersClasses = classNames(cl.landscapeDisplayNone, cl.mobilePitcherFiltersWrapper, {
     [cl.noVideo]: !isVideo
   });
+
+  // Testing funcs
+  // !Remove after testing
+
+  const handleIncreaseBtnClick = async () => await axios.get('http://localhost:3001/inc');
+  const handleDecreaseBtnClick = async () => await axios.get('http://localhost:3001/dec');
+  const handleResetBtnClick = async () => await axios.get('http://localhost:3001/reset');
+
+  // !
   return (
     <>
       {currentTab !== 'box' ? (
@@ -406,6 +415,17 @@ const Content = ({ currentTab }) => {
               currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
+            <div style={{ position: 'fixed', top: 8, left: '20%' }}>
+              <button onClick={handleIncreaseBtnClick} style={{ fontWeight: 600 }}>
+                Increase
+              </button>
+              <button onClick={handleDecreaseBtnClick} style={{ marginLeft: '1rem', fontWeight: 600 }}>
+                Decrease
+              </button>
+              <button onClick={handleResetBtnClick} style={{ marginLeft: '1rem', fontWeight: 600 }}>
+                Reset
+              </button>
+            </div>
             {/* {isCameraSelector && <ModalCameraSelector />} */}
           </div>
           {errorMsg !== null && (
