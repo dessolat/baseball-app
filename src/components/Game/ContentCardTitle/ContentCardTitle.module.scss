@@ -1,5 +1,28 @@
 .playerName {
-	font: 400 .9375rem var(--font-nunito);
-	line-height: .9375rem;
-	margin-left: 4px;
+  font: 400 0.9375rem var(--font-nunito);
+  line-height: 0.9375rem;
+  margin-left: 4px;
+
+  > a {
+    display: inline-block;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: 0;
+			left: unset;
+      bottom: -1px;
+      width: 0;
+      height: 2px;
+      transition: width 0.25s;
+      background-color: var(--side-color);
+    }
+
+    &:hover::before {
+			right: unset;
+			left: 0;
+      width: 100%;
+    }
+  }
 }
