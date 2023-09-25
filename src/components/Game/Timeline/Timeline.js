@@ -530,7 +530,7 @@ const Timeline = ({ addedClass = null, currentTab = 'videos', forFullscreen = fa
             )}
 
             {/* Horizontal lines */}
-            {LINES_DATA.map(({ color, secondaryColor, events }, i) => (
+            {totalSeconds > 0 && LINES_DATA.map(({ color, secondaryColor, events }, i) => (
               // Horizontal line
               <Fragment key={i}>
                 <line
