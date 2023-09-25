@@ -209,6 +209,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
   const currentMoment = useSelector(state => state.game.currentMoment);
   const viewMode = useSelector(state => state.game.viewMode);
   const isVideoEffects = useSelector(state => state.game.isVideoEffects);
+  const maxVideoMomentBroadcast = useSelector(state => state.game.maxVideoMomentBroadcast);
 
   useEffect(() => () => clearInterval(currentTimeInterval.current), []);
 
@@ -316,7 +317,7 @@ const Video = ({ videoId, videoNumber, handleOnReady, stateChangeHandler, setPla
               />
             </div>
           </div>
-          {!currentMoment.video && <NoVideoScreen />}
+          {!currentMoment.video && !maxVideoMomentBroadcast && <NoVideoScreen />}
         </div>
       ) : (
         <></>

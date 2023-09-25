@@ -27,6 +27,7 @@ const VideoList = ({ viewMode }, ref) => {
   const isLastMomentMode = useSelector(s => s.game.isLastMomentMode);
   const playbackMode = useSelector(s => s.game.playbackMode);
   const isBroadcast = useSelector(s => s.game.isBroadcast);
+  const maxVideoMomentBroadcast = useSelector(s => s.game.maxVideoMomentBroadcast);
 
   const dispatch = useDispatch();
 
@@ -647,7 +648,9 @@ const VideoList = ({ viewMode }, ref) => {
           />
         </>
       )}
-      {currentMoment.video && <VideoControls setPlayPause={setPlayPause} currentTab='videos' ref={ref} />}
+      {(currentMoment.video || (!currentMoment.video && maxVideoMomentBroadcast)) && (
+        <VideoControls setPlayPause={setPlayPause} currentTab='videos' ref={ref} />
+      )}
     </>
   );
 };
