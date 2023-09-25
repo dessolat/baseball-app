@@ -17,6 +17,7 @@ const Videos = ({ currentTab }) => {
   const currentMoment = useSelector(s => s.game.currentMoment);
   const playerCardFilterFocused = useSelector(s => s.game.playerCardFilterFocused);
   const preferredVideoState = useSelector(s => s.game.preferredVideoState);
+  const maxVideoMomentBroadcast = useSelector(s => s.game.maxVideoMomentBroadcast);
 
   const isMobile = useSelector(s => s.shared.isMobile);
 
@@ -43,7 +44,7 @@ const Videos = ({ currentTab }) => {
   }
 
   function handleMouseMove() {
-    if (!currentMoment.video || isMobile) return;
+    if ((!currentMoment.video && !maxVideoMomentBroadcast) || isMobile) return;
 
     clearTimeout(timerRef.current);
 
