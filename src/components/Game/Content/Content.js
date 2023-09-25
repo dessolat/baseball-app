@@ -35,6 +35,7 @@ const Content = ({ currentTab }) => {
   const isVideo = useSelector(s => s.game.isVideo);
   const playerCardFilter = useSelector(s => s.game.playerCardFilter);
   const playerCardFilterBy = useSelector(s => s.game.playerCardFilterBy);
+  const isBroadcast = useSelector(s => s.game.isBroadcast);
 
   const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
   const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline);
@@ -167,7 +168,8 @@ const Content = ({ currentTab }) => {
       dispatch(setCurrentCard(newCurCard));
     }
 
-    if (currentCard?.moments) {
+    // ! Current card update if last card in list selected
+    if (currentCard?.moments && !isBroadcast) {
       filteredCards[filteredCards.length - 1]?.moments[0].inner.id === currentCard?.moments[0].inner.id &&
         // playbackMode === 'playOnline' &&
         (newFilteredCards.length !== 0
