@@ -19,6 +19,7 @@ const defaultState = {
 	boxMode: 'Batting',
   isVideo: false,
   isBroadcast: false,
+	maxVideoMomentBroadcast: false,
   pitchState: 'Field',
   hitState: 'Field',
   runState: 'Field',
@@ -65,6 +66,7 @@ const SET_BOX_ACTIVE_BUTTON = 'SET_BOX_ACTIVE_BUTTON';
 const SET_BOX_MODE = 'SET_BOX_MODE';
 const SET_IS_VIDEO = 'SET_IS_VIDEO';
 const SET_IS_BROADCAST = 'SET_IS_BROADCAST';
+const SET_MAX_VIDEO_MOMENT_BROADCAST = 'SET_MAX_VIDEO_MOMENT_BROADCAST';
 const SET_PITCH_STATE = 'SET_PITCH_STATE';
 const SET_HIT_STATE = 'SET_HIT_STATE';
 const SET_RUN_STATE = 'SET_RUN_STATE';
@@ -132,6 +134,8 @@ export const gameReducer = (state = defaultState, action) => {
       return { ...state, isVideo: action.payload };
     case SET_IS_BROADCAST:
       return { ...state, isBroadcast: action.payload };
+    case SET_MAX_VIDEO_MOMENT_BROADCAST:
+      return { ...state, maxVideoMomentBroadcast: action.payload };
     case SET_PITCH_STATE:
       return { ...state, pitchState: action.payload };
     case SET_HIT_STATE:
@@ -208,6 +212,7 @@ export const setBoxActiveButton = payload => ({ type: SET_BOX_ACTIVE_BUTTON, pay
 export const setBoxMode = payload => ({ type: SET_BOX_MODE, payload });
 export const setIsVideo = payload => ({ type: SET_IS_VIDEO, payload });
 export const setIsBroadcast = payload => ({ type: SET_IS_BROADCAST, payload });
+export const setMaxVideoMomentBroadcast = payload => ({ type: SET_MAX_VIDEO_MOMENT_BROADCAST, payload });
 export const setPitchState = payload => ({ type: SET_PITCH_STATE, payload });
 export const setHitState = payload => ({ type: SET_HIT_STATE, payload });
 export const setRunState = payload => ({ type: SET_RUN_STATE, payload });
