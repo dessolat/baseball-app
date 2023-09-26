@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentCard,
   setCurrentMoment,
+  setMaxVideoMomentBroadcast,
   setSeekValue,
   setVideoCurrentTime,
   setVideoState,
@@ -70,6 +71,11 @@ const VideoList = ({ viewMode }, ref) => {
     },
     []
   );
+  useEffect(() => {
+    if (video1Ref.current === null) return;
+
+    videoHandling(false, false);
+  }, [filteredCards]);
 
   useEffect(() => {
     const isInterruptedMoment =
@@ -249,10 +255,12 @@ const VideoList = ({ viewMode }, ref) => {
         video[`${videoLengthPrefix}_seconds_from`] +
         (secondsTotal / 100) * (sliderCoords.changedCoord !== 'x2' ? sliderCoords.x1 : sliderCoords.x2);
 
-      video1Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 1), true);
-      video2Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 2), true);
-      video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3), true);
-      video4Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 4), true);
+      if (!currentMoment?.noStartSeeking) {
+        video1Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 1), true);
+        video2Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 2), true);
+        video3Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 3), true);
+        video4Ref.current?.seekTo(secondsFromRated - getCamDelta(modeNumber, 4), true);
+      }
     }
 
     videoHandlingTimeoutRef.current = setTimeout(
@@ -329,7 +337,7 @@ const VideoList = ({ viewMode }, ref) => {
     const isInterruptedMoment =
       !!preview.camera_info.broadcast_link_add_moment_from &&
       currentMoment?.inner?.id >= preview.camera_info.broadcast_link_add_moment_from;
-	
+
     if (modeNumber === 1 && isInterruptedMoment) return cameraInfo.broadcast_link_add;
 
     return cameraInfo[JSON.parse(cameraViews[modeNumber - 1]).cameras[index]];
@@ -420,6 +428,36 @@ const VideoList = ({ viewMode }, ref) => {
     clearInterval(intervalRef.current);
 
     if (!currentMoment.video) {
+      const maxVideoMoment = filteredCards.reduce((maxMoment, card) => {
+        card.type !== 'Replacement' &&
+          card.moments?.forEach(moment => {
+            if (moment.icons && moment.video) {
+              maxMoment = moment;
+            }
+          });
+
+        return maxMoment;
+      }, []);
+
+      if (currentMoment.inner.id > maxVideoMoment.inner.id) {
+        preferredVideoState === 1 && video1Ref.current?.playVideo();
+
+        if (maxVideoMoment?.video?.broadcast_seconds_to) {
+          dispatch(setMaxVideoMomentBroadcast(true));
+        }
+
+        if (video1Ref.current?.getCurrentTime() < maxVideoMoment?.video?.broadcast_seconds_to) {
+          video1Ref.current?.seekTo(maxVideoMoment.video.broadcast_seconds_to);
+        }
+        // video1Ref.current?.pauseVideo();
+        // setTimeout(() => {
+        //   videoHandling(true, isForcePlay);
+        // }, 1000);
+        return;
+      }
+
+      dispatch(setMaxVideoMomentBroadcast(false));
+
       video1Ref.current?.pauseVideo();
       video2Ref.current?.pauseVideo();
       video3Ref.current?.pauseVideo();
@@ -475,7 +513,7 @@ const VideoList = ({ viewMode }, ref) => {
     const secondsToRated =
       video[`${videoLengthPrefix}_seconds_from`] + (secondsTotal / 100) * sliderCoords.x2;
 
-		startRef.current = secondsFromRated
+    startRef.current = secondsFromRated;
     endRef.current = secondsToRated;
 
     const camDelta1 = getCamDelta(modeNumber, 1);
@@ -485,11 +523,11 @@ const VideoList = ({ viewMode }, ref) => {
 
       const currentTime = video1Ref.current.getCurrentTime() + camDelta1;
 
-			if (currentTime < startRef.current && viewMode === 'mode-1') {
-				video1Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 1), true);
-				// console.log('seeking video1 to: ',seekToTime - getCamDelta(modeNumber, 1), '...');
-				return
-			}
+      if (currentTime < startRef.current && viewMode === 'mode-1') {
+        video1Ref.current?.seekTo(seekToTime - getCamDelta(modeNumber, 1), true);
+        // console.log('seeking video1 to: ',seekToTime - getCamDelta(modeNumber, 1), '...');
+        return;
+      }
 
       if (currentTime >= endRef.current) {
         if (modeRef.current === 'pause') {
