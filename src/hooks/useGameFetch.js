@@ -11,6 +11,7 @@ import {
 import { shallowEqual, useSelector } from 'react-redux';
 import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import { useParams } from 'react-router-dom';
+// import axios from 'axios';
 
 const useGameFetch = url => {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,12 +55,14 @@ const useGameFetch = url => {
       try {
         firstTime && setIsLoading(true);
         const resp = await axiosInstance.get(innerUrl, {
+        // const resp = await axios.get('http://localhost:3001', {
           cancelToken: cancelTokenRef.current.token,
           onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
         // if (JSON.stringify(dataRef.current) === JSON.stringify(resp.data)) return;
         dispatch(setErrorMsg(null));
         error && setError(null);
+
         const dataLength = JSON.stringify(resp.data).length;
 
         intervalRef.current = setTimeout(() => {
