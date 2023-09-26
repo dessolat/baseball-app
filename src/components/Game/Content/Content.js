@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import cl from './Content.module.scss';
 import ContentSituationsList from '../ContentSituationsList/ContentSituationsList';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-// import axios from 'axios';
+import axios from 'axios';
 import {
   setSituations,
   setInningNumber,
@@ -28,6 +28,7 @@ const Content = ({ currentTab }) => {
   const innings = useSelector(s => s.game.innings, shallowEqual);
   const situationFilter = useSelector(s => s.game.situationFilter);
   const currentCard = useSelector(s => s.game.currentCard, shallowEqual);
+  const currentMoment = useSelector(s => s.game.currentMoment, shallowEqual);
   const filteredCards = useSelector(s => s.game.filteredCards, shallowEqual);
   const playbackMode = useSelector(s => s.game.playbackMode);
   const errorMsg = useSelector(s => s.game.errorMsg, shallowEqual);
@@ -39,8 +40,8 @@ const Content = ({ currentTab }) => {
 
   const isMobileScoreboard = useSelector(s => s.shared.isMobileScoreboard);
   const isMobileTimeline = useSelector(s => s.shared.isMobileTimeline);
-
   const isMobile = useSelector(s => s.shared.isMobile);
+
 
   const dispatch = useDispatch();
 
@@ -151,6 +152,33 @@ const Content = ({ currentTab }) => {
     /*************************************************/
     setCards(newCards);
     dispatch(setFilteredCards(newFilteredCards));
+
+    if (Object.keys(currentCard).length !== 0 && isBroadcast) {
+      const newCurCard = newFilteredCards.find(
+        card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+      );
+
+      const newMoments = [];
+
+      newCurCard.type !== 'Replacement'
+        ? newCurCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+        : newMoments.push(newCurCard.moments[0]);
+
+      newCurCard && dispatch(setCurrentCard({ ...currentCard, ...newCurCard, noMomentChange: true }));
+      dispatch(setMoments(newMoments));
+
+      const newMoment = newMoments.find(moment => moment.inner.id === currentMoment.inner.id);
+
+      if (newMoment?.video && !currentMoment.video) {
+        dispatch(setCurrentMoment({ ...newMoment, noStartSeeking: true }));
+      }
+      // const newCurCard = newFilteredCards.find(
+      //   card => card.moments[0].inner.id === currentCard.moments[0].inner.id
+      // );
+
+      // newCurCard && dispatch(setCurrentCard({ ...currentCard, ...newCurCard, noMomentChange: true }));
+    }
+
     if ((playbackMode === 'play' || playbackMode === 'pause') && Object.keys(currentCard).length === 0) {
       const card = +getSearchParam('card');
       let cardIndex =
@@ -239,10 +267,10 @@ const Content = ({ currentTab }) => {
           card.moments[0].inner.id === currentCard.moments[0].inner.id
       );
 
-      if (newCurrentCard ) {
-        // dispatch(setCurrentCard({ ...newCurrentCard, customMoment: 
-				// 	currentCard.customMoment
-				//  }));
+      if (newCurrentCard) {
+        // dispatch(setCurrentCard({ ...newCurrentCard, customMoment:
+        // 	currentCard.customMoment
+        //  }));
         return;
       }
 
@@ -272,6 +300,22 @@ const Content = ({ currentTab }) => {
   useEffect(() => {
     if (Object.keys(currentCard).length === 0) return;
 
+    if (currentCard.noMomentChange) {
+      // const newMoments = [];
+
+      // currentCard.type !== 'Replacement'
+      //   ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
+      //   : newMoments.push(currentCard.moments[0]);
+
+      // dispatch(setMoments(newMoments));
+
+      // const newMoment = newMoments.find(moment => moment.inner.id === currentMoment.inner.id)
+
+      // newMoment.video && !currentMoment.video && dispatch(setCurrentMoment(newMoment))
+
+      return;
+    }
+
     const cardId = currentCard.customMoment || (currentCard.moments && currentCard.moments[0].inner.id);
     setSearchParam('card', cardId);
 
@@ -283,7 +327,7 @@ const Content = ({ currentTab }) => {
       ? currentCard.moments?.forEach(moment => moment.icons && newMoments.push(moment))
       : newMoments.push(currentCard.moments[0]);
 
-		//Set current moment
+    //Set current moment
     if (currentCard.customMoment) {
       const newMoment = currentCard.moments.find(moment => moment.inner.id === currentCard.customMoment);
       dispatch(setCurrentMoment(newMoment));
@@ -297,10 +341,10 @@ const Content = ({ currentTab }) => {
 
     dispatch(setMoments(newMoments));
 
-		// No smooth scroll on manual card click
+    // No smooth scroll on manual card click
     if (currentCard.manualClick || !situationsChildRef.current) return;
 
-		// Smooth scrolling
+    // Smooth scrolling
     if (isMobile) {
       document.documentElement.scrollTop =
         situationsChildRef.current.offsetTop + situationsChildRef.current.clientHeight / 2 - 85;
