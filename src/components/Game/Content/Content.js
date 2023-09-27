@@ -461,7 +461,7 @@ const Content = ({ currentTab }) => {
               currentTab={currentTab}
             />
             {isVideo && <ContentFooter />}
-            <div style={{ position: 'fixed', top: 8, left: '20%' }}>
+            {/* <div style={{ position: 'fixed', top: 8, left: '20%' }}>
               <button onClick={handleIncreaseBtnClick} style={{ fontWeight: 600 }}>
                 Increase
               </button>
@@ -471,7 +471,7 @@ const Content = ({ currentTab }) => {
               <button onClick={handleResetBtnClick} style={{ marginLeft: '1rem', fontWeight: 600 }}>
                 Reset
               </button>
-            </div>
+            </div> */}
             {/* {isCameraSelector && <ModalCameraSelector />} */}
           </div>
           {errorMsg !== null && (
