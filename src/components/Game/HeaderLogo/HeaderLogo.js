@@ -17,21 +17,6 @@ const HeaderLogo = ({ side = 'guests' }) => {
 	const imgClass = side === 'guests' ? cl.leftLogo : cl.rightLogo
 	
 	const teamName = side === 'guests' ? guests.name : owners.name;
-	// ! Old img method
-
-  // const leftClasses = images[teamName] ? cl.leftLogo : cl.leftLogoText;
-  // const rightClasses = images[teamName] ? cl.rightLogo : cl.rightLogoText;
-  // const classes = side === 'left' ? leftClasses : rightClasses;
-	
-  // const logo = images[teamName] ? (
-  //   <img src={images[teamName]} className={classes} alt='attack-team' style={imgStyles} />
-  // ) : (
-  //   <h2 className={classes} style={pHolderStyles}>
-  //     {teamName.slice(0, 2).toUpperCase()}
-  //   </h2>
-  // );
-
-  // <>{logo}</>;
   return (
     <>
       <img
