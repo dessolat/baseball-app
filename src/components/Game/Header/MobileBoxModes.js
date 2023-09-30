@@ -21,7 +21,6 @@ const MobileBoxModes = () => {
         options={BOX_MODES}
         currentOption={boxMode}
         handleClick={handleClick}
-        // wrapperStyles={{ paddingRight: '.5rem' }}
         listWrapperStyles={{
           left: 'unset',
           right: 0,
