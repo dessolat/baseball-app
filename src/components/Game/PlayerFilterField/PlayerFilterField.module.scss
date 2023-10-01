@@ -30,9 +30,7 @@
     screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     line-height: 18px;
     width: 22px;
-    // height: 17px;
 		height: 100%;
-    // border: 1px solid transparent;
 		border: unset;
 		border-right: .5px solid rgba($color: #cdcccc, $alpha: 0.5);
 		color: black;
@@ -67,13 +65,11 @@
   background: no-repeat white url('/images/player_filter_icon.png') right 6px bottom 50% / 15px;
   width: 183px;
 	height: calc(1.5rem + 2px);
-	// height: 100%;
 	
   @media screen and (max-width: 800px),
 	screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
 		line-height: 15px;
     background-size: 13px;
-    // height: 17px;
 		height: 100%;
 		width: 172px;
   }
