@@ -33,9 +33,6 @@ const PlaysBatFooter = ({ currentLine, currentMoment, handleDotClick, frame }) =
         <path d='M1 25L330 25' stroke='#1A4C96' />
         {isDots && (
           <>
-            {/* <text x='182.5' y='12' className={cl.value}>
-              90
-            </text> */}
             <circle
               cx={getXCoord(swing_index)}
               cy='25.38184'
@@ -44,9 +41,6 @@ const PlaysBatFooter = ({ currentLine, currentMoment, handleDotClick, frame }) =
               onClick={handleDotClick('line0')}
               fill={getDotColor('line0')}
             />
-            {/* <text x='228.5' y='12' className={cl.value}>
-              90
-            </text> */}
             <circle
               cx={getXCoord(plane_index)}
               cy='25.38184'
@@ -55,9 +49,6 @@ const PlaysBatFooter = ({ currentLine, currentMoment, handleDotClick, frame }) =
               onClick={handleDotClick('line1')}
               fill={getDotColor('line1')}
             />
-            {/* <text x='268.5' y='12' className={cl.value}>
-              90
-            </text> */}
             <circle
               cx={getXCoord(impact_index)}
               cy='25.38184'
