@@ -1,13 +1,15 @@
 import React from 'react';
 import cl from './PlaysBat.module.scss';
+import classNames from 'classnames';
 
 const PlaysBatMedia = ({ metering, curvePath, linesPaths, currentLine }) => {
-  const batterClasses = [cl.batter];
-  metering?.bat?.batter_position && batterClasses.push(cl.leftHanded);
-
   const getLineColor = name => (currentLine === name ? '#1A4C96' : '#9E9E9E');
+
+	const batterClasses = classNames(cl.batter, {
+		[cl.leftHanded]: metering?.bat?.batter_position
+	})
   return (
-    <div className={batterClasses.join(' ')}>
+    <div className={batterClasses}>
       <svg
         viewBox='0 0 830 550'
         fill='none'
