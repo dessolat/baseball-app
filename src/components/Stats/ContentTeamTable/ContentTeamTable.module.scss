@@ -19,12 +19,12 @@
   }
 
   &:nth-child(2n) {
-    background-color:  rgba($color: #eaeaea, $alpha: .4);
+    background-color: rgba($color: #eaeaea, $alpha: 0.4);
   }
 
-	.teamName {
-		font-weight: 700;
-	}
+  .teamName {
+    font-weight: 700;
+  }
 }
 
 .tableHeader,
@@ -47,26 +47,24 @@
       width: 17rem;
       padding-left: 1rem;
 
-      @media screen and (max-width: 800px) {
+      @media screen and (max-width: 800px),
+        screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
         padding-left: 0;
       }
-			@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-				padding-left: 0;
-			}
     }
 
-&.tall {
-	width: 1.4rem;
-}
-&.wide2 {
-	width: 2rem;
-}
-&.wide2_5 {
-	width: 2.5rem;
-}
-&.wide3 {
-	width: 3rem;
-}
+    &.tall {
+      width: 1.4rem;
+    }
+    &.wide2 {
+      width: 2rem;
+    }
+    &.wide2_5 {
+      width: 2.5rem;
+    }
+    &.wide3 {
+      width: 3rem;
+    }
 
     &.wider {
       width: 3.5rem;
@@ -76,12 +74,12 @@
 
 .rows {
   position: relative;
-	max-height: calc(100vh - 2.1875rem - 6.4rem - 6rem);
-	overflow: scroll;
+  max-height: calc(100vh - 2.1875rem - 6.4rem - 6rem);
+  overflow: scroll;
 
-	&::-webkit-scrollbar {
-		width: 0;
-	}
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 .mobileWrapper {
@@ -89,7 +87,7 @@
   width: 100%;
   padding: 0;
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     height: calc(100vh - var(--landscape-nav-height) - 80.5px);
   }
 }
@@ -109,7 +107,7 @@
     align-items: center;
     border-bottom: 0.5px solid #dfdfdf;
     flex: 0 0 185px;
-		border-right: 0.5px solid transparent;
+    border-right: 0.5px solid transparent;
 
     > div {
       &:first-child {
@@ -138,25 +136,25 @@
     overflow-x: hidden;
     scroll-behavior: initial;
 
-		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-			justify-content: space-between;
-		}
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      justify-content: space-between;
+    }
 
     > div {
       flex: 0 0 2rem;
 
-			&.tall {
-				flex: 0 0 1.6rem;
-			}
-			&.wide2 {
-				flex: 0 0 2.3rem;
-			}
-			&.wide2_5 {
-				flex: 0 0 3rem;
-			}
-			&.wide3 {
-				flex: 0 0 3rem;
-			}
+      &.tall {
+        flex: 0 0 1.6rem;
+      }
+      &.wide2 {
+        flex: 0 0 2.3rem;
+      }
+      &.wide2_5 {
+        flex: 0 0 3rem;
+      }
+      &.wide3 {
+        flex: 0 0 3rem;
+      }
       &.wider {
         flex: 0 0 3rem;
       }
@@ -170,7 +168,7 @@
   overflow-y: scroll;
   display: flex;
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     max-height: calc(100vh - var(--landscape-nav-height) - 80.5px - 38.5px);
   }
 
@@ -181,14 +179,14 @@
 
 .leftRows {
   max-width: 185px;
-  border-right: .5px solid #DFDFDF;
-	box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.25);
-	height: fit-content;
+  border-right: 0.5px solid #dfdfdf;
+  box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.25);
+  height: fit-content;
 
   > .tableRow {
     display: flex;
     height: 38.5px;
-		padding-right: 8.5px;
+    padding-right: 8.5px;
 
     > div {
       font: 300 1rem / 38.5px var(--font-nunito);
@@ -197,7 +195,7 @@
         padding-left: 8.5px;
         flex: 1 100px;
         line-height: 15px;
-			}
+      }
 
       .fullName {
         font-weight: 700;
@@ -209,7 +207,7 @@
     }
 
     &:nth-child(2n) {
-      background-color:  rgba($color: #eaeaea, $alpha: .4);
+      background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
   }
 }
@@ -218,9 +216,9 @@
   overflow-x: scroll;
   height: fit-content;
 
-	@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-		flex: 1;
-	}
+  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+    flex: 1;
+  }
 
   > .tableRow {
     display: flex;
@@ -228,9 +226,9 @@
     justify-content: unset;
     height: 38.5px;
 
-		@media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-			justify-content: space-between;
-		}
+    @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+      justify-content: space-between;
+    }
 
     > div {
       width: 2rem !important;
@@ -238,22 +236,22 @@
       text-align: center;
       font: 300 1rem/38.5px var(--font-nunito);
 
-			&.tall {
-				width: 1.6rem !important;
-				flex: 0 0 1.6rem;
-			}
-			&.wide2 {
-				width: 2.3rem !important;
-				flex: 0 0 2.3rem;
-			}
-			&.wide2_5 {
-				width: 3rem !important;
-				flex: 0 0 3rem;
-			}
-			&.wide3 {
-				width: 3rem !important;
-				flex: 0 0 3rem;
-			}
+      &.tall {
+        width: 1.6rem !important;
+        flex: 0 0 1.6rem;
+      }
+      &.wide2 {
+        width: 2.3rem !important;
+        flex: 0 0 2.3rem;
+      }
+      &.wide2_5 {
+        width: 3rem !important;
+        flex: 0 0 3rem;
+      }
+      &.wide3 {
+        width: 3rem !important;
+        flex: 0 0 3rem;
+      }
       &.wider {
         width: 3rem !important;
         flex: 0 0 3rem;
@@ -261,7 +259,7 @@
     }
 
     &:nth-child(2n) {
-      background-color:  rgba($color: #eaeaea, $alpha: .4);
+      background-color: rgba($color: #eaeaea, $alpha: 0.4);
     }
   }
 }
