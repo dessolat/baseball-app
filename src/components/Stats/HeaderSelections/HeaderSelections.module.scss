@@ -78,15 +78,8 @@
   margin-left: -1.22rem;
   text-align: center;
 
-  @media screen and (max-width: 800px) {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 777;
-    font-size: 1rem;
-  }
-  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     position: absolute;
     left: 0;
     top: 50%;
@@ -104,10 +97,8 @@ a.active {
   display: flex;
   align-items: baseline;
 
-  @media screen and (max-width: 800px) {
-    display: contents;
-  }
-  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: contents;
   }
 
@@ -125,16 +116,8 @@ a.active {
   width: 4.375rem;
   font-size: 0.875rem;
 
-  @media screen and (max-width: 800px) {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 777;
-    font-size: 1rem;
-    width: 5rem;
-  }
-  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     position: absolute;
     right: 6px;
     top: 50%;
@@ -154,12 +137,8 @@ a.active {
     width: 4.5rem;
     font-size: 0.9rem;
   }
-  @media screen and (max-width: 800px) {
-    z-index: 777;
-    width: 4.9rem;
-    font-size: 1rem;
-  }
-  @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
+  @media screen and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     z-index: 777;
     width: 4.9rem;
     font-size: 1rem;
@@ -171,29 +150,29 @@ a.active {
 
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
     display: block;
-		height: 100%;
-		position: relative;
-		margin-left: auto;
-		width: 254px;
+    height: 100%;
+    position: relative;
+    margin-left: auto;
+    width: 254px;
   }
 }
 
 .mobileListTypesDropdown {
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     width: 190px;
-		left: unset;
-		right: 0;
+    left: unset;
+    right: 0;
   }
 }
 
 .mobileTableModesDropdown {
-	@media screen and (max-width: 800px) {
+  @media screen and (max-width: 800px) {
     width: 190px;
-		left: unset;
-		right: -6px;
+    left: unset;
+    right: -6px;
 
-		> ul {
-			width: unset;
-		}
+    > ul {
+      width: unset;
+    }
   }
 }
