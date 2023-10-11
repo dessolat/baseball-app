@@ -7,7 +7,6 @@ import { setCurrentLeague } from 'redux/gamesReducer';
 import { setTableMode } from 'redux/statsReducer';
 import { Link, useParams } from 'react-router-dom';
 import ContentPlayerFilterField from '../ContentPlayerTable/ContentPlayerFilterField';
-// import { getYears } from 'utils';
 
 const TABLE_MODES = ['Batting', 'Fielding / Running', 'Pitching'];
 
@@ -35,7 +34,6 @@ const HeaderSelections = () => {
   const handleModeClick = mode => dispatch(setTableMode(mode));
   const handleGameTypeClick = gameType => dispatch(setCurrentGameType(gameType));
 
-  // const yearsArr = getYears();
 	const yearsArr = Object.keys(statsData)
     .map(year => +year)
     .reverse();
