@@ -1,5 +1,5 @@
 import { PlayerYearsContext } from 'context';
-import { createContext, useContext, useEffect, useState, useRef, Fragment } from 'react';
+import { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './PlayerStatsAnimationContext.module.scss';
 
