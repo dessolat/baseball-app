@@ -39,8 +39,6 @@ const Logo = ({ cl }) => {
   );
 };
 
-// `http://baseball-gametrack.ru/api/logo/${url}`
-
 const HeaderSelectionsTeamInfo = ({ cl }) => (
   <div className={cl.teamInfo}>
     <Logo cl={cl} />
