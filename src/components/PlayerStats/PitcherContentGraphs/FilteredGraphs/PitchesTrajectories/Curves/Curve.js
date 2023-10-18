@@ -1,11 +1,11 @@
-import { memo, useRef, useState, useEffect, useContext } from 'react';
+import { memo, useRef, useState, useEffect } from 'react';
 import {
   useFrame
   // extend
 } from '@react-three/fiber';
 import { HSVtoRGB } from 'utils';
 // import ComfortaaFont from 'fonts/Comfortaa_Regular.json';
-import { ctx } from 'context/ThreeTextCtx';
+import { useThreeTextCtx } from 'context/ThreeTextCtx';
 
 // const TouchPoints = ({ data3D, coef, curveCount }) => (
 //   <>
@@ -31,13 +31,7 @@ const CurvePath = memo(
     const tubeRef = useRef(null);
     // const textRef = useRef(null);
 
-    const {
-      // TextGeometry,
-      Vector3,
-      CatmullRomCurve3,
-      // FontLoader,
-      FrontSide
-    } = useContext(ctx);
+    const { Vector3, CatmullRomCurve3, FrontSide } = useThreeTextCtx();
 
     // extend({ TextGeometry });
 

@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { CatmullRomCurve3, FrontSide, Vector3 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
@@ -12,5 +12,7 @@ const ThreeTextCtx = ({ children }) => {
     </ctx.Provider>
   );
 };
+
+export const useThreeTextCtx = () => useContext(ctx);
 
 export default ThreeTextCtx;
