@@ -6,7 +6,6 @@ import { Canvas } from '@react-three/fiber';
 import { FrontSide, TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
 import FieldBg from 'images/field_right.jpg';
-// import ArrowDown from 'components/UI/icons/ArrowDown';
 import Curves from './Curves/Curves';
 import Tooltip from './Tooltip';
 
@@ -23,9 +22,6 @@ const OptionsBar = ({ isAutoRotate, handleAutoRotateClick, handleResetClick }) =
         </button>
         <button onClick={handleResetClick}>Reset field</button>
       </div>
-      {/* <div className={cl.arrowDown}>
-        <ArrowDown />
-      </div> */}
     </div>
   );
 };
