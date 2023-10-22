@@ -9,7 +9,6 @@ import classNames from 'classnames';
 
 const PARAMS = {
   GRAPH_WIDTH: 713,
-  // GRAPH_WIDTH: 463,
   GRAPH_HEIGHT: 388,
   SIDE_PADDING: 30
 };
@@ -97,7 +96,6 @@ const HeatAreas = ({ arrData, coords }) => {
         x: +(j * colWidth + colWidth / 2).toFixed(2),
         y: +(i * rowHeight + rowHeight / 2).toFixed(2),
         value: col
-        // value: col <= 5 ? +col : 5
       };
 
       sum.push(newPoint);
@@ -124,52 +122,8 @@ const HeatAreas = ({ arrData, coords }) => {
 
         const opacity = firstLayerRadius / maxRadius;
 
-        // let path = '';
-        // const topLeftX = x - firstLayerRadius;
-        // const topLeftY = y - firstLayerRadius;
-        // const topRightX = x + firstLayerRadius;
-        // const topRightY = topLeftY;
-        // const bottomRightX = topRightX;
-        // const bottomRightY = y + firstLayerRadius;
-        // const bottomLeftX = topLeftX;
-        // const bottomLeftY = bottomRightY;
-
-        // const topRightCornering = getRndValue(-firstLayerRadius, firstLayerRadius);
-        // const bottomRightCornering = getRndValue(-firstLayerRadius, firstLayerRadius)
-        // const bottomLeftCornering = getRndValue(-firstLayerRadius, firstLayerRadius)
-
-        // // top-left point
-        // path += `M${topLeftX},${topLeftY}`;
-        // // top-right
-        // path += `C${topLeftX + getRndValue(0, firstLayerRadius)} ${
-        //   topLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // }, ${topRightX - getRndValue(0, firstLayerRadius)} ${
-        //   topRightY + topRightCornering
-        // }, ${topRightX} ${topRightY}`;
-        // // bottom-right
-        // path += `C${topRightX + getRndValue(0, firstLayerRadius)} ${topRightY - topRightCornering}, ${
-        //   bottomRightX + bottomRightCornering
-        //   // bottomRightX + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // } ${bottomRightY - getRndValue(0, firstLayerRadius)}, ${bottomRightX} ${bottomRightY}`;
-        // // bottom-left
-        // path += `C${bottomRightX - getRndValue(0, firstLayerRadius)} ${
-        //   bottomRightY - bottomRightCornering
-        //   // bottomRightY + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // }, ${bottomLeftX + getRndValue(0, firstLayerRadius)} ${
-        //   bottomLeftY + bottomLeftCornering
-        //   // bottomLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // }, ${bottomLeftX} ${bottomLeftY}`;
-        // // top-left
-        // path += `C${bottomLeftX - getRndValue(0, firstLayerRadius)} ${
-        //   bottomLeftY - bottomLeftCornering
-        //   // bottomRightY + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // }, ${topLeftX + getRndValue(-firstLayerRadius, firstLayerRadius)} ${
-        //   topLeftY + getRndValue(-firstLayerRadius, firstLayerRadius)
-        // }, ${topLeftX} ${topLeftY}`;
-
         return (
           <Fragment key={i}>
-            {/* <path d={path} fill='#8aa3cf' className={cl.blurredPath} filter='url(#goo)' /> */}
             <circle
               // key={`${i}-x-${x}-y-${y}`}
               cx={x}
@@ -598,8 +552,6 @@ const Columns = ({ right, center, values, byPitchZone }) => {
 };
 
 const PercentsGraph = ({ left, center, filteredData, byPitchZone }) => {
-  // const { pitch_classes: pitchClasses } = preview;
-
   const filteredPitches = !byPitchZone
     ? filteredData.filter(({ result }) => result.swing || result.take)
     : filteredData.filter(({ result }) => result['soft hit'] || result['base hit & hard hit']);
