@@ -72,7 +72,6 @@ const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true, JSONs
   const mouseDownStateRef = useRef();
   const mouseClickTimeRef = useRef(null);
   const sliderCoordsTimer = useRef();
-  // const curMinMaxValues = useRef(null);
 
   const minMaxMph = useMemo(() => {
     const minMax = speeds.reduce((minMax, curSpeed, i) => {
@@ -93,22 +92,11 @@ const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true, JSONs
   useEffect(() => {
     clearTimeout(sliderCoordsTimer.current);
 
-    // const minMaxMph = speeds.reduce((minMax, curSpeed, i) => {
-    //   if (curSpeed > minMax.max || i === 0) minMax.max = curSpeed;
-    //   if (curSpeed < minMax.min || i === 0) minMax.min = curSpeed;
-
-    //   return minMax;
-    // }, {});
-
-    // minMaxMph.min = Math.floor(minMaxMph.min);
-    // minMaxMph.max = Math.ceil(minMaxMph.max);
-
     sliderCoordsTimer.current = setTimeout(() => {
       const minSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1).toFixed(0);
       const maxSpeed = +(minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2).toFixed(0);
 
       handleFilterChange(pitchClassName, { min: minSpeed, max: maxSpeed });
-      // curMinMaxValues.current = { min: minMaxMph.min, max: minMaxMph.max };
     }, 250);
 
     return () => {
@@ -122,34 +110,6 @@ const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true, JSONs
 
     handleFilterChange(pitchClassName, { min: minSpeed, max: maxSpeed });
   }, [JSONspeeds]);
-
-  // useEffect(() => {
-  //   if (curMinMaxValues.current === null) return;
-
-  //   const minMaxMph = speeds.reduce((minMax, curSpeed, i) => {
-  //     if (curSpeed > minMax.max || i === 0) minMax.max = curSpeed;
-  //     if (curSpeed < minMax.min || i === 0) minMax.min = curSpeed;
-
-  //     return minMax;
-  //   }, {});
-
-  //   minMaxMph.min = Math.floor(minMaxMph.min);
-  //   minMaxMph.max = Math.ceil(minMaxMph.max);
-
-  // 	console.log('here');
-
-  //   const minMaxDelta = minMaxMph.max - minMaxMph.min;
-
-  //   const curMinDelta = curMinMaxValues.current.min - minMaxMph.min;
-
-  //   const x1Rel = curMinDelta < 0 ? 0 : (100 * curMinDelta) / minMaxDelta;
-
-  //   setSliderCoords(prev => ({ ...prev, x1: x1Rel }));
-
-  //   // const x1SpeedValue = minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x1;
-  //   // const x2SpeedValue = minMaxMph.min + (minMaxDelta / 100) * sliderCoords.x2;
-  //   // const x2SliderRightCoord = 100 - sliderCoords.x2 < 5 ? 5 : 100 - sliderCoords.x2;
-  // }, [speeds]);
 
   function handleMouseMove(e) {
     const slider = sliderRef.current;
@@ -222,9 +182,6 @@ const SpeedGroupItem = ({ pitchClass, handleFilterChange, isActive = true, JSONs
     mouseDownXCoordRef.current = e.clientX;
     mouseDownStateRef.current = JSON.parse(JSON.stringify(sliderCoords));
 
-    // sliderRef.current.parentElement.style.cursor = 'e-resize';
-    // if (sliderNameRef.current.includes('line')) rectRef.current.style.cursor = 'e-resize';
-
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };
@@ -277,11 +234,6 @@ const SpeedGroup = ({
   filteredTeamName,
   filteredPlayerFullName
 }) => {
-  // const { name, absValue, absValueTotal, relValue, staticText } = data;
-  // const isRelValueNumber = typeof relValue === 'number' && !isNaN(relValue);
-
-  // const dataValue = isRelValueNumber ? `${relValue}%` : isNaN(relValue) ? '-' : relValue;
-
   const { groupName } = groupData;
 
   const teamName = currentFilterValues.pitcher === 'team' ? filteredTeamName : null;
@@ -756,10 +708,6 @@ const RightColumnGraphs = ({
   const { preview } = data;
   const { pitch_classes: pitchClasses } = preview;
 
-  // ! Remove after testing
-  // const [isFakeTwinBalls, setFakeTwinBalls] = useState(false);
-  // !
-
   const { name: playerName, surname: playerSurname } = useSelector(
     state => state.playerStats.playerStatsData
   );
@@ -768,7 +716,7 @@ const RightColumnGraphs = ({
 
   const teamName = currentFilterValues.batter === 'team' ? filteredTeamName : null;
   const playerFullName = currentFilterValues.batter === 'batter' ? filteredPlayerFullName : null;
-  // const filteredData = []
+
   const filteredData = useFilterBatterGroupData(data, currentFilterValues, 'all', teamName, playerFullName);
 
   // Count and speed values
@@ -993,8 +941,6 @@ const FilteredGraphs = ({ battingData }) => {
       ...prev,
       speed: { ...prev.speed, [pitchClassName]: { min: mSValueMin, max: mSValueMax } }
     }));
-
-    // setCurrentFilterValues(prev => ({ ...prev, [groupName]: value }));
   }
 
   const handleTeamNameChange = name => {
