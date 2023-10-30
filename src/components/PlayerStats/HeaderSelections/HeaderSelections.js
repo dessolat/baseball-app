@@ -38,12 +38,7 @@ export const Logo = () => {
           onError={() => setError(true)}
           style={imgStyles}
         />
-        <Skeleton
-          // width={22}
-          // circle={true}
-          height={'100%'}
-          style={pHolderStyles}
-        />
+        <Skeleton height={'100%'} style={pHolderStyles} />
         <img src={PortraitImg} alt='' style={defaultImgStyles} className={cl.default} />
       </div>
     </>
@@ -246,7 +241,7 @@ const HeaderSelections = () => {
                 title={tableType}
                 options={getSortedTableOptions()}
                 currentOption={tableType}
-								listWrapperClass={cl.mobileTableModesDropdown}
+                listWrapperClass={cl.mobileTableModesDropdown}
                 handleClick={handleTableOptionClick}
               />
             ) : getSortedTableOptions().length === 1 ? (
