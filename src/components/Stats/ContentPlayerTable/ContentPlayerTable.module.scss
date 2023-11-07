@@ -94,6 +94,10 @@
   position: relative;
   max-height: calc(100vh - var(--desktop-nav-height) - 6.4rem - 6rem - 1.5rem);
   overflow: scroll;
+	
+	@media print {
+		max-height: unset;
+  }
 
   &::-webkit-scrollbar {
     width: 0;
