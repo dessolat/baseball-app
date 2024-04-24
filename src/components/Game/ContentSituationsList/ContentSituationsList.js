@@ -30,33 +30,33 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
   const scrollTimeoutRef = useRef();
 
   useEffect(() => {
-		if (!isMobile) {
-			const timeout = setTimeout(() => {
-				if (!listRef.current) return
-				
-				const isListScroll =
-					(listRef.current.scrollTop === 0 && listRef.current.scrollHeight > listRef.current.clientHeight) ||
-					listRef.current.scrollTop > 0;
-				dispatch(setListScrollTop(isListScroll));
-			}, 400);
-	
-			return () => {
-				clearTimeout(timeout);
-			};
-		}
+    if (!isMobile) {
+      const timeout = setTimeout(() => {
+        if (!listRef.current) return;
 
-		const scrollHandler = () => {
-			clearTimeout(scrollTimeoutRef.current);
-	
-			scrollTimeoutRef.current = setTimeout(() => {
-				const element = document.documentElement
+        const isListScroll =
+          (listRef.current.scrollTop === 0 && listRef.current.scrollHeight > listRef.current.clientHeight) ||
+          listRef.current.scrollTop > 0;
+        dispatch(setListScrollTop(isListScroll));
+      }, 400);
 
-				const isListScroll = element.scrollTop + window.innerHeight < element.scrollHeight;
-				dispatch(setListScrollTop(isListScroll));
-			}, 100);
-		};
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
 
-		window.addEventListener('scroll', scrollHandler);
+    const scrollHandler = () => {
+      clearTimeout(scrollTimeoutRef.current);
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        const element = document.documentElement;
+
+        const isListScroll = element.scrollTop + window.innerHeight < element.scrollHeight;
+        dispatch(setListScrollTop(isListScroll));
+      }, 100);
+    };
+
+    window.addEventListener('scroll', scrollHandler);
 
     return () => {
       clearTimeout(scrollTimeoutRef.current);
@@ -76,7 +76,7 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     dispatch(setCurrentCard({ ...player, manualClick: true }));
   };
 
-	const scrollHandler = e => {
+  const scrollHandler = e => {
     clearTimeout(scrollTimeoutRef.current);
 
     scrollTimeoutRef.current = setTimeout(() => {
@@ -85,9 +85,9 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     }, 100);
   };
 
-	const wrapperClasses = classNames(cl.wrapper, {
-		[cl.landscapeDisplayNone]: currentTab === 'videos'
-	})
+  const wrapperClasses = classNames(cl.wrapper, {
+    [cl.landscapeDisplayNone]: currentTab === 'videos'
+  });
   const classes = classNames(cl.blueDiv, {
     [cl.wider]: activeCardList === 'cards',
     [cl.taller]: activeCardList !== 'cards'
@@ -98,14 +98,19 @@ const ContentSituationsList = ({ filteredCards, currentCard, beforeAfterData, is
     [cl.mobilePlaysListHeight]: isVideo,
     [cl.mobilePlaysListHeightVideo]: isVideo && currentTab === 'videos'
   });
+
+  console.log(filteredCards);
   return (
     <div className={wrapperClasses} onClick={useGameFocus('list')}>
       {isVideo && currentTab !== 'videos' && <MobileLandscapeTabs cl={cl} />}
-      
+
       <ul className={listClasses} ref={listRef} onScroll={scrollHandler}>
         {filteredCards.map((card, i) => (
           <ContentSituationsListItem
-            key={i}
+            key={
+              card.moments[0]?.inner.id ||
+              `${card.inning_number}-${card.hit_order}-${card.who_id}-${card.side}-${card.who}`
+            }
             cardIndex={i}
             ref={ref}
             player={card}
