@@ -728,7 +728,15 @@ const Content = () => {
   //Sorting filtered array
   const getSortedStatsData = (filteredStatsData, sortField, sortDirection) =>
     filteredStatsData.sort((a, b) =>
-      Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf' || isNaN(a[sortField])
+      Number(a[sortField]) === Number(b[sortField]) && `${a.name} ${a.surname}` > `${b.name} ${b.surname}`
+        ? sortDirection === 'asc'
+          ? 1
+          : -1
+        : Number(a[sortField]) === Number(b[sortField]) && `${a.name} ${a.surname}` < `${b.name} ${b.surname}`
+        ? sortDirection === 'asc'
+          ? -1
+          : 1
+        : Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf' || isNaN(a[sortField])
         ? sortDirection === 'asc'
           ? 1
           : -1
@@ -751,7 +759,7 @@ const Content = () => {
         getSortedStatsData={getSortedStatsData}
       />
     );
-		
+
   return (
     <section>
       <div className='container'>

@@ -73,8 +73,8 @@ const MobileTable = ({
               className={cl.leftRows}
               style={!isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null}>
               {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                (row, index) => (
-                  <div key={index} className={cl.tableRow}>
+                (row) => (
+                  <div key={row.id} className={cl.tableRow}>
                     <div>
                       <Link to={`/stats/player/${row.id}`}>
                         {' '}
@@ -92,10 +92,10 @@ const MobileTable = ({
               onScroll={e => (headerScroll.current.scrollLeft = e.target.scrollLeft)}
               ref={rowsScroll}>
               {getSortedStatsData(filteredStatsData, sortField[tableMode], sortDirection).map(
-                (row, index) => {
+                (row) => {
                   return (
                     <div
-                      key={index}
+                      key={row.id}
                       className={cl.tableRow}
                       style={{
                         width: !isScrollable ? '100%' : 'fit-content'
