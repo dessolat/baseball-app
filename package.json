@@ -40,7 +40,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+		"compose-build": "docker-compose up --build --no-recreate -d",
+		"attach": "docker exec -it react-16.15.1 /bin/sh"
   },
   "eslintConfig": {
     "extends": [

@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  react:
+    image: node:16.15.1-alpine
+    container_name: react-16.15.1
+    entrypoint: /bin/sh
+    ports:
+      - '3000:3000'
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
