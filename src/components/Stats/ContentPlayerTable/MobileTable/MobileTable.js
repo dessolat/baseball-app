@@ -61,26 +61,7 @@ const MobileTable = ({
               <div>Players</div>
             </div>
             <div className={cl.rightHeader} ref={headerScroll}>
-              <div>
-                <Dropdown
-                  title={'Team'}
-                  options={sortedTeamOptions}
-                  currentOption={currentTeam}
-                  handleClick={handleTeamClick}
-                  wrapperStyles={{ position: 'initial' }}
-                  listWrapperClass={cl.mobileHeaderTeamDropdown}
-                  listStyles={{
-                    maxWidth: 125,
-                    left: '125px',
-                    top: '68px',
-                    maxHeight: '50vh',
-                    overflowY: 'scroll'
-                  }}
-                  itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
-                  shortNames={13}
-                  searchField={true}
-                />
-              </div>
+              <div>Team</div>
               {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl, {
                 top: '.1rem',
                 transform: 'translateX(-50%) scale(0.7)'
@@ -140,6 +121,31 @@ const MobileTable = ({
       )}
       <div className={cl.contentPlayerFilterFieldWrapper}>
         <ContentPlayerFilterField mobile={true} />
+        <Dropdown
+          title={currentTeam}
+          options={sortedTeamOptions}
+          currentOption={currentTeam}
+          handleClick={handleTeamClick}
+          // wrapperStyles={{ position: 'initial' }}
+          wrapperStyles={{
+            position: 'absolute',
+            right: '25%',
+            top: 11,
+            transform: 'translateX(50%)',
+            width: '45%'
+          }}
+          listWrapperClass={cl.mobileHeaderTeamDropdown}
+          listStyles={{
+            maxWidth: 125,
+            left: '125px',
+            top: '68px',
+            maxHeight: '50vh',
+            overflowY: 'scroll'
+          }}
+          itemStyles={{ fontSize: '12px', padding: '0.2rem 0.5rem' }}
+          shortNames={13}
+          searchField={true}
+        />
       </div>
     </div>
   );

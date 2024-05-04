@@ -2,10 +2,10 @@
   position: absolute;
   left: 30px;
   top: 20px;
+	width: 14%;
 	padding: 6px;
 	line-height: 1;
 	border: 0.5px solid #CDCCCC;
-	width: 254px;
 	padding-right: 28px;
 	background: no-repeat url('../../../images/player_filter_icon.png') right 2px bottom 50%;
 	outline: none;
@@ -15,11 +15,13 @@
 		left: 0;
 		top: 0;
 		height: 100%;
+		width: 175px;
   }
 }
 
 .mobile {
-	left: 50%;
+	left: 25%;
 	top: 5px;
 	transform: translateX(-50%);
+	width: 45%;
 }

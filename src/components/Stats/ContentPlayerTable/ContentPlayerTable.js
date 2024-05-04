@@ -120,16 +120,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         <div>
           <div className={cl.tableHeader}>
             <div></div>
-            <div>
-              <Dropdown
-                title={'Team'}
-                options={sortedTeamOptions}
-                currentOption={currentTeam}
-                handleClick={handleTeamClick}
-                listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
-                searchField={true}
-              />
-            </div>
+            <div>Team</div>
             {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
           </div>
           <ul className={cl.rows}>
@@ -175,6 +166,15 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         <p className={cl.noPlayersFound}>No players found.</p>
       )}
       <ContentPlayerFilterField />
+      <Dropdown
+        title={currentTeam}
+        options={sortedTeamOptions}
+        currentOption={currentTeam}
+        handleClick={handleTeamClick}
+        wrapperStyles={{ position: 'absolute', left: 'calc(30px + 15%)', top: 26, width: '13%' }}
+        listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
+        searchField={true}
+      />
     </div>
   );
 };

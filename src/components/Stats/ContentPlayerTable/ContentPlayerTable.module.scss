@@ -329,8 +329,11 @@
   @media screen and (max-width: 800px) {
     position: fixed;
     top: auto;
-    left: auto;
-    width: 55vw;
+    // left: auto;
+		// width: 55vw;
+		right: 0;
+		left: unset;
+    width: 95vw;
 
     > ul {
       max-width: unset !important;

@@ -149,11 +149,16 @@ a.active {
   display: none;
 
   @media screen and (orientation: landscape) and (max-width: 1000px) and (max-height: 800px) {
-    display: block;
+    display: flex;
     height: 100%;
     position: relative;
-    margin-left: auto;
-    width: 254px;
+    margin-left: 1rem;
+    // width: 265px;
+		width: 100%;
+
+		> * {
+			width: 48% !important;
+		}
   }
 }
 
