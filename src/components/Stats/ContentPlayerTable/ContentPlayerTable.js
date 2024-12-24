@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchParam, getShortName, setSearchParam } from 'utils';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import { setSortDirection, setSortField } from 'redux/statsReducer';
+import CustomLeaguesDropdown from 'components/UI/dropdown/CustomLeaguesDropdown/Dropdown';
+import { setCurrentCustomLeaguesForFetch, setSortDirection, setSortField } from 'redux/statsReducer';
 import ContentPlayerFilterField from './ContentPlayerFilterField';
 import MobileTable from './MobileTable/MobileTable';
 
 const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [currentTeam, setCurrentTeam] = useState(getSearchParam('team') || 'All');
+
+  const currentCustomLeagues = useSelector(state => state.stats.currentCustomLeagues);
+  const customStatsData = useSelector(state => state.stats.customStatsData);
 
   const isMobile = useSelector(state => state.shared.isMobile);
   const currentGameType = useSelector(state => state.shared.currentGameType);
@@ -20,6 +24,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   const sortDirection = useSelector(state => state.stats.sortDirection);
   const statsData = useSelector(state => state.stats.statsData);
   const playerFilter = useSelector(state => state.stats.statsPlayerFilterValue);
+
   const currentLeague = useSelector(state => state.games.currentLeague);
 
   const dispatch = useDispatch();
@@ -37,7 +42,9 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   let filteredStatsData = useMemo(
     () =>
-      currentLeague.id !== -1
+      currentLeague.id === -2
+        ? customStatsData.find(item => item.type === currentGameType)?.players[tableMode.toLowerCase()] || []
+        : currentLeague.id !== -1
         ? statsData[currentYear]?.find(
             item =>
               (item.title === currentLeague.name || item.title === currentLeague.title) &&
@@ -46,7 +53,16 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         : statsData[currentYear]?.find(item => item.title === 'All leagues' && item.type === currentGameType)
             ?.players[tableMode.toLowerCase()] || [],
 
-    [currentLeague, statsData, tableMode, currentGameType, currentYear]
+    [
+      currentLeague.id,
+      currentLeague.name,
+      currentLeague.title,
+      customStatsData,
+      statsData,
+      currentYear,
+      tableMode,
+      currentGameType
+    ]
   );
 
   const teamOptions = useMemo(
@@ -96,6 +112,9 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         })
       : filteredStatsData;
 
+  const leaguesDropdownOptions =
+    statsData[currentYear]?.filter(({ id, type }) => id !== null && type === currentGameType) || [];
+
   // Mobile render
   if (isMobile) {
     return (
@@ -114,13 +133,27 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
   }
 
   // Desktop render
+
+	const handleOkBtn = () => {
+		dispatch(setCurrentCustomLeaguesForFetch(currentCustomLeagues))
+	}
+
   return (
     <div className={cl.wrapper}>
       {filteredStatsData.length !== 0 || playerFilter === '' ? (
         <div>
           <div className={cl.tableHeader}>
             <div></div>
-            <div>Team</div>
+            <div>
+              <Dropdown
+                title={'Team'}
+                options={sortedTeamOptions}
+                currentOption={currentTeam}
+                handleClick={handleTeamClick}
+                listStyles={{ left: '-1rem', width: 'calc(100% + .1rem)' }}
+                searchField={true}
+              />
+            </div>
             {getTableHeaders(sortField[tableMode], sortDirection, handleFieldClick, cl)}
           </div>
           <ul className={cl.rows}>
@@ -166,7 +199,17 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         <p className={cl.noPlayersFound}>No players found.</p>
       )}
       <ContentPlayerFilterField />
-      <Dropdown
+      {currentLeague.id === -2 && (
+        <CustomLeaguesDropdown
+          title='Select league'
+          options={leaguesDropdownOptions}
+          currentOptions={currentCustomLeagues}
+          handleOkBtn={handleOkBtn}
+          wrapperStyles={{ position: 'absolute', left: 'calc(30px + 15%)', top: 26, width: '13%' }}
+          listWrapperStyles={{ left: '-1rem', width: 'calc(100% + 4rem)' }}
+        />
+      )}
+      {/* <Dropdown
         title={currentTeam}
         options={sortedTeamOptions}
         currentOption={currentTeam}
@@ -174,7 +217,7 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
         wrapperStyles={{ position: 'absolute', left: 'calc(30px + 15%)', top: 26, width: '13%' }}
         listStyles={{ left: '-1rem', width: 'calc(100% + 1rem)' }}
         searchField={true}
-      />
+      /> */}
     </div>
   );
 };

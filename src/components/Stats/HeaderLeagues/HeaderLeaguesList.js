@@ -6,15 +6,15 @@ import HeaderLeaguesListItem from './HeaderLeaguesListItem';
 import { useStatsLoadingCtx } from 'context/StatsLoadingContext';
 
 const HeaderLeaguesList = ({ leagues }, ref) => {
-	const isLoading = useStatsLoadingCtx()
+  const isLoading = useStatsLoadingCtx();
 
   const currentLeague = useSelector(state => state.games.currentLeague);
   const currentGameType = useSelector(state => state.shared.currentGameType);
   const dispatch = useDispatch();
 
   const handleLeagueClick = league => () => {
-		if (isLoading) return
-		
+    if (isLoading) return;
+
     const { id, title } = league;
 
     dispatch(setCurrentLeague({ ...league, name: title, title, id }));
@@ -23,14 +23,17 @@ const HeaderLeaguesList = ({ leagues }, ref) => {
   return (
     <ul className={cl.leagues} ref={ref}>
       {leagues
-        .filter(league => (league.type === currentGameType || league.id === -1) && league.id !== null)
+        .filter(
+          league =>
+            (league.type === currentGameType || league.id === -1 || league.id === -2) && league.id !== null
+        )
         .map((league, index) => (
           <HeaderLeaguesListItem
             key={index}
             league={league}
             handleClick={handleLeagueClick}
             currentLeague={currentLeague}
-						isLoading={isLoading}
+            isLoading={isLoading}
           />
         ))}
     </ul>

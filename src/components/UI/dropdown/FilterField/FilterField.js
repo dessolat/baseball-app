@@ -37,6 +37,7 @@ const FilterField = ({
   const filterTimeoutRef = useRef();
   const menuRef = useRef(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setIsOpen));
 
   const handleFilterFieldChange = e => {

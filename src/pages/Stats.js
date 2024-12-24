@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import Header from 'components/Stats/Header/Header';
 import Content from 'components/Stats/Content/Content';
-import { setStatsData } from 'redux/statsReducer';
+import { setCustomStatsData, setStatsData } from 'redux/statsReducer';
 import Loader from 'components/UI/loaders/Loader/Loader';
 import { setTableType } from 'redux/playerStatsReducer';
 import StatsLoadingProvider from 'context/StatsLoadingContext';
@@ -76,6 +76,52 @@ const Stats = () => {
         {}
       );
     };
+    const refactorCustomData = customData => {
+      return customData.map(statsByType => {
+        const playersFielding = statsByType.players.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...statsByType.players.running[index] });
+          return sum;
+        }, []);
+        const teamsFielding = statsByType.teams.fielding.reduce((sum, player, index) => {
+          sum.push({ ...player, ...statsByType.teams.running[index] });
+          return sum;
+        }, []);
+
+        return {
+          ...statsByType,
+          players: {
+            batting: statsByType.players.batting,
+            pitching: statsByType.players.pitching,
+            'fielding / running': playersFielding
+          },
+          teams: {
+            batting: statsByType.teams.batting,
+            pitching: statsByType.teams.pitching,
+            'fielding / running': teamsFielding
+          }
+        };
+      });
+    };
+
+    const fetchCustomStats = async leaguesArr => {
+      cancelStatsTokenRef.current = axiosCancelToken.source();
+
+      try {
+        const response = await axiosInstance.get(`/custom_leagues_stats?leagues=${leaguesArr.join(',')}`, {
+          cancelToken: cancelStatsTokenRef.current.token,
+          // timeout: 10000,
+          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+        });
+
+        setError('');
+
+        return response;
+      } catch (err) {
+        if (err.message === null) return;
+        console.log(err.message);
+        setError(err.message);
+      }
+    };
 
     const fetchStats = async () => {
       cancelStatsTokenRef.current = axiosCancelToken.source();
@@ -85,11 +131,20 @@ const Stats = () => {
         const response = await axiosInstance.get(`/stats`, {
           cancelToken: cancelStatsTokenRef.current.token,
           // timeout: 10000,
-          onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+          // onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
         });
 
+        // Get custom stats for all leagues in selected year
+        const customResponse = await fetchCustomStats([0]);
+        // const customResponse = await fetchCustomStats(response.data[currentYear].filter(({id}) => id !== null).map(({ id }) => id));
+
+        const statsData = refactorData(response.data);
+        const customStatsData = refactorCustomData(customResponse.data);
+
+				console.log(customStatsData)
         setError('');
-        dispatch(setStatsData(refactorData(response.data)));
+        dispatch(setStatsData(statsData));
+        dispatch(setCustomStatsData(customStatsData));
       } catch (err) {
         if (err.message === null) return;
         console.log(err.message);
@@ -108,46 +163,6 @@ const Stats = () => {
 
     // eslint-disable-next-line
   }, []);
-  // useEffect(() => {
-  //   const fetchGamesData = async () => {
-  //     cancelTokenRef.current = axios.CancelToken.source();
-
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
-  //         cancelToken: cancelTokenRef.current.token,
-  //         timeout: 5000
-  //       });
-  //       console.log(response.data);
-  //       setError('');
-  //       dispatch(setGamesAndLeagues(response.data));
-
-  //       if (games === null) {
-  //         console.log('dispatched after fetching');
-  //         dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-  //       }
-  //     } catch (err) {
-  //       if (err.message === null) return;
-  //       console.log(err.message);
-  //       setError(err.message);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   fetchGamesData();
-
-  //   if (firstMountRef.current === true) {
-  //     firstMountRef.current = false;
-  //     return;
-  //   }
-
-  //   dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-
-  //   return () => {
-  //     cancelTokenRef.current.cancel(null);
-  //   };
-  // 	// eslint-disable-next-line
-  // }, [currentYear]);
 
   const contentLoaderStyles = {
     margin: 'unset',

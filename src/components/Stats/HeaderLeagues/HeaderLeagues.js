@@ -39,7 +39,7 @@ const HeaderLeagues = () => {
     return () => {
       ref.removeEventListener('scroll', leaguesScrollDispatch);
     };
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -92,8 +92,10 @@ const HeaderLeagues = () => {
       const scrollValue = leaguesRef.current.scrollLeft - 249;
       leaguesRef.current.scrollLeft -= 249;
       dispatch(setCurrentLeaguesScroll(scrollValue));
+
       return;
     }
+
     const scrollValue = leaguesRef.current.scrollLeft + 249;
     leaguesRef.current.scrollLeft += 249;
     dispatch(setCurrentLeaguesScroll(scrollValue));
@@ -101,7 +103,9 @@ const HeaderLeagues = () => {
 
   const leaguesArr = useMemo(() => {
     const newLeagues = statsData[currentYear] ? statsData[currentYear].slice() : [];
+    newLeagues.unshift({ id: -2, title: 'Custom leagues' });
     newLeagues.unshift({ id: -1, title: 'All' });
+
     return newLeagues;
     // eslint-disable-next-line
   }, [statsData, currentYear]);

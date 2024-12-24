@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import cl from './ContentTeamTable.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSortDirection, setSortField } from 'redux/statsReducer';
+import { setCurrentCustomLeaguesForFetch, setSortDirection, setSortField } from 'redux/statsReducer';
+import CustomLeaguesDropdown from 'components/UI/dropdown/CustomLeaguesDropdown/Dropdown';
 
 const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData }) => {
   const [isScrollable, setIsScrollable] = useState(true);
@@ -16,6 +17,9 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   const isMobile = useSelector(state => state.shared.isMobile);
   const mobileOrientation = useSelector(state => state.shared.mobileOrientation);
   const currentYear = useSelector(state => state.shared.currentYear);
+
+  const currentCustomLeagues = useSelector(state => state.stats.currentCustomLeagues);
+  const customStatsData = useSelector(state => state.stats.customStatsData);
 
   const dispatch = useDispatch();
 
@@ -50,7 +54,9 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
   };
 
   const filteredStatsData =
-    currentLeague.id !== -1
+    currentLeague.id === -2
+      ? customStatsData.find(item => item.type === currentGameType)?.teams[tableMode.toLowerCase()] || []
+      : currentLeague.id !== -1
       ? statsData[currentYear].find(
           item => item.title === currentLeague.name && item.type === currentGameType
         )?.teams[tableMode.toLowerCase()] || []
@@ -59,7 +65,7 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
 
   const leftHeaderStyles = !isScrollable ? { borderRight: 'none', boxShadow: 'none' } : null;
 
-	// Mobile render
+  // Mobile render
   if (isMobile) {
     return (
       <div className={cl.mobileWrapper}>
@@ -110,7 +116,15 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
     );
   }
 
-	// Desktop render
+  const leaguesDropdownOptions =
+    statsData[currentYear]?.filter(({ id, type }) => id !== null && type === currentGameType) || [];
+
+  const handleOkBtn = () => {
+    dispatch(setCurrentCustomLeaguesForFetch(currentCustomLeagues));
+  };
+
+	console.log(filteredStatsData)
+  // Desktop render
   return (
     <div className={cl.wrapper}>
       <div>
@@ -136,6 +150,16 @@ const ContentTeamTable = ({ getTableHeaders, getTableRows, getSortedStatsData })
           })}
         </ul>
       </div>
+      {currentLeague.id === -2 && (
+        <CustomLeaguesDropdown
+          title='Select league'
+          options={leaguesDropdownOptions}
+          currentOptions={currentCustomLeagues}
+          handleOkBtn={handleOkBtn}
+          wrapperStyles={{ position: 'absolute', left: '30px', top: 26, width: '13%' }}
+          listWrapperStyles={{ left: '-1rem', width: 'calc(100% + 4rem)' }}
+        />
+      )}
     </div>
   );
 };

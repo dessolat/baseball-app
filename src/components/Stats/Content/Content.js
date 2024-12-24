@@ -1,16 +1,112 @@
-import React from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import cl from './Content.module.scss';
 import { useParams } from 'react-router-dom';
 import ContentTeamTable from '../ContentTeamTable/ContentTeamTable';
 import ContentPlayerTable from '../ContentPlayerTable/ContentPlayerTable';
 import SortField from 'components/UI/sortField/SortField';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ActiveBodyCell from 'components/UI/ActiveBodyCell/ActiveBodyCell';
+import {
+  setCurrentCustomLeagues,
+  setCurrentCustomLeaguesForFetch,
+  setCustomStatsData
+} from 'redux/statsReducer';
+import { axiosCancelToken, axiosInstance } from 'axios-instance';
+import Loader from 'components/UI/loaders/Loader/Loader';
 
 const Content = () => {
   const { statsType } = useParams();
 
   const tableMode = useSelector(state => state.stats.tableMode);
+
+  const currentGameType = useSelector(state => state.shared.currentGameType);
+  const currentYear = useSelector(state => state.shared.currentYear);
+  const currentLeague = useSelector(state => state.games.currentLeague);
+
+  const cancelStatsTokenRef = useRef();
+  const [isStatsLoading, setIsStatsLoading] = useState(true);
+  // const [loadedPercents, setLoadedPercents] = useState(null);
+  const [error, setError] = useState('');
+  const currentCustomLeaguesForFetch = useSelector(state => state.stats.currentCustomLeaguesForFetch);
+
+  const dispatch = useDispatch();
+
+  // !Custom data fetching
+
+  const refactorCustomData = customData => {
+    return customData.map(statsByType => {
+      const playersFielding = statsByType.players.fielding.reduce((sum, player, index) => {
+        sum.push({ ...player, ...statsByType.players.running[index] });
+        return sum;
+      }, []);
+      const teamsFielding = statsByType.teams.fielding.reduce((sum, player, index) => {
+        sum.push({ ...player, ...statsByType.teams.running[index] });
+        return sum;
+      }, []);
+
+      return {
+        ...statsByType,
+        players: {
+          batting: statsByType.players.batting,
+          pitching: statsByType.players.pitching,
+          'fielding / running': playersFielding
+        },
+        teams: {
+          batting: statsByType.teams.batting,
+          pitching: statsByType.teams.pitching,
+          'fielding / running': teamsFielding
+        }
+      };
+    });
+  };
+
+  const fetchCustomStats = useCallback(async () => {
+    cancelStatsTokenRef.current = axiosCancelToken.source();
+
+    try {
+      setIsStatsLoading(true);
+
+      const response = await axiosInstance.get(
+        `/custom_leagues_stats?leagues=${
+          currentCustomLeaguesForFetch.length > 0 ? currentCustomLeaguesForFetch.join(',') : 0
+        }`,
+        {
+          cancelToken: cancelStatsTokenRef.current.token,
+          // timeout: 10000,
+          // onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
+        }
+      );
+
+      setError('');
+      dispatch(setCustomStatsData(refactorCustomData(response.data)));
+
+      return response;
+    } catch (err) {
+      if (err.message === null) return;
+      console.log(err.message);
+      setError(err.message);
+    } finally {
+      setIsStatsLoading(false);
+    }
+  }, [dispatch, currentCustomLeaguesForFetch]);
+  //!
+
+  useLayoutEffect(() => {
+    dispatch(setCurrentCustomLeagues([]));
+    dispatch(setCurrentCustomLeaguesForFetch([]));
+  }, [currentGameType, currentYear, dispatch]);
+
+  useLayoutEffect(() => {
+    if (currentLeague.id !== -2) return;
+
+    fetchCustomStats();
+  }, [currentLeague.id, fetchCustomStats]);
+
+  useEffect(() => {
+    return () => {
+      currentLeague.id === -2 && cancelStatsTokenRef.current?.cancel();
+    };
+  }, [currentLeague.id]);
 
   const getTableHeaders = (sortField, sortDirection, handleFieldClick, cl, arrowStyles = null) =>
     tableMode === 'Batting' ? (
@@ -478,7 +574,12 @@ const Content = () => {
   const getTableRows = (row, cl, sortField) =>
     tableMode === 'Batting' ? (
       <>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell
+          sortField={sortField}
+          row={row}
+          currentGameType={currentGameType}
+          isCustomLeagues={currentLeague.id === -2}
+          statsType={statsType}>
           G
         </ActiveBodyCell>
         <ActiveBodyCell
@@ -577,7 +678,13 @@ const Content = () => {
       </>
     ) : tableMode === 'Pitching' ? (
       <>
-        <ActiveBodyCell sortField={sortField} row={row} addedClass={cl.tall}>
+        <ActiveBodyCell
+          sortField={sortField}
+          row={row}
+          addedClass={cl.tall}
+          currentGameType={currentGameType}
+          isCustomLeagues={currentLeague.id === -2}
+          statsType={statsType}>
           G
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row} addedClass={statsType === 'player' ? cl.tall : null}>
@@ -689,7 +796,12 @@ const Content = () => {
       </>
     ) : (
       <>
-        <ActiveBodyCell sortField={sortField} row={row}>
+        <ActiveBodyCell
+          sortField={sortField}
+          row={row}
+          currentGameType={currentGameType}
+          isCustomLeagues={currentLeague.id === -2}
+          statsType={statsType}>
           G
         </ActiveBodyCell>
         <ActiveBodyCell sortField={sortField} row={row}>
@@ -727,36 +839,57 @@ const Content = () => {
 
   //Sorting filtered array
   const getSortedStatsData = (filteredStatsData, sortField, sortDirection) =>
-    filteredStatsData.sort((a, b) =>
-      Number(a[sortField]) === Number(b[sortField]) && `${a.name} ${a.surname}` > `${b.name} ${b.surname}`
+    filteredStatsData.sort((a, b) => {
+      const valueA =
+        statsType !== 'player' && sortField === 'G' && currentLeague.id === -2
+          ? a[sortField][currentGameType]
+          : a[sortField];
+      const valueB =
+        statsType !== 'player' && sortField === 'G' && currentLeague.id === -2
+          ? b[sortField][currentGameType]
+          : b[sortField];
+
+      return Number(valueA) === Number(valueB) && `${a.name} ${a.surname}` > `${b.name} ${b.surname}`
         ? sortDirection === 'asc'
           ? 1
           : -1
-        : Number(a[sortField]) === Number(b[sortField]) && `${a.name} ${a.surname}` < `${b.name} ${b.surname}`
+        : Number(valueA) === Number(valueB) && `${a.name} ${a.surname}` < `${b.name} ${b.surname}`
         ? sortDirection === 'asc'
           ? -1
           : 1
-        : Number(a[sortField]) > Number(b[sortField]) || a[sortField] === 'inf' || isNaN(a[sortField])
+        : Number(valueA) > Number(valueB) || valueA === 'inf' || isNaN(valueA)
         ? sortDirection === 'asc'
           ? 1
           : -1
         : sortDirection === 'asc'
         ? -1
-        : 1
-    );
+        : 1;
+    });
+
+  const contentLoaderStyles = {
+    margin: 'unset',
+    position: 'absolute',
+    top: '200px',
+    left: '50%',
+    transform: 'translateX(-50%)'
+  };
 
   const contentTable =
-    statsType !== 'player' ? (
+    isStatsLoading && currentLeague.id === -2 ? (
+      <Loader styles={contentLoaderStyles} />
+    ) : statsType !== 'player' ? (
       <ContentTeamTable
         getTableHeaders={getTableHeaders}
         getTableRows={getTableRows}
         getSortedStatsData={getSortedStatsData}
+        fetchCustomStats={fetchCustomStats}
       />
     ) : (
       <ContentPlayerTable
         getTableHeaders={getTableHeaders}
         getTableRows={getTableRows}
         getSortedStatsData={getSortedStatsData}
+        fetchCustomStats={fetchCustomStats}
       />
     );
 
