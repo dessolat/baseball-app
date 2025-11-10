@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import React, { memo, Suspense, useMemo, useState, useRef, useEffect, lazy } from 'react';
+import React, { memo, Suspense, useState, useRef, useEffect, lazy } from 'react';
 import cl from './PitchesTrajectories.module.scss';
 import { Canvas } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+// import { TextureLoader } from 'three';
 import { OrbitControls } from '@react-three/drei';
-import FieldBg from 'images/field_right.jpg';
+// import FieldBg from 'images/field_right.jpg';
 import Curves from './Curves/Curves';
 import Tooltip from './Tooltip';
 import Loader from 'components/UI/loaders/Loader/Loader';
@@ -85,7 +85,7 @@ const PitchesTrajectories = ({ metrix }) => {
   const handleResetClick = () => controlsRef.current.reset();
   const handleAutoRotateClick = () => setAutoRotate(prev => !prev);
 
-  const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
+  // const textureRef = useMemo(() => new TextureLoader().load(FieldBg), []);
 
   const isCurves = filteredMetrix.length > 0;
 

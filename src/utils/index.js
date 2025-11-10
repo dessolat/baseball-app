@@ -245,3 +245,7 @@ export function HSVtoRGB(h, s, v) {
 export function propsAreEqual(prevProps, nextProps) {
   return JSON.stringify(prevProps) === JSON.stringify(nextProps);
 }
+
+export function getDomen() {
+  return process.env.REACT_APP_GAMETRACK_API_URL ?? `https://baseball-gametrack.ru/api`;
+}

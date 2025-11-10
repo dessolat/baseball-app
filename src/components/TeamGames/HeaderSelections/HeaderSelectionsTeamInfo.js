@@ -5,6 +5,7 @@ import HeaderSelectionsLinks from './HeaderSelectionsLinks';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import RoundLoader from 'components/UI/loaders/RoundLoader/RoundLoader';
+import { getDomen } from 'utils';
 
 const Logo = ({ cl }) => {
   const [isLoaded, setLoaded] = useState(false);
@@ -28,7 +29,7 @@ const Logo = ({ cl }) => {
         </div>
         <img src={TeamLogo} alt='' className={cl.teamImg} style={pHolderStyles} />
         <img
-          src={`http://baseball-gametrack.ru/api/logo/${league.logo}`}
+          src={`${getDomen()}/logo/${league.logo}`}
           alt=''
           className={cl.teamImg}
           onLoad={() => setLoaded(true)}

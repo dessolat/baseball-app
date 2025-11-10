@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentYear, setCurrentDate } from 'redux/sharedReducer';
 import PortraitImg from 'images/portrait.png';
 import { setPlayerCurrentTeam as setCurrentTeam, setTableType } from 'redux/playerStatsReducer';
-import { getShortName, getYears } from 'utils';
+import { getDomen, getShortName, getYears } from 'utils';
 import { setCurrentLeague } from 'redux/gamesReducer';
 import { useParams } from 'react-router-dom';
 import { PlayerYearsContext } from 'context';
@@ -23,7 +23,7 @@ export const Logo = () => {
     setError(false);
   }, [playerId]);
 
-  const imgUrl = `http://baseball-gametrack.ru/api/logo/${playerId}`;
+  const imgUrl = `${getDomen()}/logo/${playerId}`;
 
   const imgStyles = !isLoaded ? { display: 'none' } : {};
   const pHolderStyles = isLoaded || error ? { display: 'none' } : {};

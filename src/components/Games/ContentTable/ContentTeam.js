@@ -3,7 +3,7 @@ import cl from './ContentTable.module.scss';
 import LeagueImage from 'images/league_image.png';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropdown from 'components/UI/dropdown/GamesDropdown/Dropdown';
-import { getShortName } from 'utils';
+import { getDomen, getShortName } from 'utils';
 import { setCurrentGuests, setCurrentHome } from 'redux/gamesReducer';
 
 const Logo = () => {
@@ -11,7 +11,7 @@ const Logo = () => {
 
   const { logo: logoUrlPart } = useSelector(state => state.games.currentLeague);
 
-  const imgUrl = `http://baseball-gametrack.ru/api/logo/${logoUrlPart}`;
+  const imgUrl = `${getDomen()}/logo/${logoUrlPart}`;
 
   const pHolderStyles = isLoaded && logoUrlPart ? { display: 'none' } : {};
   const imgStyles = !isLoaded || !logoUrlPart ? { display: 'none' } : { marginLeft: 'unset' };

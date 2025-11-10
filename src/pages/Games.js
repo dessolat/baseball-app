@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import axios from 'axios';
 import { axiosInstance, axiosCancelToken } from 'axios-instance';
 import Content from 'components/Games/Content/Content';
 import Header from 'components/Games/Header/Header';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
-  // addLeagueImage,
   resetTableFilters,
   setGamesAndLeagues,
   setMobileTableMode,
@@ -115,72 +113,8 @@ const Games = () => {
 
     dispatch(setGamesAndLeagues(yearData));
 
-    // const fetchGamesData = async () => {
-    //   cancelTokenRef.current = axios.CancelToken.source();
-
-    //   try {
-    //     setIsLoading(true);
-    //     const response = await axios.get(`http://baseball-gametrack.ru/api/main/year-${currentYear}`, {
-    //       cancelToken: cancelTokenRef.current.token,
-    //       timeout: 10000,
-    //       onDownloadProgress: ({ total, loaded }) => setLoadedPercents((loaded * 100) / total)
-    //     });
-
-    //     setError('');
-    //     dispatch(setGamesAndLeagues(response.data));
-
-    //     if (games === null) {
-    //       console.log('dispatched after fetching');
-    //       // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-    //     }
-    //   } catch (err) {
-    //     if (err.message === null) return;
-    //     if (err.message.includes('timeout') && currentYear === 2023) {
-    //       dispatch(setCurrentYear(2022));
-    //     } else {
-    //       setError(err.message);
-    //     }
-    //   } finally {
-    //     setIsLoading(false);
-    //     setLoadedPercents(null);
-    //   }
-    // };
-    // fetchGamesData();
-
-    // return () => {
-    //   cancelTokenRef.current.cancel(null);
-    // };
     // eslint-disable-next-line
   }, [currentYear]);
-
-  // useEffect(() => {
-  //   if (games === null) return;
-
-  //   const fetchImage = async (id, name, url) => {
-  //     try {
-  //       const response = await axios.get(`http://baseball-gametrack.ru/api/logo/${url}`, {
-  //         responseType: 'arraybuffer',
-  //         timeout: 2500
-  //       });
-
-  //       dispatch(
-  //         addLeagueImage({
-  //           [id]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64'),
-  //           [name]: 'data:image/jpg;base64, ' + Buffer.from(response.data, 'binary').toString('base64')
-  //         })
-  //       );
-  //     } catch (err) {
-  //       // err.message === 'Request failed with status code 523' &&
-  //       setTimeout(() => fetchImage(id, name, url), 2500);
-  //       console.log(err.message);
-  //     }
-  //   };
-
-  //   leagues
-  //     .filter(league => league.logo !== '' && !leaguesImages[league.id])
-  //     .forEach(league => league.id !== -1 && fetchImage(league.id, league.name, league.logo));
-  //   // eslint-disable-next-line
-  // }, [games, leagues]);
 
   useEffect(() => {
     if (firstMountRef.current === true) {
@@ -197,8 +131,6 @@ const Games = () => {
       return;
     }
 
-    // dispatch(setCurrentLeague({ id: -1, name: 'All' }));
-    // dispatch(setMobileTableMode('Calendar'));
     // eslint-disable-next-line
   }, [currentGameType, currentYear]);
 

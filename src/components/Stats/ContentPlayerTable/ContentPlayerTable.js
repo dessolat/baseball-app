@@ -134,9 +134,9 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
 
   // Desktop render
 
-	const handleOkBtn = () => {
-		dispatch(setCurrentCustomLeaguesForFetch(currentCustomLeagues))
-	}
+  const handleOkBtn = () => {
+    dispatch(setCurrentCustomLeaguesForFetch(currentCustomLeagues));
+  };
 
   return (
     <div className={cl.wrapper}>
@@ -169,8 +169,13 @@ const ContentPlayerTable = ({ getTableHeaders, getTableRows, getSortedStatsData 
                     </Link>
                   </div>
                   <div className={cl.teamNames}>
-                    <Link to={`/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`}>
-                      {getShortName(row.teams[0].name, row.teams[1] ? 12 : 28)}
+                    <Link
+                      to={
+                        row.teams[0]?.name
+                          ? `/games/team/${currentGameType.toLowerCase()}/${row.teams[0].name}`
+                          : ''
+                      }>
+                      {getShortName(row.teams[0]?.name || '-', row.teams[1] ? 12 : 28)}
                     </Link>
                     {row.teams[1] && (
                       <>

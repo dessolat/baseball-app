@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cl from './HeaderLogo.module.scss';
+import { getDomen } from 'utils';
 
 const HeaderLogo = ({ side = 'guests' }) => {
   const [isLoaded, setLoaded] = useState(false);
@@ -9,14 +10,14 @@ const HeaderLogo = ({ side = 'guests' }) => {
 
   const imgStyles = !isLoaded ? { display: 'none' } : {};
   const pHolderStyles = isLoaded ? { display: 'none' } : {};
-	
+
   const imgLogoUrl = side === 'guests' ? guests.logo : owners.logo;
-	const imgSrc = `http://baseball-gametrack.ru/api/logo/${imgLogoUrl}`
-	
-	const textClass = side === 'guests' ? cl.leftLogoText : cl.rightLogoText
-	const imgClass = side === 'guests' ? cl.leftLogo : cl.rightLogo
-	
-	const teamName = side === 'guests' ? guests.name : owners.name;
+  const imgSrc = `${getDomen()}/logo/${imgLogoUrl}`;
+
+  const textClass = side === 'guests' ? cl.leftLogoText : cl.rightLogoText;
+  const imgClass = side === 'guests' ? cl.leftLogo : cl.rightLogo;
+
+  const teamName = side === 'guests' ? guests.name : owners.name;
   return (
     <>
       <img
